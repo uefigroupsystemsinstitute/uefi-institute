@@ -62,11 +62,24 @@
             margin: auto;
         }
 
+        /* Updated Logo Brand Styling */
         .logo {
-            color: var(--gold) !important;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 45px; /* Restricts height to look crisp and balanced in the header */
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo span {
+            color: var(--gold);
             font-size: 1.1rem;
             font-weight: 900;
-            text-decoration: none;
             letter-spacing: 1px;
             font-family: 'JetBrains Mono', monospace;
         }
@@ -207,7 +220,10 @@
 
     <header>
         <nav>
-            <a href="index.html" class="logo">U.E.F.I. INSTITUTE</a>
+            <a href="index.html" class="logo">
+                <img src="assets/img/logo-uefi.png" alt="U.E.F.I. Logo">
+                <span>U.E.F.I. INSTITUTE</span>
+            </a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="abouts.html">About</a></li>
