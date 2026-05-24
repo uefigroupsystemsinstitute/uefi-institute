@@ -23,12 +23,20 @@ body {
     color: var(--text-dark);
     line-height: 1.5;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
+
+main {
+    flex: 1; /* Pushes footer to the bottom even if content is short */
+}
+
 /* ==========================================
-   FIXED HORIZONTAL NAVIGATION (Multi-Link)
+   2. FIXED HORIZONTAL NAVIGATION
    ========================================== */
 header {
-    background-color: var(--midnight-blue);
+    background: linear-gradient(to right, #000000 0%, #000000 10%, var(--midnight-blue) 40%);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -43,6 +51,31 @@ nav {
     padding: 0.8rem 2%; /* Reduced side padding to give more room */
     max-width: 1400px; /* Increased max-width for the long menu */
     margin: auto;
+}
+
+.logo {
+    color: var(--gold) !important; /* Force Gold color */
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-decoration: none !important; /* Remove underline */
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px; /* Adjust height to your taste */
+    width: auto;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* Ensure logo stays gold even after being clicked or hovered */
+.logo:visited, 
+.logo:hover, 
+.logo:active {
+    color: var(--gold) !important;
+    text-decoration: none !important;
 }
 
 .nav-links {
@@ -82,8 +115,7 @@ nav {
     font-weight: 700 !important;
 }
 
-/* RESPONSIVE: If the screen is too small, we might need a scrollbar 
-   or a hamburger menu later, but this keeps it horizontal for now. */
+/* RESPONSIVE: If the screen is too small, we keep it horizontal for now. */
 @media (max-width: 1100px) {
     .nav-links {
         gap: 0.5rem;
@@ -262,6 +294,7 @@ footer {
     padding: 2.5rem;
     margin-top: 4rem;
 }
+
 /* ==========================================
    7. AI TUTOR INTERFACE 
    ========================================== */
@@ -390,6 +423,7 @@ footer {
     font-weight: 600;
     cursor: pointer;
 }
+
 /* ==========================================
    8. ENROLLMENT FORM STYLES
    ========================================== */
@@ -454,6 +488,7 @@ footer {
     border: none;
     font-size: 1.1rem;
 }
+
 /* ==========================================
    9. ABOUT PAGE STYLES
    ========================================== */
@@ -539,6 +574,7 @@ footer {
 @media (max-width: 768px) {
     .pillar-grid { grid-template-columns: 1fr; }
 }
+
 /* ==========================================
    10. VISION SECTION STYLES
    ========================================== */
@@ -580,6 +616,7 @@ footer {
     color: #555;
     font-style: italic;
 }
+
 /* ==========================================
    11. CONTACT PAGE STYLES
    ========================================== */
@@ -650,20 +687,15 @@ footer {
         text-align: center;
     }
 }
+
 /* ==========================================
    12. TECH LAB SPECIFIC STYLES
    ========================================== */
-
-/* Main Container */
 .lab-container {
     max-width: 1100px;
     margin: 0 auto;
     padding: 60px 20px;
 }
-
-/* ==========================================
-   FIXED TECH-LAB HERO TEXT COLORS
-   ========================================== */
 
 .lab-hero {
     text-align: center;
@@ -679,7 +711,6 @@ footer {
     color: #FFFFFF !important; /* Forced Pure White */
     font-weight: 800;
     margin: 15px 0;
-    /* This shadow creates a "border" around letters so they are visible on any background */
     text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5); 
     letter-spacing: -0.02em;
 }
@@ -706,6 +737,7 @@ footer {
     text-transform: uppercase;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
+
 /* Course Tracks Grid */
 .course-tracks {
     display: grid;
@@ -734,6 +766,10 @@ footer {
 .track-card.highlight {
     border: 2px solid var(--gold);
     position: relative;
+}
+
+.track-card.beginner {
+    border: 1px dashed var(--accent-gold) !important;
 }
 
 .track-icon {
@@ -809,6 +845,57 @@ footer {
     opacity: 0.9;
     line-height: 1.6;
 }
+
+/* Professor Webcam Box Aesthetics */
+.prof-video-box {
+    position: relative;
+}
+
+.prof-video-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.6) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.prof-video-box img {
+    filter: contrast(1.1) brightness(0.9) saturate(0.8);
+    transition: filter 0.5s ease;
+}
+
+.prof-video-box:hover img {
+    filter: contrast(1.1) brightness(1) saturate(1);
+}
+
+.prof-video-box::after {
+    content: " ";
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+    background-size: 100% 3px, 3px 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+#prof-pulse-indicator {
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0px var(--gold);
+}
+
+#prof-pulse-indicator.speaking {
+    animation: pulse-red 1.5s infinite;
+    background-color: #ff4b2b !important; /* Changes to red/orange when speaking */
+}
+
+@keyframes pulse-red {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 75, 43, 0.7); }
+    70% { transform: scale(1.2); box-shadow: 0 0 0 15px rgba(255, 75, 43, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 75, 43, 0); }
+}
+
 /* ==========================================
    13. SUPPORT / DONATION PAGE STYLES
    ========================================== */
@@ -883,27 +970,6 @@ footer {
     margin-bottom: 20px;
 }
 
-/* Ensure the Enroll button in nav stays visible on this page */
-.btn-nav {
-    background-color: var(--gold);
-    color: var(--midnight-blue) !important;
-}
-/* --- LOGO GLOBAL FIX --- */
-.logo {
-    color: var(--gold) !important; /* Force Gold color */
-    font-size: 1.4rem;
-    font-weight: bold;
-    text-decoration: none !important; /* Remove underline */
-    white-space: nowrap;
-}
-
-/* Ensure it stays gold even after being clicked or hovered */
-.logo:visited, 
-.logo:hover, 
-.logo:active {
-    color: var(--gold) !important;
-    text-decoration: none !important;
-}
 /* ==========================================
    14. COURSES & OPPORTUNITIES STYLES (REFINED)
    ========================================== */
@@ -912,8 +978,6 @@ footer {
     margin: 50px auto;
     padding: 20px;
 }
-
-/* ... keep your level-title and course-item styles ... */
 
 .opp-list {
     margin-top: 20px;
@@ -941,17 +1005,7 @@ footer {
     padding-left: 5px; /* Subtle movement on hover */
 }
 
-/* Ensure the footer on this page stays at the bottom */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-main {
-    flex: 1; /* Pushes footer to the bottom even if content is short */
-}
-/* --- COURSE ITEM ENHANCEMENTS --- */
+/* Course Item Enhancements */
 .course-list {
     display: flex;
     flex-direction: column;
@@ -1002,7 +1056,6 @@ main {
     color: white;
 }
 
-/* Ensure centering of titles */
 .level-title {
     text-align: center;
     display: block;
@@ -1010,6 +1063,7 @@ main {
     font-size: 1.8rem;
     border-bottom: none;
 }
+
 /* ==========================================
    15. CENTERED OPPORTUNITIES & TABLES
    ========================================== */
@@ -1112,85 +1166,10 @@ main {
     .opp-table thead { display: none; } /* Stack table on mobile */
     .opp-table td { display: block; text-align: center; }
 }
-/* Professor Voice Pulse Animation */
-#prof-pulse-indicator {
-    transition: all 0.3s ease;
-    box-shadow: 0 0 0px var(--gold);
-}
 
-#prof-pulse-indicator.speaking {
-    animation: pulse-red 1.5s infinite;
-    background-color: #ff4b2b !important; /* Changes to red/orange when speaking */
-}
-
-@keyframes pulse-red {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 75, 43, 0.7); }
-    70% { transform: scale(1.2); box-shadow: 0 0 0 15px rgba(255, 75, 43, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 75, 43, 0); }
-}
-/* Add a vignette effect to the professor box to look more like a high-end webcam */
-.prof-video-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.6) 100%);
-    z-index: 2;
-    pointer-events: none;
-}
-
-/* Make the professor image slightly desaturated for a "Professional Studio" look */
-.prof-video-box img {
-    filter: contrast(1.1) brightness(0.9) saturate(0.8);
-    transition: filter 0.5s ease;
-}
-
-.prof-video-box:hover img {
-    filter: contrast(1.1) brightness(1) saturate(1);
-}
-
-/* Scanline effect for the "Lecture Live" aesthetic */
-.prof-video-box::after {
-    content: " ";
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-    background-size: 100% 3px, 3px 100%;
-    z-index: 3;
-    pointer-events: none;
-}
-/* Add a vignette effect to the professor box to look more like a high-end webcam */
-.prof-video-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.6) 100%);
-    z-index: 2;
-    pointer-events: none;
-}
-
-/* Make the professor image slightly desaturated for a "Professional Studio" look */
-.prof-video-box img {
-    filter: contrast(1.1) brightness(0.9) saturate(0.8);
-    transition: filter 0.5s ease;
-}
-
-.prof-video-box:hover img {
-    filter: contrast(1.1) brightness(1) saturate(1);
-}
-
-/* Scanline effect for the "Lecture Live" aesthetic */
-.prof-video-box::after {
-    content: " ";
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-    background-size: 100% 3px, 3px 100%;
-    z-index: 3;
-    pointer-events: none;
-}
-/* Direct Access Bar - Terminal Style */
+/* ==========================================
+   16. TERMINAL & CONSOLE INTERFACES
+   ========================================== */
 .direct-access-bar {
     background: rgba(212, 175, 55, 0.05);
     border-top: 1px solid var(--border-light);
@@ -1225,11 +1204,6 @@ main {
     color: var(--accent-gold);
 }
 
-/* Specific styling for the beginner track to differentiate it slightly */
-.track-card.beginner {
-    border: 1px dashed var(--accent-gold) !important;
-}
-/* TERMINAL OVERLAY STYLES */
 .terminal-container {
     position: fixed;
     bottom: 0;
@@ -1292,5 +1266,4 @@ main {
     outline: none;
 }
 
-/* Class to minimize the terminal */
 .terminal-minimized { transform: translateY(250px); }
