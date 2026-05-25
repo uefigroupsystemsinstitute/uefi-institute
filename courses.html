@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI | Systems Institute Forge</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>The Global Forge | UEFI Systems Institute</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #010306; 
@@ -13,6 +13,7 @@
             --accent-gold: #e6c25a; 
             --accent-green: #00ff87; 
             --accent-blue: #3b82f6;
+            --accent-red: #ef4444;
             --musk-titanium: #cbd5e1;
             --border: rgba(255, 255, 255, 0.1);
             --text: #ffffff;
@@ -25,28 +26,45 @@
             background-color: var(--bg); 
             color: var(--text);
             margin: 0; 
-            font-family: 'Times New Roman', Times, serif; /* Simons/Institutional Rigor */
+            font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
             font-size: 13px;
         }
 
-        /* Institutional Navigation */
+        /* --- KENYAN FLAG TOP SPLIT IDENTITY BAR --- */
+        .identity-bar {
+            width: 100%;
+            height: 5px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1100;
+        }
+        .id-black { background: #000000; }
+        .id-green { background: #006633; }
+        .id-red { background: #990000; }
+        .id-white { background: #ffffff; }
+
+        /* --- RESTRICTED TOP NAVIGATION --- */
         header.top-nav {
             background: var(--nav-bg);
-            border-bottom: 1px solid var(--accent-gold);
+            border-bottom: 1px solid var(--border);
             padding: 0 5%;
             height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
+            position: fixed;
+            top: 5px;
+            width: 100%;
+            z-index: 1000;
         }
 
         .logo-area { display: flex; align-items: center; gap: 20px; }
-        
         .logo-main { 
             font-weight: 900; 
             font-size: 1.1rem; 
@@ -55,10 +73,9 @@
             border-left: 3px solid var(--accent-green);
             padding-left: 10px;
             text-transform: uppercase;
-            font-family: 'Inter', sans-serif;
         }
 
-        nav.main-links { display: flex; gap: 30px; align-items: center; }
+        nav.main-links { display: flex; gap: 25px; align-items: center; }
 
         .nav-link {
             color: var(--text-muted);
@@ -70,9 +87,8 @@
             transition: 0.2s;
             font-weight: 700;
         }
-
-        .nav-link:hover { color: var(--accent-gold); }
-        .home-bar-btn { color: var(--accent-green); border: 1px solid var(--accent-green); padding: 5px 15px; border-radius: 2px; }
+        .nav-link:hover, .nav-link.active { color: var(--accent-green); }
+        .nav-link.active-tab-indicator { color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 4px; }
 
         .mastery-status {
             font-family: 'JetBrains Mono', monospace;
@@ -82,259 +98,517 @@
             align-items: center;
             gap: 10px;
         }
-
         .progress-track { width: 80px; height: 3px; background: rgba(255,255,255,0.05); position: relative; }
-        .progress-fill { width: 45%; height: 100%; background: var(--accent-green); }
+        .progress-fill { width: 78%; height: 100%; background: var(--accent-green); }
 
-        /* Main Content Engine */
+        /* --- DYNAMIC APP DASHBOARD SUB-BAR --- */
+        .workspace-tabs-bar {
+            position: fixed;
+            top: 75px;
+            width: 100%;
+            background: #040811;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px 0;
+            z-index: 900;
+        }
+
+        .tab-trigger {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+        .tab-trigger:hover { color: white; border-color: var(--accent-blue); }
+        .tab-trigger.active-panel {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+        }
+
+        /* --- CONTAINER CONTROL --- */
         main {
+            margin-top: 135px;
             flex-grow: 1;
             overflow-y: auto;
-            background: radial-gradient(circle at 50% 0%, #0a1122 0%, #010306 100%);
+            background: radial-gradient(circle at 50% 0%, #0d1527 0%, #010306 100%);
         }
 
-        .hero-section {
-            padding: 80px 8% 40px;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        h1 { 
-            font-size: 4rem; 
-            font-weight: 900; 
-            margin: 0; 
-            line-height: 0.85; 
-            letter-spacing: -3px; 
-            text-transform: uppercase; 
-            font-family: 'Inter', sans-serif;
-        }
-        
-        h1 span { color: var(--accent-gold); font-style: italic; }
+        .workspace-panel { display: none; padding: 40px 8% 100px; }
+        .workspace-panel.active-panel { display: block; }
 
-        .philosophy-tagline {
-            color: var(--musk-titanium);
-            max-width: 900px;
-            margin-top: 25px;
-            font-size: 1.2rem;
-            line-height: 1.6;
+        /* --- WORKSPACE VIEW TYPOGRAPHY & BLOCKS --- */
+        .panel-billboard {
+            margin-bottom: 45px;
+            border-left: 4px solid var(--accent-gold);
+            padding-left: 20px;
+        }
+        .panel-billboard h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+        .panel-billboard p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 8px;
+            max-width: 800px;
         }
 
-        .content-wrap { padding: 60px 8%; }
+        .grid-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+        }
 
-        /* Course Tier Headers */
-        .section-header {
+        .forge-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 30px;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
-            margin: 60px 0 30px;
-            padding: 12px 20px;
-            background: rgba(255,255,255,0.02);
-            border-left: 4px solid var(--accent-blue);
+            position: relative;
+            transition: all 0.25s ease;
+        }
+        .forge-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-3px);
+            background: #0a1122;
         }
 
-        .section-title {
+        .card-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .forge-card h3 {
+            font-size: 1.6rem;
+            margin: 0 0 12px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .forge-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .badge-cluster {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 25px;
+        }
+        .spec-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            padding: 3px 8px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+        .spec-badge.global-standard {
+            background: rgba(0, 255, 135, 0.05);
+            border-color: rgba(0, 255, 135, 0.2);
+            color: var(--accent-green);
+        }
+
+        /* --- CONTROL INTERFACE ELEMENTS --- */
+        .action-trigger {
+            width: 100%;
+            background: #ffffff;
+            color: #000000;
+            padding: 12px;
+            text-align: center;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             font-weight: 800;
-            color: #fff;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Course Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
-        }
-
-        .course-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 35px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .course-card:hover {
-            border-color: var(--accent-gold);
-            transform: translateY(-5px);
-            background: #0c1221;
-        }
-
-        .meta-data {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--accent-gold);
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            text-transform: uppercase;
-        }
-
-        .course-card h3 { 
-            font-size: 1.8rem; 
-            margin: 0 0 15px; 
-            font-weight: 900; 
-            color: #fff; 
-            font-family: 'Inter', sans-serif;
-            letter-spacing: -1px;
-        }
-        
-        .course-card p { 
-            color: var(--text-muted); 
-            font-size: 14px; 
-            line-height: 1.6; 
-            margin-bottom: 30px; 
-            flex-grow: 1;
-        }
-
-        .btn-initialize {
-            background: #fff;
-            color: #000;
-            padding: 14px 24px;
-            font-size: 11px;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 900;
             text-decoration: none;
             text-transform: uppercase;
-            text-align: center;
-            transition: 0.2s;
+            transition: all 0.2s ease;
+            display: inline-block;
         }
-
-        .course-card:hover .btn-initialize {
+        .forge-card:hover .action-trigger {
             background: var(--accent-green);
         }
+        .action-trigger.blue-variant { background: var(--accent-blue); color: white; }
+        .action-trigger.gold-variant { background: var(--accent-gold); color: black; }
 
-        /* Tier Specific Colors */
-        .tier-foundation { border-left-color: var(--accent-green) !important; }
-        .tier-intermediate { border-left-color: var(--accent-blue) !important; }
-        .tier-advanced { border-left-color: var(--accent-gold) !important; }
+        /* --- TERMINAL GATE DISPLAY MOCK --- */
+        .terminal-block {
+            background: #000000;
+            border: 1px solid var(--border);
+            padding: 25px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #e2e8f0;
+            border-left: 4px solid var(--accent-blue);
+            margin-top: 15px;
+            border-radius: 4px;
+        }
 
-        @media (max-width: 1000px) { h1 { font-size: 2.5rem; } nav.main-links { display: none; } }
+        /* --- FOOTER REGION --- */
+        footer {
+            background: #000000;
+            border-top: 1px solid var(--border);
+            padding: 30px 5%;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        @media (max-width: 1100px) {
+            .workspace-tabs-bar { overflow-x: auto; justify-content: flex-start; padding: 10px 20px; }
+            .tab-trigger { flex-shrink: 0; }
+        }
     </style>
 </head>
 <body>
 
+    <div class="identity-bar">
+        <div class="id-black"></div>
+        <div class="id-green"></div>
+        <div class="id-red"></div>
+        <div class="id-white"></div>
+    </div>
+
     <header class="top-nav">
         <div class="logo-area">
-            <a href="index.html" class="nav-link home-bar-btn">← MAIN WEBSITE</a>
-            <div class="logo-main">UEFI SYSTEMS FORGE</div>
+            <div class="logo-main">UEFI GLOBAL INTEGRATION ENGINE</div>
         </div>
         
         <nav class="main-links">
-            <a href="#foundations" class="nav-link">Foundations</a>
-            <a href="#core-cs" class="nav-link">Core CS</a>
-            <a href="#quant-ai" class="nav-link">Quant & AI</a>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="courses.html" class="nav-link active-tab-indicator">Courses</a>
+            <a href="tutor.html" class="nav-link">AI Professor</a>
+            
             <div class="mastery-status">
-                INDEX: <div class="progress-track"><div class="progress-fill"></div></div> 45%
+                GLOBAL SYSTEM INDEX: <div class="progress-track"><div class="progress-fill"></div></div> 78%
             </div>
         </nav>
-
-        <a href="#" class="btn-initialize" style="padding: 10px 20px; background: var(--accent-green);">Access_Terminal</a>
     </header>
 
+    <div class="workspace-tabs-bar">
+        <button class="tab-trigger active-panel" onclick="switchPanel(event, 'curriculum-panel')">Unified K-12 Matrix</button>
+        <button class="tab-trigger" onclick="switchPanel(event, 'computation-panel')">Advanced CS & Enterprise</button>
+        <button class="tab-trigger" onclick="switchPanel(event, 'gateways-panel')">Global Ed Portals</button>
+        <button class="tab-trigger" onclick="switchPanel(event, 'cohorts-panel')">Sovereign Cohorts & Exchange</button>
+    </div>
+
     <main>
-        <div class="hero-section">
-            <div style="font-family: 'JetBrains Mono'; font-size: 10px; color: var(--accent-green); margin-bottom: 20px; font-weight: 800; letter-spacing: 2px;">// SYSTEM_STATUS: OPERATIONAL // DATA_SET: INSTITUTIONAL</div>
-            <h1>THE FORGE OF <span>INTELLIGENCE</span></h1>
-            <p class="philosophy-tagline">
-                The UEFI technical pipeline combines <strong>Simons'</strong> mathematical rigor, <strong>Musk's</strong> first-principles engineering, <strong>Khan's</strong> mastery-based pedagogy, and <strong>Larson's</strong> project-driven code execution.
-            </p>
+
+        <div id="curriculum-panel" class="workspace-panel active-panel">
+            <div class="panel-billboard">
+                <h2>Unified Curricula & Disciplinary Graph</h2>
+                <p>Cross-mapped core disciplines connecting Kenyan CBC/CBE standards directly into IGCSE, GCSE, US K-12, and IB Diploma matrices. High-frequency educational integration.</p>
+            </div>
+
+            <div class="grid-matrix">
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Core Discipline // Math</span>
+                        <h3>Advanced Mathematics</h3>
+                        <p>Universal numerical logic modeling. Covers vector spaces, matrix algorithms, computational calculus, and statistical analytics.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge global-standard">Kenya CBE</span>
+                            <span class="spec-badge global-standard">IB MYP/DP</span>
+                            <span class="spec-badge">IGCSE</span>
+                            <span class="spec-badge">US K-12 AP</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                </div>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Core Discipline // Physics</span>
+                        <h3>Quantum & Classical Mechanics</h3>
+                        <p>Analytical mapping of physical structures, thermodynamics, wave properties, and computational electronics.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge global-standard">Kenya CBE</span>
+                            <span class="spec-badge global-standard">IB DP Physics</span>
+                            <span class="spec-badge">A-Levels</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                </div>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Core Discipline // Biology</span>
+                        <h3>Molecular & Genetic Systems</h3>
+                        <p>Deep-dive research tracking cell mechanics, advanced taxonomy frameworks, genomic architecture, and metabolic processes.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge global-standard">CBE Systems</span>
+                            <span class="spec-badge global-standard">IB DP Bio</span>
+                            <span class="spec-badge">IGCSE Matrix</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                </div>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Core Discipline // Econ</span>
+                        <h3>Macro & Micro Economics</h3>
+                        <p>Stochastic market modeling, behavioral finance analysis, regional inflation algorithms, and resource allocation policies.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge global-standard">IB DP Econ</span>
+                            <span class="spec-badge global-standard">A-Level Core</span>
+                            <span class="spec-badge">Global Markets</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                </div>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Core Discipline // CompSci</span>
+                        <h3>Foundational Computation</h3>
+                        <p>Introduction to object-oriented frameworks, algorithmic complexity analysis, and safe database paradigms.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge global-standard">Kenya CBE</span>
+                            <span class="spec-badge global-standard">IGCSE / GCSE</span>
+                            <span class="spec-badge">US AP CS-A</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                </div>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Core Discipline // Humanities</span>
+                        <h3>Global History & Geopolitics</h3>
+                        <p>Mapping geographical distributions, demographic evolution tracking, and socio-economic history metrics.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge global-standard">CBE Kenya</span>
+                            <span class="spec-badge global-standard">IB DP History</span>
+                            <span class="spec-badge">Human Geo</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                </div>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Core Discipline // Creative</span>
+                        <h3>Fine Arts & Structural Design</h3>
+                        <p>Form, aesthetics, visual systems architecture, composition rules, and architectural design methodologies.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge global-standard">IB MYP Design</span>
+                            <span class="spec-badge global-standard">CBE Art</span>
+                            <span class="spec-badge">Portfolio Suite</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                </div>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Core Discipline // Health</span>
+                        <h3>Physical Health Education (PHE)</h3>
+                        <p>Kinesiology analytics, nutritional systems mapping, physical safety procedures, and organizational leadership standards.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge global-standard">IB MYP PHE</span>
+                            <span class="spec-badge global-standard">CBE PE Core</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                </div>
+            </div>
         </div>
 
-        <div class="content-wrap">
-            
-            <section id="foundations" class="section-header tier-foundation">
-                <div class="section-title">PHASE_01 // BARE-METAL FOUNDATIONS</div>
-                <div style="font-family: 'JetBrains Mono'; color: var(--accent-green); font-size: 10px;">[MASTERY REQUIRED]</div>
-            </section>
-
-            <div class="grid">
-                <div class="course-card">
-                    <div class="meta-data"><span>ID: DL101</span><span>HARDWARE PHYSICS</span></div>
-                    <h3>Intro to Computing</h3>
-                    <p>Analysis of the Von Neumann architecture, machine instruction cycles, and the physical logic of transistors. The foundation of all systems.</p>
-                    <a href="course-player.html?course=dl101" class="btn-initialize">Initialize Vector</a>
-                </div>
-                <div class="course-card">
-                    <div class="meta-data"><span>ID: DL102</span><span>OFFICE_SYSTEMS</span></div>
-                    <h3>Professional Mastery</h3>
-                    <p>Advanced data modeling in Excel and professional documentation architecture. Essential tools for institutional reporting.</p>
-                    <a href="course-player.html?course=dl102" class="btn-initialize">Initialize Vector</a>
-                </div>
-                <div class="course-card">
-                    <div class="meta-data"><span>ID: DL103</span><span>AI_ETHICS</span></div>
-                    <h3>Machine Learning HL</h3>
-                    <p>Deconstructing neural networks and the ethical landscape of algorithmic bias. High-level (HL) machine learning foundations.</p>
-                    <a href="course-player.html?course=dl103" class="btn-initialize">Initialize Vector</a>
-                </div>
+        <div id="computation-panel" class="workspace-panel">
+            <div class="panel-billboard">
+                <h2>Advanced Computation, Quant & Enterprise</h2>
+                <p>High-tier elite engineering tracks pulling resources from open repositories of MIT and Harvard, coupled with comprehensive Microsoft Corporate Suite credentials.</p>
             </div>
 
-            <section id="core-cs" class="section-header tier-intermediate">
-                <div class="section-title">PHASE_02 // COMPUTATIONAL ARCHITECTURE</div>
-                <div style="font-family: 'JetBrains Mono'; color: var(--accent-blue); font-size: 10px;">[ENGINEERING CORE]</div>
-            </section>
+            <div class="grid-matrix">
+                <div class="forge-card" style="border-color: var(--accent-blue);">
+                    <div>
+                        <span class="card-tag" style="color: var(--accent-blue);">Advanced Pipeline // Open Source Elite</span>
+                        <h3>Quant Finance & Systems Engineering</h3>
+                        <p>Deep implementation frameworks modeled directly from MIT and Harvard resources. Built for future software engineers, quantitative analysts, and autonomous ML designers.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge">MIT OpenCourseWare</span>
+                            <span class="spec-badge">Harvard CS50 Extension</span>
+                            <span class="spec-badge">HFT Logic</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger blue-variant">Access Elite Repository</a>
+                </div>
 
-            <div class="grid">
-                <div class="course-card">
-                    <div class="meta-data"><span>ID: CS201</span><span>ORGANIZATION</span></div>
-                    <h3>Computer Organization</h3>
-                    <p>Fetch-Decode-Execute. Deep dive into CPU logic gates, memory hierarchies, and the speed-vs-capacity trade-offs of modern hardware.</p>
-                    <a href="course-player.html?course=cs201" class="btn-initialize">Initialize Vector</a>
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Enterprise Training // Applications</span>
+                        <h3>Microsoft Enterprise Engineering</h3>
+                        <p>Complete professional execution pipelines for standard office systems. Master complex document logic, relational schemas, and data structures.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge">MS Word</span>
+                            <span class="spec-badge">Excel Modeling</span>
+                            <span class="spec-badge">PowerPoint</span>
+                            <span class="spec-badge">MS Access</span>
+                            <span class="spec-badge">Publisher</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Initialize Enterprise Core</a>
                 </div>
-                <div class="course-card">
-                    <div class="meta-data"><span>ID: CS202</span><span>LOGIC</span></div>
-                    <h3>Computational Thinking</h3>
-                    <p>Algorithmic complexity (Big O), data sorting visualizations, and problem decomposition. If you can't trace it, you don't own it.</p>
-                    <a href="course-player.html?course=cs202" class="btn-initialize">Initialize Vector</a>
-                </div>
-                <div class="course-card">
-                    <div class="meta-data"><span>ID: CS301</span><span>PYTHON_UNI</span></div>
-                    <h3>Python for Computer Science</h3>
-                    <p>University-grade memory management, garbage collection, and advanced data structures (Heaps & Tries). No syntax; pure implementation.</p>
-                    <a href="course-player.html?course=cs301" class="btn-initialize">Initialize Vector</a>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Advanced Pipeline // Intelligent Infrastructure</span>
+                        <h3>Applied AI & Machine Learning</h3>
+                        <p>Constructing actual models from the ground up. Neural network architectures, backpropagation mathematics, and production-level system implementation.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge">Transformers</span>
+                            <span class="spec-badge">PyTorch Core</span>
+                            <span class="spec-badge">Tensor Datasets</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Deploy Neural Track</a>
                 </div>
             </div>
-
-            <section id="quant-ai" class="section-header tier-advanced">
-                <div class="section-title" style="color: var(--accent-gold);">PHASE_03 // STOCHASTIC & QUANT SYSTEMS</div>
-                <div style="font-family: 'JetBrains Mono'; color: var(--accent-gold); font-size: 10px;">[INSTITUTIONAL GRADE]</div>
-            </section>
-
-            <div class="grid">
-                <div class="course-card">
-                    <div class="meta-data"><span>ID: CS302</span><span>MATH_FOR_ML</span></div>
-                    <h3>CS for Machine Learning</h3>
-                    <p>Linear Algebra, Multivariable Calculus, and Stochastic processes. The mathematical physics required to build, not just use, AI.</p>
-                    <a href="course-player.html?course=cs302" class="btn-initialize">Initialize Vector</a>
-                </div>
-                <div class="course-card">
-                    <div class="meta-data"><span>ID: CS303</span><span>AGENTIC_AI</span></div>
-                    <h3>Computer Science for AI</h3>
-                    <p>Transformer architectures, self-attention, and autonomous agent design. Mastering the logic behind LLMs and agentic workflows.</p>
-                    <a href="course-player.html?course=cs303" class="btn-initialize">Initialize Vector</a>
-                </div>
-                <div class="course-card" style="border-color: var(--accent-gold);">
-                    <div class="meta-data" style="color: var(--accent-gold);"><span>ID: CS501</span><span>QUANT_FINANCE</span></div>
-                    <h3>Quant & Software Engineering</h3>
-                    <p>High-frequency trading logic, network latency optimization, and system reliability for million-user infrastructures like Safaricom or Jane Street.</p>
-                    <a href="course-player.html?course=cs501" class="btn-initialize" style="background: var(--accent-gold);">Initialize Final Phase</a>
-                </div>
-            </div>
-
-            <div style="margin-top: 100px; padding: 60px; border: 1px solid var(--accent-green); background: rgba(0,255,135,0.02); text-align: center;">
-                <div style="font-family: 'JetBrains Mono'; color: var(--accent-green); margin-bottom: 20px;">[ FINAL_ASSESSMENT_PROTOCOL ]</div>
-                <h2 style="font-family: 'Inter'; font-size: 3rem; margin: 0; font-weight: 900;">THE CS401 CRUCIBLE</h2>
-                <p style="color: var(--text-muted); max-width: 600px; margin: 20px auto 40px; font-size: 1.1rem;">
-                    The ultimate adversarial vetting. Solve O(N log N) bottlenecks and build AI-solvable functions for global logistics.
-                </p>
-                <a href="course-player.html?course=cs401" class="btn-initialize" style="background: var(--accent-green); display: inline-block; padding: 20px 60px;">Enter the Crucible</a>
-            </div>
-
         </div>
+
+        <div id="gateways-panel" class="workspace-panel">
+            <div class="panel-billboard">
+                <h2>Global Admissions Gateways & Opportunities</h2>
+                <p>Direct application portals to any higher education entity globally alongside verified international scholarships and real-time youth development grants.</p>
+            </div>
+
+            <div class="grid-matrix">
+                <div class="forge-card" style="grid-column: span 2; border-color: var(--accent-gold);">
+                    <div>
+                        <span class="card-tag" style="color: var(--accent-gold);">System Protocol // Gateways</span>
+                        <h3>Direct Autonomous Admissions Portal Router</h3>
+                        <p>UEFI integrates a decentralized direct application routing system. If a higher education institute anywhere across the globe operates a live web landing page, our structural proxy maps parameters to facilitate clean, raw admissions dispatch pipelines directly without external agencies.</p>
+                        <div class="terminal-block">
+                            $ uefi-router --initialize-global-admissions --mode=DIRECT<br>
+                            [STATUS] Scanning international university directory endpoints...<br>
+                            [PORTALS] 5,000+ Verified Direct Connection Hubs Online (FREE ACCESS)
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger gold-variant" style="margin-top: 20px;">Open Admissions Router Interface</a>
+                </div>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Opportunities Pipeline // Fully Funded</span>
+                        <h3>Sovereign Scholarship Aggregator</h3>
+                        <p>Real-time updates linking continental applicants to elite fully-funded scholarship tracks and international academic grants.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge">Youth Opportunities Link</span>
+                            <span class="spec-badge">Direct Access Nodes</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Explore Scholarship Streams</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="cohorts-panel" class="workspace-panel">
+            <div class="panel-billboard">
+                <h2>Strategic Cohorts, Cross-Border Exchange & Tutor Marketplace</h2>
+                <p>Bridging global talent. Gender-specific initiatives, international peer study pools, streaming podcasts, and escrow-backed tutor employment engines.</p>
+            </div>
+
+            <div class="grid-matrix">
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Strategic Cohort // Men & Boys</span>
+                        <h3>The Wilson Initiative</h3>
+                        <p>Targeted tracks driving algorithmic design, high-performance logic systems, and executive technological deployment for young men and boys.</p>
+                    </div>
+                    <a href="#" class="action-trigger">Access Wilson Node</a>
+                </div>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Strategic Cohort // Women & Girls</span>
+                        <h3>The Anthoninah Initiative</h3>
+                        <p>Dedicated high-performance tracks, deep computer science pipelines, and exclusive engineering podcast ecosystems for women and girls globally.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge">Podcasts Streaming</span>
+                            <span class="spec-badge">Women In Tech Track</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger">Access Anthoninah Node</a>
+                </div>
+
+                <div class="forge-card" style="border-color: var(--accent-green);">
+                    <div>
+                        <span class="card-tag" style="color: var(--accent-green);">Economic Network // Marketplace</span>
+                        <h3>Paid Educator Tutoring Onboarding</h3>
+                        <p>Premium workspace enrollment framework for professional educators. Teachers register portfolios, access globally distributed student classrooms, and secure digital payouts for managing interactive online mastery sessions.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge">Paid Placement</span>
+                            <span class="spec-badge">Verified Escrow Core</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-trigger" style="background: var(--accent-green); color: black;">Enroll as a Premium Tutor</a>
+                </div>
+
+                <div class="forge-card">
+                    <div>
+                        <span class="card-tag">Strategic Alliances // Industrial</span>
+                        <h3>Corporate Partnerships Engine</h3>
+                        <p>Direct infrastructure linkages connecting operational modules to industrial allies across Africa and beyond.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge">eCultures Kenya</span>
+                            <span class="spec-badge">Aid For Aiming Africa</span>
+                            <span class="spec-badge">Sovereign Networks</span>
+                        </div>
+                    </div>
+                    <div style="font-family:'JetBrains Mono'; font-size:10px; color:var(--accent-blue); padding:10px 0;">[PARTNERSHIPS STATUS: LIVE]</div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
+    <footer>
+        <div>&copy; 2026 UEFI Systems Institute Core Forge. Built on First-Principles. All Rights Reserved.</div>
+    </footer>
+
+    <script>
+        function switchPanel(event, panelId) {
+            // Remove active status from all triggers
+            const triggers = document.querySelectorAll('.tab-trigger');
+            triggers.forEach(trigger => trigger.classList.remove('active-panel'));
+
+            // Remove active status from all structural panels
+            const panels = document.querySelectorAll('.workspace-panel');
+            panels.forEach(panel => panel.classList.remove('active-panel'));
+
+            // Set current active targeting
+            event.currentTarget.classList.add('active-panel');
+            document.getElementById(panelId).classList.add('active-panel');
+
+            // Instantly sync layout scroll view smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
