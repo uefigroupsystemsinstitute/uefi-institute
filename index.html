@@ -20,11 +20,11 @@
     
     <style>
         :root {
-            --midnight-blue: #001F3F;
-            --gold: #FFD700;
+            --midnight-blue: #43B02A; /* Safaricom Primary Green */
+            --gold: #E4002B;          /* Safaricom Primary Red */
             --off-white: #F9F9F9;
-            --teal: #008080;
-            --text-dark: #0f172a;
+            --teal: #43B02A;          /* Safaricom Accent Green */
+            --text-dark: #1C1B1B;     /* Safaricom Dark Charcoal */
             --white: #ffffff;
         }
 
@@ -44,12 +44,15 @@
 
         /* --- NAVIGATION --- */
         header {
-            background-color: var(--midnight-blue);
+            background-color: #ffffff; /* Premium White Nav Background */
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 2px solid var(--gold);
+            /* Kenyan Flag Stripe: Black, Red, Green, White */
+            border-bottom: 5px solid transparent;
+            border-image: linear-gradient(to right, #000000 25%, #E4002B 25%, #E4002B 50%, #43B02A 50%, #43B02A 75%, #ffffff 75%) 1;
             width: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         nav {
@@ -76,7 +79,7 @@
         }
 
         .logo span {
-            color: var(--gold);
+            color: var(--midnight-blue);
             font-size: 1.1rem;
             font-weight: 900;
             letter-spacing: 1px;
@@ -91,29 +94,29 @@
         }
 
         .nav-links a {
-            color: var(--off-white);
+            color: var(--text-dark);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.7rem;
             transition: 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover { color: var(--midnight-blue); }
 
         .btn-nav {
-            background-color: var(--gold);
-            color: var(--midnight-blue) !important;
+            background-color: var(--midnight-blue);
+            color: var(--white) !important;
             padding: 8px 15px;
-            border-radius: 2px;
+            border-radius: 4px;
             font-weight: 900 !important;
             font-family: 'JetBrains Mono', monospace;
             text-decoration: none;
             transition: 0.3s;
         }
 
-        .btn-nav:hover { background: var(--white); }
+        .btn-nav:hover { background: var(--gold); }
 
         /* --- HERO --- */
         .hero {
@@ -122,7 +125,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--midnight-blue);
+            background: #1C1B1B;
             overflow: hidden;
             color: var(--white);
             text-align: center;
@@ -132,7 +135,7 @@
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(0, 31, 63, 0.8), rgba(0, 31, 63, 0.9)), 
+            background: linear-gradient(rgba(28, 27, 27, 0.85), rgba(28, 27, 27, 0.95)), 
                         url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
@@ -143,7 +146,7 @@
 
         .hero-tag {
             font-family: 'JetBrains Mono', monospace;
-            color: var(--gold);
+            color: var(--midnight-blue);
             font-size: 0.8rem;
             letter-spacing: 4px;
             text-transform: uppercase;
@@ -158,7 +161,7 @@
             line-height: 1;
         }
 
-        .hero h1 span { color: var(--gold); font-style: italic; }
+        .hero h1 span { color: var(--midnight-blue); font-style: italic; }
 
         /* --- STATS --- */
         .stats-bar {
@@ -172,28 +175,29 @@
         .stat-item { text-align: center; border-right: 1px solid #e2e8f0; }
         .stat-item:last-child { border-right: none; }
         .stat-item h2 { font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; color: var(--midnight-blue); }
-        .stat-item p { font-weight: 700; color: var(--teal); text-transform: uppercase; font-size: 0.65rem; }
+        .stat-item p { font-weight: 700; color: var(--gold); text-transform: uppercase; font-size: 0.65rem; }
 
         /* --- STRATEGY --- */
         .strategy { padding: 8rem 10%; display: flex; align-items: center; gap: 4rem; background: #fff; }
         .strategy-text { flex: 1.2; }
-        .strategy-text h2 { color: var(--midnight-blue); font-size: 3rem; margin-bottom: 1.5rem; font-weight: 900; }
+        .strategy-text h2 { color: var(--text-dark); font-size: 3rem; margin-bottom: 1.5rem; font-weight: 900; }
         .strategy-image { flex: 0.8; }
         .strategy-image img { width: 100%; border-radius: 4px; box-shadow: 30px 30px 0 var(--midnight-blue); }
 
         /* --- PILLARS --- */
-        .pillars-section { background: var(--midnight-blue); padding: 6rem 10%; color: white; }
+        .pillars-section { background: #1C1B1B; padding: 6rem 10%; color: white; }
         .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
         .card { 
-            background: rgba(255, 255, 255, 0.03); 
+            background: rgba(255, 255, 255, 0.02); 
             padding: 3rem; 
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             transition: 0.3s;
         }
-        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .card h3 { color: var(--gold); margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; }
+        .card:hover { border-color: var(--midnight-blue); transform: translateY(-5px); }
+        .card h3 { color: var(--midnight-blue); margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; }
         .card p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem; }
         .card-link { color: white; text-decoration: none; font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; }
+        .card-link:hover { color: var(--gold); }
 
         /* --- STRATEGIC PARTNERS SECTION --- */
         .partners-section {
@@ -204,7 +208,7 @@
         }
         
         .partners-section h2 {
-            color: var(--midnight-blue);
+            color: var(--text-dark);
             font-size: 2.2rem;
             font-weight: 900;
             margin-bottom: 3rem;
@@ -227,7 +231,7 @@
             align-items: center;
             justify-content: center;
             height: 160px;
-            text-decoration: none; /* Prevents default text underlines on hyperlinked containers */
+            text-decoration: none; 
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -250,19 +254,20 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
             font-weight: 700;
-            color: var(--midnight-blue);
+            color: var(--text-dark);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             opacity: 0.8;
         }
 
         /* --- FOOTER --- */
-        footer { background: #000; color: var(--white); padding: 5rem 10% 2rem; }
+        footer { background: #111111; color: var(--white); padding: 5rem 10% 2rem; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
-        .footer-col h4 { color: var(--gold); margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+        .footer-col h4 { color: var(--midnight-blue); margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
         .footer-col ul { list-style: none; }
         .footer-col li { margin-bottom: 0.8rem; }
         .footer-col a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; }
+        .footer-col a:hover { color: var(--gold); }
         .footer-bottom { margin-top: 4rem; border-top: 1px solid #1e293b; padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.65rem; color: #475569; font-family: 'JetBrains Mono', monospace; }
 
         /* --- MOBILE ADAPTATION --- */
