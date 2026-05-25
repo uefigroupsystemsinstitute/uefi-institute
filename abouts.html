@@ -9,16 +9,17 @@
     
     <style>
         :root {
-            --ke-black: #0a0a0a;
-            --ke-red: #9e0b0f;      
-            --ke-green: #006633;    
+            /* --- SAFARICOM BRAND COLOR SYSTEM --- */
+            --ke-black: #141414;
+            --ke-red: #e31b23;      
+            --ke-green: #43b02a;    /* Safaricom Signature Green */
             --ke-white: #ffffff;
-            --ke-gold: #d4af37;     
-            --slate-100: #f1f5f9;
+            --ke-gold: #ffb81c;     
+            --slate-100: #f4f9f3;   /* Light green tinted background alternative */
             --slate-200: #e2e8f0;
-            --slate-800: #1e293b;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
+            --slate-800: #1b361a;   /* Deep corporate green for code/terminal blocks */
+            --text-main: #2d2d2d;
+            --text-muted: #656565;
             --card-bg: #ffffff;
         }
 
@@ -26,7 +27,7 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f8fafc;
+            background-color: #f7f9f6;
             color: var(--text-main);
             overflow-x: hidden;
             line-height: 1.6;
@@ -50,8 +51,8 @@
             position: fixed;
             top: 6px; width: 100%; z-index: 1000;
             background: rgba(255, 255, 255, 0.98);
-            border-bottom: 2px solid var(--slate-200);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            border-bottom: 3px solid var(--ke-green); /* Safaricom accent underline border */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
         header nav { 
@@ -61,7 +62,7 @@
             max-width: 1500px; 
             margin: 0 auto; 
             padding: 0.5rem 4%;
-            height: 70px;
+            height: 75px;
         }
 
         .logo-block { 
@@ -72,17 +73,17 @@
         }
         
         .logo-block img { 
-            height: 35px; 
+            height: 45px; /* Boosted sizing typical of corporate identities */ 
             width: auto; 
             object-fit: contain; 
             display: block; 
         }
         
         .logo-block span { 
-            font-family: 'JetBrains Mono', monospace; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
             font-weight: 800; 
-            font-size: 0.9rem; 
-            letter-spacing: 0.5px; 
+            font-size: 1.1rem; 
+            letter-spacing: -0.5px; 
             color: var(--ke-black); 
         }
 
@@ -90,87 +91,89 @@
             display: flex;
             align-items: center;
             list-style: none;
-            gap: 8px;
+            gap: 6px;
         }
 
         .nav-menu a {
             text-decoration: none;
             color: var(--text-main);
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 10px 16px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
+            text-transform: none; /* Corporate clean look over hyper-monospaced labels */
+            letter-spacing: 0px;
+            padding: 10px 18px;
+            border-radius: 30px; /* Fully rounded elegant pill tabs */
+            transition: all 0.25s ease;
         }
 
         .nav-menu a:hover:not(.active-tab):not(.btn-cta) { 
             background: var(--slate-100); 
+            color: var(--ke-green);
         }
 
         .active-tab {
-            background: var(--ke-black);
+            background: var(--ke-green);
             color: var(--ke-white) !important;
         }
 
         .btn-cta {
-            background: var(--ke-green);
+            background: var(--ke-red); /* High-converting Safaricom Red Action Button */
             color: var(--ke-white) !important;
-            box-shadow: 0 4px 12px rgba(0, 102, 51, 0.15);
+            box-shadow: 0 4px 14px rgba(227, 27, 35, 0.25);
         }
 
         .btn-cta:hover {
-            background: var(--ke-black);
+            background: #be1219;
             transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(227, 27, 35, 0.35);
         }
 
         /* --- LONG-FORM PAGE WRAPPER LAYOUT --- */
         .page-container {
             display: grid;
-            grid-template-columns: 320px 1fr;
+            grid-template-columns: 340px 1fr;
             max-width: 1600px;
-            margin: 76px auto 0;
-            min-height: calc(100vh - 76px);
+            margin: 81px auto 0;
+            min-height: calc(100vh - 81px);
         }
 
         /* --- FLUID STICKY SIDEBAR INDEX --- */
         aside {
             background: #ffffff;
-            border-right: 1px solid var(--slate-200);
-            padding: 40px 30px;
-            height: calc(100vh - 76px);
+            border-right: 1px solid rgba(0,0,0,0.06);
+            padding: 45px 30px;
+            height: calc(100vh - 81px);
             position: sticky;
-            top: 76px;
+            top: 81px;
             overflow-y: auto;
         }
 
         .index-group { margin-bottom: 35px; }
         .index-label { 
-            font-size: 0.65rem; 
+            font-size: 0.75rem; 
             font-weight: 800; 
-            color: var(--text-muted); 
+            color: var(--ke-green); /* Corporate sub-label colors */
             text-transform: uppercase; 
-            letter-spacing: 1.5px;
-            margin-bottom: 12px;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
             display: block;
         }
 
         .index-link {
             display: flex;
             align-items: center;
-            padding: 10px 12px;
+            padding: 11px 14px;
             text-decoration: none;
             color: var(--text-main);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.2s ease;
-            margin-bottom: 4px;
-            border-left: 3px solid transparent;
+            margin-bottom: 6px;
+            border-left: 4px solid transparent;
         }
         .index-link:hover { 
-            background: #f0fdf4; 
+            background: var(--slate-100); 
             color: var(--ke-green); 
             border-left-color: var(--ke-green);
         }
@@ -178,22 +181,23 @@
         /* --- CONTENT DISPATCH SIDE --- */
         main { 
             padding: 50px 6% 120px; 
-            max-width: 1100px; 
+            max-width: 1150px; 
         }
 
         .profile-crumbs { 
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.85rem; 
+            font-weight: 600;
             color: var(--text-muted); 
-            margin-bottom: 25px; 
+            margin-bottom: 30px; 
         }
-        .profile-crumbs span { color: var(--ke-red); font-weight: 700; }
+        .profile-crumbs span { color: var(--ke-green); font-weight: 700; }
 
         /* --- MASTER HERO HEADER BANNER --- */
         .hero-showcase {
-            background: linear-gradient(135deg, var(--ke-black) 0%, #1e293b 100%);
-            border-radius: 12px;
-            padding: 55px;
+            background: linear-gradient(135deg, #093012 0%, #17541f 100%); /* Lush Safaricom Deep Premium Green Gradient */
+            border-radius: 20px; /* Softer corporate curves */
+            padding: 65px;
             color: var(--ke-white);
             margin-bottom: 50px;
             display: flex;
@@ -201,109 +205,112 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            border-left: 6px solid var(--ke-gold);
+            border-left: 8px solid var(--ke-red); /* Prominent Identity Strip */
+            box-shadow: 0 10px 30px rgba(23, 84, 31, 0.15);
         }
 
         .hero-showcase::after {
-            content: ''; position: absolute; top:0; right:0; width:300px; height:100%;
-            background: radial-gradient(circle, rgba(0,102,51,0.15) 0%, transparent 80%);
+            content: ''; position: absolute; top:0; right:0; width:400px; height:100%;
+            background: radial-gradient(circle, rgba(67,176,42,0.3) 0%, transparent 80%);
             z-index: 1;
         }
 
-        .hero-info { z-index: 2; max-width: 650px; }
-        .hero-info h1 { font-family: 'Bebas Neue', display; font-size: 4rem; letter-spacing: 1px; line-height: 1; margin-bottom: 15px; color: var(--ke-white); }
-        .hero-info p { color: #94a3b8; font-size: 1.05rem; }
+        .hero-info { z-index: 2; max-width: 700px; }
+        .hero-info h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 3.5rem; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 20px; color: var(--ke-white); }
+        .hero-info p { color: #d0ecd5; font-size: 1.15rem; font-weight: 400; }
 
         /* --- DATA SHEET ARCHITECTURE BLOCKS --- */
-        section { margin-bottom: 70px; scroll-margin-top: 100px; }
+        section { margin-bottom: 80px; scroll-margin-top: 120px; }
         
         .section-header {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--slate-200);
-            padding-bottom: 12px;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #eef4ed;
+            padding-bottom: 15px;
         }
 
         .section-header h2 { 
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.8rem; 
+            font-size: 2rem; 
             font-weight: 800; 
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
             color: var(--ke-black);
         }
 
         .section-header .line-decorator {
             flex-grow: 1;
-            height: 2px;
-            background: linear-gradient(to right, var(--slate-200), transparent);
+            height: 3px;
+            background: linear-gradient(to right, var(--ke-green), transparent);
         }
 
         /* --- SYSTEMIC CONTENT COMPONENT GRIDS --- */
         .grid-framework {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+            gap: 30px;
         }
 
         .system-card {
             background: var(--card-bg);
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid var(--slate-200);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.02);
             position: relative;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .system-card:hover { 
-            border-color: var(--ke-green); 
-            transform: translateY(-2px); 
-            box-shadow: 0 12px 20px -5px rgba(0,0,0,0.05);
+            border-color: rgba(67,176,42,0.3); 
+            transform: translateY(-4px); 
+            box-shadow: 0 20px 35px -5px rgba(23,84,31,0.08);
         }
 
         .system-card h3 { 
-            font-size: 1.2rem; 
-            font-weight: 700; 
-            margin-bottom: 12px; 
+            font-size: 1.35rem; 
+            font-weight: 800; 
+            margin-bottom: 14px; 
             color: var(--ke-black);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .system-card p {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             margin-bottom: 15px;
         }
 
         /* Subject badges wrapper */
-        .badge-matrix { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 15px; }
+        .badge-matrix { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
         .matrix-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.75rem;
             font-weight: 700;
-            padding: 4px 10px;
-            background: var(--slate-100);
-            color: var(--slate-800);
-            border-radius: 4px;
-            text-transform: uppercase;
+            padding: 6px 14px;
+            background: #f3f4f6;
+            color: #4b5563;
+            border-radius: 20px;
+            text-transform: none;
         }
         .matrix-tag.accent {
-            background: rgba(0, 102, 51, 0.08);
-            color: var(--ke-green);
+            background: rgba(67, 176, 42, 0.1);
+            color: #236114;
         }
 
         /* Internal Portal Integration Display Block */
         .portal-terminal-ui {
             background: var(--slate-800);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 25px;
             font-family: 'JetBrains Mono', monospace;
-            color: #e2e8f0;
-            font-size: 0.85rem;
-            margin-top: 20px;
-            border-left: 4px solid var(--ke-green);
+            color: #e2fcdb;
+            font-size: 0.9rem;
+            margin-top: 25px;
+            border-left: 5px solid var(--ke-green);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
         }
 
         /* --- INITIATIVES VISUAL BLOCK --- */
@@ -315,55 +322,63 @@
 
         .initiative-node {
             background: white;
-            border-radius: 10px;
+            border-radius: 20px;
             overflow: hidden;
-            border: 1px solid var(--slate-200);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease;
+        }
+        .initiative-node:hover {
+            transform: translateY(-4px);
         }
         .node-cover {
-            height: 200px;
+            height: 240px;
             background-size: cover;
             background-position: center;
             position: relative;
         }
         .node-overlay {
             position: absolute; top:0; left:0; width:100%; height:100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            background: linear-gradient(to top, rgba(10,30,12,0.85), transparent);
         }
         .node-title-box {
-            position: absolute; bottom: 20px; left: 25px; color: white;
+            position: absolute; bottom: 25px; left: 30px; right: 30px; color: white;
+            z-index: 2;
         }
-        .node-title-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 1px; }
-        .node-title-box span { font-size: 0.7rem; text-transform: uppercase; color: var(--ke-gold); font-weight: 700; letter-spacing: 1px;}
+        .node-title-box h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.8rem; letter-spacing: -0.5px; line-height: 1.2; }
+        .node-title-box span { font-size: 0.8rem; text-transform: uppercase; color: var(--ke-green); font-weight: 800; letter-spacing: 1px; display: block; margin-bottom: 4px;}
         
-        .node-body { padding: 25px; }
-        .node-body p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; }
+        .node-body { padding: 30px; }
+        .node-body p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; }
 
         /* Partnership Matrix Row */
         .partner-ecosystem-strip {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
         .partner-identity-card {
             background: white;
-            padding: 20px;
-            border-radius: 6px;
-            border: 1px solid var(--slate-200);
+            padding: 30px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.05);
             text-align: center;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--slate-800);
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--ke-black);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
         }
         .partner-identity-card span {
-            font-size: 0.65rem;
-            text-transform: uppercase;
+            font-size: 0.75rem;
+            text-transform: none;
             color: var(--ke-green);
-            letter-spacing: 1px;
+            font-weight: 600;
+            letter-spacing: 0px;
         }
 
         @media (max-width: 1200px) {
@@ -442,7 +457,7 @@
                     <h2>1. Sovereign Curriculum Integration</h2>
                     <div class="line-decorator"></div>
                 </div>
-                <p style="margin-bottom: 20px; color: var(--text-muted);">We unify global benchmarks with African standards. Our system provides direct instructional frameworks mapping directly to international and regional academic matrices.</p>
+                <p style="margin-bottom: 25px; color: var(--text-muted); font-size: 1.05rem;">We unify global benchmarks with African standards. Our system provides direct instructional frameworks mapping directly to international and regional academic matrices.</p>
                 <div class="grid-framework">
                     <div class="system-card">
                         <h3>International Frameworks</h3>
@@ -505,7 +520,7 @@
                 </div>
                 <div class="split-initiative-axis">
                     <div class="initiative-node">
-                        <div class="node-cover" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80');">
+                        <div class="node-cover" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80');">
                             <div class="node-overlay"></div>
                             <div class="node-title-box">
                                 <span>Men & Boys Pathway</span>
@@ -517,7 +532,7 @@
                         </div>
                     </div>
                     <div class="initiative-node">
-                        <div class="node-cover" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80');">
+                        <div class="node-cover" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80');">
                             <div class="node-overlay"></div>
                             <div class="node-title-box">
                                 <span>Women & Girls Engineering</span>
@@ -656,8 +671,8 @@
         </main>
     </div>
 
-    <footer style="background: var(--ke-black); border-top: 3px solid var(--ke-gold); padding: 50px 5%; font-size: 0.8rem; color: #94a3b8; text-align: center;">
-        <p style="font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px;">&copy; 2026 UEFI Systems Institute. Document Authorization Protocol Active. Built for the Silicon Savannah.</p>
+    <footer style="background: var(--ke-black); border-top: 4px solid var(--ke-green); padding: 60px 5%; font-size: 0.85rem; color: #a3a3a3; text-align: center;">
+        <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; letter-spacing: 0px;">&copy; 2026 UEFI Systems Institute. Document Authorization Protocol Active. Built for the Silicon Savannah.</p>
     </footer>
 
 </body>
