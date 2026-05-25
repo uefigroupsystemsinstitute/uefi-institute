@@ -163,6 +163,109 @@
 
         .hero h1 span { color: var(--midnight-blue); font-style: italic; }
 
+        /* --- DYNAMIC SHOWCASE SLIDER --- */
+        .showcase-slider-container {
+            background-color: var(--white);
+            padding: 4rem 5% 2rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-bottom: 5px solid var(--midnight-blue);
+            transition: border-color 0.5s;
+        }
+        
+        .slider-wrapper:hover {
+            border-color: var(--gold);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1C1B1B;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Slider Controls */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(28, 27, 27, 0.7);
+            color: var(--white);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 20;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .slider-btn:hover {
+            background: var(--midnight-blue);
+        }
+
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+
+        /* Slider Indicators */
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active {
+            background: var(--midnight-blue);
+            transform: scale(1.2);
+        }
+
         /* --- STATS --- */
         .stats-bar {
             background: var(--white);
@@ -279,9 +382,11 @@
             .strategy-image img { box-shadow: none; }
             .partners-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: 1fr 1fr; }
+            .slider-wrapper { height: 350px; }
         }
         @media (max-width: 600px) {
             .partners-grid { grid-template-columns: 1fr; }
+            .slider-wrapper { height: 250px; }
         }
     </style>
 </head>
@@ -313,6 +418,33 @@
             <p>Bridging elite intelligence through first-principles engineering. From Narok to the world.</p>
             <div style="margin-top: 2rem;">
                 <a href="courses.html" class="btn-nav" style="padding: 15px 35px; font-size: 0.8rem;">Access the Curriculum</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="showcase-slider-container">
+        <div class="slider-wrapper">
+            <button class="slider-btn prev-btn">&#10094;</button>
+            <button class="slider-btn next-btn">&#10095;</button>
+
+            <div class="slide active">
+                <img src="Direct photo 2.jpg" alt="Direct Photo 2">
+            </div>
+            <div class="slide">
+                <img src="cultures celeb.png" alt="Cultures Celebration">
+            </div>
+            <div class="slide">
+                <img src="advocacy photo 1.png" alt="Advocacy Photo 1">
+            </div>
+            <div class="slide">
+                <img src="I'm a jaluo.png" alt="I'm a Jaluo Photo">
+            </div>
+
+            <div class="slider-dots">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
         </div>
     </section>
@@ -416,5 +548,70 @@
         </div>
     </footer>
 
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        let currentIndex = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            // Reset indexes boundary conditions
+            if (index >= slides.length) currentIndex = 0;
+            else if (index < 0) currentIndex = slides.length - 1;
+            else currentIndex = index;
+
+            // Remove active status from all elements
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            // Activate current targeted slide and relative indicator node
+            slides[currentIndex].classList.add('active');
+            dots[currentIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+
+        // Run automatic looping transition mechanism (3.5 seconds frequency)
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, 3500);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(slideInterval);
+        }
+
+        // Event triggers for manual dashboard adjustments
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            stopAutoSlide();
+            startAutoSlide(); // restarts timer after clicking
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        });
+
+        // Event handling mapping for indicators dots 
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+                stopAutoSlide();
+                startAutoSlide();
+            });
+        });
+
+        // Initialize script loop routine
+        startAutoSlide();
+    </script>
 </body>
 </html>
