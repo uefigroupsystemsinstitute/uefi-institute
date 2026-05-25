@@ -3,308 +3,661 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI x Daraja | Developer Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>About Our Ecosystem | UEFI Systems Institute</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --safaricom-green: #1eb53a;
-            --safaricom-red: #e41e26;
-            --safaricom-dark: #2d2e2e;
-            --portal-bg: #f4f7f6;
-            --sidebar-bg: #ffffff;
-            --text-main: #3c4858;
-            --text-muted: #6a737d;
-            --border-color: #e1e8ed;
-            --code-bg: #1e293b;
+            --ke-black: #0a0a0a;
+            --ke-red: #9e0b0f;      
+            --ke-green: #006633;    
+            --ke-white: #ffffff;
+            --ke-gold: #d4af37;     
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-800: #1e293b;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+
         body {
-            background-color: var(--portal-bg);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
             color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* --- TOP NAV --- */
+        /* --- STYLISED FLAG IDENTITY TOP BAR --- */
+        .national-identity-bar {
+            position: fixed;
+            top: 0; width: 100%; height: 6px;
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr 1fr; 
+            z-index: 2000;
+        }
+        .flag-b { background: var(--ke-black); }
+        .flag-g { background: var(--ke-green); }
+        .flag-r { background: var(--ke-red); }
+        .flag-w { background: var(--ke-white); }
+
+        /* --- STICKY CORPORATE HEADER --- */
         header {
-            background: #ffffff;
-            border-bottom: 1px solid var(--border-color);
-            padding: 0 5%;
+            position: fixed;
+            top: 6px; width: 100%; z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 2px solid var(--slate-200);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        header nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            max-width: 1500px; 
+            margin: 0 auto; 
+            padding: 0.5rem 4%;
             height: 70px;
+        }
+
+        .logo-block { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            text-decoration: none;
+        }
+        
+        .logo-block img { 
+            height: 35px; 
+            width: auto; 
+            object-fit: contain; 
+            display: block; 
+        }
+        
+        .logo-block span { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-weight: 800; 
+            font-size: 0.9rem; 
+            letter-spacing: 0.5px; 
+            color: var(--ke-black); 
+        }
+
+        .nav-menu {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            list-style: none;
+            gap: 8px;
         }
 
-        .logo-area { display: flex; align-items: center; gap: 15px; }
-        .logo { font-weight: 800; font-size: 1.2rem; color: var(--safaricom-dark); text-decoration: none; }
-        .logo span { color: var(--safaricom-green); }
-        .partner-tag { 
-            background: var(--safaricom-red); 
-            color: white; 
-            font-size: 0.65rem; 
-            padding: 2px 8px; 
-            border-radius: 4px; 
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 16px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
         }
 
-        /* --- MAIN PORTAL LAYOUT --- */
-        .portal-wrapper {
+        .nav-menu a:hover:not(.active-tab):not(.btn-cta) { 
+            background: var(--slate-100); 
+        }
+
+        .active-tab {
+            background: var(--ke-black);
+            color: var(--ke-white) !important;
+        }
+
+        .btn-cta {
+            background: var(--ke-green);
+            color: var(--ke-white) !important;
+            box-shadow: 0 4px 12px rgba(0, 102, 51, 0.15);
+        }
+
+        .btn-cta:hover {
+            background: var(--ke-black);
+            transform: translateY(-1px);
+        }
+
+        /* --- LONG-FORM PAGE WRAPPER LAYOUT --- */
+        .page-container {
             display: grid;
-            grid-template-columns: 280px 1fr;
-            flex-grow: 1;
+            grid-template-columns: 320px 1fr;
+            max-width: 1600px;
+            margin: 76px auto 0;
+            min-height: calc(100vh - 76px);
         }
 
-        /* Sidebar Navigation */
+        /* --- FLUID STICKY SIDEBAR INDEX --- */
         aside {
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            padding: 40px 20px;
-            height: calc(100vh - 70px);
+            background: #ffffff;
+            border-right: 1px solid var(--slate-200);
+            padding: 40px 30px;
+            height: calc(100vh - 76px);
             position: sticky;
-            top: 70px;
+            top: 76px;
+            overflow-y: auto;
         }
 
-        .nav-group { margin-bottom: 30px; }
-        .nav-label { 
-            font-size: 0.7rem; 
+        .index-group { margin-bottom: 35px; }
+        .index-label { 
+            font-size: 0.65rem; 
             font-weight: 800; 
             color: var(--text-muted); 
             text-transform: uppercase; 
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
             display: block;
         }
 
-        .nav-link {
+        .index-link {
             display: flex;
             align-items: center;
             padding: 10px 12px;
             text-decoration: none;
             color: var(--text-main);
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 0.85rem;
+            font-weight: 600;
             border-radius: 6px;
-            transition: 0.2s;
+            transition: all 0.2s ease;
             margin-bottom: 4px;
+            border-left: 3px solid transparent;
         }
-        .nav-link:hover { background: #f0fdf4; color: var(--safaricom-green); }
-        .nav-link.active { background: #f0fdf4; color: var(--safaricom-green); border-left: 3px solid var(--safaricom-green); }
+        .index-link:hover { 
+            background: #f0fdf4; 
+            color: var(--ke-green); 
+            border-left-color: var(--ke-green);
+        }
 
-        /* Main Documentation Area */
-        main { padding: 40px 5% 100px 5%; max-width: 1000px; }
-        
-        .breadcrumb { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; }
-        .breadcrumb span { color: var(--safaricom-red); font-weight: 600; }
+        /* --- CONTENT DISPATCH SIDE --- */
+        main { 
+            padding: 50px 6% 120px; 
+            max-width: 1100px; 
+        }
 
-        .hero-banner {
-            background: white;
+        .profile-crumbs { 
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem; 
+            color: var(--text-muted); 
+            margin-bottom: 25px; 
+        }
+        .profile-crumbs span { color: var(--ke-red); font-weight: 700; }
+
+        /* --- MASTER HERO HEADER BANNER --- */
+        .hero-showcase {
+            background: linear-gradient(135deg, var(--ke-black) 0%, #1e293b 100%);
             border-radius: 12px;
-            padding: 40px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 40px;
+            padding: 55px;
+            color: var(--ke-white);
+            margin-bottom: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+            border-left: 6px solid var(--ke-gold);
         }
 
-        .hero-text h1 { margin: 0 0 10px 0; font-size: 2.2rem; letter-spacing: -1px; }
-        .hero-text p { color: var(--text-muted); margin: 0; max-width: 500px; }
-
-        .hero-visual img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid #f0fdf4;
+        .hero-showcase::after {
+            content: ''; position: absolute; top:0; right:0; width:300px; height:100%;
+            background: radial-gradient(circle, rgba(0,102,51,0.15) 0%, transparent 80%);
+            z-index: 1;
         }
 
-        /* API Badges */
-        .method-badge {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: 700;
-            margin-right: 10px;
+        .hero-info { z-index: 2; max-width: 650px; }
+        .hero-info h1 { font-family: 'Bebas Neue', display; font-size: 4rem; letter-spacing: 1px; line-height: 1; margin-bottom: 15px; color: var(--ke-white); }
+        .hero-info p { color: #94a3b8; font-size: 1.05rem; }
+
+        /* --- DATA SHEET ARCHITECTURE BLOCKS --- */
+        section { margin-bottom: 70px; scroll-margin-top: 100px; }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--slate-200);
+            padding-bottom: 12px;
         }
-        .post { background: #e1f5fe; color: #0288d1; }
-        .get { background: #e8f5e9; color: #2e7d32; }
 
-        /* Content Blocks */
-        section { margin-bottom: 60px; }
-        h2 { font-size: 1.6rem; border-bottom: 2px solid var(--portal-bg); padding-bottom: 10px; margin-bottom: 25px; }
+        .section-header h2 { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            letter-spacing: -1px;
+            color: var(--ke-black);
+        }
 
-        .grid-cards {
+        .section-header .line-decorator {
+            flex-grow: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--slate-200), transparent);
+        }
+
+        /* --- SYSTEMIC CONTENT COMPONENT GRIDS --- */
+        .grid-framework {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .system-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--slate-200);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            position: relative;
+        }
+        .system-card:hover { 
+            border-color: var(--ke-green); 
+            transform: translateY(-2px); 
+            box-shadow: 0 12px 20px -5px rgba(0,0,0,0.05);
+        }
+
+        .system-card h3 { 
+            font-size: 1.2rem; 
+            font-weight: 700; 
+            margin-bottom: 12px; 
+            color: var(--ke-black);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .system-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Subject badges wrapper */
+        .badge-matrix { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 15px; }
+        .matrix-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            background: var(--slate-100);
+            color: var(--slate-800);
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .matrix-tag.accent {
+            background: rgba(0, 102, 51, 0.08);
+            color: var(--ke-green);
+        }
+
+        /* Internal Portal Integration Display Block */
+        .portal-terminal-ui {
+            background: var(--slate-800);
+            border-radius: 8px;
+            padding: 25px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #e2e8f0;
+            font-size: 0.85rem;
+            margin-top: 20px;
+            border-left: 4px solid var(--ke-green);
+        }
+
+        /* --- INITIATIVES VISUAL BLOCK --- */
+        .split-initiative-axis {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .initiative-node {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--slate-200);
+        }
+        .node-cover {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .node-overlay {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+        .node-title-box {
+            position: absolute; bottom: 20px; left: 25px; color: white;
+        }
+        .node-title-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 1px; }
+        .node-title-box span { font-size: 0.7rem; text-transform: uppercase; color: var(--ke-gold); font-weight: 700; letter-spacing: 1px;}
+        
+        .node-body { padding: 25px; }
+        .node-body p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; }
+
+        /* Partnership Matrix Row */
+        .partner-ecosystem-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
         }
-
-        .doc-card {
+        .partner-identity-card {
             background: white;
-            padding: 25px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            transition: 0.3s;
-        }
-        .doc-card:hover { border-color: var(--safaricom-green); transform: translateY(-3px); }
-        .doc-card h3 { margin: 0 0 10px 0; font-size: 1.1rem; display: flex; align-items: center; }
-
-        .code-block {
-            background: var(--code-bg);
-            color: #e2e8f0;
             padding: 20px;
-            border-radius: 8px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            line-height: 1.6;
-            position: relative;
-            margin-top: 20px;
-        }
-        .code-block .key { color: #f87171; }
-        .code-block .string { color: var(--safaricom-green); }
-
-        .cta-box {
-            background: var(--safaricom-dark);
-            color: white;
-            padding: 40px;
-            border-radius: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--slate-200);
             text-align: center;
-            border-bottom: 6px solid var(--safaricom-red);
-        }
-        .btn-green {
-            background: var(--safaricom-green);
-            color: white;
-            padding: 14px 28px;
-            text-decoration: none;
             font-weight: 700;
-            border-radius: 4px;
-            display: inline-block;
-            margin-top: 20px;
+            font-size: 0.95rem;
+            color: var(--slate-800);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .partner-identity-card span {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--ke-green);
+            letter-spacing: 1px;
         }
 
-        @media (max-width: 900px) {
-            .portal-wrapper { grid-template-columns: 1fr; }
+        @media (max-width: 1200px) {
+            .page-container { grid-template-columns: 1fr; }
             aside { display: none; }
+            .split-initiative-axis { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
+    <div class="national-identity-bar">
+        <div class="flag-b"></div>
+        <div class="flag-g"></div>
+        <div class="flag-r"></div>
+        <div class="flag-w"></div>
+    </div>
+
     <header>
-        <div class="logo-area">
-                        <a href="index.html" class="logo">
+        <nav>
+            <a href="index.html" class="logo-block">
                <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo">
-               <span>U.E.F.I. INSTITUTE</span>
+               <span>U.E.F.I. SYSTEMS INSTITUTE</span>
             </a>
-            <div class="partner-tag">OFFICIAL PARTNER</div>
-        </div>
-        <div style="display: flex; gap: 20px; align-items: center;">
-            <li><a href="index.html">Home</a></li>
-                <li><a href="abouts.html">About</a></li>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="abouts.html" class="active-tab">About Us</a></li>
                 <li><a href="tech-lab.html">Tech Lab</a></li>
                 <li><a href="courses.html">Courses</a></li>
                 <li><a href="tutor.html">AI Professor</a></li>
                 <li><a href="opportunities-hub.html">Opportunities</a></li>
-            <a href="#" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">Support</a>
-            <a href="#" style="background: var(--safaricom-red); color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-size: 0.8rem; font-weight: 700;">My Dashboard</a>
-        </div>
+                <li><a href="enroll.html" class="btn-cta">Apply Portal</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <div class="portal-wrapper">
+    <div class="page-container">
+        
         <aside>
-            <div class="nav-group">
-                <span class="nav-label">Documentation</span>
-                <a href="#" class="nav-link active">Institutional Overview</a>
-                <a href="#" class="nav-link">Integration Logic</a>
-                <a href="#" class="nav-link">Compute Infrastructure</a>
+            <div class="index-group">
+                <span class="index-label">Academic Foundations</span>
+                <a href="#curriculum-matrix" class="index-link">Core Curriculums Matrix</a>
+                <a href="#university-gateway" class="index-link">Global University Portals</a>
             </div>
-            <div class="nav-group">
-                <span class="nav-label">Initiatives</span>
-                <a href="#" class="nav-link">Anthoninah (Node A)</a>
-                <a href="#" class="nav-link">Wilson (Node B)</a>
-                
+            <div class="index-group">
+                <span class="index-label">Strategic Pipelines</span>
+                <a href="#gender-initiatives" class="index-link">Wilson & Anthoninah Hubs</a>
+                <a href="#scholarship-nodes" class="index-link">Scholarship Architecture</a>
+                <a href="#tutor-marketplace" class="index-link">Sovereign Tutoring Network</a>
             </div>
-            <div class="nav-group">
-                <span class="nav-label">API Reference</span>
-                <a href="#" class="nav-link">Authentication</a>
-                <a href="#" class="nav-link">Talent Webhooks</a>
-                <a href="#" class="nav-link">Payment Disbursal</a>
+            <div class="index-group">
+                <span class="index-label">Advanced Compute & AI</span>
+                <a href="#professor-oneiro" class="index-link">Professor Oneiro Core</a>
+                <a href="#productivity-suite" class="index-link">Enterprise Components</a>
+                <a href="#computation-labs" class="index-link">Advanced Computation Labs</a>
+            </div>
+            <div class="index-group">
+                <span class="index-label">Alliances & Tooling</span>
+                <a href="#corporate-alliances" class="index-link">Corporate Alliances</a>
+                <a href="#tech-sandbox" class="index-link">The Tech Lab Engine</a>
             </div>
         </aside>
 
         <main>
-            <div class="breadcrumb">Docs / Institutional / <span>Profile_v2.0</span></div>
+            <div class="profile-crumbs">System_Docs / Architecture / <span>About_Specification_v3.2</span></div>
 
-            <section class="hero-banner">
-                <div class="hero-text">
-                    <h1>Sovereign Tech Integration</h1>
-                    <p>The UEFI framework enables the seamless deployment of African talent into global high-frequency markets through the Daraja ecosystem.</p>
-                </div>
-                <div class="hero-visual">
-                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=300&q=80" alt="Tech Hub">
+            <section class="hero-showcase">
+                <div class="hero-info">
+                    <h1>Architecting African Ingenuity.</h1>
+                    <p>The operational manifest of the UEFI Systems Institute: Bridging regional academic excellence with open-source global technological mastery.</p>
                 </div>
             </section>
 
-            <section>
-                <h2>Operational Logic</h2>
-                <div class="grid-cards">
-                    <div class="doc-card">
-                        <h3><span class="method-badge get">GET</span> The Talent Pipeline</h3>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">We identify top-tier mathematical minds in Narok and onboard them via logic-based credentialing.</p>
-                    </div>
-                    <div class="doc-card">
-                        <h3><span class="method-badge post">POST</span> Market Deployment</h3>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Trained engineers are 'pushed' to global H100 compute tasks, returning high-value KES to the local economy.</p>
-                    </div>
+            <section id="curriculum-matrix">
+                <div class="section-header">
+                    <h2>1. Sovereign Curriculum Integration</h2>
+                    <div class="line-decorator"></div>
                 </div>
-
-                <div class="code-block">
-                    // Initialization of UEFI Sovereign Node<br>
-                    {<br>
-                    &nbsp;&nbsp;<span class="key">"partner_id":</span> <span class="string">"UEFI_KENYA_001"</span>,<br>
-                    &nbsp;&nbsp;<span class="key">"compute_power":</span> <span class="string">"Industrial_GPU_Cluster"</span>,<br>
-                    &nbsp;&nbsp;<span class="key">"disbursal_method":</span> <span class="string">"M-PESA_Daraja_B2C"</span>,<br>
-                    &nbsp;&nbsp;<span class="key">"status":</span> <span class="string">"Live"</span><br>
-                    }
+                <p style="margin-bottom: 20px; color: var(--text-muted);">We unify global benchmarks with African standards. Our system provides direct instructional frameworks mapping directly to international and regional academic matrices.</p>
+                <div class="grid-framework">
+                    <div class="system-card">
+                        <h3>International Frameworks</h3>
+                        <p>Complete course materials, deep tracking, and exam metrics built directly for standard cross-border systems.</p>
+                        <div class="badge-matrix">
+                            <span class="matrix-tag accent">IB MYP</span>
+                            <span class="matrix-tag accent">IB DP</span>
+                            <span class="matrix-tag accent">IGCSE</span>
+                            <span class="matrix-tag accent">A-Levels</span>
+                        </div>
+                    </div>
+                    <div class="system-card">
+                        <h3>Continental & Regional</h3>
+                        <p>Optimized for the Competency-Based Education model in Kenya, ensuring comprehensive standard fulfillment.</p>
+                        <div class="badge-matrix">
+                            <span class="matrix-tag accent">CBE / CBC Kenya</span>
+                            <span class="matrix-tag accent">KNEC Alignment</span>
+                            <span class="matrix-tag">Pan-African Standards</span>
+                        </div>
+                    </div>
+                    <div class="system-card" style="grid-column: span 2;">
+                        <h3>Supported Disciplinary Subject Matrix</h3>
+                        <p>Deep-dive content structural mapping across all primary branches of science, arts, and economic thought:</p>
+                        <div class="badge-matrix">
+                            <span class="matrix-tag">Mathematics</span>
+                            <span class="matrix-tag">Physics</span>
+                            <span class="matrix-tag">Biology</span>
+                            <span class="matrix-tag">Computer Science</span>
+                            <span class="matrix-tag">Economics</span>
+                            <span class="matrix-tag">History</span>
+                            <span class="matrix-tag">Geography</span>
+                            <span class="matrix-tag">Design</span>
+                            <span class="matrix-tag">Fine Arts</span>
+                            <span class="matrix-tag">PHE / PE</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section>
-                <h2>Infrastructure Nodes</h2>
-                <div class="grid-cards">
-                    <div class="doc-card" style="border-left: 4px solid var(--safaricom-red);">
-                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80" style="width:100%; border-radius:4px; margin-bottom:15px;">
-                        <h3>Anthoninah Initiative</h3>
-                        <p style="font-size: 0.85rem;">High-performance AI track specifically designed for Kenyan women in tech.</p>
-                    </div>
-                    <div class="doc-card" style="border-left: 4px solid var(--safaricom-green);">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" style="width:100%; border-radius:4px; margin-bottom:15px;">
-                        <h3>Wilson Initiative</h3>
-                        <p style="font-size: 0.85rem;">Quant-Finance and Algorithmic leadership training for the next generation of men.</p>
+            <section id="university-gateway">
+                <div class="section-header">
+                    <h2>2. Global Higher Education Gateways</h2>
+                    <div class="line-decorator"></div>
+                </div>
+                <div class="system-card">
+                    <h3>Direct Higher Education Pipeline Engine</h3>
+                    <p>UEFI integrates a decentralized direct-access gateway linking candidates to admissions infrastructures globally. If an international university operates an accessible web platform, our routing system maps application matrices directly, removing middleman dependencies.</p>
+                    <div class="portal-terminal-ui">
+                        $ uefi-gateway --target="Global Admissions Link" --status=FREE_ACCESS<br>
+                        [INFO] Resolving direct application endpoints...<br>
+                        [SUCCESS] Verified access protocol for 4,500+ global university portals.
                     </div>
                 </div>
             </section>
 
-            <div class="cta-box">
-                <h2>Ready to Integrate?</h2>
-                <p>Join the only ecosystem bridging rural ingenuity with global compute demand.</p>
-                <a href="#" class="btn-green">Request API Credentials</a>
-            </div>
+            <section id="gender-initiatives">
+                <div class="section-header">
+                    <h2>3. Leadership & Gender Cohorts</h2>
+                    <div class="line-decorator"></div>
+                </div>
+                <div class="split-initiative-axis">
+                    <div class="initiative-node">
+                        <div class="node-cover" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80');">
+                            <div class="node-overlay"></div>
+                            <div class="node-title-box">
+                                <span>Men & Boys Pathway</span>
+                                <h3>The Wilson Initiative</h3>
+                            </div>
+                        </div>
+                        <div class="node-body">
+                            <p>Developing executive leadership, technical excellence, and quantitative trading systems engineering workflows for young men and boys across Africa.</p>
+                        </div>
+                    </div>
+                    <div class="initiative-node">
+                        <div class="node-cover" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80');">
+                            <div class="node-overlay"></div>
+                            <div class="node-title-box">
+                                <span>Women & Girls Engineering</span>
+                                <h3>The Anthoninah Initiative</h3>
+                            </div>
+                        </div>
+                        <div class="node-body">
+                            <p>Dedicated high-performance computer science tracks for women and girls, paired with dedicated media channels and engineering podcasts broadcasting directly to upcoming female tech leaders.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="scholarship-nodes">
+                <div class="section-header">
+                    <h2>4. Sovereign Opportunity Networks</h2>
+                    <div class="line-decorator"></div>
+                </div>
+                <div class="grid-framework">
+                    <div class="system-card">
+                        <h3>Sovereign Scholarship Aggregator</h3>
+                        <p>Real-time structural monitoring connecting qualified continental applicants directly to fully-funded international options and regional developmental grants.</p>
+                    </div>
+                    <div class="system-card">
+                        <h3>Youth Opportunities Direct API</h3>
+                        <p>Direct live API frameworks linking users explicitly to raw pipelines for global fellowships, incubation support vectors, and global competitive grants.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tutor-marketplace">
+                <div class="section-header">
+                    <h2>5. Academic Placement & Tutoring Node</h2>
+                    <div class="line-decorator"></div>
+                </div>
+                <div class="system-card">
+                    <h3>Paid Online Tutoring Network</h3>
+                    <p>Qualified educators register directly into our centralized marketplace core. UEFI allows teachers to manage custom portfolios, secure digital classrooms, and receive standardized payouts for executing premium virtual academic sessions for enrolled students.</p>
+                    <div class="badge-matrix" style="margin-top:10px;">
+                        <span class="matrix-tag accent">Verified Educator Onboarding</span>
+                        <span class="matrix-tag accent">Escrowed Student Payout Engine</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="professor-oneiro">
+                <div class="section-header">
+                    <h2>6. AI Core Infrastructure: Professor Oneiro</h2>
+                    <div class="line-decorator"></div>
+                </div>
+                <div class="grid-framework">
+                    <div class="system-card">
+                        <h3>Knowledge Optimization & Mapping</h3>
+                        <p>Professor Oneiro processes our internal databases and educational resources to instantly synthesize clear conceptual mind maps and fast-track research pipelines.</p>
+                    </div>
+                    <div class="system-card">
+                        <h3>Multimodal Neural Audio Pipeline</h3>
+                        <p>Enables natural fluid interaction. Enrolled students prompt Professor Oneiro via standard text inputs or real-time voice, receiving complex, context-aware audio explanations.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="productivity-suite">
+                <div class="section-header">
+                    <h2>7. Enterprise Systems Architecture</h2>
+                    <div class="line-decorator"></div>
+                </div>
+                <div class="system-card">
+                    <h3>Microsoft Corporate Applications Framework</h3>
+                    <p>Deep foundational training protocols providing institutional parameters on standard workflow solutions and automated corporate suites:</p>
+                    <div class="badge-matrix">
+                        <span class="matrix-tag">Advanced MS Word</span>
+                        <span class="matrix-tag">Data Modelling Excel</span>
+                        <span class="matrix-tag">MS PowerPoint</span>
+                        <span class="matrix-tag">Relational MS Access</span>
+                        <span class="matrix-tag">MS Publisher</span>
+                        <span class="matrix-tag accent">Foundational AI & ML</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="computation-labs">
+                <div class="section-header">
+                    <h2>8. High-Performance Computation Tracks</h2>
+                    <div class="line-decorator"></div>
+                </div>
+                <div class="system-card">
+                    <h3>Elite Open-Source University Blueprints</h3>
+                    <p>For candidates diving deep into computer science, UEFI bridges advanced tracks using open frameworks from elite centers like MIT and Harvard. The roadmap prepares developers directly for high-frequency algorithmic ecosystems.</p>
+                    <div class="badge-matrix">
+                        <span class="matrix-tag accent">Quantitative Engineering</span>
+                        <span class="matrix-tag accent">Full-Stack Architecture</span>
+                        <span class="matrix-tag accent">Applied Machine Learning Research</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="corporate-alliances">
+                <div class="section-header">
+                    <h2>9. Strategic Alliances Matrix</h2>
+                    <div class="line-decorator"></div>
+                </div>
+                <div class="partner-ecosystem-strip">
+                    <div class="partner-identity-card">
+                        eCultures Kenya
+                        <span>Cultural Tech Integration Partner</span>
+                    </div>
+                    <div class="partner-identity-card">
+                        Aid For Aiming Africa
+                        <span>Continental Deployment Logistics</span>
+                    </div>
+                    <div class="partner-identity-card">
+                        Global Technology Alliances
+                        <span>Compute Provision Clusters</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tech-sandbox">
+                <div class="section-header">
+                    <h2>10. The Sovereign Tech Lab Engine</h2>
+                    <div class="line-decorator"></div>
+                </div>
+                <div class="system-card">
+                    <h3>Optimized Technology Interface Sandbox</h3>
+                    <p>The UEFI Tech Lab acts as a curated design engine. We index, categorize, and supply direct link structures to the world’s elite creative development platforms, organizing the best open free utilities alongside enterprise-grade premium design applications.</p>
+                    <div class="badge-matrix">
+                        <span class="matrix-tag">UI/UX Layout Tools</span>
+                        <span class="matrix-tag">Creative Media Compilers</span>
+                        <span class="matrix-tag">CAD Frameworks</span>
+                        <span class="matrix-tag">Web Development Sandboxes</span>
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
 
-    <footer style="background: white; border-top: 1px solid var(--border-color); padding: 40px 5%; font-size: 0.8rem; color: var(--text-muted); text-align: center;">
-        <p>&copy; 2026 UEFI x Safaricom Daraja Partnership. All Rights Reserved. Built for the Silicon Savannah.</p>
+    <footer style="background: var(--ke-black); border-top: 3px solid var(--ke-gold); padding: 50px 5%; font-size: 0.8rem; color: #94a3b8; text-align: center;">
+        <p style="font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px;">&copy; 2026 UEFI Systems Institute. Document Authorization Protocol Active. Built for the Silicon Savannah.</p>
     </footer>
 
 </body>
