@@ -177,7 +177,7 @@
             position: relative;
             width: 100%;
             max-width: 900px;
-            height: 500px;
+            height: 650px; /* Increased vertical size for better visibility */
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -211,7 +211,8 @@
         .slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* Changed to 'contain' to ensure images are not cropped out */
+            background-color: #1C1B1B; /* Dark background matches layout if ratios mismatch */
         }
 
         /* Slider Controls */
@@ -382,11 +383,11 @@
             .strategy-image img { box-shadow: none; }
             .partners-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: 1fr 1fr; }
-            .slider-wrapper { height: 350px; }
+            .slider-wrapper { height: 480px; } /* Proportions kept higher on smaller viewports */
         }
         @media (max-width: 600px) {
             .partners-grid { grid-template-columns: 1fr; }
-            .slider-wrapper { height: 250px; }
+            .slider-wrapper { height: 350px; } /* Proportions kept higher on smaller viewports */
         }
     </style>
 </head>
@@ -431,13 +432,13 @@
                 <img src="assets/Direct photo 2.jpg" alt="Direct Photo 2">
             </div>
             <div class="slide">
-                <img src="cultures celeb.png" alt="Cultures Celebration">
+                <img src="assets/cultures celeb.png" alt="Cultures Celebration">
             </div>
             <div class="slide">
-                <img src="advocacy photo 1.png" alt="Advocacy Photo 1">
+                <img src="assets/Advocacy photo 1.jpg" alt="Advocacy Photo 1">
             </div>
             <div class="slide">
-                <img src="I'm a jaluo.png" alt="I'm a Jaluo Photo">
+                <img src="assets/I AM A JALUO POEM.pdf" alt="I'm a Jaluo Photo">
             </div>
 
             <div class="slider-dots">
