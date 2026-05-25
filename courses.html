@@ -7,17 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #010306; 
-            --nav-bg: #000000;
-            --card: #080c17;
-            --accent-gold: #e6c25a; 
-            --accent-green: #00ff87; 
-            --accent-blue: #3b82f6;
-            --accent-red: #ef4444;
-            --musk-titanium: #cbd5e1;
-            --border: rgba(255, 255, 255, 0.1);
+            /* --- SAFARICOM BRAND MATRIX --- */
+            --bg: #070a08;                  /* Ultra-dark rich charcoal green background */
+            --nav-bg: #020403;              /* Absolute deep nav background */
+            --card: #0f1611;                /* Solid dark green-tinted card container */
+            --accent-green: #43B02A;        /* Official Safaricom Green */
+            --accent-red: #E11B22;          /* Official Safaricom Red */
+            --border: rgba(67, 176, 42, 0.15); /* Subdued brand borders */
             --text: #ffffff;
-            --text-muted: #94a3b8;
+            --text-muted: #8fa093;          /* Soft slate green for readable secondary text */
         }
 
         * { box-sizing: border-box; cursor: crosshair; scroll-behavior: smooth; }
@@ -33,7 +31,7 @@
             font-size: 13px;
         }
 
-        /* --- KENYAN FLAG TOP SPLIT IDENTITY BAR --- */
+        /* --- Identity Bar fits beautifully with the new scheme --- */
         .identity-bar {
             width: 100%;
             height: 5px;
@@ -49,7 +47,7 @@
         .id-red { background: #990000; }
         .id-white { background: #ffffff; }
 
-        /* --- RESTRICTED TOP NAVIGATION --- */
+        /* --- TOP NAVIGATION --- */
         header.top-nav {
             background: var(--nav-bg);
             border-bottom: 1px solid var(--border);
@@ -88,12 +86,12 @@
             font-weight: 700;
         }
         .nav-link:hover, .nav-link.active { color: var(--accent-green); }
-        .nav-link.active-tab-indicator { color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 4px; }
+        .nav-link.active-tab-indicator { color: var(--accent-green); border-bottom: 2px solid var(--accent-green); padding-bottom: 4px; }
 
         .mastery-status {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
-            color: var(--accent-gold);
+            color: var(--accent-green);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -101,12 +99,12 @@
         .progress-track { width: 80px; height: 3px; background: rgba(255,255,255,0.05); position: relative; }
         .progress-fill { width: 78%; height: 100%; background: var(--accent-green); }
 
-        /* --- DYNAMIC APP DASHBOARD SUB-BAR --- */
+        /* --- DASHBOARD SUB-BAR --- */
         .workspace-tabs-bar {
             position: fixed;
             top: 75px;
             width: 100%;
-            background: #040811;
+            background: #040705;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: center;
@@ -127,12 +125,12 @@
             letter-spacing: 0.5px;
             transition: all 0.2s ease;
         }
-        .tab-trigger:hover { color: white; border-color: var(--accent-blue); }
+        .tab-trigger:hover { color: white; border-color: var(--accent-green); }
         .tab-trigger.active-panel {
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent-blue);
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+            background: rgba(67, 176, 42, 0.1);
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 12px rgba(67, 176, 42, 0.15);
         }
 
         /* --- CONTAINER CONTROL --- */
@@ -140,16 +138,16 @@
             margin-top: 135px;
             flex-grow: 1;
             overflow-y: auto;
-            background: radial-gradient(circle at 50% 0%, #0d1527 0%, #010306 100%);
+            background: radial-gradient(circle at 50% 0%, #0e1711 0%, #070a08 100%);
         }
 
         .workspace-panel { display: none; padding: 40px 8% 100px; }
         .workspace-panel.active-panel { display: block; }
 
-        /* --- WORKSPACE VIEW TYPOGRAPHY & BLOCKS --- */
+        /* --- TYPOGRAPHY & BLOCKS --- */
         .panel-billboard {
             margin-bottom: 45px;
-            border-left: 4px solid var(--accent-gold);
+            border-left: 4px solid var(--accent-green);
             padding-left: 20px;
         }
         .panel-billboard h2 {
@@ -185,14 +183,14 @@
         .forge-card:hover {
             border-color: var(--accent-green);
             transform: translateY(-3px);
-            background: #0a1122;
+            background: #131d16;
         }
 
         .card-tag {
             font-family: 'JetBrains Mono', monospace;
             font-size: 9px;
             font-weight: 700;
-            color: var(--accent-gold);
+            color: var(--accent-green);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 12px;
@@ -229,8 +227,8 @@
             text-transform: uppercase;
         }
         .spec-badge.global-standard {
-            background: rgba(0, 255, 135, 0.05);
-            border-color: rgba(0, 255, 135, 0.2);
+            background: rgba(67, 176, 42, 0.05);
+            border-color: rgba(67, 176, 42, 0.2);
             color: var(--accent-green);
         }
 
@@ -251,18 +249,18 @@
         }
         .forge-card:hover .action-trigger {
             background: var(--accent-green);
+            color: #ffffff;
         }
-        .action-trigger.blue-variant { background: var(--accent-blue); color: white; }
-        .action-trigger.gold-variant { background: var(--accent-gold); color: black; }
+        .action-trigger.red-variant { background: var(--accent-red); color: white; }
 
-        /* --- TERMINAL GATE DISPLAY MOCK --- */
+        /* --- TERMINAL DISPLAY MOCK --- */
         .terminal-block {
             background: #000000;
             border: 1px solid var(--border);
             padding: 25px;
             font-family: 'JetBrains Mono', monospace;
             color: #e2e8f0;
-            border-left: 4px solid var(--accent-blue);
+            border-left: 4px solid var(--accent-green);
             margin-top: 15px;
             border-radius: 4px;
         }
@@ -446,9 +444,9 @@
             </div>
 
             <div class="grid-matrix">
-                <div class="forge-card" style="border-color: var(--accent-blue);">
+                <div class="forge-card" style="border-color: var(--accent-green);">
                     <div>
-                        <span class="card-tag" style="color: var(--accent-blue);">Advanced Pipeline // Open Source Elite</span>
+                        <span class="card-tag" style="color: var(--accent-green);">Advanced Pipeline // Open Source Elite</span>
                         <h3>Quant Finance & Systems Engineering</h3>
                         <p>Deep implementation frameworks modeled directly from MIT and Harvard resources. Built for future software engineers, quantitative analysts, and autonomous ML designers.</p>
                         <div class="badge-cluster">
@@ -457,7 +455,7 @@
                             <span class="spec-badge">HFT Logic</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger blue-variant">Access Elite Repository</a>
+                    <a href="#" class="action-trigger">Access Elite Repository</a>
                 </div>
 
                 <div class="forge-card">
@@ -499,9 +497,9 @@
             </div>
 
             <div class="grid-matrix">
-                <div class="forge-card" style="grid-column: span 2; border-color: var(--accent-gold);">
+                <div class="forge-card" style="grid-column: span 2; border-color: var(--accent-green);">
                     <div>
-                        <span class="card-tag" style="color: var(--accent-gold);">System Protocol // Gateways</span>
+                        <span class="card-tag" style="color: var(--accent-green);">System Protocol // Gateways</span>
                         <h3>Direct Autonomous Admissions Portal Router</h3>
                         <p>UEFI integrates a decentralized direct application routing system. If a higher education institute anywhere across the globe operates a live web landing page, our structural proxy maps parameters to facilitate clean, raw admissions dispatch pipelines directly without external agencies.</p>
                         <div class="terminal-block">
@@ -510,7 +508,7 @@
                             [PORTALS] 5,000+ Verified Direct Connection Hubs Online (FREE ACCESS)
                         </div>
                     </div>
-                    <a href="#" class="action-trigger gold-variant" style="margin-top: 20px;">Open Admissions Router Interface</a>
+                    <a href="#" class="action-trigger" style="margin-top: 20px;">Open Admissions Router Interface</a>
                 </div>
 
                 <div class="forge-card">
@@ -567,7 +565,7 @@
                             <span class="spec-badge">Verified Escrow Core</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger" style="background: var(--accent-green); color: black;">Enroll as a Premium Tutor</a>
+                    <a href="#" class="action-trigger red-variant">Enroll as a Premium Tutor</a>
                 </div>
 
                 <div class="forge-card">
@@ -581,7 +579,7 @@
                             <span class="spec-badge">Sovereign Networks</span>
                         </div>
                     </div>
-                    <div style="font-family:'JetBrains Mono'; font-size:10px; color:var(--accent-blue); padding:10px 0;">[PARTNERSHIPS STATUS: LIVE]</div>
+                    <div style="font-family:'JetBrains Mono'; font-size:10px; color:var(--accent-green); padding:10px 0;">[PARTNERSHIPS STATUS: LIVE]</div>
                 </div>
             </div>
         </div>
@@ -594,19 +592,15 @@
 
     <script>
         function switchPanel(event, panelId) {
-            // Remove active status from all triggers
             const triggers = document.querySelectorAll('.tab-trigger');
             triggers.forEach(trigger => trigger.classList.remove('active-panel'));
 
-            // Remove active status from all structural panels
             const panels = document.querySelectorAll('.workspace-panel');
             panels.forEach(panel => panel.classList.remove('active-panel'));
 
-            // Set current active targeting
             event.currentTarget.classList.add('active-panel');
             document.getElementById(panelId).classList.add('active-panel');
 
-            // Instantly sync layout scroll view smoothly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
