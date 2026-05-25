@@ -50,30 +50,78 @@
             z-index: 2000;
         }
 
-        /* Solid Navigation */
-        .hub-nav {
+        /* Reconciled & Upgraded Navigation Styling */
+        header {
             background: var(--white);
-            padding: 0 5%;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             position: sticky;
             top: 6px;
             z-index: 1000;
             border-bottom: 2px solid var(--slate-200);
         }
 
-        .logo-area { display: flex; align-items: center; gap: 12px; }
-        .logo-text { font-family: 'JetBrains Mono'; font-weight: 800; font-size: 0.85rem; letter-spacing: 1px; color: var(--navy-deep); }
+        header nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            height: 70px;
+        }
+
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            text-decoration: none;
+        }
         
-        .status-dot { width: 10px; height: 10px; background: #22c55e; position: relative; }
+        .logo img { 
+            height: 32px; 
+            width: auto; 
+            object-fit: contain; 
+            display: block; 
+        }
+        
+        .logo span { 
+            font-family: 'JetBrains Mono'; 
+            font-weight: 800; 
+            font-size: 0.85rem; 
+            letter-spacing: 1px; 
+            color: var(--navy-deep); 
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            list-style: none; /* Removes bullet points */
+            gap: 5px;
+        }
 
         .nav-links a { 
-            text-decoration: none; color: var(--navy-surface); font-size: 0.65rem; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 1px; padding: 10px 15px; transition: background 0.2s;
+            text-decoration: none; 
+            color: var(--navy-surface); 
+            font-size: 0.65rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            padding: 10px 15px; 
+            transition: all 0.2s;
+            display: inline-block;
         }
-        .nav-links a:hover { background: var(--slate-200); }
+        
+        .nav-links a:hover { 
+            background: var(--slate-200); 
+        }
+
+        /* Styled 'Enroll Now' button to fit the premium theme */
+        .btn-nav {
+            border: 2px solid var(--navy-deep);
+            background: transparent;
+            color: var(--navy-deep) !important;
+        }
+        .btn-nav:hover {
+            background: var(--navy-deep) !important;
+            color: var(--white) !important;
+        }
 
         /* Solid Hero Section */
         .page-header { 
@@ -86,7 +134,7 @@
         .page-header h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -2px; line-height: 1; }
         .page-header p { font-size: 1.1rem; color: var(--slate-300); max-width: 600px; margin: 0 auto; font-weight: 400; }
 
-        /* Updated Quick Jump Navigation Bar (Replaces Sponsors) */
+        /* Quick Jump Navigation Bar */
         .sponsor-marquee {
             background: var(--white);
             padding: 15px 0;
@@ -155,8 +203,6 @@
         .private-card { border-left: 6px solid var(--private-clr); }
         .tvet-card { border-left: 6px solid var(--tvet-clr); }
         .continental-card { border-left: 6px solid var(--continental-clr); }
-        .external-card { border-left: 6px solid var(--external-clr); }
-        .scholar-card { border-left: 6px solid var(--scholarship-clr); }
 
         footer { background: var(--navy-deep); color: white; padding: 60px 10%; text-align: center; border-top: 10px solid var(--accent-gold); }
         .footer-tag { font-family: 'JetBrains Mono'; font-size: 0.65rem; opacity: 0.6; margin-top: 20px; display: block; letter-spacing: 2px; }
@@ -167,25 +213,24 @@
 <div class="national-accent"></div>
 
 <header>
-        <nav>
-            <a href="index.html" class="logo">
-               <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo">
-               <span>U.E.F.I. INSTITUTE</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="abouts.html">About</a></li>
-                <li><a href="tech-lab.html">Tech Lab</a></li>
-                <li><a href="courses.html">Courses</a></li>
-                <li><a href="#national">National</a></li>
-                <li><a href="#continental">Continental</a></li>
-                <li><a href="#extra-continental">Global</a></li>
-                <li><a href="enroll.html" class="btn-nav">Enroll Now</a></li>
-                <li><a href="#scholarships" style="background: var(--accent-gold); color: var(--navy-deep);">Scholarships</a></li>
-            </ul>
-        </nav>
-    </header>
-
+    <nav>
+        <a href="index.html" class="logo">
+           <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo">
+           <span>U.E.F.I. INSTITUTE</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="abouts.html">About</a></li>
+            <li><a href="tech-lab.html">Tech Lab</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="#national">National</a></li>
+            <li><a href="#continental">Continental</a></li>
+            <li><a href="#extra-continental">Global</a></li>
+            <li><a href="enroll.html" class="btn-nav">Enroll Now</a></li>
+            <li><a href="#scholarships" style="background: var(--accent-gold); color: var(--navy-deep);">Scholarships</a></li>
+        </ul>
+    </nav>
+</header>
 
 <div class="page-header">
     <div class="badge" style="background: var(--accent-gold); color: black;">ENTERPRISE EDITION</div>
