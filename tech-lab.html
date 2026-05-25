@@ -7,19 +7,21 @@
     <link rel="stylesheet" href="style.css">
     <style>
         :root {
-            --terminal-dark: #020617;
-            --terminal-bg: #0f172a;
-            --accent-gold: #D4AF37;
-            --data-teal: #00f2ff;
+            --terminal-dark: #142114;
+            --terminal-bg: #1B361B;
+            --accent-gold: #43B02A; /* Safaricom Green */
+            --data-teal: #E4002B;    /* Safaricom Maroon/Red */
             --error-red: #ff3333;
-            --border-light: rgba(255, 255, 255, 0.1);
-            --midnight-blue: #001F3F; 
+            --border-light: rgba(255, 255, 255, 0.15);
+            --midnight-blue: #0E170E; 
+            /* Kenyan Flag Strip Gradient */
+            --kenyan-flag: linear-gradient(to right, #000000 0%, #000000 25%, #BB0000 25%, #BB0000 50%, #006600 50%, #006600 75%, #FFFFFF 75%, #FFFFFF 100%);
         }
 
         body {
             background-color: var(--terminal-dark);
             background-image: 
-                linear-gradient(rgba(2, 6, 23, 0.95), rgba(2, 6, 23, 0.95)),
+                linear-gradient(rgba(20, 33, 20, 0.95), rgba(20, 33, 20, 0.95)),
                 url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
             margin: 0;
             font-family: 'Inter', sans-serif;
@@ -29,18 +31,30 @@
 
         /* Hero Section */
         .lab-hero {
-            background: radial-gradient(circle at center, rgba(0, 51, 102, 0.4) 0%, var(--terminal-dark) 100%),
+            background: radial-gradient(circle at center, rgba(67, 176, 42, 0.2) 0%, var(--terminal-dark) 100%),
                         url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80');
             background-size: cover;
             background-position: center;
             padding: 140px 20px 80px;
             text-align: center;
             border-bottom: 1px solid var(--border-light);
+            position: relative;
+        }
+
+        /* Continuous Kenyan Flag line at the top of the Hero */
+        .lab-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--kenyan-flag);
         }
 
         .badge {
             border: 1px solid var(--accent-gold);
-            color: var(--accent-gold);
+            color: #fff;
             padding: 5px 15px;
             font-family: 'Courier New', monospace;
             text-transform: uppercase;
@@ -48,7 +62,7 @@
             margin-bottom: 20px;
             display: inline-block;
             font-size: 0.8rem;
-            background: rgba(212, 175, 55, 0.05);
+            background: var(--accent-gold);
         }
 
         .lab-hero h1 { 
@@ -57,10 +71,11 @@
             text-transform: uppercase;
             margin: 0 0 1rem;
             line-height: 1.1;
+            color: #fff;
         }
 
         .lab-hero p { 
-            color: rgba(255,255,255,0.7); 
+            color: rgba(255,255,255,0.8); 
             font-family: 'Courier New', monospace;
             max-width: 700px; 
             margin: 0 auto;
@@ -83,14 +98,15 @@
             background: var(--terminal-dark);
             padding: 25px;
             text-align: center;
+            border-top: 3px solid var(--accent-gold);
         }
 
-        .stat-card h4 { color: var(--accent-gold); font-size: 1.8rem; margin: 0; font-weight: 300; }
-        .stat-card p { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.5); margin: 5px 0 0; }
+        .stat-card h4 { color: #fff; font-size: 1.8rem; margin: 0; font-weight: 300; }
+        .stat-card p { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-gold); margin: 5px 0 0; font-weight: bold; }
 
         /* Direct Access Bar */
         .direct-access-bar {
-            background: rgba(212, 175, 55, 0.05);
+            background: rgba(67, 176, 42, 0.1);
             border-bottom: 1px solid var(--border-light);
             padding: 20px 0;
             display: flex;
@@ -127,14 +143,14 @@
         }
 
         .track-card {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--border-light);
             transition: 0.3s;
             display: flex;
             flex-direction: column;
         }
 
-        .track-card:hover { border-color: var(--accent-gold); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1); }
+        .track-card:hover { border-color: var(--accent-gold); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(67, 176, 42, 0.2); }
 
         .track-image {
             width: 100%;
@@ -148,13 +164,13 @@
         .track-card:hover .track-image { filter: grayscale(0) contrast(1); opacity: 1; }
 
         .track-content { padding: 30px; flex-grow: 1; }
-        .track-content h3 { font-size: 1.4rem; margin: 0 0 15px; text-transform: uppercase; }
-        .track-content p { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+        .track-content h3 { font-size: 1.4rem; margin: 0 0 15px; text-transform: uppercase; color: #fff; }
+        .track-content p { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
 
         .lesson-list { list-style: none; padding: 0; margin-top: 20px; }
         .lesson-list li { margin-bottom: 10px; font-family: 'Courier New', monospace; font-size: 0.85rem; }
-        .lesson-list li a { color: var(--accent-gold); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
-        .lesson-list li a:hover { border-bottom: 1px solid var(--accent-gold); }
+        .lesson-list li a { color: var(--accent-gold); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; font-weight: bold; }
+        .lesson-list li a:hover { border-bottom: 1px solid var(--accent-gold); color: #fff; }
 
         /* COMPILER SANDBOX SECTION */
         .sandbox-container {
@@ -177,7 +193,7 @@
         .sandbox-title {
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
-            color: var(--accent-gold);
+            color: #fff;
             letter-spacing: 2px;
         }
 
@@ -187,17 +203,18 @@
         }
 
         .btn-run {
-            background: var(--data-teal);
-            color: #000;
+            background: var(--accent-gold);
+            color: #fff;
             border: none;
             padding: 8px 20px;
             font-family: 'Courier New', monospace;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
+            text-transform: uppercase;
         }
 
-        .btn-run:hover { box-shadow: 0 0 15px var(--data-teal); }
+        .btn-run:hover { box-shadow: 0 0 15px var(--accent-gold); background: #fff; color: var(--terminal-dark); }
 
         .sandbox-grid {
             display: grid;
@@ -215,7 +232,7 @@
             height: 100%;
             background: transparent;
             border: none;
-            color: #a8b2d1;
+            color: #e0e0e0;
             font-family: 'Courier New', monospace;
             font-size: 0.95rem;
             resize: none;
@@ -225,7 +242,7 @@
 
         .output-pane {
             padding: 20px;
-            background: #000;
+            background: #090f09;
             color: #fff;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
@@ -234,16 +251,16 @@
 
         /* Footer Info Box */
         .info-box {
-            border: 1px solid var(--accent-gold);
+            border: 2px solid var(--accent-gold);
             padding: 50px;
             text-align: center;
-            background: rgba(212, 175, 55, 0.02);
+            background: rgba(67, 176, 42, 0.05);
             backdrop-filter: blur(10px);
         }
 
         .btn-primary {
             background: var(--accent-gold);
-            color: var(--terminal-dark);
+            color: #fff;
             padding: 15px 40px;
             text-decoration: none;
             font-weight: 900;
@@ -255,7 +272,9 @@
         }
 
         .btn-primary:hover {
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 20px rgba(67, 176, 42, 0.6);
+            background: #fff;
+            color: var(--terminal-dark);
         }
 
         /* TERMINAL OVERLAY STYLES */
@@ -264,8 +283,8 @@
             bottom: 0;
             right: 5%;
             width: 450px;
-            background: rgba(2, 6, 23, 0.98);
-            border: 1px solid var(--accent-gold);
+            background: rgba(20, 33, 20, 0.98);
+            border: 1px solid var(--border-light);
             border-bottom: none;
             border-radius: 8px 8px 0 0;
             font-family: 'Courier New', monospace;
@@ -276,8 +295,8 @@
 
         .terminal-header {
             background: var(--accent-gold);
-            color: var(--terminal-dark);
-            padding: 10px 15px;
+            color: #fff;
+            padding: 12px 15px;
             font-weight: 900;
             font-size: 0.85rem;
             display: flex;
@@ -285,6 +304,18 @@
             cursor: pointer;
             border-radius: 6px 6px 0 0;
             user-select: none;
+            position: relative;
+        }
+
+        /* Kenyan Flag Strip inside the Terminal window Header line */
+        .terminal-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--kenyan-flag);
         }
 
         .terminal-body {
@@ -298,7 +329,7 @@
             flex-grow: 1;
             overflow-y: auto;
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 10px;
             line-height: 1.4;
         }
@@ -309,7 +340,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
-            color: var(--data-teal);
+            color: var(--accent-gold);
             font-size: 0.85rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 10px;
@@ -339,7 +370,7 @@
 <body>
     <header>
         <nav>
-                       <a href="index.html" class="logo">
+               <a href="index.html" class="logo">
                <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo">
                <span>U.E.F.I. INSTITUTE</span>
             </a>
@@ -468,7 +499,7 @@ print(f"Target Alpha: {alpha:.2f}%")
         </div>
     </main>
 
-    <footer style="padding: 50px; text-align: center; background: var(--midnight-blue); color: white; border-top: 1px solid var(--border-light);">
+    <footer style="padding: 50px; text-align: center; background: var(--midnight-blue); color: white; border-top: 5px solid transparent; border-image: var(--kenyan-flag) 1;">
         <p>&copy; 2026 Universal Empowerment & Future-Tech Institute. All rights reserved.</p>
     </footer>
 
@@ -480,7 +511,7 @@ print(f"Target Alpha: {alpha:.2f}%")
         <div class="terminal-body">
             <div class="terminal-output" id="terminal-output">
                 <p>Initializing UEFI Sovereign Environment...</p>
-                <p>Target Latency: <span style="color: var(--data-teal);">10ms</span> | Compute: <span style="color: var(--accent-gold);">ONLINE</span></p>
+                <p>Target Latency: <span style="color: var(--accent-gold);">10ms</span> | Compute: <span style="color: var(--accent-gold);">ONLINE</span></p>
                 <p>Type <span style="color: #fff; font-weight: bold;">help</span> for available modules.</p>
             </div>
             <div class="terminal-input-line">
@@ -514,10 +545,10 @@ print(f"Target Alpha: {alpha:.2f}%")
                 switch(command) {
                     case 'help':
                         printToTerminal(`Available commands:<br>
-                        - <span style="color:var(--data-teal)">boot quant</span>: Load trading modules<br>
-                        - <span style="color:var(--data-teal)">boot neural</span>: Load AI models<br>
-                        - <span style="color:var(--data-teal)">status</span>: Check node health<br>
-                        - <span style="color:var(--data-teal)">clear</span>: Clear terminal`);
+                        - <span style="color:var(--accent-gold)">boot quant</span>: Load trading modules<br>
+                        - <span style="color:var(--accent-gold)">boot neural</span>: Load AI models<br>
+                        - <span style="color:var(--accent-gold)">status</span>: Check node health<br>
+                        - <span style="color:var(--accent-gold)">clear</span>: Clear terminal`);
                         break;
                     case 'boot quant':
                         printToTerminal("Loading linear algebra vectors... <span style='color: var(--accent-gold);'>[SUCCESS]</span>");
@@ -560,7 +591,7 @@ print(f"Target Alpha: {alpha:.2f}%")
             }, 400);
 
             setTimeout(() => {
-                outputPane.innerHTML += "> Target Alpha: <span style='color: var(--data-teal);'>88.89%</span><br>";
+                outputPane.innerHTML += "> Target Alpha: <span style='color: var(--accent-gold);'>88.89%</span><br>";
                 outputPane.innerHTML += "> <span style='color: var(--accent-gold);'>Process completed with exit code 0</span>";
             }, 900);
         }
