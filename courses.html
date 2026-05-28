@@ -31,7 +31,7 @@
             font-size: 13px;
         }
 
-        /* --- Identity Bar fits beautifully with the new scheme --- */
+        /* --- Identity Bar --- */
         .identity-bar {
             width: 100%;
             height: 5px;
@@ -251,19 +251,6 @@
             background: var(--accent-green);
             color: #ffffff;
         }
-        .action-trigger.red-variant { background: var(--accent-red); color: white; }
-
-        /* --- TERMINAL DISPLAY MOCK --- */
-        .terminal-block {
-            background: #000000;
-            border: 1px solid var(--border);
-            padding: 25px;
-            font-family: 'JetBrains Mono', monospace;
-            color: #e2e8f0;
-            border-left: 4px solid var(--accent-green);
-            margin-top: 15px;
-            border-radius: 4px;
-        }
 
         /* --- FOOTER REGION --- */
         footer {
@@ -293,293 +280,194 @@
 
     <header class="top-nav">
         <div class="logo-area">
-            <div class="logo-main">UEFI GLOBAL INTEGRATION ENGINE</div>
+            <div class="logo-main">UEFI STEM INTEGRATION ENGINE</div>
         </div>
         
         <nav class="main-links">
             <a href="index.html" class="nav-link">Home</a>
-            <a href="courses.html" class="nav-link active-tab-indicator">Courses</a>
+            <a href="courses.html" class="nav-link active-tab-indicator">STEM Pipelines</a>
             <a href="tutor.html" class="nav-link">AI Professor</a>
             
             <div class="mastery-status">
-                GLOBAL SYSTEM INDEX: <div class="progress-track"><div class="progress-fill"></div></div> 78%
+                STEM CORE INDEX: <div class="progress-track"><div class="progress-fill"></div></div> 78%
             </div>
         </nav>
     </header>
 
     <div class="workspace-tabs-bar">
-        <button class="tab-trigger active-panel" onclick="switchPanel(event, 'curriculum-panel')">Unified K-12 Matrix</button>
-        <button class="tab-trigger" onclick="switchPanel(event, 'computation-panel')">Advanced CS & Enterprise</button>
-        <button class="tab-trigger" onclick="switchPanel(event, 'gateways-panel')">Global Ed Portals</button>
-        <button class="tab-trigger" onclick="switchPanel(event, 'cohorts-panel')">Sovereign Cohorts & Exchange</button>
+        <button class="tab-trigger active-panel" onclick="switchPanel(event, 'grade10-panel')">Grade 10 Pipeline</button>
+        <button class="tab-trigger" onclick="switchPanel(event, 'grade11-panel')">Grade 11 Pipeline</button>
     </div>
 
     <main>
 
-        <div id="curriculum-panel" class="workspace-panel active-panel">
+        <!-- === GRADE 10 DISCIPLINARY MATRIX === -->
+        <div id="grade10-panel" class="workspace-panel active-panel">
             <div class="panel-billboard">
-                <h2>Unified Curricula & Disciplinary Graph</h2>
-                <p>Cross-mapped core disciplines connecting Kenyan CBC/CBE standards directly into IGCSE, GCSE, US K-12, and IB Diploma matrices. High-frequency educational integration.</p>
+                <h2>Grade 10 Core STEM Pipeline</h2>
+                <p>Foundational structural frameworks across logic, physical dynamics, biological systems, and circuit electronics designed for early stage technological alignment.</p>
             </div>
 
             <div class="grid-matrix">
+                <!-- Essential Math Grade 10 -->
                 <div class="forge-card">
                     <div>
-                        <span class="card-tag">Core Discipline // Math</span>
-                        <h3>Advanced Mathematics</h3>
-                        <p>Universal numerical logic modeling. Covers vector spaces, matrix algorithms, computational calculus, and statistical analytics.</p>
+                        <span class="card-tag">Grade 10 // Mathematics</span>
+                        <h3>Essential Mathematics I</h3>
+                        <p>Practical context calculations and mathematical literacy. Focused on ratios, contextual formula usage, metric conversions, and structural map scales.</p>
                         <div class="badge-cluster">
-                            <span class="spec-badge global-standard">Kenya CBE</span>
-                            <span class="spec-badge global-standard">IB MYP/DP</span>
-                            <span class="spec-badge">IGCSE</span>
-                            <span class="spec-badge">US K-12 AP</span>
+                            <span class="spec-badge global-standard">Estimation & Rounding</span>
+                            <span class="spec-badge">Metric Conversions</span>
+                            <span class="spec-badge">Scale Drawings</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                    <a href="#" class="action-trigger">Launch Logic Pod</a>
                 </div>
 
+                <!-- Core Math Grade 10 -->
                 <div class="forge-card">
                     <div>
-                        <span class="card-tag">Core Discipline // Physics</span>
-                        <h3>Quantum & Classical Mechanics</h3>
-                        <p>Analytical mapping of physical structures, thermodynamics, wave properties, and computational electronics.</p>
+                        <span class="card-tag">Grade 10 // Advanced Mathematics</span>
+                        <h3>Core Mathematics I</h3>
+                        <p>Foundational pure mathematics parameters. Covers expression factorization, trinomial expansion, multi-variable linear networks, and introductory hyperbolic/quadratic modeling.</p>
                         <div class="badge-cluster">
-                            <span class="spec-badge global-standard">Kenya CBE</span>
-                            <span class="spec-badge global-standard">IB DP Physics</span>
-                            <span class="spec-badge">A-Levels</span>
+                            <span class="spec-badge global-standard">Exponents & Algebra</span>
+                            <span class="spec-badge">Simultaneous Equations</span>
+                            <span class="spec-badge">Linear & Quadratic Transforms</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                    <a href="#" class="action-trigger">Launch Logic Pod</a>
                 </div>
 
+                <!-- Physics Grade 10 -->
                 <div class="forge-card">
                     <div>
-                        <span class="card-tag">Core Discipline // Biology</span>
-                        <h3>Molecular & Genetic Systems</h3>
-                        <p>Deep-dive research tracking cell mechanics, advanced taxonomy frameworks, genomic architecture, and metabolic processes.</p>
+                        <span class="card-tag">Grade 10 // Physics</span>
+                        <h3>Introduction to Mechanics & Waves</h3>
+                        <p>Analysis of physical structures. Quantitative mapping of rectilinear motion, forces, work-energy distributions, and mechanical wave properties.</p>
                         <div class="badge-cluster">
-                            <span class="spec-badge global-standard">CBE Systems</span>
-                            <span class="spec-badge global-standard">IB DP Bio</span>
-                            <span class="spec-badge">IGCSE Matrix</span>
+                            <span class="spec-badge global-standard">Kinematics</span>
+                            <span class="spec-badge">Newtonian Forces</span>
+                            <span class="spec-badge">Wave Mechanics</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                    <a href="#" class="action-trigger">Launch Physics Pod</a>
                 </div>
 
+                <!-- Electricity Grade 10 -->
                 <div class="forge-card">
                     <div>
-                        <span class="card-tag">Core Discipline // Econ</span>
-                        <h3>Macro & Micro Economics</h3>
-                        <p>Stochastic market modeling, behavioral finance analysis, regional inflation algorithms, and resource allocation policies.</p>
+                        <span class="card-tag">Grade 10 // Physics Sub-Discipline</span>
+                        <h3>Foundations of Electricity</h3>
+                        <p>Initial exploration of electrostatics, charge distribution, electric fields, and basic direct current (DC) circuit parameters using Ohm's Law.</p>
                         <div class="badge-cluster">
-                            <span class="spec-badge global-standard">IB DP Econ</span>
-                            <span class="spec-badge global-standard">A-Level Core</span>
-                            <span class="spec-badge">Global Markets</span>
+                            <span class="spec-badge global-standard">Electrostatics</span>
+                            <span class="spec-badge">Ohm's Law</span>
+                            <span class="spec-badge">DC Resistors</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                    <a href="#" class="action-trigger">Launch Electrical Pod</a>
                 </div>
 
+                <!-- Biology Grade 10 -->
                 <div class="forge-card">
                     <div>
-                        <span class="card-tag">Core Discipline // CompSci</span>
-                        <h3>Foundational Computation</h3>
-                        <p>Introduction to object-oriented frameworks, algorithmic complexity analysis, and safe database paradigms.</p>
+                        <span class="card-tag">Grade 10 // Biology</span>
+                        <h3>Cellular Architecture & Taxonomy</h3>
+                        <p>Microscopic biological engineering frameworks. Investigating cellular structures, organelle processing, biomolecules, and evolutionary taxonomic sorting.</p>
                         <div class="badge-cluster">
-                            <span class="spec-badge global-standard">Kenya CBE</span>
-                            <span class="spec-badge global-standard">IGCSE / GCSE</span>
-                            <span class="spec-badge">US AP CS-A</span>
+                            <span class="spec-badge global-standard">Cell Structure</span>
+                            <span class="spec-badge">Biomolecules</span>
+                            <span class="spec-badge">Classification Nodes</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
-                </div>
-
-                <div class="forge-card">
-                    <div>
-                        <span class="card-tag">Core Discipline // Humanities</span>
-                        <h3>Global History & Geopolitics</h3>
-                        <p>Mapping geographical distributions, demographic evolution tracking, and socio-economic history metrics.</p>
-                        <div class="badge-cluster">
-                            <span class="spec-badge global-standard">CBE Kenya</span>
-                            <span class="spec-badge global-standard">IB DP History</span>
-                            <span class="spec-badge">Human Geo</span>
-                        </div>
-                    </div>
-                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
-                </div>
-
-                <div class="forge-card">
-                    <div>
-                        <span class="card-tag">Core Discipline // Creative</span>
-                        <h3>Fine Arts & Structural Design</h3>
-                        <p>Form, aesthetics, visual systems architecture, composition rules, and architectural design methodologies.</p>
-                        <div class="badge-cluster">
-                            <span class="spec-badge global-standard">IB MYP Design</span>
-                            <span class="spec-badge global-standard">CBE Art</span>
-                            <span class="spec-badge">Portfolio Suite</span>
-                        </div>
-                    </div>
-                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
-                </div>
-
-                <div class="forge-card">
-                    <div>
-                        <span class="card-tag">Core Discipline // Health</span>
-                        <h3>Physical Health Education (PHE)</h3>
-                        <p>Kinesiology analytics, nutritional systems mapping, physical safety procedures, and organizational leadership standards.</p>
-                        <div class="badge-cluster">
-                            <span class="spec-badge global-standard">IB MYP PHE</span>
-                            <span class="spec-badge global-standard">CBE PE Core</span>
-                        </div>
-                    </div>
-                    <a href="#" class="action-trigger">Launch Co-Creation Pod</a>
+                    <a href="#" class="action-trigger">Launch Biological Pod</a>
                 </div>
             </div>
         </div>
 
-        <div id="computation-panel" class="workspace-panel">
+
+        <!-- === GRADE 11 DISCIPLINARY MATRIX === -->
+        <div id="grade11-panel" class="workspace-panel">
             <div class="panel-billboard">
-                <h2>Advanced Computation, Quant & Enterprise</h2>
-                <p>High-tier elite engineering tracks pulling resources from open repositories of MIT and Harvard, coupled with comprehensive Microsoft Corporate Suite credentials.</p>
+                <h2>Grade 11 Core STEM Pipeline</h2>
+                <p>Advanced cross-mapped disciplines optimizing pure functional analysis, multi-stage circuitry, and high-frequency genomic mechanics.</p>
             </div>
 
             <div class="grid-matrix">
-                <div class="forge-card" style="border-color: var(--accent-green);">
-                    <div>
-                        <span class="card-tag" style="color: var(--accent-green);">Advanced Pipeline // Open Source Elite</span>
-                        <h3>Quant Finance & Systems Engineering</h3>
-                        <p>Deep implementation frameworks modeled directly from MIT and Harvard resources. Built for future software engineers, quantitative analysts, and autonomous ML designers.</p>
-                        <div class="badge-cluster">
-                            <span class="spec-badge">MIT OpenCourseWare</span>
-                            <span class="spec-badge">Harvard CS50 Extension</span>
-                            <span class="spec-badge">HFT Logic</span>
-                        </div>
-                    </div>
-                    <a href="#" class="action-trigger">Access Elite Repository</a>
-                </div>
-
+                <!-- Essential Math Grade 11 -->
                 <div class="forge-card">
                     <div>
-                        <span class="card-tag">Enterprise Training // Applications</span>
-                        <h3>Microsoft Enterprise Engineering</h3>
-                        <p>Complete professional execution pipelines for standard office systems. Master complex document logic, relational schemas, and data structures.</p>
+                        <span class="card-tag">Grade 11 // Mathematics</span>
+                        <h3>Essential Mathematics II</h3>
+                        <p>Advanced application logic. Structuring operational budgets, real-world tax computations, data handling metrics, probability intervals, and basic pattern mapping.</p>
                         <div class="badge-cluster">
-                            <span class="spec-badge">MS Word</span>
-                            <span class="spec-badge">Excel Modeling</span>
-                            <span class="spec-badge">PowerPoint</span>
-                            <span class="spec-badge">MS Access</span>
-                            <span class="spec-badge">Publisher</span>
+                            <span class="spec-badge global-standard">Finance & Tax</span>
+                            <span class="spec-badge">Data Handling</span>
+                            <span class="spec-badge">Linear Slopes</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger">Initialize Enterprise Core</a>
+                    <a href="#" class="action-trigger">Launch Logic Pod</a>
                 </div>
 
+                <!-- Core Math Grade 11 -->
                 <div class="forge-card">
                     <div>
-                        <span class="card-tag">Advanced Pipeline // Intelligent Infrastructure</span>
-                        <h3>Applied AI & Machine Learning</h3>
-                        <p>Constructing actual models from the ground up. Neural network architectures, backpropagation mathematics, and production-level system implementation.</p>
+                        <span class="card-tag">Grade 11 // Advanced Mathematics</span>
+                        <h3>Core Mathematics II</h3>
+                        <p>Intermediate functional geometry and processing models. Structural reduction formulae, analytical distance matrices, circle equations, and arithmetic/geometric sequences.</p>
                         <div class="badge-cluster">
-                            <span class="spec-badge">Transformers</span>
-                            <span class="spec-badge">PyTorch Core</span>
-                            <span class="spec-badge">Tensor Datasets</span>
+                            <span class="spec-badge global-standard">Trigonometric Identities</span>
+                            <span class="spec-badge">Analytical Geometry</span>
+                            <span class="spec-badge">Sequences & Series</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger">Deploy Neural Track</a>
-                </div>
-            </div>
-        </div>
-
-        <div id="gateways-panel" class="workspace-panel">
-            <div class="panel-billboard">
-                <h2>Global Admissions Gateways & Opportunities</h2>
-                <p>Direct application portals to any higher education entity globally alongside verified international scholarships and real-time youth development grants.</p>
-            </div>
-
-            <div class="grid-matrix">
-                <div class="forge-card" style="grid-column: span 2; border-color: var(--accent-green);">
-                    <div>
-                        <span class="card-tag" style="color: var(--accent-green);">System Protocol // Gateways</span>
-                        <h3>Direct Autonomous Admissions Portal Router</h3>
-                        <p>UEFI integrates a decentralized direct application routing system. If a higher education institute anywhere across the globe operates a live web landing page, our structural proxy maps parameters to facilitate clean, raw admissions dispatch pipelines directly without external agencies.</p>
-                        <div class="terminal-block">
-                            $ uefi-router --initialize-global-admissions --mode=DIRECT<br>
-                            [STATUS] Scanning international university directory endpoints...<br>
-                            [PORTALS] 5,000+ Verified Direct Connection Hubs Online (FREE ACCESS)
-                        </div>
-                    </div>
-                    <a href="#" class="action-trigger" style="margin-top: 20px;">Open Admissions Router Interface</a>
+                    <a href="#" class="action-trigger">Launch Logic Pod</a>
                 </div>
 
+                <!-- Physics Grade 11 -->
                 <div class="forge-card">
                     <div>
-                        <span class="card-tag">Opportunities Pipeline // Fully Funded</span>
-                        <h3>Sovereign Scholarship Aggregator</h3>
-                        <p>Real-time updates linking continental applicants to elite fully-funded scholarship tracks and international academic grants.</p>
+                        <span class="card-tag">Grade 11 // Physics</span>
+                        <h3>Thermodynamics & Classical Fields</h3>
+                        <p>Analytical quantification of heat distribution, thermodynamic laws, gravitational potentials, and macroscopic vector field systems.</p>
                         <div class="badge-cluster">
-                            <span class="spec-badge">Youth Opportunities Link</span>
-                            <span class="spec-badge">Direct Access Nodes</span>
+                            <span class="spec-badge global-standard">Thermodynamics</span>
+                            <span class="spec-badge">Vector Fields</span>
+                            <span class="spec-badge">Ideal Gas Laws</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger">Explore Scholarship Streams</a>
+                    <a href="#" class="action-trigger">Launch Physics Pod</a>
                 </div>
-            </div>
-        </div>
 
-        <div id="cohorts-panel" class="workspace-panel">
-            <div class="panel-billboard">
-                <h2>Strategic Cohorts, Cross-Border Exchange & Tutor Marketplace</h2>
-                <p>Bridging global talent. Gender-specific initiatives, international peer study pools, streaming podcasts, and escrow-backed tutor employment engines.</p>
-            </div>
-
-            <div class="grid-matrix">
+                <!-- Electricity Grade 11 -->
                 <div class="forge-card">
                     <div>
-                        <span class="card-tag">Strategic Cohort // Men & Boys</span>
-                        <h3>The Wilson Initiative</h3>
-                        <p>Targeted tracks driving algorithmic design, high-performance logic systems, and executive technological deployment for young men and boys.</p>
+                        <span class="card-tag">Grade 11 // Physics Sub-Discipline</span>
+                        <h3>Electromagnetism & Network Circuits</h3>
+                        <p>Advanced circuit logic optimization. Investigating electromagnetic induction, Faraday's mechanics, Kirchhoff's network rules, and alternating current (AC) basics.</p>
+                        <div class="badge-cluster">
+                            <span class="spec-badge global-standard">Induction</span>
+                            <span class="spec-badge">Kirchhoff's Laws</span>
+                            <span class="spec-badge">Network Topology</span>
+                        </div>
                     </div>
-                    <a href="#" class="action-trigger">Access Wilson Node</a>
+                    <a href="#" class="action-trigger">Launch Electrical Pod</a>
                 </div>
 
+                <!-- Biology Grade 11 -->
                 <div class="forge-card">
                     <div>
-                        <span class="card-tag">Strategic Cohort // Women & Girls</span>
-                        <h3>The Anthoninah Initiative</h3>
-                        <p>Dedicated high-performance tracks, deep computer science pipelines, and exclusive engineering podcast ecosystems for women and girls globally.</p>
+                        <span class="card-tag">Grade 11 // Biology</span>
+                        <h3>Genetics & Metabolic Systems</h3>
+                        <p>Deep-dive biological processes tracking cellular replication mechanics, DNA transcription, Mendelian genomic matrices, and metabolic energy processing.</p>
                         <div class="badge-cluster">
-                            <span class="spec-badge">Podcasts Streaming</span>
-                            <span class="spec-badge">Women In Tech Track</span>
+                            <span class="spec-badge global-standard">Genomics</span>
+                            <span class="spec-badge">Metabolism</span>
+                            <span class="spec-badge">Inheritance Frameworks</span>
                         </div>
                     </div>
-                    <a href="#" class="action-trigger">Access Anthoninah Node</a>
-                </div>
-
-                <div class="forge-card" style="border-color: var(--accent-green);">
-                    <div>
-                        <span class="card-tag" style="color: var(--accent-green);">Economic Network // Marketplace</span>
-                        <h3>Paid Educator Tutoring Onboarding</h3>
-                        <p>Premium workspace enrollment framework for professional educators. Teachers register portfolios, access globally distributed student classrooms, and secure digital payouts for managing interactive online mastery sessions.</p>
-                        <div class="badge-cluster">
-                            <span class="spec-badge">Paid Placement</span>
-                            <span class="spec-badge">Verified Escrow Core</span>
-                        </div>
-                    </div>
-                    <a href="#" class="action-trigger red-variant">Enroll as a Premium Tutor</a>
-                </div>
-
-                <div class="forge-card">
-                    <div>
-                        <span class="card-tag">Strategic Alliances // Industrial</span>
-                        <h3>Corporate Partnerships Engine</h3>
-                        <p>Direct infrastructure linkages connecting operational modules to industrial allies across Africa and beyond.</p>
-                        <div class="badge-cluster">
-                            <span class="spec-badge">eCultures Kenya</span>
-                            <span class="spec-badge">Aid For Aiming Africa</span>
-                            <span class="spec-badge">Sovereign Networks</span>
-                        </div>
-                    </div>
-                    <div style="font-family:'JetBrains Mono'; font-size:10px; color:var(--accent-green); padding:10px 0;">[PARTNERSHIPS STATUS: LIVE]</div>
+                    <a href="#" class="action-trigger">Launch Biological Pod</a>
                 </div>
             </div>
         </div>
@@ -587,7 +475,7 @@
     </main>
 
     <footer>
-        <div>&copy; 2026 UEFI Systems Institute Core Forge. Built on First-Principles. All Rights Reserved.</div>
+        <div>&copy; 2026 UEFI Systems Institute Core Forge. Focused strictly on Pure STEM Pipelines. All Rights Reserved.</div>
     </footer>
 
     <script>
