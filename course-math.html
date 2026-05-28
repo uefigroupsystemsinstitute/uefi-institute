@@ -157,6 +157,7 @@
         .options-grid { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
         .option-btn { background: var(--white); border: 1px solid #cbd5e1; padding: 1rem; text-align: left; border-radius: 4px; cursor: pointer; font-weight: 600; transition: 0.2s; color: #334155; }
         .option-btn:hover { border-color: var(--kenya-green); background: var(--off-white); }
+        .option-btn.selected { border-color: var(--kenya-green); background: rgba(0, 135, 81, 0.04); }
         .action-bar { display: flex; gap: 1rem; }
         .btn { padding: 0.8rem 1.5rem; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
         .btn-submit { background: var(--kenya-black); color: var(--white); }
@@ -184,31 +185,27 @@
 </head>
 <body>
 
-    <!-- === LEFT DIRECTIONAL MATRIX === -->
     <div class="curriculum-sidebar">
         <div class="sidebar-header">
-            <h2>Grade 11 Core Math</h2>
-            <p>CBE Appendix 1 Strand Integration Node</p>
+            <h2 id="sidebarTitle">Grade Math Pod</h2>
+            <p id="sidebarSubtitle">CBE Appendix Node</p>
         </div>
         <div class="topic-scroll" id="topicDirectory">
-            <!-- Programmatically Loaded via JS from Curriculum Sheets -->
-        </div>
+            </div>
     </div>
 
-    <!-- === CENTRAL WORKSPACE CONTEXT === -->
     <main>
         <span class="curriculum-tag" id="strandLabel">Loading Strand Engine...</span>
         <h1 id="topicTitle">Dynamic Syllabus Target</h1>
         
         <div class="video-wrapper">
-            <iframe id="videoPlayer" src="https://www.youtube.com/embed/Szk_f8vU_LI" allowfullscreen></iframe>
+            <iframe id="videoPlayer" src="" allowfullscreen></iframe>
         </div>
 
         <div class="resource-panel">
             <div class="resource-title">Required Structural & Material Resources</div>
             <div class="resource-tags" id="resourceContainer">
-                <!-- Loaded Dynamically per Sub-strand -->
-            </div>
+                </div>
         </div>
 
         <div class="quiz-container">
@@ -217,8 +214,7 @@
                 Loading targeted logical vector expansion formula...
             </div>
             <div class="options-grid" id="optionsGrid">
-                <!-- Loaded Dynamically -->
-            </div>
+                </div>
             <div class="action-bar">
                 <button class="btn btn-submit" onclick="evaluateAnswer()">Validate Vector</button>
                 <button class="btn btn-hint" onclick="summonOneiroHint()">Query Professor Oneiro</button>
@@ -226,7 +222,6 @@
         </div>
     </main>
 
-    <!-- === AI PROFESSOR REGION === -->
     <aside>
         <div class="prof-header">
             <div class="prof-title">
@@ -236,8 +231,7 @@
         </div>
         
         <div class="chat-space" id="chatSpace">
-            <!-- Chat history injected here -->
-        </div>
+            </div>
 
         <div class="chat-input-area">
             <input type="text" class="chat-input" id="studentInput" placeholder="Query analytical step matrix parameters...">
@@ -246,438 +240,176 @@
     </aside>
 
     <script>
-        // Full Grade 11 Core Math Curriculum Matrix mapped directly from Draft Summaries
+        // Core Curriculum Database mapping both Grade 10 and Grade 11 variations
         const curriculumDatabase = [
-            {
-                id: "quadratics",
-                strand: "Numbers and Algebra",
-                subStrand: "Quadratic Expressions and Equations",
-                resources: ["Calculators", "Learner Digital Devices (LDD)", "Graph Paper"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Solve for x across the real boundary matrix: 2x^2 - 5x - 3 = 0",
-                options: [
-                    "A) x = 3 or x = -1/2",
-                    "B) x = -3 or x = 1/2",
-                    "C) x = 1 or x = -6",
-                    "D) x = 3 or x = 1/2"
-                ],
-                correctIndex: 0,
-                hint: "Factorize by splitting the middle linear term. Look for two integers whose product equals -6 and sum equals -5. These are -6 and +1.",
-                intro: "Welcome to Quadratics. We are analyzing parabolic properties and solution sets. Ready your calculator framework."
-            },
-            {
-                id: "irrationals",
-                strand: "Numbers and Algebra",
-                subStrand: "Irrational numbers",
-                resources: ["Calculator", "Mathematical Tables", "Learner Books"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Simplify completely without decimal approximation: sqrt(72) - sqrt(18)",
-                options: [
-                    "A) 3*sqrt(2)",
-                    "B) 9*sqrt(2)",
-                    "C) 6",
-                    "D) 5*sqrt(2)"
-                ],
-                correctIndex: 0,
-                hint: "Extract perfect square factors from within the radical expressions. Reduce sqrt(72) to 6*sqrt(2) and sqrt(18) to 3*sqrt(2), then compute the difference.",
-                intro: "Irrational numbers mapping initialized. We are factoring rational perfect bases out of complex surd nodes."
-            },
-            {
-                id: "inequalities",
-                strand: "Numbers and Algebra",
-                subStrand: "Linear Inequalities",
-                resources: ["Graphs", "Geometrical Set", "Calculator"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Solve the linear inequality statement: 3(x - 2) <= 5x + 4",
-                options: [
-                    "A) x >= -5",
-                    "B) x <= -5",
-                    "C) x >= -1",
-                    "D) x <= 5"
-                ],
-                correctIndex: 0,
-                hint: "Expand the left expression to obtain 3x - 6. Collect like variables on one side. Remember to invert the inequality direction pointer if multiplying or dividing by a negative index.",
-                intro: "Linear continuous boundary fields active. Let's isolate the inequality parameters safely."
-            },
-            {
-                id: "logarithms",
-                strand: "Numbers and Algebra",
-                subStrand: "Logarithms II",
-                resources: ["Calculator", "Mathematical Table", "TDD Reference"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Solve for x using logarithmic transformations: log_2(x) + log_2(x - 2) = 3",
-                options: [
-                    "A) x = 4",
-                    "B) x = -2",
-                    "C) x = 4 or x = -2",
-                    "D) x = 8"
-                ],
-                correctIndex: 0,
-                hint: "Apply the addition law to compress into log_2(x(x - 2)) = 3. Convert this logarithmic model directly into exponential form: x^2 - 2x = 2^3. Drop negative paths out of range.",
-                intro: "Logarithms Engine active. Keep structural base restrictions in alignment; logs cannot process negative coordinates."
-            },
-            {
-                id: "formulae",
-                strand: "Numbers and Algebra",
-                subStrand: "Formulae and Variations",
-                resources: ["Grid Boards", "Geometrical Equipment", "Stop Watch"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "y varies directly as x and inversely as the square root of z. If y = 6 when x = 3 and z = 4, calculate y when x = 5 and z = 9.",
-                options: [
-                    "A) y = 20/3",
-                    "B) y = 10",
-                    "C) y = 4",
-                    "D) y = 15"
-                ],
-                correctIndex: 0,
-                hint: "Construct the structural equation y = k*x / sqrt(z). Solve for proportionality constant k using initial coordinates, then resolve with the new parameters.",
-                intro: "Variation nodes online. We are charting compound and inverse variable dependency matrices here."
-            },
-            {
-                id: "sequences",
-                strand: "Numbers and Algebra",
-                subStrand: "Sequences and Series",
-                resources: ["Objects of Different Sizes", "Strings", "Measuring Instruments"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Determine the exact 15th term of the arithmetic progress profile: 5, 11, 17, 23, ...",
-                options: [
-                    "A) 89",
-                    "B) 95",
-                    "C) 83",
-                    "D) 101"
-                ],
-                correctIndex: 0,
-                hint: "Identify the base term component a = 5 and common variance step d = 6. Evaluate using the arithmetic sequence locator formula: T_n = a + (n - 1)d.",
-                intro: "Linear progressions and summation patterns active. Keep track of uniform step increments."
-            },
-            {
-                id: "matrices",
-                strand: "Numbers and Algebra",
-                subStrand: "Matrices (I)",
-                resources: ["Tables and Charts", "Rows/Columns Realia", "Calculators"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Calculate the scaling determinant value of Matrix M = [[3, 2], [5, 4]]",
-                options: [
-                    "A) 2",
-                    "B) -2",
-                    "C) 22",
-                    "D) 4"
-                ],
-                correctIndex: 0,
-                hint: "For any transformation matrix shape [[a, b], [c, d]], compute the vector cross difference calculation formula: determinant = (a*d) - (b*c).",
-                intro: "Multi-dimensional arrays localized. Let's compute coordinate system scaling determinants."
-            },
-            {
-                id: "errors",
-                strand: "Measurements and Geometry",
-                subStrand: "Approximation and Errors",
-                resources: ["Measuring Cylinders", "Meter Rule", "Tape Measure"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "A rectangle's borders are recorded as 10 cm by 5 cm to the nearest centimeter. Determine the absolute maximum percentage error calculation of its area product.",
-                options: [
-                    "A) 15%",
-                    "B) 10%",
-                    "C) 5%",
-                    "D) 12.5%"
-                ],
-                correctIndex: 0,
-                hint: "The absolute error margin is 0.5 cm per side. Find the maximum possible upper area using limits (10.5 * 5.5) and compare against nominal targets to extract the ratio.",
-                intro: "Precision tolerance tracking online. We are mapping propagation boundaries across physical data parameters."
-            },
-            {
-                id: "angle-properties",
-                strand: "Measurements and Geometry",
-                subStrand: "Angle Properties of a Circle",
-                resources: ["Geometrical Instruments", "Drawing Book", "Circular Rings"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "An arc node subtends 70 degrees at the origin locus point of a circle. Identify the angle footprint it maps at the perimeter shell within the matching segment boundary.",
-                options: [
-                    "A) 35 degrees",
-                    "B) 70 degrees",
-                    "C) 140 degrees",
-                    "D) 55 degrees"
-                ],
-                correctIndex: 0,
-                hint: "Recall the core angle structural principle: the angle mapped at the center point is exactly double the value tracking to any position along the remaining circumferential rim.",
-                intro: "Geometric angle matrices operational. Remember to rely on circle theorems to track structural relationships."
-            },
-            {
-                id: "commercial-arithmetic",
-                strand: "Measurements and Geometry",
-                subStrand: "Commercial Arithmetic",
-                resources: ["Sample Cash Books", "Income Tax Tables from KRA", "Pay Slips"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "An enterprise engineer reports KSh 50,000 monthly gross income. Given a primary KRA processing bracket threshold taxing 10% on the opening KSh 24,000 block, calculate tax obligation on that section prior to deducting personal relief.",
-                options: [
-                    "A) KSh 2,400",
-                    "B) KSh 5,000",
-                    "C) KSh 240",
-                    "D) KSh 1,200"
-                ],
-                correctIndex: 0,
-                hint: "Isolate the bracket size chunk (KSh 24,000) and scale downward to the basic decimal rate configuration (0.10). Personal relief offsets step in afterward.",
-                intro: "Financial data matrices initialized. We are analyzing tax schedules and hire purchase agreements."
-            },
-            {
-                id: "circle-tangents",
-                strand: "Measurements and Geometry",
-                subStrand: "Circles, Chords and Tangents",
-                resources: ["Geometrical Instruments", "Drawing Book", "Circular Rings", "Strings"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Chords AB and CD cross internally at coordinate point X. If segment distance metrics map AX=4cm, XB=6cm, and CX=3cm, compute length XD.",
-                options: [
-                    "A) 8 cm",
-                    "B) 4.5 cm",
-                    "C) 5 cm",
-                    "D) 2 cm"
-                ],
-                correctIndex: 0,
-                hint: "Apply the intersecting chord vector law: the metric products of intersecting line segments are perfectly equivalent. Thus, AX * XB = CX * XD.",
-                intro: "Secant and chord mechanics online. We are tracking structural ratios within enclosed circular geometries."
-            },
-            {
-                id: "trigonometry",
-                strand: "Measurements and Geometry",
-                subStrand: "Trigonometry (II)",
-                resources: ["Graph Paper", "Geometrical Tools", "Graph Boards"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Identify all matching solution spaces for the equation sin(theta) = 0.5 within standard boundary bounds 0 <= theta <= 180 degrees.",
-                options: [
-                    "A) 30 degrees or 150 degrees",
-                    "B) 30 degrees only",
-                    "C) 60 degrees or 120 degrees",
-                    "D) 45 degrees or 135 degrees"
-                ],
-                correctIndex: 0,
-                hint: "Sine outputs generate positive metrics in Quadrants I and II. Locate the base angle target, then reference it symmetrically via (180 - theta).",
-                intro: "Wave tracking systems responsive. Keep periodic rotation frameworks stable as we move past right triangles."
-            },
-            {
-                id: "graphical-methods",
-                strand: "Measurements and Geometry",
-                subStrand: "Graphical Methods",
-                resources: ["Graph Paper", "Geometrical Set", "Graph Boards"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Convert the exponential scale power law relation matrix y = a*x^b into a uniform linear design structure Y = m*X + c.",
-                options: [
-                    "A) log(y) = b*log(x) + log(a)",
-                    "B) log(y) = a*log(x) + b",
-                    "Y) y = log(a) + b*log(x)",
-                    "D) log(y) = log(b) + a*log(x)"
-                ],
-                correctIndex: 0,
-                hint: "Introduce log elements across both sides of the expression. Use power expansion properties to separate the variables and match the slope intercept form.",
-                intro: "Linearization routines initialized. We are converting non-linear curvature patterns into standard linear coordinates."
-            },
-            {
-                id: "permutations",
-                strand: "Statistics and probability",
-                subStrand: "Permutations and combinations",
-                resources: ["Assorted Objects", "Calculators", "LDD Interfaces"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "In how many discrete configurations can a project committee group of 3 members be chosen out of 7 total candidates?",
-                options: [
-                    "A) 35",
-                    "B) 210",
-                    "C) 42",
-                    "D) 7"
-                ],
-                correctIndex: 0,
-                hint: "Order does not shift functional utility inside this selection matrix. Apply the standard combinations formula framework: nCr = n! / (r! * (n-r)!).",
-                intro: "Combinatorial distribution networks online. Separate sequence ordering paths from standard selection groupings."
-            },
-            {
-                id: "probability",
-                strand: "Statistics and probability",
-                subStrand: "Probability II",
-                resources: ["Dice Modules", "Coins", "Glass Marbles of Different Colors", "Calculators"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "A deployment box contains 4 red components and 6 green units. Extracting two parts sequentially without replenishment, evaluate the probability that both items match red.",
-                options: [
-                    "A) 2/15",
-                    "B) 4/25",
-                    "C) 8/45",
-                    "D) 1/5"
-                ],
-                correctIndex: 0,
-                hint: "Evaluate compound dependency states. The first selection factor outputs 4/10. Because items are not replaced, the trailing iteration probability shifts to 3/9. Multiply these events together.",
-                intro: "Conditional risk evaluation models live. Track updating state balances across dependent sample pools."
-            },
-            {
-                id: "functions",
-                strand: "Calculus",
-                subStrand: "Functions",
-                resources: ["Graph Paper", "Charts", "Scientific Calculator"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Given compound system components mapping f(x) = 2x + 3 and g(x) = x^2, define the composite array formula notation for f(g(x)).",
-                options: [
-                    "A) 2x^2 + 3",
-                    "B) (2x + 3)^2",
-                    "C) 4x^2 + 9",
-                    "D) 2x^2 + 6"
-                ],
-                correctIndex: 0,
-                hint: "Incorporate the operational definition of g(x) straight inside the x variable input slot of your master engine frame f(x).",
-                intro: "Composite logic pathways online. We are nesting independent functions inside dependent mappings."
-            },
-            {
-                id: "differentiation",
-                strand: "Calculus",
-                subStrand: "Differentiation (I)",
-                resources: ["Graph Paper", "Ropes", "Stop Watch", "Ruler", "Calculator"],
-                videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI",
-                problem: "Isolate the instantaneous rate derivative vector expression (dy/dx) for the curve function: y = 3x^3 - 5x^2 + 2x - 7",
-                options: [
-                    "A) 9x^2 - 10x + 2",
-                    "B) 3x^2 - 5x + 2",
-                    "C) 9x^3 - 10x^2 + 2",
-                    "D) 6x^2 - 5x"
-                ],
-                correctIndex: 0,
-                hint: "Execute the polynomial power rule pattern across each term: multiply each coefficient scalar by the current exponent power value, then reduce that power step by 1.",
-                intro: "Calculus processing framework active. We are determining instantaneous rate gradients along curvature configurations."
-            }
+            // --- GRADE 10 ESSENTIAL MATH ---
+            { id: "g10-est", grade: "10", type: "essential", strand: "Arithmetic & Context", subStrand: "Estimation & Rounding", resources: ["Calculators", "Digital Logsheets", "Workbooks"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Estimate the value of 5.87 × 19.3 by rounding each term to 1 significant figure.", options: ["100", "120", "60", "200"], correctIndex: 1, hint: "Round 5.87 to 6 and 19.3 to 20, then evaluate." },
+            { id: "g10-conv", grade: "10", type: "essential", strand: "Measurement Logic", subStrand: "Metric Conversions", resources: ["Metric Rulers", "Conversion Matrices"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Convert 4.25 kilometers into standard meters.", options: ["425 m", "4,250 m", "42,500 m", "42.5 m"], correctIndex: 1, hint: "Recall that 1 kilometer maps directly to 1,000 meters." },
+            { id: "g10-scale", grade: "10", type: "essential", strand: "Applied Geometry", subStrand: "Scale Drawings", resources: ["Graph Paper", "Protractors"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "If a map scale is 1:50,000, what actual distance corresponds to 2 cm on the map?", options: ["1 km", "5 km", "10 km", "0.5 km"], correctIndex: 0, hint: "Multiply 2 by 50,000 cm, then map the centimeter output to kilometers." },
+
+            // --- GRADE 10 CORE MATH ---
+            { id: "g10-alg", grade: "10", type: "core", strand: "Pure Algebra", subStrand: "Exponents & Algebra", resources: ["Formula Arrays", "Scientific Device"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Simplify the structural algebraic expression: (x³ × x⁵) / x²", options: ["x⁶", "x¹⁰", "x⁴", "x¹"], correctIndex: 0, hint: "Apply linear exponent law: add indices on multiplication, subtract on division." },
+            { id: "g10-sim", grade: "10", type: "core", strand: "Linear Networks", subStrand: "Simultaneous Equations", resources: ["System Plotters", "Matrices Workspace"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Solve for variables: x + y = 12 and x - y = 4.", options: ["(8, 4)", "(7, 5)", "(9, 3)", "(6, 2)"], correctIndex: 0, hint: "Sum the equation vectors together to isolate and eliminate the y parameter." },
+
+            // --- GRADE 11 ESSENTIAL MATH ---
+            { id: "g11-fin", grade: "11", type: "essential", strand: "Applied Finance", subStrand: "Finance & Tax", resources: ["Tax Charts", "Spreadsheets"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Calculate the net profit index on a gross volume of 45,000 KES subject to a 15% flat deduction rate.", options: ["38,250 KES", "35,000 KES", "40,000 KES", "37,500 KES"], correctIndex: 0, hint: "Deduct 0.15 × 45,000 from the baseline system volume." },
+
+            // --- GRADE 11 CORE MATH ---
+            { id: "g11-trig", grade: "11", type: "core", strand: "Analytical Geometry", subStrand: "Trigonometric Identities", resources: ["Trig Tables", "Calculators"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Simplify the fundamental structure expression: sin²(θ) + cos²(θ)", options: ["0", "1", "tan²(θ)", "2"], correctIndex: 1, hint: "This identity represents the unitary value circle radius vector." }
         ];
 
+        let selectedAnswerIndex = null;
         let activeTopic = null;
-        let selectedOptionIndex = null;
 
-        // Build the dynamic curriculum choice framework on boot
-        function compileCurriculumDirectory() {
-            const directoryNode = document.getElementById('topicDirectory');
-            
-            // Extract distinct strands to form semantic group blocks
-            const strands = [...new Set(curriculumDatabase.map(item => item.strand))];
-            
-            strands.forEach(strandName => {
-                const groupDiv = document.createElement('div');
-                groupDiv.classList.add('strand-group');
-                
-                const titleNode = document.createElement('div');
-                titleNode.classList.add('strand-title');
-                titleNode.innerText = strandName;
-                groupDiv.appendChild(titleNode);
-                
-                // Group individual sub-strands
-                curriculumDatabase.filter(item => item.strand === strandName).forEach(topic => {
-                    const btn = document.createElement('button');
-                    btn.classList.add('topic-btn');
-                    btn.id = `btn-${topic.id}`;
-                    btn.innerText = topic.subStrand;
-                    btn.onclick = () => activateTargetTopic(topic.id);
-                    groupDiv.appendChild(btn);
-                });
-                
-                directoryNode.appendChild(groupDiv);
-            });
-        }
+        // Routing Engine Initialization
+        function initRouting() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const activeGrade = urlParams.get('grade') || '10';
+            const activeType = urlParams.get('type') || 'core';
 
-        // State Machine: Update workspace view parameters per user direction
-        function activateTargetTopic(topicId) {
-            // Adjust UI focus states
-            document.querySelectorAll('.topic-btn').forEach(btn => btn.classList.remove('active-topic'));
-            const targetedBtn = document.getElementById(`btn-${topicId}`);
-            if(targetedBtn) targetedBtn.classList.add('active-topic');
+            // Filter relevant items
+            const localizedSyllabus = curriculumDatabase.filter(item => item.grade === activeGrade && item.type === activeType);
 
-            // Find current data block
-            activeTopic = curriculumDatabase.find(t => t.id === topicId);
-            
-            // Map text vectors to layout fields
-            document.getElementById('strandLabel').innerText = `CBE National Curriculum // ${activeTopic.strand}`;
-            document.getElementById('topicTitle').innerText = activeTopic.subStrand;
-            document.getElementById('videoPlayer').src = activeTopic.videoUrl;
-            document.getElementById('problemExpression').innerText = activeTopic.problem;
-            
-            // Clear out and rebuild the material constraints list
-            const resContainer = document.getElementById('resourceContainer');
-            resContainer.innerHTML = '';
-            
-            // Always integrate foundational ICT toolkit alongside itemized tools
-            const coreToolkit = [...activeTopic.resources, "Learner Digital Device (LDD)", "Internet Connection"];
-            [...new Set(coreToolkit)].forEach(resName => {
-                const tag = document.createElement('span');
-                tag.classList.add('res-tag');
-                tag.innerText = resName;
-                resContainer.appendChild(tag);
-            });
+            // Interface Content Adjustments
+            const headerTitle = `Grade ${activeGrade} ${activeType.charAt(0).toUpperCase() + activeType.slice(1)} Math`;
+            document.getElementById('sidebarTitle').innerText = headerTitle;
+            document.getElementById('sidebarSubtitle').innerText = `Active Pipeline Node: L${activeGrade}`;
 
-            // Rebuild selection arrays
-            const optionsGrid = document.getElementById('optionsGrid');
-            optionsGrid.innerHTML = '';
-            selectedOptionIndex = null;
+            const directoryContainer = document.getElementById('topicDirectory');
+            directoryContainer.innerHTML = '';
 
-            activeTopic.options.forEach((optText, matrixIdx) => {
-                const optBtn = document.createElement('button');
-                optBtn.classList.add('option-btn');
-                optBtn.innerText = optText;
-                optBtn.onclick = () => commitOptionSelection(optBtn, matrixIdx);
-                optionsGrid.appendChild(optBtn);
-            });
-
-            // Refresh AI engine logs
-            wipeChatConsole();
-            appendConsoleMessage("Prof. Oneiro", activeTopic.intro, "oneiro");
-        }
-
-        function commitOptionSelection(element, index) {
-            document.querySelectorAll('.option-btn').forEach(btn => btn.style.borderColor = '#cbd5e1');
-            element.style.borderColor = 'var(--kenya-green)';
-            selectedOptionIndex = index;
-        }
-
-        function evaluateAnswer() {
-            if(selectedOptionIndex === null) {
-                alert("Please select a vector solution coordinate to evaluate.");
+            if(localizedSyllabus.length === 0) {
+                directoryContainer.innerHTML = '<p style="padding:1rem; font-size:0.8rem; color:var(--muted-gray);">No specific system records found.</p>';
                 return;
             }
-            if(selectedOptionIndex === activeTopic.correctIndex) {
-                alert("Evaluation Validated: Vector Complete.");
-                appendConsoleMessage("System Notification", `Successfully cleared task module: ${activeTopic.subStrand}. Metric vectors are stable.`, "student");
+
+            // Render topics sequentially
+            let currentStrand = "";
+            let groupDiv = null;
+
+            localizedSyllabus.forEach((item, index) => {
+                if (item.strand !== currentStrand) {
+                    currentStrand = item.strand;
+                    groupDiv = document.createElement('div');
+                    groupDiv.className = 'strand-group';
+                    
+                    const title = document.createElement('div');
+                    title.className = 'strand-title';
+                    title.innerText = currentStrand;
+                    groupDiv.appendChild(title);
+                    directoryContainer.appendChild(groupDiv);
+                }
+
+                const button = document.createElement('button');
+                button.className = `topic-btn ${index === 0 ? 'active-topic' : ''}`;
+                button.innerText = item.subStrand;
+                button.onclick = (e) => loadWorkspaceTopic(item, e.currentTarget);
+                
+                if(groupDiv) groupDiv.appendChild(button);
+            });
+
+            // Auto-load Initial Dataset Node
+            loadWorkspaceTopic(localizedSyllabus[0]);
+            initOneiroGreeting(headerTitle);
+        }
+
+        // Workspace Presentation Modifier
+        function loadWorkspaceTopic(topic, elementNode = null) {
+            if(!topic) return;
+            activeTopic = topic;
+            selectedAnswerIndex = null;
+
+            if(elementNode) {
+                document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active-topic'));
+                elementNode.classList.add('active-topic');
+            }
+
+            // Load textual information
+            document.getElementById('strandLabel').innerText = topic.strand;
+            document.getElementById('topicTitle').innerText = topic.subStrand;
+            document.getElementById('videoPlayer').src = topic.videoUrl;
+
+            // Load structural resources 
+            const resourceBox = document.getElementById('resourceContainer');
+            resourceBox.innerHTML = '';
+            topic.resources.forEach(res => {
+                const tag = document.createElement('span');
+                tag.className = 'res-tag';
+                tag.innerText = res;
+                resourceBox.appendChild(tag);
+            });
+
+            // Load active matrix metrics
+            document.getElementById('problemExpression').innerText = topic.problem;
+            const optionsBox = document.getElementById('optionsGrid');
+            optionsBox.innerHTML = '';
+            
+            topic.options.forEach((opt, idx) => {
+                const optBtn = document.createElement('button');
+                optBtn.className = 'option-btn';
+                optBtn.innerText = opt;
+                optBtn.onclick = () => {
+                    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                    optBtn.classList.add('selected');
+                    selectedAnswerIndex = idx;
+                };
+                optionsBox.appendChild(optBtn);
+            });
+        }
+
+        // Answer evaluation matrix parameters
+        function evaluateAnswer() {
+            if(selectedAnswerIndex === null) {
+                alert("Please select a transformation logic matrix option before running analysis.");
+                return;
+            }
+            if(selectedAnswerIndex === activeTopic.correctIndex) {
+                appendChatMessage("System Diagnostic", "Vector verification positive. Formula solution matches parameters.", "oneiro");
+                alert("Correct! Mathematical logic confirmed.");
             } else {
-                alert("Evaluation Failed: Structural Discrepancy In Matrix Path.");
-                summonOneiroHint();
+                appendChatMessage("System Diagnostic", "Vector mapping discrepancy detected. Review the hint profile.", "oneiro");
+                alert("Incorrect logical path. Query Professor Oneiro for details.");
             }
         }
 
-        function appendConsoleMessage(sender, text, type) {
-            const chatSpace = document.getElementById('chatSpace');
-            const msgDiv = document.createElement('div');
-            msgDiv.classList.add('msg', type);
-            msgDiv.innerHTML = `<strong>${sender}:</strong><br>${text}`;
-            chatSpace.appendChild(msgDiv);
-            chatSpace.scrollTop = chatSpace.scrollHeight;
-        }
-
-        function wipeChatConsole() {
-            document.getElementById('chatSpace').innerHTML = '';
-        }
-
-        function sendStudentMessage() {
-            const input = document.getElementById('studentInput');
-            if(!input.value.trim()) return;
-            
-            appendConsoleMessage("You", input.value, "student");
-            
-            setTimeout(() => {
-                appendConsoleMessage("Prof. Oneiro", `Query verified. Let's isolate the root conditions of this model. For ${activeTopic.subStrand}, focus on mapping structural indices before calculating terminal transformations.`, "oneiro");
-            }, 750);
-            
-            input.value = '';
+        // AI Cognitive Chat Interfaces
+        function initOneiroGreeting(courseName) {
+            const workspace = document.getElementById('chatSpace');
+            workspace.innerHTML = '';
+            appendChatMessage("PROF. ONEIRO", `Welcome to the ${courseName} engineering workspace portal. Input queries regarding steps, formulas, or algorithmic pathways below.`, "oneiro");
         }
 
         function summonOneiroHint() {
-            appendConsoleMessage("You", "Requesting strategic breakdown parameters for current calculation matrix.", "student");
-            setTimeout(() => {
-                appendConsoleMessage("Prof. Oneiro", activeTopic.hint, "oneiro");
-            }, 500);
+            if(activeTopic) {
+                appendChatMessage("PROF. ONEIRO", `Evaluation Hint: ${activeTopic.hint}`, "oneiro");
+            }
         }
 
-        // Initialize on DOM completion
-        window.onload = () => {
-            compileCurriculumDirectory();
-            // Fire up first item by default
-            activateTargetTopic(curriculumDatabase[0].id);
-        };
+        function sendStudentMessage() {
+            const inputField = document.getElementById('studentInput');
+            const userMsg = inputField.value.trim();
+            if(!userMsg) return;
+
+            appendChatMessage("LEARNER", userMsg, "student");
+            inputField.value = '';
+
+            // Simulated Expert Logic Response Process
+            setTimeout(() => {
+                appendChatMessage("PROF. ONEIRO", "Query logged into processing engine. Reviewing current matrix step values against system standards...", "oneiro");
+            }, 700);
+        }
+
+        function appendChatMessage(sender, bodyText, originClass) {
+            const chatBox = document.getElementById('chatSpace');
+            const container = document.createElement('div');
+            container.className = `msg ${originClass}`;
+            container.innerHTML = `<strong>${sender}:</strong> ${bodyText}`;
+            chatBox.appendChild(container);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Boot sequence trigger
+        window.onload = initRouting;
     </script>
 </body>
 </html>
