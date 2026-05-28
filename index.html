@@ -16,63 +16,47 @@
     <meta property="og:description" content="Engineering Global Transformation through First-Principles. Join the apex of computation.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200">
 
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Deep STEM & Global Tech Architecture Canvas */
-            --bg-obsidian: #030712;      /* Ultra-deep space workspace */
-            --bg-surface: #0b1329;       /* Secondary structural blue panel */
-            --bg-card: #111c44;          /* Advanced interactive card fill */
-            --text-primary: #f8fafc;     /* Pristine typography white */
-            --text-secondary: #94a3b8;   /* Muted grey documentation data */
-            --accent-cyan: #38bdf8;      /* Computational light blue highlight */
-            --accent-pipeline: #1d4ed8;  /* Deep energetic gateway blue */
+            /* Kenyan Flag Exact Hex Architecture */
+            --kenya-black: #000000;
+            --kenya-red: #BB0000;
+            --kenya-green: #006600;
+            --white: #ffffff;
             
-            /* Calibrated Sovereign Kenyan Flag Assets (100% Legally Clean Custom Hexes) */
-            --flag-black: #000000;
-            --flag-white: #ffffff;
-            --flag-red: #9a0000;         /* True national flag dark crimson */
-            --flag-green: #006400;       /* True national flag deep emerald */
+            /* Structural Colors */
+            --bg-obsidian: #0A0A0A; /* Deep Black for premium sections */
+            --off-white: #F9F9F9;
+            --text-dark: #111111;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: var(--bg-obsidian);
-            color: var(--text-primary);
+            background-color: var(--off-white);
+            color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* --- IMMERSIVE SOVEREIGN HERALDRY HEADER --- */
+        /* --- NAVIGATION --- */
         header {
-            background-color: rgba(3, 7, 18, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background-color: var(--white);
             position: sticky;
             top: 0;
             z-index: 1000;
+            /* Authentic Kenyan Flag Stripe */
+            border-bottom: 5px solid transparent;
+            border-image: linear-gradient(to right, var(--kenya-black) 25%, var(--kenya-red) 25%, var(--kenya-red) 50%, var(--kenya-green) 50%, var(--kenya-green) 75%, var(--white) 75%) 1;
             width: 100%;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
-        }
-
-        /* Exact Mathematical 5-Stripe Flag Execution Frame */
-        .flag-ribbon {
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(to right, 
-                var(--flag-black) 0% 30%, 
-                var(--flag-white) 30% 33%, 
-                var(--flag-red) 33% 66%, 
-                var(--flag-white) 66% 69%, 
-                var(--flag-green) 69% 100%
-            );
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         nav {
@@ -80,110 +64,74 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
-            height: 85px;
+            height: 80px;
             max-width: 1600px;
             margin: auto;
-            position: relative;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             text-decoration: none;
         }
 
         .logo img {
-            height: 42px;
+            height: 45px;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 0 8px var(--accent-cyan));
         }
 
         .logo span {
-            color: var(--text-primary);
-            font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
+            color: var(--kenya-green);
+            font-size: 1.1rem;
+            font-weight: 900;
+            letter-spacing: 1px;
             font-family: 'JetBrains Mono', monospace;
-        }
-        
-        .logo span b {
-            color: var(--accent-cyan);
-            font-weight: 700;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             align-items: center;
         }
 
         .nav-links a {
-            color: var(--text-secondary);
+            color: var(--text-dark);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.7rem;
+            transition: 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-family: 'JetBrains Mono', monospace;
         }
 
-        .nav-links a:hover, .nav-links a.active-tab { 
-            color: var(--accent-cyan); 
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
-        }
+        .nav-links a:hover { color: var(--kenya-green); }
 
         .btn-nav {
-            background-color: var(--accent-pipeline);
-            color: var(--text-primary) !important;
-            padding: 10px 22px;
+            background-color: var(--kenya-green);
+            color: var(--white) !important;
+            padding: 8px 15px;
             border-radius: 4px;
-            font-weight: 700 !important;
+            font-weight: 900 !important;
             font-family: 'JetBrains Mono', monospace;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid var(--accent-cyan);
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.5px;
+            transition: 0.3s;
         }
 
-        .btn-nav:hover { 
-            background: var(--accent-cyan);
-            color: var(--bg-obsidian) !important;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
-            transform: translateY(-1px);
-        }
+        .btn-nav:hover { background: var(--kenya-red); }
 
-        /* Mobile Hamburger Icon */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            z-index: 1100;
-        }
-        .menu-toggle span {
-            width: 26px;
-            height: 3px;
-            background-color: var(--text-primary);
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        /* --- ADVANCED HIGH-TECH HERO TERMINAL --- */
+        /* --- HERO --- */
         .hero {
             position: relative;
-            height: 85vh;
+            height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #01040a;
+            background: var(--bg-obsidian);
             overflow: hidden;
-            color: var(--text-primary);
+            color: var(--white);
             text-align: center;
         }
 
@@ -191,89 +139,58 @@
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(3, 7, 18, 0.75), rgba(3, 7, 18, 0.95)), 
+            background: linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.95)), 
                         url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             z-index: 1;
         }
 
-        /* Vector Grid Overlay Matrix for Silicon Valley aesthetic */
-        .hero::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: 1;
-        }
-
-        .hero-content { 
-            position: relative; 
-            z-index: 2; 
-            max-width: 950px; 
-            padding: 0 24px; 
-        }
+        .hero-content { position: relative; z-index: 2; max-width: 1000px; padding: 0 20px; }
 
         .hero-tag {
             font-family: 'JetBrains Mono', monospace;
-            color: var(--accent-cyan);
-            font-size: 0.85rem;
-            letter-spacing: 5px;
+            color: var(--kenya-green);
+            font-size: 0.8rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 25px;
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.08);
-            padding: 6px 16px;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 50px;
+            margin-bottom: 20px;
+            display: block;
         }
 
         .hero h1 {
-            font-size: clamp(2.4rem, 6.5vw, 4.6rem);
+            font-size: clamp(2.2rem, 6vw, 4.5rem);
             font-weight: 900;
-            margin-bottom: 1.8rem;
-            line-height: 1.1;
-            letter-spacing: -1.5px;
+            margin-bottom: 1.5rem;
+            line-height: 1;
         }
 
-        .hero h1 span { 
-            color: transparent;
-            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-cyan) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
+        .hero h1 span { color: var(--kenya-green); font-style: italic; }
 
-        .hero p {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            color: var(--text-secondary);
-            max-width: 720px;
-            margin: 0 auto 2.8rem;
-            font-weight: 400;
-        }
-
-        /* --- DYNAMIC OPTIMIZED MEDIA SLIDER --- */
+        /* --- DYNAMIC SHOWCASE SLIDER --- */
         .showcase-slider-container {
-            background-color: var(--bg-obsidian);
-            padding: 6rem 5% 4rem 5%;
+            background-color: var(--white);
+            padding: 4rem 5% 2rem 5%;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .slider-wrapper {
             position: relative;
             width: 100%;
-            max-width: 1100px;
-            height: 600px; 
+            max-width: 900px;
+            height: 650px;
             overflow: hidden;
             border-radius: 8px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            background: #060913;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-bottom: 5px solid var(--kenya-green);
+            transition: border-color 0.5s;
+        }
+        
+        .slider-wrapper:hover {
+            border-color: var(--kenya-red);
         }
 
         .slide {
@@ -283,11 +200,11 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 1s ease-in-out;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1;
+            background-color: var(--bg-obsidian);
         }
 
         .slide.active {
@@ -298,400 +215,250 @@
         .slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover; 
+            object-fit: contain;
             background-color: var(--bg-obsidian);
         }
 
-        /* High-Visibility Navigation Array controls */
+        /* Slider Controls */
         .slider-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(11, 19, 41, 0.85);
-            color: var(--text-primary);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            width: 50px;
-            height: 50px;
-            border-radius: 4px;
+            background: rgba(10, 10, 10, 0.7);
+            color: var(--white);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
             cursor: pointer;
-            z-index: 25;
-            font-size: 1.1rem;
+            z-index: 20;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
+            transition: 0.3s;
         }
 
         .slider-btn:hover {
-            background: var(--accent-cyan);
-            color: var(--bg-obsidian);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+            background: var(--kenya-green);
         }
 
-        .prev-btn { left: 25px; }
-        .next-btn { right: 25px; }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
 
-        /* Synchronized Core Indicators Array Matrix */
+        /* Slider Indicators */
         .slider-dots {
             position: absolute;
-            bottom: 25px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 12px;
-            z-index: 25;
-            background: rgba(3, 7, 18, 0.6);
-            padding: 8px 16px;
-            border-radius: 50px;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.05);
+            gap: 10px;
+            z-index: 20;
         }
 
         .dot {
-            width: 8px;
-            height: 8px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.4);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
         .dot.active {
-            background: var(--accent-cyan);
-            transform: scale(1.3);
-            box-shadow: 0 0 8px var(--accent-cyan);
+            background: var(--kenya-green);
+            transform: scale(1.2);
         }
 
-        /* --- COMPUTATIONAL INTELLECT METRICS BAR --- */
+        /* --- STATS --- */
         .stats-bar {
-            background: var(--bg-surface);
+            background: var(--white);
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            padding: 4rem 5%;
-            border-top: 1px solid rgba(56, 189, 248, 0.1);
-            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+            padding: 3rem 5%;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .stat-item { 
-            text-align: center; 
-            border-right: 1px solid rgba(255, 255, 255, 0.05); 
-        }
+        .stat-item { text-align: center; border-right: 1px solid #e2e8f0; }
         .stat-item:last-child { border-right: none; }
-        .stat-item h2 { 
-            font-family: 'JetBrains Mono', monospace; 
-            font-size: 2.6rem; 
-            color: var(--text-primary); 
-            font-weight: 700;
-        }
-        .stat-item h2 span { color: var(--accent-cyan); }
-        .stat-item p { 
-            color: var(--text-secondary); 
-            text-transform: uppercase; 
-            font-size: 0.75rem; 
-            letter-spacing: 2px;
-            margin-top: 5px;
-            font-weight: 500;
-        }
+        .stat-item h2 { font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; color: var(--kenya-green); }
+        .stat-item p { font-weight: 700; color: var(--kenya-red); text-transform: uppercase; font-size: 0.65rem; }
 
-        /* --- STRUCTURAL STRATEGY SYSTEM --- */
-        .strategy { 
-            padding: 8rem 10%; 
-            display: flex; 
-            align-items: center; 
-            gap: 5rem; 
-            background: var(--bg-obsidian); 
-        }
+        /* --- STRATEGY --- */
+        .strategy { padding: 8rem 10%; display: flex; align-items: center; gap: 4rem; background: #fff; }
         .strategy-text { flex: 1.2; }
-        .strategy-text h2 { 
-            color: var(--text-primary); 
-            font-size: 2.8rem; 
-            margin-bottom: 1.8rem; 
-            font-weight: 700; 
-            line-height: 1.2;
-            letter-spacing: -1px;
-        }
-        .strategy-text p {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            margin-bottom: 2.5rem;
-        }
-        .strategy-image { flex: 0.8; position: relative; }
-        .strategy-image img { 
-            width: 100%; 
-            border-radius: 6px; 
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            filter: grayscale(20%);
-        }
-        
-        /* Tactical structural shadow layout */
-        .strategy-image::before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            top: 20px; left: 20px; width: 100%; height: 100%;
-            background: var(--bg-surface);
-            border-radius: 6px;
-            border: 1px solid rgba(56, 189, 248, 0.1);
-        }
+        .strategy-text h2 { color: var(--text-dark); font-size: 3rem; margin-bottom: 1.5rem; font-weight: 900; }
+        .strategy-image { flex: 0.8; }
+        .strategy-image img { width: 100%; border-radius: 4px; box-shadow: 30px 30px 0 var(--kenya-green); }
 
-        /* --- THE THREE COMPATIONAL PILLARS --- */
-        .pillars-section { 
-            background: var(--bg-surface); 
-            padding: 8rem 10%; 
-            color: var(--text-primary);
-        }
-        .pillars { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 2rem; 
-        }
+        /* --- PILLARS --- */
+        .pillars-section { background: var(--bg-obsidian); padding: 6rem 10%; color: white; }
+        .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
         .card { 
-            background: var(--bg-card); 
-            padding: 3.5rem 2.5rem; 
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 4px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
+            background: rgba(255, 255, 255, 0.02); 
+            padding: 3rem; 
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.3s;
         }
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 3px; height: 100%;
-            background: var(--accent-cyan);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .card:hover { 
-            border-color: rgba(56, 189, 248, 0.2); 
-            transform: translateY(-5px); 
-            box-shadow: 0 15px 30px rgba(2, 4, 10, 0.4);
-        }
-        .card:hover::before { opacity: 1; }
-        
-        .card h3 { 
-            color: var(--text-primary); 
-            margin-bottom: 1.2rem; 
-            font-family: 'JetBrains Mono', monospace; 
-            font-size: 1.2rem;
-            letter-spacing: 0.5px;
-        }
-        .card p { 
-            color: var(--text-secondary); 
-            font-size: 0.95rem; 
-            margin-bottom: 2.5rem; 
-            line-height: 1.6;
-        }
-        .card-link { 
-            color: var(--accent-cyan); 
-            text-decoration: none; 
-            font-weight: 700; 
-            font-size: 0.75rem; 
-            letter-spacing: 1px; 
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            transition: color 0.3s ease;
-        }
-        .card-link:hover { color: var(--text-primary); }
+        .card:hover { border-color: var(--kenya-green); transform: translateY(-5px); }
+        .card h3 { color: var(--kenya-green); margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; }
+        .card p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem; }
+        .card-link { color: white; text-decoration: none; font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; }
+        .card-link:hover { color: var(--kenya-red); }
 
-        /* --- GLOBAL ALLIANCES REFACTOR --- */
+        /* --- STRATEGIC PARTNERS SECTION --- */
         .partners-section {
-            background: var(--bg-obsidian);
-            padding: 8rem 10%;
+            background: var(--white);
+            padding: 6rem 10%;
             text-align: center;
+            border-top: 1px solid #e2e8f0;
         }
         
         .partners-section h2 {
-            color: var(--text-primary);
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 4rem;
+            color: var(--text-dark);
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 3rem;
             letter-spacing: -1px;
         }
         
         .partners-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
+            gap: 20px;
             align-items: center;
         }
         
         .partner-card {
-            background: var(--bg-surface);
-            border: 1px solid rgba(255,255,255,0.03);
-            padding: 35px 24px;
+            background: var(--off-white);
+            border: 2px solid #f1f5f9;
+            padding: 30px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 170px;
+            height: 160px;
             text-decoration: none; 
-            border-radius: 4px;
+            cursor: pointer;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         .partner-card:hover {
-            border-color: rgba(56, 189, 248, 0.3);
-            transform: translateY(-3px);
-            background: #0f1a3a;
+            border-color: var(--kenya-green);
+            transform: translateY(-4px);
+            background: var(--white);
         }
         
         .partner-card img {
-            max-width: 85%;
-            max-height: 50px;
+            max-width: 90%;
+            max-height: 55px;
             object-fit: contain;
-            margin-bottom: 18px;
+            margin-bottom: 15px;
             display: block;
-            filter: brightness(0.9) contrast(1.1);
         }
         
         .partner-card span {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
-            font-weight: 500;
-            color: var(--text-secondary);
+            font-weight: 700;
+            color: var(--text-dark);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            transition: color 0.3s;
+            opacity: 0.8;
         }
-        .partner-card:hover span { color: var(--text-primary); }
 
-        /* --- STRUCTURAL ENCRYPTED FOOTER --- */
-        footer { 
-            background: #02040a; 
-            color: var(--text-primary); 
-            padding: 6rem 10% 0 10%; 
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 5rem;}
-        .footer-col h4 { 
-            color: var(--accent-cyan); 
-            margin-bottom: 1.8rem; 
-            font-family: 'JetBrains Mono', monospace; 
-            font-size: 0.85rem; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        /* --- FOOTER --- */
+        footer { background: var(--bg-obsidian); color: var(--white); padding: 5rem 10% 2rem; border-top: 2px solid var(--kenya-black); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+        .footer-col h4 { color: var(--kenya-green); margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
         .footer-col ul { list-style: none; }
-        .footer-col li { margin-bottom: 0.9rem; }
-        .footer-col a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
-        .footer-col a:hover { color: var(--text-primary); }
-        
-        .footer-bottom { 
-            border-top: 1px solid rgba(255, 255, 255, 0.05); 
-            padding: 2.5rem 0; 
-            display: flex; 
-            justify-content: space-between; 
-            font-size: 0.75rem; 
-            color: var(--text-secondary); 
-            font-family: 'JetBrains Mono', monospace; 
-        }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; }
+        .footer-col a:hover { color: var(--kenya-red); }
+        .footer-bottom { margin-top: 4rem; border-top: 1px solid #1e293b; padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.65rem; color: #475569; font-family: 'JetBrains Mono', monospace; }
 
-        /* --- RESPONSIVE LAYOUT SYSTEMS --- */
-        @media (max-width: 1150px) {
-            .nav-links {
-                position: fixed;
-                top: 91px; /* 85px nav + 6px flag */
-                right: -100%;
-                width: 280px;
-                height: calc(100vh - 91px);
-                background: var(--bg-obsidian);
-                border-left: 1px solid rgba(56, 189, 248, 0.15);
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 3rem 2.5rem;
-                gap: 2rem;
-                transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                z-index: 999;
-                overflow-y: auto;
-            }
-            .nav-links.active { right: 0; }
-            .menu-toggle { display: flex; }
+        /* --- MOBILE ADAPTATION --- */
+        @media (max-width: 1024px) {
+            .nav-links { display: none; }
+            .stats-bar { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .stat-item { border: none; }
+            .strategy { flex-direction: column; text-align: center; }
+            .strategy-image img { box-shadow: none; }
             .partners-grid { grid-template-columns: repeat(2, 1fr); }
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .slider-wrapper { height: 480px; } 
         }
-
-        @media (max-width: 900px) {
-            .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; padding: 3rem 5%; }
-            .stat-item { border: none; text-align: left; padding-left: 15%; }
-            .strategy { flex-direction: column; text-align: center; gap: 4rem; padding: 6rem 5%; }
-            .strategy-image::before { display: none; }
-            .slider-wrapper { height: 450px; }
-        }
-
-        @media (max-width: 640px) {
-            .stats-bar { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
-            .stat-item { padding-left: 0; text-align: center; }
+        @media (max-width: 600px) {
             .partners-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .slider-wrapper { height: 320px; }
-            .slider-btn { width: 40px; height: 40px; }
-            .prev-btn { left: 10px; }
-            .next-btn { right: 10px; }
+            .slider-wrapper { height: 350px; } 
         }
     </style>
 </head>
 <body>
 
-    <div class="flag-ribbon"></div>
     <header>
         <nav>
             <a href="index.html" class="logo">
-               <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo" onerror="this.style.display='none'">
-               <span>U.E.F.I. <b>CORE</b></span>
+               <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo">
+               <span>U.E.F.I. INSTITUTE</span>
             </a>
-            
-            <div class="menu-toggle" id="mobile-menu-trigger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-            <ul class="nav-links" id="nav-menu-container">
-                <li><a href="index.html" class="active-tab">System</a></li>
-                <li><a href="abouts.html">Manifesto</a></li>
-                <li><a href="tech-lab.html">Computational Lab</a></li>
-                <li><a href="courses.html">Curriculum</a></li>
-                <li><a href="tutor.html">AI Processor</a></li>
-                <li><a href="opportunities-hub.html">Vectors Hub</a></li>
-                <li><a href="contactus.html">Node Link</a></li>
-                <li><a href="enroll.html" class="btn-nav">Access Terminal</a></li>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active-tab">Home</a></li>
+                <li><a href="abouts.html">About</a></li>
+                <li><a href="tech-lab.html">Tech Lab</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="tutor.html">AI Professor</a></li>
+                <li><a href="opportunities-hub.html">Opportunities</a></li>
+                <li><a href="contactus.html">Contact</a></li>
+                <li><a href="enroll.html" class="btn-nav">Enroll Now</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="hero">
         <div class="hero-content">
-            <span class="hero-tag">// Sovereign Computational Infrastructure</span>
+            <span class="hero-tag">Engineering Global Transformation</span>
             <h1>The Apex of <span>Computation</span> & Empowerment.</h1>
-            <p>Bridging elite intelligence through first-principles engineering. Architecting world-class technological infrastructure from Narok, Kenya to the global matrix.</p>
-            <div>
-                <a href="courses.html" class="btn-nav" style="padding: 16px 40px; font-size: 0.8rem; letter-spacing: 1px;">Access the Curriculum</a>
+            <p>Bridging elite intelligence through first-principles engineering. From Narok to the world.</p>
+            <div style="margin-top: 2rem;">
+                <a href="courses.html" class="btn-nav" style="padding: 15px 35px; font-size: 0.8rem;">Access the Curriculum</a>
             </div>
         </div>
     </section>
 
     <section class="showcase-slider-container">
         <div class="slider-wrapper">
-            <button class="slider-btn prev-btn" aria-label="Previous Slide">&#10094;</button>
-            <button class="slider-btn next-btn" aria-label="Next Slide">&#10095;</button>
+            <button class="slider-btn prev-btn">&#10094;</button>
+            <button class="slider-btn next-btn">&#10095;</button>
 
-            <div class="slide active"><img src="assets/Direct photo 2.jpg" alt="Direct Photo Asset 2"></div>
-            <div class="slide"><img src="assets/Fact 1.png" alt="Computational Insight 1"></div>
-            <div class="slide"><img src="assets/cultures celeb.png" alt="Cultural Alignment Celebration"></div>
-            <div class="slide"><img src="assets/Fact 2.png" alt="Computational Insight 2"></div>
-            <div class="slide"><img src="assets/Advocacy photo 1.jpg" alt="Socioeconomic Development Advocacy"></div>
-            <div class="slide"><img src="assets/Fact 3.png" alt="Computational Insight 3"></div>
-            <div class="slide"><img src="assets/I AM A JALUO POEM.pdf" alt="Cultural Identity Integration Document"></div>
-            <div class="slide"><img src="assets/Fact 4.png" alt="Computational Insight 4"></div>
+            <div class="slide active">
+                <img src="assets/Direct photo 2.jpg" alt="Direct Photo 2">
+            </div>
+            <div class="slide">
+                <img src="assets/Fact 1.png" alt="Fact 1 photo">
+            </div>
+            <div class="slide">
+                <img src="assets/cultures celeb.png" alt="Cultures Celebration">
+            </div>
+            <div class="slide">
+                <img src="assets/Fact 2.png" alt="Fact 2 photo">
+            </div>
+            <div class="slide">
+                <img src="assets/Advocacy photo 1.jpg" alt="Advocacy Photo 1">
+            </div>
+            <div class="slide">
+                <img src="assets/Fact 3.png" alt="Fact 3">
+            </div>
+            <div class="slide">
+                <img src="assets/I AM A JALUO POEM.pdf" alt="I'm a Jaluo Photo">
+            </div>
+            <div class="slide">
+                <img src="assets/Fact 4.png" alt="Fact 4">
+            </div>
 
-            <div class="slider-dots" id="dots-matrix-anchor">
+            <div class="slider-dots">
                 <div class="dot active"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
@@ -700,121 +467,105 @@
     </section>
 
     <div class="stats-bar">
-        <div class="stat-item"><h2>500<span>+</span></h2><p>Vectors Activated</p></div>
-        <div class="stat-item"><h2>120<span>+</span></h2><p>Hardware Deployments</p></div>
-        <div class="stat-item"><h2>15<span>+</span></h2><p>Global Alliances</p></div>
-        <div class="stat-item"><h2>$20k<span>+</span></h2><p>Sovereign Alpha</p></div>
+        <div class="stat-item"><h2>500+</h2><p>Vectors (Students)</p></div>
+        <div class="stat-item"><h2>120+</h2><p>Units Donated</p></div>
+        <div class="stat-item"><h2>15+</h2><p>Global Partners</p></div>
+        <div class="stat-item"><h2>$20k+</h2><p>Alpha Generated</p></div>
     </div>
 
     <section class="strategy">
         <div class="strategy-text">
-            <h2>The "First-Principles" Framework: Build Infrastructure, Retain Intellect.</h2>
-            <p>Every international enrollment fuels local educational ecosystems. By establishing uncapped off-grid computational labs inside Narok County, we provide talented youth free access to high-performance hardware, internet access, and asynchronous tracks.</p>
-            <a href="support-us.html" class="card-link" style="border-bottom: 1px solid var(--accent-cyan); padding-bottom: 4px;">VIEW ARCHITECTURE MAP →</a>
+            <h2 style="font-size: 2.5rem;">The "Musk" Strategy: Buy One, Empower One.</h2>
+            <p>Every international enrollment triggers a physical hardware provision for a high-potential student in rural Kenya. Your success funds a future.</p>
+            <a href="support-us.html" style="color: var(--kenya-green); font-weight: 900; font-family: 'JetBrains Mono'; text-decoration: none; border-bottom: 2px solid var(--kenya-red); font-size: 0.8rem;">VIEW SYSTEM ARCHITECTURE →</a>
         </div>
         <div class="strategy-image">
-            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Tech Lab Engineering Process Workspace">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Tech Lab Students">
         </div>
     </section>
 
     <section class="pillars-section">
         <div class="pillars">
             <div class="card">
-                <h3>[ UEFI_LABS ]</h3>
-                <p>Bare-metal system software architecture, discrete algorithmic logic, and high-performance quantitative data analysis funnels designed for international markets.</p>
-                <a href="tech-lab.html" class="card-link">Initialize Terminal →</a>
+                <h3>UEFI_LABS</h3>
+                <p>Bare-metal engineering. Neural Network optimization and Quant logic for high-output engineers.</p>
+                <a href="tech-lab.html" class="card-link">INITIALIZE TERMINAL →</a>
             </div>
             <div class="card">
-                <h3>[ ANTHONINAH_PATH ]</h3>
-                <p>Dedicated safe-haven tech modules, flexible learning loops, and critical mentorship resources engineered to empower young women and combat systemic school dropout rates.</p>
-                <a href="anthoninas-initiative.html" class="card-link">View Initiative →</a>
+                <h3>ANTHONINAH</h3>
+                <p>Mentorship pipelines and health education for women entering the computational workforce.</p>
+                <a href="anthoninas-initiative.html" class="card-link">VIEW INITIATIVE →</a>
             </div>
             <div class="card">
-                <h3>[ WILSON_LEAD ]</h3>
-                <p>Advanced engineering optimization tracks, remote project routing systems, and university-grade scholarships built to provide sustainable economic lifelines.</p>
-                <a href="wilsons-initiative.html" class="card-link">View Initiative →</a>
+                <h3>WILSON_LEAD</h3>
+                <p>Advanced development for men. High-income gig-work and university-grade scholarship pathways.</p>
+                <a href="wilsons-initiative.html" class="card-link">VIEW INITIATIVE →</a>
             </div>
         </div>
     </section>
 
     <section class="partners-section">
-        <h2>Institutional Alliances & Protocols</h2>
+        <h2>Institutional Alliances & Partners</h2>
         <div class="partners-grid">
+            
             <a href="https://youtube.com/@quantforgeacademy?si=K0QnqU7dEJr1Ru1-" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/quantforge-logo.png" alt="QuantForge Academy Logo" onerror="this.style.display='none'">
+                <img src="assets/quantforge-logo.png" alt="QuantForge Academy Logo">
                 <span>QuantForge Academy</span>
             </a>
+
             <a href="https://ecultureskenya.github.io/eCultures-Kenya-/index.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/ecultures-logo.png" alt="eCultures Kenya Logo" onerror="this.style.display='none'">
-                <span>eCultures Kenya</span>
+                <img src="assets/ecultures-logo.png" alt="eCUltures Kenya Logo">
+                <span>eCUltures Kenya</span>
             </a>
+
             <a href="https://aid-for-aiming-africa-fbx6511.public.builtwithrocket.new/" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/aaa-logo.png" alt="Aid For Aiming Africa Logo" onerror="this.style.display='none'">
-                <span>Aid For Aiming Africa</span>
+                <img src="assets/aaa-logo.png" alt="Aid For Aiming Africa Logo">
+                <span>Aid For Aiming Africa (AAA)</span>
             </a>
+
             <a href="https://jengamaliyouthflow.github.io/JengaMali-Youth-Flow-/index.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/jengamali-logo.png" alt="JengaMali Youth Flow Logo" onerror="this.style.display='none'">
-                <span>JengaMali Flow</span>
+                <img src="assets/jengamali-logo.png" alt="JengaMali Youth Flow Logo">
+                <span>JengaMali Youth Flow</span>
             </a>
+
         </div>
     </section>
 
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4 style="color: var(--text-primary);">U.E.F.I. // GLOBAL OPERATIONAL CORE</h4>
-                <p style="color: var(--text-secondary); font-size: 0.85rem; max-width: 320px;">Deploying high-performance frameworks to bridge regional human capability with international economic pipelines.</p>
+                <h4 style="color: white;">U.E.F.I. // GLOBAL</h4>
+                <p style="color:#64748b; font-size: 0.8rem;">Building the architects of tomorrow from Narok, Kenya.</p>
             </div>
             <div class="footer-col">
                 <h4>System Links</h4>
                 <ul>
-                    <li><a href="tech-lab.html">Computational Labs</a></li>
-                    <li><a href="enroll.html">Enrollment Arrays</a></li>
-                    <li><a href="support-us.html">Sovereign Support</a></li>
+                    <li><a href="tech-lab.html">The Labs</a></li>
+                    <li><a href="enroll.html">Enrollment</a></li>
+                    <li><a href="support-us.html">Support</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Nodes</h4>
                 <ul>
-                    <li><a href="tutor.html">AI Processor</a></li>
-                    <li><a href="opportunities-hub.html">Opportunities Vector</a></li>
+                    <li><a href="tutor.html">AI Professor</a></li>
+                    <li><a href="opportunities-hub.html">Opportunities</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
                 <ul>
-                    <li><a href="contactus.html">Initialize Contact Sequence</a></li>
+                    <li><a href="contactus.html">Initialize Contact</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 UEFI Group Systems Institute. All Sovereign Technical Rights Reserved.</p>
-            <p>LATENCY: 0.00ms // SECURITY STATUS: SECURE // REGIONAL IDENTITY LOCK: ACTIVE</p>
+            <p>&copy; 2026 UEFI Institute.</p>
+            <p>LATENCY: 0.00ms // STATUS: ENCRYPTED</p>
         </div>
-        <div class="flag-ribbon" style="margin-top: 1rem; height: 8px;"></div>
     </footer>
 
     <script>
-        // --- MOBILE NAVBAR RESPONSIVE PROTOCOL ---
-        const menuTrigger = document.getElementById('mobile-menu-trigger');
-        const navMenu = document.getElementById('nav-menu-container');
-
-        menuTrigger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            // Animate hamburger lines
-            const lines = menuTrigger.getElementsByTagName('span');
-            if(navMenu.classList.contains('active')) {
-                lines[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
-                lines[1].style.opacity = '0';
-                lines[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
-            } else {
-                lines[0].style.transform = 'none';
-                lines[1].style.opacity = '1';
-                lines[2].style.transform = 'none';
-            }
-        });
-
-        // --- SYNCHRONIZED INTERACTIVE MEDIA SLIDER TRACK ENGINE ---
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
         const prevBtn = document.querySelector('.prev-btn');
@@ -823,17 +574,18 @@
         let slideInterval;
 
         function showSlide(index) {
+            // Reset indexes boundary conditions
             if (index >= slides.length) currentIndex = 0;
             else if (index < 0) currentIndex = slides.length - 1;
             else currentIndex = index;
 
+            // Remove active status from all elements
             slides.forEach(slide => slide.classList.remove('active'));
             dots.forEach(dot => dot.classList.remove('active'));
 
+            // Activate current targeted slide and relative indicator node
             slides[currentIndex].classList.add('active');
-            if(dots[currentIndex]) {
-                dots[currentIndex].classList.add('active');
-            }
+            dots[currentIndex].classList.add('active');
         }
 
         function nextSlide() {
@@ -844,18 +596,20 @@
             showSlide(currentIndex - 1);
         }
 
+        // Run automatic looping transition mechanism (3.5 seconds frequency)
         function startAutoSlide() {
-            slideInterval = setInterval(nextSlide, 4000); // Fluid 4 second computational polling pace
+            slideInterval = setInterval(nextSlide, 3500);
         }
 
         function stopAutoSlide() {
             clearInterval(slideInterval);
         }
 
+        // Event triggers for manual dashboard adjustments
         nextBtn.addEventListener('click', () => {
             nextSlide();
             stopAutoSlide();
-            startAutoSlide();
+            startAutoSlide(); // restarts timer after clicking
         });
 
         prevBtn.addEventListener('click', () => {
@@ -864,6 +618,7 @@
             startAutoSlide();
         });
 
+        // Event handling mapping for indicators dots 
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 showSlide(index);
@@ -872,7 +627,7 @@
             });
         });
 
-        // Initialize Automated Systems Loop Routine
+        // Initialize script loop routine
         startAutoSlide();
     </script>
 </body>
