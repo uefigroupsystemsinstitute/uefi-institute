@@ -16,18 +16,24 @@
     <meta property="og:description" content="Engineering Global Transformation through First-Principles. Join the apex of computation.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200">
 
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #080D1A;         /* Deep Tech Blue Base */
-            --panel-bg: #0F172A;        /* Premium dark slate panel background */
-            --cyber-blue: #00D2FF;      /* Global pipeline connectivity color */
-            --eco-green: #00F5A0;       /* Sustainability Mint Green */
-            --energy-red: #FF3366;      /* Accent Crimson Red */
-            --text-pure: #FFFFFF;
-            --text-muted: #94A3B8;      /* Clean slate grey for paragraphs */
-            --border-glow: rgba(255, 255, 255, 0.05);
+            /* Deep STEM & Global Tech Architecture Canvas */
+            --bg-obsidian: #030712;      /* Ultra-deep space workspace */
+            --bg-surface: #0b1329;       /* Secondary structural blue panel */
+            --bg-card: #111c44;          /* Advanced interactive card fill */
+            --text-primary: #f8fafc;     /* Pristine typography white */
+            --text-secondary: #94a3b8;   /* Muted grey documentation data */
+            --accent-cyan: #38bdf8;      /* Computational light blue highlight */
+            --accent-pipeline: #1d4ed8;  /* Deep energetic gateway blue */
+            
+            /* Calibrated Sovereign Kenyan Flag Assets (100% Legally Clean Custom Hexes) */
+            --flag-black: #000000;
+            --flag-white: #ffffff;
+            --flag-red: #9a0000;         /* True national flag dark crimson */
+            --flag-green: #006400;       /* True national flag deep emerald */
         }
 
         * {
@@ -38,25 +44,35 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-pure);
+            background-color: var(--bg-obsidian);
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* --- HIGH-TECH GLASS NAVIGATION --- */
+        /* --- IMMERSIVE SOVEREIGN HERALDRY HEADER --- */
         header {
-            background-color: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(12px);
+            background-color: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             position: sticky;
             top: 0;
             z-index: 1000;
-            /* Premium original tech gradient ribbon replacing corporate flag block lines */
-            border-top: 4px solid transparent;
-            border-image: linear-gradient(to right, var(--cyber-blue), var(--eco-green), var(--energy-red), var(--text-pure)) 1;
-            border-bottom: 1px solid var(--border-glow);
             width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+        }
+
+        /* Exact Mathematical 5-Stripe Flag Execution Frame */
+        .flag-ribbon {
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, 
+                var(--flag-black) 0% 30%, 
+                var(--flag-white) 30% 33%, 
+                var(--flag-red) 33% 66%, 
+                var(--flag-white) 66% 69%, 
+                var(--flag-green) 69% 100%
+            );
         }
 
         nav {
@@ -64,34 +80,38 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
-            height: 80px;
+            height: 85px;
             max-width: 1600px;
             margin: auto;
+            position: relative;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             text-decoration: none;
         }
 
         .logo img {
-            height: 40px;
+            height: 42px;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 0 8px var(--cyber-blue));
+            filter: drop-shadow(0 0 8px var(--accent-cyan));
         }
 
         .logo span {
-            color: var(--text-pure);
-            font-size: 1.1rem;
+            color: var(--text-primary);
+            font-size: 1.15rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             font-family: 'JetBrains Mono', monospace;
         }
         
-        .logo span b { color: var(--eco-green); }
+        .logo span b {
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
 
         .nav-links {
             list-style: none;
@@ -101,50 +121,69 @@
         }
 
         .nav-links a {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.8rem;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-family: 'JetBrains Mono', monospace;
         }
 
         .nav-links a:hover, .nav-links a.active-tab { 
-            color: var(--eco-green); 
+            color: var(--accent-cyan); 
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
         }
 
         .btn-nav {
-            background-color: var(--eco-green);
-            color: var(--bg-dark) !important;
-            padding: 10px 20px;
-            border-radius: 2px;
+            background-color: var(--accent-pipeline);
+            color: var(--text-primary) !important;
+            padding: 10px 22px;
+            border-radius: 4px;
             font-weight: 700 !important;
             font-family: 'JetBrains Mono', monospace;
             text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid var(--accent-cyan);
             text-transform: uppercase;
-            font-size: 0.75rem !important;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 14px rgba(0, 245, 160, 0.2);
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
         }
 
         .btn-nav:hover { 
-            background: var(--text-pure);
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+            background: var(--accent-cyan);
+            color: var(--bg-obsidian) !important;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
             transform: translateY(-1px);
         }
 
-        /* --- CYBER HEROSCAPE --- */
+        /* Mobile Hamburger Icon */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+        .menu-toggle span {
+            width: 26px;
+            height: 3px;
+            background-color: var(--text-primary);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* --- ADVANCED HIGH-TECH HERO TERMINAL --- */
         .hero {
             position: relative;
             height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #040710;
+            background: #01040a;
             overflow: hidden;
-            color: var(--text-pure);
+            color: var(--text-primary);
             text-align: center;
         }
 
@@ -152,122 +191,149 @@
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(7, 12, 25, 0.8), rgba(8, 13, 26, 0.98)), 
+            background: linear-gradient(to bottom, rgba(3, 7, 18, 0.75), rgba(3, 7, 18, 0.95)), 
                         url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             z-index: 1;
         }
 
-        .hero-content { position: relative; z-index: 2; max-width: 1000px; padding: 0 20px; }
+        /* Vector Grid Overlay Matrix for Silicon Valley aesthetic */
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+
+        .hero-content { 
+            position: relative; 
+            z-index: 2; 
+            max-width: 950px; 
+            padding: 0 24px; 
+        }
 
         .hero-tag {
             font-family: 'JetBrains Mono', monospace;
-            color: var(--cyber-blue);
-            font-size: 0.8rem;
-            letter-spacing: 4px;
+            color: var(--accent-cyan);
+            font-size: 0.85rem;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            margin-bottom: 20px;
-            display: block;
+            margin-bottom: 25px;
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.08);
+            padding: 6px 16px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 50px;
         }
 
         .hero h1 {
-            font-size: clamp(2.2rem, 6vw, 4.2rem);
+            font-size: clamp(2.4rem, 6.5vw, 4.6rem);
             font-weight: 900;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
             line-height: 1.1;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
         }
 
         .hero h1 span { 
-            background: linear-gradient(120deg, var(--eco-green), var(--cyber-blue));
+            color: transparent;
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-cyan) 100%);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: var(--text-secondary);
+            max-width: 720px;
+            margin: 0 auto 2.8rem;
+            font-weight: 400;
         }
 
-        /* --- SECURE DATA SLIDER --- */
+        /* --- DYNAMIC OPTIMIZED MEDIA SLIDER --- */
         .showcase-slider-container {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-obsidian);
             padding: 6rem 5% 4rem 5%;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .slider-wrapper {
             position: relative;
             width: 100%;
-            max-width: 950px;
-            height: 550px;
+            max-width: 1100px;
+            height: 600px; 
             overflow: hidden;
-            border-radius: 4px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-            border: 1px solid var(--border-glow);
-            border-bottom: 4px solid var(--cyber-blue);
-            transition: all 0.4s ease;
-        }
-        
-        .slider-wrapper:hover {
-            border-bottom-color: var(--eco-green);
-            box-shadow: 0 25px 60px rgba(0, 245, 160, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            background: #060913;
         }
 
         .slide {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             opacity: 0;
-            transition: opacity 0.8s ease-in-out;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #0B0F19;
+            z-index: 1;
         }
 
-        .slide.active { opacity: 1; z-index: 10; }
+        .slide.active {
+            opacity: 1;
+            z-index: 10;
+        }
 
         .slide img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            background-color: #0B0F19;
+            object-fit: cover; 
+            background-color: var(--bg-obsidian);
         }
 
+        /* High-Visibility Navigation Array controls */
         .slider-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid var(--border-glow);
-            color: var(--text-pure);
+            background: rgba(11, 19, 41, 0.85);
+            color: var(--text-primary);
+            border: 1px solid rgba(56, 189, 248, 0.3);
             width: 50px;
             height: 50px;
-            border-radius: 50%;
+            border-radius: 4px;
             cursor: pointer;
-            z-index: 20;
-            font-size: 1rem;
+            z-index: 25;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
         }
 
         .slider-btn:hover {
-            background: var(--cyber-blue);
-            color: var(--bg-dark);
-            border-color: var(--cyber-blue);
+            background: var(--accent-cyan);
+            color: var(--bg-obsidian);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
         }
 
-        .prev-btn { left: 20px; }
-        .next-btn { right: 20px; }
+        .prev-btn { left: 25px; }
+        .next-btn { right: 25px; }
 
+        /* Synchronized Core Indicators Array Matrix */
         .slider-dots {
             position: absolute;
             bottom: 25px;
@@ -275,247 +341,357 @@
             transform: translateX(-50%);
             display: flex;
             gap: 12px;
-            z-index: 20;
+            z-index: 25;
+            background: rgba(3, 7, 18, 0.6);
+            padding: 8px 16px;
+            border-radius: 50px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         .dot.active {
-            background: var(--eco-green);
+            background: var(--accent-cyan);
             transform: scale(1.3);
-            box-shadow: 0 0 10px var(--eco-green);
+            box-shadow: 0 0 8px var(--accent-cyan);
         }
 
-        /* --- STATS NODE --- */
+        /* --- COMPUTATIONAL INTELLECT METRICS BAR --- */
         .stats-bar {
-            background: var(--panel-bg);
+            background: var(--bg-surface);
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             padding: 4rem 5%;
-            border-top: 1px solid var(--border-glow);
-            border-bottom: 1px solid var(--border-glow);
+            border-top: 1px solid rgba(56, 189, 248, 0.1);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
         }
 
-        .stat-item { text-align: center; border-right: 1px solid var(--border-glow); }
+        .stat-item { 
+            text-align: center; 
+            border-right: 1px solid rgba(255, 255, 255, 0.05); 
+        }
         .stat-item:last-child { border-right: none; }
-        .stat-item h2 { font-family: 'JetBrains Mono', monospace; font-size: 2.6rem; color: var(--eco-green); font-weight: 700; }
-        .stat-item p { font-weight: 700; color: var(--text-muted); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; margin-top: 5px;}
-
-        /* --- SUSTAINABILITY STRATEGY --- */
-        .strategy { padding: 8rem 10%; display: flex; align-items: center; gap: 5rem; background: var(--bg-dark); }
-        .strategy-text { flex: 1.2; }
-        .strategy-text h2 { color: var(--text-pure); font-size: 2.8rem; margin-bottom: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
-        .strategy-text p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2.5rem; }
-        .strategy-image { flex: 0.8; position: relative; }
-        .strategy-image img { width: 100%; border-radius: 4px; border: 1px solid var(--border-glow); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        
-        /* Decorative custom corner tech accent instead of old heavy background blocks */
-        .strategy-image::after {
-            content: ''; position: absolute; bottom: -15px; right: -15px; width: 100px; height: 100px;
-            border-right: 4px solid var(--energy-red); border-bottom: 4px solid var(--energy-red); z-index: -1;
-        }
-
-        .strategy-link { 
-            color: var(--eco-green); 
-            font-weight: 700; 
+        .stat-item h2 { 
             font-family: 'JetBrains Mono', monospace; 
-            text-decoration: none; 
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            transition: 0.3s;
-            border-bottom: 1px dashed var(--eco-green);
-            padding-bottom: 4px;
+            font-size: 2.6rem; 
+            color: var(--text-primary); 
+            font-weight: 700;
         }
-        .strategy-link:hover { color: var(--text-pure); border-bottom-color: var(--text-pure); }
+        .stat-item h2 span { color: var(--accent-cyan); }
+        .stat-item p { 
+            color: var(--text-secondary); 
+            text-transform: uppercase; 
+            font-size: 0.75rem; 
+            letter-spacing: 2px;
+            margin-top: 5px;
+            font-weight: 500;
+        }
 
-        /* --- CORE PILLARS MATRIX --- */
-        .pillars-section { background: #060A14; padding: 8rem 10%; border-top: 1px solid var(--border-glow); }
-        .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        /* --- STRUCTURAL STRATEGY SYSTEM --- */
+        .strategy { 
+            padding: 8rem 10%; 
+            display: flex; 
+            align-items: center; 
+            gap: 5rem; 
+            background: var(--bg-obsidian); 
+        }
+        .strategy-text { flex: 1.2; }
+        .strategy-text h2 { 
+            color: var(--text-primary); 
+            font-size: 2.8rem; 
+            margin-bottom: 1.8rem; 
+            font-weight: 700; 
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+        .strategy-text p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 2.5rem;
+        }
+        .strategy-image { flex: 0.8; position: relative; }
+        .strategy-image img { 
+            width: 100%; 
+            border-radius: 6px; 
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            filter: grayscale(20%);
+        }
+        
+        /* Tactical structural shadow layout */
+        .strategy-image::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 20px; left: 20px; width: 100%; height: 100%;
+            background: var(--bg-surface);
+            border-radius: 6px;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+        }
+
+        /* --- THE THREE COMPATIONAL PILLARS --- */
+        .pillars-section { 
+            background: var(--bg-surface); 
+            padding: 8rem 10%; 
+            color: var(--text-primary);
+        }
+        .pillars { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 2rem; 
+        }
         .card { 
-            background: var(--panel-bg); 
+            background: var(--bg-card); 
             padding: 3.5rem 2.5rem; 
-            border: 1px solid var(--border-glow);
+            border: 1px solid rgba(255, 255, 255, 0.03);
             border-radius: 4px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 3px; height: 100%;
+            background: var(--accent-cyan);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
         .card:hover { 
-            border-color: rgba(0, 210, 255, 0.3); 
+            border-color: rgba(56, 189, 248, 0.2); 
             transform: translateY(-5px); 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 30px rgba(2, 4, 10, 0.4);
         }
-        .card h3 { color: var(--cyber-blue); margin-bottom: 1.2rem; font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; letter-spacing: 1px; }
-        .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2.5rem; min-height: 70px; }
-        .card-link { color: var(--text-pure); text-decoration: none; font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; font-family: 'JetBrains Mono', monospace; transition: 0.3s;}
-        .card-link:hover { color: var(--energy-red); }
+        .card:hover::before { opacity: 1; }
+        
+        .card h3 { 
+            color: var(--text-primary); 
+            margin-bottom: 1.2rem; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+        .card p { 
+            color: var(--text-secondary); 
+            font-size: 0.95rem; 
+            margin-bottom: 2.5rem; 
+            line-height: 1.6;
+        }
+        .card-link { 
+            color: var(--accent-cyan); 
+            text-decoration: none; 
+            font-weight: 700; 
+            font-size: 0.75rem; 
+            letter-spacing: 1px; 
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        .card-link:hover { color: var(--text-primary); }
 
-        /* --- ALLIANCES NETWORK --- */
+        /* --- GLOBAL ALLIANCES REFACTOR --- */
         .partners-section {
-            background: var(--bg-dark);
+            background: var(--bg-obsidian);
             padding: 8rem 10%;
             text-align: center;
-            border-top: 1px solid var(--border-glow);
         }
         
         .partners-section h2 {
-            color: var(--text-pure);
-            font-size: 2.4rem;
+            color: var(--text-primary);
+            font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 4rem;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
         }
         
         .partners-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
+            gap: 24px;
             align-items: center;
         }
         
         .partner-card {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-glow);
-            padding: 35px 20px;
+            background: var(--bg-surface);
+            border: 1px solid rgba(255,255,255,0.03);
+            padding: 35px 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 170px;
-            border-radius: 4px;
             text-decoration: none; 
-            cursor: pointer;
-            transition: all 0.3s ease;
+            border-radius: 4px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         .partner-card:hover {
-            border-color: var(--eco-green);
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border-color: rgba(56, 189, 248, 0.3);
+            transform: translateY(-3px);
+            background: #0f1a3a;
         }
         
         .partner-card img {
             max-width: 85%;
             max-height: 50px;
             object-fit: contain;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             display: block;
-            filter: brightness(0) invert(1); /* Ensures multi-colored legacy partner logos match the clean theme cleanly */
-            opacity: 0.7;
-            transition: 0.3s;
+            filter: brightness(0.9) contrast(1.1);
         }
-        
-        .partner-card:hover img { opacity: 1; filter: none; }
         
         .partner-card span {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            transition: color 0.3s;
         }
-        .partner-card:hover span { color: var(--text-pure); }
+        .partner-card:hover span { color: var(--text-primary); }
 
-        /* --- TERMINAL FOOTER --- */
-        footer { background: #04070F; color: var(--text-pure); padding: 6rem 10% 2rem; border-top: 1px solid var(--border-glow); }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
-        .footer-col h4 { color: var(--cyber-blue); margin-bottom: 1.8rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        /* --- STRUCTURAL ENCRYPTED FOOTER --- */
+        footer { 
+            background: #02040a; 
+            color: var(--text-primary); 
+            padding: 6rem 10% 0 10%; 
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 5rem;}
+        .footer-col h4 { 
+            color: var(--accent-cyan); 
+            margin-bottom: 1.8rem; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.85rem; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
         .footer-col ul { list-style: none; }
         .footer-col li { margin-bottom: 0.9rem; }
-        .footer-col a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: 0.3s; }
-        .footer-col a:hover { color: var(--energy-red); }
-        .footer-bottom { margin-top: 5rem; border-top: 1px solid var(--border-glow); padding-top: 2.5rem; display: flex; justify-content: space-between; font-size: 0.7rem; color: #475569; font-family: 'JetBrains Mono', monospace; }
-
-        /* --- SYSTEM RESPONSIVENESS MATRIX --- */
-        @media (max-width: 1024px) {
-            .nav-links { display: none; }
-            .stats-bar { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-            .stat-item { border: none; }
-            .strategy { flex-direction: column; text-align: center; gap: 3rem; }
-            .strategy-image::after { display: none; }
-            .partners-grid { grid-template-columns: repeat(2, 1fr); }
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-            .slider-wrapper { height: 420px; }
+        .footer-col a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .footer-col a:hover { color: var(--text-primary); }
+        
+        .footer-bottom { 
+            border-top: 1px solid rgba(255, 255, 255, 0.05); 
+            padding: 2.5rem 0; 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 0.75rem; 
+            color: var(--text-secondary); 
+            font-family: 'JetBrains Mono', monospace; 
         }
-        @media (max-width: 600px) {
+
+        /* --- RESPONSIVE LAYOUT SYSTEMS --- */
+        @media (max-width: 1150px) {
+            .nav-links {
+                position: fixed;
+                top: 91px; /* 85px nav + 6px flag */
+                right: -100%;
+                width: 280px;
+                height: calc(100vh - 91px);
+                background: var(--bg-obsidian);
+                border-left: 1px solid rgba(56, 189, 248, 0.15);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 3rem 2.5rem;
+                gap: 2rem;
+                transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 999;
+                overflow-y: auto;
+            }
+            .nav-links.active { right: 0; }
+            .menu-toggle { display: flex; }
+            .partners-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+        }
+
+        @media (max-width: 900px) {
+            .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; padding: 3rem 5%; }
+            .stat-item { border: none; text-align: left; padding-left: 15%; }
+            .strategy { flex-direction: column; text-align: center; gap: 4rem; padding: 6rem 5%; }
+            .strategy-image::before { display: none; }
+            .slider-wrapper { height: 450px; }
+        }
+
+        @media (max-width: 640px) {
+            .stats-bar { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+            .stat-item { padding-left: 0; text-align: center; }
             .partners-grid { grid-template-columns: 1fr; }
-            .stats-bar { grid-template-columns: 1fr; gap: 2rem; }
             .footer-grid { grid-template-columns: 1fr; }
             .slider-wrapper { height: 320px; }
-            .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
+            .slider-btn { width: 40px; height: 40px; }
+            .prev-btn { left: 10px; }
+            .next-btn { right: 10px; }
         }
     </style>
 </head>
 <body>
 
+    <div class="flag-ribbon"></div>
     <header>
         <nav>
             <a href="index.html" class="logo">
-               <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo">
-               <span>U.E.F.I. <b>INSTITUTE</b></span>
+               <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo" onerror="this.style.display='none'">
+               <span>U.E.F.I. <b>CORE</b></span>
             </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active-tab">Home</a></li>
-                <li><a href="abouts.html">About</a></li>
-                <li><a href="tech-lab.html">Tech Lab</a></li>
-                <li><a href="courses.html">Courses</a></li>
-                <li><a href="tutor.html">AI Professor</a></li>
-                <li><a href="opportunities-hub.html">Opportunities</a></li>
-                <li><a href="contactus.html">Contact</a></li>
-                <li><a href="enroll.html" class="btn-nav">Enroll Now</a></li>
+            
+            <div class="menu-toggle" id="mobile-menu-trigger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-links" id="nav-menu-container">
+                <li><a href="index.html" class="active-tab">System</a></li>
+                <li><a href="abouts.html">Manifesto</a></li>
+                <li><a href="tech-lab.html">Computational Lab</a></li>
+                <li><a href="courses.html">Curriculum</a></li>
+                <li><a href="tutor.html">AI Processor</a></li>
+                <li><a href="opportunities-hub.html">Vectors Hub</a></li>
+                <li><a href="contactus.html">Node Link</a></li>
+                <li><a href="enroll.html" class="btn-nav">Access Terminal</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="hero">
         <div class="hero-content">
-            <span class="hero-tag">// Engineering Global Transformation</span>
-            <h1>The Apex of <span>Computation</span> & Sustainable Empowerment.</h1>
-            <p>Bridging elite tech intelligence through first-principles engineering. Decentralizing opportunities directly from Narok to the world web.</p>
-            <div style="margin-top: 2rem;">
-                <a href="courses.html" class="btn-nav" style="padding: 16px 40px; font-size: 0.8rem; border-radius: 2px;">Access the Curriculum</a>
+            <span class="hero-tag">// Sovereign Computational Infrastructure</span>
+            <h1>The Apex of <span>Computation</span> & Empowerment.</h1>
+            <p>Bridging elite intelligence through first-principles engineering. Architecting world-class technological infrastructure from Narok, Kenya to the global matrix.</p>
+            <div>
+                <a href="courses.html" class="btn-nav" style="padding: 16px 40px; font-size: 0.8rem; letter-spacing: 1px;">Access the Curriculum</a>
             </div>
         </div>
     </section>
 
     <section class="showcase-slider-container">
         <div class="slider-wrapper">
-            <button class="slider-btn prev-btn">&#10094;</button>
-            <button class="slider-btn next-btn">&#10095;</button>
+            <button class="slider-btn prev-btn" aria-label="Previous Slide">&#10094;</button>
+            <button class="slider-btn next-btn" aria-label="Next Slide">&#10095;</button>
 
-            <div class="slide active">
-                <img src="assets/Direct photo 2.jpg" alt="Direct Photo 2">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 1.png" alt="Fact 1 photo">
-            </div>
-            <div class="slide">
-                <img src="assets/cultures celeb.png" alt="Cultures Celebration">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 2.png" alt="Fact 2 photo">
-            </div>
-            <div class="slide">
-                <img src="assets/Advocacy photo 1.jpg" alt="Advocacy Photo 1">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 3.png" alt="Fact 3">
-            </div>
-            <div class="slide">
-                <img src="assets/I AM A JALUO POEM.pdf" alt="I'm a Jaluo Photo">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 4.png" alt="Fact 4">
-            </div>
+            <div class="slide active"><img src="assets/Direct photo 2.jpg" alt="Direct Photo Asset 2"></div>
+            <div class="slide"><img src="assets/Fact 1.png" alt="Computational Insight 1"></div>
+            <div class="slide"><img src="assets/cultures celeb.png" alt="Cultural Alignment Celebration"></div>
+            <div class="slide"><img src="assets/Fact 2.png" alt="Computational Insight 2"></div>
+            <div class="slide"><img src="assets/Advocacy photo 1.jpg" alt="Socioeconomic Development Advocacy"></div>
+            <div class="slide"><img src="assets/Fact 3.png" alt="Computational Insight 3"></div>
+            <div class="slide"><img src="assets/I AM A JALUO POEM.pdf" alt="Cultural Identity Integration Document"></div>
+            <div class="slide"><img src="assets/Fact 4.png" alt="Computational Insight 4"></div>
 
-            <div class="slider-dots">
+            <div class="slider-dots" id="dots-matrix-anchor">
                 <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
@@ -524,20 +700,20 @@
     </section>
 
     <div class="stats-bar">
-        <div class="stat-item"><h2>500+</h2><p>Vectors (Students)</p></div>
-        <div class="stat-item"><h2>120+</h2><p>Units Donated</p></div>
-        <div class="stat-item"><h2>15+</h2><p>Global Partners</p></div>
-        <div class="stat-item"><h2>$20k+</h2><p>Alpha Generated</p></div>
+        <div class="stat-item"><h2>500<span>+</span></h2><p>Vectors Activated</p></div>
+        <div class="stat-item"><h2>120<span>+</span></h2><p>Hardware Deployments</p></div>
+        <div class="stat-item"><h2>15<span>+</span></h2><p>Global Alliances</p></div>
+        <div class="stat-item"><h2>$20k<span>+</span></h2><p>Sovereign Alpha</p></div>
     </div>
 
     <section class="strategy">
         <div class="strategy-text">
-            <h2>The "Musk" Strategy: Buy One, Empower One.</h2>
-            <p>Every international enrollment triggers an automated hardware allocation node for a high-potential student in rural regions. Your engineering mastery directly codes an equitable future.</p>
-            <a href="support-us.html" class="strategy-link">VIEW SYSTEM ARCHITECTURE →</a>
+            <h2>The "First-Principles" Framework: Build Infrastructure, Retain Intellect.</h2>
+            <p>Every international enrollment fuels local educational ecosystems. By establishing uncapped off-grid computational labs inside Narok County, we provide talented youth free access to high-performance hardware, internet access, and asynchronous tracks.</p>
+            <a href="support-us.html" class="card-link" style="border-bottom: 1px solid var(--accent-cyan); padding-bottom: 4px;">VIEW ARCHITECTURE MAP →</a>
         </div>
         <div class="strategy-image">
-            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Tech Lab Students">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Tech Lab Engineering Process Workspace">
         </div>
     </section>
 
@@ -545,84 +721,100 @@
         <div class="pillars">
             <div class="card">
                 <h3>[ UEFI_LABS ]</h3>
-                <p>Bare-metal system optimization, advanced neural architectures, and algorithmic quantitative logic built for international scaling.</p>
-                <a href="tech-lab.html" class="card-link">INITIALIZE TERMINAL →</a>
+                <p>Bare-metal system software architecture, discrete algorithmic logic, and high-performance quantitative data analysis funnels designed for international markets.</p>
+                <a href="tech-lab.html" class="card-link">Initialize Terminal →</a>
             </div>
             <div class="card">
-                <h3>[ ANTHONINAH ]</h3>
-                <p>Strategic mentorship pipelines, data literacy structures, and specialized pathways for women breaking into the global machine workforce.</p>
-                <a href="anthoninas-initiative.html" class="card-link">VIEW INITIATIVE →</a>
+                <h3>[ ANTHONINAH_PATH ]</h3>
+                <p>Dedicated safe-haven tech modules, flexible learning loops, and critical mentorship resources engineered to empower young women and combat systemic school dropout rates.</p>
+                <a href="anthoninas-initiative.html" class="card-link">View Initiative →</a>
             </div>
             <div class="card">
                 <h3>[ WILSON_LEAD ]</h3>
-                <p>Architecting production pipelines for men. Accelerating high-income remote contract operations and university-grade tech nodes.</p>
-                <a href="wilsons-initiative.html" class="card-link">VIEW INITIATIVE →</a>
+                <p>Advanced engineering optimization tracks, remote project routing systems, and university-grade scholarships built to provide sustainable economic lifelines.</p>
+                <a href="wilsons-initiative.html" class="card-link">View Initiative →</a>
             </div>
         </div>
     </section>
 
     <section class="partners-section">
-        <h2>Institutional Alliances & Partners</h2>
+        <h2>Institutional Alliances & Protocols</h2>
         <div class="partners-grid">
-            
             <a href="https://youtube.com/@quantforgeacademy?si=K0QnqU7dEJr1Ru1-" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/quantforge-logo.png" alt="QuantForge Academy Logo">
+                <img src="assets/quantforge-logo.png" alt="QuantForge Academy Logo" onerror="this.style.display='none'">
                 <span>QuantForge Academy</span>
             </a>
-
             <a href="https://ecultureskenya.github.io/eCultures-Kenya-/index.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/ecultures-logo.png" alt="eCUltures Kenya Logo">
-                <span>eCUltures Kenya</span>
+                <img src="assets/ecultures-logo.png" alt="eCultures Kenya Logo" onerror="this.style.display='none'">
+                <span>eCultures Kenya</span>
             </a>
-
             <a href="https://aid-for-aiming-africa-fbx6511.public.builtwithrocket.new/" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/aaa-logo.png" alt="Aid For Aiming Africa Logo">
-                <span>Aid For Aiming Africa (AAA)</span>
+                <img src="assets/aaa-logo.png" alt="Aid For Aiming Africa Logo" onerror="this.style.display='none'">
+                <span>Aid For Aiming Africa</span>
             </a>
-
             <a href="https://jengamaliyouthflow.github.io/JengaMali-Youth-Flow-/index.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/jengamali-logo.png" alt="JengaMali Youth Flow Logo">
-                <span>JengaMali Youth Flow</span>
+                <img src="assets/jengamali-logo.png" alt="JengaMali Youth Flow Logo" onerror="this.style.display='none'">
+                <span>JengaMali Flow</span>
             </a>
-
         </div>
     </section>
 
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4 style="color: white;">U.E.F.I. // GLOBAL</h4>
-                <p style="color:#64748b; font-size: 0.8rem;">Building the deep-tech architects of tomorrow from Narok, Kenya.</p>
+                <h4 style="color: var(--text-primary);">U.E.F.I. // GLOBAL OPERATIONAL CORE</h4>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; max-width: 320px;">Deploying high-performance frameworks to bridge regional human capability with international economic pipelines.</p>
             </div>
             <div class="footer-col">
                 <h4>System Links</h4>
                 <ul>
-                    <li><a href="tech-lab.html">The Labs</a></li>
-                    <li><a href="enroll.html">Enrollment</a></li>
-                    <li><a href="support-us.html">Support Node</a></li>
+                    <li><a href="tech-lab.html">Computational Labs</a></li>
+                    <li><a href="enroll.html">Enrollment Arrays</a></li>
+                    <li><a href="support-us.html">Sovereign Support</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Nodes</h4>
                 <ul>
-                    <li><a href="tutor.html">AI Professor</a></li>
-                    <li><a href="opportunities-hub.html">Opportunities Hub</a></li>
+                    <li><a href="tutor.html">AI Processor</a></li>
+                    <li><a href="opportunities-hub.html">Opportunities Vector</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
                 <ul>
-                    <li><a href="contactus.html">Initialize Link</a></li>
+                    <li><a href="contactus.html">Initialize Contact Sequence</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 UEFI Institute. All Rights Reserved.</p>
-            <p>LATENCY: 0.00ms // PIPELINE ACTIVE // SECURE CONNECTION</p>
+            <p>&copy; 2026 UEFI Group Systems Institute. All Sovereign Technical Rights Reserved.</p>
+            <p>LATENCY: 0.00ms // SECURITY STATUS: SECURE // REGIONAL IDENTITY LOCK: ACTIVE</p>
         </div>
+        <div class="flag-ribbon" style="margin-top: 1rem; height: 8px;"></div>
     </footer>
 
     <script>
+        // --- MOBILE NAVBAR RESPONSIVE PROTOCOL ---
+        const menuTrigger = document.getElementById('mobile-menu-trigger');
+        const navMenu = document.getElementById('nav-menu-container');
+
+        menuTrigger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            // Animate hamburger lines
+            const lines = menuTrigger.getElementsByTagName('span');
+            if(navMenu.classList.contains('active')) {
+                lines[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                lines[1].style.opacity = '0';
+                lines[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+            } else {
+                lines[0].style.transform = 'none';
+                lines[1].style.opacity = '1';
+                lines[2].style.transform = 'none';
+            }
+        });
+
+        // --- SYNCHRONIZED INTERACTIVE MEDIA SLIDER TRACK ENGINE ---
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
         const prevBtn = document.querySelector('.prev-btn');
@@ -638,8 +830,10 @@
             slides.forEach(slide => slide.classList.remove('active'));
             dots.forEach(dot => dot.classList.remove('active'));
 
-            if(slides[currentIndex]) slides[currentIndex].classList.add('active');
-            if(dots[currentIndex]) dots[currentIndex].classList.add('active');
+            slides[currentIndex].classList.add('active');
+            if(dots[currentIndex]) {
+                dots[currentIndex].classList.add('active');
+            }
         }
 
         function nextSlide() {
@@ -651,7 +845,7 @@
         }
 
         function startAutoSlide() {
-            slideInterval = setInterval(nextSlide, 3500);
+            slideInterval = setInterval(nextSlide, 4000); // Fluid 4 second computational polling pace
         }
 
         function stopAutoSlide() {
@@ -678,6 +872,7 @@
             });
         });
 
+        // Initialize Automated Systems Loop Routine
         startAutoSlide();
     </script>
 </body>
