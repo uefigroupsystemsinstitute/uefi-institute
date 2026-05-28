@@ -3,706 +3,1289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Academic Core | CBE Mathematics Workspace</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+    <title>Grade 10 Mathematics Interactive Curriculum Blueprint</title>
     <style>
+        /* ==========================================================================
+           1. ROOT VARIABLES & MATTE THEME SYSTEM
+           ========================================================================== */
         :root {
-            --kenya-black: #0A0A0A;
-            --kenya-red: #BB0000;
-            --kenya-green: #008751;
-            --white: #ffffff;
-            --bg-obsidian: #0D0F12;
-            --off-white: #F8FAFC;
-            --border-color: #E2E8F0;
-            --text-dark: #1E293B;
-            --muted-gray: #64748B;
-            --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-            --interactive-shadow: 0 10px 15px -3px rgba(0, 135, 81, 0.1);
+            --bg-matte-main: #f4f6f7;
+            --bg-matte-card: #ffffff;
+            --bg-matte-accent: #eaeded;
+            --bg-matte-dark: #2c3e50;
+            --bg-matte-header: #1a252f;
+            --text-matte-dark: #232b2b;
+            --text-matte-muted: #7f8c8d;
+            --border-matte: #d5dbdb;
+            --math-highlight: #e74c3c;
+            --shadow-matte: 0 4px 10px rgba(0, 0, 0, 0.04);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Playfair Display', serif; }
-        body { background-color: var(--off-white); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; position: relative;}
+        /* ==========================================================================
+           2. BASE TYPOGRAPHY & RESET
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        /* --- LEFT NAVIGATION: LEARNING DIRECTORY --- */
-        .curriculum-sidebar {
-            width: 340px;
-            background: var(--white);
-            border-right: 1px solid var(--border-color);
-            display: flex;
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: var(--bg-matte-main);
+            color: var(--text-matte-dark);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-matte-card);
+            padding: 50px;
+            border-radius: 6px;
+            box-shadow: var(--shadow-matte);
+        }
+
+        /* ==========================================================================
+           3. HEADERS & STRUCTURAL LAYOUT
+           ========================================================================== */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 3px double var(--border-matte);
+            padding-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            color: var(--bg-matte-header);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--text-matte-muted);
+        }
+
+        h2.section-title {
+            font-size: 1.8rem;
+            color: var(--bg-matte-dark);
+            border-bottom: 2px solid var(--bg-matte-dark);
+            padding-bottom: 8px;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==========================================================================
+           4. MATTE SPECIFICATIONS TABLE
+           ========================================================================== */
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 35px;
+        }
+
+        .specs-table th {
+            background-color: var(--bg-matte-dark);
+            color: #ffffff;
+            font-weight: bold;
+            text-align: left;
+            padding: 14px 18px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            border: 1px solid var(--bg-matte-dark);
+        }
+
+        .specs-table td {
+            padding: 14px 18px;
+            border: 1px solid var(--border-matte);
+            font-size: 1.05rem;
+            vertical-align: top;
+        }
+
+        .specs-table tr:nth-child(even) {
+            background-color: #fafbfc;
+        }
+
+        .col-id { width: 12%; font-weight: bold; color: var(--text-matte-muted); }
+        .col-unit { width: 25%; font-weight: bold; color: var(--bg-matte-header); }
+        .col-qty { width: 10%; text-align: center; font-weight: bold; }
+        .col-intent { width: 53%; }
+
+        /* ==========================================================================
+           5. MATH TYPESETTING ENGINE (NO FLAT TEXT EXPRESSIONS)
+           ========================================================================== */
+        .math-expr {
+            font-family: "Times New Roman", Times, serif;
+            font-style: italic;
+            padding: 0 3px;
+            font-size: 1.15rem;
+            white-space: nowrap;
+        }
+
+        .math-expr sup {
+            font-style: normal;
+            font-size: 0.75rem;
+            vertical-align: super;
+            line-height: 0;
+        }
+
+        .math-expr sub {
+            font-style: normal;
+            font-size: 0.75rem;
+            vertical-align: sub;
+            line-height: 0;
+        }
+
+        .math-block {
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+            font-style: italic;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1.15rem;
+            margin: 2px 0;
+        }
+
+        .math-frac {
+            display: inline-transform;
+            display: inline-flex;
             flex-direction: column;
-            height: 100vh;
-            box-shadow: 2px 0 12px rgba(0,0,0,0.02);
+            vertical-align: middle;
+            text-align: center;
+            padding: 0 4px;
+            font-style: italic;
         }
 
-        .sidebar-header {
-            padding: 1.75rem;
-            border-bottom: 1px solid var(--border-color);
-            background: var(--white);
+        .math-frac .num {
+            border-bottom: 1px solid var(--text-matte-dark);
+            padding-bottom: 1px;
+            font-size: 0.95rem;
         }
 
-        .back-courses-link {
+        .math-frac .den {
+            padding-top: 1px;
+            font-size: 0.95rem;
+        }
+
+        .math-matrix {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: transparent;
-            border: none;
-            color: var(--muted-gray);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            padding: 4px 0;
-            margin-bottom: 0.75rem;
-            transition: color 0.2s ease;
-            text-decoration: none;
+            margin: 0 4px;
+            vertical-align: middle;
+            border-left: 2px solid var(--text-matte-dark);
+            border-right: 2px solid var(--text-matte-dark);
+            border-radius: 4px;
+            padding: 0 5px;
         }
 
-        .back-courses-link:hover {
-            color: var(--kenya-red);
-        }
-
-        .sidebar-header h2 {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--kenya-black);
-            letter-spacing: -0.3px;
-        }
-
-        .sidebar-header p {
-            font-size: 0.8rem;
-            color: var(--muted-gray);
-            margin-top: 4px;
-            font-weight: 500;
-        }
-
-        .topic-scroll {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1.25rem 1rem;
-        }
-
-        .strand-group {
-            margin-bottom: 1.75rem;
-        }
-
-        .strand-title {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--kenya-red);
-            padding-left: 0.75rem;
-            margin-bottom: 0.6rem;
-            letter-spacing: 0.8px;
-        }
-
-        .topic-btn {
-            width: 100%;
-            background: transparent;
-            border: 1px solid transparent;
-            text-align: left;
-            padding: 0.85rem 1.1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-bottom: 0.4rem;
+        .matrix-col {
             display: flex;
-            align-items: center;
-            gap: 8px;
+            flex-direction: column;
+            text-align: center;
+            padding: 0 4px;
+            font-style: normal;
+            font-size: 1rem;
         }
 
-        .topic-btn::before {
-            content: "•";
-            color: var(--border-color);
-            transition: color 0.2s;
-            font-size: 1.2rem;
+        .math-surd {
+            font-style: normal;
+            font-size: 1.15rem;
         }
-
-        .topic-btn:hover {
-            background: rgba(10, 10, 10, 0.04);
-            color: var(--kenya-black);
-            padding-left: 1.25rem;
-        }
-
-        .topic-btn:hover::before {
-            color: var(--kenya-red);
-        }
-
-        .topic-btn.active-topic {
-            background: rgba(0, 135, 81, 0.08);
-            color: var(--kenya-green);
-            border-color: rgba(0, 135, 81, 0.15);
-            font-weight: 700;
-            padding-left: 1.25rem;
-        }
-
-        .topic-btn.active-topic::before {
-            color: var(--kenya-green);
-            content: "➔";
-            font-size: 0.85rem;
-        }
-
-        /* --- MAIN STUDY ENVIRONMENT --- */
-        main {
-            flex: 1;
-            padding: 2.5rem 4%;
-            overflow-y: auto;
-            height: 100vh;
-        }
-
-        .curriculum-tag { 
-            font-family: 'JetBrains Mono', monospace; 
-            color: var(--kenya-red); 
-            font-weight: 700; 
-            font-size: 0.8rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1.5px; 
-        }
-
-        h1 { font-size: 2.4rem; font-weight: 800; margin-top: 0.4rem; margin-bottom: 1.75rem; color: var(--kenya-black); letter-spacing: -0.5px; }
         
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 12px; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05); margin-bottom: 2rem; border: 1px solid var(--border-color); }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .math-surd span {
+            border-top: 1px solid var(--text-matte-dark);
+            padding-top: 1px;
+            font-style: italic;
+            margin-left: -2px;
+        }
 
-        .resource-panel {
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--card-shadow);
-        }
-        .resource-title {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: var(--muted-gray);
-            margin-bottom: 0.65rem;
-            letter-spacing: 0.5px;
-        }
-        .resource-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .res-tag {
-            font-size: 0.8rem;
-            background: var(--off-white);
-            padding: 6px 12px;
+        /* ==========================================================================
+           6. INTERACTIVE STUDY MODULES (VIDEO & PRACTICE)
+           ========================================================================== */
+        .unit-module {
+            background-color: #ffffff;
+            border: 1px solid var(--border-matte);
             border-radius: 6px;
-            font-weight: 600;
-            color: #475569;
-            border: 1px solid var(--border-color);
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
 
-        /* --- EXAM STEP TRACKER BAR --- */
-        .progression-tracker {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--white);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 1.5rem;
+        .unit-module h3 {
+            font-size: 1.4rem;
+            color: var(--bg-matte-dark);
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--border-matte);
+            padding-bottom: 8px;
         }
-        .tracker-title { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); text-transform: uppercase; }
-        .node-track { display: flex; gap: 8px; align-items: center; }
-        .track-node {
-            width: 32px; height: 32px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.85rem; font-weight: 700; border: 2px solid var(--border-color);
-            background: var(--white); color: var(--muted-gray); transition: all 0.3s ease;
+
+        /* Responsive Video Container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            background-color: #000000;
+            border-radius: 4px;
+            margin-bottom: 25px;
         }
-        .track-node.passed { background: var(--kenya-green); color: var(--white); border-color: var(--kenya-green); }
-        .track-node.current { border-color: var(--kenya-black); color: var(--kenya-black); background: rgba(0,0,0,0.03); box-shadow: 0 0 0 3px rgba(10,10,10,0.1); }
-        .track-node.locked { background: var(--off-white); opacity: 0.6; cursor: not-allowed; }
 
-        /* Quiz UI Container Elements */
-        .quiz-container { 
-            background: var(--white); 
-            border-top: 6px solid var(--kenya-green); 
-            padding: 2.25rem; 
-            border-radius: 12px; 
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.04), var(--card-shadow); 
-            margin-bottom: 3rem; 
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
-        .quiz-container h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--kenya-black); display: flex; align-items: center; gap: 8px;}
-        .quiz-container h2::before { content: "✍️"; }
-        .math-expr { background: var(--off-white); padding: 1.5rem; border-radius: 8px; font-size: 1.2rem; margin-bottom: 1.75rem; border: 1px solid var(--border-color); color: #0f172a; line-height: 1.8; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
-        
-        /* Math Render Structures */
-        .rad-wrap { display: inline-flex; align-items: flex-end; position: relative; margin: 0 2px; }
-        .rad-sym { font-size: 1.35rem; line-height: 0.9; transform: translateY(2px); font-family: sans-serif; }
-        .rad-val { border-top: 2px solid currentColor; padding: 0 3px 1px 2px; line-height: 1; font-style: italic; }
-        .sup-val { font-size: 0.75rem; vertical-align: super; font-style: italic; margin-left: 1px; }
-        .sub-val { font-size: 0.75rem; vertical-align: sub; font-style: italic; }
-        .fr-wrap { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; font-size: 0.95rem; }
-        .fr-num { border-bottom: 1px solid currentColor; padding: 0 4px; line-height: 1.1; }
-        .fr-den { padding: 0 4px; line-height: 1.1; }
 
-        .options-grid { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.75rem; }
-        .option-btn { background: var(--white); border: 2px solid var(--border-color); padding: 1.1rem 1.25rem; text-align: left; border-radius: 10px; cursor: pointer; font-size: 1.05rem; font-weight: 600; transition: all 0.2s ease; color: #334155; display: flex; align-items: center; }
-        .option-btn:hover { border-color: var(--kenya-black); background: var(--off-white); }
-        .option-btn.selected { border-color: var(--kenya-green); background: rgba(0, 135, 81, 0.03); box-shadow: 0 0 0 1px var(--kenya-green); }
-        
-        .action-bar { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn { padding: 0.9rem 1.75rem; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.9rem; letter-spacing: 0.5px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 8px;}
-        .btn-submit { background: var(--kenya-green); color: var(--white); box-shadow: 0 4px 6px -1px rgba(0, 135, 81, 0.2); }
-        .btn-submit:hover { background: #006e41; transform: translateY(-1px); }
-        .btn-hint { background: #E2E8F0; color: #475569; }
-        .btn-hint:hover { background: #CBD5E1; }
-        .btn-calc { background: #1E293B; color: var(--white); margin-left: auto;}
-        .btn-calc:hover { background: #0F172A; }
-
-        /* --- PROFESSOR ONEIRO COGNITIVE SIDEBAR (RIGHT) --- */
-        aside { width: 360px; background: var(--bg-obsidian); color: var(--white); position: relative; height: 100vh; display: flex; flex-direction: column; border-left: 4px solid var(--kenya-green); }
-        .prof-header { padding: 1.5rem; border-bottom: 1px solid #1e293b; background: #090b0d; }
-        .prof-title { font-family: 'JetBrains Mono', monospace; color: var(--kenya-green); font-weight: 900; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
-        .prof-status { font-size: 0.65rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
-        .chat-space { flex: 1; padding: 1.25rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; font-size: 0.85rem; }
-        .msg { padding: 0.9rem; border-radius: 6px; max-width: 88%; line-height: 1.4; }
-        .msg.oneiro { background: rgba(0, 135, 81, 0.08); border: 1px solid rgba(0, 135, 81, 0.2); color: #e2e8f0; align-self: flex-start; }
-        .msg.student { background: #1e293b; color: var(--white); align-self: flex-end; }
-        .chat-input-area { padding: 1.25rem; background: #090b0d; border-top: 1px solid #1e293b; display: flex; gap: 10px; }
-        .chat-input { flex: 1; background: #1e293b; border: 1px solid #334155; padding: 0.8rem; border-radius: 4px; color: var(--white); font-size: 0.85rem; }
-        .chat-input:focus { outline: none; border-color: var(--kenya-green); }
-        .btn-send { background: var(--kenya-green); border: none; padding: 0 1.2rem; border-radius: 4px; cursor: pointer; color: white; font-weight: 900; }
-
-        /* --- SLIDING DESMOS CALCULATOR PANEL INTERFACE --- */
-        .desmos-drawer {
-            position: fixed; top: 0; right: -500px; width: 480px; height: 100vh;
-            background: var(--white); border-left: 1px solid var(--border-color);
-            box-shadow: -10px 0 30px rgba(0,0,0,0.1); z-index: 1000;
-            display: flex; flex-direction: column; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Practice Problem Sets Layout */
+        .practice-heading {
+            font-size: 1.15rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-matte-dark);
         }
-        .desmos-drawer.open { right: 0; }
-        .calc-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #FAFAFA;}
-        .calc-title { font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 6px; font-size: 0.95rem; }
-        .close-calc-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--muted-gray); }
-        .close-calc-btn:hover { color: var(--kenya-red); }
-        .desmos-frame { flex: 1; width: 100%; border: none; }
 
-        /* --- GAMIFIED POPUP MODALS (SUCCESS / FAILURE) --- */
-        .feedback-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(4px);
-            display: flex; align-items: center; justify-content: center; z-index: 9999;
-            opacity: 0; pointer-events: none; transition: all 0.3s ease;
+        .problem-item {
+            background-color: var(--bg-matte-main);
+            border-left: 3px solid var(--bg-matte-dark);
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
         }
-        .feedback-overlay.show { opacity: 1; pointer-events: auto; }
-        .feedback-modal {
-            background: var(--white); border-radius: 16px; padding: 2.5rem; width: 90%; max-width: 450px;
-            text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            transform: scale(0.85); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .feedback-overlay.show .feedback-modal { transform: scale(1); }
-        .modal-icon { font-size: 4.5rem; margin-bottom: 1rem; display: inline-block; }
-        .modal-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
-        .modal-desc { color: var(--muted-gray); font-size: 1rem; margin-bottom: 1.75rem; line-height: 1.5; }
-        .modal-btn { width: 100%; padding: 1rem; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
-        
-        .modal-success .modal-title { color: var(--kenya-green); }
-        .modal-success .modal-btn { background: var(--kenya-green); color: var(--white); }
-        .modal-success .modal-btn:hover { background: #016b40; }
-        .modal-fail .modal-title { color: var(--kenya-red); }
-        .modal-fail .modal-btn { background: var(--kenya-black); color: var(--white); }
-        .modal-fail .modal-btn:hover { background: #222; }
 
-        @media (max-width: 1200px) {
-            .curriculum-sidebar { width: 280px; }
-            aside { width: 320px; }
-            .desmos-drawer { width: 400px; }
+        .problem-text {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        /* Matte Accordion Style Expandable Answers */
+        .solution-toggle {
+            display: block;
+            background: none;
+            border: none;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--text-matte-muted);
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+        }
+
+        .solution-toggle:hover {
+            color: var(--bg-matte-dark);
+        }
+
+        .solution-content {
+            display: none;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-matte);
+            font-size: 1.05rem;
+            color: #16a085;
+        }
+
+        /* ==========================================================================
+           7. CURRICULUM SUMMARY CARD
+           ========================================================================== */
+        .summary-dashboard {
+            background-color: var(--bg-matte-accent);
+            border-left: 6px solid var(--bg-matte-dark);
+            padding: 25px 30px;
+            margin-top: 50px;
+            border-radius: 4px;
+        }
+
+        .summary-dashboard h3 {
+            margin-top: 0;
+            color: var(--bg-matte-dark);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .summary-dashboard ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+
+        .summary-dashboard li {
+            margin-bottom: 6px;
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
 
-    <div class="desmos-drawer" id="desmosDrawer">
-        <div class="calc-header">
-            <div class="calc-title">🧮 Desmos Scientific Workspace</div>
-            <button class="close-calc-btn" onclick="toggleCalculator()">✕</button>
-        </div>
-        <iframe class="desmos-frame" src="https://www.desmos.com/scientific" title="Desmos Scientific Calculator"></iframe>
-    </div>
+<div class="container">
 
-    <div class="curriculum-sidebar">
-        <div class="sidebar-header">
-            <a href="courses.html" class="back-courses-link">← Back to Courses</a>
-            <h2 id="sidebarTitle">Grade Math Pod</h2>
-            <p id="sidebarSubtitle">Loading Framework Node...</p>
-        </div>
-        <div class="topic-scroll" id="topicDirectory"></div>
-    </div>
+    <header>
+        <h1>Grade 10 Mathematics Blueprint</h1>
+        <p>Comprehensive Academic Curriculum Specification and Structured Item Bank</p>
+    </header>
 
-    <main>
-        <span class="curriculum-tag" id="strandLabel">Loading Strand Engine...</span>
-        <h1 id="topicTitle">Dynamic Syllabus Target</h1>
+    <h2>I. Curriculum Structure Matrix</h2>
+    <table class="specs-table">
+        <thead>
+            <tr>
+                <th class="col-id">Strand ID</th>
+                <th class="col-unit">Sub-Strand Unit</th>
+                <th class="col-qty">Items</th>
+                <th class="col-intent">Focus / Intent</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="col-id">g10-real</td>
+                <td class="col-unit">Real Numbers</td>
+                <td class="col-qty">10</td>
+                <td>Rational vs irrational delineation, surd structural simplification, analytical interval boundaries, and operational bounds.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-ind</td>
+                <td class="col-unit">Indices and Logarithms</td>
+                <td class="col-qty">10</td>
+                <td>Operational laws of indices, fundamental exponent equations, and change of base transformations.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-quad</td>
+                <td class="col-unit">Quadratic Expressions & Equations</td>
+                <td class="col-qty">10</td>
+                <td>Polynomial factoring variations, completing perfect squares, and analytical application of the quadratic formula.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-sim</td>
+                <td class="col-unit">Similarity and Enlargement</td>
+                <td class="col-qty">10</td>
+                <td>Linear scale transformations (<span class="math-expr">k</span>), area modification factors (<span class="math-expr">k<sup>2</sup></span>), and volumetric ratios (<span class="math-expr">k<sup>3</sup></span>).</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-ref</td>
+                <td class="col-unit">Reflection and Congruence</td>
+                <td class="col-qty">10</td>
+                <td>Cartesian coordinate mirror-line transforms, and structural proofs utilizing triangle congruence criteria.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-rot</td>
+                <td class="col-unit">Rotation</td>
+                <td class="col-qty">10</td>
+                <td>Tracking spatial coordinates relative to an explicit center, applying directional rotational angles.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-trig</td>
+                <td class="col-unit">Trigonometry 1</td>
+                <td class="col-qty">10</td>
+                <td>Right-angled trigonometric criteria, Pythagoras theorem mechanics, and basic contextual angle tracking.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-poly</td>
+                <td class="col-unit">Area of Polygons</td>
+                <td class="col-qty">10</td>
+                <td>Area determinations across irregular triangles, parallelograms, trapeziums, and compound regular polygons.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-circ</td>
+                <td class="col-unit">Area of a Part of a Circle</td>
+                <td class="col-qty">10</td>
+                <td>Analytical evaluation of sector surface fields, absolute arc parameters, and isolated segment regions.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-surf</td>
+                <td class="col-unit">Surface Area & Volume of Solids</td>
+                <td class="col-qty">10</td>
+                <td>Three-dimensional boundary area mappings and spatial volume quantities for geometric solids.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-vec</td>
+                <td class="col-unit">Vectors 1</td>
+                <td class="col-qty">10</td>
+                <td>Two-dimensional vector representations, algebraic column transformations, and scalar length computations.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-mot</td>
+                <td class="col-unit">Linear Motion</td>
+                <td class="col-qty">10</td>
+                <td>Kinematic relative velocities, standard vector mechanics for speed calculations, and unit dimensional analysis.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-stat</td>
+                <td class="col-unit">Statistics</td>
+                <td class="col-qty">10</td>
+                <td>Central tendency evaluation across explicit discrete frequency distributions and raw grouped datasets.</td>
+            </tr>
+            <tr>
+                <td class="col-id">g10-prob</td>
+                <td class="col-unit">Probability 1</td>
+                <td class="col-qty">10</td>
+                <td>Theoretical event structures, isolated binary complement computations, and multi-stage tree branch calculations.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>II. Structured Learning Modules & Practice Banks</h2>
+
+    <div class="unit-module">
+        <h3>Unit 1: Real Numbers (Strand ID: g10-real)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Real Numbers Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
         
-        <div class="video-wrapper">
-            <iframe id="videoPlayer" src="" allowfullscreen></iframe>
+        <div class="problem-item">
+            <div class="problem-text">1. Classify the following expression as rational or irrational: <span class="math-expr">3<span class="math-surd">&radic;</span><span>5</span> &times; <span class="math-surd">&radic;</span><span>20</span></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Simplify: <span class="math-expr">3<span class="math-surd">&radic;</span><span>100</span> = 3 &times; 10 = 30</span>. Result is <strong>Rational</strong>.</div>
         </div>
-
-        <div class="resource-panel">
-            <div class="resource-title">Required Learning & Activity Materials</div>
-            <div class="resource-tags" id="resourceContainer"></div>
+        <div class="problem-item">
+            <div class="problem-text">2. Express the recurring decimal <span class="math-expr">0.777...</span> as a fractional ratio <span class="math-frac"><span class="num">a</span><span class="den">b</span></span> in its lowest terms.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Let <span class="math-expr">x = 0.777...</span>, then <span class="math-expr">10x = 7.777...</span>. Subtracting yields <span class="math-expr">9x = 7</span>, so <span class="math-expr">x = <span class="math-frac"><span class="num">7</span><span class="den">9</span></span></span>.</div>
         </div>
-
-        <div class="progression-tracker">
-            <span class="tracker-title">Topic Milestone Progression</span>
-            <div class="node-track" id="nodeTrack"></div>
+        <div class="problem-item">
+            <div class="problem-text">3. Simplify the following surd expression completely: <span class="math-expr"><span class="math-surd">&radic;</span><span>72</span> - <span class="math-surd">&radic;</span><span>18</span></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">6<span class="math-surd">&radic;</span><span>2</span> - 3<span class="math-surd">&radic;</span><span>2</span> = 3<span class="math-surd">&radic;</span><span>2</span></span>.</div>
         </div>
-
-        <div class="quiz-container">
-            <h2 id="matrixTaskLabel">Practice Question</h2>
-            <div class="math-expr" id="problemExpression">Loading mathematical problem structure...</div>
-            <div class="options-grid" id="optionsGrid"></div>
-            <div class="action-bar">
-                <button class="btn btn-submit" onclick="evaluateAnswer()">Check Answer</button>
-                <button class="btn btn-hint" onclick="summonOneiroHint()">Ask Prof. Oneiro for Hint</button>
-                <button class="btn btn-calc" onclick="toggleCalculator()">🧮 Toggle Calculator</button>
-            </div>
+        <div class="problem-item">
+            <div class="problem-text">4. Rationalize the denominator of the following fraction: <span class="math-frac"><span class="num">5</span><span class="den"><span class="math-surd">&radic;</span><span>3</span></span></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Multiply numerator and denominator by <span class="math-expr"><span class="math-surd">&radic;</span><span>3</span></span> to get <span class="math-frac"><span class="num">5<span class="math-surd">&radic;</span><span>3</span></span><span class="den">3</span></span>.</div>
         </div>
-    </main>
-
-    <aside>
-        <div class="prof-header">
-            <div class="prof-title">
-                <span style="color: var(--kenya-red);">●</span> PROFESSOR_ONEIRO_v1.0
-            </div>
-            <div class="prof-status">Cognitive Assistance Engine // Online</div>
+        <div class="problem-item">
+            <div class="problem-text">5. Given a measurement written as <span class="math-expr">x = 4.3</span> cm rounded to 1 decimal place, state its absolute lower bound.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The interval spacing is 0.1, so error margin is 0.05. Lower Bound = <span class="math-expr">4.25</span> cm.</div>
         </div>
-        
-        <div class="chat-space" id="chatSpace"></div>
-
-        <div class="chat-input-area">
-            <input type="text" class="chat-input" id="studentInput" placeholder="Ask a question about this step...">
-            <button class="btn-send" onclick="sendStudentMessage()">→</button>
+        <div class="problem-item">
+            <div class="problem-text">6. A rectangular field measures 20m by 15m, with each length rounded to the nearest meter. Find the upper bound of its area.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Upper bounds are 20.5 and 15.5. Max Area = <span class="math-expr">20.5 &times; 15.5 = 317.75</span> m².</div>
         </div>
-    </aside>
-
-    <div class="feedback-overlay" id="feedbackOverlay">
-        <div class="feedback-modal" id="feedbackModal">
-            <div class="modal-icon" id="modalIcon">🎉</div>
-            <div class="modal-title" id="modalTitle">Excellent Job!</div>
-            <div class="modal-desc" id="modalDesc">Your logic checks out perfectly. Keep up the great work!</div>
-            <button class="modal-btn" id="modalActionBtn" onclick="closeFeedback()">Continue Learning</button>
+        <div class="problem-item">
+            <div class="problem-text">7. Write the set of real values satisfying the inequality interval <span class="math-expr">-3 &le; x &lt; 5</span> in standard bracket notation.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The interval notation is defined as <span class="math-expr">[-3, 5)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. Evaluate the true nature of the number represented by the constant <span class="math-expr">&pi; - 3</span>. Is it rational or irrational?</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Since <span class="math-expr">&pi;</span> is transcendental, subtracting a rational integer leaves it <strong>Irrational</strong>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. Simplify the compound radical statement: <span class="math-expr">(2 + <span class="math-surd">&radic;</span><span>3</span>)(2 - <span class="math-surd">&radic;</span><span>3</span>)</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Applying difference of squares: <span class="math-expr">2<sup>2</sup> - (<span class="math-surd">&radic;</span><span>3</span>)<sup>2</sup> = 4 - 3 = 1</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Find the upper bound of the quotient expression <span class="math-frac"><span class="num">a</span><span class="den">b</span></span> if <span class="math-expr">a = 10</span> (exact) and <span class="math-expr">b = 4 &plusmn; 0.5</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">To maximize, divide by the lower bound of b: <span class="math-frac"><span class="num">10</span><span class="den">3.5</span></span> = <span class="math-frac"><span class="num">20</span><span class="den">7</span></span> = <span class="math-expr">2.857</span>.</div>
         </div>
     </div>
 
-    <script>
-        // Web Audio API Synth Engine for Feedback Sound Effects
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    <div class="unit-module">
+        <h3>Unit 2: Indices and Logarithms (Strand ID: g10-ind)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Indices and Logarithms Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Simplify the index expression completely: <span class="math-expr">(2a<sup>3</sup>b<sup>2</sup>) &times; (4a<sup>-1</sup>b<sup>4</sup>)</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Combine components: <span class="math-expr">(2&times;4) &cdot; a<sup>3-1</sup> &cdot; b<sup>2+4</sup> = 8a<sup>2</sup>b<sup>6</sup></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. Solve the exponential equation for the real variable <span class="math-expr">x</span>: <span class="math-expr">3<sup>2x - 1</sup> = 27</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Equate exponential bases: <span class="math-expr">3<sup>2x-1</sup> = 3<sup>3</sup> &rArr; 2x - 1 = 3 &rArr; 2x = 4 &rArr; x = 2</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. Evaluate the exact numeric value of the negative fractional power: <span class="math-expr">16<sup>-3/4</sup></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Transform expression: <span class="math-frac"><span class="num">1</span><span class="den">(16<sup>1/4</sup>)<sup>3</sup></span></span> = <span class="math-frac"><span class="num">1</span><span class="den">2<sup>3</sup></span></span> = <span class="math-frac"><span class="num">1</span><span class="den">8</span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. Solve for the missing parameter <span class="math-expr">y</span> in the base-10 equation: <span class="math-expr">log<sub>10</sub>(y) + log<sub>10</sub>(2) = 1</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Apply product law: <span class="math-expr">log<sub>10</sub>(2y) = 1 &rArr; 2y = 10<sup>1</sup> &rArr; y = 5</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Change the logarithmic base to common form to calculate: <span class="math-expr">log<sub>2</sub>(5)</span> given <span class="math-expr">log<sub>10</sub>(2) &asymp; 0.3010</span> and <span class="math-expr">log<sub>10</sub>(5) &asymp; 0.6990</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Apply base transformation formula: <span class="math-frac"><span class="num">log<sub>10</sub>(5)</span><span class="den">log<sub>10</sub>(2)</span></span> = <span class="math-frac"><span class="num">0.6990</span><span class="den">0.3010</span></span> &asymp; <span class="math-expr">2.322</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. Simplify the logarithmic summation structural sequence: <span class="math-expr">2 log(x) - log(y)</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Apply exponent rule then quotient rule: <span class="math-expr">log(x<sup>2</sup>) - log(y) = log(<span class="math-frac"><span class="num">x<sup>2</sup></span><span class="den">y</span></span>)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. Solve for <span class="math-expr">x</span> when expressed as the index: <span class="math-expr">5<sup>x</sup> = 12</span> to 3 significant figures.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Take base-10 logs: <span class="math-expr">x log(5) = log(12) &rArr; x = <span class="math-frac"><span class="num">log(12)</span><span class="den">log(5)</span></span> &asymp; 1.54</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. Rewrite the structural expression into power notation: <span class="math-expr"><span class="math-surd">&radic;</span><span>a<sup>5</sup></span></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Square root is an index of 1/2: <span class="math-expr">(a<sup>5</sup>)<sup>1/2</sup> = a<sup>5/2</sup></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. Solve the specific log equation: <span class="math-expr">log<sub>3</sub>(x) = -2</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Convert to index form: <span class="math-expr">x = 3<sup>-2</sup> = <span class="math-frac"><span class="num">1</span><span class="den">9</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Evaluate the composite numeric sequence: <span class="math-expr">log<sub>6</sub>(2) + log<sub>6</sub>(18)</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Combine: <span class="math-expr">log<sub>6</sub>(2 &times; 18) = log<sub>6</sub>(36) = 2</span>.</div>
+        </div>
+    </div>
 
-        function playFeedbackSound(isCorrect) {
-            // Ensure audio context is running
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+    <div class="unit-module">
+        <h3>Unit 3: Quadratic Expressions & Equations (Strand ID: g10-quad)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Quadratic Expressions Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Factorize the quadratic trinomial expression completely: <span class="math-expr">x<sup>2</sup> - 5x - 6</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Find factors that multiply to -6 and sum to -5: <span class="math-expr">(x - 6)(x + 1)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. Find the roots of the equation by factoring methods: <span class="math-expr">2x<sup>2</sup> + 5x - 3 = 0</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Split the middle term: <span class="math-expr">2x<sup>2</sup> + 6x - x - 3 = 0 &rArr; (2x - 1)(x + 3) = 0</span>. Roots: <span class="math-expr">x = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span>, x = -3</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. Determine the specific constant term <span class="math-expr">c</span> that makes <span class="math-expr">x<sup>2</sup> + 8x + c</span> a perfect square trinomial.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Take half the linear coefficient and square it: <span class="math-expr">(8/2)<sup>2</sup> = 16</span>. Therefore, <span class="math-expr">c = 16</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. Solve the equation using the formal quadratic formula, leaving answer to 2 decimal places: <span class="math-expr">x<sup>2</sup> - 4x + 2 = 0</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Apply <span class="math-block">x = <span class="math-frac"><span class="num">-b &plusmn; <span class="math-surd">&radic;</span><span>b<sup>2</sup> - 4ac</span></span><span class="den">2a</span></span></span>: <span class="math-expr">x = <span class="math-frac"><span class="num">4 &plusmn; <span class="math-surd">&radic;</span><span>16 - 8</span></span><span class="den">2</span></span> = 2 &plusmn; <span class="math-surd">&radic;</span><span>2</span></span>. Roots are <span class="math-expr">3.41</span> and <span class="math-expr">0.59</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Calculate the discriminant value for <span class="math-expr">3x<sup>2</sup> - 2x + 5 = 0</span> and describe the nature of its roots.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">&Delta; = b<sup>2</sup> - 4ac = (-2)<sup>2</sup> - 4(3)(5) = 4 - 60 = -56</span>. Since <span class="math-expr">&Delta; &lt; 0</span>, the roots are <strong>Complex/Non-real</strong>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. Factorize using the difference of two squares identity: <span class="math-expr">9x<sup>2</sup> - 49</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Rewrite as squared terms: <span class="math-expr">(3x)<sup>2</sup> - (7)<sup>2</sup> = (3x - 7)(3x + 7)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. Solve by completing the square stage: <span class="math-expr">x<sup>2</sup> - 6x = 0</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Add 9 to both sides: <span class="math-expr">(x - 3)<sup>2</sup> = 9 &rArr; x - 3 = &plusmn;3</span>. Roots: <span class="math-expr">x = 0, x = 6</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. If one root of the equation <span class="math-expr">x<sup>2</sup> + kx - 12 = 0</span> is <span class="math-expr">3</span>, calculate the value of the missing parameter <span class="math-expr">k</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Substitute 3 into equation: <span class="math-expr">(3)<sup>2</sup> + 3k - 12 = 0 &rArr; 9 + 3k - 12 = 0 &rArr; 3k = 3 &rArr; k = 1</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. Convert the expression into vertex format by structuring perfect squares: <span class="math-expr">x<sup>2</sup> + 4x + 7</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Group terms: <span class="math-expr">(x<sup>2</sup> + 4x + 4) + 3 = (x + 2)<sup>2</sup> + 3</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Find the non-zero root values for the simple system: <span class="math-expr">4x<sup>2</sup> = 28x</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Rearrange: <span class="math-expr">4x<sup>2</sup> - 28x = 0 &rArr; 4x(x - 7) = 0</span>. Since it must be non-zero, <span class="math-expr">x = 7</span>.</div>
+        </div>
+    </div>
 
-            const now = audioCtx.currentTime;
+    <div class="unit-module">
+        <h3>Unit 4: Similarity and Enlargement (Strand ID: g10-sim)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Similarity Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Two mathematically similar triangles have corresponding side lengths of 4 cm and 12 cm. Determine the scale factor <span class="math-expr">k</span> of enlargement.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">k = <span class="math-frac"><span class="num">12</span><span class="den">4</span></span> = 3</span>. The scale factor is 3.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. If the linear scale factor between two similar planes is <span class="math-expr">k = 2.5</span>, find the area ratio transformation constant.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Area ratio is defined by <span class="math-expr">k<sup>2</sup></span>. <span class="math-expr">(2.5)<sup>2</sup> = 6.25</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. Two similar cylinders have volumes of 50 cm³ and 400 cm³. Compute their linear scale factor ratio in lowest fractional terms.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Volume ratio <span class="math-expr">k<sup>3</sup> = <span class="math-frac"><span class="num">400</span><span class="den">50</span></span> = 8</span>. Therefore, <span class="math-expr">k = <sup>3</sup><span class="math-surd">&radic;</span><span>8</span> = 2</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. A model design blueprint has an area of 15 cm². If the actual area must scale up by a factor of <span class="math-expr">k = 10</span>, find the total scale area.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Actual Area = <span class="math-expr">Blueprint Area &times; k<sup>2</sup> = 15 &times; 10<sup>2</sup> = 1500</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Triangle ABC is scaled down to XYZ. The area of ABC is 100 cm², and the area of XYZ is 36 cm². Find the length of side XY if AB is 15 cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Area ratio = <span class="math-frac"><span class="num">36</span><span class="den">100</span></span> = 0.36. Linear factor <span class="math-expr">k = <span class="math-surd">&radic;</span><span>0.36</span> = 0.6</span>. Side <span class="math-expr">XY = 15 &times; 0.6 = 9</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. A solid metal cone has a mass of 1.2 kg. A mathematically similar cone is made of identical density metal but has double the height. Determine its total mass.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Mass scales directly with volume, which uses <span class="math-expr">k<sup>3</sup></span>. Height ratio <span class="math-expr">k = 2</span>, so mass multiplier is <span class="math-expr">2<sup>3</sup> = 8</span>. New mass = <span class="math-expr">1.2 &times; 8 = 9.6</span> kg.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. The surface areas of two spheres are in the ratio 4:9. Find the exact matching ratio of their respective volumes.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Given <span class="math-expr">k<sup>2</sup> = 4/9 &rArr; k = 2/3</span>. Volume ratio <span class="math-expr">k<sup>3</sup> = (2/3)<sup>3</sup> = 8:27</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. If an enlargement transformation has center (0,0) and factor <span class="math-expr">k = -2</span>, locate the mapped coordinate of original point P(3, -1).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Multiply coordinates by scale factor: <span class="math-expr">P' = (3 &times; -2, -1 &times; -2) = (-6, 2)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. On a geographic map blueprint scaled at 1:20000, a path length measures 5 cm. Compute the actual terrain distance in kilometers.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Real length = <span class="math-expr">5 &times; 20000 = 100000</span> cm = 1000 m = 1 km.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. A standard storage box holds a volume of 0.5 m³. A similar container is built with all linear dimenions increased by 40%. Find its structural volume capacity.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Linear multiplier <span class="math-expr">k = 1.40</span>. Volumetric scale multiplier = <span class="math-expr">(1.4)<sup>3</sup> = 2.744</span>. Capacity = <span class="math-expr">0.5 &times; 2.744 = 1.372</span> m³.</div>
+        </div>
+    </div>
 
-            if (isCorrect) {
-                // Celebration Sound Dynamic: High Volume (0.8) and grand harmonic chord architecture
-                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 major chord
-                notes.forEach((freq, index) => {
-                    const osc = audioCtx.createOscillator();
-                    const gainNode = audioCtx.createGain();
-                    
-                    osc.type = index % 2 === 0 ? 'sine' : 'triangle';
-                    osc.frequency.setValueAtTime(freq, now + (index * 0.04)); // Arpeggiated entry
-                    
-                    gainNode.gain.setValueAtTime(0.2, now + (index * 0.04)); 
-                    // Main celebration volume blast
-                    gainNode.gain.exponentialRampToValueAtTime(0.8 / notes.length, now + 0.1);
-                    gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
-                    
-                    osc.connect(gainNode);
-                    gainNode.connect(audioCtx.destination);
-                    osc.start(now + (index * 0.04));
-                    osc.stop(now + 0.6);
-                });
-            } else {
-                // Mistake Dynamic: Quite Low Volume (0.08) and flat downward tone
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(180, now);
-                osc.frequency.linearRampToValueAtTime(110, now + 0.25);
-                
-                gainNode.gain.setValueAtTime(0.08, now); // Quiet audio feedback
-                gainNode.gain.linearRampToValueAtTime(0.001, now + 0.28);
-                
-                osc.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                osc.start(now);
-                osc.stop(now + 0.3);
-            }
+    <div class="unit-module">
+        <h3>Unit 5: Reflection and Congruence (Strand ID: g10-ref)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Reflection Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Reflect the coordinate point A(4, -3) across the Cartesian standard line axis <span class="math-expr">y = 0</span> (x-axis). State the new coordinate layout.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Reflection across x-axis negates y: <span class="math-expr">(x, -y) &rArr; A'(4, 3)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. Find the coordinate map of point B(2, 5) when processed through a reflection across the mirror line <span class="math-expr">y = x</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Reflection across <span class="math-expr">y = x</span> swaps coordinate locations: <span class="math-expr">(y, x) &rArr; B'(5, 2)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. Point C(-1, 4) is reflected across the vertical mirror plane line <span class="math-expr">x = 2</span>. Track the path to locate the transformed position C'.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Distance from x=-1 to x=2 is 3 units. Move 3 units further past the line: <span class="math-expr">2 + 3 = 5</span>. Map coordinate: <span class="math-expr">C'(5, 4)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. State the geometric congruence criteria being used if two triangles have all matching sides exactly equal.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The matching condition corresponds directly to the <strong>SSS (Side-Side-Side)</strong> congruence criteria theorem.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Triangle ABC has angles 40° and 60° with an included side of 8cm. Triangle PQR has angles 40° and 60° with an identical included side of 8cm. Name the congruence criterion.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Since the equal side is bounded explicitly between matching angles, it satisfies <strong>ASA (Angle-Side-Angle)</strong> criteria.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. If point D(3, 2) transforms to D'(3, -6) via a linear reflection, define the explicit algebraic formula of the mirror line axis.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Find the midpoint of y-values: <span class="math-frac"><span class="num">2 + (-6)</span><span class="den">2</span></span> = -2. The mirror plane line is horizontal at <span class="math-expr">y = -2</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. Two right-angled triangles share a hypotenuse of length 13 cm and one corresponding leg of 5 cm. Identify the congruence condition.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">This configuration satisfies the specialized <strong>RHS (Right-angle, Hypotenuse, Side)</strong> congruence axiom.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. If triangle LMN is congruent to triangle XYZ, and the perimeter of LMN is 34cm, write the value of the structural perimeter of XYZ.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Congruent geometric figures maintain identical side values and geometric traits, so perimeter is exactly <strong>34cm</strong>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. Reflect point E(-2, -5) across the coordinate horizontal mirror line <span class="math-expr">y = -1</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The distance from y = -5 to y = -1 is 4 units upward. Move 4 units upward past line: <span class="math-expr">-1 + 4 = 3</span>. Position is <span class="math-expr">E'(-2, 3)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. True or False: All mathematically similar figures satisfy the structural geometric properties of congruent systems.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><strong>False</strong>. Congruent systems require absolute 1:1 scale equivalency, whereas similar systems can change scale size.</div>
+        </div>
+    </div>
+
+    <div class="unit-module">
+        <h3>Unit 6: Rotation (Strand ID: g10-rot)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Rotation固定 Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Rotate point P(3, 5) by an angle of 90° clockwise around the origin center coordinates (0,0).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The mapping rule for 90° clockwise about origin is <span class="math-expr">(x,y) &rArr; (y, -x)</span>. Thus, <span class="math-expr">P'(5, -3)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. Rotate point Q(-2, 6) through an angle of 180° around the coordinate center origin. Locate the target coordinate.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The transformation mapping rule for 180° rotation is <span class="math-expr">(x,y) &rArr; (-x, -y)</span>. Thus, <span class="math-expr">Q'(2, -6)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. Transform point R(1, 4) by a 90° anticlockwise rotation around the tracking point (0,0).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The mapping rule for 90° anticlockwise about origin is <span class="math-expr">(x,y) &rArr; (-y, x)</span>. Thus, <span class="math-expr">R'(-4, 1)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. A rotation maps point T(2, 3) to T'(-3, 2) around the origin. Determine the directional angle parameters of this transformation.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The coordinate shift follows <span class="math-expr">(x,y) &rArr; (-y, x)</span>, which is a <strong>90° anticlockwise</strong> rotation.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Rotate point A(4, 2) by 90° clockwise around a non-origin center fixed at coordinate pivot point (1,1).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Translate pivot to origin: <span class="math-expr">(4-1, 2-1) = (3,1)</span>. Apply 90° clockwise rotation: <span class="math-expr">(1, -3)</span>. Translate back: <span class="math-expr">(1+1, -3+1) = (2, -2)</span>. Result is <span class="math-expr">A'(2, -2)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. State the coordinate mapping identity rule for a geometric rotation of 270° clockwise around center point (0,0).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Rotating 270° clockwise is identical to a 90° anticlockwise rotation: <span class="math-expr">(x,y) &rArr; (-y, x)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. Find the value of invariant coordinates when a shape rotates around its explicit center pivot point (3, -2).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The center of rotation itself is the only invariant location point. Coordinates are exactly <strong>(3, -2)</strong>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. Rotate point M(-4, -1) by an angle of 180° around the center tracking node origin.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Negate both coordinate metrics: <span class="math-expr">(-x, -y) &rArr; M'(4, 1)</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. If shape transformation matrix mapping brings node coordinates from (1,0) to (0,-1), state the equivalent rotational parameters.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The transformation shifts the unit vector down to the negative y axis, representing a <strong>90° clockwise</strong> rotation.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Determine the coordinate location of point K(0, 3) rotated 90° anticlockwise around origin parameters.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Apply mapping rule <span class="math-expr">(x,y) &rArr; (-y, x)</span>: <span class="math-expr">K'(-3, 0)</span>.</div>
+        </div>
+    </div>
+
+    <div class="unit-module">
+        <h3>Unit 7: Trigonometry 1 (Strand ID: g10-trig)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Trigonometry Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. In a right-angled triangle, the opposite side is 5 cm and the hypotenuse is 13 cm. Compute the exact fraction for <span class="math-expr">sin(&theta;)</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">sin(&theta;) = <span class="math-frac"><span class="num">Opposite</span><span class="den">Hypotenuse</span></span> = <span class="math-frac"><span class="num">5</span><span class="den">13</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. Calculate the missing hypotenuse base side length <span class="math-expr">c</span> of a right triangle with legs measuring 6 cm and 8 cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Apply Pythagoras theorem: <span class="math-expr">c = <span class="math-surd">&radic;</span><span>6<sup>2</sup> + 8<sup>2</sup></span> = <span class="math-surd">&radic;</span><span>100</span> = 10</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. Given <span class="math-expr">cos(&theta;) = <span class="math-frac"><span class="num">4</span><span class="den">5</span></span></span> in a right-angled triangle layout, find the explicit fraction value of <span class="math-expr">tan(&theta;)</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Using a 3-4-5 right triangle, the opposite side length is 3. <span class="math-expr">tan(&theta;) = <span class="math-frac"><span class="num">Opposite</span><span class="den">Adjacent</span></span> = <span class="math-frac"><span class="num">3</span><span class="den">4</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. An observer tracks a building top from 30 meters away from the base. If the angle of elevation is 45°, calculate the building height.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">tan(45&deg;) = <span class="math-frac"><span class="num">Height</span><span class="den">30</span></span> &rArr; 1 = <span class="math-frac"><span class="num">Height</span><span class="den">30</span></span> &rArr; Height = 30</span> meters.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Find the exact length of the adjacent side if the hypotenuse is 10 cm and the adjacent angle is 60°.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Adjacent = Hypotenuse &times; cos(60&deg;) = 10 &times; 0.5 = 5</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. A 12-meter structural ladder leans against a flat wall, creating a angle of 30° with the vertical wall axis. Calculate the base distance to the wall.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The side opposite the 30° angle is the base distance: <span class="math-expr">Distance = 12 &times; sin(30&deg;) = 12 &times; 0.5 = 6</span> meters.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. Calculate the angle of depression from a 40m high cliff edge to an anchored boat located 40m out from the base cliff boundary.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">tan(&theta;) = <span class="math-frac"><span class="num">40</span><span class="den">40</span></span> = 1 &rArr; &theta; = tan<sup>-1</sup>(1) = 45&deg;</span>. Angle of depression is <strong>45°</strong>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. In a right-angled triangle, if <span class="math-expr">sin(&alpha;) = 0.6</span>, what is the value of <span class="math-expr">cos(90&deg; - &alpha;)</span>?</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">By co-function trigonometric identity properties, <span class="math-expr">cos(90&deg; - &alpha;) = sin(&alpha;) = 0.6</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. Solve for side length <span class="math-expr">x</span> in a right triangle where opposite side is 15 cm and angle is 30°: <span class="math-expr">sin(30&deg;) = <span class="math-frac"><span class="num">15</span><span class="den">x</span></span></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">0.5 = <span class="math-frac"><span class="num">15</span><span class="den">x</span></span> &rArr; x = <span class="math-frac"><span class="num">15</span><span class="den">0.5</span></span> = 30</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Find the length of a rectangle's diagonal if its width is 5 cm and its length is 12 cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The diagonal forms a right triangle: <span class="math-expr">d = <span class="math-surd">&radic;</span><span>5<sup>2</sup> + 12<sup>2</sup></span> = <span class="math-surd">&radic;</span><span>169</span> = 13</span> cm.</div>
+        </div>
+    </div>
+
+    <div class="unit-module">
+        <h3>Unit 8: Area of Polygons (Strand ID: g10-poly)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Area of Polygons Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Calculate the surface area of a triangle with a base of 14 cm and perpendicular height of 9 cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Area = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span> &times; base &times; height = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span> &times; 14 &times; 9 = 63</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. A parallelogram has a base dimension of 12 cm and a total surface area of 96 cm². Find its perpendicular height.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Area = base &times; height &rArr; 96 = 12 &times; height &rArr; height = <span class="math-frac"><span class="num">96</span><span class="den">12</span></span> = 8</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. Find the area of a trapezium with parallel sides measuring 8 cm and 12 cm, and a perpendicular height of 6 cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Area = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span>(a + b)h = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span>(8 + 12) &times; 6 = 10 &times; 6 = 60</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. Find the total area of a regular composite shape formed by a rectangle (10cm by 6cm) joined to a square of side 4cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Sum individual component areas: <span class="math-expr">Area<sub>1</sub> = 10 &times; 6 = 60</span> cm², <span class="math-expr">Area<sub>2</sub> = 4 &times; 4 = 16</span> cm². Total Area = <span class="math-expr">60 + 16 = 76</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Calculate the area of an equilateral triangle with a side length of 6 cm, using the trigonometric area formula.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Area = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span> a b sin(C) = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span>(6)(6)sin(60&deg;) = 18 &times; <span class="math-frac"><span class="num"><span class="math-surd">&radic;</span><span>3</span></span><span class="den">2</span></span> = 9<span class="math-surd">&radic;</span><span>3</span></span> cm² &asymp; 15.59 cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. A rhombus has diagonals measuring 10 cm and 24 cm. Calculate its total area.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Area = <span class="math-frac"><span class="num">d<sub>1</sub> &times; d<sub>2</sub></span><span class="den">2</span></span> = <span class="math-frac"><span class="num">10 &times; 24</span><span class="den">2</span></span> = 120</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. A regular hexagon is split into six identical equilateral triangles of side 4 cm. Calculate its total surface area.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Area of 1 triangle = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span>(4)(4)sin(60°) = <span class="math-expr">4<span class="math-surd">&radic;</span><span>3</span></span>. Total Area = <span class="math-expr">6 &times; 4<span class="math-surd">&radic;</span><span>3</span> = 24<span class="math-surd">&radic;</span><span>3</span></span> cm² &asymp; 41.57 cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. A trapezium has an overall area of 50 cm² and parallel sides of 7 cm and 13 cm. Find its height.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">50 = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span>(7 + 13)h &rArr; 50 = 10h &rArr; h = 5</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. Calculate the remaining area of a square of side 10cm after a central rectangle of 4cm by 3cm is removed.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Area = Area<sub>Square</sub> - Area<sub>Rect</sub> = (10 &times; 10) - (4 &times; 3) = 100 - 12 = 88</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Find the area of a right-angled triangle whose hypotenuse is 5 cm and base is 3 cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Height via Pythagoras = <span class="math-expr"><span class="math-surd">&radic;</span><span>5<sup>2</sup> - 3<sup>2</sup></span> = 4</span> cm. <span class="math-expr">Area = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span> &times; 3 &times; 4 = 6</span> cm².</div>
+        </div>
+    </div>
+
+    <div class="unit-module">
+        <h3>Unit 9: Area of a Part of a Circle (Strand ID: g10-circ)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Circle Parts Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Calculate the area of a circle sector with a radius of 6 cm and a central angle of 60°. Leave answer in terms of <span class="math-expr">&pi;</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Area = <span class="math-frac"><span class="num">&theta;</span><span class="den">360</span></span> &times; &pi; r<sup>2</sup> = <span class="math-frac"><span class="num">60</span><span class="den">360</span></span> &times; &pi; &times; 6<sup>2</sup> = <span class="math-frac"><span class="num">1</span><span class="den">6</span></span> &times; 36&pi; = 6&pi;</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. Find the absolute arc length of a sector with a radius of 14 cm and subtended central angle of 90° (use <span class="math-expr">&pi; = <span class="math-frac"><span class="num">22</span><span class="den">7</span></span></span>).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Arc Length = <span class="math-frac"><span class="num">90</span><span class="den">360</span></span> &times; 2 &times; <span class="math-frac"><span class="num">22</span><span class="den">7</span></span> &times; 14 = <span class="math-frac"><span class="num">1</span><span class="den">4</span></span> &times; 88 = 22</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. A circle sector has an arc length of <span class="math-expr">4&pi;</span> cm and a total radius of 8 cm. Find its central angle parameter.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">4&pi; = <span class="math-frac"><span class="num">&theta;</span><span class="den">360</span></span> &times; 2&pi;(8) &rArr; 4&pi; = <span class="math-frac"><span class="num">16&pi;&theta;</span><span class="den">360</span></span> &rArr; <span class="math-frac"><span class="num">&theta;</span><span class="den">360</span></span> = <span class="math-frac"><span class="num">1</span><span class="den">4</span></span> &rArr; &theta; = 90&deg;</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. Find the area of a chord-slice segment bounded by a radius of 10 cm and a central angle of 90°.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Area<sub>Segment</sub> = Area<sub>Sector</sub> - Area<sub>Triangle</sub> = (<span class="math-frac"><span class="num">90</span><span class="den">360</span></span> &times; &pi; &times; 10<sup>2</sup>) - (<span class="math-frac"><span class="num">1</span><span class="den">2</span></span> &times; 10 &times; 10) = 25&pi; - 50</span> cm² &asymp; 28.54 cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Determine the perimeter of a sector with a radius of 7 cm and central angle of 180° (semicircle).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Perimeter = Arc Length + 2r = (&pi; &times; 7) + 2(7) = 7&pi; + 14</span> cm &asymp; 36 cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. The area of a sector with central angle 120° is <span class="math-expr">12&pi;</span> cm². Calculate the radius of the circle.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">12&pi; = <span class="math-frac"><span class="num">120</span><span class="den">360</span></span> &times; &pi; r<sup>2</sup> &rArr; 12&pi; = <span class="math-frac"><span class="num">1</span><span class="den">3</span></span> &pi; r<sup>2</sup> &rArr; r<sup>2</sup> = 36 &rArr; r = 6</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. Find the exact arc length of a quadrant sector isolated inside a circle of diameter 20 cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Radius = 10 cm. Quadrant angle = 90°. <span class="math-expr">Arc Length = <span class="math-frac"><span class="num">90</span><span class="den">360</span></span> &times; 2&pi;(10) = 5&pi;</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. Calculate the area of a sector whose total perimeter bounds measure exactly <span class="math-expr">arc = 10</span> cm and <span class="math-expr">radius = 5</span> cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Using the sector formula: <span class="math-expr">Area = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span> r &middot; s = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span> &times; 5 &times; 10 = 25</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. Find the central angle of a sector with area <span class="math-expr">15&pi;</span> cm² inside a circle of radius 10 cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">15&pi; = <span class="math-frac"><span class="num">&theta;</span><span class="den">360</span></span> &times; &pi; &times; 100 &rArr; <span class="math-frac"><span class="num">100&theta;</span><span class="den">360</span></span> = 15 &rArr; &theta; = <span class="math-frac"><span class="num">15 &times; 360</span><span class="den">100</span></span> = 54&deg;</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Calculate the sector area of a circle slice if the total circle area is 120 cm² and slice angle is 30°.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Area = <span class="math-frac"><span class="num">30</span><span class="den">360</span></span> &times; 120 = <span class="math-frac"><span class="num">1</span><span class="den">12</span></span> &times; 120 = 10</span> cm².</div>
+        </div>
+    </div>
+
+    <div class="unit-module">
+        <h3>Unit 10: Surface Area & Volume of Solids (Strand ID: g10-surf)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Solids Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Calculate the total volume of a cylinder with radius 3 cm and height 7 cm (use <span class="math-expr">&pi; = <span class="math-frac"><span class="num">22</span><span class="den">7</span></span></span>).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Volume = &pi; r<sup>2</sup> h = <span class="math-frac"><span class="num">22</span><span class="den">7</span></span> &times; 3<sup>2</sup> &times; 7 = 22 &times; 9 = 198</span> cm³.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. Find the total surface area of a solid cube whose individual edges measure 5 cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Surface Area = 6 &times; s<sup>2</sup> = 6 &times; 5<sup>2</sup> = 6 &times; 25 = 150</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. A rectangular prism has a base area of 24 cm² and volume of 120 cm³. Calculate its perpendicular height.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Volume = Base Area &times; Height &rArr; 120 = 24 &times; Height &rArr; Height = <span class="math-frac"><span class="num">120</span><span class="den">24</span></span> = 5</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. Find the volume of a right pyramid structured over a square base of side 6 cm, with a height of 10 cm.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Volume = <span class="math-frac"><span class="num">1</span><span class="den">3</span></span> &times; Base Area &times; Height = <span class="math-frac"><span class="num">1</span><span class="den">3</span></span> &times; (6 &times; 6) &times; 10 = 12 &times; 10 = 120</span> cm³.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Determine the volume of a sphere with a radius of 3 cm. Leave the answer in terms of <span class="math-expr">&pi;</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Volume = <span class="math-frac"><span class="num">4</span><span class="den">3</span></span> &pi; r<sup>3</sup> = <span class="math-frac"><span class="num">4</span><span class="den">3</span></span> &pi; &times; 3<sup>3</sup> = 4 &times; 9&pi; = 36&pi;</span> cm³.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. Find the curved surface area of a cone with radius 5 cm and slant height <span class="math-expr">l = 10</span> cm. Leave in terms of <span class="math-expr">&pi;</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Curved Area = &pi; r l = &pi; &times; 5 &times; 10 = 50&pi;</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. A cylinder has a volume of <span class="math-expr">100&pi;</span> cm³ and a height of 4 cm. Determine its matching base radius.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">100&pi; = &pi; r<sup>2</sup> (4) &rArr; 4r<sup>2</sup> = 100 &rArr; r<sup>2</sup> = 25 &rArr; r = 5</span> cm.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. Find the total surface area of a sphere whose radius measures exactly 2 cm in terms of <span class="math-expr">&pi;</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Surface Area = 4 &pi; r<sup>2</sup> = 4 &times; &pi; &times; 2<sup>2</sup> = 16&pi;</span> cm².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. A triangular prism has a cross-sectional triangle area of 12 cm² and length of 15 cm. Find its volume.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Volume = Area<sub>Cross</sub> &times; Length = 12 &times; 15 = 180</span> cm³.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Find the volume of a solid cone with a base radius of 6 cm and perpendicular height of 7 cm (using <span class="math-expr">&pi; = <span class="math-frac"><span class="num">22</span><span class="den">7</span></span></span>).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Volume = <span class="math-frac"><span class="num">1</span><span class="den">3</span></span> &pi; r<sup>2</sup> h = <span class="math-frac"><span class="num">1</span><span class="den">3</span></span> &times; <span class="math-frac"><span class="num">22</span><span class="den">7</span></span> &times; 6<sup>2</sup> &times; 7 = <span class="math-frac"><span class="num">1</span><span class="den">3</span></span> &times; 22 &times; 36 = 264</span> cm³.</div>
+        </div>
+    </div>
+
+    <div class="unit-module">
+        <h3>Unit 11: Vectors 1 (Strand ID: g10-vec)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vectors Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Given column vectors <span class="math-expr">u = </span><span class="math-matrix"><span class="matrix-col"><span>3</span><span>-1</span></span></span> and <span class="math-expr">v = </span><span class="math-matrix"><span class="matrix-col"><span>2</span><span>5</span></span></span>, calculate the resultant summation vector <span class="math-expr">u + v</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Add row components: <span class="math-matrix"><span class="matrix-col"><span>3+2</span><span>-1+5</span></span></span> = <span class="math-matrix"><span class="matrix-col"><span>5</span><span>4</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. Find the absolute magnitude length <span class="math-expr">|a|</span> of column vector <span class="math-expr">a = </span><span class="math-matrix"><span class="matrix-col"><span>6</span><span>-8</span></span></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Compute using Euclidean norm formula: <span class="math-expr">|a| = <span class="math-surd">&radic;</span><span>6<sup>2</sup> + (-8)<sup>2</sup></span> = <span class="math-surd">&radic;</span><span>36 + 64</span> = 10</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. Given vector <span class="math-expr">m = </span><span class="math-matrix"><span class="matrix-col"><span>-2</span><span>4</span></span></span>, resolve the matrix mapping scalar multiplier expression: <span class="math-expr">3m</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Multiply all elements by 3: <span class="math-matrix"><span class="matrix-col"><span>3(-2)</span><span>3(4)</span></span></span> = <span class="math-matrix"><span class="matrix-col"><span>-6</span><span>12</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. Find the column vector representation of displacement vector <span class="math-expr">AB</span> given point initial positions A(1, 2) and B(5, -2).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Subtract components (Terminal - Initial): <span class="math-matrix"><span class="matrix-col"><span>5-1</span><span>-2-2</span></span></span> = <span class="math-matrix"><span class="matrix-col"><span>4</span><span>-4</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Solve for missing scale factors <span class="math-expr">x</span> and <span class="math-expr">y</span> in the column matrix statement: <span class="math-matrix"><span class="matrix-col"><span>x</span><span>y</span></span></span> + <span class="math-matrix"><span class="matrix-col"><span>2</span><span>-3</span></span></span> = <span class="math-matrix"><span class="matrix-col"><span>7</span><span>0</span></span></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Set up individual linear systems: <span class="math-expr">x + 2 = 7 &rArr; x = 5</span> and <span class="math-expr">y - 3 = 0 &rArr; y = 3</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. If vector <span class="math-expr">p = </span><span class="math-matrix"><span class="matrix-col"><span>4</span><span>3</span></span></span>, calculate the magnitude of the scalar multiple vector <span class="math-expr">2p</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">2p = </span><span class="math-matrix"><span class="matrix-col"><span>8</span><span>6</span></span></span>. Magnitude = <span class="math-expr"><span class="math-surd">&radic;</span><span>8<sup>2</sup> + 6<sup>2</sup></span> = 10</span>. Alternatively, <span class="math-expr">2 &times; |p| = 2 &times; 5 = 10</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. Calculate vector subtraction metrics <span class="math-expr">a - b</span> given <span class="math-expr">a = </span><span class="math-matrix"><span class="matrix-col"><span>0</span><span>4</span></span></span> and <span class="math-expr">b = </span><span class="math-matrix"><span class="matrix-col"><span>-3</span><span>2</span></span></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Perform row operations: <span class="math-matrix"><span class="matrix-col"><span>0 - (-3)</span><span>4 - 2</span></span></span> = <span class="math-matrix"><span class="matrix-col"><span>3</span><span>2</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. Determine the matching inverse column vector direction format for vector <span class="math-expr">v = </span><span class="math-matrix"><span class="matrix-col"><span>-7</span><span>11</span></span></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Negate all coordinate vector fields: <span class="math-expr">-v = </span><span class="math-matrix"><span class="matrix-col"><span>7</span><span>-11</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. Find the length of column vector <span class="math-expr">k = </span><span class="math-matrix"><span class="matrix-col"><span>1</span><span>1</span></span></span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Apply vector modulus rules: <span class="math-expr">|k| = <span class="math-surd">&radic;</span><span>1<sup>2</sup> + 1<sup>2</sup></span> = <span class="math-surd">&radic;</span><span>2</span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Two vectors are parallel. If vector A = <span class="math-matrix"><span class="matrix-col"><span>2</span><span>5</span></span></span> and vector B = <span class="math-matrix"><span class="matrix-col"><span>4</span><span>m</span></span></span>, calculate the value of parameter <span class="math-expr">m</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Parallel vectors are scalar multiples: <span class="math-expr">B = 2A &rArr; m = 2(5) = 10</span>.</div>
+        </div>
+    </div>
+
+    <div class="unit-module">
+        <h3>Unit 12: Linear Motion (Strand ID: g10-mot)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Linear Motion Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Convert a standardized linear velocity of 90 km/h into alternative units of meters per second (m/s).</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Multiply by conversion factor: <span class="math-expr">90 &times; <span class="math-frac"><span class="num">5</span><span class="den">18</span></span> = 5 &times; 5 = 25</span> m/s.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. A train travels a total distance of 210 kilometers at a constant velocity speed of 70 km/h. Find travel runtime.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Time = <span class="math-frac"><span class="num">Distance</span><span class="den">Speed</span></span> = <span class="math-frac"><span class="num">210</span><span class="den">70</span></span> = 3</span> hours.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. Two vehicles travel directly toward each other from starting endpoints spaced 150 km apart. If car A travels at 40 km/h and car B at 60 km/h, find their relative velocity.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Objects moving toward each other have additive relative velocities: <span class="math-expr">40 + 60 = 100</span> km/h.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. Using information from question 3, calculate the time elapsed until the two vehicles meet.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Time = <span class="math-frac"><span class="num">Distance Gap</span><span class="den">Relative Speed</span></span> = <span class="math-frac"><span class="num">150</span><span class="den">100</span></span> = 1.5</span> hours (1 hour 30 minutes).</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. An object accelerates uniformly from a speed of 10 m/s to 30 m/s over an elapsed timeframe of 5 seconds. Find its acceleration.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">a = <span class="math-frac"><span class="num">v - u</span><span class="den">t</span></span> = <span class="math-frac"><span class="num">30 - 10</span><span class="den">5</span></span> = <span class="math-frac"><span class="num">20</span><span class="den">5</span></span> = 4</span> m/s².</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. A runner covers a distance of 400 meters in exactly 50 seconds. Find the average speed parameter.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Speed = <span class="math-frac"><span class="num">400</span><span class="den">50</span></span> = 8</span> m/s.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. Two speedboats travel along the same path direction. Boat X travels at 25 m/s, while boat Y chases it from behind at 35 m/s. Find their relative velocity.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Objects traveling in identical directions have subtractive relative velocities: <span class="math-expr">35 - 25 = 10</span> m/s.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. Find the total distance covered by a cyclist moving at a constant velocity rate of 6 m/s over an interval of 2 minutes.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Convert time to seconds: 2 minutes = 120 seconds. <span class="math-expr">Distance = Speed &times; Time = 6 &times; 120 = 720</span> meters.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. A vehicle travels 60 km at 40 km/h and then another 60 km at 60 km/h. Calculate the average velocity speed for the entire journey.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Total Distance = 120 km. Total Time = <span class="math-frac"><span class="num">60</span><span class="den">40</span></span> + <span class="math-frac"><span class="num">60</span><span class="den">60</span></span> = <span class="math-expr">1.5 + 1 = 2.5</span> hours. <span class="math-expr">Average Speed = <span class="math-frac"><span class="num">120</span><span class="den">2.5</span></span> = 48</span> km/h.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Convert an acceleration rate of 72 km/h² into standard meters per second squared matrix units.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">72 &times; <span class="math-frac"><span class="num">1000</span><span class="den">3600 &times; 3600</span></span> = <span class="math-frac"><span class="num">72000</span><span class="den">12960000</span></span> &asymp; 0.00556</span> m/s².</div>
+        </div>
+    </div>
+
+    <div class="unit-module">
+        <h3>Unit 13: Statistics (Strand ID: g10-stat)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Statistics Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. Calculate the arithmetic mean of the following discrete dataset collection: 3, 7, 8, 8, 14.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Mean = <span class="math-frac"><span class="num">3 + 7 + 8 + 8 + 14</span><span class="den">5</span></span> = <span class="math-frac"><span class="num">40</span><span class="den">5</span></span> = 8</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. Find the median value for the unsorted dataset parameter array: 12, 5, 22, 17, 9, 11.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Sort the list first: 5, 9, 11, 12, 17, 22. Median is mean of middle pair: <span class="math-frac"><span class="num">11 + 12</span><span class="den">2</span></span> = 11.5.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. Identify the mode value for the following distribution sequence: 4, 9, 6, 9, 4, 11, 9, 5.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The value 9 appears most frequently (3 times). The mode is <strong>9</strong>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. A frequency table shows values of x=[1, 2, 3] with corresponding frequencies of f=[3, 5, 2]. Compute the mean.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">&sum;f = 3+5+2 = 10</span>. <span class="math-expr">&sum;fx = (1&times;3)+(2&times;5)+(3&times;2) = 3+10+6 = 19</span>. <span class="math-expr">Mean = <span class="math-frac"><span class="num">19</span><span class="den">10</span></span> = 1.9</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Determine the range of the following recorded measurement data set: 43, 12, 67, 89, 34, 55.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Range = Maximum - Minimum = 89 - 12 = 77</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. State the explicit midpoint coordinate value for the grouped frequency data class interval: <span class="math-expr">10 &le; w &lt; 20</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Midpoint = <span class="math-frac"><span class="num">10 + 20</span><span class="den">2</span></span> = 15</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. If the mean of 4 values is 15, and a 5th value is added, the new mean becomes 16. Find the value of the 5th item.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Original sum = <span class="math-expr">4 &times; 15 = 60</span>. New sum = <span class="math-expr">5 &times; 16 = 80</span>. 5th value = <span class="math-expr">80 - 60 = 20</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. In a grouped dataset table, the cumulative frequencies are 4, 12, 25, 34. Find the individual frequency of the third interval class.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Subtract previous total: <span class="math-expr">25 - 12 = 13</span>. The frequency is 13.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. Calculate the modal class for a data table with intervals [0-5, 5-10, 10-15] and frequencies [4, 9, 3].</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">The highest frequency is 9, which belongs to the interval class <strong>5-10</strong>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. Find the median position index indicator score if total items evaluated count to <span class="math-expr">n = 49</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content"><span class="math-expr">Position = <span class="math-frac"><span class="num">n + 1</span><span class="den">2</span></span> = <span class="math-frac"><span class="num">49 + 1</span><span class="den">2</span></span> = 25</span>th term.</div>
+        </div>
+    </div>
+
+    <div class="unit-module">
+        <h3>Unit 14: Probability 1 (Strand ID: g10-prob)</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Probability Instructional Video"></iframe>
+        </div>
+        <div class="practice-heading">Standard Practice Item Bank (10 Questions)</div>
+        
+        <div class="problem-item">
+            <div class="problem-text">1. A standard six-sided die is rolled. Find the theoretical probability of rolling a prime number.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Prime outcomes are 2, 3, 5 (3 options). <span class="math-expr">P = <span class="math-frac"><span class="num">3</span><span class="den">6</span></span> = <span class="math-frac"><span class="num">1</span><span class="den">2</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">2. The probability of an event occurring is given as <span class="math-expr">P(A) = <span class="math-frac"><span class="num">3</span><span class="den">11</span></span></span>. Calculate its complement probability value <span class="math-expr">P(A')</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Apply complement rule: <span class="math-expr">P(A') = 1 - P(A) = 1 - <span class="math-frac"><span class="num">3</span><span class="den">11</span></span> = <span class="math-frac"><span class="num">8</span><span class="den">11</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">3. A bag contains 4 red marbles and 6 blue marbles. If two marbles are pulled out sequentially with replacement, find the probability that both are red.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Independent events: <span class="math-expr">P(Red &cap; Red) = <span class="math-frac"><span class="num">4</span><span class="den">10</span></span> &times; <span class="math-frac"><span class="num">4</span><span class="den">10</span></span> = <span class="math-frac"><span class="num">16</span><span class="den">100</span></span> = <span class="math-frac"><span class="num">4</span><span class="den">25</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">4. Using the marble bag from question 3, if the extraction is done without replacement, find the probability that both are red.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Dependent events: <span class="math-expr">P(Red &cap; Red) = <span class="math-frac"><span class="num">4</span><span class="den">10</span></span> &times; <span class="math-frac"><span class="num">3</span><span class="den">9</span></span> = <span class="math-frac"><span class="num">12</span><span class="den">90</span></span> = <span class="math-frac"><span class="num">2</span><span class="den">15</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">5. Two independent events have properties <span class="math-expr">P(X) = 0.5</span> and <span class="math-expr">P(Y) = 0.3</span>. Calculate the intersection probability <span class="math-expr">P(X &cap; Y)</span>.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">For independent paths, multiply probabilities: <span class="math-expr">0.5 &times; 0.3 = 0.15</span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">6. A fair coin is tossed three consecutive times. Determine the probability of getting exactly three heads.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Sample space size is <span class="math-expr">2<sup>3</sup> = 8</span>. Out of these, HHH is 1 outcome. Probability = <span class="math-frac"><span class="num">1</span><span class="den">8</span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">7. The probability of rain tomorrow is 20%. Calculate the probability that it will not rain tomorrow.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Complement calculation: <span class="math-expr">100% - 20% = 80%</span> (or 0.80).</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">8. A spinner is divided into 5 equal sectors numbered 1 to 5. Find the probability of spinning a value greater than 3.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Favorable outcomes are 4 and 5 (2 outcomes). Probability = <span class="math-frac"><span class="num">2</span><span class="den">5</span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">9. A card is drawn at random from a standard 52-card deck. Calculate the probability that the drawn card is an Ace.</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">There are 4 Aces in a deck: <span class="math-expr">P = <span class="math-frac"><span class="num">4</span><span class="den">52</span></span> = <span class="math-frac"><span class="num">1</span><span class="den">13</span></span></span>.</div>
+        </div>
+        <div class="problem-item">
+            <div class="problem-text">10. If two independent steps on a tree branch diagram have transition success options of 0.7 and 0.8 respectively, what is the probability of complete path failure?</div>
+            <button class="solution-toggle" onclick="toggleSolution(this)">View Analytical Steps</button>
+            <div class="solution-content">Find failure probabilities: <span class="math-expr">1 - 0.7 = 0.3</span> and <span class="math-expr">1 - 0.8 = 0.2</span>. Path failure product = <span class="math-expr">0.3 &times; 0.2 = 0.06</span>.</div>
+        </div>
+    </div>
+
+    <div class="summary-dashboard">
+        <h3>📊 Structural Validation Summary</h3>
+        <ul>
+            <li><strong>Total Core Curricular Strands Configured:</strong> 3 Primary Categories</li>
+            <li><strong>Total Component Units Realized:</strong> 14 Individual Topic Modules</li>
+            <li><strong>Interactive Video Frameworks:</strong> 14 Embedded Video Containers</li>
+            <li><strong>Total Unique Practice Items Compiled:</strong> 140 Questions with isolated solutions</li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    function toggleSolution(buttonElement) {
+        var solutionDisplay = buttonElement.nextElementSibling;
+        if (solutionDisplay.style.display === "block") {
+            solutionDisplay.style.display = "none";
+            buttonElement.textContent = "View Analytical Steps";
+        } else {
+            solutionDisplay.style.display = "block";
+            buttonElement.textContent = "Hide Analytical Steps";
         }
+    }
+</script>
 
-        const curriculumDatabase = [
-            /* --- 1. NUMBERS AND ALGEBRA --- */
-            { 
-                id: "g10-real", grade: "10", type: "essential", strand: "NUMBERS AND ALGEBRA", subStrand: "Real Numbers", resources: ["Number Lines", "Workbooks"], videoUrl: "https://www.youtube.com/embed/m94WTZ7JLIs",
-                questions: [
-                    { problem: "[Q1] Which of the following numbers is irrational?", options: ["3.14159", "<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>16</span></span>", "<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>5</span></span>", "<span class='fr-wrap'><span class='fr-num'>22</span><span class='fr-den'>7</span></span>"], correctIndex: 2, hint: "An irrational number cannot be written as an exact fraction of two integers." },
-                    { problem: "[Q2] Simplify the following surd completely: <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>72</span></span>.", options: ["2<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span>", "6<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>2</span></span>", "3<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>8</span></span>", "8<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span>"], correctIndex: 1, hint: "Find the largest perfect square factor of 72, which is 36." },
-                    { problem: "[Q3] Rationalize the denominator of: <span class='fr-wrap'><span class='fr-num'>3</span><span class='fr-den'><span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span></span></span>.", options: ["<span class='fr-wrap'><span class='fr-num'><span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span></span><span class='fr-den'>2</span></span>", "<span class='fr-wrap'><span class='fr-num'><span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span></span><span class='fr-den'>3</span></span>", "2<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span>", "3<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span>"], correctIndex: 0, hint: "Multiply both the numerator and denominator by the square root of 6." },
-                    { problem: "[Q4] Convert the recurring decimal 0.777... into a standard fraction.", options: ["<span class='fr-wrap'><span class='fr-num'>7</span><span class='fr-den'>10</span></span>", "<span class='fr-wrap'><span class='fr-num'>7</span><span class='fr-den'>9</span></span>", "<span class='fr-wrap'><span class='fr-num'>77</span><span class='fr-den'>100</span></span>", "<span class='fr-wrap'><span class='fr-num'>7</span><span class='fr-den'>11</span></span>"], correctIndex: 1, hint: "Let x = 0.777... then 10x = 7.777... Subtract the two setups." },
-                    { problem: "[Q5] Find the upper bound of a length measured as 12 cm to the nearest centimeter.", options: ["12.4 cm", "12.5 cm", "13 cm", "12.05 cm"], correctIndex: 1, hint: "Add half of the unit of precision (0.5 cm) to the measured value." },
-                    { problem: "[Q6] Solve for x: 3 &times; (x - 4) &le; 5 &times; x + 2.", options: ["x &ge; -7", "x &le; -7", "x &ge; 7", "x &le; -5"], correctIndex: 0, hint: "Expand out the brackets to get 3x - 12 <= 5x + 2, then rearrange carefully." },
-                    { problem: "[Q7] Identify the correct interval represented by the inequality -3 &lt; x &le; 5.", options: ["(-3, 5)", "[-3, 5]", "(-3, 5]", "[-3, 5)"], correctIndex: 2, hint: "Strict inequalities use parentheses () while inclusive inequalities use square brackets []." },
-                    { problem: "[Q8] Simplify the expression: <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>50</span></span> + <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>18</span></span>.", options: ["<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>68</span></span>", "8<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>2</span></span>", "15<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>2</span></span>", "4<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>2</span></span>"], correctIndex: 1, hint: "Simplify each radical first: root of 50 is 5 root 2, and root of 18 is 3 root 2." },
-                    { problem: "[Q9] If a = <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span> and b = <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>12</span></span>, find the exact value of a &times; b.", options: ["6", "<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>15</span></span>", "36", "3<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>2</span></span>"], correctIndex: 0, hint: "Multiply the values inside the square roots together directly." },
-                    { problem: "[Q10] Final Mastery: Find the rationalized form of <span class='fr-wrap'><span class='fr-num'>2</span><span class='fr-den'><span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span> + 1</span></span>.", options: ["<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span> + 1", "<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span> - 1", "2<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span> - 2", "<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span>"], correctIndex: 1, hint: "Multiply the numerator and denominator by the conjugate expression: root of 3 minus 1." }
-                ]
-            },
-            { 
-                id: "g10-ind", grade: "10", type: "essential", strand: "NUMBERS AND ALGEBRA", subStrand: "Indices and Logarithms", resources: ["Formula Sheets", "Log Tables"], videoUrl: "https://www.youtube.com/embed/Z5myJ8dg_rM",
-                questions: [
-                    { problem: "[Q1] Simplify the exponential expression: <span class='fr-wrap'><span class='fr-num'>x<span class='sup-val'>4</span> &times; x<span class='sup-val'>5</span></span><span class='fr-den'>x<span class='sup-val'>2</span></span></span>.", options: ["x<span class='sup-val'>10</span>", "x<span class='sup-val'>7</span>", "x<span class='sup-val'>11</span>", "x<span class='sup-val'>6</span>"], correctIndex: 1, hint: "Add the exponents when multiplying, and subtract them when dividing." },
-                    { problem: "[Q2] Evaluate the following fractional index: 27<span class='sup-val'>2/3</span>.", options: ["3", "6", "9", "18"], correctIndex: 2, hint: "First find the cube root of 27, then square the resulting answer." },
-                    { problem: "[Q3] Solve the index equation for x: 2<span class='sup-val'>x + 3</span> = 32.", options: ["x = 2", "x = 5", "x = 3", "x = 4"], correctIndex: 0, hint: "Express 32 as a base of 2: 32 = 2^5. Then equate indices." },
-                    { problem: "[Q4] Convert the exponential equation 5<span class='sup-val'>3</span> = 125 into logarithmic form.", options: ["log<span class='sub-val'>3</span>(125) = 5", "log<span class='sub-val'>5</span>(125) = 3", "log<span class='sub-val'>125</span>(5) = 3", "log<span class='sub-val'>5</span>(3) = 125"], correctIndex: 1, hint: "The base remains the base, and the exponent is the isolated answer." },
-                    { problem: "[Q5] Evaluate the expression: log<span class='sub-val'>2</span>(16) + log<span class='sub-val'>3</span>(27).", options: ["5", "6", "7", "12"], correctIndex: 2, hint: "Find what power you raise 2 to get 16, and what power you raise 3 to get 27." },
-                    { problem: "[Q6] Simplify into a single term: log(12) - log(3).", options: ["log(9)", "log(4)", "log(36)", "4"], correctIndex: 1, hint: "The subtraction law of logarithms states that log(A) - log(B) = log(A/B)." },
-                    { problem: "[Q7] Solve the logarithmic equation for x: log<span class='sub-val'>5</span>(x) = 2.", options: ["x = 10", "x = 25", "x = 32", "x = 5"], correctIndex: 1, hint: "Rewrite the log equation into its base exponential form: x = 5^2." },
-                    { problem: "[Q8] Express 2 &times; log(x) + log(y) as a single logarithm.", options: ["log(2x + y)", "log(x<span class='sup-val'>2</span>y)", "log(x<span class='sup-val'>2</span> + y)", "log(2xy)"], correctIndex: 1, hint: "Move the coefficient up as a power first, then use the multiplication log law." },
-                    { problem: "[Q9] Change the base to evaluate exactly: log<span class='sub-val'>4</span>(64).", options: ["2", "3", "4", "16"], correctIndex: 1, hint: "Identify what exponent satisfies the condition: 4^x = 64." },
-                    { problem: "[Q10] Final Mastery: Solve the equation 3<span class='sup-val'>2x - 1</span> = 9<span class='sup-val'>x + 2</span> if possible.", options: ["x = 5", "x = -2", "No Solution", "x = 0"], correctIndex: 2, hint: "Rewrite 9 as 3^2. The equation simplifies to 2x - 1 = 2x + 4, which yields an impossible statement." }
-                ]
-            },
-            { 
-                id: "g10-quad", grade: "10", type: "essential", strand: "NUMBERS AND ALGEBRA", subStrand: "Quadratic Expressions & Equations", resources: ["Desmos Graphic Tool"], videoUrl: "https://www.youtube.com/embed/IKyUuvulKbY",
-                questions: [
-                    { problem: "[Q1] Factorize the quadratic expression completely: x<span class='sup-val'>2</span> - 5x + 6.", options: ["(x-1)(x-6)", "(x-2)(x-3)", "(x+2)(x+3)", "(x-5)(x+1)"], correctIndex: 1, hint: "Find two numbers that multiply to +6 and add up to -5." },
-                    { problem: "[Q2] Solve the equation by factorizing: x<span class='sup-val'>2</span> + 7x = 0.", options: ["x = 0 or x = -7", "x = 7", "x = 0 or x = 7", "x = -7"], correctIndex: 0, hint: "Factor out the common term x to get x(x + 7) = 0." },
-                    { problem: "[Q3] Find the roots of the equation: x<span class='sup-val'>2</span> - 9 = 0.", options: ["x = 9", "x = 3", "x = 3 or x = -3", "x = 4.5"], correctIndex: 2, hint: "This is a difference of two squares: (x - 3)(x + 3) = 0." },
-                    { problem: "[Q4] What constant must be added to x<span class='sup-val'>2</span> + 8x to make it a perfect square?", options: ["4", "8", "16", "64"], correctIndex: 2, hint: "Take half of the x-coefficient (4) and square it." },
-                    { problem: "[Q5] Solve using the quadratic formula: x<span class='sup-val'>2</span> - 4x + 1 = 0.", options: ["2 &plusmn; <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span>", "4 &plusmn; <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>12</span></span>", "2 &plusmn; <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>5</span></span>", "1 &plusmn; <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span>"], correctIndex: 0, hint: "Substitute a=1, b=-4, c=1 into the standard quadratic formula." },
-                    { problem: "[Q6] Find the discriminant of the quadratic equation: 2x<span class='sup-val'>2</span> - 4x + 5 = 0.", options: ["56", "-24", "24", "-4"], correctIndex: 1, hint: "Calculate the value of the discriminant using the formula: b^2 - 4ac." },
-                    { problem: "[Q7] Determine the nature of the roots for: x<span class='sup-val'>2</span> - 6x + 9 = 0.", options: ["Two real distinct roots", "No real roots", "One real repeated root", "Imaginary roots"], correctIndex: 2, hint: "Check the discriminant value. If it equals 0, the roots are identical." },
-                    { problem: "[Q8] Factorize the non-monic quadratic expression: 2x<span class='sup-val'>2</span> + 5x - 3.", options: ["(2x-1)(x+3)", "(2x+3)(x-1)", "(2x+1)(x-3)", "(x-1)(x+3)"], correctIndex: 0, hint: "Look for numbers that multiply to -6 (2 * -3) and add up to 5." },
-                    { problem: "[Q9] Find the coordinates of the turning point of the curve y = (x - 2)<span class='sup-val'>2</span> + 3.", options: ["(-2, 3)", "(2, 3)", "(2, -3)", "(3, 2)"], correctIndex: 1, hint: "The vertex form equation y = (x - h)^2 + k has its vertex point directly at (h, k)." },
-                    { problem: "[Q10] Final Mastery: Find the value of k for which x<span class='sup-val'>2</span> + kx + 25 = 0 has a single repeated root.", options: ["k = 5", "k = 10 or k = -10", "k = 25", "k = 0"], correctIndex: 1, hint: "Set the discriminant b^2 - 4ac equal to 0, which gives k^2 - 100 = 0." }
-                ]
-            }
-        ];
-
-        let activeTopicIndex = 0;
-        let currentQuestionIndex = 0;
-        let selectedOptionIndex = null;
-        let masterProgress = {};
-
-        function initializeWorkspace() {
-            curriculumDatabase.forEach(topic => {
-                masterProgress[topic.id] = 0;
-            });
-            renderSidebarDirectory();
-            loadTopicNode(0);
-        }
-
-        function renderSidebarDirectory() {
-            const container = document.getElementById("topicDirectory");
-            container.innerHTML = "";
-            
-            let currentStrand = "";
-            let currentGroup = null;
-
-            curriculumDatabase.forEach((topic, index) => {
-                if (topic.strand !== currentStrand) {
-                    currentStrand = topic.strand;
-                    currentGroup = document.createElement("div");
-                    currentGroup.className = "strand-group";
-                    
-                    const title = document.createElement("div");
-                    title.className = "strand-title";
-                    title.innerText = currentStrand;
-                    currentGroup.appendChild(title);
-                    container.appendChild(currentGroup);
-                }
-
-                const btn = document.createElement("button");
-                btn.className = `topic-btn ${index === activeTopicIndex ? 'active-topic' : ''}`;
-                btn.innerText = topic.subStrand;
-                btn.onclick = () => loadTopicNode(index);
-                currentGroup.appendChild(btn);
-            });
-
-            document.getElementById("sidebarSubtitle").innerText = "Kenya CBC Secondary Toolkit";
-        }
-
-        function loadTopicNode(index) {
-            activeTopicIndex = index;
-            const topic = curriculumDatabase[index];
-            currentQuestionIndex = masterProgress[topic.id];
-
-            renderSidebarDirectory();
-
-            document.getElementById("strandLabel").innerText = `Strand Node // ${topic.strand}`;
-            document.getElementById("topicTitle").innerText = topic.subStrand;
-            document.getElementById("videoPlayer").src = topic.videoUrl;
-
-            const resContainer = document.getElementById("resourceContainer");
-            resContainer.innerHTML = "";
-            topic.resources.forEach(res => {
-                const span = document.createElement("span");
-                span.className = "res-tag";
-                span.innerText = `📦 ${res}`;
-                resContainer.appendChild(span);
-            });
-
-            buildMilestoneTrack(topic);
-            presentQuestion(topic);
-            clearProfessorSpace();
-        }
-
-        function buildMilestoneTrack(topic) {
-            const track = document.getElementById("nodeTrack");
-            track.innerHTML = "";
-            topic.questions.forEach((_, idx) => {
-                const node = document.createElement("div");
-                node.className = "track-node";
-                node.innerText = idx + 1;
-                
-                if (idx < masterProgress[topic.id]) {
-                    node.className = "track-node passed";
-                } else if (idx === masterProgress[topic.id]) {
-                    node.className = "track-node current";
-                } else {
-                    node.className = "track-node locked";
-                }
-                track.appendChild(node);
-            });
-        }
-
-        function presentQuestion(topic) {
-            selectedOptionIndex = null;
-            const totalQuestions = topic.questions.length;
-
-            if (currentQuestionIndex >= totalQuestions) {
-                document.getElementById("matrixTaskLabel").innerText = "Topic Completed!";
-                document.getElementById("problemExpression").innerText = "🎉 Magnificent work! You have finished all core milestone checkpoints for this sub-strand.";
-                document.getElementById("optionsGrid").innerHTML = "";
-                return;
-            }
-
-            const qData = topic.questions[currentQuestionIndex];
-            document.getElementById("matrixTaskLabel").innerText = `Practice Question Checkpoint (${currentQuestionIndex + 1}/${totalQuestions})`;
-            document.getElementById("problemExpression").innerHTML = qData.problem;
-
-            const grid = document.getElementById("optionsGrid");
-            grid.innerHTML = "";
-            qData.options.forEach((opt, idx) => {
-                const btn = document.createElement("button");
-                btn.className = "option-btn";
-                btn.innerHTML = opt;
-                btn.onclick = () => selectOption(idx);
-                grid.appendChild(btn);
-            });
-        }
-
-        function selectOption(idx) {
-            selectedOptionIndex = idx;
-            const buttons = document.querySelectorAll(".options-grid .option-btn");
-            buttons.forEach((btn, i) => {
-                btn.className = `option-btn ${i === idx ? 'selected' : ''}`;
-            });
-        }
-
-        function evaluateAnswer() {
-            if (selectedOptionIndex === null) {
-                alert("Please click on an option before verification evaluation.");
-                return;
-            }
-
-            const topic = curriculumDatabase[activeTopicIndex];
-            const qData = topic.questions[currentQuestionIndex];
-            const overlay = document.getElementById("feedbackOverlay");
-            const modal = document.getElementById("feedbackModal");
-
-            if (selectedOptionIndex === qData.correctIndex) {
-                playFeedbackSound(true); // Celebration Volume: High (0.8)
-                
-                modal.className = "feedback-modal modal-success";
-                document.getElementById("modalIcon").innerText = "🎉";
-                document.getElementById("modalTitle").innerText = "Excellent Job!";
-                document.getElementById("modalDesc").innerText = "Your mathematical logic checks out flawlessly. Excellent steps!";
-                document.getElementById("modalActionBtn").innerText = "Advance to Next Node";
-                
-                masterProgress[topic.id]++;
-                currentQuestionIndex = masterProgress[topic.id];
-            } else {
-                playFeedbackSound(false); // Wrong Volume: Low (0.08)
-                
-                modal.className = "feedback-modal modal-fail";
-                document.getElementById("modalIcon").innerText = "❌";
-                document.getElementById("modalTitle").innerText = "Review Step Logic";
-                document.getElementById("modalDesc").innerText = "That choice did not match the solution pathway. Re-evaluate using Professor Oneiro's structural hint.";
-                document.getElementById("modalActionBtn").innerText = "Try Problem Again";
-            }
-
-            overlay.classList.add("show");
-        }
-
-        function closeFeedback() {
-            document.getElementById("feedbackOverlay").classList.remove("show");
-            const topic = curriculumDatabase[activeTopicIndex];
-            buildMilestoneTrack(topic);
-            presentQuestion(topic);
-        }
-
-        function toggleCalculator() {
-            document.getElementById("desmosDrawer").classList.toggle("open");
-        }
-
-        function clearProfessorSpace() {
-            const chatSpace = document.getElementById("chatSpace");
-            chatSpace.innerHTML = `
-                <div class="msg oneiro">Jambo! I am Professor Oneiro. Review your target assignment framework. Ask me anytime if structural hints are needed.</div>
-            `;
-        }
-
-        function summonOneiroHint() {
-            const topic = curriculumDatabase[activeTopicIndex];
-            if (currentQuestionIndex >= topic.questions.length) return;
-            const qData = topic.questions[currentQuestionIndex];
-            
-            const chatSpace = document.getElementById("chatSpace");
-            const msg = document.createElement("div");
-            msg.className = "msg oneiro";
-            msg.innerText = `💡 Hint for Question ${currentQuestionIndex + 1}: ${qData.hint}`;
-            chatSpace.appendChild(msg);
-            chatSpace.scrollTop = chatSpace.scrollHeight;
-        }
-
-        function sendStudentMessage() {
-            const input = document.getElementById("studentInput");
-            const val = input.value.trim();
-            if (!val) return;
-
-            const chatSpace = document.getElementById("chatSpace");
-            const sMsg = document.createElement("div");
-            sMsg.className = "msg student";
-            sMsg.innerText = val;
-            chatSpace.appendChild(sMsg);
-
-            input.value = "";
-
-            setTimeout(() => {
-                const oMsg = document.createElement("div");
-                oMsg.className = "msg oneiro";
-                oMsg.innerText = "Understood. Focus your methodology on applying standard formulas step-by-step. Let's solve the current target choice model together.";
-                chatSpace.appendChild(oMsg);
-                chatSpace.scrollTop = chatSpace.scrollHeight;
-            }, 700);
-
-            chatSpace.scrollTop = chatSpace.scrollHeight;
-        }
-
-        window.onload = initializeWorkspace;
-    </script>
 </body>
 </html>
