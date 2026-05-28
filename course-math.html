@@ -38,6 +38,30 @@
             background: var(--white);
         }
 
+        /* Nav Tab Link Back to Dashboard */
+        .back-courses-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            border: none;
+            color: var(--muted-gray);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            padding: 4px 0;
+            margin-bottom: 0.75rem;
+            transition: color 0.2s ease;
+            text-decoration: none;
+        }
+
+        .back-courses-link:hover {
+            color: var(--kenya-red);
+        }
+
         .sidebar-header h2 {
             font-size: 1.1rem;
             font-weight: 900;
@@ -187,6 +211,7 @@
 
     <div class="curriculum-sidebar">
         <div class="sidebar-header">
+            <a href="index.html" class="back-courses-link">← Back to Courses</a>
             <h2 id="sidebarTitle">Grade Math Pod</h2>
             <p id="sidebarSubtitle">CBE Appendix Node</p>
         </div>
@@ -248,32 +273,33 @@
             { id: "g10-scale", grade: "10", type: "essential", strand: "Applied Geometry", subStrand: "Scale Drawings", resources: ["Graph Paper", "Protractors"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "If a map scale is 1:50,000, what actual distance corresponds to 2 cm on the map?", options: ["1 km", "5 km", "10 km", "0.5 km"], correctIndex: 0, hint: "Multiply 2 by 50,000 cm, then map the centimeter output to kilometers." },
 
             // --- GRADE 10 CORE MATH ---
-{ 
-    id: "g10-alg", 
-    grade: "10", 
-    type: "core", 
-    strand: "Pure Algebra", 
-    subStrand: "Exponents & Algebra", 
-    resources: ["Formula Arrays", "Scientific Device"], 
-    videoUrl: "https://www.youtube.com/embed/LkhPRz7Hocg", // Changed from watch?v=LkhPRz7Hocg
-    problem: "Simplify the structural algebraic expression: (x³ × x⁵) / x²", 
-    options: ["x⁶", "x¹⁰", "x⁴", "x¹"], 
-    correctIndex: 0, 
-    hint: "Apply linear exponent law: add indices on multiplication, subtract on division." 
-},
-{ 
-    id: "g10-sim", 
-    grade: "10", 
-    type: "core", 
-    strand: "Linear Networks", 
-    subStrand: "Simultaneous Equations", 
-    resources: ["System Plotters", "Matrices Workspace"], 
-    videoUrl: "https://www.youtube.com/embed/oKqtgz2eo-Y", // Changed from watch?v=oKqtgz2eo-Y
-    problem: "Solve for variables: x + y = 12 and x - y = 4.", 
-    options: ["(8, 4)", "(7, 5)", "(9, 3)", "(6, 2)"], 
-    correctIndex: 0, 
-    hint: "Sum the equation vectors together to isolate and eliminate the y parameter." 
-},
+            { 
+                id: "g10-alg", 
+                grade: "10", 
+                type: "core", 
+                strand: "Pure Algebra", 
+                subStrand: "Exponents & Algebra", 
+                resources: ["Formula Arrays", "Scientific Device"], 
+                videoUrl: "https://www.youtube.com/embed/LkhPRz7Hocg", 
+                problem: "Simplify the structural algebraic expression: (x³ × x⁵) / x²", 
+                options: ["x⁶", "x¹⁰", "x⁴", "x¹"], 
+                correctIndex: 0, 
+                hint: "Apply linear exponent law: add indices on multiplication, subtract on division." 
+            },
+            { 
+                id: "g10-sim", 
+                grade: "10", 
+                type: "core", 
+                strand: "Linear Networks", 
+                subStrand: "Simultaneous Equations", 
+                resources: ["System Plotters", "Matrices Workspace"], 
+                videoUrl: "https://www.youtube.com/embed/oKqtgz2eo-Y", 
+                problem: "Solve for variables: x + y = 12 and x - y = 4.", 
+                options: ["(8, 4)", "(7, 5)", "(9, 3)", "(6, 2)"], 
+                correctIndex: 0, 
+                hint: "Sum the equation vectors together to isolate and eliminate the y parameter." 
+            },
+
             // --- GRADE 11 ESSENTIAL MATH ---
             { id: "g11-fin", grade: "11", type: "essential", strand: "Applied Finance", subStrand: "Finance & Tax", resources: ["Tax Charts", "Spreadsheets"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Calculate the net profit index on a gross volume of 45,000 KES subject to a 15% flat deduction rate.", options: ["38,250 KES", "35,000 KES", "40,000 KES", "37,500 KES"], correctIndex: 0, hint: "Deduct 0.15 × 45,000 from the baseline system volume." },
 
