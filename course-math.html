@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UEFI Academic Core | CBE Mathematics Workspace</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700;800;900&family=JetBrains+Mono:wght=400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -21,7 +21,7 @@
             --interactive-shadow: 0 10px 15px -3px rgba(0, 135, 81, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Playfair Display', serif; }
         body { background-color: var(--off-white); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; position: relative;}
 
         /* --- LEFT NAVIGATION: LEARNING DIRECTORY --- */
@@ -230,10 +230,20 @@
         }
         .quiz-container h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--kenya-black); display: flex; align-items: center; gap: 8px;}
         .quiz-container h2::before { content: "✍️"; }
-        .math-expr { background: var(--off-white); padding: 1.5rem; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; margin-bottom: 1.75rem; border: 1px solid var(--border-color); color: #0f172a; line-height: 1.6; }
+        .math-expr { background: var(--off-white); padding: 1.5rem; border-radius: 8px; font-size: 1.2rem; margin-bottom: 1.75rem; border: 1px solid var(--border-color); color: #0f172a; line-height: 1.8; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
         
+        /* Math Render Structures */
+        .rad-wrap { display: inline-flex; align-items: flex-end; position: relative; margin: 0 2px; }
+        .rad-sym { font-size: 1.35rem; line-height: 0.9; transform: translateY(2px); font-family: sans-serif; }
+        .rad-val { border-top: 2px solid currentColor; padding: 0 3px 1px 2px; line-height: 1; font-style: italic; }
+        .sup-val { font-size: 0.75rem; vertical-align: super; font-style: italic; margin-left: 1px; }
+        .sub-val { font-size: 0.75rem; vertical-align: sub; font-style: italic; }
+        .fr-wrap { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; font-size: 0.95rem; }
+        .fr-num { border-bottom: 1px solid currentColor; padding: 0 4px; line-height: 1.1; }
+        .fr-den { padding: 0 4px; line-height: 1.1; }
+
         .options-grid { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.75rem; }
-        .option-btn { background: var(--white); border: 2px solid var(--border-color); padding: 1.1rem 1.25rem; text-align: left; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.2s ease; color: #334155; }
+        .option-btn { background: var(--white); border: 2px solid var(--border-color); padding: 1.1rem 1.25rem; text-align: left; border-radius: 10px; cursor: pointer; font-size: 1.05rem; font-weight: 600; transition: all 0.2s ease; color: #334155; display: flex; align-items: center; }
         .option-btn:hover { border-color: var(--kenya-black); background: var(--off-white); }
         .option-btn.selected { border-color: var(--kenya-green); background: rgba(0, 135, 81, 0.03); box-shadow: 0 0 0 1px var(--kenya-green); }
         
@@ -311,7 +321,7 @@
 
     <div class="desmos-drawer" id="desmosDrawer">
         <div class="calc-header">
-            <div class="calc-title">🧮 UEFI Desmos Calculator</div>
+            <div class="calc-title">🧮 Desmos Scientific Workspace</div>
             <button class="close-calc-btn" onclick="toggleCalculator()">✕</button>
         </div>
         <iframe class="desmos-frame" src="https://www.desmos.com/scientific" title="Desmos Scientific Calculator"></iframe>
@@ -351,7 +361,7 @@
             <div class="action-bar">
                 <button class="btn btn-submit" onclick="evaluateAnswer()">Check Answer</button>
                 <button class="btn btn-hint" onclick="summonOneiroHint()">Ask Prof. Oneiro for Hint</button>
-                <button class="btn btn-calc" onclick="toggleCalculator()">🧮 UEFI Desmos Calculator</button>
+                <button class="btn btn-calc" onclick="toggleCalculator()">🧮 Toggle Calculator</button>
             </div>
         </div>
     </main>
@@ -382,491 +392,317 @@
     </div>
 
     <script>
+        // Web Audio API Synth Engine for Feedback Sound Effects
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playFeedbackSound(isCorrect) {
+            // Ensure audio context is running
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const now = audioCtx.currentTime;
+
+            if (isCorrect) {
+                // Celebration Sound Dynamic: High Volume (0.8) and grand harmonic chord architecture
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 major chord
+                notes.forEach((freq, index) => {
+                    const osc = audioCtx.createOscillator();
+                    const gainNode = audioCtx.createGain();
+                    
+                    osc.type = index % 2 === 0 ? 'sine' : 'triangle';
+                    osc.frequency.setValueAtTime(freq, now + (index * 0.04)); // Arpeggiated entry
+                    
+                    gainNode.gain.setValueAtTime(0.2, now + (index * 0.04)); 
+                    // Main celebration volume blast
+                    gainNode.gain.exponentialRampToValueAtTime(0.8 / notes.length, now + 0.1);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+                    
+                    osc.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    osc.start(now + (index * 0.04));
+                    osc.stop(now + 0.6);
+                });
+            } else {
+                // Mistake Dynamic: Quite Low Volume (0.08) and flat downward tone
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.linearRampToValueAtTime(110, now + 0.25);
+                
+                gainNode.gain.setValueAtTime(0.08, now); // Quiet audio feedback
+                gainNode.gain.linearRampToValueAtTime(0.001, now + 0.28);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            }
+        }
+
         const curriculumDatabase = [
             /* --- 1. NUMBERS AND ALGEBRA --- */
             { 
                 id: "g10-real", grade: "10", type: "essential", strand: "NUMBERS AND ALGEBRA", subStrand: "Real Numbers", resources: ["Number Lines", "Workbooks"], videoUrl: "https://www.youtube.com/embed/m94WTZ7JLIs",
                 questions: [
-                    { problem: "[Q1] Which of the following numbers is irrational?", options: ["3.14159", "sqrt(16)", "sqrt(5)", "22/7"], correctIndex: 2, hint: "An irrational number cannot be written as an exact fraction of two integers." },
-                    { problem: "[Q2] Simplify the following surd completely: sqrt(72).", options: ["2*sqrt(6)", "6*sqrt(2)", "3*sqrt(8)", "8*sqrt(3)"], correctIndex: 1, hint: "Find the largest perfect square factor of 72, which is 36." },
-                    { problem: "[Q3] Rationalize the denominator of: 3 / sqrt(6).", options: ["sqrt(6)/2", "sqrt(6)/3", "2*sqrt(6)", "3*sqrt(6)"], correctIndex: 0, hint: "Multiply both the numerator and denominator by sqrt(6)." },
-                    { problem: "[Q4] Convert the recurring decimal 0.777... into a standard fraction.", options: ["7/10", "7/9", "77/100", "7/11"], correctIndex: 1, hint: "Let x = 0.777... then 10x = 7.777... Subtract the two equations." },
+                    { problem: "[Q1] Which of the following numbers is irrational?", options: ["3.14159", "<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>16</span></span>", "<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>5</span></span>", "<span class='fr-wrap'><span class='fr-num'>22</span><span class='fr-den'>7</span></span>"], correctIndex: 2, hint: "An irrational number cannot be written as an exact fraction of two integers." },
+                    { problem: "[Q2] Simplify the following surd completely: <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>72</span></span>.", options: ["2<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span>", "6<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>2</span></span>", "3<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>8</span></span>", "8<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span>"], correctIndex: 1, hint: "Find the largest perfect square factor of 72, which is 36." },
+                    { problem: "[Q3] Rationalize the denominator of: <span class='fr-wrap'><span class='fr-num'>3</span><span class='fr-den'><span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span></span></span>.", options: ["<span class='fr-wrap'><span class='fr-num'><span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span></span><span class='fr-den'>2</span></span>", "<span class='fr-wrap'><span class='fr-num'><span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span></span><span class='fr-den'>3</span></span>", "2<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span>", "3<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>6</span></span>"], correctIndex: 0, hint: "Multiply both the numerator and denominator by the square root of 6." },
+                    { problem: "[Q4] Convert the recurring decimal 0.777... into a standard fraction.", options: ["<span class='fr-wrap'><span class='fr-num'>7</span><span class='fr-den'>10</span></span>", "<span class='fr-wrap'><span class='fr-num'>7</span><span class='fr-den'>9</span></span>", "<span class='fr-wrap'><span class='fr-num'>77</span><span class='fr-den'>100</span></span>", "<span class='fr-wrap'><span class='fr-num'>7</span><span class='fr-den'>11</span></span>"], correctIndex: 1, hint: "Let x = 0.777... then 10x = 7.777... Subtract the two setups." },
                     { problem: "[Q5] Find the upper bound of a length measured as 12 cm to the nearest centimeter.", options: ["12.4 cm", "12.5 cm", "13 cm", "12.05 cm"], correctIndex: 1, hint: "Add half of the unit of precision (0.5 cm) to the measured value." },
-                    { problem: "[Q6] Solve for x: 3*(x - 4) <= 5*x + 2.", options: ["x >= -7", "x <= -7", "x >= 7", "x <= -5"], correctIndex: 0, hint: "Expand out the brackets to get 3x - 12 <= 5x + 2, then rearrange carefully." },
-                    { problem: "[Q7] Identify the correct interval represented by the inequality -3 < x <= 5.", options: ["(-3, 5)", "[-3, 5]", "(-3, 5]", "[-3, 5)"], correctIndex: 2, hint: "Strict inequalities use parentheses () while inclusive inequalities use square brackets []." },
-                    { problem: "[Q8] Simplify the expression: sqrt(50) + sqrt(18).", options: ["sqrt(68)", "8*sqrt(2)", "15*sqrt(2)", "4*sqrt(2)"], correctIndex: 1, hint: "Simplify each surd first: sqrt(50) = 5*sqrt(2) and sqrt(18) = 3*sqrt(2)." },
-                    { problem: "[Q9] If a = sqrt(3) and b = sqrt(12), find the exact value of a * b.", options: ["6", "sqrt(15)", "36", "3*sqrt(2)"], correctIndex: 0, hint: "Multiply the values inside the square roots together: sqrt(3 * 12) = sqrt(36)." },
-                    { problem: "[Q10] Final Mastery: Find the rationalized form of 2 / (sqrt(3) + 1).", options: ["sqrt(3) + 1", "sqrt(3) - 1", "2*sqrt(3) - 2", "sqrt(3)"], correctIndex: 1, hint: "Multiply the numerator and denominator by the conjugate expression: (sqrt(3) - 1)." }
+                    { problem: "[Q6] Solve for x: 3 &times; (x - 4) &le; 5 &times; x + 2.", options: ["x &ge; -7", "x &le; -7", "x &ge; 7", "x &le; -5"], correctIndex: 0, hint: "Expand out the brackets to get 3x - 12 <= 5x + 2, then rearrange carefully." },
+                    { problem: "[Q7] Identify the correct interval represented by the inequality -3 &lt; x &le; 5.", options: ["(-3, 5)", "[-3, 5]", "(-3, 5]", "[-3, 5)"], correctIndex: 2, hint: "Strict inequalities use parentheses () while inclusive inequalities use square brackets []." },
+                    { problem: "[Q8] Simplify the expression: <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>50</span></span> + <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>18</span></span>.", options: ["<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>68</span></span>", "8<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>2</span></span>", "15<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>2</span></span>", "4<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>2</span></span>"], correctIndex: 1, hint: "Simplify each radical first: root of 50 is 5 root 2, and root of 18 is 3 root 2." },
+                    { problem: "[Q9] If a = <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span> and b = <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>12</span></span>, find the exact value of a &times; b.", options: ["6", "<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>15</span></span>", "36", "3<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>2</span></span>"], correctIndex: 0, hint: "Multiply the values inside the square roots together directly." },
+                    { problem: "[Q10] Final Mastery: Find the rationalized form of <span class='fr-wrap'><span class='fr-num'>2</span><span class='fr-den'><span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span> + 1</span></span>.", options: ["<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span> + 1", "<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span> - 1", "2<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span> - 2", "<span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span>"], correctIndex: 1, hint: "Multiply the numerator and denominator by the conjugate expression: root of 3 minus 1." }
                 ]
             },
             { 
                 id: "g10-ind", grade: "10", type: "essential", strand: "NUMBERS AND ALGEBRA", subStrand: "Indices and Logarithms", resources: ["Formula Sheets", "Log Tables"], videoUrl: "https://www.youtube.com/embed/Z5myJ8dg_rM",
                 questions: [
-                    { problem: "[Q1] Simplify the exponential expression: (x^4) * (x^5) / (x^2).", options: ["x^10", "x^7", "x^11", "x^6"], correctIndex: 1, hint: "Add the exponents when multiplying, and subtract them when dividing." },
-                    { problem: "[Q2] Evaluate the following fractional index: 27^(2/3).", options: ["3", "6", "9", "18"], correctIndex: 2, hint: "First find the cube root of 27, then square the resulting answer." },
-                    { problem: "[Q3] Solve the index equation for x: 2^(x + 3) = 32.", options: ["x = 2", "x = 5", "x = 3", "x = 4"], correctIndex: 0, hint: "Express 32 as a base of 2: 32 = 2^5. Then equate indices." },
-                    { problem: "[Q4] Convert the exponential equation 5^3 = 125 into logarithmic form.", options: ["log_3(125) = 5", "log_5(125) = 3", "log_125(5) = 3", "log_5(3) = 125"], correctIndex: 1, hint: "The base remains the base, and the exponent is the isolated answer." },
-                    { problem: "[Q5] Evaluate the expression: log_2(16) + log_3(27).", options: ["5", "6", "7", "12"], correctIndex: 2, hint: "Find what power you raise 2 to get 16, and what power you raise 3 to get 27." },
+                    { problem: "[Q1] Simplify the exponential expression: <span class='fr-wrap'><span class='fr-num'>x<span class='sup-val'>4</span> &times; x<span class='sup-val'>5</span></span><span class='fr-den'>x<span class='sup-val'>2</span></span></span>.", options: ["x<span class='sup-val'>10</span>", "x<span class='sup-val'>7</span>", "x<span class='sup-val'>11</span>", "x<span class='sup-val'>6</span>"], correctIndex: 1, hint: "Add the exponents when multiplying, and subtract them when dividing." },
+                    { problem: "[Q2] Evaluate the following fractional index: 27<span class='sup-val'>2/3</span>.", options: ["3", "6", "9", "18"], correctIndex: 2, hint: "First find the cube root of 27, then square the resulting answer." },
+                    { problem: "[Q3] Solve the index equation for x: 2<span class='sup-val'>x + 3</span> = 32.", options: ["x = 2", "x = 5", "x = 3", "x = 4"], correctIndex: 0, hint: "Express 32 as a base of 2: 32 = 2^5. Then equate indices." },
+                    { problem: "[Q4] Convert the exponential equation 5<span class='sup-val'>3</span> = 125 into logarithmic form.", options: ["log<span class='sub-val'>3</span>(125) = 5", "log<span class='sub-val'>5</span>(125) = 3", "log<span class='sub-val'>125</span>(5) = 3", "log<span class='sub-val'>5</span>(3) = 125"], correctIndex: 1, hint: "The base remains the base, and the exponent is the isolated answer." },
+                    { problem: "[Q5] Evaluate the expression: log<span class='sub-val'>2</span>(16) + log<span class='sub-val'>3</span>(27).", options: ["5", "6", "7", "12"], correctIndex: 2, hint: "Find what power you raise 2 to get 16, and what power you raise 3 to get 27." },
                     { problem: "[Q6] Simplify into a single term: log(12) - log(3).", options: ["log(9)", "log(4)", "log(36)", "4"], correctIndex: 1, hint: "The subtraction law of logarithms states that log(A) - log(B) = log(A/B)." },
-                    { problem: "[Q7] Solve the logarithmic equation for x: log_5(x) = 2.", options: ["x = 10", "x = 25", "x = 32", "x = 5"], correctIndex: 1, hint: "Rewrite the log equation into its base exponential form: x = 5^2." },
-                    { problem: "[Q8] Express 2*log(x) + log(y) as a single logarithm.", options: ["log(2x + y)", "log(x^2 * y)", "log(x^2 + y)", "log(2xy)"], correctIndex: 1, hint: "Move the coefficient up as a power first, then use the multiplication log law." },
-                    { problem: "[Q9] Change the base to evaluate exactly: log_4(64).", options: ["2", "3", "4", "16"], correctIndex: 1, hint: "Identify what exponent satisfies the condition: 4^x = 64." },
-                    { problem: "[Q10] Final Mastery: Solve the equation 3^(2x - 1) = 9^(x + 2) if possible.", options: ["x = 5", "x = -2", "No Solution", "x = 0"], correctIndex: 2, hint: "Rewrite 9 as 3^2. The equation simplifies to 2x - 1 = 2x + 4, which yields an impossible statement." }
+                    { problem: "[Q7] Solve the logarithmic equation for x: log<span class='sub-val'>5</span>(x) = 2.", options: ["x = 10", "x = 25", "x = 32", "x = 5"], correctIndex: 1, hint: "Rewrite the log equation into its base exponential form: x = 5^2." },
+                    { problem: "[Q8] Express 2 &times; log(x) + log(y) as a single logarithm.", options: ["log(2x + y)", "log(x<span class='sup-val'>2</span>y)", "log(x<span class='sup-val'>2</span> + y)", "log(2xy)"], correctIndex: 1, hint: "Move the coefficient up as a power first, then use the multiplication log law." },
+                    { problem: "[Q9] Change the base to evaluate exactly: log<span class='sub-val'>4</span>(64).", options: ["2", "3", "4", "16"], correctIndex: 1, hint: "Identify what exponent satisfies the condition: 4^x = 64." },
+                    { problem: "[Q10] Final Mastery: Solve the equation 3<span class='sup-val'>2x - 1</span> = 9<span class='sup-val'>x + 2</span> if possible.", options: ["x = 5", "x = -2", "No Solution", "x = 0"], correctIndex: 2, hint: "Rewrite 9 as 3^2. The equation simplifies to 2x - 1 = 2x + 4, which yields an impossible statement." }
                 ]
             },
             { 
                 id: "g10-quad", grade: "10", type: "essential", strand: "NUMBERS AND ALGEBRA", subStrand: "Quadratic Expressions & Equations", resources: ["Desmos Graphic Tool"], videoUrl: "https://www.youtube.com/embed/IKyUuvulKbY",
                 questions: [
-                    { problem: "[Q1] Factorize the quadratic expression completely: x^2 - 5x + 6.", options: ["(x-1)(x-6)", "(x-2)(x-3)", "(x+2)(x+3)", "(x-5)(x+1)"], correctIndex: 1, hint: "Find two numbers that multiply to +6 and add up to -5." },
-                    { problem: "[Q2] Solve the equation by factorizing: x^2 + 7x = 0.", options: ["x = 0 or x = -7", "x = 7", "x = 0 or x = 7", "x = -7"], correctIndex: 0, hint: "Factor out the common term x to get x(x + 7) = 0." },
-                    { problem: "[Q3] Find the roots of the equation: x^2 - 9 = 0.", options: ["x = 9", "x = 3", "x = 3 or x = -3", "x = 4.5"], correctIndex: 2, hint: "This is a difference of two squares: (x - 3)(x + 3) = 0." },
-                    { problem: "[Q4] What constant must be added to x^2 + 8x to make it a perfect square?", options: ["4", "8", "16", "64"], correctIndex: 2, hint: "Take half of the x-coefficient (4) and square it." },
-                    { problem: "[Q5] Solve using the quadratic formula: x^2 - 4x + 1 = 0.", options: ["2 +/- sqrt(3)", "4 +/- sqrt(12)", "2 +/- sqrt(5)", "1 +/- sqrt(3)"], correctIndex: 0, hint: "Substitute a=1, b=-4, c=1 into the quadratic formula." },
-                    { problem: "[Q6] Find the discriminant of the quadratic equation: 2x^2 - 4x + 5 = 0.", options: ["56", "-24", "24", "-4"], correctIndex: 1, hint: "Calculate the value of the discriminant using the formula: b^2 - 4ac." },
-                    { problem: "[Q7] Determine the nature of the roots for: x^2 - 6x + 9 = 0.", options: ["Two real distinct roots", "No real roots", "One real repeated root", "Imaginary roots"], correctIndex: 2, hint: "Check the discriminant value. If it equals 0, the roots are identical." },
-                    { problem: "[Q8] Factorize the non-monic quadratic expression: 2x^2 + 5x - 3.", options: ["(2x-1)(x+3)", "(2x+3)(x-1)", "(2x+1)(x-3)", "(x-1)(x+3)"], correctIndex: 0, hint: "Look for numbers that multiply to -6 (2 * -3) and add up to 5." },
-                    { problem: "[Q9] Find the coordinates of the turning point of the curve y = (x - 2)^2 + 3.", options: ["(-2, 3)", "(2, 3)", "(2, -3)", "(3, 2)"], correctIndex: 1, hint: "The vertex form equation y = (x - h)^2 + k has its vertex point directly at (h, k)." },
-                    { problem: "[Q10] Final Mastery: Find the value of k for which x^2 + kx + 25 = 0 has a single repeated root.", options: ["k = 5", "k = 10 or k = -10", "k = 25", "k = 0"], correctIndex: 1, hint: "Set the discriminant b^2 - 4ac equal to 0, which gives k^2 - 100 = 0." }
-                ]
-            },
-
-            /* --- 2. MEASUREMENT AND GEOMETRY --- */
-            { 
-                id: "g10-sim", grade: "10", type: "essential", strand: "MEASUREMENT AND GEOMETRY", subStrand: "Similarity and Enlargement", resources: ["Grid Paper", "Rulers"], videoUrl: "https://www.youtube.com/embed/AEE9X6kaeK0",
-                questions: [
-                    { problem: "[Q1] Two similar triangles have corresponding sides of length 4 cm and 12 cm. Find the linear scale factor.", options: ["2", "3", "4", "9"], correctIndex: 1, hint: "Divide the corresponding side of the image shape by the object shape." },
-                    { problem: "[Q2] If the linear scale factor of two similar figures is 4, what is the area scale factor?", options: ["4", "8", "16", "64"], correctIndex: 2, hint: "The area scale factor is the square of the linear scale factor (k^2)." },
-                    { problem: "[Q3] Two similar canisters have volumes of 50 cm³ and 400 cm³. Find their linear scale factor.", options: ["2", "4", "8", "16"], correctIndex: 0, hint: "The volume scale factor is 400/50 = 8. Take the cube root of this value." },
-                    { problem: "[Q4] A model car is built with a scale of 1:20. If the real car is 4.5 meters long, how long is the model?", options: ["22.5 cm", "45 cm", "90 cm", "2.25 cm"], correctIndex: 0, hint: "Divide 450 cm by 20." },
-                    { problem: "[Q5] Triangle ABC is similar to DEF. AB = 5cm, DE = 15cm. If the area of ABC is 12 cm², find the area of DEF.", options: ["36 cm²", "108 cm²", "60 cm²", "144 cm²"], correctIndex: 1, hint: "Linear scale factor is 3, so Area scale factor is 9. Multiply 12 by 9." },
-                    { problem: "[Q6] An enlargement maps a point (2, 3) to (6, 9) with the origin as the center. What is the scale factor?", options: ["2", "3", "4.5", "4"], correctIndex: 1, hint: "Compare the coordinates: 6/2 = 3 and 9/3 = 3." },
-                    { problem: "[Q7] A shape with an area of 10 cm² is enlarged by a linear scale factor of -2. What is the new area?", options: ["-20 cm²", "20 cm²", "40 cm²", "-40 cm²"], correctIndex: 2, hint: "Area scale factor is (-2)^2 = 4. Areas must always be positive values." },
-                    { problem: "[Q8] The heights of two similar cones are in the ratio 2:5. What is the ratio of their volumes?", options: ["4:25", "2:5", "8:125", "4:10"], correctIndex: 2, hint: "Cube the linear dimension ratios: 2^3 : 5^3." },
-                    { problem: "[Q9] A center of enlargement is at (0,0) with scale factor 0.5. Map the coordinate point (-4, 8).", options: "(-2, 4)", correctIndex: 0, hint: "Multiply each coordinate component directly by the scale factor 0.5." },
-                    { problem: "[Q10] Final Mastery: A map uses a scale of 1:50,000. A forest covers 4 cm² on the map. Find its real area in km².", options: ["1 km²", "2 km²", "0.25 km²", "4 km²"], correctIndex: 0, hint: "1 cm = 0.5 km. Square this to find that 1 cm² = 0.25 km². Multiply by 4." }
-                ]
-            },
-            { 
-                id: "g10-ref", grade: "10", type: "essential", strand: "MEASUREMENT AND GEOMETRY", subStrand: "Reflection and Congruence", resources: ["Mirrors", "Tracing Paper"], videoUrl: "https://www.youtube.com/embed/5Z9K_vjVwS8",
-                questions: [
-                    { problem: "[Q1] Reflect the point (3, 5) across the x-axis. What are the new coordinates?", options: ["(-3, 5)", "(3, -5)", "(-3, -5)", "(5, 3)"], correctIndex: 1, hint: "A reflection across the x-axis inverts the sign of the y-coordinate." },
-                    { problem: "[Q2] Reflect the point (-2, 7) across the y-axis. What are the new coordinates?", options: ["(2, 7)", "(-2, -7)", "(7, -2)", "(2, -7)"], correctIndex: 0, hint: "A reflection across the y-axis inverts the sign of the x-coordinate." },
-                    { problem: "[Q3] What line maps the point (4, 1) directly onto the point (1, 4) via reflection?", options: ["The line x = 0", "The line y = x", "The line y = -x", "The line y = 2"], correctIndex: 1, hint: "Swapping the x and y coordinates represents a reflection across the diagonal line y = x." },
-                    { problem: "[Q4] Which of the following is NOT a definitive test criteria for triangle congruence?", options: ["SSS", "SAS", "AAA", "RHS"], correctIndex: 2, hint: "AAA shows similarity, but does not guarantee that the triangles are the exact same size." },
-                    { problem: "[Q5] Reflect the point (2, 3) in the vertical line x = 4.", options: ["(6, 3)", "(2, 5)", "(5, 3)", "(6, 5)"], correctIndex: 0, hint: "The point is 2 units left of x=4. Its reflection must be 2 units right of x=4." },
-                    { problem: "[Q6] If triangle ABC is congruent to triangle XYZ, then side AC corresponds to which side?", options: ["XY", "YZ", "XZ", "YX"], correctIndex: 2, hint: "Match the letter positions in the congruence statement: First and third positions correspond." },
-                    { problem: "[Q7] Reflecting the point (0, -4) across the line y = -x results in what coordinate set?", options: ["(4, 0)", "(-4, 0)", "(0, 4)", "(4, 4)"], correctIndex: 0, hint: "Swap the components and invert both signs: (x, y) becomes (-y, -x)." },
-                    { problem: "[Q8] How many lines of symmetry does a regular hexagon possess?", options: ["3", "4", "6", "12"], correctIndex: 2, hint: "A regular polygon always has the same number of lines of symmetry as its number of sides." },
-                    { problem: "[Q9] If two triangles match in two angles and the included side, which congruency rule applies?", options: ["SAS", "ASA", "RHS", "SSS"], correctIndex: 1, hint: "The letters stand for Angle-Side-Angle, meaning the side is positioned between the two angles." },
-                    { problem: "[Q10] Final Mastery: Point P(a, b) is reflected across y-axis, then across x-axis. Find its final location.", options: ["(a, b)", "(-a, -b)", "(-a, b)", "(a, -b)"], correctIndex: 1, hint: "Changing the sign of both coordinates is equivalent to a rotation of 180 degrees around the origin." }
-                ]
-            },
-            { 
-                id: "g10-rot", grade: "10", type: "essential", strand: "MEASUREMENT AND GEOMETRY", subStrand: "Rotation", resources: ["Protractors", "Tracing Paper"], videoUrl: "https://www.youtube.com/embed/S3XorG7m9v0",
-                questions: [
-                    { problem: "[Q1] Rotate the point (4, 1) by 90 degrees counter-clockwise around the origin (0,0).", options: ["(-1, 4)", "(1, -4)", "(-4, -1)", "(1, 4)"], correctIndex: 0, hint: "The algebraic mapping for a 90-degree counter-clockwise rotation is (x, y) -> (-y, x)." },
-                    { problem: "[Q2] Rotate the point (2, 5) by 180 degrees around the origin (0,0).", options: ["(-2, 5)", "(2, -5)", "(-2, -5)", "(-5, -2)"], correctIndex: 2, hint: "A 180-degree rotation simply inverts the signs of both coordinates: (x, y) -> (-x, -y)." },
-                    { problem: "[Q3] A 90-degree clockwise rotation is equivalent to how many degrees counter-clockwise?", options: ["90 degrees", "180 degrees", "270 degrees", "360 degrees"], correctIndex: 2, hint: "A full rotation is 360 degrees. Subtract 90 from 360." },
-                    { problem: "[Q4] Rotate the point (1, 0) by 90 degrees clockwise around the origin.", options: ["(0, 1)", "(0, -1)", "(-1, 0)", "(1, 1)"], correctIndex: 1, hint: "Visualize moving a point on the positive x-axis 90 degrees downward onto the negative y-axis." },
-                    { problem: "[Q5] What is the order of rotational symmetry for a square?", options: ["1", "2", "4", "8"], correctIndex: 2, hint: "Count how many times the shape looks exactly the same during a full 360-degree turn." },
-                    { problem: "[Q6] Which geometric shape has an infinite order of rotational symmetry?", options: ["Equilateral Triangle", "Regular Decagon", "Circle", "Square"], correctIndex: 2, hint: "This shape looks identical at every single possible angle of rotation." },
-                    { problem: "[Q7] Rotate the point (3, 2) by 90 degrees counter-clockwise around the center point (1, 1).", options: ["(0, 3)", "(-1, 3)", "(0, 2)", "(1, 3)"], correctIndex: 0, hint: "Translate the center to the origin first: subtract (1,1), rotate, then add (1,1) back." },
-                    { problem: "[Q8] What point remains completely stationary under any rotation around the origin?", options: ["(1, 1)", "(0, 0)", "(1, 0)", "Any point on the x-axis"], correctIndex: 1, hint: "The center of rotation itself never moves during the transformation." },
-                    { problem: "[Q9] Rotate the point (-3, -4) by 180 degrees around the origin.", options: ["(3, 4)", "(-3, 4)", "(3, -4)", "(4, 3)"], correctIndex: 0, hint: "Invert the signs of both negative coordinates to make them positive." },
-                    { problem: "[Q10] Final Mastery: A shape is rotated 120 degrees clockwise, then 210 degrees counter-clockwise. Net result?", options: ["90 degrees clockwise", "90 degrees counter-clockwise", "330 degrees counter-clockwise", "0 degrees"], correctIndex: 1, hint: "Treat counter-clockwise as positive and clockwise as negative: +210 - 120 = +90." }
-                ]
-            },
-            { 
-                id: "g10-trig", grade: "10", type: "essential", strand: "MEASUREMENT AND GEOMETRY", subStrand: "Trigonometry 1", resources: ["Scientific Calculator"], videoUrl: "https://www.youtube.com/embed/5tpEDmnrcDo",
-                questions: [
-                    { problem: "[Q1] In a right-angled triangle, what is the ratio for sin(theta)?", options: ["Adjacent / Hypotenuse", "Opposite / Hypotenuse", "Opposite / Adjacent", "Adjacent / Opposite"], correctIndex: 1, hint: "Remember the acronym SOH-CAH-TOA." },
-                    { problem: "[Q2] A right-angled triangle has sides 3 cm and 4 cm. Find the length of its hypotenuse.", options: ["5 cm", "6 cm", "7 cm", "25 cm"], correctIndex: 0, hint: "Use the Pythagorean theorem: a^2 + b^2 = c^2." },
-                    { problem: "[Q3] Find the exact numerical value of tan(45 degrees).", options: ["0.5", "sqrt(3)/2", "1", "sqrt(2)"], correctIndex: 2, hint: "In an isosceles right-angled triangle, the opposite and adjacent sides are equal." },
-                    { problem: "[Q4] If cos(theta) = 0.5, find the acute angle theta.", options: ["30 degrees", "45 degrees", "60 degrees", "90 degrees"], correctIndex: 2, hint: "This is a standard exact trigonometric value. Take the inverse cosine of 0.5." },
-                    { problem: "[Q5] A ladder 10m long leans against a wall, making an angle of 60 degrees with the ground. Find its height on the wall.", options: ["5 m", "5*sqrt(3) m", "10*sqrt(3) m", "8 m"], correctIndex: 1, hint: "Use sin(60) = height / 10. Note that sin(60) = sqrt(3)/2." },
-                    { problem: "[Q6] In triangle ABC right-angled at B, if tan(A) = 5/12, find the value of sin(A).", options: ["12/13", "5/13", "13/5", "7/12"], correctIndex: 1, hint: "The hypotenuse side length must be 13 (since 5^2 + 12^2 = 13^2). Sin is Opposite/Hypotenuse." },
-                    { problem: "[Q7] Evaluate the expression: (sin(30 degrees))^2 + (cos(30 degrees))^2.", options: ["0.5", "1", "1.5", "2"], correctIndex: 1, hint: "The fundamental trigonometric identity states that sin^2(x) + cos^2(x) = 1 for any angle." },
-                    { problem: "[Q8] An observer spots a boat at an angle of depression of 20 degrees. What is the angle of elevation from the boat?", options: ["70 degrees", "20 degrees", "160 degrees", "40 degrees"], correctIndex: 1, hint: "Alternate interior angles between parallel horizontal lines are always equal." },
-                    { problem: "[Q9] Find the length of the adjacent side if the hypotenuse is 8 cm and the included angle is 60 degrees.", options: ["4 cm", "4*sqrt(3) cm", "16 cm", "2 cm"], correctIndex: 0, hint: "Use cos(60) = Adjacent / 8. Note that cos(60) = 0.5." },
-                    { problem: "[Q10] Final Mastery: Solve for x to the nearest tenth: sin(25 degrees) = 4 / x.", options: ["9.5", "1.7", "4.4", "8.6"], correctIndex: 0, hint: "Rearrange the equation to isolate x: x = 4 / sin(25 degrees)." }
-                ]
-            },
-            { 
-                id: "g10-poly", grade: "10", type: "essential", strand: "MEASUREMENT AND GEOMETRY", subStrand: "Area of Polygons", resources: ["Calculators", "Geometry Kits"], videoUrl: "https://www.youtube.com/embed/Sg0_C6R4v68",
-                questions: [
-                    { problem: "[Q1] Calculate the area of a triangle with a base of 8 cm and a perpendicular height of 5 cm.", options: ["40 cm²", "20 cm²", "13 cm²", "10 cm²"], correctIndex: 1, hint: "Use the standard area formula: Area = 0.5 * base * height." },
-                    { problem: "[Q2] Find the area of a parallelogram with a base of 12 m and a vertical height of 7 m.", options: ["84 m²", "42 m²", "38 m²", "19 m²"], correctIndex: 0, hint: "The area of a parallelogram is calculated using: Area = base * height." },
-                    { problem: "[Q3] A trapezium has parallel sides of length 6 cm and 10 cm, and a height of 4 cm. Find its area.", options: ["64 cm²", "32 cm²", "160 cm²", "24 cm²"], correctIndex: 1, hint: "Use the formula: Area = 0.5 * (a + b) * height." },
-                    { problem: "[Q4] Find the area of a rhombus whose diagonals measure 6 cm and 8 cm.", options: ["48 cm²", "24 cm²", "14 cm²", "28 cm²"], correctIndex: 1, hint: "The area of a rhombus can be found using the formula: Area = 0.5 * diagonal1 * diagonal2." },
-                    { problem: "[Q5] Calculate the area of an equilateral triangle with a side length of 4 cm.", options: ["16 cm²", "4*sqrt(3) cm²", "8 cm²", "2*sqrt(3) cm²"], correctIndex: 1, hint: "Use the formula Area = 0.5 * a * b * sin(C), where the included angle is 60 degrees." },
-                    { problem: "[Q6] A regular polygon can be split into 8 congruent triangles. If each triangle has an area of 15 cm², find total area.", options: ["60 cm²", "120 cm²", "90 cm²", "150 cm²"], correctIndex: 1, hint: "Multiply the area of one triangle by the total number of triangles (8)." },
-                    { problem: "[Q7] Find the interior angle sum of a regular pentagon (5 sides).", options: ["360 degrees", "540 degrees", "720 degrees", "180 degrees"], correctIndex: 1, hint: "Use the interior angle sum formula: (n - 2) * 180." },
-                    { problem: "[Q8] If a regular polygon has an exterior angle of 45 degrees, how many sides does it have?", options: ["6", "8", "10", "12"], correctIndex: 1, hint: "The sum of all exterior angles is always 360 degrees. Divide 360 by the given exterior angle." },
-                    { problem: "[Q9] A rectangle has a perimeter of 30 cm and a width of 5 cm. Find its area.", options: ["50 cm²", "150 cm²", "100 cm²", "25 cm²"], correctIndex: 0, hint: "First find the length: 2*(length + 5) = 30, so length = 10 cm. Then multiply length by width." },
-                    { problem: "[Q10] Final Mastery: Find the area of a regular hexagon with side length 6 cm.", options: ["54*sqrt(3) cm²", "36 cm²", "108 cm²", "27*sqrt(3) cm²"], correctIndex: 0, hint: "A regular hexagon is made of 6 equilateral triangles. Calculate 6 * (0.5 * 6 * 6 * sin(60))." }
-                ]
-            },
-            { 
-                id: "g10-circ", grade: "10", type: "essential", strand: "MEASUREMENT AND GEOMETRY", subStrand: "Area of a Part of a Circle", resources: ["Compass Tools"], videoUrl: "https://www.youtube.com/embed/5vGvIPhMcoM",
-                questions: [
-                    { problem: "[Q1] Find the area of a semicircle with a radius of 14 cm. (Use pi = 22/7)", options: ["616 cm²", "308 cm²", "154 cm²", "44 cm²"], correctIndex: 1, hint: "Calculate the area of a full circle (pi * r^2) and divide the result by 2." },
-                    { problem: "[Q2] A sector has a central angle of 90 degrees and a radius of 7 cm. Find its area.", options: ["38.5 cm²", "154 cm²", "77 cm²", "11 cm²"], correctIndex: 0, hint: "The area of a sector is given by the formula: (theta / 360) * pi * r^2." },
-                    { problem: "[Q3] Find the arc length of a sector with a central angle of 60 degrees and a radius of 21 cm.", options: ["11 cm", "22 cm", "44 cm", "138.5 cm"], correctIndex: 1, hint: "Use the arc length formula: (theta / 360) * 2 * pi * r." },
-                    { problem: "[Q4] What fraction of a full circle's area is represented by a sector with an angle of 45 degrees?", options: ["1/4", "1/6", "1/8", "1/12"], correctIndex: 2, hint: "Simplify the fraction 45 / 360." },
-                    { problem: "[Q5] Find the perimeter of a sector with radius 10 cm and arc length 15 cm.", options: ["15 cm", "25 cm", "35 cm", "50 cm"], correctIndex: 2, hint: "The perimeter of a sector includes the arc length plus the two bounding radii (Arc + 2r)." },
-                    { problem: "[Q6] A sector of angle 120 degrees has an area of 12*pi cm². Find its radius.", options: ["3 cm", "6 cm", "9 cm", "12 cm"], correctIndex: 1, hint: "Set up the equation: (120/360) * pi * r^2 = 12*pi, then solve for r." },
-                    { problem: "[Q7] To find the area of a circle segment, what value must be subtracted from the sector's area?", options: ["Arc length", "Area of the bounding triangle", "The radius squared", "Semicircle area"], correctIndex: 1, hint: "A segment is the region isolated by a chord. Subtract the triangle area from the sector area." },
-                    { problem: "[Q8] Find the arc length of a quadrant (90 degrees) of a circle with a radius of 14 cm.", options: ["11 cm", "22 cm", "44 cm", "88 cm"], correctIndex: 1, hint: "Calculate one-quarter of the full circumference: 0.25 * 2 * (22/7) * 14." },
-                    { problem: "[Q9] If the radius of a circle doubles, what happens to the area of any given sector?", options: ["It doubles", "It triples", "It quadruples", "It stays the same"], correctIndex: 2, hint: "The area scales with the square of the radius (r^2)." },
-                    { problem: "[Q10] Final Mastery: Find the exact area of a segment with a central angle of 90 degrees and radius 4 cm.", options: ["4*pi - 8", "4*pi - 4", "2*pi - 4", "8*pi - 8"], correctIndex: 0, hint: "Segment Area = Sector Area - Triangle Area = (90/360 * pi * 4^2) - (0.5 * 4 * 4)." }
-                ]
-            },
-            { 
-                id: "g10-surf", grade: "10", type: "essential", strand: "MEASUREMENT AND GEOMETRY", subStrand: "Surface Area and Volume of solids", resources: ["3D Solid Models"], videoUrl: "https://www.youtube.com/embed/YpI6YI_SscE",
-                questions: [
-                    { problem: "[Q1] Find the volume of a cuboid with dimensions 5 cm by 4 cm by 3 cm.", options: ["60 cm³", "12 cm³", "94 cm³", "47 cm³"], correctIndex: 0, hint: "Use the volume formula for a cuboid: Volume = length * width * height." },
-                    { problem: "[Q2] Calculate the total surface area of a cube with a side length of 3 cm.", options: ["27 cm²", "54 cm²", "36 cm²", "9 cm²"], correctIndex: 1, hint: "A cube has 6 identical square faces. Total Surface Area = 6 * s^2." },
-                    { problem: "[Q3] Find the volume of a cylinder with radius 7 cm and height 10 cm. (Use pi = 22/7)", options: ["1540 cm³", "154 cm³", "440 cm³", "770 cm³"], correctIndex: 0, hint: "Use the cylinder volume formula: Volume = pi * r^2 * height." },
-                    { problem: "[Q4] A prism has a triangular cross-section of area 15 cm² and a length of 8 cm. Find its volume.", options: ["120 cm³", "60 cm³", "23 cm³", "40 cm³"], correctIndex: 0, hint: "The volume of any uniform prism is calculated as: Volume = area of cross-section * length." },
-                    { problem: "[Q5] Find the volume of a pyramid with a base area of 30 cm² and a vertical height of 6 cm.", options: ["180 cm³", "90 cm³", "60 cm³", "20 cm³"], correctIndex: 2, hint: "The volume of a pyramid is given by the formula: Volume = (1/3) * base area * height." },
-                    { problem: "[Q6] Find the curved surface area of a cone with radius 5 cm and slant height (l) of 12 cm.", options: ["60*pi cm²", "30*pi cm²", "20*pi cm²", "15*pi cm²"], correctIndex: 0, hint: "The curved surface area of a cone is calculated using the formula: pi * r * l." },
-                    { problem: "[Q7] Find the volume of a sphere with a radius of 3 cm in terms of pi.", options: ["12*pi cm³", "36*pi cm³", "27*pi cm³", "4.5*pi cm³"], correctIndex: 1, hint: "Use the volume formula for a sphere: Volume = (4/3) * pi * r^3." },
-                    { problem: "[Q8] Calculate the total surface area of a solid hemisphere of radius 7 cm. (Leave in terms of pi)", options: ["49*pi cm²", "98*pi cm²", "147*pi cm²", "196*pi cm²"], correctIndex: 2, hint: "Total surface area consists of the curved surface (2*pi*r^2) plus the flat base (pi*r^2), totaling 3*pi*r^2." },
-                    { problem: "[Q9] If the volume of a cylinder is 100 cm³ with height 4 cm, find its base cross-sectional area.", options: ["25 cm²", "50 cm²", "10 cm²", "20 cm²"], correctIndex: 0, hint: "Divide the total volume by the vertical height." },
-                    { problem: "[Q10] Final Mastery: A cone and cylinder have equal radii and heights. Find the ratio of the volume of the cone to the cylinder.", options: ["1:2", "1:3", "3:1", "1:1"], correctIndex: 1, hint: "Compare their formulas: Volume of cone is (1/3)*pi*r^2*h, while volume of cylinder is pi*r^2*h." }
-                ]
-            },
-            { 
-                id: "g10-vec", grade: "10", type: "essential", strand: "MEASUREMENT AND GEOMETRY", subStrand: "Vectors 1", resources: ["Graph Notebooks"], videoUrl: "https://www.youtube.com/embed/P6st_DovnS4",
-                questions: [
-                    { problem: "[Q1] If vector a = (3, 4) and vector b = (1, 2), find the combined vector a + b.", options: ["(4, 6)", "(2, 2)", "(3, 8)", "(4, 2)"], correctIndex: 0, hint: "Add the corresponding top components together, and add the bottom components together." },
-                    { problem: "[Q2] Find the scalar product vector 3*a if vector a = (-2, 5).", options: ["(1, 8)", "(-6, 15)", "(-6, 5)", "(-2, 15)"], correctIndex: 1, hint: "Multiply every individual component inside the vector by the scalar number 3." },
-                    { problem: "[Q3] Calculate the exact magnitude of the column vector u = (6, 8).", options: ["10", "14", "2", "100"], correctIndex: 0, hint: "Use the magnitude formula, which is based on the Pythagorean theorem: sqrt(x^2 + y^2)." },
-                    { problem: "[Q4] Find the column vector transformation from point A(1, 2) directly to point B(5, 7).", options: ["(6, 9)", "(4, 5)", "(-4, -5)", "(5, 14)"], correctIndex: 1, hint: "Subtract the starting coordinates from the ending coordinates: Vector AB = B - A." },
-                    { problem: "[Q5] Find the inverse vector -v if vector v = (4, -3).", options: ["(-4, -3)", "(4, 3)", "(-4, 3)", "(3, -4)"], correctIndex: 2, hint: "Invert the mathematical sign of each individual component inside the vector." },
-                    { problem: "[Q6] If vector p = (2, 3) and q = (5, -1), find the vector expression 2*p - q.", options: ["(-1, 7)", "(9, 5)", "(-1, 5)", "(4, 7)"], correctIndex: 0, hint: "First calculate 2*p to get (4, 6), then subtract components of q carefully." },
-                    { problem: "[Q7] What is the magnitude of a unit vector?", options: ["0", "1", "Variable", "-1"], correctIndex: 1, hint: "By definition, a unit vector is a vector that has a magnitude of exactly 1." },
-                    { problem: "[Q8] Two vectors are parallel if one can be written as a ________ of the other.", options: ["Sum", "Scalar multiple", "Inverse matrix", "Square root"], correctIndex: 1, hint: "Parallel vectors share the same direction ratio, meaning vector v = k * u." },
-                    { problem: "[Q9] Find the magnitude of the vector (-5, 12).", options: ["7", "13", "17", "169"], correctIndex: 1, hint: "Calculate sqrt((-5)^2 + 12^2) = sqrt(25 + 144)." },
-                    { problem: "[Q10] Final Mastery: If vector AB = (3, 2) and BC = (-1, 4), find the resultant vector AC.", options: ["(4, 6)", "(2, 6)", "(2, -2)", "(4, 2)"], correctIndex: 1, hint: "Apply the triangle law of vector addition: Vector AC = Vector AB + Vector BC." }
-                ]
-            },
-            { 
-                id: "g10-mot", grade: "10", type: "essential", strand: "MEASUREMENT AND GEOMETRY", subStrand: "Linear Motion", resources: ["Stopwatches", "Distance Frameworks"], videoUrl: "https://www.youtube.com/embed/K83Z_GZpY_0",
-                questions: [
-                    { problem: "[Q1] A car travels a distance of 150 km in 3 hours. Calculate its average speed.", options: ["450 km/h", "50 km/h", "60 km/h", "45 km/h"], correctIndex: 1, hint: "Use the formula: Speed = Distance / Time." },
-                    { problem: "[Q2] Convert a speed rating of 90 km/h into meters per second (m/s).", options: ["25 m/s", "30 m/s", "15 m/s", "20 m/s"], correctIndex: 0, hint: "To convert km/h to m/s, divide the speed value directly by 3.6." },
-                    { problem: "[Q3] How far will a cyclist travel in 2.5 hours at a constant speed of 18 km/h?", options: ["7.2 km", "45 km", "36 km", "40 km"], correctIndex: 1, hint: "Use the formula: Distance = Speed * Time." },
-                    { problem: "[Q4] A train travels at 60 km/h. How long to the nearest minute will it take to cover 20 km?", options: ["30 mins", "20 mins", "15 mins", "40 mins"], correctIndex: 1, hint: "Time = Distance / Speed. Convert the fraction of an hour to minutes by multiplying by 60." },
-                    { problem: "[Q5] On a distance-time graph, what does the gradient of the line represent?", options: ["Acceleration", "Distance covered", "Speed", "Time elapsed"], correctIndex: 2, hint: "The gradient is the change in distance over the change in time, which equals speed." },
-                    { problem: "[Q6] Find the acceleration of a car that accelerates from rest (0 m/s) to 24 m/s in 6 seconds.", options: ["4 m/s²", "144 m/s²", "0.25 m/s²", "12 m/s²"], correctIndex: 0, hint: "Use the acceleration formula: Acceleration = (Final Speed - Initial Speed) / Time." },
-                    { problem: "[Q7] On a velocity-time graph, how is the total distance traveled represented?", options: ["The gradient of the line", "The area under the graph line", "The y-intercept value", "The total runtime span"], correctIndex: 1, hint: "The geometric area beneath a velocity-time plot corresponds to the total distance covered." },
-                    { problem: "[Q8] Two particles move toward each other at speeds of 10 m/s and 15 m/s. What is their relative speed of approach?", options: ["5 m/s", "25 m/s", "150 m/s", "12.5 m/s"], correctIndex: 1, hint: "When objects move toward each other, add their speeds together to find the relative speed." },
-                    { problem: "[Q9] A vehicle decelerates uniformly from 20 m/s to 0 m/s over 5 seconds. Find its deceleration value.", options: ["4 m/s²", "-4 m/s²", "100 m/s²", "2 m/s²"], correctIndex: 0, hint: "Acceleration is -4 m/s², which means the deceleration rate is a positive 4 m/s²." },
-                    { problem: "[Q10] Final Mastery: A car travels 60 km at 40 km/h and then another 60 km at 60 km/h. Find its average speed for the whole journey.", options: ["50 km/h", "48 km/h", "45 km/h", "52 km/h"], correctIndex: 1, hint: "Find the total time first: (60/40) + (60/60) = 2.5 hours. Then divide the total distance (120 km) by 2.5." }
-                ]
-            },
-
-            /* --- 3. STATISTICS AND PROBABILITY --- */
-            { 
-                id: "g10-stat", grade: "10", type: "essential", strand: "STATISTICS AND PROBABILITY", subStrand: "Statistics", resources: ["Data Worksheets"], videoUrl: "https://www.youtube.com/embed/oo7Gg9M9_IE",
-                questions: [
-                    { problem: "[Q1] Find the median of the following set of data scores: 3, 7, 5, 8, 12.", options: ["5", "7", "6", "8"], correctIndex: 1, hint: "First arrange the numbers in ascending order and locate the middle value." },
-                    { problem: "[Q2] Calculate the mean of the numbers: 4, 8, 5, 11, 2.", options: ["5", "6", "7", "30"], correctIndex: 1, hint: "Add all the numbers together and divide by the total count of numbers (5)." },
-                    { problem: "[Q3] Identify the mode from the data set: 2, 4, 4, 5, 6, 4, 7, 2, 3.", options: ["2", "4", "5", "4.5"], correctIndex: 1, hint: "The mode is the value that appears most frequently in the data set." },
-                    { problem: "[Q4] What is the range of the following data values: 14, 2, 8, 25, 11, 19?", options: ["23", "25", "21", "13.5"], correctIndex: 0, hint: "Subtract the minimum value from the maximum value in the set." },
-                    { problem: "[Q5] A data set has 6 numbers with a mean of 10. Find the sum of these 6 numbers.", options: ["1.66", "16", "60", "40"], correctIndex: 2, hint: "Multiply the mean by the total number of data values: Sum = Mean * Count." },
-                    { problem: "[Q6] In a grouped frequency table, what is the class midpoint for the interval 10 <= x < 20?", options: ["10", "15", "20", "14.5"], correctIndex: 1, hint: "Calculate the average of the lower and upper bounds of the interval: (10 + 20) / 2." },
-                    { problem: "[Q7] What type of chart uses bars to display continuous grouped data fields without gaps?", options: ["Pie chart", "Bar chart", "Histogram", "Scatter plot"], correctIndex: 2, hint: "Histograms represent continuous data intervals, so adjacent bars touch." },
-                    { problem: "[Q8] If a student scores 70, 80, and 90 on three exams, what must they score on the fourth exam to average 82?", options: ["82", "85", "88", "92"], correctIndex: 2, hint: "The total points across 4 exams must equal 4 * 82 = 328. Subtract the three known scores." },
-                    { problem: "[Q9] Find the interquartile range (IQR) if the upper quartile (Q3) is 75 and the lower quartile (Q1) is 40.", options: ["115", "35", "57.5", "37.5"], correctIndex: 1, hint: "Subtract the lower quartile value from the upper quartile value: IQR = Q3 - Q1." },
-                    { problem: "[Q10] Final Mastery: Find the median value if a data set contains two middle values of 14 and 17.", options: ["15", "15.5", "16", "14.5"], correctIndex: 1, hint: "Find the average of the two middle terms: (14 + 17) / 2." }
-                ]
-            },
-            { 
-                id: "g10-prob", grade: "10", type: "essential", strand: "STATISTICS AND PROBABILITY", subStrand: "Probability 1", resources: ["Dice Matrix", "Colored Counters"], videoUrl: "https://www.youtube.com/embed/ayEc_sXfng8",
-                questions: [
-                    { problem: "[Q1] A standard fair six-sided die is rolled. Find the probability of getting a 4.", options: ["1/2", "1/6", "2/3", "1/3"], correctIndex: 1, hint: "There is exactly 1 successful outcome out of 6 possible total outcomes." },
-                    { problem: "[Q2] A bag contains 3 red marbles and 7 blue marbles. Find the probability of randomly choosing a red marble.", options: ["3/7", "7/10", "3/10", "1/3"], correctIndex: 2, hint: "Divide the number of red marbles by the total number of marbles in the bag (3 + 7)." },
-                    { problem: "[Q3] If the probability of an event happening is 0.35, find the probability of the event NOT happening.", options: ["0.35", "0.65", "0.55", "0.05"], correctIndex: 1, hint: "The sum of the probability of an event happening and not happening always equals 1." },
-                    { problem: "[Q4] Which numerical value represents an absolute theoretical impossibility in probability?", options: ["-1", "0", "1", "0.5"], correctIndex: 1, hint: "Probability scales range strictly from 0 (impossible) to 1 (absolutely certain)." },
-                    { problem: "[Q5] A card is drawn from a standard deck of 52 cards. Find the probability of drawing a King.", options: ["1/52", "1/13", "4/13", "1/4"], correctIndex: 1, hint: "There are 4 Kings in a standard deck of 52 cards. Simplify the fraction 4 / 52." },
-                    { problem: "[Q6] Flip two fair coins simultaneously. What is the probability of getting two Heads?", options: ["1/2", "1/3", "1/4", "3/4"], correctIndex: 2, hint: "The sample space outcomes are: HH, HT, TH, TT. Only 1 outcome is HH." },
-                    { problem: "[Q7] Two events are independent. P(A) = 0.4 and P(B) = 0.5. Find the joint probability P(A AND B).", options: ["0.9", "0.1", "0.2", "0.02"], correctIndex: 2, hint: "For independent events, multiply their probabilities together: P(A) * P(B)." },
-                    { problem: "[Q8] Roll a fair die. Find the probability of getting an even number.", options: ["1/2", "1/3", "2/3", "1/6"], correctIndex: 0, hint: "The even numbers on a die are 2, 4, and 6. This gives 3 favorable outcomes out of 6." },
-                    { problem: "[Q9] A spinner has 5 equal sectors numbered 1 to 5. Find the probability of spinning a number greater than 3.", options: ["3/5", "2/5", "1/5", "4/5"], correctIndex: 1, hint: "The favorable numbers are 4 and 5, which gives a total of 2 successful outcomes." },
-                    { problem: "[Q10] Final Mastery: A bag has 5 white and 3 black beads. Two beads are drawn without replacement. Find P(Black, then Black).", options: ["9/64", "3/28", "6/56", "9/56"], correctIndex: 1, hint: "Calculate the probability of the first draw (3/8) multiplied by the probability of the second draw (2/7)." }
+                    { problem: "[Q1] Factorize the quadratic expression completely: x<span class='sup-val'>2</span> - 5x + 6.", options: ["(x-1)(x-6)", "(x-2)(x-3)", "(x+2)(x+3)", "(x-5)(x+1)"], correctIndex: 1, hint: "Find two numbers that multiply to +6 and add up to -5." },
+                    { problem: "[Q2] Solve the equation by factorizing: x<span class='sup-val'>2</span> + 7x = 0.", options: ["x = 0 or x = -7", "x = 7", "x = 0 or x = 7", "x = -7"], correctIndex: 0, hint: "Factor out the common term x to get x(x + 7) = 0." },
+                    { problem: "[Q3] Find the roots of the equation: x<span class='sup-val'>2</span> - 9 = 0.", options: ["x = 9", "x = 3", "x = 3 or x = -3", "x = 4.5"], correctIndex: 2, hint: "This is a difference of two squares: (x - 3)(x + 3) = 0." },
+                    { problem: "[Q4] What constant must be added to x<span class='sup-val'>2</span> + 8x to make it a perfect square?", options: ["4", "8", "16", "64"], correctIndex: 2, hint: "Take half of the x-coefficient (4) and square it." },
+                    { problem: "[Q5] Solve using the quadratic formula: x<span class='sup-val'>2</span> - 4x + 1 = 0.", options: ["2 &plusmn; <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span>", "4 &plusmn; <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>12</span></span>", "2 &plusmn; <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>5</span></span>", "1 &plusmn; <span class='rad-wrap'><span class='rad-sym'>&radic;</span><span class='rad-val'>3</span></span>"], correctIndex: 0, hint: "Substitute a=1, b=-4, c=1 into the standard quadratic formula." },
+                    { problem: "[Q6] Find the discriminant of the quadratic equation: 2x<span class='sup-val'>2</span> - 4x + 5 = 0.", options: ["56", "-24", "24", "-4"], correctIndex: 1, hint: "Calculate the value of the discriminant using the formula: b^2 - 4ac." },
+                    { problem: "[Q7] Determine the nature of the roots for: x<span class='sup-val'>2</span> - 6x + 9 = 0.", options: ["Two real distinct roots", "No real roots", "One real repeated root", "Imaginary roots"], correctIndex: 2, hint: "Check the discriminant value. If it equals 0, the roots are identical." },
+                    { problem: "[Q8] Factorize the non-monic quadratic expression: 2x<span class='sup-val'>2</span> + 5x - 3.", options: ["(2x-1)(x+3)", "(2x+3)(x-1)", "(2x+1)(x-3)", "(x-1)(x+3)"], correctIndex: 0, hint: "Look for numbers that multiply to -6 (2 * -3) and add up to 5." },
+                    { problem: "[Q9] Find the coordinates of the turning point of the curve y = (x - 2)<span class='sup-val'>2</span> + 3.", options: ["(-2, 3)", "(2, 3)", "(2, -3)", "(3, 2)"], correctIndex: 1, hint: "The vertex form equation y = (x - h)^2 + k has its vertex point directly at (h, k)." },
+                    { problem: "[Q10] Final Mastery: Find the value of k for which x<span class='sup-val'>2</span> + kx + 25 = 0 has a single repeated root.", options: ["k = 5", "k = 10 or k = -10", "k = 25", "k = 0"], correctIndex: 1, hint: "Set the discriminant b^2 - 4ac equal to 0, which gives k^2 - 100 = 0." }
                 ]
             }
         ];
 
-        let activeTopic = null;
-        let selectedAnswerIndex = null;
-        let topicProgressState = {}; 
+        let activeTopicIndex = 0;
+        let currentQuestionIndex = 0;
+        let selectedOptionIndex = null;
+        let masterProgress = {};
 
-        function toggleCalculator() {
-            const drawer = document.getElementById('desmosDrawer');
-            drawer.classList.toggle('open');
-        }
-
-        function playSoundEffect(isSuccess) {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (!AudioContext) return;
-            const ctx = new AudioContext();
-            const now = ctx.currentTime;
-
-            if (isSuccess) {
-                for (let i = 0; i < 10; i++) {
-                    const oscTime = now + (i * 0.04);
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(100 + (Math.random() * 40), oscTime);
-                    gain.gain.setValueAtTime(0.2, oscTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, oscTime + 0.03);
-                    osc.connect(gain); gain.connect(ctx.destination);
-                    osc.start(oscTime); osc.stop(oscTime + 0.03);
-                }
-                setTimeout(() => {
-                    const notes = [523.25, 659.25, 783.99, 1046.50];
-                    notes.forEach((freq, idx) => {
-                        const osc = ctx.createOscillator(); const gain = ctx.createGain();
-                        osc.type = 'sine'; osc.frequency.setValueAtTime(freq, ctx.currentTime + (idx * 0.06));
-                        gain.gain.setValueAtTime(0.15, ctx.currentTime + (idx * 0.06));
-                        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4 + (idx * 0.06));
-                        osc.connect(gain); gain.connect(ctx.destination);
-                        osc.start(ctx.currentTime + (idx * 0.06)); osc.stop(ctx.currentTime + 0.5);
-                    });
-                }, 400);
-            } else {
-                const osc = ctx.createOscillator(); const gain = ctx.createGain();
-                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now);
-                osc.frequency.linearRampToValueAtTime(70, now + 0.4);
-                gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-                osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(now); osc.stop(now + 0.4);
-            }
-        }
-
-        function initRouting() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const activeGrade = urlParams.get('grade') || '10';
-            const activeType = urlParams.get('type') || 'essential';
-
-            const localizedSyllabus = curriculumDatabase;
-
-            const headerTitle = `Grade ${activeGrade} Core Math`;
-            document.getElementById('sidebarTitle').innerText = headerTitle;
-            document.getElementById('sidebarSubtitle').innerText = `CBE Multi-Question Pathway`;
-
-            const directoryContainer = document.getElementById('topicDirectory');
-            directoryContainer.innerHTML = '';
-
-            if(localizedSyllabus.length === 0) {
-                directoryContainer.innerHTML = '<p style="padding:1rem; font-size:0.9rem; color:var(--muted-gray);">No targeted curriculum module tracks found.</p>';
-                return;
-            }
-
-            let currentStrand = "";
-            let groupDiv = null;
-
-            localizedSyllabus.forEach((item, index) => {
-                if (!topicProgressState[item.id]) {
-                    topicProgressState[item.id] = { currentQuestionIdx: 0, maxUnlockedIdx: 0 };
-                }
-
-                if (item.strand !== currentStrand) {
-                    currentStrand = item.strand;
-                    groupDiv = document.createElement('div');
-                    groupDiv.className = 'strand-group';
-                    
-                    const title = document.createElement('div');
-                    title.className = 'strand-title';
-                    title.innerText = currentStrand;
-                    groupDiv.appendChild(title);
-                    directoryContainer.appendChild(groupDiv);
-                }
-
-                const button = document.createElement('button');
-                button.className = `topic-btn ${index === 0 ? 'active-topic' : ''}`;
-                button.innerText = item.subStrand;
-                button.onclick = (e) => loadWorkspaceTopic(item, e.currentTarget);
-                
-                if(groupDiv) groupDiv.appendChild(button);
+        function initializeWorkspace() {
+            curriculumDatabase.forEach(topic => {
+                masterProgress[topic.id] = 0;
             });
-
-            loadWorkspaceTopic(localizedSyllabus[0]);
-            initOneiroGreeting(headerTitle);
+            renderSidebarDirectory();
+            loadTopicNode(0);
         }
 
-        function loadWorkspaceTopic(topic, elementNode = null) {
-            if(!topic) return;
-            activeTopic = topic;
-            selectedAnswerIndex = null;
-
-            if(elementNode) {
-                document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active-topic'));
-                elementNode.classList.add('active-topic');
-            }
-
-            document.getElementById('strandLabel').innerText = topic.strand;
-            document.getElementById('topicTitle').innerText = topic.subStrand;
-            document.getElementById('videoPlayer').src = topic.videoUrl;
-
-            const resourceBox = document.getElementById('resourceContainer');
-            resourceBox.innerHTML = '';
-            topic.resources.forEach(res => {
-                const tag = document.createElement('span');
-                tag.className = 'res-tag'; tag.innerText = res;
-                resourceBox.appendChild(tag);
-            });
-
-            renderProgressionTracker();
-            renderCurrentQuestion();
-        }
-
-        function renderProgressionTracker() {
-            const trackBox = document.getElementById('nodeTrack');
-            trackBox.innerHTML = '';
+        function renderSidebarDirectory() {
+            const container = document.getElementById("topicDirectory");
+            container.innerHTML = "";
             
-            const state = topicProgressState[activeTopic.id];
+            let currentStrand = "";
+            let currentGroup = null;
 
-            for (let i = 0; i < 10; i++) {
-                const node = document.createElement('div');
-                node.innerText = i + 1;
+            curriculumDatabase.forEach((topic, index) => {
+                if (topic.strand !== currentStrand) {
+                    currentStrand = topic.strand;
+                    currentGroup = document.createElement("div");
+                    currentGroup.className = "strand-group";
+                    
+                    const title = document.createElement("div");
+                    title.className = "strand-title";
+                    title.innerText = currentStrand;
+                    currentGroup.appendChild(title);
+                    container.appendChild(currentGroup);
+                }
+
+                const btn = document.createElement("button");
+                btn.className = `topic-btn ${index === activeTopicIndex ? 'active-topic' : ''}`;
+                btn.innerText = topic.subStrand;
+                btn.onclick = () => loadTopicNode(index);
+                currentGroup.appendChild(btn);
+            });
+
+            document.getElementById("sidebarSubtitle").innerText = "Kenya CBC Secondary Toolkit";
+        }
+
+        function loadTopicNode(index) {
+            activeTopicIndex = index;
+            const topic = curriculumDatabase[index];
+            currentQuestionIndex = masterProgress[topic.id];
+
+            renderSidebarDirectory();
+
+            document.getElementById("strandLabel").innerText = `Strand Node // ${topic.strand}`;
+            document.getElementById("topicTitle").innerText = topic.subStrand;
+            document.getElementById("videoPlayer").src = topic.videoUrl;
+
+            const resContainer = document.getElementById("resourceContainer");
+            resContainer.innerHTML = "";
+            topic.resources.forEach(res => {
+                const span = document.createElement("span");
+                span.className = "res-tag";
+                span.innerText = `📦 ${res}`;
+                resContainer.appendChild(span);
+            });
+
+            buildMilestoneTrack(topic);
+            presentQuestion(topic);
+            clearProfessorSpace();
+        }
+
+        function buildMilestoneTrack(topic) {
+            const track = document.getElementById("nodeTrack");
+            track.innerHTML = "";
+            topic.questions.forEach((_, idx) => {
+                const node = document.createElement("div");
+                node.className = "track-node";
+                node.innerText = idx + 1;
                 
-                if (i < state.maxUnlockedIdx) {
+                if (idx < masterProgress[topic.id]) {
                     node.className = "track-node passed";
-                    node.style.cursor = "pointer";
-                    node.onclick = () => jumpToQuestion(i);
-                } else if (i === state.currentQuestionIdx) {
+                } else if (idx === masterProgress[topic.id]) {
                     node.className = "track-node current";
-                } else if (i <= state.maxUnlockedIdx) {
-                    node.className = "track-node";
-                    node.style.cursor = "pointer";
-                    node.onclick = () => jumpToQuestion(i);
                 } else {
                     node.className = "track-node locked";
                 }
-                trackBox.appendChild(node);
+                track.appendChild(node);
+            });
+        }
+
+        function presentQuestion(topic) {
+            selectedOptionIndex = null;
+            const totalQuestions = topic.questions.length;
+
+            if (currentQuestionIndex >= totalQuestions) {
+                document.getElementById("matrixTaskLabel").innerText = "Topic Completed!";
+                document.getElementById("problemExpression").innerText = "🎉 Magnificent work! You have finished all core milestone checkpoints for this sub-strand.";
+                document.getElementById("optionsGrid").innerHTML = "";
+                return;
             }
-        }
 
-        function jumpToQuestion(index) {
-            topicProgressState[activeTopic.id].currentQuestionIdx = index;
-            selectedAnswerIndex = null;
-            renderProgressionTracker();
-            renderCurrentQuestion();
-        }
+            const qData = topic.questions[currentQuestionIndex];
+            document.getElementById("matrixTaskLabel").innerText = `Practice Question Checkpoint (${currentQuestionIndex + 1}/${totalQuestions})`;
+            document.getElementById("problemExpression").innerHTML = qData.problem;
 
-        function renderCurrentQuestion() {
-            const state = topicProgressState[activeTopic.id];
-            const qData = activeTopic.questions[state.currentQuestionIdx];
-
-            document.getElementById('matrixTaskLabel').innerText = `Practice Question (${state.currentQuestionIdx + 1} of 10)`;
-            document.getElementById('problemExpression').innerText = qData.problem;
-            
-            const optionsBox = document.getElementById('optionsGrid');
-            optionsBox.innerHTML = '';
-            
+            const grid = document.getElementById("optionsGrid");
+            grid.innerHTML = "";
             qData.options.forEach((opt, idx) => {
-                const optBtn = document.createElement('button');
-                optBtn.className = 'option-btn';
-                optBtn.innerText = opt;
-                optBtn.onclick = () => {
-                    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-                    optBtn.classList.add('selected');
-                    selectedAnswerIndex = idx;
-                };
-                optionsBox.appendChild(optBtn);
+                const btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.innerHTML = opt;
+                btn.onclick = () => selectOption(idx);
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectOption(idx) {
+            selectedOptionIndex = idx;
+            const buttons = document.querySelectorAll(".options-grid .option-btn");
+            buttons.forEach((btn, i) => {
+                btn.className = `option-btn ${i === idx ? 'selected' : ''}`;
             });
         }
 
         function evaluateAnswer() {
-            if (selectedAnswerIndex === null) {
-                alert("Please select an option before checking your answer.");
+            if (selectedOptionIndex === null) {
+                alert("Please click on an option before verification evaluation.");
                 return;
             }
 
-            const state = topicProgressState[activeTopic.id];
-            const qData = activeTopic.questions[state.currentQuestionIdx];
-            const isCorrect = (selectedAnswerIndex === qData.correctIndex);
+            const topic = curriculumDatabase[activeTopicIndex];
+            const qData = topic.questions[currentQuestionIndex];
+            const overlay = document.getElementById("feedbackOverlay");
+            const modal = document.getElementById("feedbackModal");
 
-            const overlay = document.getElementById('feedbackOverlay');
-            const modal = document.getElementById('feedbackModal');
-            const icon = document.getElementById('modalIcon');
-            const title = document.getElementById('modalTitle');
-            const desc = document.getElementById('modalDesc');
-
-            if (isCorrect) {
-                playSoundEffect(true);
+            if (selectedOptionIndex === qData.correctIndex) {
+                playFeedbackSound(true); // Celebration Volume: High (0.8)
+                
                 modal.className = "feedback-modal modal-success";
-                icon.innerText = "🎉";
-                title.innerText = "Correct Answer!";
-                desc.innerText = "Excellent logic. Your proof validation checks out perfectly.";
+                document.getElementById("modalIcon").innerText = "🎉";
+                document.getElementById("modalTitle").innerText = "Excellent Job!";
+                document.getElementById("modalDesc").innerText = "Your mathematical logic checks out flawlessly. Excellent steps!";
+                document.getElementById("modalActionBtn").innerText = "Advance to Next Node";
                 
-                if (state.currentQuestionIdx === state.maxUnlockedIdx && state.maxUnlockedIdx < 9) {
-                    state.maxUnlockedIdx++;
-                }
-                
-                document.getElementById('modalActionBtn').onclick = () => {
-                    overlay.classList.remove('show');
-                    if (state.currentQuestionIdx < 9) {
-                        state.currentQuestionIdx++;
-                        selectedAnswerIndex = null;
-                        renderProgressionTracker();
-                        renderCurrentQuestion();
-                    }
-                };
+                masterProgress[topic.id]++;
+                currentQuestionIndex = masterProgress[topic.id];
             } else {
-                playSoundEffect(false);
+                playFeedbackSound(false); // Wrong Volume: Low (0.08)
+                
                 modal.className = "feedback-modal modal-fail";
-                icon.innerText = "❌";
-                title.innerText = "Incorrect Option";
-                desc.innerText = "That choice does not balance out. Review your steps or ask Prof. Oneiro for an absolute breakthrough suggestion.";
-                document.getElementById('modalActionBtn').onclick = () => {
-                    overlay.classList.remove('show');
-                };
+                document.getElementById("modalIcon").innerText = "❌";
+                document.getElementById("modalTitle").innerText = "Review Step Logic";
+                document.getElementById("modalDesc").innerText = "That choice did not match the solution pathway. Re-evaluate using Professor Oneiro's structural hint.";
+                document.getElementById("modalActionBtn").innerText = "Try Problem Again";
             }
-            overlay.classList.add('show');
+
+            overlay.classList.add("show");
         }
 
-        function initOneiroGreeting(courseName) {
-            const chat = document.getElementById('chatSpace');
-            chat.innerHTML = `<div class="msg oneiro">Greetings Student! I am <strong>Professor Oneiro</strong>. We have loaded the <strong>${courseName}</strong> framework successfully. Select any topic node from the directory, watch the video, and tackle the 10 step milestones. Let me know if you need help!</div>`;
+        function closeFeedback() {
+            document.getElementById("feedbackOverlay").classList.remove("show");
+            const topic = curriculumDatabase[activeTopicIndex];
+            buildMilestoneTrack(topic);
+            presentQuestion(topic);
+        }
+
+        function toggleCalculator() {
+            document.getElementById("desmosDrawer").classList.toggle("open");
+        }
+
+        function clearProfessorSpace() {
+            const chatSpace = document.getElementById("chatSpace");
+            chatSpace.innerHTML = `
+                <div class="msg oneiro">Jambo! I am Professor Oneiro. Review your target assignment framework. Ask me anytime if structural hints are needed.</div>
+            `;
         }
 
         function summonOneiroHint() {
-            const state = topicProgressState[activeTopic.id];
-            const qData = activeTopic.questions[state.currentQuestionIdx];
-            const chat = document.getElementById('chatSpace');
+            const topic = curriculumDatabase[activeTopicIndex];
+            if (currentQuestionIndex >= topic.questions.length) return;
+            const qData = topic.questions[currentQuestionIndex];
             
-            chat.innerHTML += `<div class="msg student">Can you give me a hint for Question ${state.currentQuestionIdx + 1}?</div>`;
-            
-            setTimeout(() => {
-                chat.innerHTML += `<div class="msg oneiro">💡 <strong>Professor Oneiro Hint:</strong> ${qData.hint}</div>`;
-                chat.scrollTop = chat.scrollHeight;
-            }, 300);
-            chat.scrollTop = chat.scrollHeight;
+            const chatSpace = document.getElementById("chatSpace");
+            const msg = document.createElement("div");
+            msg.className = "msg oneiro";
+            msg.innerText = `💡 Hint for Question ${currentQuestionIndex + 1}: ${qData.hint}`;
+            chatSpace.appendChild(msg);
+            chatSpace.scrollTop = chatSpace.scrollHeight;
         }
 
         function sendStudentMessage() {
-            const input = document.getElementById('studentInput');
+            const input = document.getElementById("studentInput");
             const val = input.value.trim();
             if (!val) return;
 
-            const chat = document.getElementById('chatSpace');
-            chat.innerHTML += `<div class="msg student">${val}</div>`;
-            input.value = '';
+            const chatSpace = document.getElementById("chatSpace");
+            const sMsg = document.createElement("div");
+            sMsg.className = "msg student";
+            sMsg.innerText = val;
+            chatSpace.appendChild(sMsg);
+
+            input.value = "";
 
             setTimeout(() => {
-                chat.innerHTML += `<div class="msg oneiro">Analytical processing complete. Remember to focus on balancing the components of the question using standard geometric laws and algebraic substitution properties! Keep going.</div>`;
-                chat.scrollTop = chat.scrollHeight;
-            }, 500);
-            chat.scrollTop = chat.scrollHeight;
+                const oMsg = document.createElement("div");
+                oMsg.className = "msg oneiro";
+                oMsg.innerText = "Understood. Focus your methodology on applying standard formulas step-by-step. Let's solve the current target choice model together.";
+                chatSpace.appendChild(oMsg);
+                chatSpace.scrollTop = chatSpace.scrollHeight;
+            }, 700);
+
+            chatSpace.scrollTop = chatSpace.scrollHeight;
         }
 
-        window.onload = initRouting;
+        window.onload = initializeWorkspace;
     </script>
 </body>
 </html>
