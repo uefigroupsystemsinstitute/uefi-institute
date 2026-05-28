@@ -23,7 +23,8 @@
             /* Kenyan Flag Exact Hex Architecture */
             --kenya-black: #000000;
             --kenya-red: #BB0000;
-            --kenya-green: #006600;
+            /* Updated to a lighter, brighter green */
+            --kenya-green: #54E346; 
             --white: #ffffff;
             
             /* Structural Colors */
@@ -111,7 +112,7 @@
 
         .btn-nav {
             background-color: var(--kenya-green);
-            color: var(--white) !important;
+            color: var(--text-dark) !important; /* Changed text color to dark for better contrast on light green */
             padding: 8px 15px;
             border-radius: 4px;
             font-weight: 900 !important;
@@ -120,7 +121,7 @@
             transition: 0.3s;
         }
 
-        .btn-nav:hover { background: var(--kenya-red); }
+        .btn-nav:hover { background: var(--kenya-red); color: var(--white) !important; }
 
         /* --- HERO --- */
         .hero {
@@ -139,7 +140,8 @@
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.95)), 
+            /* Reduced opacity values from 0.85/0.95 to 0.4/0.6 to make the Earth visible */
+            background: linear-gradient(rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.6)), 
                         url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
@@ -156,6 +158,7 @@
             text-transform: uppercase;
             margin-bottom: 20px;
             display: block;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Added shadow for readability over the brighter background */
         }
 
         .hero h1 {
@@ -163,9 +166,14 @@
             font-weight: 900;
             margin-bottom: 1.5rem;
             line-height: 1;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.8); /* Added shadow for readability */
         }
 
         .hero h1 span { color: var(--kenya-green); font-style: italic; }
+        
+        .hero p {
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Added shadow for readability */
+        }
 
         /* --- DYNAMIC SHOWCASE SLIDER --- */
         .showcase-slider-container {
@@ -241,6 +249,7 @@
 
         .slider-btn:hover {
             background: var(--kenya-green);
+            color: var(--text-dark);
         }
 
         .prev-btn { left: 20px; }
