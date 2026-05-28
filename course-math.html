@@ -22,7 +22,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--off-white); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; }
+        body { background-color: var(--off-white); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; position: relative;}
 
         /* --- LEFT NAVIGATION: LEARNING DIRECTORY --- */
         .curriculum-sidebar {
@@ -98,7 +98,6 @@
             letter-spacing: 0.8px;
         }
 
-        /* Upgraded Modules/Topics Typography */
         .topic-btn {
             width: 100%;
             background: transparent;
@@ -107,7 +106,7 @@
             padding: 0.85rem 1.1rem;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1.05rem; /* Noticeably bigger font sizes */
+            font-size: 1.05rem;
             font-weight: 600;
             color: var(--text-dark);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -167,11 +166,9 @@
 
         h1 { font-size: 2.4rem; font-weight: 800; margin-top: 0.4rem; margin-bottom: 1.75rem; color: var(--kenya-black); letter-spacing: -0.5px; }
         
-        /* Video Player Dashboard Interface */
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 12px; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05); margin-bottom: 2rem; border: 1px solid var(--border-color); }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* Resource Panel */
         .resource-panel {
             background: #fff;
             border: 1px solid var(--border-color);
@@ -199,7 +196,30 @@
             border: 1px solid var(--border-color);
         }
 
-        /* Friendly Khan Academy-Style Learning Sandbox Box */
+        /* --- EXAM STEP TRACKER BAR --- */
+        .progression-tracker {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+        .tracker-title { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); text-transform: uppercase; }
+        .node-track { display: flex; gap: 8px; align-items: center; }
+        .track-node {
+            width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; font-weight: 700; border: 2px solid var(--border-color);
+            background: var(--white); color: var(--muted-gray); transition: all 0.3s ease;
+        }
+        .track-node.passed { background: var(--kenya-green); color: var(--white); border-color: var(--kenya-green); }
+        .track-node.current { border-color: var(--kenya-black); color: var(--kenya-black); background: rgba(0,0,0,0.03); box-shadow: 0 0 0 3px rgba(10,10,10,0.1); }
+        .track-node.locked { background: var(--off-white); opacity: 0.6; cursor: not-allowed; }
+
+        /* Quiz UI Container Elements */
         .quiz-container { 
             background: var(--white); 
             border-top: 6px solid var(--kenya-green); 
@@ -217,12 +237,14 @@
         .option-btn:hover { border-color: var(--kenya-black); background: var(--off-white); }
         .option-btn.selected { border-color: var(--kenya-green); background: rgba(0, 135, 81, 0.03); box-shadow: 0 0 0 1px var(--kenya-green); }
         
-        .action-bar { display: flex; gap: 1rem; }
-        .btn { padding: 0.9rem 1.75rem; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.9rem; letter-spacing: 0.5px; transition: all 0.2s ease; }
+        .action-bar { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn { padding: 0.9rem 1.75rem; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.9rem; letter-spacing: 0.5px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 8px;}
         .btn-submit { background: var(--kenya-green); color: var(--white); box-shadow: 0 4px 6px -1px rgba(0, 135, 81, 0.2); }
         .btn-submit:hover { background: #006e41; transform: translateY(-1px); }
         .btn-hint { background: #E2E8F0; color: #475569; }
         .btn-hint:hover { background: #CBD5E1; }
+        .btn-calc { background: #1E293B; color: var(--white); margin-left: auto;}
+        .btn-calc:hover { background: #0F172A; }
 
         /* --- PROFESSOR ONEIRO COGNITIVE SIDEBAR (RIGHT) --- */
         aside { width: 360px; background: var(--bg-obsidian); color: var(--white); position: relative; height: 100vh; display: flex; flex-direction: column; border-left: 4px solid var(--kenya-green); }
@@ -238,49 +260,42 @@
         .chat-input:focus { outline: none; border-color: var(--kenya-green); }
         .btn-send { background: var(--kenya-green); border: none; padding: 0 1.2rem; border-radius: 4px; cursor: pointer; color: white; font-weight: 900; }
 
+        /* --- SLIDING DESMOS CALCULATOR PANEL INTERFACE --- */
+        .desmos-drawer {
+            position: fixed; top: 0; right: -500px; width: 480px; height: 100vh;
+            background: var(--white); border-left: 1px solid var(--border-color);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1); z-index: 1000;
+            display: flex; flex-direction: column; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .desmos-drawer.open { right: 0; }
+        .calc-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #FAFAFA;}
+        .calc-title { font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 6px; font-size: 0.95rem; }
+        .close-calc-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--muted-gray); }
+        .close-calc-btn:hover { color: var(--kenya-red); }
+        .desmos-frame { flex: 1; width: 100%; border: none; }
+
         /* --- GAMIFIED POPUP MODALS (SUCCESS / FAILURE) --- */
         .feedback-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0; pointer-events: none;
-            transition: all 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center; z-index: 9999;
+            opacity: 0; pointer-events: none; transition: all 0.3s ease;
         }
         .feedback-overlay.show { opacity: 1; pointer-events: auto; }
-        
         .feedback-modal {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 2.5rem;
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            transform: scale(0.85);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: var(--white); border-radius: 16px; padding: 2.5rem; width: 90%; max-width: 450px;
+            text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.85); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .feedback-overlay.show .feedback-modal { transform: scale(1); }
-        
         .modal-icon { font-size: 4.5rem; margin-bottom: 1rem; display: inline-block; }
-        
         .modal-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
         .modal-desc { color: var(--muted-gray); font-size: 1rem; margin-bottom: 1.75rem; line-height: 1.5; }
+        .modal-btn { width: 100%; padding: 1rem; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
         
-        .modal-btn {
-            width: 100%; padding: 1rem; border: none; border-radius: 10px;
-            font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
-        }
-        
-        /* Modal Context Themes */
         .modal-success .modal-title { color: var(--kenya-green); }
         .modal-success .modal-btn { background: var(--kenya-green); color: var(--white); }
         .modal-success .modal-btn:hover { background: #016b40; }
-        
         .modal-fail .modal-title { color: var(--kenya-red); }
         .modal-fail .modal-btn { background: var(--kenya-black); color: var(--white); }
         .modal-fail .modal-btn:hover { background: #222; }
@@ -288,10 +303,19 @@
         @media (max-width: 1200px) {
             .curriculum-sidebar { width: 280px; }
             aside { width: 320px; }
+            .desmos-drawer { width: 400px; }
         }
     </style>
 </head>
 <body>
+
+    <div class="desmos-drawer" id="desmosDrawer">
+        <div class="calc-header">
+            <div class="calc-title">🧮 Desmos Scientific Workspace</div>
+            <button class="close-calc-btn" onclick="toggleCalculator()">✕</button>
+        </div>
+        <iframe class="desmos-frame" src="https://www.desmos.com/scientific" title="Desmos Scientific Calculator"></iframe>
+    </div>
 
     <div class="curriculum-sidebar">
         <div class="sidebar-header">
@@ -315,15 +339,19 @@
             <div class="resource-tags" id="resourceContainer"></div>
         </div>
 
+        <div class="progression-tracker">
+            <span class="tracker-title">Topic Milestone Progression</span>
+            <div class="node-track" id="nodeTrack"></div>
+        </div>
+
         <div class="quiz-container">
             <h2 id="matrixTaskLabel">Practice Question</h2>
-            <div class="math-expr" id="problemExpression">
-                Loading mathematical problem structure...
-            </div>
+            <div class="math-expr" id="problemExpression">Loading mathematical problem structure...</div>
             <div class="options-grid" id="optionsGrid"></div>
             <div class="action-bar">
                 <button class="btn btn-submit" onclick="evaluateAnswer()">Check Answer</button>
                 <button class="btn btn-hint" onclick="summonOneiroHint()">Ask Prof. Oneiro for Hint</button>
+                <button class="btn btn-calc" onclick="toggleCalculator()">🧮 Toggle Calculator</button>
             </div>
         </div>
     </main>
@@ -354,45 +382,53 @@
     </div>
 
     <script>
-        // Core Curriculum Database Pipeline Arrays
+        // Scaled Database Schema: 10 sequenced progressive questions per subStrand topic profile
         const curriculumDatabase = [
-            { id: "g10-est", grade: "10", type: "essential", strand: "Arithmetic & Context", subStrand: "Estimation & Rounding", resources: ["Calculators", "Digital Logsheets", "Workbooks"], videoUrl: "https://www.youtube.com/embed/fd-E18EqSVk", problem: "Estimate the value of 5.87 × 19.3 by rounding each term to 1 significant figure.", options: ["100", "120", "60", "200"], correctIndex: 1, hint: "Round 5.87 to 6 and 19.3 to 20, then evaluate." },
-            { id: "g10-conv", grade: "10", type: "essential", strand: "Measurement Logic", subStrand: "Metric Conversions", resources: ["Metric Rulers", "Conversion Matrices"], videoUrl: "https://www.youtube.com/embed/ZNX-a-5jGeM", problem: "Convert 4.25 kilometers into standard meters.", options: ["425 m", "4,250 m", "42,500 m", "42.5 m"], correctIndex: 1, hint: "Recall that 1 kilometer maps directly to 1,000 meters." },
-            { id: "g10-scale", grade: "10", type: "essential", strand: "Applied Geometry", subStrand: "Scale Drawings", resources: ["Graph Paper", "Protractors"], videoUrl: "https://www.youtube.com/embed/f-gCYOCFMYc", problem: "If a map scale is 1:50,000, what actual distance corresponds to 2 cm on the map?", options: ["1 km", "5 km", "10 km", "0.5 km"], correctIndex: 0, hint: "Multiply 2 by 50,000 cm, then map the centimeter output to kilometers." },
             { 
-                id: "g10-alg", 
-                grade: "10", 
-                type: "core", 
-                strand: "Pure Algebra", 
-                subStrand: "Exponents & Algebra", 
-                resources: ["Formula Arrays", "Scientific Device"], 
-                videoUrl: "https://www.youtube.com/embed/LkhPRz7Hocg", 
-                problem: "Simplify the structural algebraic expression: (x³ × x⁵) / x²", 
-                options: ["x⁶", "x¹⁰", "x⁴", "x¹"], 
-                correctIndex: 0, 
-                hint: "Apply linear exponent law: add indices on multiplication, subtract on division." 
+                id: "g10-est", grade: "10", type: "essential", strand: "Arithmetic & Context", subStrand: "Estimation & Rounding", resources: ["Calculators", "Workbooks"], videoUrl: "https://www.youtube.com/embed/fd-E18EqSVk",
+                questions: [
+                    { problem: "[Q1] Estimate 5.87 × 19.3 by rounding each term to 1 significant figure.", options: ["100", "120", "60", "200"], correctIndex: 1, hint: "Round 5.87 to 6 and 19.3 to 20, then evaluate." },
+                    { problem: "[Q2] Round 0.004567 to 3 significant figures.", options: ["0.005", "0.00457", "0.0046", "0.00456"], correctIndex: 1, hint: "Start counting sig figs from the first non-zero number (4)." },
+                    { problem: "[Q3] Estimate the square root of 93 to the nearest integer index.", options: ["9", "10", "8", "9.5"], correctIndex: 0, hint: "93 falls right near the perfect square 81 and 100." },
+                    { problem: "[Q4] Express 45,843 correct to 2 significant figures.", options: ["46,000", "45,000", "45,800", "50,000"], correctIndex: 0, hint: "Look at the third digit (8) to determine if you round up." },
+                    { problem: "[Q5] Estimate the value of 213 ÷ 6.8 by rounding to 1 significant figure.", options: ["30", "20", "40", "25"], correctIndex: 0, hint: "Compute 200 divided by 7 or near nice numbers like 210 ÷ 7." },
+                    { problem: "[Q6] Round 3.14159 to 3 decimal places.", options: ["3.14", "3.142", "3.141", "3.15"], correctIndex: 1, hint: "Look at the 4th decimal digit (5) to round up." },
+                    { problem: "[Q7] Estimate the product of 0.48 and 249 using estimation maps.", options: ["125", "100", "150", "75"], correctIndex: 0, hint: "0.48 behaves roughly like 0.5 (half). What is half of 250?" },
+                    { problem: "[Q8] Write 0.07045 correct to 2 significant figures.", options: ["0.07", "0.070", "0.071", "0.0705"], correctIndex: 1, hint: "Zeroes immediately after the decimal point here are placeholders." },
+                    { problem: "[Q9] Approximate the volume of a cube with side lengths of 4.1 cm to 1 significant figure.", options: ["60 cm³", "64 cm³", "80 cm³", "16 cm³"], correctIndex: 0, hint: "4 cubed is 64. 1 sig fig converts 64 to the nearest ten map." },
+                    { problem: "[Q10] Final Mastery: Estimate (34.6 × 2.04) / 0.47 to the nearest multiple of ten.", options: ["140", "150", "70", "200"], correctIndex: 0, hint: "Map terms to (35 × 2) / 0.5 = 70 / 0.5." }
+                ]
             },
             { 
-                id: "g10-sim", 
-                grade: "10", 
-                type: "core", 
-                strand: "Linear Networks", 
-                subStrand: "Simultaneous Equations", 
-                resources: ["System Plotters", "Matrices Workspace"], 
-                videoUrl: "https://www.youtube.com/embed/oKqtgz2eo-Y", 
-                problem: "Solve for variables: x + y = 12 and x - y = 4.", 
-                options: ["(8, 4)", "(7, 5)", "(9, 3)", "(6, 2)"], 
-                correctIndex: 0, 
-                hint: "Sum the equation vectors together to isolate and eliminate the y parameter." 
-            },
-            { id: "g11-fin", grade: "11", type: "essential", strand: "Applied Finance", subStrand: "Finance & Tax", resources: ["Tax Charts", "Spreadsheets"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Calculate the net profit index on a gross volume of 45,000 KES subject to a 15% flat deduction rate.", options: ["38,250 KES", "35,000 KES", "40,000 KES", "37,500 KES"], correctIndex: 0, hint: "Deduct 0.15 × 45,000 from the baseline system volume." },
-            { id: "g11-trig", grade: "11", type: "core", strand: "Analytical Geometry", subStrand: "Trigonometric Identities", resources: ["Trig Tables", "Calculators"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Simplify the fundamental structure expression: sin²(θ) + cos²(θ)", options: ["0", "1", "tan²(θ)", "2"], correctIndex: 1, hint: "This identity represents the unitary value circle radius vector." }
+                id: "g10-conv", grade: "10", type: "essential", strand: "Measurement Logic", subStrand: "Metric Conversions", resources: ["Rulers", "Matrices Workspace"], videoUrl: "https://www.youtube.com/embed/ZNX-a-5jGeM",
+                questions: [
+                    { problem: "[Q1] Convert 4.25 kilometers into standard meters.", options: ["425 m", "4,250 m", "42,500 m", "42.5 m"], correctIndex: 1, hint: "Recall that 1 kilometer maps directly to 1,000 meters." },
+                    { problem: "[Q2] Convert 750 grams into kilograms.", options: ["7.5 kg", "0.75 kg", "75 kg", "0.075 kg"], correctIndex: 1, hint: "Divide the gram integer payload value by 1,000." },
+                    { problem: "[Q3] A container holds 2.4 liters of compound. Convert this to milliliters.", options: ["240 mL", "2,400 mL", "24,000 mL", "24 mL"], correctIndex: 1, hint: "1 Litre equals 1,000 mL." },
+                    { problem: "[Q4] Convert 85 millimeters into centimeters.", options: ["850 cm", "8.5 cm", "0.85 cm", "0.085 cm"], correctIndex: 1, hint: "There are exactly 10 millimeters inside a standard centimeter matrix." },
+                    { problem: "[Q5] Convert 3.5 square meters ($m^2$) into square centimeters ($cm^2$).", options: ["350 $cm^2$", "3,500 $cm^2$", "35,000 $cm^2$", "350,000 $cm^2$"], correctIndex: 2, hint: "Multiply by 100 times 100 (which is 10,000)." },
+                    { problem: "[Q6] An operation measures 450,000 cm. Convert this structural run to kilometers.", options: ["4.5 km", "45 km", "0.45 km", "450 km"], correctIndex: 0, hint: "Divide by 100 to change to meters, then by 1,000 for kilometers." },
+                    { problem: "[Q7] Convert 1.2 tonnes into kilograms.", options: ["120 kg", "1,200 kg", "12,000 kg", "12 kg"], correctIndex: 1, hint: "1 metric tonne contains exactly 1,000 standard kg units." },
+                    { problem: "[Q8] Transform 150 cubic centimeters ($cm^3$) into milliliters.", options: ["1.5 mL", "15 mL", "150 mL", "1500 mL"], correctIndex: 2, hint: "The physical equivalence ratio maps directly: 1 $cm^3$ = 1 mL." },
+                    { problem: "[Q9] Convert a speed rating of 72 km/h into meters per second (m/s).", options: ["20 m/s", "25 m/s", "15 m/s", "30 m/s"], correctIndex: 0, hint: "Multiply by 1000 then divide by 3600 (or divide directly by 3.6)." },
+                    { problem: "[Q10] Final Mastery: Convert 0.05 cubic meters ($m^3$) into standard liters.", options: ["5 L", "50 L", "500 L", "0.5 L"], correctIndex: 1, hint: "1 cubic meter space encapsulates exactly 1,000 liters of substance fluid." }
+                ]
+            }
         ];
 
-        let selectedAnswerIndex = null;
         let activeTopic = null;
+        let selectedAnswerIndex = null;
+        
+        // Progression State tracking per topic structure mapping
+        let topicProgressState = {}; 
 
-        // --- SYNTHESIZED GAME AUDIO ENGINE (Web Audio API) ---
+        // --- TOGGLE INTERACTIVE DRAWER ENGINE ---
+        function toggleCalculator() {
+            const drawer = document.getElementById('desmosDrawer');
+            drawer.classList.toggle('open');
+        }
+
+        // --- SYNTHESIZED GAME AUDIO ENGINE ---
         function playSoundEffect(isSuccess) {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             if (!AudioContext) return;
@@ -400,52 +436,35 @@
             const now = ctx.currentTime;
 
             if (isSuccess) {
-                // 1. Drumroll Simulation (Rapid low amplitude noise/pulses)
-                for (let i = 0; i < 14; i++) {
+                for (let i = 0; i < 10; i++) {
                     const oscTime = now + (i * 0.04);
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
                     osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(90 + (Math.random() * 30), oscTime);
-                    gain.gain.setValueAtTime(0.25, oscTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, oscTime + 0.035);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start(oscTime);
-                    osc.stop(oscTime + 0.035);
+                    osc.frequency.setValueAtTime(100 + (Math.random() * 40), oscTime);
+                    gain.gain.setValueAtTime(0.2, oscTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, oscTime + 0.03);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(oscTime); osc.stop(oscTime + 0.03);
                 }
-
-                // 2. Chime Success Chord/Pop Sound
                 setTimeout(() => {
-                    const chimeTime = ctx.currentTime;
-                    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 (Bright Major Arpeggio)
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
                     notes.forEach((freq, idx) => {
-                        const osc = ctx.createOscillator();
-                        const gain = ctx.createGain();
-                        osc.type = 'sine';
-                        osc.frequency.setValueAtTime(freq, chimeTime + (idx * 0.06));
-                        gain.gain.setValueAtTime(0.2, chimeTime + (idx * 0.06));
-                        gain.gain.exponentialRampToValueAtTime(0.001, chimeTime + 0.5 + (idx * 0.06));
-                        osc.connect(gain);
-                        gain.connect(ctx.destination);
-                        osc.start(chimeTime + (idx * 0.06));
-                        osc.stop(chimeTime + 0.7);
+                        const osc = ctx.createOscillator(); const gain = ctx.createGain();
+                        osc.type = 'sine'; osc.frequency.setValueAtTime(freq, ctx.currentTime + (idx * 0.06));
+                        gain.gain.setValueAtTime(0.15, ctx.currentTime + (idx * 0.06));
+                        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4 + (idx * 0.06));
+                        osc.connect(gain); gain.connect(ctx.destination);
+                        osc.start(ctx.currentTime + (idx * 0.06)); osc.stop(ctx.currentTime + 0.5);
                     });
-                }, 520);
-
+                }, 400);
             } else {
-                // Game Over / Failure Downward Slide Tone
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(160, now);
-                osc.frequency.linearRampToValueAtTime(80, now + 0.45);
-                gain.gain.setValueAtTime(0.25, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start(now);
-                osc.stop(now + 0.5);
+                const osc = ctx.createOscillator(); const gain = ctx.createGain();
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now);
+                osc.frequency.linearRampToValueAtTime(70, now + 0.4);
+                gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(now); osc.stop(now + 0.4);
             }
         }
 
@@ -453,19 +472,19 @@
         function initRouting() {
             const urlParams = new URLSearchParams(window.location.search);
             const activeGrade = urlParams.get('grade') || '10';
-            const activeType = urlParams.get('type') || 'core';
+            const activeType = urlParams.get('type') || 'essential';
 
             const localizedSyllabus = curriculumDatabase.filter(item => item.grade === activeGrade && item.type === activeType);
 
             const headerTitle = `Grade ${activeGrade} ${activeType.charAt(0).toUpperCase() + activeType.slice(1)} Math`;
             document.getElementById('sidebarTitle').innerText = headerTitle;
-            document.getElementById('sidebarSubtitle').innerText = `Active Course Pathway Node`;
+            document.getElementById('sidebarSubtitle').innerText = `CBE Multi-Question Pathway`;
 
             const directoryContainer = document.getElementById('topicDirectory');
             directoryContainer.innerHTML = '';
 
             if(localizedSyllabus.length === 0) {
-                directoryContainer.innerHTML = '<p style="padding:1rem; font-size:0.9rem; color:var(--muted-gray);">No specific course modules found.</p>';
+                directoryContainer.innerHTML = '<p style="padding:1rem; font-size:0.9rem; color:var(--muted-gray);">No targeted curriculum module tracks found.</p>';
                 return;
             }
 
@@ -473,6 +492,11 @@
             let groupDiv = null;
 
             localizedSyllabus.forEach((item, index) => {
+                // Instantiating memory footprint index matrices for state retention
+                if (!topicProgressState[item.id]) {
+                    topicProgressState[item.id] = { currentQuestionIdx: 0, maxUnlockedIdx: 0 };
+                }
+
                 if (item.strand !== currentStrand) {
                     currentStrand = item.strand;
                     groupDiv = document.createElement('div');
@@ -497,7 +521,7 @@
             initOneiroGreeting(headerTitle);
         }
 
-        // Workspace Presentation Manager
+        // Workspace Update Engine
         function loadWorkspaceTopic(topic, elementNode = null) {
             if(!topic) return;
             activeTopic = topic;
@@ -512,20 +536,66 @@
             document.getElementById('topicTitle').innerText = topic.subStrand;
             document.getElementById('videoPlayer').src = topic.videoUrl;
 
+            // Load Resources Elements
             const resourceBox = document.getElementById('resourceContainer');
             resourceBox.innerHTML = '';
             topic.resources.forEach(res => {
                 const tag = document.createElement('span');
-                tag.className = 'res-tag';
-                tag.innerText = res;
+                tag.className = 'res-tag'; tag.innerText = res;
                 resourceBox.appendChild(tag);
             });
 
-            document.getElementById('problemExpression').innerText = topic.problem;
+            renderProgressionTracker();
+            renderCurrentQuestion();
+        }
+
+        // Progression Visualizer
+        function renderProgressionTracker() {
+            const trackBox = document.getElementById('nodeTrack');
+            trackBox.innerHTML = '';
+            
+            const state = topicProgressState[activeTopic.id];
+
+            for (let i = 0; i < 10; i++) {
+                const node = document.createElement('div');
+                node.innerText = i + 1;
+                
+                if (i < state.maxUnlockedIdx) {
+                    node.className = "track-node passed";
+                    node.style.cursor = "pointer";
+                    node.onclick = () => jumpToQuestion(i);
+                } else if (i === state.currentQuestionIdx) {
+                    node.className = "track-node current";
+                } else if (i <= state.maxUnlockedIdx) {
+                    node.className = "track-node";
+                    node.style.cursor = "pointer";
+                    node.onclick = () => jumpToQuestion(i);
+                } else {
+                    node.className = "track-node locked";
+                }
+                trackBox.appendChild(node);
+            }
+        }
+
+        function jumpToQuestion(index) {
+            topicProgressState[activeTopic.id].currentQuestionIdx = index;
+            selectedAnswerIndex = null;
+            renderProgressionTracker();
+            renderCurrentQuestion();
+        }
+
+        // Render Current Active Matrix Question
+        function renderCurrentQuestion() {
+            const state = topicProgressState[activeTopic.id];
+            const qData = activeTopic.questions[state.currentQuestionIdx];
+
+            document.getElementById('matrixTaskLabel').innerText = `Practice Question (${state.currentQuestionIdx + 1} of 10)`;
+            document.getElementById('problemExpression').innerText = qData.problem;
+            
             const optionsBox = document.getElementById('optionsGrid');
             optionsBox.innerHTML = '';
             
-            topic.options.forEach((opt, idx) => {
+            qData.options.forEach((opt, idx) => {
                 const optBtn = document.createElement('button');
                 optBtn.className = 'option-btn';
                 optBtn.innerText = opt;
@@ -538,12 +608,15 @@
             });
         }
 
-        // Integrated Interactive Evaluation Modal Triggers
+        // Question Evaluation Logic
         function evaluateAnswer() {
             if(selectedAnswerIndex === null) {
                 alert("Please select an answer choice option first.");
                 return;
             }
+
+            const state = topicProgressState[activeTopic.id];
+            const qData = activeTopic.questions[state.currentQuestionIdx];
 
             const overlay = document.getElementById('feedbackOverlay');
             const modal = document.getElementById('feedbackModal');
@@ -552,28 +625,47 @@
             const desc = document.getElementById('modalDesc');
             const actionBtn = document.getElementById('modalActionBtn');
 
-            modal.className = "feedback-modal"; // Reset classes
+            modal.className = "feedback-modal";
 
-            if(selectedAnswerIndex === activeTopic.correctIndex) {
-                // Trigger Success Audio & Visual
+            if(selectedAnswerIndex === qData.correctIndex) {
                 playSoundEffect(true);
                 modal.classList.add('modal-success');
                 icon.innerText = "🎉";
-                title.innerText = "Correct! Well Done!";
-                desc.innerText = "Fantastic matching logic. Your mathematical proof checks out beautifully.";
-                actionBtn.innerText = "Keep Moving Forward";
                 
-                appendChatMessage("System Diagnostic", "Vector verification positive. Excellent compilation of principles.", "oneiro");
+                // Check if this unlocks the next level progression matrix node
+                if (state.currentQuestionIdx === state.maxUnlockedIdx && state.maxUnlockedIdx < 9) {
+                    state.maxUnlockedIdx++;
+                }
+
+                if (state.currentQuestionIdx === 9) {
+                    title.innerText = "Topic Mastered!";
+                    desc.innerText = "Amazing Work! You have completed all 10 questions in this targeted mathematical module strand Node.";
+                    actionBtn.innerText = "Return to Core Module";
+                    actionBtn.onclick = () => { closeFeedback(); };
+                } else {
+                    title.innerText = "Correct Verification!";
+                    desc.innerText = "Your structural value checks out perfectly. Next parameter locked vector layer is now open.";
+                    actionBtn.innerText = "Advance to Next Question";
+                    actionBtn.onclick = () => {
+                        state.currentQuestionIdx++;
+                        selectedAnswerIndex = null;
+                        closeFeedback();
+                        renderProgressionTracker();
+                        renderCurrentQuestion();
+                    };
+                }
+                
+                appendChatMessage("System Diagnostic", `Question ${state.currentQuestionIdx + 1} matrix pass match confirmation. Output accepted.`, "oneiro");
             } else {
-                // Trigger Failure Audio & Visual
                 playSoundEffect(false);
                 modal.classList.add('modal-fail');
                 icon.innerText = "❌";
-                title.innerText = "Not Quite Right";
-                desc.innerText = "Don't worry! Review the formulas, think through the process again, and give it another shot.";
-                actionBtn.innerText = "Try Again";
+                title.innerText = "Calculation Mismatch";
+                desc.innerText = "The pipeline output did not match the validation criteria. Check parameters using your Desmos workspace tool panel and evaluate your formula array again!";
+                actionBtn.innerText = "Review and Try Again";
+                actionBtn.onclick = () => { closeFeedback(); };
                 
-                appendChatMessage("System Diagnostic", "Calculated path variation discrepancy. Try running an alternative equation logic.", "oneiro");
+                appendChatMessage("System Diagnostic", "Calculated verification discrepancy found. Review alternative step variables.", "oneiro");
             }
 
             overlay.classList.add('show');
@@ -583,16 +675,18 @@
             document.getElementById('feedbackOverlay').classList.remove('show');
         }
 
-        // AI Chat Modules
+        // AI Chat Helper Functions
         function initOneiroGreeting(courseName) {
             const workspace = document.getElementById('chatSpace');
             workspace.innerHTML = '';
-            appendChatMessage("PROF. ONEIRO", `Welcome to the ${courseName} engineering workspace portal. Input queries regarding steps, formulas, or algorithmic pathways below.`, "oneiro");
+            appendChatMessage("PROF. ONEIRO", `Welcome to the portal. Access structural references or query matrix constraints. Toggle the interactive Desmos panel if complex calculation metrics are required.`, "oneiro");
         }
 
         function summonOneiroHint() {
             if(activeTopic) {
-                appendChatMessage("PROF. ONEIRO", `Evaluation Hint: ${activeTopic.hint}`, "oneiro");
+                const state = topicProgressState[activeTopic.id];
+                const qData = activeTopic.questions[state.currentQuestionIdx];
+                appendChatMessage("PROF. ONEIRO", `Evaluation Hint [Q${state.currentQuestionIdx + 1}]: ${qData.hint}`, "oneiro");
             }
         }
 
@@ -605,7 +699,7 @@
             inputField.value = '';
 
             setTimeout(() => {
-                appendChatMessage("PROF. ONEIRO", "Query logged into processing engine. Reviewing current matrix step values against system standards...", "oneiro");
+                appendChatMessage("PROF. ONEIRO", "Query parsing structural analysis complete. Verify your pipeline inputs match the active parameter matrices configuration.", "oneiro");
             }, 700);
         }
 
