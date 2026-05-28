@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UEFI Academic Core | CBE Mathematics Workspace</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -13,32 +13,34 @@
             --kenya-green: #008751;
             --white: #ffffff;
             --bg-obsidian: #0D0F12;
-            --off-white: #F4F6F8;
+            --off-white: #F8FAFC;
             --border-color: #E2E8F0;
             --text-dark: #1E293B;
             --muted-gray: #64748B;
+            --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            --interactive-shadow: 0 10px 15px -3px rgba(0, 135, 81, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: var(--off-white); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; }
 
-        /* --- LEFT NAVIGATION: CURRICULUM DIRECTORY --- */
+        /* --- LEFT NAVIGATION: LEARNING DIRECTORY --- */
         .curriculum-sidebar {
-            width: 320px;
+            width: 340px;
             background: var(--white);
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             height: 100vh;
+            box-shadow: 2px 0 12px rgba(0,0,0,0.02);
         }
 
         .sidebar-header {
-            padding: 1.5rem;
-            border-bottom: 2px solid var(--off-white);
+            padding: 1.75rem;
+            border-bottom: 1px solid var(--border-color);
             background: var(--white);
         }
 
-        /* Nav Tab Link Back to Dashboard */
         .back-courses-link {
             display: inline-flex;
             align-items: center;
@@ -47,7 +49,7 @@
             border: none;
             color: var(--muted-gray);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -63,71 +65,93 @@
         }
 
         .sidebar-header h2 {
-            font-size: 1.1rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 1.3rem;
+            font-weight: 800;
             color: var(--kenya-black);
+            letter-spacing: -0.3px;
         }
 
         .sidebar-header p {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--muted-gray);
-            margin-top: 2px;
+            margin-top: 4px;
+            font-weight: 500;
         }
 
         .topic-scroll {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem;
+            padding: 1.25rem 1rem;
         }
 
         .strand-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.75rem;
         }
 
         .strand-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
             color: var(--kenya-red);
-            padding-left: 0.5rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.5px;
+            padding-left: 0.75rem;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.8px;
         }
 
+        /* Upgraded Modules/Topics Typography */
         .topic-btn {
             width: 100%;
             background: transparent;
             border: 1px solid transparent;
             text-align: left;
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
+            padding: 0.85rem 1.1rem;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 1.05rem; /* Noticeably bigger font sizes */
+            font-weight: 600;
             color: var(--text-dark);
-            transition: all 0.2s ease;
-            margin-bottom: 0.25rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topic-btn::before {
+            content: "•";
+            color: var(--border-color);
+            transition: color 0.2s;
+            font-size: 1.2rem;
         }
 
         .topic-btn:hover {
-            background: var(--off-white);
+            background: rgba(10, 10, 10, 0.04);
             color: var(--kenya-black);
+            padding-left: 1.25rem;
+        }
+
+        .topic-btn:hover::before {
+            color: var(--kenya-red);
         }
 
         .topic-btn.active-topic {
             background: rgba(0, 135, 81, 0.08);
             color: var(--kenya-green);
-            border-color: rgba(0, 135, 81, 0.2);
+            border-color: rgba(0, 135, 81, 0.15);
             font-weight: 700;
+            padding-left: 1.25rem;
         }
 
-        /* --- MAIN WORKSPACE (CENTER) --- */
+        .topic-btn.active-topic::before {
+            color: var(--kenya-green);
+            content: "➔";
+            font-size: 0.85rem;
+        }
+
+        /* --- MAIN STUDY ENVIRONMENT --- */
         main {
             flex: 1;
-            padding: 2.5rem 3%;
+            padding: 2.5rem 4%;
             overflow-y: auto;
             height: 100vh;
         }
@@ -136,58 +160,71 @@
             font-family: 'JetBrains Mono', monospace; 
             color: var(--kenya-red); 
             font-weight: 700; 
-            font-size: 0.75rem; 
+            font-size: 0.8rem; 
             text-transform: uppercase; 
-            letter-spacing: 2px; 
+            letter-spacing: 1.5px; 
         }
 
-        h1 { font-size: 2.2rem; font-weight: 900; margin-top: 0.25rem; margin-bottom: 1.5rem; color: var(--kenya-black); letter-spacing: -0.5px; }
+        h1 { font-size: 2.4rem; font-weight: 800; margin-top: 0.4rem; margin-bottom: 1.75rem; color: var(--kenya-black); letter-spacing: -0.5px; }
         
-        /* Video Container */
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); margin-bottom: 2rem; }
+        /* Video Player Dashboard Interface */
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 12px; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05); margin-bottom: 2rem; border: 1px solid var(--border-color); }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* Infrastructure / Resource Inventory Panel */
+        /* Resource Panel */
         .resource-panel {
             background: #fff;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 1.25rem;
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
             margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
         }
         .resource-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             font-weight: 700;
             color: var(--muted-gray);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.65rem;
+            letter-spacing: 0.5px;
         }
         .resource-tags { display: flex; flex-wrap: wrap; gap: 8px; }
         .res-tag {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             background: var(--off-white);
-            padding: 4px 10px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 6px;
             font-weight: 600;
             color: #475569;
-            border: 1px solid rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
         }
 
-        /* Quiz Component */
-        .quiz-container { background: var(--white); border-left: 5px solid var(--kenya-green); padding: 2rem; border-radius: 0 6px 6px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.01); margin-bottom: 2rem; }
-        .quiz-container h2 { font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; margin-bottom: 1rem; color: var(--kenya-black); }
-        .math-expr { background: var(--off-white); padding: 1.25rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); color: #0f172a; line-height: 1.5; }
-        .options-grid { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
-        .option-btn { background: var(--white); border: 1px solid #cbd5e1; padding: 1rem; text-align: left; border-radius: 4px; cursor: pointer; font-weight: 600; transition: 0.2s; color: #334155; }
-        .option-btn:hover { border-color: var(--kenya-green); background: var(--off-white); }
-        .option-btn.selected { border-color: var(--kenya-green); background: rgba(0, 135, 81, 0.04); }
+        /* Friendly Khan Academy-Style Learning Sandbox Box */
+        .quiz-container { 
+            background: var(--white); 
+            border-top: 6px solid var(--kenya-green); 
+            padding: 2.25rem; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.04), var(--card-shadow); 
+            margin-bottom: 3rem; 
+        }
+        .quiz-container h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--kenya-black); display: flex; align-items: center; gap: 8px;}
+        .quiz-container h2::before { content: "✍️"; }
+        .math-expr { background: var(--off-white); padding: 1.5rem; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; margin-bottom: 1.75rem; border: 1px solid var(--border-color); color: #0f172a; line-height: 1.6; }
+        
+        .options-grid { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.75rem; }
+        .option-btn { background: var(--white); border: 2px solid var(--border-color); padding: 1.1rem 1.25rem; text-align: left; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.2s ease; color: #334155; }
+        .option-btn:hover { border-color: var(--kenya-black); background: var(--off-white); }
+        .option-btn.selected { border-color: var(--kenya-green); background: rgba(0, 135, 81, 0.03); box-shadow: 0 0 0 1px var(--kenya-green); }
+        
         .action-bar { display: flex; gap: 1rem; }
-        .btn { padding: 0.8rem 1.5rem; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
-        .btn-submit { background: var(--kenya-black); color: var(--white); }
-        .btn-hint { background: #cbd5e1; color: var(--text-dark); }
+        .btn { padding: 0.9rem 1.75rem; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.9rem; letter-spacing: 0.5px; transition: all 0.2s ease; }
+        .btn-submit { background: var(--kenya-green); color: var(--white); box-shadow: 0 4px 6px -1px rgba(0, 135, 81, 0.2); }
+        .btn-submit:hover { background: #006e41; transform: translateY(-1px); }
+        .btn-hint { background: #E2E8F0; color: #475569; }
+        .btn-hint:hover { background: #CBD5E1; }
 
-        /* --- PROFESSOR ONEIRO SIDEBAR (RIGHT) --- */
+        /* --- PROFESSOR ONEIRO COGNITIVE SIDEBAR (RIGHT) --- */
         aside { width: 360px; background: var(--bg-obsidian); color: var(--white); position: relative; height: 100vh; display: flex; flex-direction: column; border-left: 4px solid var(--kenya-green); }
         .prof-header { padding: 1.5rem; border-bottom: 1px solid #1e293b; background: #090b0d; }
         .prof-title { font-family: 'JetBrains Mono', monospace; color: var(--kenya-green); font-weight: 900; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
@@ -201,8 +238,55 @@
         .chat-input:focus { outline: none; border-color: var(--kenya-green); }
         .btn-send { background: var(--kenya-green); border: none; padding: 0 1.2rem; border-radius: 4px; cursor: pointer; color: white; font-weight: 900; }
 
+        /* --- GAMIFIED POPUP MODALS (SUCCESS / FAILURE) --- */
+        .feedback-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0; pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .feedback-overlay.show { opacity: 1; pointer-events: auto; }
+        
+        .feedback-modal {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.85);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .feedback-overlay.show .feedback-modal { transform: scale(1); }
+        
+        .modal-icon { font-size: 4.5rem; margin-bottom: 1rem; display: inline-block; }
+        
+        .modal-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .modal-desc { color: var(--muted-gray); font-size: 1rem; margin-bottom: 1.75rem; line-height: 1.5; }
+        
+        .modal-btn {
+            width: 100%; padding: 1rem; border: none; border-radius: 10px;
+            font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
+        }
+        
+        /* Modal Context Themes */
+        .modal-success .modal-title { color: var(--kenya-green); }
+        .modal-success .modal-btn { background: var(--kenya-green); color: var(--white); }
+        .modal-success .modal-btn:hover { background: #016b40; }
+        
+        .modal-fail .modal-title { color: var(--kenya-red); }
+        .modal-fail .modal-btn { background: var(--kenya-black); color: var(--white); }
+        .modal-fail .modal-btn:hover { background: #222; }
+
         @media (max-width: 1200px) {
-            .curriculum-sidebar { width: 260px; }
+            .curriculum-sidebar { width: 280px; }
             aside { width: 320px; }
         }
     </style>
@@ -213,10 +297,9 @@
         <div class="sidebar-header">
             <a href="courses.html" class="back-courses-link">← Back to Courses</a>
             <h2 id="sidebarTitle">Grade Math Pod</h2>
-            <p id="sidebarSubtitle">CBE Appendix Node</p>
+            <p id="sidebarSubtitle">Loading Framework Node...</p>
         </div>
-        <div class="topic-scroll" id="topicDirectory">
-            </div>
+        <div class="topic-scroll" id="topicDirectory"></div>
     </div>
 
     <main>
@@ -228,21 +311,19 @@
         </div>
 
         <div class="resource-panel">
-            <div class="resource-title">Required Structural & Material Resources</div>
-            <div class="resource-tags" id="resourceContainer">
-                </div>
+            <div class="resource-title">Required Learning & Activity Materials</div>
+            <div class="resource-tags" id="resourceContainer"></div>
         </div>
 
         <div class="quiz-container">
-            <h2 id="matrixTaskLabel">Active Evaluation Matrix // Task 01</h2>
+            <h2 id="matrixTaskLabel">Practice Question</h2>
             <div class="math-expr" id="problemExpression">
-                Loading targeted logical vector expansion formula...
+                Loading mathematical problem structure...
             </div>
-            <div class="options-grid" id="optionsGrid">
-                </div>
+            <div class="options-grid" id="optionsGrid"></div>
             <div class="action-bar">
-                <button class="btn btn-submit" onclick="evaluateAnswer()">Validate Vector</button>
-                <button class="btn btn-hint" onclick="summonOneiroHint()">Query Professor Oneiro</button>
+                <button class="btn btn-submit" onclick="evaluateAnswer()">Check Answer</button>
+                <button class="btn btn-hint" onclick="summonOneiroHint()">Ask Prof. Oneiro for Hint</button>
             </div>
         </div>
     </main>
@@ -255,24 +336,29 @@
             <div class="prof-status">Cognitive Assistance Engine // Online</div>
         </div>
         
-        <div class="chat-space" id="chatSpace">
-            </div>
+        <div class="chat-space" id="chatSpace"></div>
 
         <div class="chat-input-area">
-            <input type="text" class="chat-input" id="studentInput" placeholder="Query analytical step matrix parameters...">
+            <input type="text" class="chat-input" id="studentInput" placeholder="Ask a question about this step...">
             <button class="btn-send" onclick="sendStudentMessage()">→</button>
         </div>
     </aside>
 
+    <div class="feedback-overlay" id="feedbackOverlay">
+        <div class="feedback-modal" id="feedbackModal">
+            <div class="modal-icon" id="modalIcon">🎉</div>
+            <div class="modal-title" id="modalTitle">Excellent Job!</div>
+            <div class="modal-desc" id="modalDesc">Your logic checks out perfectly. Keep up the great work!</div>
+            <button class="modal-btn" id="modalActionBtn" onclick="closeFeedback()">Continue Learning</button>
+        </div>
+    </div>
+
     <script>
-        // Core Curriculum Database mapping both Grade 10 and Grade 11 variations
+        // Core Curriculum Database Pipeline Arrays
         const curriculumDatabase = [
-            // --- GRADE 10 ESSENTIAL MATH ---
             { id: "g10-est", grade: "10", type: "essential", strand: "Arithmetic & Context", subStrand: "Estimation & Rounding", resources: ["Calculators", "Digital Logsheets", "Workbooks"], videoUrl: "https://www.youtube.com/embed/fd-E18EqSVk", problem: "Estimate the value of 5.87 × 19.3 by rounding each term to 1 significant figure.", options: ["100", "120", "60", "200"], correctIndex: 1, hint: "Round 5.87 to 6 and 19.3 to 20, then evaluate." },
             { id: "g10-conv", grade: "10", type: "essential", strand: "Measurement Logic", subStrand: "Metric Conversions", resources: ["Metric Rulers", "Conversion Matrices"], videoUrl: "https://www.youtube.com/embed/ZNX-a-5jGeM", problem: "Convert 4.25 kilometers into standard meters.", options: ["425 m", "4,250 m", "42,500 m", "42.5 m"], correctIndex: 1, hint: "Recall that 1 kilometer maps directly to 1,000 meters." },
             { id: "g10-scale", grade: "10", type: "essential", strand: "Applied Geometry", subStrand: "Scale Drawings", resources: ["Graph Paper", "Protractors"], videoUrl: "https://www.youtube.com/embed/f-gCYOCFMYc", problem: "If a map scale is 1:50,000, what actual distance corresponds to 2 cm on the map?", options: ["1 km", "5 km", "10 km", "0.5 km"], correctIndex: 0, hint: "Multiply 2 by 50,000 cm, then map the centimeter output to kilometers." },
-
-            // --- GRADE 10 CORE MATH ---
             { 
                 id: "g10-alg", 
                 grade: "10", 
@@ -299,16 +385,69 @@
                 correctIndex: 0, 
                 hint: "Sum the equation vectors together to isolate and eliminate the y parameter." 
             },
-
-            // --- GRADE 11 ESSENTIAL MATH ---
             { id: "g11-fin", grade: "11", type: "essential", strand: "Applied Finance", subStrand: "Finance & Tax", resources: ["Tax Charts", "Spreadsheets"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Calculate the net profit index on a gross volume of 45,000 KES subject to a 15% flat deduction rate.", options: ["38,250 KES", "35,000 KES", "40,000 KES", "37,500 KES"], correctIndex: 0, hint: "Deduct 0.15 × 45,000 from the baseline system volume." },
-
-            // --- GRADE 11 CORE MATH ---
             { id: "g11-trig", grade: "11", type: "core", strand: "Analytical Geometry", subStrand: "Trigonometric Identities", resources: ["Trig Tables", "Calculators"], videoUrl: "https://www.youtube.com/embed/Szk_f8vU_LI", problem: "Simplify the fundamental structure expression: sin²(θ) + cos²(θ)", options: ["0", "1", "tan²(θ)", "2"], correctIndex: 1, hint: "This identity represents the unitary value circle radius vector." }
         ];
 
         let selectedAnswerIndex = null;
         let activeTopic = null;
+
+        // --- SYNTHESIZED GAME AUDIO ENGINE (Web Audio API) ---
+        function playSoundEffect(isSuccess) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+            const now = ctx.currentTime;
+
+            if (isSuccess) {
+                // 1. Drumroll Simulation (Rapid low amplitude noise/pulses)
+                for (let i = 0; i < 14; i++) {
+                    const oscTime = now + (i * 0.04);
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(90 + (Math.random() * 30), oscTime);
+                    gain.gain.setValueAtTime(0.25, oscTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, oscTime + 0.035);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(oscTime);
+                    osc.stop(oscTime + 0.035);
+                }
+
+                // 2. Chime Success Chord/Pop Sound
+                setTimeout(() => {
+                    const chimeTime = ctx.currentTime;
+                    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 (Bright Major Arpeggio)
+                    notes.forEach((freq, idx) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, chimeTime + (idx * 0.06));
+                        gain.gain.setValueAtTime(0.2, chimeTime + (idx * 0.06));
+                        gain.gain.exponentialRampToValueAtTime(0.001, chimeTime + 0.5 + (idx * 0.06));
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(chimeTime + (idx * 0.06));
+                        osc.stop(chimeTime + 0.7);
+                    });
+                }, 520);
+
+            } else {
+                // Game Over / Failure Downward Slide Tone
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(160, now);
+                osc.frequency.linearRampToValueAtTime(80, now + 0.45);
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.5);
+            }
+        }
 
         // Routing Engine Initialization
         function initRouting() {
@@ -316,23 +455,20 @@
             const activeGrade = urlParams.get('grade') || '10';
             const activeType = urlParams.get('type') || 'core';
 
-            // Filter relevant items
             const localizedSyllabus = curriculumDatabase.filter(item => item.grade === activeGrade && item.type === activeType);
 
-            // Interface Content Adjustments
             const headerTitle = `Grade ${activeGrade} ${activeType.charAt(0).toUpperCase() + activeType.slice(1)} Math`;
             document.getElementById('sidebarTitle').innerText = headerTitle;
-            document.getElementById('sidebarSubtitle').innerText = `Active Pipeline Node: L${activeGrade}`;
+            document.getElementById('sidebarSubtitle').innerText = `Active Course Pathway Node`;
 
             const directoryContainer = document.getElementById('topicDirectory');
             directoryContainer.innerHTML = '';
 
             if(localizedSyllabus.length === 0) {
-                directoryContainer.innerHTML = '<p style="padding:1rem; font-size:0.8rem; color:var(--muted-gray);">No specific system records found.</p>';
+                directoryContainer.innerHTML = '<p style="padding:1rem; font-size:0.9rem; color:var(--muted-gray);">No specific course modules found.</p>';
                 return;
             }
 
-            // Render topics sequentially
             let currentStrand = "";
             let groupDiv = null;
 
@@ -357,12 +493,11 @@
                 if(groupDiv) groupDiv.appendChild(button);
             });
 
-            // Auto-load Initial Dataset Node
             loadWorkspaceTopic(localizedSyllabus[0]);
             initOneiroGreeting(headerTitle);
         }
 
-        // Workspace Presentation Modifier
+        // Workspace Presentation Manager
         function loadWorkspaceTopic(topic, elementNode = null) {
             if(!topic) return;
             activeTopic = topic;
@@ -373,12 +508,10 @@
                 elementNode.classList.add('active-topic');
             }
 
-            // Load textual information
             document.getElementById('strandLabel').innerText = topic.strand;
             document.getElementById('topicTitle').innerText = topic.subStrand;
             document.getElementById('videoPlayer').src = topic.videoUrl;
 
-            // Load structural resources 
             const resourceBox = document.getElementById('resourceContainer');
             resourceBox.innerHTML = '';
             topic.resources.forEach(res => {
@@ -388,7 +521,6 @@
                 resourceBox.appendChild(tag);
             });
 
-            // Load active matrix metrics
             document.getElementById('problemExpression').innerText = topic.problem;
             const optionsBox = document.getElementById('optionsGrid');
             optionsBox.innerHTML = '';
@@ -406,22 +538,52 @@
             });
         }
 
-        // Answer evaluation matrix parameters
+        // Integrated Interactive Evaluation Modal Triggers
         function evaluateAnswer() {
             if(selectedAnswerIndex === null) {
-                alert("Please select a transformation logic matrix option before running analysis.");
+                alert("Please select an answer choice option first.");
                 return;
             }
+
+            const overlay = document.getElementById('feedbackOverlay');
+            const modal = document.getElementById('feedbackModal');
+            const icon = document.getElementById('modalIcon');
+            const title = document.getElementById('modalTitle');
+            const desc = document.getElementById('modalDesc');
+            const actionBtn = document.getElementById('modalActionBtn');
+
+            modal.className = "feedback-modal"; // Reset classes
+
             if(selectedAnswerIndex === activeTopic.correctIndex) {
-                appendChatMessage("System Diagnostic", "Vector verification positive. Formula solution matches parameters.", "oneiro");
-                alert("Correct! Mathematical logic confirmed.");
+                // Trigger Success Audio & Visual
+                playSoundEffect(true);
+                modal.classList.add('modal-success');
+                icon.innerText = "🎉";
+                title.innerText = "Correct! Well Done!";
+                desc.innerText = "Fantastic matching logic. Your mathematical proof checks out beautifully.";
+                actionBtn.innerText = "Keep Moving Forward";
+                
+                appendChatMessage("System Diagnostic", "Vector verification positive. Excellent compilation of principles.", "oneiro");
             } else {
-                appendChatMessage("System Diagnostic", "Vector mapping discrepancy detected. Review the hint profile.", "oneiro");
-                alert("Incorrect logical path. Query Professor Oneiro for details.");
+                // Trigger Failure Audio & Visual
+                playSoundEffect(false);
+                modal.classList.add('modal-fail');
+                icon.innerText = "❌";
+                title.innerText = "Not Quite Right";
+                desc.innerText = "Don't worry! Review the formulas, think through the process again, and give it another shot.";
+                actionBtn.innerText = "Try Again";
+                
+                appendChatMessage("System Diagnostic", "Calculated path variation discrepancy. Try running an alternative equation logic.", "oneiro");
             }
+
+            overlay.classList.add('show');
         }
 
-        // AI Cognitive Chat Interfaces
+        function closeFeedback() {
+            document.getElementById('feedbackOverlay').classList.remove('show');
+        }
+
+        // AI Chat Modules
         function initOneiroGreeting(courseName) {
             const workspace = document.getElementById('chatSpace');
             workspace.innerHTML = '';
@@ -442,7 +604,6 @@
             appendChatMessage("LEARNER", userMsg, "student");
             inputField.value = '';
 
-            // Simulated Expert Logic Response Process
             setTimeout(() => {
                 appendChatMessage("PROF. ONEIRO", "Query logged into processing engine. Reviewing current matrix step values against system standards...", "oneiro");
             }, 700);
@@ -457,7 +618,6 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // Boot sequence trigger
         window.onload = initRouting;
     </script>
 </body>
