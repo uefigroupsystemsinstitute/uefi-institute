@@ -16,43 +16,47 @@
     <meta property="og:description" content="Engineering Global Transformation through First-Principles. Join the apex of computation.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --midnight-blue: #43B02A; /* Safaricom Primary Green */
-            --gold: #E4002B;          /* Safaricom Primary Red */
-            --off-white: #F9F9F9;
-            --teal: #43B02A;          /* Safaricom Accent Green */
-            --text-dark: #1C1B1B;     /* Safaricom Dark Charcoal */
-            --white: #ffffff;
+            --bg-dark: #080D1A;         /* Deep Tech Blue Base */
+            --panel-bg: #0F172A;        /* Premium dark slate panel background */
+            --cyber-blue: #00D2FF;      /* Global pipeline connectivity color */
+            --eco-green: #00F5A0;       /* Sustainability Mint Green */
+            --energy-red: #FF3366;      /* Accent Crimson Red */
+            --text-pure: #FFFFFF;
+            --text-muted: #94A3B8;      /* Clean slate grey for paragraphs */
+            --border-glow: rgba(255, 255, 255, 0.05);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         body {
-            background-color: var(--off-white);
-            color: var(--text-dark);
+            background-color: var(--bg-dark);
+            color: var(--text-pure);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* --- NAVIGATION --- */
+        /* --- HIGH-TECH GLASS NAVIGATION --- */
         header {
-            background-color: #ffffff; /* Premium White Nav Background */
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
             z-index: 1000;
-            /* Kenyan Flag Stripe: Black, Red, Green, White */
-            border-bottom: 5px solid transparent;
-            border-image: linear-gradient(to right, #000000 25%, #E4002B 25%, #E4002B 50%, #43B02A 50%, #43B02A 75%, #ffffff 75%) 1;
+            /* Premium original tech gradient ribbon replacing corporate flag block lines */
+            border-top: 4px solid transparent;
+            border-image: linear-gradient(to right, var(--cyber-blue), var(--eco-green), var(--energy-red), var(--text-pure)) 1;
+            border-bottom: 1px solid var(--border-glow);
             width: 100%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         nav {
@@ -73,61 +77,74 @@
         }
 
         .logo img {
-            height: 45px;
+            height: 40px;
             width: auto;
             object-fit: contain;
+            filter: drop-shadow(0 0 8px var(--cyber-blue));
         }
 
         .logo span {
-            color: var(--midnight-blue);
+            color: var(--text-pure);
             font-size: 1.1rem;
-            font-weight: 900;
+            font-weight: 700;
             letter-spacing: 1px;
             font-family: 'JetBrains Mono', monospace;
         }
+        
+        .logo span b { color: var(--eco-green); }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             align-items: center;
         }
 
         .nav-links a {
-            color: var(--text-dark);
+            color: var(--text-muted);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.7rem;
+            font-weight: 500;
+            font-size: 0.8rem;
             transition: 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .nav-links a:hover { color: var(--midnight-blue); }
+        .nav-links a:hover, .nav-links a.active-tab { 
+            color: var(--eco-green); 
+        }
 
         .btn-nav {
-            background-color: var(--midnight-blue);
-            color: var(--white) !important;
-            padding: 8px 15px;
-            border-radius: 4px;
-            font-weight: 900 !important;
+            background-color: var(--eco-green);
+            color: var(--bg-dark) !important;
+            padding: 10px 20px;
+            border-radius: 2px;
+            font-weight: 700 !important;
             font-family: 'JetBrains Mono', monospace;
             text-decoration: none;
-            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.75rem !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(0, 245, 160, 0.2);
         }
 
-        .btn-nav:hover { background: var(--gold); }
+        .btn-nav:hover { 
+            background: var(--text-pure);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
 
-        /* --- HERO --- */
+        /* --- CYBER HEROSCAPE --- */
         .hero {
             position: relative;
-            height: 90vh;
+            height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #1C1B1B;
+            background: #040710;
             overflow: hidden;
-            color: var(--white);
+            color: var(--text-pure);
             text-align: center;
         }
 
@@ -135,7 +152,7 @@
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(28, 27, 27, 0.85), rgba(28, 27, 27, 0.95)), 
+            background: linear-gradient(rgba(7, 12, 25, 0.8), rgba(8, 13, 26, 0.98)), 
                         url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
@@ -146,7 +163,7 @@
 
         .hero-tag {
             font-family: 'JetBrains Mono', monospace;
-            color: var(--midnight-blue);
+            color: var(--cyber-blue);
             font-size: 0.8rem;
             letter-spacing: 4px;
             text-transform: uppercase;
@@ -155,18 +172,30 @@
         }
 
         .hero h1 {
-            font-size: clamp(2.2rem, 6vw, 4.5rem);
+            font-size: clamp(2.2rem, 6vw, 4.2rem);
             font-weight: 900;
             margin-bottom: 1.5rem;
-            line-height: 1;
+            line-height: 1.1;
+            letter-spacing: -1px;
         }
 
-        .hero h1 span { color: var(--midnight-blue); font-style: italic; }
+        .hero h1 span { 
+            background: linear-gradient(120deg, var(--eco-green), var(--cyber-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        /* --- DYNAMIC SHOWCASE SLIDER --- */
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* --- SECURE DATA SLIDER --- */
         .showcase-slider-container {
-            background-color: var(--white);
-            padding: 4rem 5% 2rem 5%;
+            background-color: var(--bg-dark);
+            padding: 6rem 5% 4rem 5%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -176,59 +205,54 @@
         .slider-wrapper {
             position: relative;
             width: 100%;
-            max-width: 900px;
-            height: 650px; /* Increased vertical size for better visibility */
+            max-width: 950px;
+            height: 550px;
             overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-bottom: 5px solid var(--midnight-blue);
-            transition: border-color 0.5s;
+            border-radius: 4px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-glow);
+            border-bottom: 4px solid var(--cyber-blue);
+            transition: all 0.4s ease;
         }
         
         .slider-wrapper:hover {
-            border-color: var(--gold);
+            border-bottom-color: var(--eco-green);
+            box-shadow: 0 25px 60px rgba(0, 245, 160, 0.1);
         }
 
         .slide {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.8s ease-in-out;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #1C1B1B;
+            background-color: #0B0F19;
         }
 
-        .slide.active {
-            opacity: 1;
-            z-index: 10;
-        }
+        .slide.active { opacity: 1; z-index: 10; }
 
         .slide img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Changed to 'contain' to ensure images are not cropped out */
-            background-color: #1C1B1B; /* Dark background matches layout if ratios mismatch */
+            object-fit: contain;
+            background-color: #0B0F19;
         }
 
-        /* Slider Controls */
         .slider-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(28, 27, 27, 0.7);
-            color: var(--white);
-            border: none;
-            width: 45px;
-            height: 45px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-glow);
+            color: var(--text-pure);
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
             z-index: 20;
-            font-size: 1.2rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -236,158 +260,195 @@
         }
 
         .slider-btn:hover {
-            background: var(--midnight-blue);
+            background: var(--cyber-blue);
+            color: var(--bg-dark);
+            border-color: var(--cyber-blue);
         }
 
         .prev-btn { left: 20px; }
         .next-btn { right: 20px; }
 
-        /* Slider Indicators */
         .slider-dots {
             position: absolute;
-            bottom: 20px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
+            gap: 12px;
             z-index: 20;
         }
 
         .dot {
-            width: 12px;
-            height: 12px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.2);
             cursor: pointer;
             transition: 0.3s;
         }
 
         .dot.active {
-            background: var(--midnight-blue);
-            transform: scale(1.2);
+            background: var(--eco-green);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--eco-green);
         }
 
-        /* --- STATS --- */
+        /* --- STATS NODE --- */
         .stats-bar {
-            background: var(--white);
+            background: var(--panel-bg);
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            padding: 3rem 5%;
-            border-bottom: 1px solid #e2e8f0;
+            padding: 4rem 5%;
+            border-top: 1px solid var(--border-glow);
+            border-bottom: 1px solid var(--border-glow);
         }
 
-        .stat-item { text-align: center; border-right: 1px solid #e2e8f0; }
+        .stat-item { text-align: center; border-right: 1px solid var(--border-glow); }
         .stat-item:last-child { border-right: none; }
-        .stat-item h2 { font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; color: var(--midnight-blue); }
-        .stat-item p { font-weight: 700; color: var(--gold); text-transform: uppercase; font-size: 0.65rem; }
+        .stat-item h2 { font-family: 'JetBrains Mono', monospace; font-size: 2.6rem; color: var(--eco-green); font-weight: 700; }
+        .stat-item p { font-weight: 700; color: var(--text-muted); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; margin-top: 5px;}
 
-        /* --- STRATEGY --- */
-        .strategy { padding: 8rem 10%; display: flex; align-items: center; gap: 4rem; background: #fff; }
+        /* --- SUSTAINABILITY STRATEGY --- */
+        .strategy { padding: 8rem 10%; display: flex; align-items: center; gap: 5rem; background: var(--bg-dark); }
         .strategy-text { flex: 1.2; }
-        .strategy-text h2 { color: var(--text-dark); font-size: 3rem; margin-bottom: 1.5rem; font-weight: 900; }
-        .strategy-image { flex: 0.8; }
-        .strategy-image img { width: 100%; border-radius: 4px; box-shadow: 30px 30px 0 var(--midnight-blue); }
-
-        /* --- PILLARS --- */
-        .pillars-section { background: #1C1B1B; padding: 6rem 10%; color: white; }
-        .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .card { 
-            background: rgba(255, 255, 255, 0.02); 
-            padding: 3rem; 
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: 0.3s;
+        .strategy-text h2 { color: var(--text-pure); font-size: 2.8rem; margin-bottom: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+        .strategy-text p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2.5rem; }
+        .strategy-image { flex: 0.8; position: relative; }
+        .strategy-image img { width: 100%; border-radius: 4px; border: 1px solid var(--border-glow); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        
+        /* Decorative custom corner tech accent instead of old heavy background blocks */
+        .strategy-image::after {
+            content: ''; position: absolute; bottom: -15px; right: -15px; width: 100px; height: 100px;
+            border-right: 4px solid var(--energy-red); border-bottom: 4px solid var(--energy-red); z-index: -1;
         }
-        .card:hover { border-color: var(--midnight-blue); transform: translateY(-5px); }
-        .card h3 { color: var(--midnight-blue); margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; }
-        .card p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem; }
-        .card-link { color: white; text-decoration: none; font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; }
-        .card-link:hover { color: var(--gold); }
 
-        /* --- STRATEGIC PARTNERS SECTION --- */
+        .strategy-link { 
+            color: var(--eco-green); 
+            font-weight: 700; 
+            font-family: 'JetBrains Mono', monospace; 
+            text-decoration: none; 
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            border-bottom: 1px dashed var(--eco-green);
+            padding-bottom: 4px;
+        }
+        .strategy-link:hover { color: var(--text-pure); border-bottom-color: var(--text-pure); }
+
+        /* --- CORE PILLARS MATRIX --- */
+        .pillars-section { background: #060A14; padding: 8rem 10%; border-top: 1px solid var(--border-glow); }
+        .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .card { 
+            background: var(--panel-bg); 
+            padding: 3.5rem 2.5rem; 
+            border: 1px solid var(--border-glow);
+            border-radius: 4px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card:hover { 
+            border-color: rgba(0, 210, 255, 0.3); 
+            transform: translateY(-5px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .card h3 { color: var(--cyber-blue); margin-bottom: 1.2rem; font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; letter-spacing: 1px; }
+        .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2.5rem; min-height: 70px; }
+        .card-link { color: var(--text-pure); text-decoration: none; font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; font-family: 'JetBrains Mono', monospace; transition: 0.3s;}
+        .card-link:hover { color: var(--energy-red); }
+
+        /* --- ALLIANCES NETWORK --- */
         .partners-section {
-            background: var(--white);
-            padding: 6rem 10%;
+            background: var(--bg-dark);
+            padding: 8rem 10%;
             text-align: center;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--border-glow);
         }
         
         .partners-section h2 {
-            color: var(--text-dark);
-            font-size: 2.2rem;
-            font-weight: 900;
-            margin-bottom: 3rem;
-            letter-spacing: -1px;
+            color: var(--text-pure);
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            letter-spacing: -0.5px;
         }
         
         .partners-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            gap: 25px;
             align-items: center;
         }
         
         .partner-card {
-            background: var(--off-white);
-            border: 2px solid #f1f5f9;
-            padding: 30px 20px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-glow);
+            padding: 35px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 160px;
+            height: 170px;
+            border-radius: 4px;
             text-decoration: none; 
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s ease;
         }
         
         .partner-card:hover {
-            border-color: var(--midnight-blue);
+            border-color: var(--eco-green);
             transform: translateY(-4px);
-            background: var(--white);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
         
         .partner-card img {
-            max-width: 90%;
-            max-height: 55px;
+            max-width: 85%;
+            max-height: 50px;
             object-fit: contain;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: block;
+            filter: brightness(0) invert(1); /* Ensures multi-colored legacy partner logos match the clean theme cleanly */
+            opacity: 0.7;
+            transition: 0.3s;
         }
+        
+        .partner-card:hover img { opacity: 1; filter: none; }
         
         .partner-card span {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            opacity: 0.8;
         }
+        .partner-card:hover span { color: var(--text-pure); }
 
-        /* --- FOOTER --- */
-        footer { background: #111111; color: var(--white); padding: 5rem 10% 2rem; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
-        .footer-col h4 { color: var(--midnight-blue); margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+        /* --- TERMINAL FOOTER --- */
+        footer { background: #04070F; color: var(--text-pure); padding: 6rem 10% 2rem; border-top: 1px solid var(--border-glow); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+        .footer-col h4 { color: var(--cyber-blue); margin-bottom: 1.8rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
         .footer-col ul { list-style: none; }
-        .footer-col li { margin-bottom: 0.8rem; }
-        .footer-col a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; }
-        .footer-col a:hover { color: var(--gold); }
-        .footer-bottom { margin-top: 4rem; border-top: 1px solid #1e293b; padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.65rem; color: #475569; font-family: 'JetBrains Mono', monospace; }
+        .footer-col li { margin-bottom: 0.9rem; }
+        .footer-col a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: 0.3s; }
+        .footer-col a:hover { color: var(--energy-red); }
+        .footer-bottom { margin-top: 5rem; border-top: 1px solid var(--border-glow); padding-top: 2.5rem; display: flex; justify-content: space-between; font-size: 0.7rem; color: #475569; font-family: 'JetBrains Mono', monospace; }
 
-        /* --- MOBILE ADAPTATION --- */
+        /* --- SYSTEM RESPONSIVENESS MATRIX --- */
         @media (max-width: 1024px) {
             .nav-links { display: none; }
-            .stats-bar { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .stats-bar { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
             .stat-item { border: none; }
-            .strategy { flex-direction: column; text-align: center; }
-            .strategy-image img { box-shadow: none; }
+            .strategy { flex-direction: column; text-align: center; gap: 3rem; }
+            .strategy-image::after { display: none; }
             .partners-grid { grid-template-columns: repeat(2, 1fr); }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            .slider-wrapper { height: 480px; } /* Proportions kept higher on smaller viewports */
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+            .slider-wrapper { height: 420px; }
         }
         @media (max-width: 600px) {
             .partners-grid { grid-template-columns: 1fr; }
-            .slider-wrapper { height: 350px; } /* Proportions kept higher on smaller viewports */
+            .stats-bar { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .slider-wrapper { height: 320px; }
+            .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
         }
     </style>
 </head>
@@ -397,7 +458,7 @@
         <nav>
             <a href="index.html" class="logo">
                <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo">
-               <span>U.E.F.I. INSTITUTE</span>
+               <span>U.E.F.I. <b>INSTITUTE</b></span>
             </a>
             <ul class="nav-links">
                 <li><a href="index.html" class="active-tab">Home</a></li>
@@ -414,11 +475,11 @@
 
     <section class="hero">
         <div class="hero-content">
-            <span class="hero-tag">Engineering Global Transformation</span>
-            <h1>The Apex of <span>Computation</span> & Empowerment.</h1>
-            <p>Bridging elite intelligence through first-principles engineering. From Narok to the world.</p>
+            <span class="hero-tag">// Engineering Global Transformation</span>
+            <h1>The Apex of <span>Computation</span> & Sustainable Empowerment.</h1>
+            <p>Bridging elite tech intelligence through first-principles engineering. Decentralizing opportunities directly from Narok to the world web.</p>
             <div style="margin-top: 2rem;">
-                <a href="courses.html" class="btn-nav" style="padding: 15px 35px; font-size: 0.8rem;">Access the Curriculum</a>
+                <a href="courses.html" class="btn-nav" style="padding: 16px 40px; font-size: 0.8rem; border-radius: 2px;">Access the Curriculum</a>
             </div>
         </div>
     </section>
@@ -471,9 +532,9 @@
 
     <section class="strategy">
         <div class="strategy-text">
-            <h2 style="font-size: 2.5rem;">The "Musk" Strategy: Buy One, Empower One.</h2>
-            <p>Every international enrollment triggers a physical hardware provision for a high-potential student in rural Kenya. Your success funds a future.</p>
-            <a href="support-us.html" style="color: var(--midnight-blue); font-weight: 900; font-family: 'JetBrains Mono'; text-decoration: none; border-bottom: 2px solid var(--gold); font-size: 0.8rem;">VIEW SYSTEM ARCHITECTURE →</a>
+            <h2>The "Musk" Strategy: Buy One, Empower One.</h2>
+            <p>Every international enrollment triggers an automated hardware allocation node for a high-potential student in rural regions. Your engineering mastery directly codes an equitable future.</p>
+            <a href="support-us.html" class="strategy-link">VIEW SYSTEM ARCHITECTURE →</a>
         </div>
         <div class="strategy-image">
             <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Tech Lab Students">
@@ -483,18 +544,18 @@
     <section class="pillars-section">
         <div class="pillars">
             <div class="card">
-                <h3>UEFI_LABS</h3>
-                <p>Bare-metal engineering. Neural Network optimization and Quant logic for high-output engineers.</p>
+                <h3>[ UEFI_LABS ]</h3>
+                <p>Bare-metal system optimization, advanced neural architectures, and algorithmic quantitative logic built for international scaling.</p>
                 <a href="tech-lab.html" class="card-link">INITIALIZE TERMINAL →</a>
             </div>
             <div class="card">
-                <h3>ANTHONINAH</h3>
-                <p>Mentorship pipelines and health education for women entering the computational workforce.</p>
+                <h3>[ ANTHONINAH ]</h3>
+                <p>Strategic mentorship pipelines, data literacy structures, and specialized pathways for women breaking into the global machine workforce.</p>
                 <a href="anthoninas-initiative.html" class="card-link">VIEW INITIATIVE →</a>
             </div>
             <div class="card">
-                <h3>WILSON_LEAD</h3>
-                <p>Advanced development for men. High-income gig-work and university-grade scholarship pathways.</p>
+                <h3>[ WILSON_LEAD ]</h3>
+                <p>Architecting production pipelines for men. Accelerating high-income remote contract operations and university-grade tech nodes.</p>
                 <a href="wilsons-initiative.html" class="card-link">VIEW INITIATIVE →</a>
             </div>
         </div>
@@ -531,33 +592,33 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <h4 style="color: white;">U.E.F.I. // GLOBAL</h4>
-                <p style="color:#64748b; font-size: 0.8rem;">Building the architects of tomorrow from Narok, Kenya.</p>
+                <p style="color:#64748b; font-size: 0.8rem;">Building the deep-tech architects of tomorrow from Narok, Kenya.</p>
             </div>
             <div class="footer-col">
                 <h4>System Links</h4>
                 <ul>
                     <li><a href="tech-lab.html">The Labs</a></li>
                     <li><a href="enroll.html">Enrollment</a></li>
-                    <li><a href="support-us.html">Support</a></li>
+                    <li><a href="support-us.html">Support Node</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Nodes</h4>
                 <ul>
                     <li><a href="tutor.html">AI Professor</a></li>
-                    <li><a href="opportunities-hub.html">Opportunities</a></li>
+                    <li><a href="opportunities-hub.html">Opportunities Hub</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
                 <ul>
-                    <li><a href="contactus.html">Initialize Contact</a></li>
+                    <li><a href="contactus.html">Initialize Link</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 UEFI Institute.</p>
-            <p>LATENCY: 0.00ms // STATUS: ENCRYPTED</p>
+            <p>&copy; 2026 UEFI Institute. All Rights Reserved.</p>
+            <p>LATENCY: 0.00ms // PIPELINE ACTIVE // SECURE CONNECTION</p>
         </div>
     </footer>
 
@@ -570,18 +631,15 @@
         let slideInterval;
 
         function showSlide(index) {
-            // Reset indexes boundary conditions
             if (index >= slides.length) currentIndex = 0;
             else if (index < 0) currentIndex = slides.length - 1;
             else currentIndex = index;
 
-            // Remove active status from all elements
             slides.forEach(slide => slide.classList.remove('active'));
             dots.forEach(dot => dot.classList.remove('active'));
 
-            // Activate current targeted slide and relative indicator node
-            slides[currentIndex].classList.add('active');
-            dots[currentIndex].classList.add('active');
+            if(slides[currentIndex]) slides[currentIndex].classList.add('active');
+            if(dots[currentIndex]) dots[currentIndex].classList.add('active');
         }
 
         function nextSlide() {
@@ -592,7 +650,6 @@
             showSlide(currentIndex - 1);
         }
 
-        // Run automatic looping transition mechanism (3.5 seconds frequency)
         function startAutoSlide() {
             slideInterval = setInterval(nextSlide, 3500);
         }
@@ -601,11 +658,10 @@
             clearInterval(slideInterval);
         }
 
-        // Event triggers for manual dashboard adjustments
         nextBtn.addEventListener('click', () => {
             nextSlide();
             stopAutoSlide();
-            startAutoSlide(); // restarts timer after clicking
+            startAutoSlide();
         });
 
         prevBtn.addEventListener('click', () => {
@@ -614,7 +670,6 @@
             startAutoSlide();
         });
 
-        // Event handling mapping for indicators dots 
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 showSlide(index);
@@ -623,11 +678,7 @@
             });
         });
 
-        // Initialize script loop routine
         startAutoSlide();
     </script>
 </body>
 </html>
-
-
-
