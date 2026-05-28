@@ -16,21 +16,21 @@
     <meta property="og:description" content="Engineering Global Transformation through First-Principles. Join the apex of computation.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;600;700;900&family=JetBrains+Mono:wght=400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             /* Kenyan Flag Exact Hex Architecture */
             --kenya-black: #000000;
             --kenya-red: #BB0000;
-            /* Updated to a lighter, brighter green */
             --kenya-green: #54E346; 
             --white: #ffffff;
             
             /* Structural Colors */
-            --bg-obsidian: #0A0A0A; /* Deep Black for premium sections */
+            --bg-obsidian: #0A0A0A; 
             --off-white: #F9F9F9;
             --text-dark: #111111;
+            --muted-gray: #64748b;
         }
 
         * {
@@ -53,7 +53,6 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            /* Authentic Kenyan Flag Stripe */
             border-bottom: 5px solid transparent;
             border-image: linear-gradient(to right, var(--kenya-black) 25%, var(--kenya-red) 25%, var(--kenya-red) 50%, var(--kenya-green) 50%, var(--kenya-green) 75%, var(--white) 75%) 1;
             width: 100%;
@@ -84,12 +83,14 @@
         }
 
         .logo span {
-            color: var(--kenya-green);
+            color: var(--kenya-black);
             font-size: 1.1rem;
             font-weight: 900;
             letter-spacing: 1px;
             font-family: 'JetBrains Mono', monospace;
         }
+        
+        .logo span span { color: var(--kenya-green); }
 
         .nav-links {
             list-style: none;
@@ -108,11 +109,11 @@
             letter-spacing: 1px;
         }
 
-        .nav-links a:hover { color: var(--kenya-green); }
+        .nav-links a:hover, .nav-links a.active-tab { color: var(--kenya-green); }
 
         .btn-nav {
             background-color: var(--kenya-green);
-            color: var(--text-dark) !important; /* Changed text color to dark for better contrast on light green */
+            color: var(--text-dark) !important; 
             padding: 8px 15px;
             border-radius: 4px;
             font-weight: 900 !important;
@@ -126,7 +127,7 @@
         /* --- HERO --- */
         .hero {
             position: relative;
-            height: 90vh;
+            height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -140,8 +141,7 @@
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Reduced opacity values from 0.85/0.95 to 0.4/0.6 to make the Earth visible */
-            background: linear-gradient(rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.6)), 
+            background: linear-gradient(rgba(10, 10, 10, 0.5), rgba(10, 10, 10, 0.7)), 
                         url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
@@ -158,21 +158,25 @@
             text-transform: uppercase;
             margin-bottom: 20px;
             display: block;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Added shadow for readability over the brighter background */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
 
         .hero h1 {
-            font-size: clamp(2.2rem, 6vw, 4.5rem);
+            font-size: clamp(2.2rem, 6vw, 4.2rem);
             font-weight: 900;
             margin-bottom: 1.5rem;
-            line-height: 1;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.8); /* Added shadow for readability */
+            line-height: 1.1;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
         }
 
         .hero h1 span { color: var(--kenya-green); font-style: italic; }
         
         .hero p {
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Added shadow for readability */
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #cbd5e1;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
 
         /* --- DYNAMIC SHOWCASE SLIDER --- */
@@ -189,7 +193,7 @@
             position: relative;
             width: 100%;
             max-width: 900px;
-            height: 650px;
+            height: 550px;
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -197,16 +201,11 @@
             transition: border-color 0.5s;
         }
         
-        .slider-wrapper:hover {
-            border-color: var(--kenya-red);
-        }
+        .slider-wrapper:hover { border-color: var(--kenya-red); }
 
         .slide {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0;
             transition: opacity 1s ease-in-out;
             display: flex;
@@ -215,10 +214,7 @@
             background-color: var(--bg-obsidian);
         }
 
-        .slide.active {
-            opacity: 1;
-            z-index: 10;
-        }
+        .slide.active { opacity: 1; z-index: 10; }
 
         .slide img {
             width: 100%;
@@ -227,7 +223,6 @@
             background-color: var(--bg-obsidian);
         }
 
-        /* Slider Controls */
         .slider-btn {
             position: absolute;
             top: 50%;
@@ -247,15 +242,10 @@
             transition: 0.3s;
         }
 
-        .slider-btn:hover {
-            background: var(--kenya-green);
-            color: var(--text-dark);
-        }
-
+        .slider-btn:hover { background: var(--kenya-green); color: var(--text-dark); }
         .prev-btn { left: 20px; }
         .next-btn { right: 20px; }
 
-        /* Slider Indicators */
         .slider-dots {
             position: absolute;
             bottom: 20px;
@@ -275,12 +265,9 @@
             transition: 0.3s;
         }
 
-        .dot.active {
-            background: var(--kenya-green);
-            transform: scale(1.2);
-        }
+        .dot.active { background: var(--kenya-green); transform: scale(1.2); }
 
-        /* --- STATS --- */
+        /* --- STATS BAR --- */
         .stats-bar {
             background: var(--white);
             display: grid;
@@ -291,15 +278,105 @@
 
         .stat-item { text-align: center; border-right: 1px solid #e2e8f0; }
         .stat-item:last-child { border-right: none; }
-        .stat-item h2 { font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; color: var(--kenya-green); }
-        .stat-item p { font-weight: 700; color: var(--kenya-red); text-transform: uppercase; font-size: 0.65rem; }
+        .stat-item h2 { font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; color: var(--kenya-black); }
+        .stat-item h2 span { color: var(--kenya-red); }
+        .stat-item p { font-weight: 700; color: var(--muted-gray); text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; margin-top: 5px;}
+
+        /* --- NEW SECTION: REGIONAL CHALLENGE TO COMPLETED FOCUS --- */
+        .regional-focus {
+            padding: 6rem 10%;
+            background-color: var(--white);
+        }
+        
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+        }
+        
+        .section-header .tag {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--kenya-red);
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 0.5rem 0 1rem 0;
+            color: var(--kenya-black);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .focus-card {
+            background: var(--off-white);
+            padding: 2.5rem;
+            border-radius: 6px;
+            border-top: 4px solid var(--kenya-black);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .focus-card.red-alert { border-top-color: var(--kenya-red); }
+        .focus-card.green-pass { border-top-color: var(--kenya-green); }
+
+        .focus-card h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .focus-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .focus-card p {
+            color: #475569;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .data-source-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--kenya-red);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border-bottom: 1px dashed var(--kenya-red);
+            width: fit-content;
+            transition: 0.2s ease;
+        }
+
+        .data-source-link:hover {
+            color: var(--kenya-black);
+            border-bottom-color: var(--kenya-black);
+        }
 
         /* --- STRATEGY --- */
-        .strategy { padding: 8rem 10%; display: flex; align-items: center; gap: 4rem; background: #fff; }
+        .strategy { padding: 6rem 10%; display: flex; align-items: center; gap: 4rem; background: var(--off-white); }
         .strategy-text { flex: 1.2; }
-        .strategy-text h2 { color: var(--text-dark); font-size: 3rem; margin-bottom: 1.5rem; font-weight: 900; }
+        .strategy-text h2 { color: var(--text-dark); font-size: 2.5rem; margin-bottom: 1.5rem; font-weight: 900; }
+        .strategy-text p { margin-bottom: 1.5rem; color: #334155; }
         .strategy-image { flex: 0.8; }
-        .strategy-image img { width: 100%; border-radius: 4px; box-shadow: 30px 30px 0 var(--kenya-green); }
+        .strategy-image img { width: 100%; border-radius: 4px; box-shadow: 20px 20px 0 var(--kenya-green); }
 
         /* --- PILLARS --- */
         .pillars-section { background: var(--bg-obsidian); padding: 6rem 10%; color: white; }
@@ -378,7 +455,7 @@
         }
 
         /* --- FOOTER --- */
-        footer { background: var(--bg-obsidian); color: var(--white); padding: 5rem 10% 2rem; border-top: 2px solid var(--kenya-black); }
+        footer { background: var(--bg-obsidian); color: var(--white); padding: 5rem 10% 2rem; border-top: 5px solid var(--kenya-black); }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
         .footer-col h4 { color: var(--kenya-green); margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
         .footer-col ul { list-style: none; }
@@ -392,15 +469,16 @@
             .nav-links { display: none; }
             .stats-bar { grid-template-columns: 1fr 1fr; gap: 2rem; }
             .stat-item { border: none; }
+            .grid-cards { grid-template-columns: 1fr; gap: 1.5rem; }
             .strategy { flex-direction: column; text-align: center; }
             .strategy-image img { box-shadow: none; }
             .partners-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: 1fr 1fr; }
-            .slider-wrapper { height: 480px; } 
+            .slider-wrapper { height: 400px; } 
         }
         @media (max-width: 600px) {
             .partners-grid { grid-template-columns: 1fr; }
-            .slider-wrapper { height: 350px; } 
+            .slider-wrapper { height: 300px; } 
         }
     </style>
 </head>
@@ -409,8 +487,8 @@
     <header>
         <nav>
             <a href="index.html" class="logo">
-               <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo">
-               <span>U.E.F.I. INSTITUTE</span>
+               <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo" onerror="this.style.display='none'">
+               <span>U.E.F.I. <span>INSTITUTE</span></span>
             </a>
             <ul class="nav-links">
                 <li><a href="index.html" class="active-tab">Home</a></li>
@@ -427,11 +505,11 @@
 
     <section class="hero">
         <div class="hero-content">
-            <span class="hero-tag">Engineering Global Transformation</span>
-            <h1>The Apex of <span>Computation</span> & Empowerment.</h1>
-            <p>Bridging elite intelligence through first-principles engineering. From Narok to the world.</p>
+            <span class="hero-tag">National Tech Revolution // Kenya</span>
+            <h1>The Apex of <span>Computation</span> & Structural Empowerment.</h1>
+            <p>Directing world-class technological infrastructure into rural Kenya. Weaponizing raw intelligence to bridge the global capital gap from Narok to the world.</p>
             <div style="margin-top: 2rem;">
-                <a href="courses.html" class="btn-nav" style="padding: 15px 35px; font-size: 0.8rem;">Access the Curriculum</a>
+                <a href="courses.html" class="btn-nav" style="padding: 15px 35px; font-size: 0.8rem;">Explore Academic Paths</a>
             </div>
         </div>
     </section>
@@ -471,22 +549,70 @@
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
         </div>
     </section>
 
     <div class="stats-bar">
-        <div class="stat-item"><h2>500+</h2><p>Vectors (Students)</p></div>
-        <div class="stat-item"><h2>120+</h2><p>Units Donated</p></div>
-        <div class="stat-item"><h2>15+</h2><p>Global Partners</p></div>
-        <div class="stat-item"><h2>$20k+</h2><p>Alpha Generated</p></div>
+        <div class="stat-item"><h2>500+</h2><p>Active Scholars</p></div>
+        <div class="stat-item"><h2>30K<span>+</span></h2><p>Dropouts Targeted</p></div>
+        <div class="stat-item"><h2>0 KES</h2><p>Cost to Underprivileged Students</p></div>
+        <div class="stat-item"><h2>$20k+</h2><p>Alpha Research Output</p></div>
     </div>
+
+    <section class="regional-focus">
+        <div class="section-header">
+            <span class="tag">Empirical Societal Grounding</span>
+            <h2>Why Narok County? Why Now?</h2>
+            <p>Our technology hubs are engineered as a structural safety framework against vulnerable cultural exit vectors, replacing system displacement with remote intellectual opportunities.</p>
+        </div>
+        
+        <div class="grid-cards">
+            <div class="focus-card red-alert">
+                <div>
+                    <h3 style="color: var(--kenya-red);">28%</h3>
+                    <h4>Adolescent Pregnancy Crisis</h4>
+                    <p>According to data processed by the Kenya National Bureau of Statistics (KNBS), baseline drop-out vulnerabilities map heavily to system disruption risks. UEFI scales up physical tracking parameters to establish robust intervention pathways.</p>
+                </div>
+                <a href="https://www.knbs.or.ke" target="_blank" rel="noopener noreferrer" class="data-source-link">
+                    SOURCE // KNBS.OR.KE ↗
+                </a>
+            </div>
+            
+            <div class="focus-card red-alert">
+                <div>
+                    <h3 style="color: var(--kenya-red);">30,000+</h3>
+                    <h4>Out-Of-School Cohorts</h4>
+                    <p>National tracking records managed via the National Council for Nomadic Education in Kenya (NACONEK) show severe drop-out numbers driven by structural economic shifts. We actively intercept these brilliant minds, routing them directly into high-tier computation metrics.</p>
+                </div>
+                <a href="http://www.naconek.ke" target="_blank" rel="noopener noreferrer" class="data-source-link">
+                    SOURCE // NACONEK DATA ↗
+                </a>
+            </div>
+            
+            <div class="focus-card green-pass">
+                <div>
+                    <h3 style="color: var(--kenya-green);">Mesh net</h3>
+                    <h4>Offline-First Infrastructure</h4>
+                    <p>To completely beat data cost limitations, our learning modules run on zero-cost local networks deployed inside rural hardware hubs. Zero internet obligations for our scholars.</p>
+                </div>
+                <span class="data-source-link" style="color: var(--kenya-green); border-bottom-color: var(--kenya-green); cursor: default;">
+                    INTERNAL ARCHITECTURE // DEPLOYED 
+                </span>
+            </div>
+        </div>
+    </section>
 
     <section class="strategy">
         <div class="strategy-text">
-            <h2 style="font-size: 2.5rem;">The "Musk" Strategy: Buy One, Empower One.</h2>
-            <p>Every international enrollment triggers a physical hardware provision for a high-potential student in rural Kenya. Your success funds a future.</p>
-            <a href="support-us.html" style="color: var(--kenya-green); font-weight: 900; font-family: 'JetBrains Mono'; text-decoration: none; border-bottom: 2px solid var(--kenya-red); font-size: 0.8rem;">VIEW SYSTEM ARCHITECTURE →</a>
+            <h2>The "Cross-Subsidization" Strategy: Buy One, Empower One.</h2>
+            <p>Every commercial enrollment from international students triggers an immediate physical hardware allocation and mentorship package for a high-potential scholar in rural Kenya.</p>
+            <p>We are creating a self-sustaining intellectual army. Your personal advancement funds a national transformation.</p>
+            <a href="support-us.html" style="color: var(--kenya-green); font-weight: 900; font-family: 'JetBrains Mono'; text-decoration: none; border-bottom: 2px solid var(--kenya-red); font-size: 0.8rem; letter-spacing: 1px;">VIEW SYSTEM ARCHITECTURE →</a>
         </div>
         <div class="strategy-image">
             <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Tech Lab Students">
@@ -496,62 +622,60 @@
     <section class="pillars-section">
         <div class="pillars">
             <div class="card">
-                <h3>UEFI_LABS</h3>
-                <p>Bare-metal engineering. Neural Network optimization and Quant logic for high-output engineers.</p>
+                <h3>UEFI_QUANT_FORGE</h3>
+                <p>Deep-tier algorithmic engineering. Financial simulations, complex variable mathematics, and high-performance physics systems built for global competitions.</p>
                 <a href="tech-lab.html" class="card-link">INITIALIZE TERMINAL →</a>
             </div>
             <div class="card">
-                <h3>ANTHONINAH</h3>
-                <p>Mentorship pipelines and health education for women entering the computational workforce.</p>
+                <h3>ANTHONINAH_LABS</h3>
+                <p>Strategic structural pipelines, health guidance modules, and digital access protection mechanisms for women entering the computational workspace.</p>
                 <a href="anthoninas-initiative.html" class="card-link">VIEW INITIATIVE →</a>
             </div>
             <div class="card">
-                <h3>WILSON_LEAD</h3>
-                <p>Advanced development for men. High-income gig-work and university-grade scholarship pathways.</p>
+                <h3>WILSON_LEAD_CORE</h3>
+                <p>Advanced engineering tracks for at-risk young men. High-income digital opportunities and international university-grade scholarship paths.</p>
                 <a href="wilsons-initiative.html" class="card-link">VIEW INITIATIVE →</a>
             </div>
         </div>
     </section>
 
     <section class="partners-section">
-        <h2>Institutional Alliances & Partners</h2>
+        <h2>Institutional Alliances & System Nodes</h2>
         <div class="partners-grid">
-            
             <a href="https://youtube.com/@quantforgeacademy?si=K0QnqU7dEJr1Ru1-" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/quantforge-logo.png" alt="QuantForge Academy Logo">
+                <img src="assets/quantforge-logo.png" alt="QuantForge Academy Logo" onerror="this.style.opacity='0.5'">
                 <span>QuantForge Academy</span>
             </a>
 
             <a href="https://ecultureskenya.github.io/eCultures-Kenya-/index.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/ecultures-logo.png" alt="eCUltures Kenya Logo">
-                <span>eCUltures Kenya</span>
+                <img src="assets/ecultures-logo.png" alt="eCultures Kenya Logo" onerror="this.style.opacity='0.5'">
+                <span>eCultures Kenya</span>
             </a>
 
             <a href="https://aid-for-aiming-africa-fbx6511.public.builtwithrocket.new/" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/aaa-logo.png" alt="Aid For Aiming Africa Logo">
-                <span>Aid For Aiming Africa (AAA)</span>
+                <img src="assets/aaa-logo.png" alt="Aid For Aiming Africa Logo" onerror="this.style.opacity='0.5'">
+                <span>Aid For Aiming Africa</span>
             </a>
 
             <a href="https://jengamaliyouthflow.github.io/JengaMali-Youth-Flow-/index.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/jengamali-logo.png" alt="JengaMali Youth Flow Logo">
+                <img src="assets/jengamali-logo.png" alt="JengaMali Youth Flow Logo" onerror="this.style.opacity='0.5'">
                 <span>JengaMali Youth Flow</span>
             </a>
-
         </div>
     </section>
 
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4 style="color: white;">U.E.F.I. // GLOBAL</h4>
-                <p style="color:#64748b; font-size: 0.8rem;">Building the architects of tomorrow from Narok, Kenya.</p>
+                <h4 style="color: white;">U.E.F.I. // REPUBLIC OF KENYA</h4>
+                <p style="color:#64748b; font-size: 0.8rem;">Building the architects of tomorrow from Narok to the global stage.</p>
             </div>
             <div class="footer-col">
                 <h4>System Links</h4>
                 <ul>
                     <li><a href="tech-lab.html">The Labs</a></li>
                     <li><a href="enroll.html">Enrollment</a></li>
-                    <li><a href="support-us.html">Support</a></li>
+                    <li><a href="support-us.html">Support Core</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -570,7 +694,7 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 UEFI Institute.</p>
-            <p>LATENCY: 0.00ms // STATUS: ENCRYPTED</p>
+            <p>LATENCY: 0.00ms // SECURITY: COMPLIANT</p>
         </div>
     </footer>
 
@@ -583,60 +707,35 @@
         let slideInterval;
 
         function showSlide(index) {
-            // Reset indexes boundary conditions
             if (index >= slides.length) currentIndex = 0;
             else if (index < 0) currentIndex = slides.length - 1;
             else currentIndex = index;
 
-            // Remove active status from all elements
             slides.forEach(slide => slide.classList.remove('active'));
             dots.forEach(dot => dot.classList.remove('active'));
 
-            // Activate current targeted slide and relative indicator node
-            slides[currentIndex].classList.add('active');
-            dots[currentIndex].classList.add('active');
+            if(slides[currentIndex]) slides[currentIndex].classList.add('active');
+            if(dots[currentIndex]) dots[currentIndex].classList.add('active');
         }
 
-        function nextSlide() {
-            showSlide(currentIndex + 1);
-        }
+        function nextSlide() { showSlide(currentIndex + 1); }
+        function prevSlide() { showSlide(currentIndex - 1); }
 
-        function prevSlide() {
-            showSlide(currentIndex - 1);
-        }
+        function startAutoSlide() { slideInterval = setInterval(nextSlide, 3500); }
+        function stopAutoSlide() { clearInterval(slideInterval); }
 
-        // Run automatic looping transition mechanism (3.5 seconds frequency)
-        function startAutoSlide() {
-            slideInterval = setInterval(nextSlide, 3500);
-        }
+        nextBtn.addEventListener('click', () => { nextSlide(); stopAutoSlide(); startAutoSlide(); });
+        prevBtn.addEventListener('click', () => { prevSlide(); stopAutoSlide(); startAutoSlide(); });
 
-        function stopAutoSlide() {
-            clearInterval(slideInterval);
-        }
-
-        // Event triggers for manual dashboard adjustments
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            stopAutoSlide();
-            startAutoSlide(); // restarts timer after clicking
-        });
-
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            stopAutoSlide();
-            startAutoSlide();
-        });
-
-        // Event handling mapping for indicators dots 
         dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showSlide(index);
-                stopAutoSlide();
-                startAutoSlide();
-            });
+            dot.addEventListener('click', () => { showSlide(index); stopAutoSlide(); startAutoSlide(); });
         });
 
-        // Initialize script loop routine
+        // Dynamic adjustment for the dots indicator array size matching slides dynamically
+        if(dots.length !== slides.length && dots.length > 0) {
+            console.warn("UI Warning: Match your indicators dots count to your slide array elements length.");
+        }
+
         startAutoSlide();
     </script>
 </body>
