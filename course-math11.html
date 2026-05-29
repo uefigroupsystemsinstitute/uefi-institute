@@ -1019,9 +1019,15 @@ function renderActiveProblemContext() {
     const activeUnit = CURRICULUM_DATABASE[currentUnitIndex];
     const question = activeUnit.questions[currentQuestionIndex];
     
-    // UPDATE: Passed question.text through compileMathText()
+    // 1. Run the question text through our math compiler engine
+    let formattedHTML = compileMathText(question.text);
+    
+    // 2. CRITICAL CLEAN: Strip out any hidden non-breaking copy-paste spaces causing raw text rendering
+    formattedHTML = formattedHTML.replace(/\u00A0/g, ' ');
+    
+    // 3. Inject beautifully cleaned operational structural code safely
     document.getElementById("question-text-target").innerHTML = `
-        <strong>Question ${currentQuestionIndex + 1}:</strong> ${compileMathText(question.text)}
+        <strong>Question ${currentQuestionIndex + 1}:</strong> ${formattedHTML}
     `;
     
     // Refresh pagination dots tracking positions
@@ -1030,7 +1036,6 @@ function renderActiveProblemContext() {
         if (idx === currentQuestionIndex) dot.classList.add("active");
     });
 }
-
 // Evaluate string patterns entered by students against database answers
 function verifyCurrentResponse() {
     const studentInput = document.getElementById("student-answer-input").value.trim().toLowerCase();
