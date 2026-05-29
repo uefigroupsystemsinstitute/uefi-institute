@@ -283,18 +283,51 @@
 
         .question-body-text {
             font-size: 1.25rem;
-            line-height: 1.5;
+            line-height: 1.6;
             margin-bottom: 15px;
         }
 
-        /* Typesetting Engines for Formulas */
+        /* ==========================================================================
+           ENHANCED CSS MATHEMATICAL TYPESETTING ENGINE 
+           ========================================================================== */
         .math-expr {
+            font-family: "Latin Modern Math", "Cambria Math", "Times New Roman", Times, serif;
             font-style: italic;
-            font-weight: bold;
-            padding: 0 4px;
+            font-weight: 500;
+            padding: 0 2px;
+            display: inline-flex;
+            align-items: center;
+            font-size: 1.15em;
+            color: #050505;
         }
-        .math-expr sup { font-size: 0.75rem; vertical-align: super; line-height: 0; }
-        .math-expr sub { font-size: 0.75rem; vertical-align: sub; line-height: 0; }
+        
+        .math-expr sup { 
+            font-size: 0.7em; 
+            vertical-align: super; 
+            line-height: 0; 
+            margin-left: 1px;
+            font-style: normal;
+        }
+        
+        .math-expr sub { 
+            font-size: 0.7em; 
+            vertical-align: sub; 
+            line-height: 0; 
+            margin-left: 1px; 
+        }
+
+        .math-op {
+            font-style: normal;
+            font-weight: normal;
+            margin: 0 0.3em;
+            color: var(--ke-black);
+        }
+
+        .math-const {
+            font-style: normal;
+            font-weight: 500;
+            padding: 0 1px;
+        }
         
         .math-frac {
             display: inline-flex;
@@ -473,6 +506,52 @@
     </style>
 </head>
 <body>
+
+<div id="app-container">
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <h2>JifunzeHesabu</h2>
+            <p>Grade 11 Mathematics</p>
+        </div>
+        <ul class="unit-menu-list">
+            <li class="strand-divider">Algebra</li>
+            <li class="unit-item active">
+                <span class="unit-title-text">Perfect Square Trinomials</span>
+                <span class="unit-meta">Unit 1.1</span>
+            </li>
+        </ul>
+    </div>
+
+    <div id="main-workspace">
+        <div id="top-workspace-bar">
+            <div class="topic-title-area">
+                <h1>Quadratic Expressions</h1>
+            </div>
+        </div>
+
+        <div id="practice-stage">
+            <div class="practice-header-panel">
+                <h3>Practice Challenge</h3>
+            </div>
+            
+            <div class="question-canvas">
+                <p class="question-body-text">
+                    Find the value of <span class="math-expr">c</span> that makes the expression 
+                    <span class="math-expr">x<sup>2</sup><span class="math-op">+</span><span class="math-const">12</span>x<span class="math-op">+</span>c</span> 
+                    a perfect square trinomial.
+                </p>
+            </div>
+            
+            <div class="interactive-input-group">
+                <input type="text" class="answer-text-field" placeholder="Enter your answer...">
+                <button class="btn-action btn-check">Verify Answer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
 
 <div id="app-container">
 
