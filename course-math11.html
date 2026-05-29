@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JifunzeHesabu - Grade 11 Interactive Math Platform</title>
+    <title>JifunzeHesabu - Grade 10 Interactive Math Platform</title>
     <style>
         /* ==========================================================================
            1. CORE DESIGN SYSTEM & KENYAN FLAG THEME PATTERNS
@@ -84,25 +84,14 @@
             flex-grow: 1;
         }
 
-        .strand-divider {
-            background-color: #111;
-            color: var(--ke-green);
-            padding: 8px 20px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #222;
-        }
-
         .unit-item {
             padding: 15px 20px;
             border-bottom: 1px solid #333;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
-            flex-direction: column;
-            gap: 4px;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .unit-item:hover {
@@ -114,11 +103,6 @@
             background-color: #262626;
             border-left: 6px solid var(--ke-green);
             font-weight: bold;
-        }
-
-        .unit-title-text {
-            font-size: 1rem;
-            color: var(--ke-white);
         }
 
         .unit-meta {
@@ -246,19 +230,19 @@
         /* Pagination Dots Layout */
         .progress-tracker-dots {
             display: flex;
-            gap: 6px;
+            gap: 8px;
         }
 
         .dot {
-            width: 26px;
-            height: 26px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             border: 2px solid #ccc;
             background-color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: bold;
             color: var(--text-muted);
             transition: all 0.3s ease;
@@ -283,51 +267,18 @@
 
         .question-body-text {
             font-size: 1.25rem;
-            line-height: 1.6;
+            line-height: 1.5;
             margin-bottom: 15px;
         }
 
-        /* ==========================================================================
-           ENHANCED CSS MATHEMATICAL TYPESETTING ENGINE 
-           ========================================================================== */
+        /* Typesetting Engines for Formulas */
         .math-expr {
-            font-family: "Latin Modern Math", "Cambria Math", "Times New Roman", Times, serif;
             font-style: italic;
-            font-weight: 500;
-            padding: 0 2px;
-            display: inline-flex;
-            align-items: center;
-            font-size: 1.15em;
-            color: #050505;
+            font-weight: bold;
+            padding: 0 4px;
         }
-        
-        .math-expr sup { 
-            font-size: 0.7em; 
-            vertical-align: super; 
-            line-height: 0; 
-            margin-left: 1px;
-            font-style: normal;
-        }
-        
-        .math-expr sub { 
-            font-size: 0.7em; 
-            vertical-align: sub; 
-            line-height: 0; 
-            margin-left: 1px; 
-        }
-
-        .math-op {
-            font-style: normal;
-            font-weight: normal;
-            margin: 0 0.3em;
-            color: var(--ke-black);
-        }
-
-        .math-const {
-            font-style: normal;
-            font-weight: 500;
-            padding: 0 1px;
-        }
+        .math-expr sup { font-size: 0.75rem; vertical-align: super; line-height: 0; }
+        .math-expr sub { font-size: 0.75rem; vertical-align: sub; line-height: 0; }
         
         .math-frac {
             display: inline-flex;
@@ -366,7 +317,7 @@
             font-family: inherit;
             border: 2px solid var(--border-color);
             border-radius: 4px;
-            width: 280px;
+            width: 250px;
         }
 
         .answer-text-field:focus {
@@ -453,6 +404,41 @@
             text-transform: uppercase;
         }
 
+        /* Sandbox Scratchpad Tool Elements */
+        .scratchpad-display {
+            background-color: #1e1e1e;
+            color: #00ff00;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            text-align: right;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            min-height: 40px;
+            word-wrap: break-word;
+        }
+
+        .scratchpad-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .btn-calc {
+            padding: 10px;
+            font-family: monospace;
+            font-size: 1rem;
+            background: #eee;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .btn-calc:hover { background: #ddd; }
+        .btn-calc.op { background: var(--ke-black); color: #fff; }
+        .btn-calc.op:hover { background: #333; }
+
         /* Consult System Interface Layout */
         .chat-log-window {
             flex-grow: 1;
@@ -460,7 +446,7 @@
             border: 1px solid var(--border-color);
             border-radius: 4px;
             padding: 10px;
-            height: 160px;
+            height: 120px;
             overflow-y: auto;
             margin-bottom: 10px;
             font-size: 0.95rem;
@@ -492,78 +478,34 @@
             cursor: pointer;
             font-weight: bold;
         }
-
-        .back-link {
-            color: #ffffff !important;
-            font-weight: bold !important;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .back-link:hover {
-            color: #006600 !important;
-        }
     </style>
 </head>
 <body>
 
 <div id="app-container">
-    <div id="sidebar">
-        <div class="sidebar-header">
-            <h2>JifunzeHesabu</h2>
-            <p>Grade 11 Mathematics</p>
-        </div>
-        <ul class="unit-menu-list">
-            <li class="strand-divider">Algebra</li>
-            <li class="unit-item active">
-                <span class="unit-title-text">Perfect Square Trinomials</span>
-                <span class="unit-meta">Unit 1.1</span>
-            </li>
-        </ul>
+
+<style>
+    .back-link {
+        color: #ffffff !important;       /* Forces the text to be white */
+        font-weight: bold !important;    /* Makes the text bold */
+        text-decoration: none;           /* Removes default underline */
+        transition: color 0.2s ease;     /* Smoothly transitions the color change */
+    }
+
+    .back-link:hover {
+        color: #006600 !important;       /* Changes to Kenyan Green on hover */
+    }
+</style>
+
+<aside id="sidebar">
+    <div class="sidebar-header">
+        <a href="courses.html" class="back-link">← Back</a>
+        <h2>Hekima Portal</h2>
+        <p>Grade 10 Mathematics</p>
     </div>
-
-    <div id="main-workspace">
-        <div id="top-workspace-bar">
-            <div class="topic-title-area">
-                <h1>Quadratic Expressions</h1>
-            </div>
-        </div>
-
-        <div id="practice-stage">
-            <div class="practice-header-panel">
-                <h3>Practice Challenge</h3>
-            </div>
-            
-            <div class="question-canvas">
-                <p class="question-body-text">
-                    Find the value of <span class="math-expr">c</span> that makes the expression 
-                    <span class="math-expr">x<sup>2</sup><span class="math-op">+</span><span class="math-const">12</span>x<span class="math-op">+</span>c</span> 
-                    a perfect square trinomial.
-                </p>
-            </div>
-            
-            <div class="interactive-input-group">
-                <input type="text" class="answer-text-field" placeholder="Enter your answer...">
-                <button class="btn-action btn-check">Verify Answer</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-</body>
-</html>
-
-<div id="app-container">
-
-    <aside id="sidebar">
-        <div class="sidebar-header">
-            <a href="courses.html" class="back-link">← Back</a>
-            <h2>Hekima Portal</h2>
-            <p>Grade 11 Core Mathematics</p>
-        </div>
-        <ul class="unit-menu-list" id="unit-menu-anchor">
-            </ul>
-    </aside>
+    <ul class="unit-menu-list" id="unit-menu-anchor">
+    </ul>
+</aside>
 
     <main id="main-workspace">
         
@@ -590,7 +532,8 @@
         <section id="practice-stage">
             <div class="practice-header-panel">
                 <h3>Structured Mastery Diagnostic</h3>
-                <div class="progress-tracker-dots" id="dots-row-anchor"></div>
+                <div class="progress-tracker-dots" id="dots-row-anchor">
+                    </div>
             </div>
 
             <div class="question-canvas">
@@ -618,7 +561,7 @@
             <div class="utility-box">
                 <h3>Consult Professor Oneiro</h3>
                 <div class="chat-log-window" id="chat-logs">
-                    <div class="chat-msg professor"><strong>Prof. Oneiro:</strong> Habari! Ask me any structural questions regarding the active Grade 11 Core Mathematics assignment problems.</div>
+                    <div class="chat-msg professor"><strong>Prof. Oneiro:</strong> Habari! Ask me any structural questions regarding the active assignment problems.</div>
                 </div>
                 <div class="chat-input-row">
                     <input type="text" class="chat-text-input" id="chat-input-field" placeholder="Inquire about methods...">
@@ -627,12 +570,13 @@
             </div>
 
             <div class="utility-box" style="display: flex; flex-direction: column; min-height: 500px; height: 100%;">
-                <h3 style="margin-bottom: 12px;">Desmos Scientific Calculator Tool</h3>
-                <iframe 
-                    src="https://www.desmos.com/scientific" 
-                    style="width: 100%; height: 100%; flex-grow: 1; border: 1px solid #dee2e6; border-radius: 6px; background: #fff;" 
-                    allow="clipboard-write">
-                </iframe>
+    <h3 style="margin-bottom: 12px;">Desmos Scientific Calculator Tool</h3>
+    <iframe 
+        src="https://www.desmos.com/scientific" 
+        style="width: 100%; height: 100%; flex-grow: 1; border: 1px solid #dee2e6; border-radius: 6px; background: #fff;" 
+        allow="clipboard-write">
+    </iframe>
+</div>
             </div>
 
         </div>
