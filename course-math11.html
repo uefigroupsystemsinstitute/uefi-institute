@@ -1,1 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hekima Portal - Grade 11 Mathematics</title>
+    <style>
+        /* Base Global Styles Reset & Typography Configuration */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Times New Roman", Times, serif;
+        }
 
+        body {
+            display: flex;
+            background-color: #f8f9fa;
+            color: #212529;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Navigation Layout Panel */
+        #sidebar {
+            width: 320px;
+            background-color: #1a252f;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 3px solid #006600; /* Kenyan Green Accent Border */
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            background-color: #111a24;
+            border-bottom: 1px solid #2c3e50;
+        }
+
+        /* Back Link Interactive States Requested */
+        .back-link {
+            color: #ffffff !important;
+            font-weight: bold !important;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #006600 !important; /* Transitions to vivid green on hover state */
+            cursor: pointer;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.6rem;
+            margin-bottom: 4px;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.95rem;
+            color: #a0aec0;
+        }
+
+        /* Component Substring Core Lists */
+        .unit-menu-list {
+            list-style: none;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        .strand-category {
+            padding: 12px 24px 6px 24px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #006600;
+            font-weight: bold;
+        }
+
+        .menu-item {
+            width: 100%;
+        }
+
+        .menu-btn {
+            width: 100%;
+            background: none;
+            border: none;
+            color: #cbd5e0;
+            text-align: left;
+            padding: 12px 24px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .menu-btn:hover {
+            background-color: #2c3e50;
+            color: #ffffff;
+        }
+
+        .menu-btn.active {
+            background-color: #243342;
+            color: #ffffff;
+            border-left: 4px solid #006600;
+            font-weight: bold;
+        }
+
+        /* Workspace Core Layout Framework */
+        #main-workspace {
+            margin-left: 320px;
+            flex-grow: 1;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+            max-width: 1800px;
+            width: calc(100% - 320px);
+        }
+
+        .content-stream {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .curriculum-card {
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            display: none; /* Controlled dynamically via active state toggles */
+        }
+
+        .curriculum-card.active-panel {
+            display: block;
+        }
+
+        .card-header-badge {
+            display: inline-block;
+            background-color: #e6fffa;
+            color: #006600;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            border: 1px solid #b2f5ea;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #1a252f;
+            margin-bottom: 10px;
+        }
+
+        .strand-meta-desc {
+            color: #4a5568;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* Enhanced Video Embedding Container Panels */
+        .video-delivery-container {
+            width: 100%;
+            background-color: #000000;
+            border-radius: 6px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .video-delivery-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Content Study Notes Elements */
+        .academic-notes-block {
+            background-color: #fcfcfc;
+            border-left: 4px solid #2b6cb0;
+            padding: 20px;
+            border-radius: 0 6px 6px 0;
+            margin-top: 20px;
+        }
+
+        .academic-notes-block h4 {
+            margin-bottom: 8px;
+            color: #2b6cb0;
+            font-size: 1.2rem;
+        }
+
+        .academic-notes-block ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .academic-notes-block li {
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        /* Right Panel Utility Workspace Sticky Mechanics */
+        .utility-sidebar-panel {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            bottom: 40px;
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 90;
+        }
+
+        /* Desmos Shell Module Match Integration */
+        .utility-box {
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 550px;
+            height: 100%;
+        }
+
+        .utility-box h3 {
+            font-size: 1.25rem;
+            color: #1a252f;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #f7fafc;
+            padding-bottom: 8px;
+        }
+
+        /* Responsive Breakdowns */
+        @media (max-width: 1200px) {
+            #main-workspace {
+                grid-template-columns: 1fr;
+                width: calc(100% - 320px);
+            }
+            .utility-sidebar-panel {
+                position: static;
+                width: 100%;
+                height: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <aside id="sidebar">
+        <div class="sidebar-header">
+            <a href="courses.html" class="back-link">← Back</a>
+            <h2>Hekima Portal</h2>
+            <p>Grade 11 Core Mathematics</p>
+        </div>
+        
+        <ul class="unit-menu-list" id="unit-menu-anchor">
+            <div class="strand-category">Numbers & Algebra</div>
+            <li class="menu-item">
+                <button class="menu-btn active" onclick="switchTab('quadratic-exp')">
+                    <span>Quadratic Exp. & Equations</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('irrational-nos')">
+                    <span>Irrational Numbers</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('linear-ineq')">
+                    <span>Linear Inequalities</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('logarithms-ii')">
+                    <span>Logarithms II</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('formulae-var')">
+                    <span>Formulae and Variations</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('sequences-series')">
+                    <span>Sequences and Series</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('matrices-i')">
+                    <span>Matrices (I)</span>
+                    <span>→</span>
+                </button>
+            </li>
+
+            <div class="strand-category">Measurements & Geometry</div>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('approx-errors')">
+                    <span>Approximation and Errors</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('circle-properties')">
+                    <span>Angle Properties of a Circle</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('commercial-arithmetic')">
+                    <span>Commercial Arithmetic</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('circles-chords')">
+                    <span>Circles, Chords & Tangents</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('trigonometry-ii')">
+                    <span>Trigonometry (II)</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('graphical-methods')">
+                    <span>Graphical Methods</span>
+                    <span>→</span>
+                </button>
+            </li>
+
+            <div class="strand-category">Statistics & Probability</div>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('permutations-comb')">
+                    <span>Permutations & Combinations</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('probability-ii')">
+                    <span>Probability II</span>
+                    <span>→</span>
+                </button>
+            </li>
+
+            <div class="strand-category">Calculus</div>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('functions-panel')">
+                    <span>Functions</span>
+                    <span>→</span>
+                </button>
+            </li>
+            <li class="menu-item">
+                <button class="menu-btn" onclick="switchTab('differentiation-i')">
+                    <span>Differentiation (I)</span>
+                    <span>→</span>
+                </button>
+            </li>
+        </ul>
+    </aside>
+
+    <main id="main-workspace">
+        <div class="content-stream">
+            
+            <div id="quadratic-exp" class="curriculum-card active-panel">
+                <span class="card-header-badge">Numbers and Algebra</span>
+                <h1>Quadratic Expressions and Equations</h1>
+                <p class="strand-meta-desc">Advanced analysis of factorization methods, completing the square, and perfect square standard forms.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/Z0b7_r-a9w0" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Algebraic Calculator verification.</li>
+                        <li>Key mastery goals: Project written testing strategies, perfect square trinomial analysis, and discriminant testing.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="irrational-nos" class="curriculum-card">
+                <span class="card-header-badge">Numbers and Algebra</span>
+                <h1>Irrational Numbers</h1>
+                <p class="strand-meta-desc">Deep study of operations involving surds, rationalization of denominators, and infinite non-repeating decimals.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/mKk7484wU_0" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Scientific calculator manipulation and precision verification.</li>
+                        <li>Key mastery goals: Rationalizing surds containing binomial expressions in denominators.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="linear-ineq" class="curriculum-card">
+                <span class="card-header-badge">Numbers and Algebra</span>
+                <h1>Linear Inequalities</h1>
+                <p class="strand-meta-desc">Formulating, systemization, and optimization of multiple inequality boundaries inside Cartesian workspaces.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/0X-bMeINp54" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Graph papers, Geometrical set vectors, and digital calculations.</li>
+                        <li>Key mastery goals: Multi-line shading rules for compound optimization systems.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="logarithms-ii" class="curriculum-card">
+                <span class="card-header-badge">Numbers and Algebra</span>
+                <h1>Logarithms II</h1>
+                <p class="strand-meta-desc">Laws of logarithms, characteristics and mantissa computations, and solving complex logarithmic equations.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/N-Z8gVbU69w" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Mathematical tables, four-figure charts, and core calculator units.</li>
+                        <li>Key mastery goals: Standard scientific transformations with negative characteristics.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="formulae-var" class="curriculum-card">
+                <span class="card-header-badge">Numbers and Algebra</span>
+                <h1>Formulae and Variations</h1>
+                <p class="strand-meta-desc">Change of subject in complex equations, alongside direct, inverse, joint, and partial variation modeling.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/8-W7wZ9l1Wk" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Grid boards, stopwatches, rulers, and scale tracking units.</li>
+                        <li>Key mastery goals: Solving variation constants from empirical data graphs.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="sequences-series" class="curriculum-card">
+                <span class="card-header-badge">Numbers and Algebra</span>
+                <h1>Sequences and Series</h1>
+                <p class="strand-meta-desc">Detailed mathematical handling of Arithmetic Progressions (AP) and Geometric Progressions (GP).</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/pXo09n_k760" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Measuring instruments, multi-sized objects, strings, and timers.</li>
+                        <li>Key mastery goals: Deriving expressions for the sum of the first $n$ terms in a progression.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="matrices-i" class="curriculum-card">
+                <span class="card-header-badge">Numbers and Algebra</span>
+                <h1>Matrices (I)</h1>
+                <p class="strand-meta-desc">Introduction to matrix order, determinants, inverses of 2x2 matrices, and solving simultaneous linear equations.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/0oGZ6_L_Pz8" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Object arrays organized in structured rows and columns.</li>
+                        <li>Key mastery goals: Singular matrix checks and identity property operations.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="approx-errors" class="curriculum-card">
+                <span class="card-header-badge">Measurements and Geometry</span>
+                <h1>Approximation and Errors</h1>
+                <p class="strand-meta-desc">Absolute, relative, and percentage error bounds calculations, with structural error propagation logic across operations.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/7S8_XW6X9C0" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Measuring cylinders, metre rules, tape measures, and stopwatches.</li>
+                        <li>Key mastery goals: Finding truncated maximum or minimum product limitations cleanly.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="circle-properties" class="curriculum-card">
+                <span class="card-header-badge">Measurements and Geometry</span>
+                <h1>Angle Properties of a Circle</h1>
+                <p class="strand-meta-desc">Angles subtended by arcs, cyclic quadrilaterals, alternate segment theorem properties, and geometric proofs.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/j_LwzXW0RNo" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Geometrical drawing sets, circular loops, and drawing books.</li>
+                        <li>Key mastery goals: Deductive angle chasing across intertwined circular layouts.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="commercial-arithmetic" class="curriculum-card">
+                <span class="card-header-badge">Measurements and Geometry</span>
+                <h1>Commercial Arithmetic</h1>
+                <p class="strand-meta-desc">Income tax computations using realistic progressive tax bands, PAYE deductions, allowances, and hire purchase options.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/V6S6gAnqFjw" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Official income tax tables from the <strong>Kenya Revenue Authority (KRA)</strong>, cash logs, and pay slips.</li>
+                        <li>Key mastery goals: Computing net salaries from gross configurations after statutory deductions.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="circles-chords" class="curriculum-card">
+                <span class="card-header-badge">Measurements and Geometry</span>
+                <h1>Circles, Chords and Tangents</h1>
+                <p class="strand-meta-desc">Lengths of intersecting chords, tangent segments from external points, and construction of common tangents.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/8yP5ZfK1ZkI" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Geometrical structural equipment sets, rings, and string guides.</li>
+                        <li>Key mastery goals: Finding missing geometric lengths using the product rule of secant segments.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="trigonometry-ii" class="curriculum-card">
+                <span class="card-header-badge">Measurements and Geometry</span>
+                <h1>Trigonometry (II)</h1>
+                <p class="strand-meta-desc">Sine and cosine rule formulations across any oblique triangle, alongside three-dimensional bearings and projections.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/b8_Ff8R_p_0" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Graph paper, 3D spatial models, and advanced calculator operations.</li>
+                        <li>Key mastery goals: True 3-digit navigation angle calculations across elevated topologies.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="graphical-methods" class="curriculum-card">
+                <span class="card-header-badge">Measurements and Geometry</span>
+                <h1>Graphical Methods</h1>
+                <p class="strand-meta-desc">Solving non-linear equations by drawing suitable straight-line graphs, law reduction, and empirical constants estimation.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/m4A_Msc9Vj8" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Linear graph grids, custom calculation verification vectors, and layout sets.</li>
+                        <li>Key mastery goals: Converting non-linear forms like $y = ax^n$ into linear equation equivalents ($Y = mX + c$).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="permutations-comb" class="curriculum-card">
+                <span class="card-header-badge">Statistics and Probability</span>
+                <h1>Permutations and Combinations</h1>
+                <p class="strand-meta-desc">Fundamental counting principles, factorial notation, notation of $^nP_r$ arrangements, and selection matching configurations ($^nC_r$).</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/Xq64mXU0mrc" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Object sorting blocks and scientific counting calculators.</li>
+                        <li>Key mastery goals: Solving complex arrangements with conditional structural restrictions.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="probability-ii" class="curriculum-card">
+                <span class="card-header-badge">Statistics and Probability</span>
+                <h1>Probability II</h1>
+                <p class="strand-meta-desc">Compound events tracking via tree diagrams, independent events probability, and mutually exclusive parameter tests.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/ZzXasFst_O4" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Multi-colored marbles, fair coins, and unbiased dice matrices.</li>
+                        <li>Key mastery goals: Calculating complex conditional outcomes accurately without replacement.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="functions-panel" class="curriculum-card">
+                <span class="card-header-badge">Calculus</span>
+                <h1>Functions</h1>
+                <p class="strand-meta-desc">Domain and range constraints maps, composite functions ($f(g(x))$), and functional inverse operations ($f^{-1}(x)$).</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/1vGv9vVvA_g" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Coordinate plot papers, maps, and functional tracking modules.</li>
+                        <li>Key mastery goals: Evaluating asymptotic boundary limitations on rational inputs.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="differentiation-i" class="curriculum-card">
+                <span class="card-header-badge">Calculus</span>
+                <h1>Differentiation (I)</h1>
+                <p class="strand-meta-desc">Concept of derivative as gradient of tangent, power rule, stationary points analysis, and application to kinematics optimization.</p>
+                <div class="video-delivery-container">
+                    <iframe src="https://www.youtube.com/embed/WvXskGZrcgA" allowfullscreen></iframe>
+                </div>
+                <div class="academic-notes-block">
+                    <h4>Suggested Resources & Focus:</h4>
+                    <ul>
+                        <li>Primary tool deployment: Tangent lines on graph paper, dynamic timers, metrics, and calculators.</li>
+                        <li>Key mastery goals: Finding equations of normals and turning point coordinates.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="utility-sidebar-panel">
+            <div class="utility-box">
+                <h3>Desmos Scientific Calculator Tool</h3>
+                <iframe 
+                    src="https://www.desmos.com/scientific" 
+                    style="width: 100%; height: 100%; flex-grow: 1; border: 1px solid #dee2e6; border-radius: 6px; background: #fff;" 
+                    allow="clipboard-write">
+                </iframe>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function switchTab(targetPanelId) {
+            // 1. Terminate active styling from all layout navigation elements
+            const navigationButtons = document.querySelectorAll('.menu-btn');
+            navigationButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // 2. Hide all resource learning card segments across workspace
+            const curriculumPanels = document.querySelectorAll('.curriculum-card');
+            curriculumPanels.forEach(panel => {
+                panel.classList.remove('active-panel');
+            });
+
+            // 3. Pin point matching clicked trigger button item for visual feedback
+            const clickedButton = document.querySelector(`[onclick="switchTab('${targetPanelId}')"]`);
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+
+            // 4. Reveal targeted core academic container layout smooth transition
+            const targetedCard = document.getElementById(targetPanelId);
+            if (targetedCard) {
+                targetedCard.classList.add('active-panel');
+                // Scroll layout display cleanly up to header anchor element
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
