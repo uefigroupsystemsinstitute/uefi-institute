@@ -3,270 +3,478 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hekima Portal - Grade 11 Mathematics</title>
+    <title>JifunzeHesabu - Grade 11 Interactive Math Platform</title>
     <style>
-        /* Base Global Styles Reset & Typography Configuration */
+        /* ==========================================================================
+           1. CORE DESIGN SYSTEM & KENYAN FLAG THEME PATTERNS
+           ========================================================================== */
+        :root {
+            --ke-black: #000000;
+            --ke-red: #990000;
+            --ke-green: #006600;
+            --ke-white: #ffffff;
+            --bg-light: #f4f6f7;
+            --text-dark: #1a1a1a;
+            --text-muted: #595959;
+            --border-color: #e0e0e0;
+            --success-bg: #e6f4ea;
+            --error-bg: #fce8e6;
+            --sidebar-width: 320px;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: "Times New Roman", Times, serif;
         }
 
         body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
             display: flex;
-            background-color: #f8f9fa;
-            color: #212529;
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        /* Sidebar Navigation Layout Panel */
+        /* ==========================================================================
+           2. APP CONTAINER & TWO-COLUMN VIEWPORT LAYOUT
+           ========================================================================== */
+        #app-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Left Sidebar: Curricular Tree Menu */
         #sidebar {
-            width: 320px;
-            background-color: #1a252f;
-            color: #ffffff;
+            width: var(--sidebar-width);
+            background-color: var(--ke-black);
+            color: var(--ke-white);
             display: flex;
             flex-direction: column;
-            border-right: 3px solid #006600; /* Kenyan Green Accent Border */
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
-            overflow-y: auto;
+            border-right: 4px solid var(--ke-red);
+            z-index: 10;
+            flex-shrink: 0;
         }
 
         .sidebar-header {
-            padding: 24px;
-            background-color: #111a24;
-            border-bottom: 1px solid #2c3e50;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--ke-black), #222);
+            border-bottom: 2px solid var(--ke-green);
+            text-align: center;
         }
 
-        /* Back Link Interactive States Requested */
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: var(--ke-white);
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.85rem;
+            color: #ccc;
+            font-style: italic;
+        }
+
+        .unit-menu-list {
+            list-style: none;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .strand-divider {
+            background-color: #111;
+            color: var(--ke-green);
+            padding: 8px 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #222;
+        }
+
+        .unit-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .unit-item:hover {
+            background-color: #1a1a1a;
+            border-left: 6px solid var(--ke-red);
+        }
+
+        .unit-item.active {
+            background-color: #262626;
+            border-left: 6px solid var(--ke-green);
+            font-weight: bold;
+        }
+
+        .unit-title-text {
+            font-size: 1rem;
+            color: var(--ke-white);
+        }
+
+        .unit-meta {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        /* Main Workspace Panel */
+        #main-workspace {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            background-color: var(--bg-light);
+        }
+
+        /* Top Bar & Professor Oneiro Node Branding */
+        #top-workspace-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .topic-title-area h1 {
+            font-size: 2rem;
+            color: var(--ke-black);
+        }
+
+        /* Professor Character Node badge */
+        #prof-oneiro-badge {
+            display: flex;
+            align-items: center;
+            background: var(--ke-white);
+            border: 2px solid var(--ke-red);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .prof-avatar {
+            width: 50px;
+            height: 50px;
+            background-color: var(--ke-black);
+            border: 2px solid var(--ke-green);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.4rem;
+            margin-right: 12px;
+        }
+
+        .prof-bubble h4 {
+            font-size: 1rem;
+            color: var(--ke-black);
+        }
+
+        .prof-bubble p {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================================================
+           3. MIDDLE STAGE: VIDEO ENGINE LAYER
+           ========================================================================== */
+        .video-stage-wrapper {
+            background: var(--ke-white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .video-viewport {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+            border-radius: 4px;
+        }
+
+        .video-viewport iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* ==========================================================================
+           4. BOTTOM STAGE: CORE PRACTICE ENGINE & MASTERY SYSTEM
+           ========================================================================== */
+        #practice-stage {
+            background: var(--ke-white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .practice-header-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--ke-black);
+            padding-bottom: 10px;
+        }
+
+        .practice-header-panel h3 {
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            color: var(--ke-black);
+        }
+
+        /* Pagination Dots Layout */
+        .progress-tracker-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            border-color: var(--ke-black);
+            background-color: var(--ke-black);
+            color: #fff;
+        }
+
+        .dot.solved {
+            border-color: var(--ke-green);
+            background-color: var(--ke-green);
+            color: #fff;
+        }
+
+        /* Active Question Display Workspace */
+        .question-canvas {
+            margin-bottom: 20px;
+        }
+
+        .question-body-text {
+            font-size: 1.25rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* Typesetting Engines for Formulas */
+        .math-expr {
+            font-style: italic;
+            font-weight: bold;
+            padding: 0 4px;
+        }
+        .math-expr sup { font-size: 0.75rem; vertical-align: super; line-height: 0; }
+        .math-expr sub { font-size: 0.75rem; vertical-align: sub; line-height: 0; }
+        
+        .math-frac {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+            text-align: center;
+            padding: 0 4px;
+            font-style: italic;
+        }
+        .math-frac .num { border-bottom: 1px solid #000; padding-bottom: 1px; font-size: 0.9rem;}
+        .math-frac .den { padding-top: 1px; font-size: 0.9rem; }
+
+        .math-matrix {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 4px;
+            vertical-align: middle;
+            border-left: 2px solid #000;
+            border-right: 2px solid #000;
+            border-radius: 4px;
+            padding: 0 4px;
+        }
+        .matrix-col { display: flex; flex-direction: column; text-align: center; padding: 0 3px; font-style: normal; }
+
+        /* Input Controls and Verification HUD */
+        .interactive-input-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .answer-text-field {
+            padding: 12px 15px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            width: 280px;
+        }
+
+        .answer-text-field:focus {
+            outline: none;
+            border-color: var(--ke-black);
+        }
+
+        .btn-action {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-family: inherit;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+
+        .btn-check { background-color: var(--ke-black); color: #fff; }
+        .btn-check:hover { background-color: #222; }
+        .btn-next { background-color: var(--ke-green); color: #fff; display: none; }
+        .btn-next:hover { background-color: #004d00; }
+
+        /* HUD Status Banner */
+        .feedback-banner {
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            display: none;
+            font-weight: bold;
+        }
+        .feedback-banner.success { background-color: var(--success-bg); color: #137333; border-left: 5px solid var(--ke-green); }
+        .feedback-banner.error { background-color: var(--error-bg); color: #c5221f; border-left: 5px solid var(--ke-red); }
+
+        /* Analytics Core Module Container under each question */
+        .analytics-sub-card {
+            background-color: #f9fbf9;
+            border: 1px solid #e1ebe1;
+            border-radius: 4px;
+            padding: 15px 20px;
+            display: none;
+        }
+
+        .analytics-sub-card h4 {
+            color: var(--ke-green);
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .analytics-sub-card p {
+            font-size: 1.05rem;
+            color: #2c3e50;
+        }
+
+        /* ==========================================================================
+           5. LOWER UTILITIES GRID: UTILITIES PANEL (LAB & CONSOLE)
+           ========================================================================== */
+        .lower-utilities-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .utility-box {
+            background: var(--ke-white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .utility-box h3 {
+            font-size: 1.15rem;
+            color: var(--ke-black);
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--ke-red);
+            padding-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        /* Consult System Interface Layout */
+        .chat-log-window {
+            flex-grow: 1;
+            background: #fafafa;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            height: 160px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .chat-msg { margin-bottom: 8px; line-height: 1.4; }
+        .chat-msg.student { color: var(--ke-red); font-weight: bold; }
+        .chat-msg.professor { color: var(--ke-green); }
+
+        .chat-input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-text-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .btn-send-chat {
+            background-color: var(--ke-red);
+            color: #fff;
+            padding: 0 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
         .back-link {
             color: #ffffff !important;
             font-weight: bold !important;
             text-decoration: none;
-            display: inline-block;
-            margin-bottom: 15px;
-            font-size: 1.05rem;
             transition: color 0.2s ease;
         }
 
         .back-link:hover {
-            color: #006600 !important; /* Transitions to vivid green on hover state */
-            cursor: pointer;
-        }
-
-        .sidebar-header h2 {
-            font-size: 1.6rem;
-            margin-bottom: 4px;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-        }
-
-        .sidebar-header p {
-            font-size: 0.95rem;
-            color: #a0aec0;
-        }
-
-        /* Component Substring Core Lists */
-        .unit-menu-list {
-            list-style: none;
-            padding: 10px 0;
-            width: 100%;
-        }
-
-        .strand-category {
-            padding: 12px 24px 6px 24px;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #006600;
-            font-weight: bold;
-        }
-
-        .menu-item {
-            width: 100%;
-        }
-
-        .menu-btn {
-            width: 100%;
-            background: none;
-            border: none;
-            color: #cbd5e0;
-            text-align: left;
-            padding: 12px 24px;
-            font-size: 1.05rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.2s ease;
-            border-left: 4px solid transparent;
-        }
-
-        .menu-btn:hover {
-            background-color: #2c3e50;
-            color: #ffffff;
-        }
-
-        .menu-btn.active {
-            background-color: #243342;
-            color: #ffffff;
-            border-left: 4px solid #006600;
-            font-weight: bold;
-        }
-
-        /* Workspace Core Layout Framework */
-        #main-workspace {
-            margin-left: 320px;
-            flex-grow: 1;
-            padding: 40px;
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 40px;
-            max-width: 1800px;
-            width: calc(100% - 320px);
-        }
-
-        .content-stream {
-            display: flex;
-            flex-direction: column;
-            gap: 35px;
-        }
-
-        .curriculum-card {
-            background: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            padding: 30px;
-            display: none; /* Controlled dynamically via active state toggles */
-        }
-
-        .curriculum-card.active-panel {
-            display: block;
-        }
-
-        .card-header-badge {
-            display: inline-block;
-            background-color: #e6fffa;
-            color: #006600;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            margin-bottom: 12px;
-            border: 1px solid #b2f5ea;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            color: #1a252f;
-            margin-bottom: 10px;
-        }
-
-        .strand-meta-desc {
-            color: #4a5568;
-            font-size: 1.1rem;
-            line-height: 1.5;
-            margin-bottom: 25px;
-        }
-
-        /* Enhanced Video Embedding Container Panels */
-        .video-delivery-container {
-            width: 100%;
-            background-color: #000000;
-            border-radius: 6px;
-            overflow: hidden;
-            aspect-ratio: 16 / 9;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        .video-delivery-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Content Study Notes Elements */
-        .academic-notes-block {
-            background-color: #fcfcfc;
-            border-left: 4px solid #2b6cb0;
-            padding: 20px;
-            border-radius: 0 6px 6px 0;
-            margin-top: 20px;
-        }
-
-        .academic-notes-block h4 {
-            margin-bottom: 8px;
-            color: #2b6cb0;
-            font-size: 1.2rem;
-        }
-
-        .academic-notes-block ul {
-            padding-left: 20px;
-            margin-top: 8px;
-        }
-
-        .academic-notes-block li {
-            margin-bottom: 6px;
-            line-height: 1.4;
-        }
-
-        /* Right Panel Utility Workspace Sticky Mechanics */
-        .utility-sidebar-panel {
-            position: fixed;
-            top: 40px;
-            right: 40px;
-            bottom: 40px;
-            width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            z-index: 90;
-        }
-
-        /* Desmos Shell Module Match Integration */
-        .utility-box {
-            background: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            min-height: 550px;
-            height: 100%;
-        }
-
-        .utility-box h3 {
-            font-size: 1.25rem;
-            color: #1a252f;
-            margin-bottom: 12px;
-            border-bottom: 2px solid #f7fafc;
-            padding-bottom: 8px;
-        }
-
-        /* Responsive Breakdowns */
-        @media (max-width: 1200px) {
-            #main-workspace {
-                grid-template-columns: 1fr;
-                width: calc(100% - 320px);
-            }
-            .utility-sidebar-panel {
-                position: static;
-                width: 100%;
-                height: 600px;
-            }
+            color: #006600 !important;
         }
     </style>
 </head>
 <body>
+
+<div id="app-container">
 
     <aside id="sidebar">
         <div class="sidebar-header">
@@ -274,437 +482,574 @@
             <h2>Hekima Portal</h2>
             <p>Grade 11 Core Mathematics</p>
         </div>
-        
         <ul class="unit-menu-list" id="unit-menu-anchor">
-            <div class="strand-category">Numbers & Algebra</div>
-            <li class="menu-item">
-                <button class="menu-btn active" onclick="switchTab('quadratic-exp')">
-                    <span>Quadratic Exp. & Equations</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('irrational-nos')">
-                    <span>Irrational Numbers</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('linear-ineq')">
-                    <span>Linear Inequalities</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('logarithms-ii')">
-                    <span>Logarithms II</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('formulae-var')">
-                    <span>Formulae and Variations</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('sequences-series')">
-                    <span>Sequences and Series</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('matrices-i')">
-                    <span>Matrices (I)</span>
-                    <span>→</span>
-                </button>
-            </li>
-
-            <div class="strand-category">Measurements & Geometry</div>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('approx-errors')">
-                    <span>Approximation and Errors</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('circle-properties')">
-                    <span>Angle Properties of a Circle</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('commercial-arithmetic')">
-                    <span>Commercial Arithmetic</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('circles-chords')">
-                    <span>Circles, Chords & Tangents</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('trigonometry-ii')">
-                    <span>Trigonometry (II)</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('graphical-methods')">
-                    <span>Graphical Methods</span>
-                    <span>→</span>
-                </button>
-            </li>
-
-            <div class="strand-category">Statistics & Probability</div>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('permutations-comb')">
-                    <span>Permutations & Combinations</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('probability-ii')">
-                    <span>Probability II</span>
-                    <span>→</span>
-                </button>
-            </li>
-
-            <div class="strand-category">Calculus</div>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('functions-panel')">
-                    <span>Functions</span>
-                    <span>→</span>
-                </button>
-            </li>
-            <li class="menu-item">
-                <button class="menu-btn" onclick="switchTab('differentiation-i')">
-                    <span>Differentiation (I)</span>
-                    <span>→</span>
-                </button>
-            </li>
-        </ul>
+            </ul>
     </aside>
 
     <main id="main-workspace">
-        <div class="content-stream">
+        
+        <div id="top-workspace-bar">
+            <div class="topic-title-area">
+                <h1 id="active-unit-title">Loading Unit...</h1>
+            </div>
             
-            <div id="quadratic-exp" class="curriculum-card active-panel">
-                <span class="card-header-badge">Numbers and Algebra</span>
-                <h1>Quadratic Expressions and Equations</h1>
-                <p class="strand-meta-desc">Advanced analysis of factorization methods, completing the square, and perfect square standard forms.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/Z0b7_r-a9w0" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Algebraic Calculator verification.</li>
-                        <li>Key mastery goals: Project written testing strategies, perfect square trinomial analysis, and discriminant testing.</li>
-                    </ul>
+            <div id="prof-oneiro-badge">
+                <div class="prof-avatar">O</div>
+                <div class="prof-bubble">
+                    <h4>Prof. Oneiro</h4>
+                    <p>Curriculum Director</p>
                 </div>
             </div>
-
-            <div id="irrational-nos" class="curriculum-card">
-                <span class="card-header-badge">Numbers and Algebra</span>
-                <h1>Irrational Numbers</h1>
-                <p class="strand-meta-desc">Deep study of operations involving surds, rationalization of denominators, and infinite non-repeating decimals.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/mKk7484wU_0" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Scientific calculator manipulation and precision verification.</li>
-                        <li>Key mastery goals: Rationalizing surds containing binomial expressions in denominators.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="linear-ineq" class="curriculum-card">
-                <span class="card-header-badge">Numbers and Algebra</span>
-                <h1>Linear Inequalities</h1>
-                <p class="strand-meta-desc">Formulating, systemization, and optimization of multiple inequality boundaries inside Cartesian workspaces.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/0X-bMeINp54" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Graph papers, Geometrical set vectors, and digital calculations.</li>
-                        <li>Key mastery goals: Multi-line shading rules for compound optimization systems.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="logarithms-ii" class="curriculum-card">
-                <span class="card-header-badge">Numbers and Algebra</span>
-                <h1>Logarithms II</h1>
-                <p class="strand-meta-desc">Laws of logarithms, characteristics and mantissa computations, and solving complex logarithmic equations.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/N-Z8gVbU69w" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Mathematical tables, four-figure charts, and core calculator units.</li>
-                        <li>Key mastery goals: Standard scientific transformations with negative characteristics.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="formulae-var" class="curriculum-card">
-                <span class="card-header-badge">Numbers and Algebra</span>
-                <h1>Formulae and Variations</h1>
-                <p class="strand-meta-desc">Change of subject in complex equations, alongside direct, inverse, joint, and partial variation modeling.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/8-W7wZ9l1Wk" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Grid boards, stopwatches, rulers, and scale tracking units.</li>
-                        <li>Key mastery goals: Solving variation constants from empirical data graphs.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="sequences-series" class="curriculum-card">
-                <span class="card-header-badge">Numbers and Algebra</span>
-                <h1>Sequences and Series</h1>
-                <p class="strand-meta-desc">Detailed mathematical handling of Arithmetic Progressions (AP) and Geometric Progressions (GP).</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/pXo09n_k760" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Measuring instruments, multi-sized objects, strings, and timers.</li>
-                        <li>Key mastery goals: Deriving expressions for the sum of the first $n$ terms in a progression.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="matrices-i" class="curriculum-card">
-                <span class="card-header-badge">Numbers and Algebra</span>
-                <h1>Matrices (I)</h1>
-                <p class="strand-meta-desc">Introduction to matrix order, determinants, inverses of 2x2 matrices, and solving simultaneous linear equations.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/0oGZ6_L_Pz8" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Object arrays organized in structured rows and columns.</li>
-                        <li>Key mastery goals: Singular matrix checks and identity property operations.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="approx-errors" class="curriculum-card">
-                <span class="card-header-badge">Measurements and Geometry</span>
-                <h1>Approximation and Errors</h1>
-                <p class="strand-meta-desc">Absolute, relative, and percentage error bounds calculations, with structural error propagation logic across operations.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/7S8_XW6X9C0" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Measuring cylinders, metre rules, tape measures, and stopwatches.</li>
-                        <li>Key mastery goals: Finding truncated maximum or minimum product limitations cleanly.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="circle-properties" class="curriculum-card">
-                <span class="card-header-badge">Measurements and Geometry</span>
-                <h1>Angle Properties of a Circle</h1>
-                <p class="strand-meta-desc">Angles subtended by arcs, cyclic quadrilaterals, alternate segment theorem properties, and geometric proofs.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/j_LwzXW0RNo" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Geometrical drawing sets, circular loops, and drawing books.</li>
-                        <li>Key mastery goals: Deductive angle chasing across intertwined circular layouts.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="commercial-arithmetic" class="curriculum-card">
-                <span class="card-header-badge">Measurements and Geometry</span>
-                <h1>Commercial Arithmetic</h1>
-                <p class="strand-meta-desc">Income tax computations using realistic progressive tax bands, PAYE deductions, allowances, and hire purchase options.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/V6S6gAnqFjw" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Official income tax tables from the <strong>Kenya Revenue Authority (KRA)</strong>, cash logs, and pay slips.</li>
-                        <li>Key mastery goals: Computing net salaries from gross configurations after statutory deductions.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="circles-chords" class="curriculum-card">
-                <span class="card-header-badge">Measurements and Geometry</span>
-                <h1>Circles, Chords and Tangents</h1>
-                <p class="strand-meta-desc">Lengths of intersecting chords, tangent segments from external points, and construction of common tangents.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/8yP5ZfK1ZkI" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Geometrical structural equipment sets, rings, and string guides.</li>
-                        <li>Key mastery goals: Finding missing geometric lengths using the product rule of secant segments.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="trigonometry-ii" class="curriculum-card">
-                <span class="card-header-badge">Measurements and Geometry</span>
-                <h1>Trigonometry (II)</h1>
-                <p class="strand-meta-desc">Sine and cosine rule formulations across any oblique triangle, alongside three-dimensional bearings and projections.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/b8_Ff8R_p_0" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Graph paper, 3D spatial models, and advanced calculator operations.</li>
-                        <li>Key mastery goals: True 3-digit navigation angle calculations across elevated topologies.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="graphical-methods" class="curriculum-card">
-                <span class="card-header-badge">Measurements and Geometry</span>
-                <h1>Graphical Methods</h1>
-                <p class="strand-meta-desc">Solving non-linear equations by drawing suitable straight-line graphs, law reduction, and empirical constants estimation.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/m4A_Msc9Vj8" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Linear graph grids, custom calculation verification vectors, and layout sets.</li>
-                        <li>Key mastery goals: Converting non-linear forms like $y = ax^n$ into linear equation equivalents ($Y = mX + c$).</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="permutations-comb" class="curriculum-card">
-                <span class="card-header-badge">Statistics and Probability</span>
-                <h1>Permutations and Combinations</h1>
-                <p class="strand-meta-desc">Fundamental counting principles, factorial notation, notation of $^nP_r$ arrangements, and selection matching configurations ($^nC_r$).</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/Xq64mXU0mrc" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Object sorting blocks and scientific counting calculators.</li>
-                        <li>Key mastery goals: Solving complex arrangements with conditional structural restrictions.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="probability-ii" class="curriculum-card">
-                <span class="card-header-badge">Statistics and Probability</span>
-                <h1>Probability II</h1>
-                <p class="strand-meta-desc">Compound events tracking via tree diagrams, independent events probability, and mutually exclusive parameter tests.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/ZzXasFst_O4" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Multi-colored marbles, fair coins, and unbiased dice matrices.</li>
-                        <li>Key mastery goals: Calculating complex conditional outcomes accurately without replacement.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="functions-panel" class="curriculum-card">
-                <span class="card-header-badge">Calculus</span>
-                <h1>Functions</h1>
-                <p class="strand-meta-desc">Domain and range constraints maps, composite functions ($f(g(x))$), and functional inverse operations ($f^{-1}(x)$).</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/1vGv9vVvA_g" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Coordinate plot papers, maps, and functional tracking modules.</li>
-                        <li>Key mastery goals: Evaluating asymptotic boundary limitations on rational inputs.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="differentiation-i" class="curriculum-card">
-                <span class="card-header-badge">Calculus</span>
-                <h1>Differentiation (I)</h1>
-                <p class="strand-meta-desc">Concept of derivative as gradient of tangent, power rule, stationary points analysis, and application to kinematics optimization.</p>
-                <div class="video-delivery-container">
-                    <iframe src="https://www.youtube.com/embed/WvXskGZrcgA" allowfullscreen></iframe>
-                </div>
-                <div class="academic-notes-block">
-                    <h4>Suggested Resources & Focus:</h4>
-                    <ul>
-                        <li>Primary tool deployment: Tangent lines on graph paper, dynamic timers, metrics, and calculators.</li>
-                        <li>Key mastery goals: Finding equations of normals and turning point coordinates.</li>
-                    </ul>
-                </div>
-            </div>
-
         </div>
 
-        <div class="utility-sidebar-panel">
+        <section class="video-stage-wrapper">
+            <div class="video-viewport">
+                <iframe id="video-frame-target" src="" title="Educational Video Frame Player" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section id="practice-stage">
+            <div class="practice-header-panel">
+                <h3>Structured Mastery Diagnostic</h3>
+                <div class="progress-tracker-dots" id="dots-row-anchor"></div>
+            </div>
+
+            <div class="question-canvas">
+                <div class="question-body-text" id="question-text-target">
+                    Select a topic module on the left side menu to map item strings.
+                </div>
+                
+                <div class="interactive-input-group">
+                    <input type="text" class="answer-text-field" id="student-answer-input" placeholder="Type structural calculation result...">
+                    <button class="btn-action btn-check" id="action-verify-btn" onclick="verifyCurrentResponse()">Check Answer</button>
+                    <button class="btn-action btn-next" id="action-next-btn" onclick="advanceToNextProblem()">Next Question &rarr;</button>
+                </div>
+            </div>
+
+            <div class="feedback-banner" id="hud-status-banner"></div>
+
+            <div class="analytics-sub-card" id="analytics-panel">
+                <h4>Analytical Resolution Profile</h4>
+                <p id="analytics-text-target"></p>
+            </div>
+        </section>
+
+        <div class="lower-utilities-grid">
+            
             <div class="utility-box">
-                <h3>Desmos Scientific Calculator Tool</h3>
+                <h3>Consult Professor Oneiro</h3>
+                <div class="chat-log-window" id="chat-logs">
+                    <div class="chat-msg professor"><strong>Prof. Oneiro:</strong> Habari! Ask me any structural questions regarding the active Grade 11 Core Mathematics assignment problems.</div>
+                </div>
+                <div class="chat-input-row">
+                    <input type="text" class="chat-text-input" id="chat-input-field" placeholder="Inquire about methods...">
+                    <button class="btn-send-chat" onclick="submitChatQuery()">Ask</button>
+                </div>
+            </div>
+
+            <div class="utility-box" style="display: flex; flex-direction: column; min-height: 500px; height: 100%;">
+                <h3 style="margin-bottom: 12px;">Desmos Scientific Calculator Tool</h3>
                 <iframe 
                     src="https://www.desmos.com/scientific" 
                     style="width: 100%; height: 100%; flex-grow: 1; border: 1px solid #dee2e6; border-radius: 6px; background: #fff;" 
                     allow="clipboard-write">
                 </iframe>
             </div>
+
         </div>
+
     </main>
+</div>
 
-    <script>
-        function switchTab(targetPanelId) {
-            // 1. Terminate active styling from all layout navigation elements
-            const navigationButtons = document.querySelectorAll('.menu-btn');
-            navigationButtons.forEach(button => {
-                button.classList.remove('active');
-            });
+<script>
+const CURRICULUM_DATABASE = [
+    {
+        id: "g11-quad-exp",
+        strand: "Numbers & Algebra",
+        title: "Unit 1: Quadratic Expressions & Equations",
+        videoUrl: "https://www.youtube.com/embed/Z0b7_r-a9w0",
+        questions: [
+            { text: "Find the value of $c$ that makes the expression $x^2 + 12x + c$ a perfect square trinomial.", ans: "36", steps: "Take half of the linear coefficient (12/2 = 6) and square it: 6^2 = 36." },
+            { text: "Solve for the larger real root of the equation: $x^2 - 7x + 10 = 0$.", ans: "5", steps: "Factor into (x-5)(x-2) = 0. The roots are 5 and 2. The larger root is 5." },
+            { text: "Find the value of the discriminant for the equation: $2x^2 - 5x + 3 = 0$.", ans: "1", steps: "Use delta = b^2 - 4ac. (-5)^2 - 4(2)(3) = 25 - 24 = 1." },
+            { text: "Determine the constant coordinate value of the axis of symmetry line for $y = x^2 - 8x + 12$.", ans: "4", steps: "Axis formula is x = -b/(2a). Thus, -(-8)/(2*1) = 8/2 = 4." },
+            { text: "Find the positive root of $3x^2 + 14x - 5 = 0$ to two decimal places if necessary.", ans: "0.33", steps: "Factors into (3x-1)(x+5) = 0. Roots are 1/3 and -5. 1/3 is approximately 0.33." },
+            { text: "What is the product of the roots of the quadratic equation $5x^2 - 11x + 6 = 0$?", ans: "1.2", steps: "Product of roots is c/a. 6/5 = 1.2." },
+            { text: "Find the minimum value of the quadratic function $f(x) = x^2 - 6x + 14$.", ans: "5", steps: "Vertex occurs at x = -(-6)/2 = 3. Minimum value = f(3) = 3^2 - 6(3) + 14 = 9 - 18 + 14 = 5." },
+            { text: "Factorize completely: $4x^2 - 25$. Format: (Ax-B)(Ax+B). What is the value of B?", ans: "5", steps: "Difference of squares: (2x)^2 - 5^2 = (2x-5)(2x+5). Thus B = 5." },
+            { text: "If the roots of $x^2 + kx + 9 = 0$ are equal and positive, find the real parameter value $k$.", ans: "-6", steps: "For equal roots, b^2 - 4ac = 0 -> k^2 - 36 = 0 -> k = ±6. For positive roots, -k/a > 0, so k must be -6." },
+            { text: "Solve for $x$: $(x-3)^2 = 49$. State the highest possible real value solution.", ans: "10", steps: "Take the square root: x - 3 = ±7. So x = 10 or x = -4. The highest solution is 10." }
+        ]
+    },
+    {
+        id: "g11-irrational-nos",
+        strand: "Numbers & Algebra",
+        title: "Unit 2: Irrational Numbers (Surds)",
+        videoUrl: "https://www.youtube.com/embed/mKk7484wU_0",
+        questions: [
+            { text: "Simplify the surd value completely: $\\sqrt{48}$. Format as $A\\sqrt{B}$. State value of $A$.", ans: "4", steps: "Extract perfect square: sqrt(16 * 3) = 4*sqrt(3). A = 4." },
+            { text: "Rationalize the denominator of $\\frac{6}{\\sqrt{2}}$.", ans: "3sqrt(2)", steps: "Multiply numerator and denominator by sqrt(2): 6*sqrt(2)/2 = 3*sqrt(2)." },
+            { text: "Simplify the compound operation: $\\sqrt{75} - \\sqrt{12}$. Format: $A\\sqrt{3}$. State $A$.", ans: "3", steps: "sqrt(75) = 5*sqrt(3) and sqrt(12) = 2*sqrt(3). 5*sqrt(3) - 2*sqrt(3) = 3*sqrt(3)." },
+            { text: "Expand and simplify: $(\\sqrt{5} + 2)(\\sqrt{5} - 2)$.", ans: "1", steps: "Difference of squares: (sqrt(5))^2 - 2^2 = 5 - 4 = 1." },
+            { text: "Rationalize the expression $\\frac{1}{2+\\sqrt{3}}$ to isolate its denominator integer value. State the resulting numerator string.", ans: "2-sqrt(3)", steps: "Multiply by the conjugate (2-sqrt(3)): Numerator becomes 1*(2-sqrt(3)), Denominator is 4 - 3 = 1." },
+            { text: "Find the value of $k$ if $\\sqrt{20} + \\sqrt{45} = k\\sqrt{5}$.", ans: "5", steps: "sqrt(20) = 2*sqrt(5) and sqrt(45) = 3*sqrt(5). 2*sqrt(5) + 3*sqrt(5) = 5*sqrt(5). So k = 5." },
+            { text: "Simplify $\\sqrt{8} \\times \\sqrt{6}$ into form $A\\sqrt{B}$. State the value of $B$.", ans: "3", steps: "sqrt(8 * 6) = sqrt(48) = sqrt(16 * 3) = 4*sqrt(3). The value under the root B is 3." },
+            { text: "True or False: The number $\\sqrt{1.44}$ is an irrational number.", ans: "False", steps: "sqrt(1.44) = 1.2, which is a terminating decimal and a rational number." },
+            { text: "Simplify $\\frac{\\sqrt{50}}{\\sqrt{2}}$.", ans: "5", steps: "Combine the division under a single radical footprint: sqrt(50/2) = sqrt(25) = 5." },
+            { text: "Find the square of the expression $3\\sqrt{7}$.", ans: "63", steps: "(3*sqrt(7))^2 = 3^2 * (sqrt(7))^2 = 9 * 7 = 63." }
+        ]
+    },
+    {
+        id: "g11-linear-ineq",
+        strand: "Numbers & Algebra",
+        title: "Unit 3: Linear Inequalities",
+        videoUrl: "https://www.youtube.com/embed/0X-bMeINp54",
+        questions: [
+            { text: "Solve the inequality: $3x - 5 > 13$. State the boundary integer limit configuration value.", ans: "6", steps: "3x > 18 -> x > 6. The boundary threshold value is 6." },
+            { text: "Solve the compound boundary system: $-2 \\le 2x + 4 < 10$. Find the upper boundary value for $x$.", ans: "3", steps: "Subtract 4 from all parts: -6 <= 2x < 6. Divide by 2: -3 <= x < 3. Upper exclusive boundary limit is 3." },
+            { text: "When solving $-4x \\le 16$, what value must $x$ be compared against after flipping the sign?", ans: "-4", steps: "Divide by -4 and reverse the inequality sign direction: x >= -4." },
+            { text: "Find the largest integer value of $x$ that satisfies the inequality: $5 - 2x \\ge 11$.", ans: "-3", steps: "-2x >= 6 -> x <= -3. The largest integer meeting this requirement is -3." },
+            { text: "Find the number of integral values of $x$ that satisfy: $-1 < x \\le 4$.", ans: "4", steps: "The acceptable integers are 0, 1, 2, 3, 4. Total count is 4." },
+            { text: "State the interval notation for a variable bounded by $-5 \\le x \\le 2$. Format: [A,B].", ans: "[-5,2]", steps: "Both values are included, requiring closed square brackets on both bounds." },
+            { text: "Solve for $x$: $\\frac{x}{3} + 4 < 2$. State the critical value threshold value.", ans: "-6", steps: "x/3 < -2 -> x < -6. The threshold boundary is -6." },
+            { text: "Find the smallest integer solution for $x$ where $4x - 7 > 2x + 5$.", ans: "7", steps: "2x > 12 -> x > 6. The smallest integer strictly greater than 6 is 7." },
+            { text: "Find the solution region intersection limit for $x > 2$ and $x \\le 5$. Format: A<x<=B. State value of B.", ans: "5", steps: "The joint region is 2 < x <= 5. The upper boundary parameter value B is 5." },
+            { text: "True or False: Multiplying an inequality system on both sides by a negative real value preserves the original direction sign.", ans: "False", steps: "Multiplying or dividing by a negative number requires reversing the inequality sign." }
+        ]
+    },
+    {
+        id: "g11-logarithms-ii",
+        strand: "Numbers & Algebra",
+        title: "Unit 4: Logarithms II",
+        videoUrl: "https://www.youtube.com/embed/N-Z8gVbU69w",
+        questions: [
+            { text: "Solve for $x$: $\\log_{10}(x) + \\log_{10}(5) = 2$.", ans: "20", steps: "Product rule: log10(5x) = 2. Convert to exponent form: 5x = 10^2 -> 5x = 100 -> x = 20." },
+            { text: "Evaluate the logarithmic evaluation result: $\\log_{2}(64) - \\log_{2}(8)$.", ans: "3", steps: "Quotient rule: log2(64/8) = log2(8). Since 2^3 = 8, the answer is 3." },
+            { text: "Solve for $x$: $2\\log(x) = \\log(81)$.", ans: "9", steps: "Power rule: log(x^2) = log(81) -> x^2 = 81. Since x must be positive, x = 9." },
+            { text: "Find the value of $x$ up to 2 decimal places using logarithms: $3^x = 20$.", ans: "2.73", steps: "x * log(3) = log(20) -> x = log(20)/log(3) = 1.3010 / 0.4771 = 2.7268 -> 2.73." },
+            { text: "Simplify the term completely: $\\log_{b}(b^5)$.", ans: "5", steps: "By definition of log base rules, the exponent shifts forward: 5 * logb(b) = 5 * 1 = 5." },
+            { text: "If $\\log_{10}(2) = 0.3010$, find the evaluation of $\\log_{10}(20)$.", ans: "1.3010", steps: "log10(20) = log10(2 * 10) = log10(2) + log10(10) = 0.3010 + 1 = 1.3010." },
+            { text: "Solve for $x$: $\\log_{3}(x) = -2$.", ans: "0.11", steps: "Convert to exponential form: x = 3^(-2) = 1/9. 1/9 is approximately 0.11." },
+            { text: "Evaluate the composite logarithmic expression: $\\log_{5}(1)$.", ans: "0", steps: "The logarithm of 1 to any base is always 0." },
+            { text: "Express $\\log(x^3y^2)$ as an addition format expression: $A\\log(x) + B\\log(y)$. State value of $A$.", ans: "3", steps: "Apply product and power laws: log(x^3) + log(y^2) = 3log(x) + 2log(y). Thus A = 3." },
+            { text: "Find the base variable $b$ value if $\\log_{b}(49) = 2$.", ans: "7", steps: "Convert to base exponential: b^2 = 49 -> b = 7 (base must be positive)." }
+        ]
+    },
+    {
+        id: "g11-formulae-var",
+        strand: "Numbers & Algebra",
+        title: "Unit 5: Formulae and Variations",
+        videoUrl: "https://www.youtube.com/embed/8-W7wZ9l1Wk",
+        questions: [
+            { text: "Make $x$ the subject of the formula: $y = 3x + 5$. State the resulting numerator when written as $\\frac{y - A}{3}$. Find $A$.", ans: "5", steps: "y - 5 = 3x -> x = (y-5)/3. Therefore, the numerator constant component A is 5." },
+            { text: "Variable $y$ varies directly as $x$. If $y=15$ when $x=3$, find the constant of variation $k$.", ans: "5", steps: "y = kx -> 15 = k(3) -> k = 5." },
+            { text: "Variable $P$ varies inversely as $Q$. If $P=8$ when $Q=3$, find the value of $P$ when $Q=6$.", ans: "4", steps: "P = k/Q -> k = P*Q = 8*3 = 24. New P = 24 / 6 = 4." },
+            { text: "Make $a$ the subject of the structural equation: $v^2 = u^2 + 2as$. Format: $(v^2 - u^2)/X$. Find $X$.", ans: "2s", steps: "v^2 - u^2 = 2as -> a = (v^2 - u^2)/(2s). The denominator part is 2s." },
+            { text: "Variable $A$ varies jointly as $B$ and the square of $C$. Write the structural equation model format link: $A = k \\cdot B \\cdot C^n$. Find exponent value $n$.", ans: "2", steps: "Joint variation with square of C means C is raised to power 2." },
+            { text: "If $y$ is inversely proportional to $\\sqrt{x}$, and $y=4$ when $x=9$, find the constant of variation $k$.", ans: "12", steps: "y = k/sqrt(x) -> 4 = k/sqrt(9) -> 4 = k/3 -> k = 12." },
+            { text: "In partial variations, $Y = 2x + 5$. Find $Y$ when $x=10$.", ans: "25", steps: "Substitute x = 10 into the expression: Y = 2(10) + 5 = 20 + 5 = 25." },
+            { text: "Make $r$ the subject of the formula $A = \\pi r^2$ for a positive radius length. Format: $\\sqrt{A/X}$. Find $X$.", ans: "pi", steps: "r^2 = A/pi -> r = sqrt(A/pi). The placeholder token is pi." },
+            { text: "If a variable value drops by 20% in an inverse relationship mapping layout, what percent scale factor matches the scalar base value?", ans: "0.8", steps: "A 20% reduction leaves 80% of the value, which corresponds to a 0.8 scalar factor." },
+            { text: "Make $m$ the subject of the kinetic energy equation $E = \\frac{1}{2}mv^2$. Format: $2E/X$. Find $X$.", ans: "v^2", steps: "2E = mv^2 -> m = 2E / v^2. The denominator string is v^2." }
+        ]
+    },
+    {
+        id: "g11-sequences-series",
+        strand: "Numbers & Algebra",
+        title: "Unit 6: Sequences and Series",
+        videoUrl: "https://www.youtube.com/embed/pXo09n_k760",
+        questions: [
+            { text: "Find the 10th term of the Arithmetic Progression (AP): $3, 7, 11, 15, ...$", ans: "39", steps: "First term a=3, common difference d=4. T_10 = a + 9d = 3 + 9(4) = 3 + 36 = 39." },
+            { text: "Find the common ratio $r$ of the Geometric Progression (GP): $2, 6, 18, 54, ...$", ans: "3", steps: "Common ratio r = 6/2 = 3." },
+            { text: "Calculate the sum of the first 5 terms of the AP sequence: $2, 5, 8, 11, 14$.", ans: "40", steps: "Sum = n/2 * (first + last) = 5/2 * (2 + 14) = 2.5 * 16 = 40." },
+            { text: "Find the 5th term of a GP with first term $a=5$ and common ratio $r=2$.", ans: "80", steps: "T_5 = a * r^4 = 5 * 2^4 = 5 * 16 = 80." },
+            { text: "Find the sum to infinity of the geometric series: $10 + 5 + 2.5 + ...$", ans: "20", steps: "a=10, r=0.5. S_inf = a / (1 - r) = 10 / (1 - 0.5) = 10 / 0.5 = 20." },
+            { text: "An AP has first term 4 and 5th term 16. Find its common difference $d$.", ans: "3", steps: "T_5 = a + 4d -> 16 = 4 + 4d -> 12 = 4d -> d = 3." },
+            { text: "What is the next number in the tracking series sequence: $1, 4, 9, 16, ...$?", ans: "25", steps: "The terms are perfect square values: 1^2, 2^2, 3^2, 4^2. Next is 5^2 = 25." },
+            { text: "Find the value of $n$ for which the $n$-th term of AP $5, 8, 11, ...$ equals $32$.", ans: "10", steps: "32 = 5 + (n-1)*3 -> 27 = (n-1)*3 -> 9 = n - 1 -> n = 10." },
+            { text: "Find the arithmetic mean value between numbers 12 and 20.", ans: "16", steps: "Mean = (12 + 20) / 2 = 32 / 2 = 16." },
+            { text: "Evaluate the geometric mean value of positive parameters 4 and 16.", ans: "8", steps: "Geometric Mean = sqrt(4 * 16) = sqrt(64) = 8." }
+        ]
+    },
+    {
+        id: "g11-matrices-i",
+        strand: "Numbers & Algebra",
+        title: "Unit 7: Matrices (I)",
+        videoUrl: "https://www.youtube.com/embed/0oGZ6_L_Pz8",
+        questions: [
+            { text: "Calculate the determinant value of the matrix $\\begin{pmatrix} 4 & 2 \\\\ 1 & 3 \\end{pmatrix}$.", ans: "10", steps: "Determinant = (4*3) - (2*1) = 12 - 2 = 10." },
+            { text: "Find the product node element after scaling: $3 \\times \\begin{pmatrix} 1 & -2 \\\\ 0 & 4 \\end{pmatrix}$. State the value at index position row 1, column 2.", ans: "-6", steps: "Multiply each cell element by 3. 3 * (-2) = -6." },
+            { text: "True or False: A matrix whose determinant evaluates to zero is called a singular matrix.", ans: "True", steps: "By definition, any matrix with a determinant of 0 cannot be inverted and is termed singular." },
+            { text: "Find the values sum of matrix coordinates addition: $\\begin{pmatrix} 2 \\\\ 5 \\end{pmatrix} + \\begin{pmatrix} -1 \\\\ 4 \\end{pmatrix}$. State the top cell value.", ans: "1", steps: "Add corresponding rows: 2 + (-1) = 1." },
+            { text: "What is the order dimension formatting signature size of a matrix containing 3 rows and 2 columns? Format: XxY.", ans: "3x2", steps: "Matrix dimensions are always stated as rows x columns, yielding 3x2." },
+            { text: "Find the inverse matrix scaling multiplier scalar fractional coefficient for $\\begin{pmatrix} 5 & 2 \\\\ 3 & 2 \\end{pmatrix}$. Format as $1/Det$. State $Det$.", ans: "4", steps: "Det = (5*2) - (2*3) = 10 - 6 = 4. The denominator value is 4." },
+            { text: "If matrix $A$ is of order $2 \\times 3$ and matrix $B$ is of order $3 \\times 4$, what is the row size count of the product matrix $AB$?", ans: "2", steps: "The product matrix inherits the row count of the first matrix (2) and column count of the second (4)." },
+            { text: "Find the value of $x$ if the matrix $\\begin{pmatrix} x & 4 \\\\ 2 & 2 \\end{pmatrix}$ is singular.", ans: "4", steps: "For a singular matrix, Det = 0 -> 2x - 8 = 0 -> 2x = 8 -> x = 4." },
+            { text: "State the value of the top-left element in a $2 \\times 2$ Identity Matrix.", ans: "1", steps: "An identity matrix has 1s on the main diagonal and 0s elsewhere: [[1,0],[0,1]]. Top-left is 1." },
+            { text: "Multiply row vector by column vector: $\\begin{pmatrix} 2 & 3 \\end{pmatrix} \\begin{pmatrix} 4 \\\\ 1 \\end{pmatrix}$.", ans: "11", steps: "Compute the dot product: (2*4) + (3*1) = 8 + 3 = 11." }
+        ]
+    },
+    {
+        id: "g11-approx-errors",
+        strand: "Measurements & Geometry",
+        title: "Unit 8: Approximation and Errors",
+        videoUrl: "https://www.youtube.com/embed/7S8_XW6X9C0",
+        questions: [
+            { text: "A line is measured as 5.0 cm to the nearest millimeter. State its absolute error margin value.", ans: "0.05", steps: "Nearest mm means nearest 0.1 cm. Absolute error is half of the smallest unit unit: 0.1 / 2 = 0.05 cm." },
+            { text: "Find the percentage error value if a true count value of 50 is approximated as 48.", ans: "4", steps: "Absolute error = 2. Relative error = 2/50 = 0.04. Percentage error = 0.04 * 100 = 4%." },
+            { text: "Calculate the upper bound limit value for a length stated as $12 \\pm 0.5$ cm.", ans: "12.5", steps: "Upper limit = 12 + 0.5 = 12.5 cm." },
+            { text: "If a number is rounded to 2 significant figures as 4300, what is the lower bound value limit?", ans: "4250", steps: "The rounding threshold transitions at the halfway mark between 4200 and 4300, which is 4250." },
+            { text: "Find the absolute error in the sum of measurements $(4.5 \\pm 0.1)$ cm and $(3.2 \\pm 0.2)$ cm.", ans: "0.3", steps: "When adding or subtracting numbers, absolute errors are added together: 0.1 + 0.2 = 0.3 cm." },
+            { text: "Round the transcendental value constant 3.14159 to three decimal places.", ans: "3.142", steps: "The fourth decimal digit is 1, which rounds up the third digit from 1 to 2, yielding 3.142." },
+            { text: "Find the relative error value quotient as a decimal for a value of 20 with an absolute error of 0.5.", ans: "0.025", steps: "Relative Error = Absolute Error / True Value = 0.5 / 20 = 0.025." },
+            { text: "A rectangle has sides measured as 10 cm and 5 cm to the nearest centimeter. Find the minimum possible lower bound area calculation.", ans: "42.75", steps: "Lower bounds are 9.5 and 4.5. Minimum area = 9.5 * 4.5 = 42.75." },
+            { text: "True or False: Truncating a number always yields the same result value as rounding it down mathematically.", ans: "True", steps: "Truncation drops the decimal values without altering the integer base, which aligns with rounding down for positive numbers." },
+            { text: "Express the fractional value representation error margin $\\frac{1}{3}$ to 2 decimal places.", ans: "0.33", steps: "1/3 = 0.3333... Rounded to two decimal places, this equals 0.33." }
+        ]
+    },
+    {
+        id: "g11-circle-properties",
+        strand: "Measurements & Geometry",
+        title: "Unit 9: Angle Properties of a Circle",
+        videoUrl: "https://www.youtube.com/embed/j_LwzXW0RNo",
+        questions: [
+            { text: "An angle subtended by an arc at the center of a circle is $100^\\circ$. Find the angle subtended by the same arc at the circumference.", ans: "50", steps: "The angle at the center is twice the angle subtended at the circumference: 100 / 2 = 50 degrees." },
+            { text: "State the sum value of opposite angles inside an embedded cyclic quadrilateral structure.", ans: "180", steps: "Opposite angles of a cyclic quadrilateral add up to 180 degrees." },
+            { text: "Find the interior angle value subtended inside a semi-circle diameter chord segment framework.", ans: "90", steps: "Thales's theorem dictates that the angle subtended by a diameter at the circumference is a right angle (90 degrees)." },
+            { text: "In a cyclic quadrilateral ABCD, if angle $A = 75^\\circ$, find the value of angle $C$.", ans: "105", steps: "Opposite angles add to 180. Angle C = 180 - 75 = 105 degrees." },
+            { text: "True or False: Angles subtended by the same circle arc segment in the same geometric sector are equal.", ans: "True", steps: "Angles in the same segment of a circle are equal according to circle chord theorems." },
+            { text: "The angle between a tangent and a chord through the point of contact is $60^\\circ$. Find the angle in the alternate segment.", ans: "60", steps: "By the Alternate Segment Theorem, these angle values are equal." },
+            { text: "If an angle at the circumference is $35^\\circ$, find the corresponding radial angle at the center point.", ans: "70", steps: "Angle at center is double the angle at the circumference: 35 * 2 = 70 degrees." },
+            { text: "What is the angle between a radius and a tangent line meeting at the point of contact?", ans: "90", steps: "A tangent is perpendicular to the radius at the point of tangency (90 degrees)." },
+            { text: "A regular polygon is inscribed in a circle. If its central angle is $60^\\circ$, how many sides does the polygon have?", ans: "6", steps: "Number of sides = 360 / central angle = 360 / 60 = 6." },
+            { text: "If the hands of a clock show exactly 3:00, what is the degree measure of the minor arc angle between them?", ans: "90", steps: "Each hour represents 30 degrees. 3 hours * 30 degrees/hour = 90 degrees." }
+        ]
+    },
+    {
+        id: "g11-commercial-arithmetic",
+        strand: "Measurements & Geometry",
+        title: "Unit 10: Commercial Arithmetic",
+        videoUrl: "https://www.youtube.com/embed/V6S6gAnqFjw",
+        questions: [
+            { text: "An employee earns a gross monthly income of KES 50,000. If the first tax band charges 10% on the first KES 24,000, find the tax amount for this first band.", ans: "2400", steps: "10% of 24,000 = 0.10 * 24,000 = KES 2,400." },
+            { text: "Calculate the compound interest on KES 10,000 invested at a 10% annual rate for 2 years.", ans: "2100", steps: "Amount = 10,000 * (1.10)^2 = 10,000 * 1.21 = 12,100. Interest = 12,100 - 10,000 = 2,100." },
+            { text: "An item costs KES 1,200 inclusive of 16% Value Added Tax (VAT). Find the original base cost before tax to two decimal places.", ans: "1034.48", steps: "Base Cost = 1,200 / 1.16 = 1034.4827... Rounded to 1034.48." },
+            { text: "A car depreciates at a rate of 10% per year. If its initial value is KES 800,000, find its value after 1 year.", ans: "720000", steps: "Value = 800,000 * (1 - 0.10) = 800,000 * 0.90 = KES 720,000." },
+            { text: "Find the net monthly tax payable if an employee's calculated gross tax is KES 8,500 and they enjoy a personal tax relief of KES 2,400.", ans: "6100", steps: "Net Tax Payable = Gross Tax - Relief = 8,500 - 2,400 = KES 6,100." },
+            { text: "A hire purchase option requires a down deposit of KES 5,000 and 10 monthly payments of KES 1,500 each. Find the total hire purchase cost.", ans: "20000", steps: "Total Cost = Deposit + (Installments * count) = 5,000 + (1,500 * 10) = 5,000 + 15,000 = KES 20,000." },
+            { text: "If the cash price of a television is KES 16,000 and the hire purchase price is KES 20,000, find the extra cost incurred by using hire purchase.", ans: "4000", steps: "Extra Cost = Hire Purchase Price - Cash Price = 20,000 - 16,000 = KES 4,000." },
+            { text: "Find the simple interest earned on KES 20,000 invested at a 5% interest rate for 3 years.", ans: "3000", steps: "I = P*R*T / 100 = 20,000 * 5 * 3 / 100 = 3,000." },
+            { text: "What basic statutory income tax framework acronym is used in Kenya for employee deductions by employers?", ans: "PAYE", steps: "PAYE stands for Pay As You Earn, the standard system for income tax collection from employees in Kenya." },
+            { text: "An agent charges a 5% commission fee on properties sold. Calculate their fee earnings for a house worth KES 2,000,000.", ans: "100000", steps: "Commission = 0.05 * 2,000,000 = KES 100,000." }
+        ]
+    },
+    {
+        id: "g11-circles-chords",
+        strand: "Measurements & Geometry",
+        title: "Unit 11: Circles, Chords & Tangents",
+        videoUrl: "https://www.youtube.com/embed/8yP5ZfK1ZkI",
+        questions: [
+            { text: "Two chords intersect inside a circle. The segments of one chord are 4 cm and 6 cm. If one segment of the second chord is 3 cm, find the length of its other segment.", ans: "8", steps: "Intersecting Chords Theorem: A * B = C * D -> 4 * 6 = 3 * x -> 24 = 3x -> x = 8." },
+            { text: "A tangent segment from an external point to a circle has a length of 12 cm. Find the radius if the closest distance from the external point to the circle boundary is 8 cm.", ans: "5", steps: "Pythagoras theorem on right-angled triangle formed by radius, tangent, and line to center: (r+8)^2 = r^2 + 12^2 -> r^2 + 16r + 64 = r^2 + 144 -> 16r = 80 -> r = 5." },
+            { text: "Find the distance from the center of a circle with radius 10 cm to a chord of length 16 cm.", ans: "6", steps: "The perpendicular line bisects the chord into two 8 cm segments. Use Pythagoras: d^2 = 10^2 - 8^2 = 100 - 64 = 36 -> d = 6." },
+            { text: "True or False: Two tangents drawn to a circle from a single shared external point have equal lengths.", ans: "True", steps: "Tangent line segments from an identical external reference source point to their points of tangency match in length." },
+            { text: "A secant segment from an external point has an external part of 4 cm and an internal chord segment of 5 cm. Find the length of the tangent to the circle from the same point.", ans: "6", steps: "Tangent-Secant Theorem: T^2 = External * Total = 4 * (4 + 5) = 4 * 9 = 36. T = sqrt(36) = 6." },
+            { text: "What is the geometric name given to a line that touches a circle at exactly one point along its boundary edge?", ans: "tangent", steps: "A tangent line intersects a circle at exactly one single surface boundary coordinate point." },
+            { text: "Find the length of the longest chord possible inside a circle with a radius of 7 cm.", ans: "14", steps: "The longest chord inside any circle is its diameter, which is twice the radius: 2 * 7 = 14 cm." },
+            { text: "If a chord of length 24 cm is 5 cm away from the center of the circle, calculate the radius of the circle.", ans: "13", steps: "Half chord length is 12 cm. Right triangle configuration: r^2 = 12^2 + 5^2 = 144 + 25 = 169 -> r = 13." },
+            { text: "How many common tangents can be drawn to two circles that intersect at two distinct points?", ans: "2", steps: "Two intersecting circles allow exactly two external common tangent lines." },
+            { text: "True or False: A perpendicular line drawn from the center of a circle to a chord bisects that chord.", ans: "True", steps: "A radius or line from the center perpendicular to a chord splits it into two equal segments." }
+        ]
+    },
+    {
+        id: "g11-trigonometry-ii",
+        strand: "Measurements & Geometry",
+        title: "Unit 12: Trigonometry (II)",
+        videoUrl: "https://www.youtube.com/embed/b8_Ff8R_p_0",
+        questions: [
+            { text: "In triangle ABC, side $a=8$ cm, $\\sin(A) = 0.5$, and $\\sin(B) = 0.25$. Find side length $b$ in cm.", ans: "4", steps: "Use the Sine Rule: a/sin(A) = b/sin(B) -> 8 / 0.5 = b / 0.25 -> 16 = b / 0.25 -> b = 4." },
+            { text: "Find the area of triangle XYZ if side $x=10$ cm, side $y=12$ cm, and the included angle $Z = 30^\\circ$.", ans: "30", steps: "Area = 0.5 * x * y * sin(Z) = 0.5 * 10 * 12 * sin(30) = 60 * 0.5 = 30 cm²." },
+            { text: "Calculate the value of $\\cos(120^\\circ)$ as a decimal fraction vector.", ans: "-0.5", steps: "cos(120) lies in the second quadrant where cosine is negative: cos(120) = -cos(180 - 120) = -cos(60) = -0.5." },
+            { text: "In a triangle, if $a=5, b=6,$ and $\\cos(C) = 0.2$, calculate the value of $c^2$ using the Cosine Rule.", ans: "49", steps: "Cosine Rule: c^2 = a^2 + b^2 - 2ab*cos(C) = 5^2 + 6^2 - 2(5)(6)(0.2) = 25 + 36 - 60(0.2) = 61 - 12 = 49." },
+            { text: "State the true bearing angle configuration value equivalent to South-West.", ans: "225", steps: "South-West is exactly halfway between South (180°) and West (270°): 180 + 45 = 225°." },
+            { text: "Find the value of $\\sin(270^\\circ)$.", ans: "-1", steps: "The sine function value at 270 degrees along a unit circle landscape drops down to -1." },
+            { text: "A surveyor stands 50 meters away from the base of a tower. If the angle of elevation to the top is $45^\\circ$, find the height of the tower.", ans: "50", steps: "tan(45) = height / 50 -> 1 = height / 50 -> height = 50 meters." },
+            { text: "Find the period length in degrees for a standard sine wave graph $y = \\sin(x)$.", ans: "360", steps: "A standard sine function completes a full wave cycle every 360 degrees." },
+            { text: "Convert the compass direction tracking notation N30°E into a 3-digit true bearing format string.", ans: "030", steps: "True bearings use three digits measured clockwise from North, so 30 degrees East of North is written as 030." },
+            { text: "True or False: The value of $\\tan(90^\\circ)$ is undefined.", ans: "True", steps: "tan(90) = sin(90)/cos(90) = 1/0, which is undefined due to division by zero." }
+        ]
+    },
+    {
+        id: "g11-graphical-methods",
+        strand: "Measurements & Geometry",
+        title: "Unit 13: Graphical Methods",
+        videoUrl: "https://www.youtube.com/embed/m4A_Msc9Vj8",
+        questions: [
+            { text: "Find the gradient of the straight line equation: $2y = 6x + 8$.", ans: "3", steps: "Convert to slope-intercept form (y = mx + c): y = 3x + 4. The gradient m is 3." },
+            { text: "Find the $y$-intercept value of the linear graph function $3x - y + 7 = 0$.", ans: "7", steps: "Set x = 0 to find y-intercept: 0 - y + 7 = 0 -> y = 7." },
+            { text: "If a non-linear relationship $y = ax^2$ is transformed into a straight line by plotting $y$ against $x^2$, what represents the gradient?", ans: "a", steps: "Let X = x^2. Then y = aX, which mirrors y = mX + c with gradient m = a and intercept c = 0." },
+            { text: "Find the coordinates of the intersection point of lines $y = 2x$ and $y = x + 3$. State the value of $x$.", ans: "3", steps: "Equate the expressions: 2x = x + 3 -> x = 3." },
+            { text: "What straight-line equation must be drawn across the parabola $y = x^2$ to graphically solve the equation $x^2 - 2x - 3 = 0$?", ans: "y=2x+3", steps: "Rearrange to match parts: x^2 = 2x + 3. Since y = x^2, substitute to get the line equation y = 2x + 3." },
+            { text: "Find the mid-point x-coordinate value between points $A(2, 5)$ and $B(8, 11)$.", ans: "5", steps: "Midpoint x = (x1 + x2)/2 = (2 + 8)/2 = 10/2 = 5." },
+            { text: "Find the slope of a line perpendicular to a line with a gradient of $-0.25$.", ans: "4", steps: "Perpendicular lines satisfy m1 * m2 = -1. (-0.25) * m2 = -1 -> m2 = 1 / 0.25 = 4." },
+            { text: "True or False: The exponential curve $y = 3^x$ passes through the coordinates point $(0,1)$.", ans: "True", steps: "Any non-zero base raised to the power of 0 evaluates to 1, so y = 3^0 = 1." },
+            { text: "What is the gradient of a completely horizontal line plotted on a standard graph board?", ans: "0", steps: "Horizontal lines have a vertical change (rise) of zero, so gradient = 0/run = 0." },
+            { text: "Find the distance between points $(1,2)$ and $(4,6)$ along a Cartesian workspace coordinate plane.", ans: "5", steps: "Use the distance formula: sqrt((4-1)^2 + (6-2)^2) = sqrt(3^2 + 4^2) = sqrt(9 + 16) = sqrt(25) = 5." }
+        ]
+    },
+    {
+        id: "g11-permutations-comb",
+        strand: "Statistics & Probability",
+        title: "Unit 14: Permutations & Combinations",
+        videoUrl: "https://www.youtube.com/embed/Xq64mXU0mrc",
+        questions: [
+            { text: "Evaluate the factorial term operation value directly: $4!$.", ans: "24", steps: "4! = 4 * 3 * 2 * 1 = 24." },
+            { text: "Calculate the number of ways to arrange 3 items out of 5 distinct options ($^5P_3$).", ans: "60", steps: "5P3 = 5! / (5-3)! = 5! / 2! = 120 / 2 = 60." },
+            { text: "Calculate the number of ways to choose a committee of 2 members from 6 candidates ($^6C_2$).", ans: "15", steps: "6C2 = 6! / (2! * 4!) = (6 * 5) / (2 * 1) = 30 / 2 = 15." },
+            { text: "How many unique 3-letter arrangement strings can be made from the word 'KENYA' without repeating any letters?", ans: "60", steps: "The word has 5 unique letters. Arranging 3 letters means computing 5P3 = 60." },
+            { text: "Evaluate the combination relationship parameter expression: $^{10}C_{10}$.", ans: "1", steps: "There is only exactly 1 way to select all 10 items out of a group of 10 options." },
+            { text: "Find the value of $n$ if $^nP_1 = 7$.", ans: "7", steps: "nP1 = n! / (n-1)! = n. Therefore, n = 7." },
+            { text: "In how many ways can 4 students line up in a single straight row for a photo session?", ans: "24", steps: "Arranging 4 items in 4 spots equals 4! = 24 ways." },
+            { text: "True or False: Order matters when evaluating combinations ($^nC_r$).", ans: "False", steps: "Combinations track selection groups where sorting order within the group is irrelevant." },
+            { text: "Simplify the fraction factorials quotient: $\\frac{6!}{5!}$.", ans: "6", steps: "6! / 5! = (6 * 5!) / 5! = 6." },
+            { text: "How many ways can you select 1 item from a pool containing 15 discrete options?", ans: "15", steps: "15C1 = 15. There are 15 distinct paths to select a single item." }
+        ]
+    },
+    {
+        id: "g11-probability-ii",
+        strand: "Statistics & Probability",
+        title: "Unit 15: Probability II",
+        videoUrl: "https://www.youtube.com/embed/ZzXasFst_O4",
+        questions: [
+            { text: "A fair coin is tossed and a standard die is rolled. Find the probability of getting a Head and a 6. Format as fraction $1/X$. State $X$.", ans: "12", steps: "P(Head) = 1/2. P(6) = 1/6. Independent events product rule: 1/2 * 1/6 = 1/12. The denominator X is 12." },
+            { text: "If the probability of rain tomorrow is 0.35, find the probability that it will not rain.", ans: "0.65", steps: "P(Not Rain) = 1 - P(Rain) = 1 - 0.35 = 0.65." },
+            { text: "A bag contains 3 red marbles and 7 blue marbles. Two marbles are drawn with replacement. Find the probability that both are red.", ans: "0.09", steps: "P(Red) = 3/10 = 0.3. With replacement, the second draw is identical: 0.3 * 0.3 = 0.09." },
+            { text: "Events A and B are mutually exclusive. If $P(A) = 0.4$ and $P(B) = 0.35$, find $P(A \\cup B)$.", ans: "0.75", steps: "For mutually exclusive events, P(A or B) = P(A) + P(B) = 0.4 + 0.35 = 0.75." },
+            { text: "A box has 5 white and 5 black balls. Two balls are drawn without replacement. Find the probability that the first is white and the second is black as a simplified fraction.", ans: "5/18", steps: "P(W) = 5/10 = 1/2. P(B second) = 5/9. Combined probability = 1/2 * 5/9 = 5/18." },
+            { text: "What is the maximum upper limit value possible for any calculated mathematical probability metric?", ans: "1", steps: "Probability scales from 0 (impossible) to 1 (absolute certainty)." },
+            { text: "True or False: If two events are independent, $P(A \\cap B) = P(A) \\times P(B)$.", ans: "True", steps: "This equation defines the multiplication rule for independent events." },
+            { text: "If a card is drawn from a standard deck of 52 cards, find the probability that it is an Ace as a simplified fraction.", ans: "1/13", steps: "There are 4 Aces in a deck of 52 cards. Probability = 4 / 52 = 1/13." },
+            { text: "The probability of hitting a target is 0.6. If two independent attempts are made, find the probability that both attempts miss.", ans: "0.16", steps: "P(Miss) = 1 - 0.6 = 0.4. For two independent attempts: 0.4 * 0.4 = 0.16." },
+            { text: "What is the probability value of an absolutely impossible event scenario?", ans: "0", steps: "An event that cannot occur has a probability value of exactly 0." }
+        ]
+    },
+    {
+        id: "g11-functions-panel",
+        strand: "Calculus",
+        title: "Unit 16: Functions",
+        videoUrl: "https://www.youtube.com/embed/1vGv9vVvA_g",
+        questions: [
+            { text: "Given $f(x) = 3x + 4$, evaluate functional mapping value $f(5)$.", ans: "19", steps: "Substitute x = 5: f(5) = 3(5) + 4 = 15 + 4 = 19." },
+            { text: "If $f(x) = x^2$ and $g(x) = x - 2$, find the composite value expression output $f(g(5))$.", ans: "9", steps: "Evaluate the inner function first: g(5) = 5 - 2 = 3. Then find f(3) = 3^2 = 9." },
+            { text: "Find the inverse function expression value for $f(x) = 2x - 3$ at input coordinate 7.", ans: "5", steps: "Set y = 2x - 3 -> y + 3 = 2x -> x = (y+3)/2. For input 7: (7+3)/2 = 10/2 = 5." },
+            { text: "Identify the restricted real domain value that cannot be input into $f(x) = \\frac{5}{x-4}$.", ans: "4", steps: "The denominator cannot equal zero, meaning x - 4 != 0, which excludes x = 4." },
+            { text: "Evaluate the value of a constant function $f(x) = 12$ for an input value $x = 100$.", ans: "12", steps: "A constant function returns the same value regardless of the input: f(100) = 12." },
+            { text: "True or False: A function can map a single domain input value to two different range output values.", ans: "False", steps: "By definition, a function maps each input to exactly one unique output." },
+            { text: "Find the root zero intercept value where the function $f(x) = 4x - 20$ crosses the horizontal axis.", ans: "5", steps: "Set f(x) = 0 -> 4x - 20 = 0 -> 4x = 20 -> x = 5." },
+            { text: "If $f(x) = x^3$, evaluate the step change value $f(-2)$.", ans: "-8", steps: "(-2)^3 = -2 * -2 * -2 = -8." },
+            { text: "What geometric test is used on a graphed curve to verify if it represents a valid single-output function?", ans: "vertical line test", steps: "The Vertical Line Test confirms that a curve represents a function if no vertical line intersects it more than once." },
+            { text: "Find the value of $g(g(2))$ if $g(x) = 2x$.", ans: "8", steps: "First pass: g(2) = 2(2) = 4. Second pass: g(4) = 2(4) = 8." }
+        ]
+    },
+    {
+        id: "g11-differentiation-i",
+        strand: "Calculus",
+        title: "Unit 17: Differentiation (I)",
+        videoUrl: "https://www.youtube.com/embed/WvXskGZrcgA",
+        questions: [
+            { text: "Find the derivative $\\frac{dy}{dx}$ of the polynomial curve function: $y = x^3$. Format: $A \\cdot x^n$. State value of exponent $n$.", ans: "2", steps: "Apply the power rule: d/dx(x^3) = 3x^2. The power value n is 2." },
+            { text: "Calculate the gradient value of the tangent to the curve $y = x^2$ at the point where $x = 3$.", ans: "6", steps: "Find the derivative: dy/dx = 2x. Substitute x = 3 into the derivative: 2 * 3 = 6." },
+            { text: "Differentiate a constant value function with respect to $x$: $y = 15$.", ans: "0", steps: "The rate of change of any constant value is zero." },
+            { text: "Find the derivative function output for $y = 5x^2 - 4x + 7$. Format: $Ax - B$. State value of coefficient $A$.", ans: "10", steps: "dy/dx = (2*5)x^(2-1) - 4 = 10x - 4. The scalar coefficient A is 10." },
+            { text: "Find the x-coordinate coordinate location of the stationary turning point for the curve $y = x^2 - 4x$.", ans: "2", steps: "Set the derivative to zero: dy/dx = 2x - 4 = 0 -> 2x = 4 -> x = 2." },
+            { text: "True or False: The derivative of a function represents the instantaneous rate of change or tangent gradient at any point.", ans: "True", steps: "Geometrically, differentiation calculates the precise instantaneous slope value along a curve." },
+            { text: "Find the derivative of $y = \\frac{1}{x}$ with respect to $x$. Format: $-1/x^n$. State value of exponent $n$.", ans: "2", steps: "y = x^(-1) -> dy/dx = -1 * x^(-2) = -1 / x^2. The exponent value n is 2." },
+            { text: "An object's displacement matches equation $s = t^2 + t$. Find its velocity equation derivative value at time $t = 3$.", ans: "7", steps: "Velocity v = ds/dt = 2t + 1. Substituting t = 3 yields: 2(3) + 1 = 6 + 1 = 7." },
+            { text: "Find the second derivative $\\frac{d^2y}{dx^2}$ of the function $y = x^3$.", ans: "6x", steps: "First derivative is 3x^2. Differentiating a second time yields d/dx(3x^2) = 6x." },
+            { text: "Determine the gradient of the function $y = 4x - 5$ at any point along its path using differentiation rules.", ans: "4", steps: "dy/dx = 4. The slope value matches the linear derivative constant everywhere." }
+        ]
+    }
+];
 
-            // 2. Hide all resource learning card segments across workspace
-            const curriculumPanels = document.querySelectorAll('.curriculum-card');
-            curriculumPanels.forEach(panel => {
-                panel.classList.remove('active-panel');
-            });
+// Application Registry State Machine Variables
+let currentUnitIndex = 0;
+let currentQuestionIndex = 0;
+let scoreCount = 0;
 
-            // 3. Pin point matching clicked trigger button item for visual feedback
-            const clickedButton = document.querySelector(`[onclick="switchTab('${targetPanelId}')"]`);
-            if (clickedButton) {
-                clickedButton.classList.add('active');
-            }
+// Initialize Application UI Layout Elements on Document Load
+document.addEventListener("DOMContentLoaded", () => {
+    renderSidebarUnits();
+    loadActiveUnitModule(0);
+});
 
-            // 4. Reveal targeted core academic container layout smooth transition
-            const targetedCard = document.getElementById(targetPanelId);
-            if (targetedCard) {
-                targetedCard.classList.add('active-panel');
-                // Scroll layout display cleanly up to header anchor element
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+// Programmatically Generate and Inject Sidebar Menu Items grouped by Curricular Strand
+function renderSidebarUnits() {
+    const anchor = document.getElementById("unit-menu-anchor");
+    anchor.innerHTML = "";
+    
+    let currentStrand = "";
+    
+    CURRICULUM_DATABASE.forEach((unit, idx) => {
+        // Inject Section Header dividers when encountering a new curricular strand category
+        if (unit.strand !== currentStrand) {
+            currentStrand = unit.strand;
+            const divider = document.createElement("div");
+            divider.className = "strand-divider";
+            divider.innerText = currentStrand;
+            anchor.appendChild(divider);
         }
-    </script>
+        
+        const listItem = document.createElement("li");
+        listItem.className = `unit-item ${idx === 0 ? 'active' : ''}`;
+        listItem.setAttribute("id", `sidebar-unit-${idx}`);
+        listItem.onclick = () => loadActiveUnitModule(idx);
+        
+        listItem.innerHTML = `
+            <div class="unit-title-text">${unit.title}</div>
+            <div class="unit-meta">${unit.questions.length} Diagnostic Items</div>
+        `;
+        
+        anchor.appendChild(listItem);
+    });
+}
+
+// Coordinate Panel Transitions to load data sets from selected module items
+function loadActiveUnitModule(unitIndex) {
+    currentUnitIndex = unitIndex;
+    currentQuestionIndex = 0;
+    
+    // Toggle navigation list item highlighted states
+    document.querySelectorAll(".unit-item").forEach(item => item.classList.remove("active"));
+    const activeItem = document.getElementById(`sidebar-unit-${unitIndex}`);
+    if (activeItem) activeItem.classList.add("active");
+    
+    const activeUnitData = CURRICULUM_DATABASE[unitIndex];
+    
+    // Bind global header texts and video links
+    document.getElementById("active-unit-title").innerText = activeUnitData.title;
+    document.getElementById("video-frame-target").src = activeUnitData.videoUrl;
+    
+    // Re-initialize interactive question interface states cleanly
+    resetInteractiveHUDFeedback();
+    generateProgressTrackerDots(activeUnitData.questions.length);
+    renderActiveProblemContext();
+}
+
+// Generate pagination dots indicating assessment milestones
+function generateProgressTrackerDots(count) {
+    const dotsAnchor = document.getElementById("dots-row-anchor");
+    dotsAnchor.innerHTML = "";
+    for (let i = 0; i < count; i++) {
+        const dot = document.createElement("div");
+        dot.className = `dot ${i === 0 ? 'active' : ''}`;
+        dot.innerText = i + 1;
+        dot.setAttribute("id", `progress-dot-${i}`);
+        dotsAnchor.appendChild(dot);
+    }
+}
+
+// Render the active problem context inside the question workspace canvas
+function renderActiveProblemContext() {
+    resetInteractiveHUDFeedback();
+    
+    const activeUnit = CURRICULUM_DATABASE[currentUnitIndex];
+    const question = activeUnit.questions[currentQuestionIndex];
+    
+    document.getElementById("question-text-target").innerHTML = `
+        <strong>Question ${currentQuestionIndex + 1}:</strong> ${question.text}
+    `;
+    
+    // Refresh pagination dots tracking positions
+    document.querySelectorAll(".dot").forEach((dot, idx) => {
+        dot.classList.remove("active");
+        if (idx === currentQuestionIndex) dot.classList.add("active");
+    });
+}
+
+// Evaluate string patterns entered by students against database answers
+function verifyCurrentResponse() {
+    const studentInput = document.getElementById("student-answer-input").value.trim().toLowerCase();
+    const correctAnswer = CURRICULUM_DATABASE[currentUnitIndex].questions[currentQuestionIndex].ans.toLowerCase();
+    const explanation = CURRICULUM_DATABASE[currentUnitIndex].questions[currentQuestionIndex].steps;
+    
+    const banner = document.getElementById("hud-status-banner");
+    const analyticsPanel = document.getElementById("analytics-panel");
+    const analyticsText = document.getElementById("analytics-text-target");
+    const currentDot = document.getElementById(`progress-dot-${currentQuestionIndex}`);
+    
+    banner.style.display = "block";
+    analyticsPanel.style.display = "block";
+    analyticsText.innerHTML = explanation;
+    
+    if (studentInput === correctAnswer || studentInput.replace(/\s+/g, '') === correctAnswer.replace(/\s+/g, '')) {
+        banner.className = "feedback-banner success";
+        banner.innerText = "CRITICAL SUCCESS: Your calculation yields the exact anticipated structural output value.";
+        if (currentDot) currentDot.classList.add("solved");
+    } else {
+        banner.className = "feedback-banner error";
+        banner.innerText = `VERIFICATION FAILURE: Expected signature code value: "${CURRICULUM_DATABASE[currentUnitIndex].questions[currentQuestionIndex].ans}". Double-check intermediate variable steps.`;
+    }
+    
+    // Hide verification button and display next item advance control triggers
+    document.getElementById("action-verify-btn").style.display = "none";
+    document.getElementById("action-next-btn").style.display = "inline-block";
+}
+
+// Advance user indices forward through the item sequences array matrix safely
+function advanceToNextProblem() {
+    const activeUnit = CURRICULUM_DATABASE[currentUnitIndex];
+    currentQuestionIndex++;
+    
+    if (currentQuestionIndex < activeUnit.questions.length) {
+        renderActiveProblemContext();
+    } else {
+        // Enforce boundary cycling loops to return users back to question 1 upon module completion
+        alert("DIAGNOSTIC COMPLETION: You have processed all diagnostic question evaluations inside this learning block. Resetting layout to first index item path.");
+        currentQuestionIndex = 0;
+        loadActiveUnitModule(currentUnitIndex);
+    }
+}
+
+// Re-initialize basic interface controls between state steps cleanly
+function resetInteractiveHUDFeedback() {
+    document.getElementById("student-answer-input").value = "";
+    document.getElementById("hud-status-banner").style.display = "none";
+    document.getElementById("analytics-panel").style.display = "none";
+    document.getElementById("action-verify-btn").style.display = "inline-block";
+    document.getElementById("action-next-btn").style.display = "none";
+}
+
+// Process chat messages through the localized chat log simulation window
+function submitChatQuery() {
+    const inputField = document.getElementById("chat-input-field");
+    const userQueryText = inputField.value.trim();
+    if (!userQueryText) return;
+    
+    const logsWindow = document.getElementById("chat-logs");
+    
+    // Append Student Message Node item block
+    const studentNode = document.createElement("div");
+    studentNode.className = "chat-msg student";
+    studentNode.innerHTML = `<strong>You:</strong> ${userQueryText}`;
+    logsWindow.appendChild(studentNode);
+    
+    inputField.value = "";
+    
+    // Generate contextually matched analytical resolution rules
+    setTimeout(() => {
+        const profNode = document.createElement("div");
+        profNode.className = "chat-msg professor";
+        
+        const explanation = CURRICULUM_DATABASE[currentUnitIndex].questions[currentQuestionIndex].steps;
+        
+        profNode.innerHTML = `
+            <strong>Prof. Oneiro:</strong> Let us look closely at the math rules for this problem. 
+            Here is a reliable path to compute the solution: <em>${explanation}</em>. Use your Desmos scientific calculator to double-check the calculations!
+        `;
+        logsWindow.appendChild(profNode);
+        logsWindow.scrollTop = logsWindow.scrollHeight;
+    }, 600);
+}
+</script>
 </body>
 </html>
