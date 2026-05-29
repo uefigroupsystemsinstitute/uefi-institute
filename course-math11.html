@@ -894,6 +894,54 @@ const CURRICULUM_DATABASE = [
     }
 ];
 
+// --- (Your 170 questions array ends here) ---
+    }
+];
+
+// ==========================================================================
+// CENTRAL MATHEMATICAL EXPRESSION PARSER ENGINE
+// Converts raw strings containing $...$ into beautiful structured HTML/CSS
+// ==========================================================================
+function compileMathText(rawText) {
+    if (!rawText) return "";
+
+    // Replace inline $...$ math blocks using a regex filter
+    return rawText.replace(/\$(.*?)\$/g, function(match, mathContent) {
+        let processed = mathContent;
+
+        // Clean up common LaTeX syntax anomalies
+        processed = processed.replace(/\\Delta/g, '<span class="math-const">Δ</span>');
+        processed = processed.replace(/\\times/g, '<span class="math-op">×</span>');
+        processed = processed.replace(/\\div/g, '<span class="math-op">÷</span>');
+        processed = processed.replace(/\\pm/g, '<span class="math-op">±</span>');
+
+        // Parse Complex Fractions: \frac{num}{den}
+        const fracRegex = /\\frac\{([^}]+)\}\{([^}]+)\}/g;
+        while (fracRegex.test(processed)) {
+            processed = processed.replace(fracRegex, function(m, num, den) {
+                return `<span class="math-frac"><span class="num">${num}</span><span class="den">${den}</span></span>`;
+            });
+        }
+
+        // Parse Radicals / Square Roots: \sqrt{value}
+        processed = processed.replace(/\\sqrt\{([^}]+)\}/g, '<span class="math-const" style="font-style:normal; margin-right:-2px;">√</span><span style="border-top:1px solid #000; padding-top:1px;">$1</span>');
+        processed = processed.replace(/\\sqrt\s*([a-zA-Z0-9]+)/g, '<span class="math-const" style="font-style:normal; margin-right:-2px;">√</span><span style="border-top:1px solid #000; padding-top:1px;">$1</span>');
+
+        // Parse Exponents / Superscripts: base^exponent
+        processed = processed.replace(/([a-zA-Z0-9)]+)\^([a-zA-Z0-9+-]+)/g, '$1<sup class="math-exp">$2</sup>');
+
+        // Parse Subscripts: base_subscript
+        processed = processed.replace(/([a-zA-Z0-9)]+)__([a-zA-Z0-9+-]+)/g, '$1<sub class="math-sub">$2</sub>');
+        processed = processed.replace(/([a-zA-Z0-9)]+)_([a-zA-Z0-9+-]+)/g, '$1<sub class="math-sub">$2</sub>');
+
+        // Wrap native operators safely (=, +, -, etc.)
+        processed = processed.replace(/([=+-\u00D7\u00F7\u00B1])/g, '<span class="math-op">$1</span>');
+
+        // Return final clean math element block
+        return `<span class="math-expr">${processed}</span>`;
+    });
+}
+
 // Application Registry State Machine Variables
 let currentUnitIndex = 0;
 let currentQuestionIndex = 0;
@@ -978,8 +1026,9 @@ function renderActiveProblemContext() {
     const activeUnit = CURRICULUM_DATABASE[currentUnitIndex];
     const question = activeUnit.questions[currentQuestionIndex];
     
+    // UPDATE: Passed question.text through compileMathText()
     document.getElementById("question-text-target").innerHTML = `
-        <strong>Question ${currentQuestionIndex + 1}:</strong> ${question.text}
+        <strong>Question ${currentQuestionIndex + 1}:</strong> ${compileMathText(question.text)}
     `;
     
     // Refresh pagination dots tracking positions
@@ -1002,7 +1051,9 @@ function verifyCurrentResponse() {
     
     banner.style.display = "block";
     analyticsPanel.style.display = "block";
-    analyticsText.innerHTML = explanation;
+    
+    // UPDATE: Passed explanation through compileMathText()
+    analyticsText.innerHTML = compileMathText(explanation);
     
     if (studentInput === correctAnswer || studentInput.replace(/\s+/g, '') === correctAnswer.replace(/\s+/g, '')) {
         banner.className = "feedback-banner success";
@@ -1065,9 +1116,10 @@ function submitChatQuery() {
         
         const explanation = CURRICULUM_DATABASE[currentUnitIndex].questions[currentQuestionIndex].steps;
         
+        // UPDATE: Passed explanation through compileMathText()
         profNode.innerHTML = `
             <strong>Prof. Oneiro:</strong> Let us look closely at the math rules for this problem. 
-            Here is a reliable path to compute the solution: <em>${explanation}</em>. Use your Desmos scientific calculator to double-check the calculations!
+            Here is a reliable path to compute the solution: <em>${compileMathText(explanation)}</em>. Use your Desmos scientific calculator to double-check the calculations!
         `;
         logsWindow.appendChild(profNode);
         logsWindow.scrollTop = logsWindow.scrollHeight;
