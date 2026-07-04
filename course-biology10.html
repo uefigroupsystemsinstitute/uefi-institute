@@ -1,1 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JifunzeHesabu - Grade 10 Interactive Math Platform</title>
+    <style>
+        /* ==========================================================================
+           1. CORE DESIGN SYSTEM & KENYAN FLAG THEME PATTERNS
+           ========================================================================== */
+        :root {
+            --ke-black: #000000;
+            --ke-red: #990000;
+            --ke-green: #006600;
+            --ke-white: #ffffff;
+            --bg-light: #f4f6f7;
+            --text-dark: #1a1a1a;
+            --text-muted: #595959;
+            --border-color: #e0e0e0;
+            --success-bg: #e6f4ea;
+            --error-bg: #fce8e6;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ==========================================================================
+           2. APP CONTAINER & TWO-COLUMN VIEWPORT LAYOUT
+           ========================================================================== */
+        #app-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Left Sidebar: Curricular Tree Menu */
+        #sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--ke-black);
+            color: var(--ke-white);
+            display: flex;
+            flex-direction: column;
+            border-right: 4px solid var(--ke-red);
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--ke-black), #222);
+            border-bottom: 2px solid var(--ke-green);
+            text-align: center;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: var(--ke-white);
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.85rem;
+            color: #ccc;
+            font-style: italic;
+        }
+
+        .unit-menu-list {
+            list-style: none;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .unit-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .unit-item:hover {
+            background-color: #1a1a1a;
+            border-left: 6px solid var(--ke-red);
+        }
+
+        .unit-item.active {
+            background-color: #262626;
+            border-left: 6px solid var(--ke-green);
+            font-weight: bold;
+        }
+
+        .unit-meta {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        /* Main Workspace Panel */
+        #main-workspace {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            background-color: var(--bg-light);
+        }
+
+        /* Top Bar & Professor Oneiro Node Branding */
+        #top-workspace-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .topic-title-area h1 {
+            font-size: 2rem;
+            color: var(--ke-black);
+        }
+
+        /* Professor Character Node badge */
+        #prof-oneiro-badge {
+            display: flex;
+            align-items: center;
+            background: var(--ke-white);
+            border: 2px solid var(--ke-red);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .prof-avatar {
+            width: 50px;
+            height: 50px;
+            background-color: var(--ke-black);
+            border: 2px solid var(--ke-green);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.4rem;
+            margin-right: 12px;
+        }
+
+        .prof-bubble h4 {
+            font-size: 1rem;
+            color: var(--ke-black);
+        }
+
+        .prof-bubble p {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================================================
+           3. MIDDLE STAGE: VIDEO ENGINE LAYER
+           ========================================================================== */
+        .video-stage-wrapper {
+            background: var(--ke-white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .video-viewport {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+            border-radius: 4px;
+        }
+
+        .video-viewport iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* ==========================================================================
+           4. BOTTOM STAGE: CORE PRACTICE ENGINE & MASTERY SYSTEM
+           ========================================================================== */
+        #practice-stage {
+            background: var(--ke-white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .practice-header-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--ke-black);
+            padding-bottom: 10px;
+        }
+
+        .practice-header-panel h3 {
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            color: var(--ke-black);
+        }
+
+        /* Pagination Dots Layout */
+        .progress-tracker-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            border-color: var(--ke-black);
+            background-color: var(--ke-black);
+            color: #fff;
+        }
+
+        .dot.solved {
+            border-color: var(--ke-green);
+            background-color: var(--ke-green);
+            color: #fff;
+        }
+
+        /* Active Question Display Workspace */
+        .question-canvas {
+            margin-bottom: 20px;
+        }
+
+        .question-body-text {
+            font-size: 1.25rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* Typesetting Engines for Formulas */
+        .math-expr {
+            font-style: italic;
+            font-weight: bold;
+            padding: 0 4px;
+        }
+        .math-expr sup { font-size: 0.75rem; vertical-align: super; line-height: 0; }
+        .math-expr sub { font-size: 0.75rem; vertical-align: sub; line-height: 0; }
+        
+        .math-frac {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+            text-align: center;
+            padding: 0 4px;
+            font-style: italic;
+        }
+        .math-frac .num { border-bottom: 1px solid #000; padding-bottom: 1px; font-size: 0.9rem;}
+        .math-frac .den { padding-top: 1px; font-size: 0.9rem; }
+
+        .math-matrix {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 4px;
+            vertical-align: middle;
+            border-left: 2px solid #000;
+            border-right: 2px solid #000;
+            border-radius: 4px;
+            padding: 0 4px;
+        }
+        .matrix-col { display: flex; flex-direction: column; text-align: center; padding: 0 3px; font-style: normal; }
+
+        /* Input Controls and Verification HUD */
+        .interactive-input-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .answer-text-field {
+            padding: 12px 15px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            width: 250px;
+        }
+
+        .answer-text-field:focus {
+            outline: none;
+            border-color: var(--ke-black);
+        }
+
+        .btn-action {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-family: inherit;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+
+        .btn-check { background-color: var(--ke-black); color: #fff; }
+        .btn-check:hover { background-color: #222; }
+        .btn-next { background-color: var(--ke-green); color: #fff; display: none; }
+        .btn-next:hover { background-color: #004d00; }
+
+        /* HUD Status Banner */
+        .feedback-banner {
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            display: none;
+            font-weight: bold;
+        }
+        .feedback-banner.success { background-color: var(--success-bg); color: #137333; border-left: 5px solid var(--ke-green); }
+        .feedback-banner.error { background-color: var(--error-bg); color: #c5221f; border-left: 5px solid var(--ke-red); }
+
+        /* Analytics Core Module Container under each question */
+        .analytics-sub-card {
+            background-color: #f9fbf9;
+            border: 1px solid #e1ebe1;
+            border-radius: 4px;
+            padding: 15px 20px;
+            display: none;
+        }
+
+        .analytics-sub-card h4 {
+            color: var(--ke-green);
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .analytics-sub-card p {
+            font-size: 1.05rem;
+            color: #2c3e50;
+        }
+
+        /* ==========================================================================
+           5. LOWER UTILITIES GRID: UTILITIES PANEL (LAB & CONSOLE)
+           ========================================================================== */
+        .lower-utilities-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .utility-box {
+            background: var(--ke-white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .utility-box h3 {
+            font-size: 1.15rem;
+            color: var(--ke-black);
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--ke-red);
+            padding-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        /* Sandbox Scratchpad Tool Elements */
+        .scratchpad-display {
+            background-color: #1e1e1e;
+            color: #00ff00;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            text-align: right;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            min-height: 40px;
+            word-wrap: break-word;
+        }
+
+        .scratchpad-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .btn-calc {
+            padding: 10px;
+            font-family: monospace;
+            font-size: 1rem;
+            background: #eee;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .btn-calc:hover { background: #ddd; }
+        .btn-calc.op { background: var(--ke-black); color: #fff; }
+        .btn-calc.op:hover { background: #333; }
+
+        /* Consult System Interface Layout */
+        .chat-log-window {
+            flex-grow: 1;
+            background: #fafafa;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            height: 120px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .chat-msg { margin-bottom: 8px; line-height: 1.4; }
+        .chat-msg.student { color: var(--ke-red); font-weight: bold; }
+        .chat-msg.professor { color: var(--ke-green); }
+
+        .chat-input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-text-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .btn-send-chat {
+            background-color: var(--ke-red);
+            color: #fff;
+            padding: 0 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+
+<style>
+    .back-link {
+        color: #ffffff !important;       /* Forces the text to be white */
+        font-weight: bold !important;    /* Makes the text bold */
+        text-decoration: none;           /* Removes default underline */
+        transition: color 0.2s ease;     /* Smoothly transitions the color change */
+    }
+
+    .back-link:hover {
+        color: #006600 !important;       /* Changes to Kenyan Green on hover */
+    }
+</style>
+
+<aside id="sidebar">
+    <div class="sidebar-header">
+        <a href="courses.html" class="back-link">← Back</a>
+        <h2>Hekima Portal</h2>
+        <p>Grade 10 Mathematics</p>
+    </div>
+    <ul class="unit-menu-list" id="unit-menu-anchor">
+    </ul>
+</aside>
+
+    <main id="main-workspace">
+        
+        <div id="top-workspace-bar">
+            <div class="topic-title-area">
+                <h1 id="active-unit-title">Loading Unit...</h1>
+            </div>
+            
+            <div id="prof-oneiro-badge">
+                <div class="prof-avatar">O</div>
+                <div class="prof-bubble">
+                    <h4>Prof. Oneiro</h4>
+                    <p>Curriculum Director</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="video-stage-wrapper">
+            <div class="video-viewport">
+                <iframe id="video-frame-target" src="" title="Educational Video Frame Player" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section id="practice-stage">
+            <div class="practice-header-panel">
+                <h3>Structured Mastery Diagnostic</h3>
+                <div class="progress-tracker-dots" id="dots-row-anchor">
+                    </div>
+            </div>
+
+            <div class="question-canvas">
+                <div class="question-body-text" id="question-text-target">
+                    Select a topic module on the left side menu to map item strings.
+                </div>
+                
+                <div class="interactive-input-group">
+                    <input type="text" class="answer-text-field" id="student-answer-input" placeholder="Type structural calculation result...">
+                    <button class="btn-action btn-check" id="action-verify-btn" onclick="verifyCurrentResponse()">Check Answer</button>
+                    <button class="btn-action btn-next" id="action-next-btn" onclick="advanceToNextProblem()">Next Question &rarr;</button>
+                </div>
+            </div>
+
+            <div class="feedback-banner" id="hud-status-banner"></div>
+
+            <div class="analytics-sub-card" id="analytics-panel">
+                <h4>Analytical Resolution Profile</h4>
+                <p id="analytics-text-target"></p>
+            </div>
+        </section>
+
+        <div class="lower-utilities-grid">
+            
+            <div class="utility-box">
+                <h3>Consult Professor Oneiro</h3>
+                <div class="chat-log-window" id="chat-logs">
+                    <div class="chat-msg professor"><strong>Prof. Oneiro:</strong> Habari! Ask me any structural questions regarding the active assignment problems.</div>
+                </div>
+                <div class="chat-input-row">
+                    <input type="text" class="chat-text-input" id="chat-input-field" placeholder="Inquire about methods...">
+                    <button class="btn-send-chat" onclick="submitChatQuery()">Ask</button>
+                </div>
+            </div>
+
+            <div class="utility-box" style="display: flex; flex-direction: column; min-height: 500px; height: 100%;">
+    <h3 style="margin-bottom: 12px;">Desmos Scientific Calculator Tool</h3>
+    <iframe 
+        src="https://www.desmos.com/scientific" 
+        style="width: 100%; height: 100%; flex-grow: 1; border: 1px solid #dee2e6; border-radius: 6px; background: #fff;" 
+        allow="clipboard-write">
+    </iframe>
+</div>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+
+<script>
+const CURRICULUM_DATABASE = [
+    {
+        id: "g10-real",
+        title: "Unit 1: Real Numbers",
+        videoUrl: "https://www.youtube.com/embed/VEY08fMYmEU",
+        questions: [
+            { text: "Classify the evaluation profile as rational/irrational: <span class='math-expr'>3<span class='math-surd'>&radic;</span><span>5</span> &times; <span class='math-surd'>&radic;</span><span>20</span></span>.", ans: "rational", steps: "Simplify: 3 * sqrt(100) = 3 * 10 = 30. Result evaluates to an integer, which falls inside rational fields." },
+            { text: "Express recurring decimal fraction <span class='math-expr'>0.777...</span> as a simplified fractional quotient format (use a/b representation).", ans: "7/9", steps: "Let x = 0.777... then 10x = 7.777... Subtracting x yields 9x = 7, leading to 7/9." },
+            { text: "Simplify the surd completely: <span class='math-expr'><span class='math-surd'>&radic;</span><span>72</span> - <span class='math-surd'>&radic;</span><span>18</span></span> (Format: Xsqrt(Y)).", ans: "3sqrt(2)", steps: "Extract perfect squares: sqrt(72) = 6sqrt(2) and sqrt(18) = 3sqrt(2). 6sqrt(2) - 3sqrt(2) = 3sqrt(2)." },
+            { text: "Rationalize the denominator: <span class='math-frac'><span class='num'>5</span><span class='den'><span class='math-surd'>&radic;</span><span>3</span></span></span> (Format: Asqrt(B)/C).", ans: "5sqrt(3)/3", steps: "Multiply numerator and denominator values explicitly by sqrt(3). Output yields 5sqrt(3)/3." },
+            { text: "A measurement is written as <span class='math-expr'>x = 4.3</span> cm to 1 decimal point. State its absolute lower bound value.", ans: "4.25", steps: "The step scale is 0.1, error interval margin is 0.05. Lower limit boundary: 4.3 - 0.05 = 4.25." },
+            { text: "A rectangle measures 20m by 15m to the nearest meter. Find the upper bound of its calculated area.", ans: "317.75", steps: "Upper bounds are 20.5 and 15.5. Maximum area calculation yields: 20.5 * 15.5 = 317.75." },
+            { text: "Write the real set inequality <span class='math-expr'>-3 &le; x &lt; 5</span> inside bracket interval syntax conventions.", ans: "[-3,5)", steps: "Inclusive lower threshold uses square bracket, exclusive upper boundary maps to parenthesis." },
+            { text: "Classify the structural outcome nature of the numerical constant <span class='math-expr'>&pi; - 3</span> (rational or irrational).", ans: "irrational", steps: "Pi is transcendental; subtracting an integer shifts magnitude but leaves decimal strings non-repeating and non-terminating." },
+            { text: "Simplify the compound conjugate structure: <span class='math-expr'>(2 + <span class='math-surd'>&radic;</span><span>3</span>)(2 - <span class='math-surd'>&radic;</span><span>3</span>)</span>.", ans: "1", steps: "Difference of squares expansion formula: 2^2 - (sqrt(3))^2 = 4 - 3 = 1." },
+            { text: "Find the absolute max upper bound of <span class='math-frac'><span class='num'>10</span><span class='den'>b</span></span> given variable parameter <span class='math-expr'>b = 4 &plusmn; 0.5</span>.", ans: "2.86", steps: "Minimize divider to maximize: 10 / 3.5 = 2.857. Rounded to two decimal points equals 2.86." }
+        ]
+    },
+    {
+        id: "g10-ind",
+        title: "Unit 2: Indices and Logarithms",
+        videoUrl: "https://www.youtube.com/embed/92pZpFVdtD8",
+        questions: [
+            { text: "Simplify index variables: <span class='math-expr'>(2a<sup>3</sup>b<sup>2</sup>) &times; (4a<sup>-1</sup>b<sup>4</sup>)</span>. Use form: X*a^Y*b^Z.", ans: "8*a^2*b^6", steps: "Group constant and variable bases: (2*4) * a^(3-1) * b^(2+4) = 8*a^2*b^6." },
+            { text: "Solve for the real base exponent variable <span class='math-expr'>x</span>: <span class='math-expr'>3<sup>2x - 1</sup> = 27</span>.", ans: "2", steps: "Express 27 as 3^3. Equate exponents: 2x - 1 = 3 -> 2x = 4 -> x = 2." },
+            { text: "Evaluate the exact numeric value of negative fractional power: <span class='math-expr'>16<sup>-3/4</sup></span>.", ans: "1/8", steps: "Invert to positive power: 1 / (16^(1/4))^3 = 1 / 2^3 = 1/8." },
+            { text: "Solve for variable <span class='math-expr'>y</span>: <span class='math-expr'>log<sub>10</sub>(y) + log<sub>10</sub>(2) = 1</span>.", ans: "5", steps: "Logarithmic product rules: log10(2y) = 1. Convert to base exponent: 2y = 10^1 -> y = 5." },
+            { text: "Convert base matrix to compute value to 3 decimal spaces: <span class='math-expr'>log<sub>2</sub>(5)</span>.", ans: "2.322", steps: "Change of base formula: log10(5) / log10(2) = 0.69897 / 0.30103 = 2.322." },
+            { text: "Condense structural terms into a single log: <span class='math-expr'>2 log(x) - log(y)</span>. Format: log(A).", ans: "log(x^2/y)", steps: "Power rule gives log(x^2). Subtraction maps directly to quotient format: log(x^2 / y)." },
+            { text: "Solve for index value <span class='math-expr'>x</span> up to 2 decimal places: <span class='math-expr'>5<sup>x</sup> = 12</span>.", ans: "1.54", steps: "Apply standard log rules: x * log(5) = log(12). Then x = log(12)/log(5) = 1.07918 / 0.69897 = 1.54." },
+            { text: "Rewrite radical structure to fraction index form: <span class='math-expr'><span class='math-surd'>&radic;</span><span>a<sup>5</sup></span></span>. Format: a^(X/Y).", ans: "a^(5/2)", steps: "Square root represents a fraction index multiplier of 1/2. Thus (a^5)^(1/2) = a^(5/2)." },
+            { text: "Find inverse logarithmic solution parameter <span class='math-expr'>x</span>: <span class='math-expr'>log<sub>3</sub>(x) = -2</span>.", ans: "1/9", steps: "Isolate variable into pure base mapping format: x = 3^(-2) = 1 / 3^2 = 1/9." },
+            { text: "Evaluate calculation sequence directly: <span class='math-expr'>log<sub>6</sub>(2) + log<sub>6</sub>(18)</span>.", ans: "2", steps: "Product rule combination: log6(2 * 18) = log6(36). Since 36 = 6^2, output evaluates to 2." }
+        ]
+    },
+    {
+        id: "g10-quad",
+        title: "Unit 3: Quadratic Expressions & Equations",
+        videoUrl: "https://www.youtube.com/embed/D6NYI41jnes",
+        questions: [
+            { text: "Factorize the expression structure completely: <span class='math-expr'>x<sup>2</sup> - 5x - 6</span>. Format: (x-A)(x+B).", ans: "x-6)(x+1", steps: "Find numbers that multiply to -6 and sum to -5. These are -6 and +1. Format matches (x-6)(x+1)." },
+            { text: "Find the positive root solution for equation: <span class='math-expr'>2x<sup>2</sup> + 5x - 3 = 0</span>.", ans: "0.5", steps: "Factor the trinomial: (2x - 1)(x + 3) = 0. Roots are x = 0.5 and x = -3. Positive root is 0.5." },
+            { text: "Determine the required value of constant <span class='math-expr'>c</span> to complete the perfect square trinomial: <span class='math-expr'>x<sup>2</sup> + 8x + c</span>.", ans: "16", steps: "Take half of the linear term coefficient, then square it: (8 / 2)^2 = 4^2 = 16." },
+            { text: "Find the highest root solution to 2 decimal places: <span class='math-expr'>x<sup>2</sup> - 4x + 2 = 0</span>.", ans: "3.41", steps: "Quadratic formula configuration: [4 + sqrt(16 - 8)]/2 = 2 + sqrt(2) = 3.414. Rounded to 3.41." },
+            { text: "Calculate the exact numeric value of the discriminant for equation: <span class='math-expr'>3x<sup>2</sup> - 2x + 5 = 0</span>.", ans: "-56", steps: "Discriminant formula pattern: delta = b^2 - 4ac. Substituting terms: (-2)^2 - 4(3)(5) = 4 - 60 = -56." },
+            { text: "Factorize using the difference of squares identity: <span class='math-expr'>9x<sup>2</sup> - 49</span>. Format: (Ax-B)(Ax+B).", ans: "3x-7)(3x+7", steps: "Rewrite expressions into perfect squares: (3x)^2 - (7)^2. This maps directly to (3x - 7)(3x + 7)." },
+            { text: "Solve for the non-zero root of the expression: <span class='math-expr'>x<sup>2</sup> - 6x = 0</span>.", ans: "6", steps: "Factor out common variable: x(x - 6) = 0. Roots are x = 0 and x = 6. The non-zero solution is 6." },
+            { text: "If one root of equation <span class='math-expr'>x<sup>2</sup> + kx - 12 = 0</span> is <span class='math-expr'>3</span>, calculate value of parameter <span class='math-expr'>k</span>.", ans: "1", steps: "Substitute root 3 into variable positions: 3^2 + 3k - 12 = 0 -> 9 + 3k - 12 = 0 -> 3k = 3 -> k = 1." },
+            { text: "Convert expression to vertex form <span class='math-expr'>(x + h)<sup>2</sup> + k</span> and state value of shift constant <span class='math-expr'>k</span>: <span class='math-expr'>x<sup>2</sup> + 4x + 7</span>.", ans: "3", steps: "Complete the square: (x^2 + 4x + 4) - 4 + 7 = (x + 2)^2 + 3. The vertical displacement constant is 3." },
+            { text: "Find the structural value of the vertex line axis of symmetry for the graph curve: <span class='math-expr'>y = x<sup>2</sup> - 6x + 5</span>.", ans: "3", steps: "Axis formula tracking: x = -b / 2a. Substituting gives: -(-6) / (2 * 1) = 6 / 2 = 3." }
+        ]
+    },
+    {
+        id: "g10-sim",
+        title: "Unit 4: Similarity and Enlargement",
+        videoUrl: "https://www.youtube.com/embed/03-G60uEeQs",
+        questions: [
+            { text: "Two similar triangles have matching sides of 4 cm and 12 cm. Find scale ratio factor <span class='math-expr'>k</span>.", ans: "3", steps: "Linear scale tracking calculation: Scale factor = Image length / Object length = 12 / 4 = 3." },
+            { text: "If linear transformation ratio between similar planes is <span class='math-expr'>k = 2.5</span>, find area modifier factor.", ans: "6.25", steps: "Area modifier maps to square of linear scale factor. Calculation: (2.5)^2 = 6.25." },
+            { text: "Two similar solid cones have volume metrics of 50 cm³ and 400 cm³. Compute their scale linear factor.", ans: "2", steps: "Volume scale factor ratio = 400 / 50 = 8. Linear modifier k corresponds to cube root: cuberoot(8) = 2." },
+            { text: "A design prototype layout has area 15 cm². If true scaled construction uses linear scale factor <span class='math-expr'>k = 10</span>, find actual area.", ans: "1500", steps: "Actual area projection: Base Area * k^2 = 15 * (10^2) = 15 * 100 = 1500 cm²." },
+            { text: "Triangle ABC area is 100 cm², similar triangle XYZ area is 36 cm². Find length XY if AB is 15 cm.", ans: "9", steps: "Area scale factor = 36/100 = 0.36. Linear factor = sqrt(0.36) = 0.6. Mapped side = 15 * 0.6 = 9 cm." },
+            { text: "A metal model weight is 1.2 kg. Find weight of similar asset with double the height made of same dense alloy.", ans: "9.6", steps: "Weight scales with volume (k^3). Doubling height implies linear factor k = 2. New mass = 1.2 * 2^3 = 9.6 kg." },
+            { text: "The surface area ratio profiles of two spheres align at 4:9. Find their volume capacity ratio factor format (A:B).", ans: "8:27", steps: "Area ratio k^2 = 4/9 implies linear ratio k = 2/3. Volumetric conversion k^3 = (2/3)^3 = 8/27 or 8:27." },
+            { text: "An enlargement transformations origin is (0,0) with scale factor <span class='math-expr'>k = -2</span>. Map node P(3, -1). Format: (X,Y).", ans: "(-6,2)", steps: "Multiply coordinate points directly by scale factor parameters: (3 * -2, -1 * -2) = (-6, 2)." },
+            { text: "On a land registry blueprint mapped at 1:20000 scale, a road trace is 5 cm. Compute true terrain distance in km.", ans: "1", steps: "Real length calculation = 5 * 20000 = 100000 cm. Convert metrics: 100000 cm = 1000 meters = 1 kilometer." },
+            { text: "A shipping module scales up all dimensions by 40%. If base space volume is 0.5 m³, find new capacity.", ans: "1.372", steps: "Linear scale factor metrics k = 1.40. Volume multiplier = (1.4)^3 = 2.744. Capacity = 0.5 * 2.744 = 1.372 m³." }
+        ]
+    },
+    {
+        id: "g10-ref",
+        title: "Unit 5: Reflection and Congruence",
+        videoUrl: "https://www.youtube.com/embed/2bQFDaH-w3s",
+        questions: [
+            { text: "Reflect node A(4, -3) across horizontal graph line <span class='math-expr'>y = 0</span>. Find image position coordinates.", ans: "(4,3)", steps: "Reflection across x-axis (y=0) preserves x-coordinate and negates y-value: (4, -(-3)) = (4, 3)." },
+            { text: "Reflect coordinate point B(2, 5) across standard diagonal mirror axis line <span class='math-expr'>y = x</span>.", ans: "(5,2)", steps: "Transformation across y=x exchanges coordinate locations: (x, y) becomes (y, x). Output equals (5, 2)." },
+            { text: "Point C(-1, 4) is reflected across vertical grid plane axis line <span class='math-expr'>x = 2</span>. Locate transformed image node.", ans: "(5,4)", steps: "Initial distance from x=-1 to x=2 is 3 units. Project 3 units past mirror line: 2 + 3 = 5. Coordinate is (5, 4)." },
+            { text: "State the geometric abbreviation name of triangle congruence tracking where all three sides match.", ans: "SSS", steps: "When all corresponding boundary lengths are identical, structural congruence is proved by Side-Side-Side (SSS)." },
+            { text: "Triangles ABC and PQR match at two angles with a bounded side link between them. Name the congruence theorem.", ans: "ASA", steps: "The parameters map to Angle-Side-Angle configuration, which dictates absolute structural congruence via ASA." },
+            { text: "Point D(3, 2) transforms to position D'(3, -6) via single axis reflection. Identify mirror equation line.", ans: "y=-2", steps: "X remains constant, y midpoint marks mirror location: [2 + (-6)] / 2 = -4 / 2 = -2. Equation profile is y = -2." },
+            { text: "Right-angled shapes share a hypotenuse of 13 cm and one side leg of 5 cm. State congruence theorem.", ans: "RHS", steps: "Specialized rule targeting right-angled systems sharing hypotenuse and one leg matches Right-Hypotenuse-Side (RHS)." },
+            { text: "Triangle LMN is congruent to triangle XYZ. If perimeter of LMN is 34 cm, state perimeter value of XYZ.", ans: "34", steps: "Congruent figures maintain exact replication scaling factors across all perimeter lines. Total length equals 34 cm." },
+            { text: "Reflect target node E(-2, -5) across the horizontal linear mirror plane <span class='math-expr'>y = -1</span>.", ans: "(-2,3)", steps: "Distance from y=-5 to line y=-1 is 4 units up. Move 4 units past line: -1 + 4 = 3. Coordinates track to (-2, 3)." },
+            { text: "True or False: All similar structural polygons automatically satisfy congruency system properties.", ans: "false", steps: "Similarity only preserves internal profile angles and dimensional balance ratios, not absolute side scalar dimensions." }
+        ]
+    },
+    {
+        id: "g10-rot",
+        title: "Unit 6: Rotation",
+        videoUrl: "https://www.youtube.com/embed/VJTxv-tRKj0",
+        questions: [
+            { text: "Rotate coordinate point P(3, 5) by 90° clockwise around origin grid center (0,0).", ans: "(5,-3)", steps: "Clockwise structural transform mapping identity across origin: (x, y) -> (y, -x). Thus node transitions to (5, -3)." },
+            { text: "Rotate point Q(-2, 6) through a 180° rotation angle around tracking center node (0,0).", ans: "(2,-6)", steps: "A 180 degree rotation maps to inversion of structural signs across both planes: (x, y) -> (-x, -y) = (2, -6)." },
+            { text: "Transform node coordinates R(1, 4) via 90° anticlockwise rotation around origin tracking node.", ans: "(-4,1)", steps: "Anticlockwise standard map rotation conversion identity: (x, y) -> (-y, x). Applying parameters yields (-4, 1)." },
+            { text: "A rotation shifts node T(2, 3) to destination T'(-3, 2) around origin. State angle and direction format (e.g. 90 anticlockwise).", ans: "90 anticlockwise", steps: "The coordinate transformation follows layout track (x, y) -> (-y, x), which marks a 90 degree anticlockwise rotation." },
+            { text: "Rotate point A(4, 2) by 90° clockwise around custom pivot node center (1,1).", ans: "(2,-2)", steps: "Translate center to origin: (4-1, 2-1)=(3,1). Rotate 90° CW: (1, -3). Translate back: (1+1, -3+1) = (2, -2)." },
+            { text: "State coordinate transformation map output property for 270° clockwise rotation about origin.", ans: "(-y,x)", steps: "Rotating 270 degrees clockwise matches structural tracking positions of a 90 degree anticlockwise arc: (-y, x)." },
+            { text: "Find invariant coordinate positions when shape asset rotates around pivot node center (3, -2).", ans: "(3,-2)", steps: "The exact coordinate mapping point representing the center of rotation remains fixed throughout the transformation: (3, -2)." },
+            { text: "Rotate node M(-4, -1) across a 180° angular path around coordinate center point (0,0).", ans: "(4,1)", steps: "Invert sign profiles for both coordinates to process path: (-(-4), -(-1)) yields transformed coordinates (4, 1)." },
+            { text: "If matrix transforms map point (1,0) to node location (0,-1), state clockwise rotation angle.", ans: "90", steps: "The unit vector on the x-axis drops directly to the negative y-axis. This corresponds to a 90 degree clockwise shift." },
+            { text: "Locate coordinate destination of point K(0, 3) processed through 90° anticlockwise rotation around origin.", ans: "(-3,0)", steps: "Apply standard algebraic transform map rules: (x, y) -> (-y, x). Substituting gives values (-3, 0)." }
+        ]
+    },
+    {
+        id: "g10-trig",
+        title: "Unit 7: Trigonometry 1",
+        videoUrl: "https://www.youtube.com/embed/WFH_7n7hpHo",
+        questions: [
+            { text: "In a right triangle, opposite side is 5 cm and hypotenuse is 13 cm. State fraction ratio for <span class='math-expr'>sin(&theta;)</span>.", ans: "5/13", steps: "Sine tracking identity definition formula: opposite / hypotenuse. Directly substituting values gives 5/13." },
+            { text: "Calculate hypotenuse side length <span class='math-expr'>c</span> of a right triangle with side legs of 6 cm and 8 cm.", ans: "10", steps: "Pythagorean formula configuration: c = sqrt(6^2 + 8^2) = sqrt(36 + 64) = sqrt(100) = 10 cm." },
+            { text: "Given <span class='math-expr'>cos(&theta;) = 4/5</span> inside right angle constraints, find value of <span class='math-expr'>tan(&theta;)</span>.", ans: "3/4", steps: "By Pythagorean triplets, opposite side leg is 3. Tangent tracking formula: opposite / adjacent = 3/4." },
+            { text: "An observer tracks a wall from 30m distance. If elevation angle to top is 45°, calculate structural wall height.", ans: "30", steps: "Trig identity evaluation: tan(45°) = height / 30. Since tan(45°) = 1, height = 30 * 1 = 30 meters." },
+            { text: "Find exact length of adjacent side leg if hypotenuse line is 10 cm and bounded angle is 60°.", ans: "5", steps: "Cosine projection track: adjacent = hypotenuse * cos(60°) = 10 * 0.5 = 5 cm." },
+            { text: "A 12m ladder leaning on vertical structure wall creates a 30° angle with the wall. Find ladder base gap from wall.", ans: "6", steps: "The angle forms at the top vertical intersection; wall gap is opposite to 30°: base = 12 * sin(30°) = 12 * 0.5 = 6m." },
+            { text: "Calculate elevation angle from ground to top of a 40m cell tower from a distance waypoint 40m away.", ans: "45", steps: "Tangent function balance: tan(theta) = 40 / 40 = 1. Inverse calculation: theta = arctan(1) = 45 degrees." },
+            { text: "In right triangle models, if identity <span class='math-expr'>sin(&alpha;) = 0.6</span>, state numeric output of complement <span class='math-expr'>cos(90&deg; - &alpha;)</span>.", ans: "0.6", steps: "Co-function trigonometric properties dictate that sin(alpha) is identically equal to cos(90° - alpha). Result is 0.6." },
+            { text: "Solve for hypotenuse distance parameter <span class='math-expr'>x</span> given linear expression: <span class='math-expr'>sin(30&deg;) = 15/x</span>.", ans: "30", steps: "Substitute value for sin(30°) which is 0.5: 0.5 = 15 / x -> x = 15 / 0.5 = 30." },
+            { text: "Find diagonal corner distance across a flat rectangle field measuring 5m wide by 12m long.", ans: "13", steps: "The structural diagonal cuts a right-angled triangle profile: length = sqrt(5^2 + 12^2) = sqrt(169) = 13m." }
+        ]
+    },
+    {
+        id: "g10-poly",
+        title: "Unit 8: Area of Polygons",
+        videoUrl: "https://www.youtube.com/embed/bwyYgCGNOQ4",
+        questions: [
+            { text: "Calculate surface area of a triangle built with base dimension 14 cm and height 9 cm.", ans: "63", steps: "Standard triangular tracking formula: 0.5 * base * height = 0.5 * 14 * 9 = 7 * 9 = 63 cm²." },
+            { text: "A parallelogram has base length 12 cm and total profile area of 96 cm². Find perpendicular height.", ans: "8", steps: "Parallelogram formula footprint: Area = base * height -> 96 = 12 * height -> height = 96 / 12 = 8 cm." },
+            { text: "Find area of a trapezoid sheet with parallel boundaries of 8 cm and 12 cm, and height 6 cm.", ans: "60", steps: "Trapezium area integration layout: 0.5 * (a + b) * h = 0.5 * (8 + 12) * 6 = 0.5 * 20 * 6 = 60 cm²." },
+            { text: "Find total surface area of compound regular asset: rectangle (10cm by 6cm) joined to a square of side 4cm.", ans: "76", steps: "Sum individual sub-component layout fields: Area = (10 * 6) + (4 * 4) = 60 + 16 = 76 cm²." },
+            { text: "Calculate area of equilateral triangle with side length 6 cm to 2 decimal places.", ans: "15.59", steps: "Trigonometric cross area profile: 0.5 * a * b * sin(60°) = 0.5 * 6 * 6 * 0.8660 = 18 * 0.8660 = 15.59 cm²." },
+            { text: "A rhombus profile possesses cross diagnostic diagonals measuring 10 cm and 24 cm. Calculate its area.", ans: "120", steps: "Rhombus diagnostic area matrix: 0.5 * d1 * d2 = 0.5 * 10 * 24 = 120 cm²." },
+            { text: "A regular hexagon layout is split into six equilateral triangles of side 4 cm. Find total area to 2 decimal places.", ans: "41.57", steps: "Area of one unit triangle = 0.5 * 4 * 4 * sin(60°) = 6.928. Hexagon accumulation = 6 * 6.928 = 41.57 cm²." },
+            { text: "A trapezium asset with area 50 cm² has parallel boundaries measuring 7 cm and 13 cm. Find its height.", ans: "5", steps: "Area equation formula structures: 50 = 0.5 * (7 + 13) * h -> 50 = 0.5 * 20 * h -> 50 = 10h -> h = 5 cm." },
+            { text: "Find remaining area of a 10cm square template after a inner core rectangle of 4cm by 3cm is cut away.", ans: "88", steps: "Subtractive geometry profiling: Area = Area(Square) - Area(Rectangle) = (10 * 10) - (4 * 3) = 100 - 12 = 88 cm²." },
+            { text: "Find area of a right triangle layout built with hypotenuse 5 cm and base 3 cm.", ans: "6", steps: "Determine missing vertical height line via Pythagoras: sqrt(5^2 - 3^2) = 4 cm. Area = 0.5 * 3 * 4 = 6 cm²." }
+        ]
+    },
+    {
+        id: "g10-circ",
+        title: "Unit 9: Area of a Part of a Circle",
+        videoUrl: "https://www.youtube.com/embed/nDMpINuq1w0",
+        questions: [
+            { text: "Calculate area of sector slice with radius 6 cm and central angle 60° (leave in terms of pi, e.g. X*pi).", ans: "6*pi", steps: "Sector area slice formula track: (angle/360) * pi * r^2 = (60/360) * pi * 6^2 = (1/6) * 36 * pi = 6*pi." },
+            { text: "Find absolute arc length perimeter of sector path with radius 14 cm and angle 90° (use pi = 22/7).", ans: "22", steps: "Arc distance tracking: (90/360) * 2 * (22/7) * 14 = (1/4) * 2 * 22 * 2 = 22 cm." },
+            { text: "A circular sector holds arc distance of <span class='math-expr'>4&pi;</span> cm over radius line 8 cm. Find central angle.", ans: "90", steps: "Arc equation structures: 4*pi = (angle/360) * 2 * pi * 8 -> 4 = 16 * (angle/360) -> angle/360 = 1/4 -> angle = 90°." },
+            { text: "Find area of circle segment bounded by radius 10 cm and central angle 90° to 2 decimal places.", ans: "28.54", steps: "Segment tracking = Area(Sector) - Area(Triangle) = (90/360 * pi * 10^2) - (0.5 * 10 * 10) = 25*pi - 50 = 78.54 - 50 = 28.54." },
+            { text: "Determine absolute boundary perimeter of a semi-circle slice with radius line 7 cm (use pi = 22/7).", ans: "36", steps: "Perimeter tracks curved arc plus baseline diameter: (180/360 * 2 * 22/7 * 7) + 2(7) = 22 + 14 = 36 cm." },
+            { text: "The area of a sector piece with central angle 120° is <span class='math-expr'>12&pi;</span> cm². Calculate matching circle radius.", ans: "6", steps: "Area formula equivalence: 12*pi = (120/360) * pi * r^2 -> 12 = (1/3) * r^2 -> r^2 = 36 -> r = 6 cm." },
+            { text: "Find exact tracking arc length of a quadrant sector slice mapped inside circle of diameter 20 cm.", ans: "5*pi", steps: "Diameter 20 implies radius 10. Quadrant implies central angle 90°: arc = (90/360) * 2 * pi * 10 = 5*pi." },
+            { text: "Calculate area of sector whose boundary track measures arc distance 10 cm over radius line 5 cm.", ans: "25", steps: "Specialized direct sector area framework formula: Area = 0.5 * radius * arc_length = 0.5 * 5 * 10 = 25 cm²." },
+            { text: "Find central angle of a sector with area <span class='math-expr'>15&pi;</span> cm² inside a circle profile of radius 10 cm.", ans: "54", steps: "Equation structure setup: 15*pi = (angle/360) * pi * 10^2 -> 15 = 100 * (angle/360) -> angle = (15 * 360)/100 = 54°." },
+            { text: "Calculate sector area field if overall circle matrix area is 120 cm² and slice track angle is 30°.", ans: "10", steps: "Proportional segment matching calculation: Area = (30 / 360) * Total Area = (1 / 12) * 120 = 10 cm²." }
+        ]
+    },
+    {
+        id: "g10-surf",
+        title: "Unit 10: Surface Area & Volume of Solids",
+        videoUrl: "https://www.youtube.com/embed/eBAq_caikJ4",
+        questions: [
+            { text: "Calculate volume capacity of a cylinder with radius 3 cm and height 7 cm (use pi = 22/7).", ans: "198", steps: "Cylinder volume metric integration formula: pi * r^2 * h = (22/7) * 3^2 * 7 = 22 * 9 = 198 cm³." },
+            { text: "Find total boundary surface area covering a solid cube asset with individual edge lengths of 5 cm.", ans: "150", steps: "Total surface area formula structure for cubes: 6 * side^2 = 6 * (5^2) = 6 * 25 = 150 cm²." },
+            { text: "A rectangular container has base surface area 24 cm² and volume capacity 120 cm³. Find height.", ans: "5", steps: "Prism layout volume tracking logic: Volume = Base Area * Height -> 120 = 24 * height -> height = 120 / 24 = 5 cm." },
+            { text: "Find volume of a right pyramid structured over a square base of side 6 cm, with height 10 cm.", ans: "120", steps: "Pyramid structural volume definition: (1/3) * Base Area * Height = (1/3) * (6 * 6) * 10 = 12 * 10 = 120 cm³." },
+            { text: "Determine total volume metrics of a sphere with radius 3 cm (leave in terms of pi, e.g. X*pi).", ans: "36*pi", steps: "Sphere volumetric rule tracking: (4/3) * pi * r^3 = (4/3) * pi * 3^3 = (4/3) * 27 * pi = 36*pi." },
+            { text: "Find curved lateral boundary area of a cone with radius 5 cm and slant length 10 cm (leave in terms of pi).", ans: "50*pi", steps: "Cone lateral surface formula tracking: pi * radius * slant_length = pi * 5 * 10 = 50*pi." },
+            { text: "A cylinder assets total volume is <span class='math-expr'>100&pi;</span> cm³ under height limits of 4 cm. Find base radius.", ans: "5", steps: "Volume mapping formula: 100*pi = pi * r^2 * 4 -> 100 = 4 * r^2 -> r^2 = 25 -> radius = 5 cm." },
+            { text: "Find total surface field boundary area of a sphere with radius 2 cm (leave in terms of pi).", ans: "16*pi", steps: "Sphere area framework formula structure: 4 * pi * r^2 = 4 * pi * 2^2 = 4 * 4 * pi = 16*pi." },
+            { text: "A triangular prism cross-section area is 12 cm² and longitudinal length is 15 cm. Find volume.", ans: "180", steps: "Prism volume tracking operations: Cross Sectional Area * Length = 12 * 15 = 180 cm³." },
+            { text: "Find volume of cone with base radius 6 cm and height 7 cm (use pi = 22/7).", ans: "264", steps: "Cone volume tracking logic formula: (1/3) * pi * r^2 * h = (1/3) * (22/7) * 6^2 * 7 = (1/3) * 22 * 36 = 264 cm³." }
+        ]
+    },
+    {
+        id: "g10-vec",
+        title: "Unit 11: Vectors 1",
+        videoUrl: "https://www.youtube.com/embed/xT5D7oYcKUQ",
+        questions: [
+            { text: "Given column vectors <span class='math-expr'>u = </span><span class='math-matrix'><span class='matrix-col'><span>3</span><span>-1</span></span></span> and <span class='math-expr'>v = </span><span class='math-matrix'><span class='matrix-col'><span>2</span><span>5</span></span></span>, calculate column vector <span class='math-expr'>u + v</span>. Format: [X,Y].", ans: "[5,4]", steps: "Sum matching components: top row 3+2=5, bottom row -1+5=4. Matrix column output matches [5,4]." },
+            { text: "Find absolute scalar magnitude length <span class='math-expr'>|a|</span> of matrix column vector <span class='math-expr'>a = </span><span class='math-matrix'><span class='matrix-col'><span>6</span><span>-8</span></span></span>.", ans: "10", steps: "Vector modulus distance formulation: sqrt(x^2 + y^2) = sqrt(6^2 + (-8)^2) = sqrt(36 + 64) = 10." },
+            { text: "Given vector <span class='math-expr'>m = </span><span class='math-matrix'><span class='matrix-col'><span>-2</span><span>4</span></span></span>, resolve scalar product vector <span class='math-expr'>3m</span>. Format: [X,Y].", ans: "[-6,12]", steps: "Scale all matrix rows by multi-factor 3: lower component 3*-2=-6, upper component 3*4=12. Result: [-6,12]." },
+            { text: "Find displacement vector column coordinates <span class='math-expr'>AB</span> from origin benchmarks A(1, 2) and B(5, -2). Format: [X,Y].", ans: "[4,-4]", steps: "Subtract vector positions (Terminal - Initial): [5-1, -2-2] maps out directly to column result [4,-4]." },
+            { text: "Solve for coordinate row <span class='math-expr'>x</span> in vector expression: <span class='math-matrix'><span class='matrix-col'><span>x</span><span>y</span></span></span> + <span class='math-matrix'><span class='matrix-col'><span>2</span><span>-3</span></span></span> = <span class='math-matrix'><span class='matrix-col'><span>7</span><span>0</span></span></span>.", ans: "5", steps: "Isolate horizontal component tracking path equation system: x + 2 = 7. Simple transposition yields x = 5." },
+            { text: "If vector <span class='math-expr'>p = </span><span class='math-matrix'><span class='matrix-col'><span>4</span><span>3</span></span></span>, calculate the magnitude of scaled double vector variable <span class='math-expr'>2p</span>.", ans: "10", steps: "Base vector magnitude is sqrt(4^2+3^2)=5. Double magnitude factor tracks directly to: 2 * 5 = 10." },
+            { text: "Calculate vector difference matrix subtraction <span class='math-expr'>a - b</span> given <span class='math-expr'>a = </span><span class='math-matrix'><span class='matrix-col'><span>0</span><span>4</span></span></span> and <span class='math-expr'>b = </span><span class='math-matrix'><span class='matrix-col'><span>-3</span><span>2</span></span></span>. Format: [X,Y].", ans: "[3,2]", steps: "Execute matrix operations components: row one 0 - (-3) = 3; row two 4 - 2 = 2. Vector equals [3,2]." },
+            { text: "Determine matching directional inverse matrix column layout for vector <span class='math-expr'>v = </span><span class='math-matrix'><span class='matrix-col'><span>-7</span><span>11</span></span></span>. Format: [X,Y].", ans: "[7,-11]", steps: "Invert sign orientations along all matrix rows to flip direction: -v equals column format [7,-11]." },
+            { text: "Find distance magnitude norm length of basic identity vector unit vector <span class='math-expr'>k = </span><span class='math-matrix'><span class='matrix-col'><span>1</span><span>1</span></span></span> to 3 decimal places.", ans: "1.414", steps: "Apply standard vector length formula tracking metrics: sqrt(1^2 + 1^2) = sqrt(2) = 1.414." },
+            { text: "Vectors <span class='math-matrix'><span class='matrix-col'><span>2</span><span>5</span></span></span> and <span class='math-matrix'><span class='matrix-col'><span>4</span><span>m</span></span></span> run parallel. Calculate matching scaling value of <span class='math-expr'>m</span>.", ans: "10", steps: "Parallel vectors display linear proportionality multipliers: x-row doubles (2 to 4), so y-row must double (5 to 10). m = 10." }
+        ]
+    },
+    {
+        id: "g10-mot",
+        title: "Unit 12: Linear Motion",
+        videoUrl: "https://www.youtube.com/embed/XIK8TYWzIPA",
+        questions: [
+            { text: "Convert standard highway cruiser velocity metric of 90 km/h into SI units of meters per second (m/s).", ans: "25", steps: "Velocity dimension transformation conversion logic multi-factor: 90 * (1000 / 3600) = 90 * (5/18) = 5 * 5 = 25 m/s." },
+            { text: "A train routes across a continuous distance track of 210 km at speed 70 km/h. Find travel time hours.", ans: "3", steps: "Linear kinematic tracking expression formula: Time = Distance / Speed = 210 / 70 = 3 hours." },
+            { text: "Car A routes at 40 km/h and Car B routes at 60 km/h heading directly toward each other. Compute relative closure velocity.", ans: "100", steps: "Vector vectors operating in inverse polar opposing paths possess additive relative speeds: 40 + 60 = 100 km/h." },
+            { text: "Using metrics from question 3, if initial gap separation distance is 150 km, find hours until collision crossover.", ans: "1.5", steps: "Crossover convergence timeline logic: Distance / Relative Velocity speed value = 150 / 100 = 1.5 hours." },
+            { text: "An asset accelerates uniformly from speed rest threshold 10 m/s to 30 m/s over 5 seconds. Find acceleration rate in m/s².", ans: "4", steps: "Acceleration change definition tracker formula: (v - u) / t = (30 - 10) / 5 = 20 / 5 = 4 m/s²." },
+            { text: "A track runner covers a total distance footprint of 400 meters in 50 seconds. Find average speed.", ans: "8", steps: "Average performance vector tracking formula: Distance / Total Time = 400 / 50 = 8 m/s." },
+            { text: "Boat X cruises at 25 m/s, while chasing Boat Y follows from behind along identical coordinates at 35 m/s. Find relative closure speed.", ans: "100", steps: "Since both move in the same direction, subtract their speeds to find the closing rate: 35 - 25 = 10 m/s." },
+            { text: "Find total meters traveled by a cyclist tracking constant velocity speed 6 m/s over a timeline duration of 2 minutes.", ans: "720", steps: "Convert duration parameters to standard SI base line units: 2 minutes = 120 seconds. Distance = 6 * 120 = 720 meters." },
+            { text: "A vehicle drives 60 km at 40 km/h, then another 60 km at 60 km/h. Find average speed across full track journey.", ans: "48", steps: "Total distance = 120km. Total time = (60/40) + (60/60) = 1.5 + 1 = 2.5 hours. Average speed = 120 / 2.5 = 48 km/h." },
+            { text: "An asset moves at 12 m/s for 10 seconds, then stands completely still for 10 seconds. Find net average speed.", ans: "6", steps: "Distance covered in segment one = 12 * 10 = 120m. Segment two distance = 0m. Total distance = 120m over 20s. Average speed = 120 / 20 = 6 m/s." }
+        ]
+    },
+    {
+        id: "g10-stat",
+        title: "Unit 13: Statistics",
+        videoUrl: "https://www.youtube.com/embed/XZo4xyJXCak",
+        questions: [
+            { text: "Calculate the arithmetic mean value of the recorded dataset collection array: 3, 7, 8, 8, 14.", ans: "8", steps: "Sum array content items: 3 + 7 + 8 + 8 + 14 = 40. Divide by component array count metrics: 40 / 5 = 8." },
+            { text: "Find median value threshold for unsorted statistical field array: 12, 5, 22, 17, 9, 11.", ans: "11.5", steps: "Sort elements array layout: 5, 9, 11, 12, 17, 22. Median splits the center pair average: (11 + 12) / 2 = 11.5." },
+            { text: "Identify structural mode value component parameter for distribution data: 4, 9, 6, 9, 4, 11, 9, 5.", ans: "9", steps: "The numerical value 9 appears with the highest frequency (3 instances) inside distribution array." },
+            { text: "Score parameters x=[1,2,3] hold frequencies f=[3,5,2]. Compute weighted structural mean score values.", ans: "1.9", steps: "Sum frequency intervals: 3+5+2=10. Cross product aggregation: (1*3)+(2*5)+(3*2)=19. Weighted mean value: 19/10 = 1.9." },
+            { text: "Determine the statistical range spread of given data collection: 43, 12, 67, 89, 34, 55.", ans: "77", steps: "Range calculation operations: Maximum element value - Minimum element value = 89 - 12 = 77." },
+            { text: "State explicit midpoint tracking coordinate for grouped frequency table data interval: <span class='math-expr'>10 &le; w &lt; 20</span>.", ans: "15", steps: "Class interval midpoint formulation logic: (Lower limit bound + Upper limit bound) / 2 = (10 + 20) / 2 = 15." },
+            { text: "Mean score value of 4 items equals 15. Inserting a 5th element shifts average to 16. Find value of 5th item.", ans: "20", steps: "Initial aggregate sum = 4 * 15 = 60. Secondary adjusted sum = 5 * 16 = 80. 5th item: 80 - 60 = 20." },
+            { text: "Cumulative frequency sequence reads 4, 12, 25, 34. Find standalone frequency of third tier interval class row.", ans: "13", steps: "Deduct previous accrued values from active row target boundary layer: 25 - 12 = 13." },
+            { text: "Determine modal interval bracket group class for frequencies [4, 9, 3] over segments [0-5, 5-10, 10-15].", ans: "5-10", steps: "Peak data density is 9, which matches directly with the mid-tier column class group 5-10." },
+            { text: "Find median split row calculation index position indicator value if collection item count is <span class='math-expr'>n = 49</span>.", ans: "25", steps: "Odd list midpoint location tracking index calculation formula: (n + 1) / 2 = (49 + 1) / 2 = 25th index slot position." }
+        ]
+    },
+    {
+        id: "g10-prob",
+        title: "Unit 14: Probability 1",
+        videoUrl: "https://www.youtube.com/embed/m95FVOfCx44",
+        questions: [
+            { text: "A standard six-sided die is rolled. Find probability of rolling a prime number asset fraction.", ans: "1/2", steps: "Favorable outcomes are prime entities: 2, 3, 5 (3 options). Sample domain size = 6. Probability value ratio = 3/6 = 1/2." },
+            { text: "The probability of an event target criteria is <span class='math-expr'>P(A) = 3/11</span>. Find value of complement <span class='math-expr'>P(A')</span>.", ans: "8/11", steps: "Complement rule transformation formula identity: 1 - P(A). Calculation: 1 - 3/11 = 8/11." },
+            { text: "Bag holds 4 red and 6 blue spheres. Pulling two with replacement, find chance of consecutive red pairs.", ans: "4/25", steps: "Events are independent due to replacement: (4/10) * (4/10) = 16/100 = 4/25." },
+            { text: "Using parameters from question 3, if extraction runs without replacement, find consecutive red probability values.", ans: "2/15", steps: "Dependent probability flow path configurations: (4/10) * (3/9) = 12 / 90 = 2/15." },
+            { text: "Independent pathways track profiles at <span class='math-expr'>P(X) = 0.5</span> and <span class='math-expr'>P(Y) = 0.3</span>. Find intersection <span class='math-expr'>P(X &cap; Y)</span>.", ans: "0.15", steps: "Multiplication rule for independent sets: P(X) * P(Y) = 0.5 * 0.3 = 0.15." },
+            { text: "A fair standard currency coin is flipped three times. Find probability value of scoring exactly three heads.", ans: "1/8", steps: "Combinatoric tree options layout count = 2^3 = 8. Target specific matching outcome path (H,H,H) equals 1 slot. Value is 1/8." },
+            { text: "The weather model gives rain index at 20% tomorrow. State probability that it will not rain tomorrow as a decimal.", ans: "0.8", steps: "Deduct probability criteria from unit whole scale profile value: 1.0 - 0.2 = 0.8 (or 80%)." },
+            { text: "A game spinner marks five equal slices numbered 1 to 5. Find chance of spinning a value greater than 3.", ans: "2/5", steps: "Favorable targets are numbers 4 and 5 (2 options). Total options field size = 5. Probability fraction = 2/5." },
+            { text: "A card is pulled from a standard deck of 52 cards. Find probability profile of pulling any Ace element.", ans: "1/13", steps: "Deck contains 4 Ace cards across the setup layout. Structural probability fraction = 4 / 52 = 1 / 13." },
+            { text: "Tree diagram nodes hold tracking success weights of 0.7 and 0.8. Find probability of complete path failure.", ans: "0.06", steps: "Determine independent failure track margins: (1 - 0.7) * (1 - 0.8) = 0.3 * 0.2 = 0.06." }
+        ]
+    }
+];
+
+// ==========================================================================
+// 7. PLATFORM APPLICATION STATE CONTROLLER ENGINE
+// ==========================================================================
+let CURRENT_UNIT_INDEX = 0;
+let CURRENT_QUESTION_INDEX = 0;
+let TRACKING_SCORES_ARRAY = Array(10).fill(false);
+
+// Web Audio API Sound Generation Subsystem
+const AudioContextEngine = window.AudioContext || window.webkitAudioContext;
+let audioCtxInstance = null;
+
+function initializeAudioEngine() {
+    if (!audioCtxInstance) {
+        audioCtxInstance = new AudioContextEngine();
+    }
+}
+
+function playSoundEffect(isSuccessSignal) {
+    try {
+        initializeAudioEngine();
+        if (!audioCtxInstance) return;
+
+        const oscillatorNode = audioCtxInstance.createOscillator();
+        const gainNode = audioCtxInstance.createGain();
+        oscillatorNode.connect(gainNode);
+        gainNode.connect(audioCtxInstance.destination);
+
+        const currentTime = audioCtxInstance.currentTime;
+
+        if (isSuccessSignal) {
+            // Harmonic upward major arpeggio
+            oscillatorNode.type = 'sine';
+            oscillatorNode.frequency.setValueAtTime(523.25, currentTime); // C5
+            oscillatorNode.frequency.setValueAtTime(659.25, currentTime + 0.1); // E5
+            oscillatorNode.frequency.setValueAtTime(783.99, currentTime + 0.2); // G5
+            gainNode.gain.setValueAtTime(0.15, currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.4);
+            oscillatorNode.start(currentTime);
+            oscillatorNode.stop(currentTime + 0.4);
+        } else {
+            // Retro low-frequency buzz
+            oscillatorNode.type = 'sawtooth';
+            oscillatorNode.frequency.setValueAtTime(120.00, currentTime); // Low flat buzz
+            oscillatorNode.frequency.linearRampToValueAtTime(80.00, currentTime + 0.3);
+            gainNode.gain.setValueAtTime(0.2, currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.35);
+            oscillatorNode.start(currentTime);
+            oscillatorNode.stop(currentTime + 0.35);
+        }
+    } catch (e) {
+        console.warn("Audio Context blocked or unsupported by local client environment parameters.", e);
+    }
+}
+
+// ==========================================================================
+// 8. INTERACTIVE WORKSPACE CORE LIFECYCLE CONTROLLERS
+// ==========================================================================
+function mountPlatformApplication() {
+    const sidebarMenuContainer = document.getElementById("unit-menu-anchor");
+    sidebarMenuContainer.innerHTML = "";
+
+    CURRICULUM_DATABASE.forEach((topicModule, index) => {
+        const itemListNode = document.createElement("li");
+        itemListNode.className = `unit-item ${index === CURRENT_UNIT_INDEX ? 'active' : ''}`;
+        itemListNode.onclick = () => switchCurriculumTopicModule(index);
+
+        const textMetadataContainer = document.createElement("div");
+        textMetadataContainer.innerHTML = `<strong>${topicModule.title}</strong>`;
+        
+        const badgeCountNode = document.createElement("span");
+        badgeCountNode.className = "unit-meta";
+        badgeCountNode.textContent = `(${topicModule.questions.length} Tasks)`;
+
+        itemListNode.appendChild(textMetadataContainer);
+        itemListNode.appendChild(badgeCountNode);
+        sidebarMenuContainer.appendChild(itemListNode);
+    });
+
+    renderActiveTopicWorkspace();
+}
+
+function switchCurriculumTopicModule(targetModuleIndex) {
+    if (targetModuleIndex === CURRENT_UNIT_INDEX) return;
+    CURRENT_UNIT_INDEX = targetModuleIndex;
+    CURRENT_QUESTION_INDEX = 0;
+    TRACKING_SCORES_ARRAY = Array(10).fill(false);
+    
+    // Refresh Sidebar Activation Classes
+    const items = document.querySelectorAll(".unit-item");
+    items.forEach((li, idx) => {
+        if (idx === CURRENT_UNIT_INDEX) li.classList.add("active");
+        else li.classList.remove("active");
+    });
+
+    renderActiveTopicWorkspace();
+}
+
+function renderActiveTopicWorkspace() {
+    const activeModuleData = CURRICULUM_DATABASE[CURRENT_UNIT_INDEX];
+    
+    // Title & Video Player Configuration
+    document.getElementById("active-unit-title").textContent = activeModuleData.title;
+    document.getElementById("video-frame-target").src = activeModuleData.videoUrl;
+
+    // Build Task Progress Indicators
+    const dotsContainer = document.getElementById("dots-row-anchor");
+    dotsContainer.innerHTML = "";
+    
+    for (let i = 0; i < activeModuleData.questions.length; i++) {
+        const dotElement = document.createElement("div");
+        dotElement.className = "dot";
+        dotElement.textContent = i + 1;
+        if (i === CURRENT_QUESTION_INDEX) dotElement.classList.add("active");
+        if (TRACKING_SCORES_ARRAY[i]) dotElement.classList.add("solved");
+        dotsContainer.appendChild(dotElement);
+    }
+
+    // Question Text Canvas Render
+    const activeQuestion = activeModuleData.questions[CURRENT_QUESTION_INDEX];
+    document.getElementById("question-text-target").innerHTML = activeQuestion.text;
+    
+    // Clear Input Field & Interface States
+    document.getElementById("student-answer-input").value = "";
+    document.getElementById("student-answer-input").disabled = false;
+    document.getElementById("action-verify-btn").style.display = "block";
+    document.getElementById("action-next-btn").style.display = "none";
+    
+    // Close Banners & Hidden Analytics Viewports
+    document.getElementById("hud-status-banner").style.display = "none";
+    document.getElementById("analytics-panel").style.display = "none";
+}
+
+function verifyCurrentResponse() {
+    const activeModuleData = CURRICULUM_DATABASE[CURRENT_UNIT_INDEX];
+    const activeQuestion = activeModuleData.questions[CURRENT_QUESTION_INDEX];
+    const rawInputText = document.getElementById("student-answer-input").value.trim().toLowerCase();
+    
+    const bannerElement = document.getElementById("hud-status-banner");
+    const analyticsPanel = document.getElementById("analytics-panel");
+    const analyticsText = document.getElementById("analytics-text-target");
+
+    if (rawInputText === "") {
+        bannerElement.className = "feedback-banner error";
+        bannerElement.textContent = "Kindly enter a calculation solution before submitting verification demands.";
+        bannerElement.style.display = "block";
+        playSoundEffect(false);
+        return;
+    }
+
+    if (rawInputText === activeQuestion.ans.toLowerCase()) {
+        // Success Configuration
+        TRACKING_SCORES_ARRAY[CURRENT_QUESTION_INDEX] = true;
+        bannerElement.className = "feedback-banner success";
+        bannerElement.textContent = "Vizuri sana! Correct answer verified successfully.";
+        bannerElement.style.display = "block";
+        
+        // Update Indicator State
+        const dots = document.getElementById("dots-row-anchor").children;
+        if (dots[CURRENT_QUESTION_INDEX]) dots[CURRENT_QUESTION_INDEX].classList.add("solved");
+
+        // Display Detailed Step Analytics Underneath
+        analyticsText.innerHTML = activeQuestion.steps;
+        analyticsPanel.style.display = "block";
+
+        // Lock Input and Switch Action Button States
+        document.getElementById("student-answer-input").disabled = true;
+        document.getElementById("action-verify-btn").style.display = "none";
+        document.getElementById("action-next-btn").style.display = "block";
+        
+        playSoundEffect(true);
+    } else {
+        // Failure System Configuration
+        bannerElement.className = "feedback-banner error";
+        bannerElement.textContent = "Incorrect result calculation. Review your operational layout and attempt again.";
+        bannerElement.style.display = "block";
+        playSoundEffect(false);
+    }
+}
+
+function advanceToNextProblem() {
+    const activeModuleData = CURRICULUM_DATABASE[CURRENT_UNIT_INDEX];
+    
+    if (CURRENT_QUESTION_INDEX + 1 < activeModuleData.questions.length) {
+        CURRENT_QUESTION_INDEX++;
+        renderActiveTopicWorkspace();
+    } else {
+        // Final Task in Topic Completed Successfully
+        alert("Hongera! You have successfully mastered all task assignments within this curricular topic module block.");
+    }
+}
+
+// ==========================================================================
+// 9. EXTRA UTILITIES ARCHITECTURE: COMPANION DIALOGUE & CALC CONSOLE
+// ==========================================================================
+function submitChatQuery() {
+    const inputField = document.getElementById("chat-input-field");
+    const logWindow = document.getElementById("chat-logs");
+    const userText = inputField.value.trim();
+
+    if (userText === "") return;
+
+    // Append Student Dialogue Node
+    const studentLine = document.createElement("div");
+    studentLine.className = "chat-msg student";
+    studentLine.innerHTML = `<strong>You:</strong> ${userText}`;
+    logWindow.appendChild(studentLine);
+    
+    inputField.value = "";
+
+    // Generate Contextual Professor AI Reply Structure
+    setTimeout(() => {
+        const profLine = document.createElement("div");
+        profLine.className = "chat-msg professor";
+        
+        // Simple heuristic response logic mapping
+        if (userText.toLowerCase().includes("how") || userText.toLowerCase().includes("step")) {
+            profLine.innerHTML = `<strong>Prof. Oneiro:</strong> Always isolate the constants and align matching bases carefully. Verify the operations sequence!`;
+        } else if (userText.toLowerCase().includes("answer") || userText.toLowerCase().includes("formula")) {
+            profLine.innerHTML = `<strong>Prof. Oneiro:</strong> Check the explicit analytics panel tied to your current task. The proof profile yields precise pathways.`;
+        } else {
+            profLine.innerHTML = `<strong>Prof. Oneiro:</strong> Excellent mathematical query! Focus intensely on step-by-step balance transformations and check your calculation syntax.`;
+        }
+        
+        logWindow.appendChild(profLine);
+        logWindow.scrollTop = logWindow.scrollHeight;
+    }, 600);
+}
+
+// Scratchpad Math Engine Operations Wrapper
+let currentCalcString = "";
+
+function appendCalc(charValue) {
+    const displayElement = document.getElementById("calc-display");
+    if (currentCalcString === "0" && charValue !== ".") {
+        currentCalcString = "";
+    }
+    currentCalcString += charValue;
+    displayElement.textContent = currentCalcString;
+}
+
+function clearCalc() {
+    currentCalcString = "";
+    document.getElementById("calc-display").textContent = "0";
+}
+
+function evalCalc() {
+    const displayElement = document.getElementById("calc-display");
+    if (currentCalcString === "") return;
+    try {
+        // Safe evaluation over strict character validation limits
+        const safeCalculationResult = new Function(`return (${currentCalcString})`)();
+        displayElement.textContent = Number(safeCalculationResult).toFixed(3).replace(/\.?0+$/, "");
+        currentCalcString = displayElement.textContent;
+    } catch (err) {
+        displayElement.textContent = "Error";
+        currentCalcString = "";
+    }
+}
+
+// Mount Platform Window Core Engine Listeners
+window.addEventListener("DOMContentLoaded", mountPlatformApplication);
+</script>
+
+</body>
+</html>
+
+
 
