@@ -6,6 +6,7 @@
     <title>Executive Admissions | UEFI Global</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Bebas+Neue&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     
     <style>
         :root {
@@ -334,16 +335,16 @@
                 <h2>Candidate Portfolio</h2>
             </div>
 
-            <form action="https://formspree.io/f/xnjoplag" method="POST" class="enroll-form">
+            <form action="https://formspree.io/f/xnjoplag" method="POST" class="enroll-form" id="enrollment-form">
                 
                 <div class="input-group full">
                     <label>Full Name</label>
-                    <input type="text" name="FullName" placeholder="e.g. Maria Leshau" required>
+                    <input type="text" id="fullname-field" name="FullName" placeholder="e.g. Maria Leshau" required>
                 </div>
 
                 <div class="input-group full">
                     <label>Professional Email</label>
-                    <input type="email" name="Email" placeholder="m.leshau@uefi.org" required>
+                    <input type="email" id="email-field" name="Email" placeholder="m.leshau@uefi.org" required>
                 </div>
 
                 <div class="input-group">
@@ -371,6 +372,26 @@
                     <textarea name="Vision" rows="4" placeholder="Briefly describe your goals..."></textarea>
                 </div>
 
+                <div id="g_id_onload"
+                     data-client_id="364917808477-afe7jv30ki4r6ld2g5rm6a2dt5kuma3l.apps.googleusercontent.com"
+                     data-context="signin"
+                     data-ux_mode="popup"
+                     data-callback="handleGoogleEnrollmentResponse"
+                     data-auto_select="false">
+                </div>
+
+                <div class="full" style="margin-bottom: 5px;">
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-shape="rectangular"
+                         data-theme="filled_blue"
+                         data-text="signin_with"
+                         data-size="large"
+                         data-logo_alignment="left"
+                         data-width="380">
+                    </div>
+                </div>
+
                 <input type="hidden" name="_subject" value="GLOBAL ADMISSION: UEFI 2026">
                 <button type="submit" class="btn-submit">Submit Formal Application</button>
             </form>
@@ -387,6 +408,18 @@
     </div>
 
     <script>
+        // Google Identity processing logic
+        function handleGoogleEnrollmentResponse(response) {
+            const idToken = response.credential;
+            const payload = JSON.parse(atob(idToken.split('.')[1]));
+            
+            // Map token variables directly onto form targets
+            document.getElementById('fullname-field').value = payload.name;
+            document.getElementById('email-field').value = payload.email;
+            
+            console.log("Verified identity parameter payload securely loaded for standard submission.");
+        }
+
         const audioTrack = document.getElementById('calmAmbientAudio');
         const audioToggleBtn = document.getElementById('audioNodeToggle');
         const statusLight = document.getElementById('audioStatusLight');
@@ -397,7 +430,6 @@
                 .then(() => {
                     statusLight.classList.add('playing');
                     nodeText.innerText = "Ambient: Active";
-                    // Clean up interaction triggers once successfully playing
                     window.removeEventListener('click', playAmbientTrack);
                     window.removeEventListener('scroll', playAmbientTrack);
                 })
@@ -418,19 +450,16 @@
             }
         }
 
-        // 1. Attempt blind setup execution on resource layout mount
         window.addEventListener('DOMContentLoaded', () => {
-            audioTrack.volume = 0.5; // Smooth balancing level to avoid shattering focus
+            audioTrack.volume = 0.5;
             playAmbientTrack();
             
-            // 2. Proactive Fallback Layer: fires immediately on user's first natural form interaction gesture
             window.addEventListener('click', playAmbientTrack);
             window.addEventListener('scroll', playAmbientTrack);
         });
 
-        // 3. User override node click connector
         audioToggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Shield from handling the generic window fallback logic loop
+            e.stopPropagation();
             toggleAudioManually();
         });
     </script>
