@@ -406,7 +406,7 @@
             font-weight: 700;
             cursor: pointer;
             color: var(--gray);
-            transition: all 0.2s;
+            transition: all 0.2;
         }
 
         .role-pill.active {
@@ -539,40 +539,40 @@
                 </div>
             </div>
 
-            <a href="#" class="btn-nav-login" onclick="openAuthModal('login')">Log In</a>
-            <a href="#" class="btn-nav-signup" onclick="openAuthModal('signup')">Sign Up</a>
+            <a href="#" class="btn-nav-login" data-i18n="nav_login" onclick="openAuthModal('login')">Log In</a>
+            <a href="#" class="btn-nav-signup" data-i18n="nav_signup" onclick="openAuthModal('signup')">Sign Up</a>
         </div>
     </header>
 
     <main class="main-container">
         <section class="hero-banner">
             <div class="hero-info">
-                <h1>A Personalized Learning Odyssey for <span>Every Learner</span>.</h1>
-                <p> UEFI Global pairs core localized performance standards with world-class interactive execution tracks. Free, structural, and custom-built for scaling outcomes.</p>
+                <h1 id="heroTitle">A Personalized Learning Odyssey for <span data-i18n="hero_span">Every Learner</span>.</h1>
+                <p data-i18n="hero_desc"> UEFI Global pairs core localized performance standards with world-class interactive execution tracks. Free, structural, and custom-built for scaling outcomes.</p>
             </div>
         </section>
 
-        <h2 class="phase-headline">Start Learning Now</h2>
+        <h2 class="phase-headline" data-i18n="phase_headline">Start Learning Now</h2>
         <section class="phases-grid">
             <div class="phase-card learners" onclick="openAuthModal('signup', 'learner')">
                 <span class="phase-icon">🎓</span>
-                <h3>Learners</h3>
-                <p>Join organized virtual text pathways, practice dynamically, and secure trackable skill metrics.</p>
-                <span class="btn-phase">Start Learning</span>
+                <h3 data-i18n="card_learner_title">Learners</h3>
+                <p data-i18n="card_learner_desc">Join organized virtual text pathways, practice dynamically, and secure trackable skill metrics.</p>
+                <span class="btn-phase" data-i18n="card_learner_btn">Start Learning</span>
             </div>
 
             <div class="phase-card teachers" onclick="openAuthModal('signup', 'teacher')">
                 <span class="phase-icon">🏫</span>
-                <h3>Teachers</h3>
-                <p>Empower your entire classroom ecosystem with tools to map targets onto structural dashboards.</p>
-                <span class="btn-phase">Start Teaching</span>
+                <h3 data-i18n="card_teacher_title">Teachers</h3>
+                <p data-i18n="card_teacher_desc">Empower your entire classroom ecosystem with tools to map targets onto structural dashboards.</p>
+                <span class="btn-phase" data-i18n="card_teacher_btn">Start Teaching</span>
             </div>
 
             <div class="phase-card parents" onclick="openAuthModal('signup', 'parent')">
                 <span class="phase-icon">🏠</span>
-                <h3>Parents</h3>
-                <p>Keep a real-time tracking pulse on execution pipelines and learning growth metrics easily.</p>
-                <span class="btn-phase">Start Guiding</span>
+                <h3 data-i18n="card_parent_title">Parents</h3>
+                <p data-i18n="card_parent_desc">Keep a real-time tracking pulse on execution pipelines and learning growth metrics easily.</p>
+                <span class="btn-phase" data-i18n="card_parent_btn">Start Guiding</span>
             </div>
         </section>
     </main>
@@ -582,59 +582,59 @@
             <button class="close-modal" onclick="closeAuthModal()">&times;</button>
             
             <div class="modal-tabs">
-                <button class="modal-tab-btn" id="tabBtnLogin" onclick="switchMode('login')">Log In</button>
-                <button class="modal-tab-btn" id="tabBtnSignup" onclick="switchMode('signup')">Sign Up</button>
+                <button class="modal-tab-btn" id="tabBtnLogin" data-i18n="tab_login" onclick="switchMode('login')">Log In</button>
+                <button class="modal-tab-btn" id="tabBtnSignup" data-i18n="tab_signup" onclick="switchMode('signup')">Sign Up</button>
             </div>
 
             <div id="loginViewPane">
-                <h2 style="font-weight: 800; margin-bottom: 5px;" id="loginTitle">Welcome Back</h2>
-                <p style="color: var(--gray); font-size: 14px; margin-bottom: 20px;">Enter verification details to resume your progress.</p>
+                <h2 style="font-weight: 800; margin-bottom: 5px;" id="loginTitle" data-i18n="login_title">Welcome Back</h2>
+                <p style="color: var(--gray); font-size: 14px; margin-bottom: 20px;" data-i18n="login_desc">Enter verification details to resume your progress.</p>
                 
                 <form onsubmit="handleManualAuth(event, 'login')">
                     <div class="form-group">
-                        <label for="loginEmail">Account Email Address</label>
+                        <label for="loginEmail" data-i18n="label_email">Account Email Address</label>
                         <input type="email" id="loginEmail" class="form-input" placeholder="name@domain.com" required>
                     </div>
-                    <button type="submit" class="btn-submit-auth">Verify Email & Enter</button>
+                    <button type="submit" class="btn-submit-auth" data-i18n="btn_login_submit">Verify Email & Enter</button>
                 </form>
             </div>
 
             <div id="signupViewPane" class="hidden-pane">
-                <h2 style="font-weight: 800; margin-bottom: 5px;">Create New Account</h2>
-                <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;">Choose your primary ecosystem role below:</p>
+                <h2 style="font-weight: 800; margin-bottom: 5px;" data-i18n="signup_title">Create New Account</h2>
+                <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;" data-i18n="signup_desc">Choose your primary ecosystem role below:</p>
                 
                 <div class="role-selector-bar">
-                    <div class="role-pill active" id="pill-learner" onclick="setSignUpRole('learner')">Learner</div>
-                    <div class="role-pill" id="pill-teacher" onclick="setSignUpRole('teacher')">Teacher</div>
-                    <div class="role-pill" id="pill-parent" onclick="setSignUpRole('parent')">Parent</div>
+                    <div class="role-pill active" id="pill-learner" data-i18n="role_learner" onclick="setSignUpRole('learner')">Learner</div>
+                    <div class="role-pill" id="pill-teacher" data-i18n="role_teacher" onclick="setSignUpRole('teacher')">Teacher</div>
+                    <div class="role-pill" id="pill-parent" data-i18n="role_parent" onclick="setSignUpRole('parent')">Parent</div>
                 </div>
 
                 <form onsubmit="handleManualAuth(event, 'signup')">
                     <div class="form-group">
-                        <label for="signupName">Full Legal Name</label>
+                        <label for="signupName" data-i18n="label_name">Full Legal Name</label>
                         <input type="text" id="signupName" class="form-input" placeholder="e.g. Juma Amina" required>
                     </div>
                     <div class="form-group">
-                        <label for="signupPreferredName">Preferred Name / Handle (For Privacy & Community spaces)</label>
+                        <label for="signupPreferredName" data-i18n="label_pref_name">Preferred Name / Handle (For Privacy & Community spaces)</label>
                         <input type="text" id="signupPreferredName" class="form-input" placeholder="e.g. Amina_Codes or TeacherJuma" required>
                     </div>
                     <div class="form-group" id="birthdayGroup">
-                        <label for="signupBirthday">Date of Birth</label>
+                        <label for="signupBirthday" data-i18n="label_dob">Date of Birth</label>
                         <input type="date" id="signupBirthday" class="form-input">
                     </div>
                     <div class="form-group">
-                        <label for="signupEmail">Email Address</label>
+                        <label for="signupEmail" data-i18n="label_email">Email Address</label>
                         <input type="email" id="signupEmail" class="form-input" placeholder="name@domain.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="signupPassword">Create Secure Password</label>
+                        <label for="signupPassword" data-i18n="label_password">Create Secure Password</label>
                         <input type="password" id="signupPassword" class="form-input" placeholder="••••••••" required>
                     </div>
-                    <button type="submit" class="btn-submit-auth">Complete Account Registration</button>
+                    <button type="submit" class="btn-submit-auth" data-i18n="btn_signup_submit">Complete Account Registration</button>
                 </form>
             </div>
 
-            <div class="divider-container">or continue with authenticated partner</div>
+            <div class="divider-container" data-i18n="auth_divider">or continue with authenticated partner</div>
 
             <div class="google-btn-wrapper">
                 <div id="g_id_onload"
@@ -668,6 +668,99 @@
         
         let targetSignUpRole = 'learner';
 
+        /* Dynamic Translation Dictionary Configurations */
+        const translations = {
+            'English': {
+                'nav_login': 'Log In',
+                'nav_signup': 'Sign Up',
+                'hero_span': 'Every Learner',
+                'hero_desc': 'UEFI Global pairs core localized performance standards with world-class interactive execution tracks. Free, structural, and custom-built for scaling outcomes.',
+                'phase_headline': 'Start Learning Now',
+                'card_learner_title': 'Learners',
+                'card_learner_desc': 'Join organized virtual text pathways, practice dynamically, and secure trackable skill metrics.',
+                'card_learner_btn': 'Start Learning',
+                'card_teacher_title': 'Teachers',
+                'card_teacher_desc': 'Empower your entire classroom ecosystem with tools to map targets onto structural dashboards.',
+                'card_teacher_btn': 'Start Teaching',
+                'card_parent_title': 'Parents',
+                'card_parent_desc': 'Keep a real-time tracking pulse on execution pipelines and learning growth metrics easily.',
+                'card_parent_btn': 'Start Guiding',
+                'tab_login': 'Log In',
+                'tab_signup': 'Sign Up',
+                'login_title': 'Welcome Back',
+                'login_desc': 'Enter verification details to resume your progress.',
+                'label_email': 'Account Email Address',
+                'btn_login_submit': 'Verify Email & Enter',
+                'signup_title': 'Create New Account',
+                'signup_desc': 'Choose your primary ecosystem role below:',
+                'role_learner': 'Learner',
+                'role_teacher': 'Teacher',
+                'role_parent': 'Parent',
+                'label_name': 'Full Legal Name',
+                'label_pref_name': 'Preferred Name / Handle (For Privacy & Community spaces)',
+                'label_dob': 'Date of Birth',
+                'label_password': 'Create Secure Password',
+                'btn_signup_submit': 'Complete Account Registration',
+                'auth_divider': 'or continue with authenticated partner'
+            },
+            'Kiswahili': {
+                'nav_login': 'Ingia',
+                'nav_signup': 'Jisajili',
+                'hero_span': 'Kila Mwanafunzi',
+                'hero_desc': 'UEFI Global inaunganisha viwango vya msingi vya utendaji wa ndani na mifumo ya kimataifa ya utendaji shirikishi. Bure, yenye muundo, na iliyoundwa maalum kwa matokeo bora.',
+                'phase_headline': 'Anza Kujifunza Sasa',
+                'card_learner_title': 'Wanafunzi',
+                'card_learner_desc': 'Jiunge na njia zilizopangwa za masomo ya mtandaoni, fanya mazoezi kwa vitendo, na upate alama za ujuzi zinazofuatiliwa.',
+                'card_learner_btn': 'Anza Kujifunza',
+                'card_teacher_title': 'Walimu',
+                'card_teacher_desc': 'Wezesha mfumo mzima wa darasa lako kwa zana za kupanga malengo kwenye dashibodi zenye muundo.',
+                'card_teacher_btn': 'Anza Kufundisha',
+                'card_parent_title': 'Wazazi',
+                'card_parent_desc': 'Fuatilia kwa wakati halisi mwenendo wa masomo na vipimo vya ukuaji wa ujifunzaji kwa urahisi.',
+                'card_parent_btn': 'Anza Kuongoza',
+                'tab_login': 'Ingia',
+                'tab_signup': 'Jisajili',
+                'login_title': 'Karibu Tena',
+                'login_desc': 'Ingiza maelezo ya uthibitisho ili kuendelea na maendeleo yako.',
+                'label_email': 'Barua Pepe ya Akaunti',
+                'btn_login_submit': 'Thibitisha Barua Pepe & Ingia',
+                'signup_title': 'Fungua Akaunti Mpya',
+                'signup_desc': 'Chagua jukumu lako kuu la mfumo hapa chini:',
+                'role_learner': 'Mwanafunzi',
+                'role_teacher': 'Mwalimu',
+                'role_parent': 'Mzazi',
+                'label_name': 'Majina Kamili ya Kisheria',
+                'label_pref_name': 'Jina Linalopendelewa / Jina la Utani (Kwa Faragha & Nafasi za Kijamii)',
+                'label_dob': 'Tarehe ya Kuzaliwa',
+                'label_password': 'Weka Nenosiri Salama',
+                'btn_signup_submit': 'Kamilisha Usajili wa Akaunti',
+                'auth_divider': 'au endelea na mshirika aliyethibitishwa'
+            }
+            // Add entries for Dholuo, Kisii, Kuria, German, etc. in exactly the same format
+        };
+
+        /* Update UI Content across DOM Elements based on keys */
+        function applyTranslations(lang) {
+            const dictionary = translations[lang];
+            if (!dictionary) return; // If language dictionary entries aren't filled yet
+
+            // Translate normal attributes
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const translationKey = element.getAttribute('data-i18n');
+                if (dictionary[translationKey]) {
+                    element.innerText = dictionary[translationKey];
+                }
+            });
+
+            // Handle unique mixed/nested HTML containers like the Hero Heading text node
+            const heroTitle = document.getElementById('heroTitle');
+            if (lang === 'Kiswahili') {
+                heroTitle.innerHTML = `Safari ya Kujifunza Iliyobinafsishwa kwa Ajili ya <span>${dictionary['hero_span']}</span>.`;
+            } else if (lang === 'English') {
+                heroTitle.innerHTML = `A Personalized Learning Odyssey for <span>${dictionary['hero_span']}</span>.`;
+            }
+        }
+
         /* Language Selector Logics */
         function toggleLangDropdown(event) {
             event.stopPropagation();
@@ -675,13 +768,22 @@
         }
 
         function selectLanguage(lang, event) {
-            event.preventDefault();
+            if (event) event.preventDefault();
             document.getElementById('currentLangLabel').innerText = lang;
             langContainer.classList.remove('show');
+            
             // Store selected preference inside localStorage container
             localStorage.setItem("uefiLanguagePreference", lang);
             console.log("Language context switched to: " + lang);
+            
+            applyTranslations(lang);
         }
+
+        // Run checking algorithm upon initial script load to preserve user settings
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedLanguage = localStorage.getItem("uefiLanguagePreference") || "English";
+            selectLanguage(savedLanguage);
+        });
 
         // Close language dropdown if clicked anywhere outside
         window.addEventListener('click', function() {
