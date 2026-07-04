@@ -473,3 +473,94 @@ app.listen(INTERACTIVE_RUN_PORT, '0.0.0.0', () => {
     console.log(`[NET ADAPTER BINDING] Mapping interfaces on host channel port: ${INTERACTIVE_RUN_PORT}`);
     console.log(`================================================================\n`);
 });
+
+// ============================================================================
+// UEFI ZOOM - EMBEDDED VIDEO CONFERENCING ENGINE STRATUM
+// ============================================================================
+// Add this section directly into your existing server.js file
+
+const ZOOM_DB_PATH = path.join(__dirname, 'uefi_zoom_persistent_db.json');
+
+/**
+ * Initializes the Zoom room persistence layer on the hard drive
+ */
+function verifyAndBootstrapZoomStorage() {
+    try {
+        if (!fs.existsSync(ZOOM_DB_PATH)) {
+            fs.writeFileSync(ZOOM_DB_PATH, JSON.stringify([], null, 4), 'utf8');
+            console.log(`[ZOOM ENGINE] Initialized clean virtual room storage: ${ZOOM_DB_PATH}`);
+        }
+    } catch (err) {
+        console.error("[ZOOM INIT ERROR] Hard drive allocation blocked:", err);
+    }
+}
+verifyAndBootstrapZoomStorage();
+
+function fetchActiveZoomRooms() {
+    try {
+        const data = fs.readFileSync(ZOOM_DB_PATH, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        return [];
+    }
+}
+
+function commitZoomRooms(roomsPayload) {
+    try {
+        fs.writeFileSync(ZOOM_DB_PATH, JSON.stringify(roomsPayload, null, 4), 'utf8');
+    } catch (err) {
+        console.error("[ZOOM WRITE ERROR] Failed to save active rooms:", err);
+    }
+}
+
+/**
+ * GET /api/zoom/rooms
+ * Retrieves all currently active video conferencing spaces
+ */
+app.get('/api/zoom/rooms', (req, res) => {
+    const activeRooms = fetchActiveZoomRooms();
+    return res.status(200).json({
+        success: true,
+        count: activeRooms.length,
+        rooms: activeRooms
+    });
+});
+
+/**
+ * POST /api/zoom/rooms
+ * Creates a brand new secure embedded video layout space
+ */
+app.post('/api/zoom/rooms', securePipelineAuthenticationGuard, (req, res) => {
+    const { roomTitle, subjectTopic } = req.body;
+    const authorContext = req.authenticatedUserContext;
+
+    if (!roomTitle || roomTitle.trim() === "") {
+        return res.status(400).json({ success: false, message: "Zoom Error: Room Title is mandatory." });
+    }
+
+    const currentRooms = fetchActiveZoomRooms();
+    
+    // Generate an un-guessable unique room string identifier for the embedded window
+    const uniqueRoomSlug = `uefi-room-${crypto.randomUUID().substring(0, 8)}`;
+
+    const newlyCompiledRoom = {
+        id: crypto.randomUUID(),
+        roomSlug: uniqueRoomSlug,
+        title: roomTitle.trim(),
+        topic: subjectTopic ? subjectTopic.trim() : "General Discussion",
+        hostName: authorContext.name,
+        hostEmail: authorContext.email,
+        createdAt: new Date().toISOString()
+    };
+
+    currentRooms.unshift(newlyCompiledRoom);
+    commitZoomRooms(currentRooms);
+
+    console.log(`[ZOOM ROOM CREATED] Room: ${roomTitle} | Slug: ${uniqueRoomSlug} | Host: ${authorContext.name}`);
+
+    return res.status(201).json({
+        success: true,
+        message: "Your internal video room space has been provisioned successfully!",
+        room: newlyCompiledRoom
+    });
+});
