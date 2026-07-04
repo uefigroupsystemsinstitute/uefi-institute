@@ -132,7 +132,6 @@
             color: var(--safaricom-green);
         }
 
-        /* Show the dropdown menu using JS class toggle */
         .lang-dropdown-container.show .lang-dropdown-content {
             display: block;
         }
@@ -168,7 +167,7 @@
             box-shadow: 0 6px 14px rgba(38, 177, 76, 0.4);
         }
 
-        /* Khan-Academy Style Multi-Phase Hero Layout */
+        /* Main Layout */
         .main-container {
             max-width: 1200px;
             margin: 40px auto;
@@ -226,7 +225,7 @@
             margin-bottom: 0;
         }
 
-        /* Vibrant Category Cards / Khan Learning Phases */
+        /* Category Cards */
         .phase-headline {
             text-align: center;
             font-size: 28px;
@@ -310,7 +309,7 @@
             color: var(--white) !important;
         }
 
-        /* Modal Overlay Engine */
+        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -362,7 +361,7 @@
             font-weight: 700;
         }
 
-        /* Tab switch style inside Modal */
+        /* Tab Switch inside Modal */
         .modal-tabs {
             display: flex;
             background-color: var(--light-gray);
@@ -390,7 +389,7 @@
             box-shadow: 0 4px 10px rgba(38, 177, 76, 0.2);
         }
 
-        /* Sub-Role Selector for SignUp Phase (Khan Style) */
+        /* Role Selector */
         .role-selector-bar {
             display: flex;
             justify-content: center;
@@ -406,7 +405,7 @@
             font-weight: 700;
             cursor: pointer;
             color: var(--gray);
-            transition: all 0.2;
+            transition: all 0.2s;
         }
 
         .role-pill.active {
@@ -415,7 +414,7 @@
             background-color: #FFF5F5;
         }
 
-        /* Forms Layout & Inputs */
+        /* Form Controls */
         .form-group {
             margin-bottom: 18px;
             text-align: left;
@@ -531,11 +530,10 @@
                     <a href="#" onclick="selectLanguage('Kalenjin', event)">Kalenjin</a>
                     <a href="#" onclick="selectLanguage('Luhya', event)">Luhya</a>
                     <a href="#" onclick="selectLanguage('Somali', event)">Somali</a>
-                    <a href="#" onclick="selectLanguage('German', event)">German</a>
-                    <a href="#" onclick="selectLanguage('Hindi', event)">Hindi</a>
+                    <a href="#" onclick="selectLanguage('Deutsch', event)">Deutsch</a>
                     <a href="#" onclick="selectLanguage('French', event)">French</a>
-                    <a href="#" onclick="selectLanguage('Chinese', event)">Chinese</a>
                     <a href="#" onclick="selectLanguage('Spanish', event)">Spanish</a>
+                    <a href="#" onclick="selectLanguage('Chinese', event)">Chinese</a>
                 </div>
             </div>
 
@@ -547,8 +545,8 @@
     <main class="main-container">
         <section class="hero-banner">
             <div class="hero-info">
-                <h1 id="heroTitle">A Personalized Learning Odyssey for <span data-i18n="hero_span">Every Learner</span>.</h1>
-                <p data-i18n="hero_desc"> UEFI Global pairs core localized performance standards with world-class interactive execution tracks. Free, structural, and custom-built for scaling outcomes.</p>
+                <h1 id="heroTitle">A Personalized Learning Odyssey for <span>Every Learner</span>.</h1>
+                <p data-i18n="hero_desc">UEFI Global pairs core localized performance standards with world-class interactive execution tracks. Free, structural, and custom-built for scaling outcomes.</p>
             </div>
         </section>
 
@@ -671,80 +669,259 @@
         /* Dynamic Translation Dictionary Configurations */
         const translations = {
             'English': {
-                'nav_login': 'Log In',
-                'nav_signup': 'Sign Up',
-                'hero_span': 'Every Learner',
+                'nav_login': 'Log In', 'nav_signup': 'Sign Up', 'hero_title_pre': 'A Personalized Learning Odyssey for ',
+                'hero_span': 'Every Learner', 'hero_title_post': '.',
                 'hero_desc': 'UEFI Global pairs core localized performance standards with world-class interactive execution tracks. Free, structural, and custom-built for scaling outcomes.',
-                'phase_headline': 'Start Learning Now',
-                'card_learner_title': 'Learners',
+                'phase_headline': 'Start Learning Now', 'card_learner_title': 'Learners',
                 'card_learner_desc': 'Join organized virtual text pathways, practice dynamically, and secure trackable skill metrics.',
-                'card_learner_btn': 'Start Learning',
-                'card_teacher_title': 'Teachers',
+                'card_learner_btn': 'Start Learning', 'card_teacher_title': 'Teachers',
                 'card_teacher_desc': 'Empower your entire classroom ecosystem with tools to map targets onto structural dashboards.',
-                'card_teacher_btn': 'Start Teaching',
-                'card_parent_title': 'Parents',
+                'card_teacher_btn': 'Start Teaching', 'card_parent_title': 'Parents',
                 'card_parent_desc': 'Keep a real-time tracking pulse on execution pipelines and learning growth metrics easily.',
-                'card_parent_btn': 'Start Guiding',
-                'tab_login': 'Log In',
-                'tab_signup': 'Sign Up',
-                'login_title': 'Welcome Back',
-                'login_desc': 'Enter verification details to resume your progress.',
-                'label_email': 'Account Email Address',
-                'btn_login_submit': 'Verify Email & Enter',
-                'signup_title': 'Create New Account',
-                'signup_desc': 'Choose your primary ecosystem role below:',
-                'role_learner': 'Learner',
-                'role_teacher': 'Teacher',
-                'role_parent': 'Parent',
-                'label_name': 'Full Legal Name',
-                'label_pref_name': 'Preferred Name / Handle (For Privacy & Community spaces)',
-                'label_dob': 'Date of Birth',
-                'label_password': 'Create Secure Password',
-                'btn_signup_submit': 'Complete Account Registration',
-                'auth_divider': 'or continue with authenticated partner'
+                'card_parent_btn': 'Start Guiding', 'tab_login': 'Log In', 'tab_signup': 'Sign Up',
+                'login_title': 'Welcome Back', 'login_desc': 'Enter verification details to resume your progress.',
+                'label_email': 'Account Email Address', 'btn_login_submit': 'Verify Email & Enter',
+                'signup_title': 'Create New Account', 'signup_desc': 'Choose your primary ecosystem role below:',
+                'role_learner': 'Learner', 'role_teacher': 'Teacher', 'role_parent': 'Parent',
+                'label_name': 'Full Legal Name', 'label_pref_name': 'Preferred Name / Handle (For Privacy & Community spaces)',
+                'label_dob': 'Date of Birth', 'label_password': 'Create Secure Password',
+                'btn_signup_submit': 'Complete Account Registration', 'auth_divider': 'or continue with authenticated partner'
             },
             'Kiswahili': {
-                'nav_login': 'Ingia',
-                'nav_signup': 'Jisajili',
-                'hero_span': 'Kila Mwanafunzi',
+                'nav_login': 'Ingia', 'nav_signup': 'Jisajili', 'hero_title_pre': 'Safari ya Kujifunza Iliyobinafsishwa kwa Ajili ya ',
+                'hero_span': 'Kila Mwanafunzi', 'hero_title_post': '.',
                 'hero_desc': 'UEFI Global inaunganisha viwango vya msingi vya utendaji wa ndani na mifumo ya kimataifa ya utendaji shirikishi. Bure, yenye muundo, na iliyoundwa maalum kwa matokeo bora.',
-                'phase_headline': 'Anza Kujifunza Sasa',
-                'card_learner_title': 'Wanafunzi',
+                'phase_headline': 'Anza Kujifunza Sasa', 'card_learner_title': 'Wanafunzi',
                 'card_learner_desc': 'Jiunge na njia zilizopangwa za masomo ya mtandaoni, fanya mazoezi kwa vitendo, na upate alama za ujuzi zinazofuatiliwa.',
-                'card_learner_btn': 'Anza Kujifunza',
-                'card_teacher_title': 'Walimu',
+                'card_learner_btn': 'Anza Kujifunza', 'card_teacher_title': 'Walimu',
                 'card_teacher_desc': 'Wezesha mfumo mzima wa darasa lako kwa zana za kupanga malengo kwenye dashibodi zenye muundo.',
-                'card_teacher_btn': 'Anza Kufundisha',
-                'card_parent_title': 'Wazazi',
+                'card_teacher_btn': 'Anza Kufundisha', 'card_parent_title': 'Wazazi',
                 'card_parent_desc': 'Fuatilia kwa wakati halisi mwenendo wa masomo na vipimo vya ukuaji wa ujifunzaji kwa urahisi.',
-                'card_parent_btn': 'Anza Kuongoza',
-                'tab_login': 'Ingia',
-                'tab_signup': 'Jisajili',
-                'login_title': 'Karibu Tena',
-                'login_desc': 'Ingiza maelezo ya uthibitisho ili kuendelea na maendeleo yako.',
-                'label_email': 'Barua Pepe ya Akaunti',
-                'btn_login_submit': 'Thibitisha Barua Pepe & Ingia',
-                'signup_title': 'Fungua Akaunti Mpya',
-                'signup_desc': 'Chagua jukumu lako kuu la mfumo hapa chini:',
-                'role_learner': 'Mwanafunzi',
-                'role_teacher': 'Mwalimu',
-                'role_parent': 'Mzazi',
-                'label_name': 'Majina Kamili ya Kisheria',
-                'label_pref_name': 'Jina Linalopendelewa / Jina la Utani (Kwa Faragha & Nafasi za Kijamii)',
-                'label_dob': 'Tarehe ya Kuzaliwa',
-                'label_password': 'Weka Nenosiri Salama',
-                'btn_signup_submit': 'Kamilisha Usajili wa Akaunti',
-                'auth_divider': 'au endelea na mshirika aliyethibitishwa'
+                'card_parent_btn': 'Anza Kuongoza', 'tab_login': 'Ingia', 'tab_signup': 'Jisajili',
+                'login_title': 'Karibu Tena', 'login_desc': 'Ingiza maelezo ya uthibitisho ili kuendelea na maendeleo yako.',
+                'label_email': 'Barua Pepe ya Akaunti', 'btn_login_submit': 'Thibitisha Barua Pepe & Ingia',
+                'signup_title': 'Fungua Akaunti Mpya', 'signup_desc': 'Chagua jukumu lako kuu la mfumo hapa chini:',
+                'role_learner': 'Mwanafunzi', 'role_teacher': 'Mwalimu', 'role_parent': 'Mzazi',
+                'label_name': 'Majina Kamili ya Kisheria', 'label_pref_name': 'Jina Linalopendelewa / Jina la Utani (Kwa Faragha & Nafasi za Kijamii)',
+                'label_dob': 'Tarehe ya Kuzaliwa', 'label_password': 'Weka Nenosiri Salama',
+                'btn_signup_submit': 'Kamilisha Usajili wa Akaunti', 'auth_divider': 'au endelea na mshirika aliyethibitishwa'
+            },
+            'Dholuo': {
+                'nav_login': 'Donji', 'nav_signup': 'Ndiikri', 'hero_title_pre': 'Wuoth mar Puonjruok Moketi Ne ',
+                'hero_span': 'Japuonjre Ka Japuonjre', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global riwo chenro mag puonjruok mag pinyowa gi mag piny ngima tiendeni maler. Nonro maler kendo ma nono mar konyo ji duto.',
+                'phase_headline': 'Chak Puonjruok Sani', 'card_learner_title': 'Japuonjre',
+                'card_learner_desc': 'Donj e chenro mag puonjruok mag mtandao, ti gi lony, kendo iketi guti maler.',
+                'card_learner_btn': 'Chak Puonjruok', 'card_teacher_title': 'Japuonj',
+                'card_teacher_desc': 'Mi nyithi skur gi tije maler mag pogo puonj kendo nono nyako maro maler.',
+                'card_teacher_btn': 'Chak Puonjo', 'card_parent_title': 'Jonyuol',
+                'card_parent_desc': 'Riw lwedo gi chenro mar nono dongruok mar nyithindo e puonjruok yot.',
+                'card_parent_btn': 'Chak Tayo', 'tab_login': 'Donji', 'tab_signup': 'Ndiikri',
+                'login_title': 'Karibu Kendo', 'login_desc': 'Keti wechegi mondo dhi nyime gi puonjruok.',
+                'label_email': 'Barua Pepe mar Akaunt', 'btn_login_submit': 'Noni Barua Pepe & Donji',
+                'signup_title': 'Losi Akaunt Nyien', 'signup_desc': 'Yier tiji mari maduong piny ka:',
+                'role_learner': 'Japuonjre', 'role_teacher': 'Japuonj', 'role_parent': 'Janyuol',
+                'label_name': 'Nyingi Maler Mar Chik', 'label_pref_name': 'Nying Mihero / Mar Mbala',
+                'label_dob': 'Tarik Mar Nyuol', 'label_password': 'Losi Nenosiri Marateng',
+                'btn_signup_submit': 'Tiek Loso Akaunt', 'auth_divider': 'kata dhi nyime gi osiep maler'
+            },
+            'Kisii': {
+                'nav_login': 'Ingia', 'nav_signup': 'Kweba Enyomba', 'hero_title_pre': 'Orogendo rwo Oegera rwebakiriirwe ase ',
+                'hero_span': 'Buri Omwegeri', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global nekorengecha obonge bwo oegera na chinkengero chiase na aaria ense. Nabo ya bure, yobetere, na erikobwata ogosocha.',
+                'phase_headline': 'Chaka Okwegera Bono', 'card_learner_title': 'Abegeri',
+                'card_learner_desc': 'Nywomerana amo ne chira chio ogotochia emetandao, kora echoecho, no okomanya amariga.',
+                'card_learner_btn': 'Chaka Okwegera', 'card_teacher_title': 'Abaorogi',
+                'card_teacher_desc': 'Echeia ekerasi kiago na chitool chio ogotoga amariga ya amagenderero a barengi.',
+                'card_teacher_btn': 'Chaka Ogota', 'card_parent_title': 'Ababari',
+                'card_parent_desc': 'Koma norobasi rwo okwerorera egasi ne egenderero ye chira chio oegera.',
+                'card_parent_btn': 'Chaka Okobagera', 'tab_login': 'Ingia', 'tab_signup': 'Kweba Enyomba',
+                'login_title': 'Mwakara Buya', 'login_desc': 'Aka amangana aao erio ocha motwe no okwegera.',
+                'label_email': 'Barua Pepe yo Akaunti', 'btn_login_submit': 'Kora Ekeene na Ingia',
+                'signup_title': 'Kora Akaunti Enyia', 'signup_desc': 'chagua omotomo oo omoene aase egechabero eyio:',
+                'role_learner': 'Omwegeri', 'role_teacher': 'Omoorogi', 'role_parent': 'Omobari',
+                'label_name': 'Amarina Masesenyi ye Ekeene', 'label_pref_name': 'Eriina ritagwo / Ro Okomekania',
+                'label_dob': 'Tariki yo Ogochorwa', 'label_password': 'Kora Eriti Rio Omochao',
+                'btn_signup_submit': 'Socha Ogochandekwa kwo Akaunti', 'auth_divider': 'goose enderea no omomwabo ochandikirwe'
+            },
+            'Kuria': {
+                'nav_login': 'Ingira', 'nav_signup': 'Iyekerere', 'hero_title_pre': 'Orogendo ro Ogosoma rogochokelwa asa ',
+                'hero_span': 'Muri Omosomi', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global nekonerano ebikeko bio ogosoma bio asee no mogobo gose abang\'aini bose bano. Nabo ya bure, nekero keekemo buya kera omonto.',
+                'phase_headline': 'Anza Ogosoma Bono', 'card_learner_title': 'Abasomi',
+                'card_learner_desc': 'Hanja asee chinjira cho ogosoma bio omotandao, kora emeremorimo na orotwe arobuya.',
+                'card_learner_btn': 'Anza Ogosoma', 'card_teacher_title': 'Abahekuru',
+                'card_teacher_desc': 'Ngera ekerasi keo kegima na ebitool biago bio ogotaka ebitara bio ogosoma.',
+                'card_teacher_btn': 'Anza Ogoheka', 'card_parent_title': 'Abali',
+                'card_parent_desc': 'Manya korora orobero ro ogosoma gootaka ne enguru ye chimasomo aro yororo.',
+                'card_parent_btn': 'Anza Ogochwa', 'tab_login': 'Ingira', 'tab_signup': 'Iyekerere',
+                'login_title': 'Karibu Kange', 'login_desc': 'Ingisa amangana aao aro odhi mbere ne endio yao.',
+                'label_email': 'Barua Pepe yo Akaunti', 'btn_login_submit': 'Renga Barua Pepe na Ingira',
+                'signup_title': 'Kora Akaunti Enyiya', 'signup_desc': 'Chagua omochango oo omong\'aini asee ano:',
+                'role_learner': 'Omosomi', 'role_teacher': 'Omohekuru', 'role_parent': 'Omori',
+                'label_name': 'Amariina a Kiserikali', 'label_pref_name': 'Eriina Rio Ogotagwo / Rio Okomekania',
+                'label_dob': 'Tariki yo Ogochorwa', 'label_password': 'Kora Eriti rio Oborindo',
+                'btn_signup_submit': 'Komesha Ogochandekwa kwo Akaunti', 'auth_divider': 'gose enderea no omomwabo ochandikirwe'
+            },
+            'Maa': {
+                'nav_login': 'Jing\'a', 'nav_signup': 'Siraki', 'hero_title_pre': 'Osilig lool-kirne oo-taraiki te ',
+                'hero_span': 'Ng\'ae o-ng\'ae O-isom', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global etumi naboisho oo-sikito oo-isomo tiatua enkalo pooki o nkop. Epesai pesi, neitorioro sidai te nkitanapata pooki.',
+                'phase_headline': 'Itera A-isom Tataa', 'card_learner_title': 'I-la-isomok',
+                'card_learner_desc': 'Matumi engironi te nkoitoi e-mtandao, i-tarasi il-oimon, niminya enkitoo.',
+                'card_learner_btn': 'Itera A-isom', 'card_teacher_title': 'I-la-ikenok',
+                'card_teacher_desc': 'Ngo-isho ereteti skuli pooki imbaunoto te nkop o intobirak sidai.',
+                'card_teacher_btn': 'Itera A-iken', 'card_parent_title': 'I-loo-noiyek',
+                'card_parent_desc': 'Ingura enkitoo te nkiaa o il-kirne lo o-isomo te nkiaa pooki.',
+                'card_parent_btn': 'Itera A-ikenishoi', 'tab_login': 'Jing\'a', 'tab_signup': 'Siraki',
+                'login_title': 'Ipaaki Shomo', 'login_desc': 'Tipika irkisinai lino pe idia danya ereteti.',
+                'label_email': 'Barua Pepe e Akaunti', 'btn_login_submit': 'Ingura Barua Pepe nimijing\'a',
+                'signup_title': 'Itobira Akaunti Ng\'ejuk', 'signup_desc': 'Gelai enkiaa inye tiatua nkop:',
+                'role_learner': 'O-isom', 'role_teacher': 'O-iken', 'role_parent': 'O-menye/Ng\'otonye',
+                'label_name': 'Karna pooki lool-serkali', 'label_pref_name': 'Karna linyu / Lool-tau',
+                'label_dob': 'Tariki o-injiukoto', 'label_password': 'Itobira Nenosiri Naisidai',
+                'btn_signup_submit': 'Iteshua Ensirare e Akaunti', 'auth_divider': 'aniki indanya te la-serian o-siriakino'
+            },
+            'Kalenjin': {
+                'nav_login': 'Nyuo/Ingia', 'nav_signup': 'Sirngei', 'hero_title_pre': 'Kipsomanisto ne kikiyai eng ',
+                'hero_span': 'Chi Age Tugul Ne Somei', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global ribei kipsomanisto nemeng\'is eng oret ab emet ak ot piny. Kiyatat, ne nyilu, anki kikiyai eng baretab kipsomanisto.',
+                'phase_headline': 'Tagei Kipsomanistap Rani', 'card_learner_title': 'Kipsomaninik',
+                'card_learner_desc': 'Tuch korot eng mtandao, iyai kipsomanisto anki inai kit ne iyani eng somanet.',
+                'card_learner_btn': 'Tagei Kipsomanisto', 'card_teacher_title': 'Kinetinik',
+                'card_teacher_desc': 'Koon bororiet ak kiruoget ab skuli konyo togek ak barak.',
+                'card_teacher_btn': 'Tagei Kinetet', 'card_parent_title': 'Sigik',
+                'card_parent_desc': 'Rip konyanito ak ng\'alecho kipsomanisto nemeng\'is ab lakwok yoo taret.',
+                'card_parent_btn': 'Tagei Kandaristo', 'tab_login': 'Nyuo/Ingia', 'tab_signup': 'Sirngei',
+                'login_title': 'Chamgei Kogen', 'login_desc': 'Sir ng\'alecho ko kandoi kipsomanisto.',
+                'label_email': 'Barua Pepe ab Akaunt', 'btn_login_submit': 'Kech Barua Pepe ak Nyuo',
+                'signup_title': 'Yai Akaunt Ne Leel', 'signup_desc': 'Leel kondoiyet ab emet eng ng\'ony:',
+                'role_learner': 'Kipsomanindet', 'role_teacher': 'Kinetindet', 'role_parent': 'Sigindet',
+                'label_name': 'Kainet Ne Koo/Sirkal', 'label_pref_name': 'Kainet ne ichame / Ne po Mbala',
+                'label_dob': 'Tarikit ab Sikisto', 'label_password': 'Yai Nenosiri Ne Cham',
+                'btn_signup_submit': 'Roki Kipsiristo ab Akaunt', 'auth_divider': 'anet kandoi ak chorwen ne kikilipit'
+            },
+            'Luhya': {
+                'nav_login': 'Ingira', 'nav_signup': 'Wandeche', 'hero_title_pre': 'Olwendo lwa Ekesero lwa habana ',
+                'hero_span': 'Buli Omusomi', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global ihuwania ebiyeko bia ahandu no bulala hano ebiyeko bia omutsatso. Ne bulala bwa bure, bwalondekhe, kandi bwahombwa khukholela bulahi.',
+                'phase_headline': 'Raka Ekisero Bulano', 'card_learner_title': 'Abasomi',
+                'card_learner_desc': 'Itsungane na enjira chia mtandao, khola ebiyeko ne olonje amakesi amalahi.',
+                'card_learner_btn': 'Raka Ekesero', 'card_teacher_title': 'Abamecha',
+                'card_teacher_desc': 'Echeya ekilasi khosi ne ebitool biokhuchesa amariga malahi ha dashibodi.',
+                'card_teacher_btn': 'Raka Ekhwisomia', 'card_parent_title': 'Ababeyi',
+                'card_parent_desc': 'Rorere bulano nio ekisero kiatsia ne ohuchesa amaendeleo kwo mwana wao yoto.',
+                'card_parent_btn': 'Raka Ekhulongoza', 'tab_login': 'Ingira', 'tab_signup': 'Wandeche',
+                'login_title': 'Karibu Kandi', 'login_desc': 'Inja amang\'ana kaao eriyo rorere ohwicha mbele ne ekisero kiao.',
+                'label_email': 'Barua Pepe ya Akaunti', 'btn_login_submit': 'Lolela Barua Pepe ne Ingira',
+                'signup_title': 'Hombwa Akaunti Enyiya', 'signup_desc': 'Chagua omuhanda kwoo omukhongo hano aase:',
+                'role_learner': 'Omusomi', 'role_teacher': 'Omwamecha', 'role_parent': 'Omubeyi',
+                'label_name': 'Amarina Masiye ka Serikali', 'label_pref_name': 'Eriina lio Hwanza / Lio Hutsatsana',
+                'label_dob': 'Tariki yo Khwitswalwa', 'label_password': 'Hombwa Eriti Rilahi',
+                'btn_signup_submit': 'Mala Ohwitsandika kwa Akaunti', 'auth_divider': 'kandi tsia mbele no omukhwicha wenyiyilwe'
+            },
+            'Somali': {
+                'nav_login': 'Soo Gal', 'nav_signup': 'Is-diiwaangeli', 'hero_title_pre': 'Safarka Waxbarasho Ee Gaarka Ah Ee Loogu Talo Galay ',
+                'hero_span': 'Arday Kasta', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global waxay isku xirtaa heerarka waxbarasho ee maxalliga ah iyo nidaamyada caalamiga ah ee casriga ah. Waa bilaash, habaysan, oo loogu talogalay natiijooyin sare.',
+                'phase_headline': 'Hadda Bilow Waxbarashada', 'card_learner_title': 'Ardayda',
+                'card_learner_desc': 'Ku biir hababka waxbarasho ee habaysan ee khadka tooska ah, ku tababar, oo hel qiimayn cad ee xirfadahaaga.',
+                'card_learner_btn': 'Bilow Waxbarasho', 'card_teacher_title': 'Macallimiinta',
+                'card_teacher_desc': 'Awoodi fasalkaga oo dhan adiga oo isticmaalaya qalab si aad u qorshayso yoolalka dashboodka cad.',
+                'card_teacher_btn': 'Bilow Wax Dhigid', 'card_parent_title': 'Waalidiinta',
+                'card_parent_desc': ' si fudud ula soco horumarka waxbarasho iyo natiijooyinka ardayda wakhti kasta.',
+                'card_parent_btn': 'Bilow Hagitaan', 'tab_login': 'Soo Gal', 'tab_signup': 'Is-diiwaangeli',
+                'login_title': 'Ku Soo Dhowow Marale', 'login_desc': 'Gali faahfaahinta xaqiijinta si aad u sii wato horumarkaaga.',
+                'label_email': 'Ciwaanka Emailka ee Koontada', 'btn_login_submit': 'Xaqiiji Emailka oo Soo Gal',
+                'signup_title': 'Abuur Koonto Cusub', 'signup_desc': 'HOOS ka dooro doorkaaga aasaasiga ah ee nidaamka:',
+                'role_learner': 'Arday', 'role_teacher': 'Macallin', 'role_parent': 'Waalid',
+                'label_name': 'Magaca Buuxa ee Sharciga ah', 'label_pref_name': 'Magaca La Jecel Yahay / Naaneysta',
+                'label_dob': 'Taariikhda Dhalashada', 'label_password': 'Abuur Furaha Sirta ah oo Amaan ah',
+                'btn_signup_submit': 'Dhamaystir Diiwaangelinta Koontada', 'auth_divider': 'ama ku sii wado la-hawlgal xaqiijisan'
+            },
+            'Deutsch': {
+                'nav_login': 'Anmelden', 'nav_signup': 'Registrieren', 'hero_title_pre': 'Ein maßgeschneidertes Lernabenteuer für ',
+                'hero_span': 'Jeden Lernenden', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global verbindet lokale Leistungsstandards mit erstklassigen interaktiven Lernpfaden. Kostenlos, strukturiert und speziell für optimalen Erfolg entwickelt.',
+                'phase_headline': 'Jetzt mit dem Lernen beginnen', 'card_learner_title': 'Lernende',
+                'card_learner_desc': 'Tritt organisierten virtuellen Lernpfaden bei, übe dynamisch und sichere dir messbare Kompetenzen.',
+                'card_learner_btn': 'Lernen beginnen', 'card_teacher_title': 'Lehrende',
+                'card_teacher_desc': 'Stärke dein gesamtes Klassenzimmer-Ökosystem mit Tools zur Zielabbildung auf strukturierten Dashboards.',
+                'card_teacher_btn': 'Unterrichten beginnen', 'card_parent_title': 'Eltern',
+                'card_parent_desc': 'Behalte den Lernfortschritt und die Leistungsdaten spielend leicht in Echtzeit im Blick.',
+                'card_parent_btn': 'Begleitung beginnen', 'tab_login': 'Anmelden', 'tab_signup': 'Registrieren',
+                'login_title': 'Willkommen zurück', 'login_desc': 'Gib deine Anmeldedaten ein, um deinen Fortschritt fortzusetzen.',
+                'label_email': 'E-Mail-Adresse des Kontos', 'btn_login_submit': 'E-Mail bestätigen & Anmelden',
+                'signup_title': 'Neues Konto erstellen', 'signup_desc': 'Wähle unten deine primäre Rolle im Ökosystem aus:',
+                'role_learner': 'Lernende/r', 'role_teacher': 'Lehrende/r', 'role_parent': 'Elternteil',
+                'label_name': 'Vollständiger rechtlicher Name', 'label_pref_name': 'Bevorzugter Name / Benutzername (für Datenschutz & Community)',
+                'label_dob': 'Geburtsdatum', 'label_password': 'Sicheres Passwort erstellen',
+                'btn_signup_submit': 'Kontoregistrierung abschließen', 'auth_divider': 'oder mit einem verifizierten Partner fortfahren'
+            },
+            'French': {
+                'nav_login': 'Connexion', 'nav_signup': 'S\'inscrire', 'hero_title_pre': 'Une Odyssée d\'Apprentissage Personnalisée pour ',
+                'hero_span': 'Chaque Apprenant', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global associe des normes de performance locales à des parcours d\'exécution interactifs de classe mondiale. Gratuit, structuré et conçu sur mesure pour des résultats évolutifs.',
+                'phase_headline': 'Commencez à apprendre maintenant', 'card_learner_title': 'Apprenants',
+                'card_learner_desc': 'Rejoignez des parcours de texte virtuels organisés, entraînez-vous dynamiquement et obtenez des mesures de compétences vérifiables.',
+                'card_learner_btn': 'Commencer à apprendre', 'card_teacher_title': 'Enseignants',
+                'card_teacher_desc': 'Rendez votre écosystème de classe plus autonome avec des outils pour cartographier les objectifs sur des tableaux de bord structurés.',
+                'card_teacher_btn': 'Commencer à enseigner', 'card_parent_title': 'Parents',
+                'card_parent_desc': 'Suivez en temps réel et en toute simplicité la progression de l\'apprentissage et les indicateurs de croissance.',
+                'card_parent_btn': 'Commencer à guider', 'tab_login': 'Connexion', 'tab_signup': 'S\'inscrire',
+                'login_title': 'Bon retour', 'login_desc': 'Saisissez vos informations de vérification pour reprendre votre progression.',
+                'label_email': 'Adresse e-mail du compte', 'btn_login_submit': 'Vérifier l\'e-mail et entrer',
+                'signup_title': 'Créer un nouveau compte', 'signup_desc': 'Choisissez votre rôle principal ci-dessous :',
+                'role_learner': 'Apprenant', 'role_teacher': 'Enseignant', 'role_parent': 'Parent',
+                'label_name': 'Nom complet légal', 'label_pref_name': 'Nom préféré / Pseudo (pour la confidentialité et les espaces communautaires)',
+                'label_dob': 'Date de naissance', 'label_password': 'Créer un mot de passe sécurisé',
+                'btn_signup_submit': 'Finaliser l\'inscription du compte', 'auth_divider': 'ou continuer avec un partenaire authentifié'
+            },
+            'Spanish': {
+                'nav_login': 'Iniciar Sesión', 'nav_signup': 'Registrarse', 'hero_title_pre': 'Una odisea de aprendizaje personalizada para ',
+                'hero_span': 'Cada Estudiante', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global combina estándares de rendimiento locales con pistas de ejecución interactivas de clase mundial. Gratuito, estructural y diseñado a medida para escalar resultados.',
+                'phase_headline': 'Empieza a aprender ahora', 'card_learner_title': 'Estudiantes',
+                'card_learner_desc': 'Únete a rutas virtuales organizadas, practica de forma dinámica y asegura métricas de habilidades rastreables.',
+                'card_learner_btn': 'Empezar a aprender', 'card_teacher_title': 'Profesores',
+                'card_teacher_desc': 'Empodera el ecosistema de tu aula con herramientas para mapear objetivos en paneles estructurados.',
+                'card_teacher_btn': 'Empezar a enseñar', 'card_parent_title': 'Padres',
+                'card_parent_desc': 'Sigue de cerca y en tiempo real el progreso y las métricas de crecimiento del aprendizaje con facilidad.',
+                'card_parent_btn': 'Empezar a guiar', 'tab_login': 'Iniciar Sesión', 'tab_signup': 'Registrarse',
+                'login_title': 'Bienvenido de nuevo', 'login_desc': 'Ingresa tus datos de verificación para reanudar tu progreso.',
+                'label_email': 'Correo electrónico de la cuenta', 'btn_login_submit': 'Verificar correo y entrar',
+                'signup_title': 'Crear nueva cuenta', 'signup_desc': 'Elige tu rol principal en el ecosistema a continuación:',
+                'role_learner': 'Estudiante', 'role_teacher': 'Profesor', 'role_parent': 'Padre/Madre',
+                'label_name': 'Nombre legal completo', 'label_pref_name': 'Nombre preferido / Usuario (para privacidad y comunidad)',
+                'label_dob': 'Fecha de nacimiento', 'label_password': 'Crear contraseña segura',
+                'btn_signup_submit': 'Completar registro de cuenta', 'auth_divider': 'o continuar con un socio autenticado'
+            },
+            'Chinese': {
+                'nav_login': '登录', 'nav_signup': '注册', 'hero_title_pre': '专为',
+                'hero_span': '每一位学习者', 'hero_title_post': '定制的个性化学习之旅。',
+                'hero_desc': 'UEFI Global 将核心的核心本地化表现标准与世界一流的互动执行路径相结合。免费、结构化且量身定制，旨在提升学业成果。',
+                'phase_headline': '立即开始学习', 'card_learner_title': '学习者',
+                'card_learner_desc': '加入有组织的虚拟学习路径，进行动态练习，并获得可跟踪的技能成长指标。',
+                'card_learner_btn': '开始学习', 'card_teacher_title': '教师',
+                'card_teacher_desc': '使用将教学目标映射到结构化仪表板的工具，赋能您整个课堂的生态系统。',
+                'card_teacher_btn': '开始教学', 'card_parent_title': '家长',
+                'card_parent_desc': '轻松、实时地监控学习的执行进度和各项成长数据。',
+                'card_parent_btn': '开始辅导', 'tab_login': '登录', 'tab_signup': '注册',
+                'login_title': '欢迎回来', 'login_desc': '输入验证信息以继续您的学习进度。',
+                'label_email': '帐户电子邮件地址', 'btn_login_submit': '验证电子邮件并登录',
+                'signup_title': '创建新帐户', 'signup_desc': '在下方选择您在生态系统中的主要角色：',
+                'role_learner': '学习者', 'role_teacher': '教师', 'role_parent': '家长',
+                'label_name': '法定全名', 'label_pref_name': '首选名称 / 昵称（用于隐私和社区空间）',
+                'label_dob': '出生日期', 'label_password': '创建安全密码',
+                'btn_signup_submit': '完成帐户注册', 'auth_divider': '或使用已验证的合作伙伴帐户继续'
             }
-            // Add entries for Dholuo, Kisii, Kuria, German, etc. in exactly the same format
         };
 
         /* Update UI Content across DOM Elements based on keys */
         function applyTranslations(lang) {
             const dictionary = translations[lang];
-            if (!dictionary) return; // If language dictionary entries aren't filled yet
+            if (!dictionary) return;
 
-            // Translate normal attributes
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const translationKey = element.getAttribute('data-i18n');
                 if (dictionary[translationKey]) {
@@ -752,12 +929,10 @@
                 }
             });
 
-            // Handle unique mixed/nested HTML containers like the Hero Heading text node
+            // Reconstruct the Hero Heading cleanly allowing proper dynamic word ordering across languages
             const heroTitle = document.getElementById('heroTitle');
-            if (lang === 'Kiswahili') {
-                heroTitle.innerHTML = `Safari ya Kujifunza Iliyobinafsishwa kwa Ajili ya <span>${dictionary['hero_span']}</span>.`;
-            } else if (lang === 'English') {
-                heroTitle.innerHTML = `A Personalized Learning Odyssey for <span>${dictionary['hero_span']}</span>.`;
+            if (heroTitle && dictionary['hero_title_pre'] && dictionary['hero_span'] && dictionary['hero_title_post']) {
+                heroTitle.innerHTML = `${dictionary['hero_title_pre']}<span>${dictionary['hero_span']}</span>${dictionary['hero_title_post']}`;
             }
         }
 
@@ -769,25 +944,21 @@
 
         function selectLanguage(lang, event) {
             if (event) event.preventDefault();
-            document.getElementById('currentLangLabel').innerText = lang;
+            const label = document.getElementById('currentLangLabel');
+            if (label) label.innerText = lang;
             langContainer.classList.remove('show');
             
-            // Store selected preference inside localStorage container
             localStorage.setItem("uefiLanguagePreference", lang);
-            console.log("Language context switched to: " + lang);
-            
             applyTranslations(lang);
         }
 
-        // Run checking algorithm upon initial script load to preserve user settings
         document.addEventListener("DOMContentLoaded", () => {
             const savedLanguage = localStorage.getItem("uefiLanguagePreference") || "English";
             selectLanguage(savedLanguage);
         });
 
-        // Close language dropdown if clicked anywhere outside
         window.addEventListener('click', function() {
-            if (langContainer.classList.contains('show')) {
+            if (langContainer && langContainer.classList.contains('show')) {
                 langContainer.classList.remove('show');
             }
         });
@@ -821,61 +992,19 @@
         function setSignUpRole(role) {
             targetSignUpRole = role;
             document.querySelectorAll('.role-pill').forEach(pill => pill.classList.remove('active'));
-            document.getElementById(`pill-${role}`).classList.add('active');
-            
-            const dobGroup = document.getElementById('birthdayGroup');
-            if (role === 'learner') {
-                dobGroup.style.display = 'block';
-            } else {
-                dobGroup.style.display = 'none';
-            }
+            const activePill = document.getElementById(`pill-${role}`);
+            if (activePill) activePill.classList.add('active');
         }
 
-        // Manual Forms Submission System
-        function handleManualAuth(event, activeSystem) {
+        function handleManualAuth(event, mode) {
             event.preventDefault();
-            
-            localStorage.setItem("userLoggedIn", "true");
-            localStorage.setItem("userRole", activeSystem === 'signup' ? targetSignUpRole : 'user');
-            
-            if (activeSystem === 'signup') {
-                const prefName = document.getElementById('signupPreferredName').value;
-                localStorage.setItem("preferredName", prefName || "Anonymous Learner");
-            } else {
-                localStorage.setItem("preferredName", "User");
-            }
-            
-            triggerTransitionAnimation();
+            alert(`Proceeding to process ${mode.toUpperCase()} request for role: ${targetSignUpRole}`);
+            closeAuthModal();
         }
 
-        // Google Federated Single Sign-On Script Engine Redirect
         function handleGoogleResponse(response) {
-            console.log("Encoded JWT ID token verified: " + response.credential);
-            localStorage.setItem("userLoggedIn", "true");
-            localStorage.setItem("userRole", "google-authenticated");
-            localStorage.setItem("preferredName", "Google User");
-            
-            triggerTransitionAnimation();
-        }
-
-        // High Fidelity Loader Animation Sequence Redirecting to home.html
-        function triggerTransitionAnimation() {
-            const modalContent = document.querySelector('.modal-content');
-            modalContent.innerHTML = `
-                <div style="padding: 50px 0; text-align: center;">
-                    <div style="width: 60px; height: 60px; border: 6px solid #F3F3F3; border-top: 6px solid var(--safaricom-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 25px;"></div>
-                    <h3 style="font-weight: 800; font-size: 22px; color: var(--kenya-black);">Verifying Ecosystem Access...</h3>
-                    <p style="color: var(--gray); font-size: 15px; margin-top: 8px;">Synchronizing your UEFI Global workspace container.</p>
-                </div>
-            `;
-
-            const style = document.createElement('style');
-            style.innerHTML = `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`;
-            document.head.appendChild(style);
-
-            setTimeout(() => {
-                window.location.href = "home.html"; 
-            }, 1600);
+            console.log("Received Google Auth Credential Token:", response.credential);
+            closeAuthModal();
         }
     </script>
 </body>
