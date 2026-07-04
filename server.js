@@ -1,15 +1,11 @@
 /**
  * ============================================================================
- * UEFI CONNECT & ENGAGE - FULL-STACK ENTERPRISE API CORE ENGINE
+ * UEFI CONNECT & ENGAGE - ENTERPRISE BACKEND ARCHITECTURE
  * ============================================================================
- * Version: 3.0.0 (Persistent Storage & Full Interactive Media Edition)
- * Architecture: Node.js / Express / Native File-System (FS) Persistence
- * Features:
- * - Persistent JSON Database (Survives server restarts and browser reloads)
- * - Social Engagement Pipeline (Likes, Multi-user Comments, Timestamps)
- * - Rich Media Support (Image URLs, Video URLs, Embedded Captions)
- * - Advanced Security Shield (Brute-force lockout, Bearer Token Auth)
- * - Real-time Telemetry & Detailed Error Management
+ * Version: 4.1.0 (Production Core Engine Simulation)
+ * Core System: Node.js / Express Architecture
+ * Storage Stratum: Local Hard-Drive File Persistence (JSON Database Engine)
+ * Framework Rules: Absolute Route Safety, Deep State Mapping, Interactive Feeds
  * ============================================================================
  */
 
@@ -21,175 +17,160 @@ const path = require('path');
 
 const app = express();
 
-// ============================================================================
-// 1. PERSISTENT DATABASE STORAGE ENGINE (FILE-SYSTEM BACKED)
-// ============================================================================
-// By writing to local JSON files, your data will NEVER be erased when refreshing
-// the browser or restarting the Node.js server terminal!
-
-const USERS_FILE = path.join(__dirname, 'uefi_users_db.json');
-const POSTS_FILE = path.join(__dirname, 'uefi_posts_db.json');
+// --- PHYSICAL DATABASE CONFIGURATION STRATUM ---
+const USERS_DB_PATH = path.join(__dirname, 'uefi_users_persistent_db.json');
+const POSTS_DB_PATH = path.join(__dirname, 'uefi_posts_persistent_db.json');
 
 /**
- * Initializes physical database files if they do not exist yet on the hard drive.
+ * Initializes and locks structural database paths to disk if missing.
  */
-function initializeDatabase() {
+function verifyAndBootstrappedPhysicalStorage() {
     try {
-        if (!fs.existsSync(USERS_FILE)) {
-            fs.writeFileSync(USERS_FILE, JSON.stringify({}, null, 4), 'utf8');
-            console.log(`[DATABASE INIT] Created new persistent users storage: ${USERS_FILE}`);
+        if (!fs.existsSync(USERS_DB_PATH)) {
+            fs.writeFileSync(USERS_DB_PATH, JSON.stringify({}, null, 4), 'utf8');
+            console.log(`[STORAGE ENGINE] Initialized clean user vault file path: ${USERS_DB_PATH}`);
         }
-        if (!fs.existsSync(POSTS_FILE)) {
-            fs.writeFileSync(POSTS_FILE, JSON.stringify([], null, 4), 'utf8');
-            console.log(`[DATABASE INIT] Created new persistent posts storage: ${POSTS_FILE}`);
+        if (!fs.existsSync(POSTS_DB_PATH)) {
+            fs.writeFileSync(POSTS_DB_PATH, JSON.stringify([], null, 4), 'utf8');
+            console.log(`[STORAGE ENGINE] Initialized clean interactive feed vault file path: ${POSTS_DB_PATH}`);
         }
-    } catch (err) {
-        console.error("[DATABASE ERROR] Could not initialize physical storage files:", err);
+    } catch (criticalInitializationError) {
+        console.error("[CRITICAL FATAL STORAGE ERROR] Hard drive write access blocked:", criticalInitializationError);
     }
 }
 
+// Execute disk binding verification sequence
+verifyAndBootstrappedPhysicalStorage();
+
 /**
- * Reads and parses the User Registry from disk.
+ * Thread-Safe Read Interface: Extracts Active User Profiles Array from Disk
  */
-function getUserRegistry() {
+function fetchSystemUserRegistry() {
     try {
-        const data = fs.readFileSync(USERS_FILE, 'utf8');
-        return JSON.parse(data);
-    } catch (err) {
-        console.error("[DATABASE READ ERROR] Failed to load user registry. Defaulting to empty object.", err);
+        const structuralDataBlob = fs.readFileSync(USERS_DB_PATH, 'utf8');
+        return JSON.parse(structuralDataBlob);
+    } catch (readError) {
+        console.error("[STORAGE READ FAILURE] Re-routing empty virtual register frame:", readError);
         return {};
     }
 }
 
 /**
- * Saves the modified User Registry back to disk immediately.
+ * Thread-Safe Write Interface: Commits Virtual Registry States Directly to Disk
  */
-function saveUserRegistry(registryData) {
+function commitSystemUserRegistry(registryPayload) {
     try {
-        fs.writeFileSync(USERS_FILE, JSON.stringify(registryData, null, 4), 'utf8');
-    } catch (err) {
-        console.error("[DATABASE WRITE ERROR] Failed to persist user registry to disk:", err);
+        fs.writeFileSync(USERS_DB_PATH, JSON.stringify(registryPayload, null, 4), 'utf8');
+    } catch (writeError) {
+        console.error("[STORAGE WRITE ATTEMPT FLUNKED] Data could not secure disk sync:", writeError);
     }
 }
 
 /**
- * Reads and parses the Global Feed Posts from disk.
+ * Thread-Safe Read Interface: Extracts Active Global Communication Feeds
  */
-function getGlobalFeed() {
+function fetchGlobalEcosystemFeed() {
     try {
-        const data = fs.readFileSync(POSTS_FILE, 'utf8');
-        return JSON.parse(data);
-    } catch (err) {
-        console.error("[DATABASE READ ERROR] Failed to load posts feed. Defaulting to empty array.", err);
+        const structuralFeedBlob = fs.readFileSync(POSTS_DB_PATH, 'utf8');
+        return JSON.parse(structuralFeedBlob);
+    } catch (readError) {
+        console.error("[FEED READ FAILURE] Re-routing clean virtual feed matrix array:", readError);
         return [];
     }
 }
 
 /**
- * Saves the modified Global Feed Posts back to disk immediately.
+ * Thread-Safe Write Interface: Commits Virtual Community Feed Arrays Directly to Disk
  */
-function saveGlobalFeed(feedData) {
+function commitGlobalEcosystemFeed(feedPayload) {
     try {
-        fs.writeFileSync(POSTS_FILE, JSON.stringify(feedData, null, 4), 'utf8');
-    } catch (err) {
-        console.error("[DATABASE WRITE ERROR] Failed to persist posts feed to disk:", err);
+        fs.writeFileSync(POSTS_DB_PATH, JSON.stringify(feedPayload, null, 4), 'utf8');
+    } catch (writeError) {
+        console.error("[FEED WRITE ATTEMPT FLUNKED] Feed stream drop blocked allocation:", writeError);
     }
 }
 
-// Run database initialization on server boot
-initializeDatabase();
+// --- NETWORK CORE CONFIGURATIONS & INTERCEPTORS ---
 
-// ============================================================================
-// 2. GLOBAL MIDDLEWARE & TELEMETRY CONFIGURATIONS
-// ============================================================================
+// Expand incoming request thresholds to easily parse embedded images and base64 video media streams
+app.use(express.json({ limit: '100mb' }));
+app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 
-// Permit large payloads for media URLs and extended text articles
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-
-// Full Cross-Origin Resource Sharing (CORS) - Allows all classmates on different computers/networks to connect
+// Absolute CORS permissions matrix allows connections from external peer systems on the network
 app.use(cors({
-    origin: '*', // Accepts web requests from any domain, IP, or local HTML file
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     credentials: true
 }));
 
-// Real-Time Network Traffic Telemetry
+// Real-Time High-Fidelity Network Client Telemetry Logger
 app.use((req, res, next) => {
-    const timestamp = new Date().toISOString();
-    const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown IP';
-    console.log(`[TELEMETRY] [${timestamp}] ${req.method} -> ${req.url} | Source: ${clientIp}`);
+    const accessTimestamp = new Date().toISOString();
+    const inboundIPAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '0.0.0.0';
+    console.log(`[NET TELEMETRY] [${accessTimestamp}] ROUTE ACTION: ${req.method} -> Target: ${req.url} | Inbound IP Node: ${inboundIPAddress}`);
     next();
 });
 
-// ============================================================================
-// 3. SECURITY & CRYPTOGRAPHY UTILITIES
-// ============================================================================
+// --- CORE SECURITY SCHEMAS & MIDDLEWARE SHIELDS ---
 
 /**
- * Generates an unpredictable, cryptographically secure alphanumeric token.
+ * Crypto-Engine Secure Token Generator
  */
 function generateSecureAlphanumericToken(length = 6) {
-    const characterPool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let token = '';
+    const tokenCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let outputToken = '';
     try {
-        const secureBytes = crypto.randomBytes(length);
-        for (let i = 0; i < length; i++) {
-            token += characterPool[secureBytes[i] % characterPool.length];
+        const cryptographicallySecureBytes = crypto.randomBytes(length);
+        for (let loopIndex = 0; loopIndex < length; loopIndex++) {
+            outputToken += tokenCharacters[cryptographicallySecureBytes[loopIndex] % tokenCharacters.length];
         }
-        return token;
-    } catch (error) {
-        console.error("[CRYPTO ERROR] Entropy failure. Using mathematical fallback:", error);
+        return outputToken;
+    } catch (cryptoEntropyException) {
+        console.warn("[SECURITY ENGINE] Cryptographic entropy failure, matching pseudorandom layout alternative.", cryptoEntropyException);
         return Math.random().toString(36).substring(2, 2 + length).toUpperCase();
     }
 }
 
 /**
- * Client Authentication Middleware Shield
- * Protects interactive routes (posting, liking, commenting) so only verified users can execute them.
+ * Authorization Guard Interceptor Middle-tier
  */
-function requireClientAuthentication(req, res, next) {
-    const authHeader = req.headers['authorization'];
+function securePipelineAuthenticationGuard(req, res, next) {
+    const rawAuthorizationHeader = req.headers['authorization'];
     
-    if (!authHeader) {
+    if (!rawAuthorizationHeader) {
         return res.status(401).json({
             success: false,
-            message: "Authentication Failed: Missing Authorization header. Please log in first."
+            message: "Access Terminated: Security context header missing. Please execute workspace login."
         });
     }
 
-    // Extract identifier (client passes email or token via: 'Bearer user@email.com')
-    const clientIdentifier = authHeader.replace('Bearer ', '').toLowerCase().trim();
-    const userRegistry = getUserRegistry();
-    const activeProfile = userRegistry[clientIdentifier];
+    const compiledClientEmailKey = rawAuthorizationHeader.replace('Bearer ', '').toLowerCase().trim();
+    const activeRegistrySnapshot = fetchSystemUserRegistry();
+    const verifiedAccountProfile = activeRegistrySnapshot[compiledClientEmailKey];
 
-    if (!activeProfile) {
+    if (!verifiedAccountProfile) {
         return res.status(401).json({
             success: false,
-            message: "Authentication Failed: Your user profile could not be located in the system."
+            message: "Access Terminated: Token structural mismatch. Identity path invalid."
         });
     }
 
-    if (!activeProfile.isVerified) {
+    if (!verifiedAccountProfile.isVerified) {
         return res.status(403).json({
             success: false,
-            message: "Access Denied: You must verify your email address before interacting with the community."
+            message: "Access Forbidden: Community access locked until alphanumeric setup token is confirmed."
         });
     }
 
-    // Attach validated profile to the request for downstream processing
-    req.authenticatedClient = activeProfile;
+    req.authenticatedUserContext = verifiedAccountProfile;
     next();
 }
 
-// ============================================================================
-// 4. AUTHENTICATION & IDENTITY API ROUTES
-// ============================================================================
+// --- CORE API INTERACTIVE ROUTING GRID ---
 
 /**
- * POST /api/auth/signup
- * Registers a new student/faculty profile and stores it persistently.
+ * POST /api/auth/signup -> Account Initialization Route
  */
 app.post('/api/auth/signup', (req, res) => {
     const { email, name, role, password } = req.body;
@@ -197,374 +178,298 @@ app.post('/api/auth/signup', (req, res) => {
     if (!email || !name || !role || !password) {
         return res.status(400).json({ 
             success: false, 
-            message: "Registration Error: All fields (email, name, role, password) are strictly required." 
+            message: "Schema Error: Core attributes missing. Verification requirements: Email, Name, Role, Password." 
         });
     }
 
-    const accountIdentifier = email.toLowerCase().trim();
-    const userRegistry = getUserRegistry();
+    const optimizedEmailIdentifier = email.toLowerCase().trim();
+    const currentRegistryInstance = fetchSystemUserRegistry();
 
-    if (userRegistry[accountIdentifier]) {
+    if (currentRegistryInstance[optimizedEmailIdentifier]) {
         return res.status(400).json({ 
             success: false, 
-            message: "Registration Error: An account with this email address already exists." 
+            message: "Identity Conflict: A registration profile already points to this email layout path." 
         });
     }
 
-    const dispatchToken = generateSecureAlphanumericToken(6);
+    const operationalValidationToken = generateSecureAlphanumericToken(6);
     
-    userRegistry[accountIdentifier] = {
+    currentRegistryInstance[optimizedEmailIdentifier] = {
         name: name.trim(),
-        email: accountIdentifier,
+        email: optimizedEmailIdentifier,
         role: role.trim(),
-        password: password, // In live production, wrap this in bcrypt.hashSync(password, 10)
+        password: password, 
         isVerified: false,
-        verificationToken: dispatchToken,
+        verificationToken: operationalValidationToken,
         failedAttempts: 0,
         isLocked: false,
         lockoutUntil: null,
-        joinedAt: new Date().toISOString()
+        createdOn: new Date().toISOString()
     };
 
-    saveUserRegistry(userRegistry);
+    commitSystemUserRegistry(currentRegistryInstance);
 
     console.log(`\n================================================================`);
-    console.log(`[NEW MEMBER REGISTRATION]: ${name.trim()} (${accountIdentifier})`);
-    console.log(`[VERIFICATION CODE DISPATCHED]: ${dispatchToken}  (CASE-SENSITIVE)`);
+    console.log(`[IDENTITY HUB REGISTRATION]: ${name.trim()} [${optimizedEmailIdentifier}]`);
+    console.log(`[DISPATCHED CHALLENGE PASSCODE]: ${operationalValidationToken} (CASE-SENSITIVE)`);
     console.log(`================================================================\n`);
 
     return res.status(201).json({
         success: true,
-        message: "Registration successful! Check server console for your 6-character verification code.",
-        email: accountIdentifier
+        message: "Ecosystem identity structure staged. Grab your authorization code from your backend execution console log.",
+        email: optimizedEmailIdentifier
     });
 });
 
 /**
- * POST /api/auth/verify
- * Verifies identity token and unlocks community access.
+ * POST /api/auth/verify -> Secure Challenge Passcode Verification
  */
 app.post('/api/auth/verify', (req, res) => {
     const { email, token } = req.body;
     
     if (!email || !token) {
-        return res.status(400).json({ success: false, message: "Verification Error: Both email and token are required." });
+        return res.status(400).json({ success: false, message: "Verification Blocked: Matching attributes missing." });
     }
 
-    const accountIdentifier = email.toLowerCase().trim();
-    const userRegistry = getUserRegistry();
-    const targetProfile = userRegistry[accountIdentifier];
+    const optimizedEmailIdentifier = email.toLowerCase().trim();
+    const currentRegistryInstance = fetchSystemUserRegistry();
+    const targetingUserMetadata = currentRegistryInstance[optimizedEmailIdentifier];
 
-    if (!targetProfile) {
-        return res.status(404).json({ success: false, message: "Verification Error: Account not found." });
+    if (!targetingUserMetadata) {
+        return res.status(404).json({ success: false, message: "Verification Blocked: Account reference matches no profile." });
     }
 
-    // Check cooling period for locked accounts
-    if (targetProfile.isLocked) {
-        const timeNow = Date.now();
-        if (timeNow < targetProfile.lockoutUntil) {
-            const minutesLeft = Math.ceil((targetProfile.lockoutUntil - timeNow) / 1000 / 60);
+    if (targetingUserMetadata.isLocked) {
+        const wallClockTime = Date.now();
+        if (wallClockTime < targetingUserMetadata.lockoutUntil) {
+            const coolingWindowRemaining = Math.ceil((targetingUserMetadata.lockoutUntil - wallClockTime) / 1000 / 60);
             return res.status(423).json({
                 success: false,
-                message: `Security Lock: Account temporarily locked due to failed attempts. Try again in ${minutesLeft} minute(s).`
+                message: `Brute-force Lockdown Engaged: Access frozen. Try again in ${coolingWindowRemaining} minute(s).`
             });
         } else {
-            targetProfile.isLocked = false;
-            targetProfile.failedAttempts = 0;
-            targetProfile.lockoutUntil = null;
+            targetingUserMetadata.isLocked = false;
+            targetingUserMetadata.failedAttempts = 0;
+            targetingUserMetadata.lockoutUntil = null;
         }
     }
 
-    // Strict Case-Sensitive Code Comparison
-    if (token === targetProfile.verificationToken) {
-        targetProfile.isVerified = true;
-        targetProfile.failedAttempts = 0;
-        targetProfile.verificationToken = null;
+    if (token === targetingUserMetadata.verificationToken) {
+        targetingUserMetadata.isVerified = true;
+        targetingUserMetadata.failedAttempts = 0;
+        targetingUserMetadata.verificationToken = null;
 
-        saveUserRegistry(userRegistry);
+        commitSystemUserRegistry(currentRegistryInstance);
 
         return res.status(200).json({
             success: true,
-            message: "Identity verified! You now have full access to post, comment, and like on UEFI Connect.",
-            role: targetProfile.role,
-            user: { name: targetProfile.name, email: targetProfile.email, role: targetProfile.role }
+            message: "Identity confirmed successfully! Platform interactive clearances mapped.",
+            user: { name: targetingUserMetadata.name, email: targetingUserMetadata.email, role: targetingUserMetadata.role }
         });
     } else {
-        targetProfile.failedAttempts += 1;
-        const remainingChances = 5 - targetProfile.failedAttempts;
+        targetingUserMetadata.failedAttempts += 1;
+        const fallbackOpportunities = 5 - targetingUserMetadata.failedAttempts;
 
-        if (targetProfile.failedAttempts >= 5) {
-            targetProfile.isLocked = true;
-            targetProfile.lockoutUntil = Date.now() + (15 * 60 * 1000); // 15 Minute Lockdown
-            saveUserRegistry(userRegistry);
+        if (targetingUserMetadata.failedAttempts >= 5) {
+            targetingUserMetadata.isLocked = true;
+            targetingUserMetadata.lockoutUntil = Date.now() + (15 * 60 * 1000); 
+            commitSystemUserRegistry(currentRegistryInstance);
             return res.status(423).json({
                 success: false,
-                message: "Security Alert: 5 incorrect attempts recorded. Account locked for 15 minutes."
+                message: "Security Lockout Triggered: 5 sequential mismatches handled. Account locked for 15 minutes."
             });
         }
 
-        saveUserRegistry(userRegistry);
+        commitSystemUserRegistry(currentRegistryInstance);
         return res.status(400).json({
             success: false,
-            message: "Invalid verification code. Remember, codes are strictly case-sensitive!",
-            attemptsRemaining: remainingChances
+            message: "Validation structure error. Code string checks are case-sensitive.",
+            attemptsRemaining: fallbackOpportunities
         });
     }
 });
 
 /**
- * POST /api/auth/login
- * Standard account login.
+ * POST /api/auth/login -> User Workspace Credential Checking
  */
 app.post('/api/auth/login', (req, res) => {
     const { email, password } = req.body;
     
     if (!email || !password) {
-        return res.status(400).json({ success: false, message: "Login Error: Email and password required." });
+        return res.status(400).json({ success: false, message: "Login Validation Error: Target parameters incomplete." });
     }
 
-    const accountIdentifier = email.toLowerCase().trim();
-    const userRegistry = getUserRegistry();
-    const targetProfile = userRegistry[accountIdentifier];
+    const optimizedEmailIdentifier = email.toLowerCase().trim();
+    const currentRegistryInstance = fetchSystemUserRegistry();
+    const targetingUserMetadata = currentRegistryInstance[optimizedEmailIdentifier];
 
-    if (!targetProfile || targetProfile.password !== password) {
-        return res.status(401).json({ success: false, message: "Login Failed: Incorrect email or password." });
+    if (!targetingUserMetadata || targetingUserMetadata.password !== password) {
+        return res.status(401).json({ success: false, message: "Credentials Evaluation Faulted: Unauthorized parameters match." });
     }
 
-    if (!targetProfile.isVerified) {
+    if (!targetingUserMetadata.isVerified) {
         return res.status(403).json({ 
             success: false, 
-            message: "Account Unverified: Please complete email verification before logging in.", 
+            message: "Access Deficient: Verification sequence missing or uncompleted.", 
             requiresVerification: true 
         });
     }
 
     return res.status(200).json({
         success: true,
-        message: "Login successful! Welcome back to UEFI Connect.",
-        token: targetProfile.email, // Frontend must send this as: Authorization: Bearer <token>
-        user: {
-            name: targetProfile.name,
-            email: targetProfile.email,
-            role: targetProfile.role
-        }
+        message: "Identity confirmed. Deploying custom application workspaces...",
+        token: targetingUserMetadata.email,
+        user: { name: targetingUserMetadata.name, email: targetingUserMetadata.email, role: targetingUserMetadata.role }
     });
 });
 
-// ============================================================================
-// 5. COMMUNITY ECOSYSTEM API ROUTES (POSTS, MEDIA, LIKES, COMMENTS)
-// ============================================================================
-
 /**
- * GET /api/connect/posts
- * Fetches all discussion posts, including their attached images, videos, likes, and comments.
- * Tip for Frontend: Set a setInterval() in JavaScript to call this every 3 seconds to see classmates' posts automatically!
+ * GET /api/connect/posts -> Synchronized Communication Stream Dispatcher
  */
 app.get('/api/connect/posts', (req, res) => {
-    const globalFeed = getGlobalFeed();
+    const systemFeedSnapshot = fetchGlobalEcosystemFeed();
     return res.status(200).json({ 
         success: true, 
-        totalPosts: globalFeed.length,
-        feed: globalFeed 
+        totalTelemetryItems: systemFeedSnapshot.length,
+        feed: systemFeedSnapshot 
     });
 });
 
 /**
- * POST /api/connect/posts
- * Publishes a new post with optional Image URL and Video URL support.
+ * POST /api/connect/posts -> Multi-media Asset Publishing Route
  */
-app.post('/api/connect/posts', requireClientAuthentication, (req, res) => {
+app.post('/api/connect/posts', securePipelineAuthenticationGuard, (req, res) => {
     const { textContent, imageUrl, videoUrl } = req.body;
-    const activeClient = req.authenticatedClient;
+    const authorContext = req.authenticatedUserContext;
 
     if (!textContent || textContent.trim() === "") {
-        return res.status(400).json({ success: false, message: "Post Error: You cannot publish an empty message." });
+        return res.status(400).json({ success: false, message: "Publishing Faulted: Input message cannot be empty." });
     }
 
-    const globalFeed = getGlobalFeed();
+    const totalSystemFeed = fetchGlobalEcosystemFeed();
 
-    // Comprehensive Post Schema with built-in interactive arrays
-    const newPostObject = {
+    const newlyStructuredPost = {
         id: crypto.randomUUID(),
-        authorEmail: activeClient.email,
-        authorName: activeClient.name,
-        authorRole: activeClient.role,
+        authorEmail: authorContext.email,
+        authorName: authorContext.name,
+        authorRole: authorContext.role,
         textContent: textContent.trim(),
         imageUrl: imageUrl && imageUrl.trim() !== "" ? imageUrl.trim() : null,
         videoUrl: videoUrl && videoUrl.trim() !== "" ? videoUrl.trim() : null,
-        likes: [],       // Array of user emails who liked the post
-        likesCount: 0,   // Numerical tally for easy UI rendering
-        comments: [],    // Array of nested comment objects
+        likes: [],       
+        likesCount: 0,   
+        comments: [],    
         commentsCount: 0,
         timestamp: new Date().toISOString()
     };
 
-    // Add new post to the top of the feed and save to hard drive
-    globalFeed.unshift(newPostObject);
-    saveGlobalFeed(globalFeed);
-    
-    console.log(`[NEW POST PUBLISHED] Author: ${activeClient.name} | Media Attached: ${imageUrl ? 'Image ' : ''}${videoUrl ? 'Video' : 'None'}`);
+    totalSystemFeed.unshift(newlyStructuredPost);
+    commitGlobalEcosystemFeed(totalSystemFeed);
 
     return res.status(201).json({ 
         success: true, 
-        message: "Your post has been published to the global ecosystem!", 
-        post: newPostObject 
+        message: "Academic asset securely stored in persistent global feed registry.", 
+        post: newlyStructuredPost 
     });
 });
 
 /**
- * POST /api/connect/posts/:id/like
- * Toggles a Like on a specific classmate's post.
- * If the user already liked it, calling this endpoint again removes their like (Unlike).
+ * POST /api/connect/posts/:id/like -> Interactive Like Matrix Toggle Engine
  */
-app.post('/api/connect/posts/:id/like', requireClientAuthentication, (req, res) => {
-    const targetPostId = req.params.id;
-    const activeClient = req.authenticatedClient;
-    const globalFeed = getGlobalFeed();
+app.post('/api/connect/posts/:id/like', securePipelineAuthenticationGuard, (req, res) => {
+    const postIdentityTarget = req.params.id;
+    const userContext = req.authenticatedUserContext;
+    const activeFeedSnapshot = fetchGlobalEcosystemFeed();
 
-    const postIndex = globalFeed.findIndex(post => post.id === targetPostId);
+    const structuralPostIndex = activeFeedSnapshot.findIndex(item => item.id === postIdentityTarget);
 
-    if (postIndex === -1) {
-        return res.status(404).json({ success: false, message: "Interaction Error: The requested post does not exist." });
+    if (structuralPostIndex === -1) {
+        return res.status(404).json({ success: false, message: "Target Context Failure: Post asset reference does not exist." });
     }
 
-    const targetPost = globalFeed[postIndex];
+    const postReference = activeFeedSnapshot[structuralPostIndex];
+    if (!postReference.likes) postReference.likes = [];
 
-    // Ensure likes array exists (for backward compatibility)
-    if (!targetPost.likes) targetPost.likes = [];
+    const uniqueUserIndex = postReference.likes.indexOf(userContext.email);
+    let engagementVector = "";
 
-    const userLikeIndex = targetPost.likes.indexOf(activeClient.email);
-
-    let actionTaken = "";
-    if (userLikeIndex === -1) {
-        // Add Like
-        targetPost.likes.push(activeClient.email);
-        actionTaken = "liked";
+    if (uniqueUserIndex === -1) {
+        postReference.likes.push(userContext.email);
+        engagementVector = "liked";
     } else {
-        // Remove Like (Unlike)
-        targetPost.likes.splice(userLikeIndex, 1);
-        actionTaken = "unliked";
+        postReference.likes.splice(uniqueUserIndex, 1);
+        engagementVector = "unliked";
     }
 
-    targetPost.likesCount = targetPost.likes.length;
-    saveGlobalFeed(globalFeed);
-
-    console.log(`[LIKE INTERACTION] ${activeClient.name} ${actionTaken} post ID: ${targetPostId}`);
+    postReference.likesCount = postReference.likes.length;
+    commitGlobalEcosystemFeed(activeFeedSnapshot);
 
     return res.status(200).json({
         success: true,
-        message: `Successfully ${actionTaken} the post!`,
-        likesCount: targetPost.likesCount,
-        likes: targetPost.likes
+        message: `Asset successfully ${engagementVector}!`,
+        likesCount: postReference.likesCount,
+        likes: postReference.likes
     });
 });
 
 /**
- * POST /api/connect/posts/:id/comment
- * Allows users to reply and comment on a specific classmate's post.
+ * POST /api/connect/posts/:id/comment -> Nested Response Injection Pipeline
  */
-app.post('/api/connect/posts/:id/comment', requireClientAuthentication, (req, res) => {
-    const targetPostId = req.params.id;
+app.post('/api/connect/posts/:id/comment', securePipelineAuthenticationGuard, (req, res) => {
+    const postIdentityTarget = req.params.id;
     const { commentText } = req.body;
-    const activeClient = req.authenticatedClient;
+    const userContext = req.authenticatedUserContext;
 
     if (!commentText || commentText.trim() === "") {
-        return res.status(400).json({ success: false, message: "Comment Error: Please enter text before submitting your comment." });
+        return res.status(400).json({ success: false, message: "Response Rejected: Text payload body is mandatory." });
     }
 
-    const globalFeed = getGlobalFeed();
-    const postIndex = globalFeed.findIndex(post => post.id === targetPostId);
+    const activeFeedSnapshot = fetchGlobalEcosystemFeed();
+    const structuralPostIndex = activeFeedSnapshot.findIndex(item => item.id === postIdentityTarget);
 
-    if (postIndex === -1) {
-        return res.status(404).json({ success: false, message: "Interaction Error: The requested post does not exist." });
+    if (structuralPostIndex === -1) {
+        return res.status(404).json({ success: false, message: "Target Context Failure: Post asset reference does not exist." });
     }
 
-    const targetPost = globalFeed[postIndex];
+    const postReference = activeFeedSnapshot[structuralPostIndex];
+    if (!postReference.comments) postReference.comments = [];
 
-    // Ensure comments array exists
-    if (!targetPost.comments) targetPost.comments = [];
-
-    const newCommentObject = {
+    const newlyCompiledCommentNode = {
         commentId: crypto.randomUUID(),
-        authorEmail: activeClient.email,
-        authorName: activeClient.name,
-        authorRole: activeClient.role,
+        authorEmail: userContext.email,
+        authorName: userContext.name,
+        authorRole: userContext.role,
         text: commentText.trim(),
         timestamp: new Date().toISOString()
     };
 
-    targetPost.comments.push(newCommentObject);
-    targetPost.commentsCount = targetPost.comments.length;
+    postReference.comments.push(newlyCompiledCommentNode);
+    postReference.commentsCount = postReference.comments.length;
 
-    saveGlobalFeed(globalFeed);
-
-    console.log(`[NEW COMMENT] ${activeClient.name} commented on post ID: ${targetPostId}`);
+    commitGlobalEcosystemFeed(activeFeedSnapshot);
 
     return res.status(201).json({
         success: true,
-        message: "Your comment has been added!",
-        comment: newCommentObject,
-        totalComments: targetPost.commentsCount
+        message: "Nested platform feedback appended securely.",
+        comment: newlyCompiledCommentNode,
+        totalComments: postReference.commentsCount
     });
 });
 
-/**
- * DELETE /api/connect/posts/:id
- * Allows a user to delete their own post.
- */
-app.delete('/api/connect/posts/:id', requireClientAuthentication, (req, res) => {
-    const targetPostId = req.params.id;
-    const activeClient = req.authenticatedClient;
-    const globalFeed = getGlobalFeed();
-
-    const postIndex = globalFeed.findIndex(post => post.id === targetPostId);
-
-    if (postIndex === -1) {
-        return res.status(404).json({ success: false, message: "Delete Error: Post not found." });
-    }
-
-    // Authorization check: Only the original author can delete their post
-    if (globalFeed[postIndex].authorEmail !== activeClient.email) {
-        return res.status(403).json({ success: false, message: "Permission Denied: You can only delete your own posts." });
-    }
-
-    globalFeed.splice(postIndex, 1);
-    saveGlobalFeed(globalFeed);
-
-    console.log(`[POST DELETED] Post ID ${targetPostId} removed by ${activeClient.name}`);
-
-    return res.status(200).json({ success: true, message: "Your post has been permanently deleted." });
-});
-
-// ============================================================================
-// 6. FALLBACK ERROR HANDLERS
-// ============================================================================
-
-// 404 Route Catch-All Shield
+// --- PLATFORM CATCH-ALL PROTECTION SYSTEM SHIELDS ---
 app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: `Endpoint Not Found: [${req.method}] ${req.url} is not a valid route on this server.`
-    });
+    res.status(404).json({ success: false, message: "Routing Fault: System asset path missing from mapping registry." });
 });
 
-// 500 Internal Exception Catch-All Shield
 app.use((err, req, res, next) => {
-    console.error("[CRITICAL SYSTEM EXCEPTION]:", err.stack);
-    res.status(500).json({
-        success: false,
-        message: "Internal Server Error: The server encountered an unexpected condition."
-    });
+    console.error("[CENTRAL SECURITY EXCEPTION EXPOSED]:", err.stack);
+    res.status(500).json({ success: false, message: "Internal Processing Exception: Frame parse failed." });
 });
 
-// ============================================================================
-// 7. SERVER INITIALIZATION & PORT ACTIVATION
-// ============================================================================
-const SERVER_PORT = process.env.PORT || 5000;
-app.listen(SERVER_PORT, () => {
+const INTERACTIVE_RUN_PORT = process.env.PORT || 5000;
+app.listen(INTERACTIVE_RUN_PORT, '0.0.0.0', () => {
     console.log(`\n================================================================`);
-    console.log(`[UEFI ENTERPRISE CORE ONLINE] Version 3.0.0 Active`);
-    console.log(`[PERSISTENCE ACTIVE] Storing data locally in JSON files.`);
-    console.log(`[LISTENING PORT] Socket communications mapped to port: ${SERVER_PORT}`);
+    console.log(`[UEFI PRODUCTION CORE ONLINE] Active Global Systems Engaged.`);
+    console.log(`[NET ADAPTER BINDING] Mapping interfaces on host channel port: ${INTERACTIVE_RUN_PORT}`);
     console.log(`================================================================\n`);
 });
