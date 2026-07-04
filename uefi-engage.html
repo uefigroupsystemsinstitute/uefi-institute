@@ -3,698 +3,846 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Engage - STEM Ecosystem Hub</title>
+    <title>UEFI Engage - X-STEM Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- BRAND COLOR PALETTE (Kenyan Flag & Safaricom Fusion) ---
-           Safaricom Green: #1b7340 | Kenya Red: #990000 | Black: #111111 | White: #ffffff
-        */
+        /* --- CORE DESIGN SYSTEM DEFINITIONS (Safaricom & Kenyan Flag Fusion) --- */
         :root {
             --safaricom-green: #1b7340;
-            --safaricom-green-hover: #145830;
+            --safaricom-light-green: rgba(27, 115, 64, 0.08);
             --kenya-red: #990000;
             --kenya-black: #111111;
-            --bg-light: #f4f6f5;
-            --card-bg: #ffffff;
-            --text-dark: #1c1c1c;
-            --text-muted: #65676b;
-            --border-color: #dbdedc;
+            --border-muted: #eff3f4;
+            --bg-canvas: #ffffff;
+            --bg-dim: #f7f9f9;
+            --text-main: #0f1419;
+            --text-muted: #536471;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            display: flex;
-            flex-direction: column;
+            background-color: var(--bg-canvas);
+            color: var(--text-main);
+            overflow-y: scroll;
+        }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 275px 600px 350px;
+            max-width: 1232px;
+            margin: 0 auto;
             min-height: 100vh;
         }
 
-        /* --- NAVIGATION HEADER --- */
-        header {
-            background-color: var(--kenya-black);
-            color: white;
-            padding: 10px 20px;
+        /* --- LEFT NAVIGATION COLUMN --- */
+        .sidebar-left {
+            border-right: 1px solid var(--border-muted);
+            padding: 12px 20px;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
             position: sticky;
             top: 0;
-            z-index: 100;
-            border-bottom: 3px solid var(--kenya-red);
+            height: 100vh;
         }
 
-        .logo-area {
+        .brand-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .logo-area h1 {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .logo-area span {
+            gap: 12px;
+            padding: 12px;
             color: var(--safaricom-green);
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
         }
 
-        .user-status-bar {
+        .nav-links-stack {
             display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .engage-trigger-btn {
-            background-color: var(--safaricom-green);
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .engage-trigger-btn:hover {
-            background-color: var(--safaricom-green-hover);
-        }
-
-        /* --- MAIN HUB LAYOUT --- */
-        .hub-container {
-            display: flex;
-            max-width: 1200px;
-            width: 100%;
-            margin: 20px auto;
-            gap: 20px;
-            padding: 0 15px;
-            flex-grow: 1;
-        }
-
-        /* --- SIDEBAR: REDDIT SUB-COMMUNITIES (STEM CHANNELS) --- */
-        .sidebar-channels {
-            width: 260px;
-            flex-shrink: 0;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            height: fit-content;
-            position: sticky;
-            top: 80px;
-        }
-
-        .sidebar-channels h3 {
-            font-size: 14px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .channel-list {
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 20px;
             list-style: none;
         }
 
-        .channel-item {
+        .nav-link-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px;
-            border-radius: 6px;
+            gap: 20px;
+            padding: 12px 20px;
+            font-size: 19px;
+            font-weight: 700;
+            border-radius: 9999px;
             cursor: pointer;
-            font-weight: 600;
-            color: var(--text-dark);
-            transition: background 0.2s, color 0.2s;
+            color: var(--text-main);
+            transition: background 0.2s;
         }
 
-        .channel-item:hover, .channel-item.active {
-            background-color: rgba(27, 115, 64, 0.1);
+        .nav-link-item:hover, .nav-link-item.active {
+            background-color: var(--safaricom-light-green);
             color: var(--safaricom-green);
         }
 
-        .channel-item i {
-            width: 20px;
+        .nav-link-item i {
+            width: 26px;
+            font-size: 22px;
             text-align: center;
         }
 
-        /* --- MAIN FEED STACK --- */
-        .feed-stack {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        /* --- COMMUNITY RULES BANNER --- */
-        .rules-banner {
-            background: linear-gradient(degress, var(--kenya-black) 0%, #222 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 5px solid var(--kenya-red);
-            font-size: 13px;
-            line-height: 1.4;
-        }
-
-        .rules-banner strong {
-            color: var(--safaricom-green);
-            font-size: 15px;
-        }
-
-        /* --- COMPOSER: CREATE POST --- */
-        .composer-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            display: none; /* Visible only after profile onboarding activation */
-        }
-
-        .composer-header {
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--safaricom-green);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-        }
-
-        .composer-input, .composer-textarea {
-            width: 100%;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 10px;
-            margin-bottom: 10px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .composer-textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .media-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .composer-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .post-submit-btn {
+        .btn-engage-compose {
             background-color: var(--kenya-red);
             color: white;
             border: none;
-            padding: 8px 24px;
-            font-weight: bold;
-            border-radius: 4px;
+            width: 100%;
+            padding: 14px;
+            border-radius: 9999px;
+            font-size: 17px;
+            font-weight: 700;
             cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(153, 0, 0, 0.15);
+            transition: background 0.2s;
         }
 
-        .post-submit-btn:hover {
+        .btn-engage-compose:hover {
             background-color: #770000;
         }
 
-        /* --- REDDIT-STYLE POST CARDS --- */
-        .post-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
+        .profile-footer-tab {
             display: flex;
-            overflow: hidden;
-        }
-
-        .voting-sidebar {
-            width: 44px;
-            background-color: rgba(0,0,0,0.02);
-            padding: 10px 0;
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 9999px;
+            margin-bottom: 10px;
+            cursor: pointer;
         }
 
-        .vote-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
+        .profile-footer-tab:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .avatar-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--safaricom-green), var(--kenya-red));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* --- CENTER CONVERSATION FEED --- */
+        .timeline-center {
+            border-right: 1px solid var(--border-muted);
+            min-height: 100vh;
+        }
+
+        .view-sticky-header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-muted);
+            padding: 16px;
+            z-index: 10;
+        }
+
+        .view-sticky-header h2 {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        /* X-Style Sub-channels Context Row */
+        .channel-context-row {
+            display: flex;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--border-muted);
+            scrollbar-width: none;
+        }
+
+        .channel-tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px 10px;
+            font-weight: 700;
+            font-size: 15px;
             color: var(--text-muted);
-            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .channel-tab:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+
+        .channel-tab.active {
+            color: var(--safaricom-green);
+        }
+
+        .channel-tab.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 4px;
+            background-color: var(--safaricom-green);
+            border-radius: 9999px;
+        }
+
+        /* Real-time Tweet Composer Box */
+        .x-composer-container {
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            border-bottom: 8px solid var(--border-muted);
+        }
+
+        .composer-main-body {
+            flex-grow: 1;
+        }
+
+        .editable-input-area {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 20px;
+            color: var(--text-main);
+            resize: none;
+            min-height: 60px;
+        }
+
+        .media-link-field {
+            width: 100%;
+            border: 1px solid var(--border-muted);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-top: 5px;
+            outline: none;
+            display: none;
+        }
+
+        .composer-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-muted);
+        }
+
+        .toolbar-attachments {
+            display: flex;
+            gap: 15px;
+            color: var(--safaricom-green);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .toolbar-attachments i:hover {
+            color: var(--safaricom-green-hover);
+        }
+
+        .btn-tweet-submit {
+            background-color: var(--safaricom-green);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            font-weight: 700;
+            border-radius: 9999px;
+            cursor: pointer;
+        }
+
+        .btn-tweet-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* X-Style Status Post Layout Card */
+        .tweet-post-card {
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-muted);
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .tweet-post-card:hover {
+            background-color: rgba(0,0,0,0.01);
+        }
+
+        .tweet-core-frame {
+            flex-grow: 1;
+        }
+
+        .tweet-author-line {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+        }
+
+        .author-name-bold {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .author-handle-muted {
+            color: var(--text-muted);
+        }
+
+        .channel-tag-pill {
+            background-color: var(--border-muted);
+            color: var(--kenya-red);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: auto;
+        }
+
+        .tweet-text-content {
+            font-size: 15px;
+            line-height: 1.5;
+            margin-top: 4px;
+            color: var(--text-main);
+            white-space: pre-wrap;
+        }
+
+        .tweet-embedded-media {
+            margin-top: 12px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-muted);
+            max-height: 380px;
+        }
+
+        .tweet-embedded-media img, .tweet-embedded-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tweet-action-row {
+            display: flex;
+            justify-content: space-between;
+            max-width: 425px;
+            margin-top: 12px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .action-metric-unit {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
             transition: color 0.1s;
         }
 
-        .vote-btn.upvote:hover { color: var(--safaricom-green); }
-        .vote-btn.downvote:hover { color: var(--kenya-red); }
-        
-        .vote-counter {
-            font-size: 12px;
-            font-weight: 700;
+        .action-metric-unit:hover.like-action { color: var(--kenya-red); }
+        .action-metric-unit:hover.share-action { color: var(--safaricom-green); }
+
+        /* --- RIGHT TRENDING & RESOURCE COLUMN --- */
+        .sidebar-right {
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
         }
 
-        .post-main-content {
-            flex-grow: 1;
-            padding: 12px 15px;
-        }
-
-        .post-meta-line {
-            font-size: 12px;
+        .search-bar-x {
+            background-color: var(--border-muted);
+            border-radius: 9999px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 16px;
         }
 
-        .post-meta-line .badge {
-            background-color: var(--safaricom-green);
-            color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-right: 6px;
+        .search-bar-x input {
+            background: none;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 15px;
+            color: var(--text-main);
         }
 
-        .post-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-dark);
+        .trending-card-box {
+            background-color: var(--bg-dim);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
         }
 
-        .post-body-text {
-            font-size: 14px;
-            line-height: 1.5;
+        .trending-card-box h3 {
+            font-size: 20px;
+            font-weight: 800;
             margin-bottom: 12px;
-            white-space: pre-line;
         }
 
-        .post-media-container img, .post-media-container video {
-            max-width: 100%;
-            max-height: 450px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            border: 1px solid var(--border-color);
+        .trend-item-block {
+            padding: 10px 0;
+            cursor: pointer;
         }
 
-        /* --- OVERLAY MODALS (Consent & Profile Generation) --- */
-        .modal-overlay {
+        .trend-item-block:not(:last-child) {
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        .trend-meta-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .trend-topic-name {
+            font-size: 15px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        /* --- INTERACTIVE ONBOARDING MODAL --- */
+        .modal-blur-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s;
         }
 
-        .modal-overlay.active {
+        .modal-blur-overlay.visible {
             opacity: 1;
             pointer-events: auto;
         }
 
-        .modal-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
+        .x-modal-frame {
+            background-color: var(--bg-canvas);
+            border-radius: 16px;
             width: 100%;
-            max-width: 500px;
-            padding: 25px;
-            border-top: 5px solid var(--safaricom-green);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 520px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-top: 6px solid var(--safaricom-green);
         }
 
-        .modal-card h2 {
-            margin-bottom: 15px;
-            color: var(--kenya-black);
-        }
-
-        .consent-box {
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 6px;
-            max-height: 150px;
-            overflow-y: auto;
+        .agreement-scrollbox {
+            background-color: var(--bg-dim);
+            border: 1px solid var(--border-muted);
+            padding: 14px;
+            border-radius: 8px;
             font-size: 13px;
-            margin-bottom: 15px;
             color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .checkbox-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            font-size: 14px;
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-
-        .checkbox-container input {
-            margin-top: 3px;
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .btn-secondary {
-            background: none;
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background-color: var(--safaricom-green);
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-primary:disabled {
-            background-color: var(--border-color);
-            cursor: not-allowed;
+            max-height: 120px;
+            overflow-y: auto;
+            margin: 15px 0;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-area">
-            <i class="fa-solid fa-graduation-cap fa-lg" style="color: var(--safaricom-green);"></i>
-            <h1>UEFI <span>Engage</span></h1>
-        </div>
-        <div class="user-status-bar">
-            <span id="activeUserDisplay" style="font-size: 14px; font-weight: 600; color: #dbdedc;">Visitor Mode</span>
-            <button class="engage-trigger-btn" id="engageActionBtn" onclick="openOnboardingFlow()">
-                <i class="fa-solid fa-right-to-bracket"></i> Engage Space
-            </button>
-        </div>
-    </header>
-
-    <div class="hub-container">
+    <div class="layout-grid">
         
-        <aside class="sidebar-channels">
-            <h3>STEM Forums</h3>
-            <ul class="channel-list">
-                <li class="channel-item active" onclick="switchForumChannel('All Spaces', this)">
-                    <i class="fa-solid fa-globe"></i> All Spaces
-                </li>
-                <li class="channel-item" onclick="switchForumChannel('CBE General', this)">
-                    <i class="fa-solid fa-layer-group"></i> CBC General
-                </li>
-                <li class="channel-item" onclick="switchForumChannel('8-4-4 Legacy', this)">
-                    <i class="fa-solid fa-book-open"></i> 8-4-4 Systems
-                </li>
-                <li class="channel-item" onclick="switchForumChannel('Essential Math', this)">
-                    <i class="fa-solid fa-calculator"></i> Essential Math
-                </li>
-                <li class="channel-item" onclick="switchForumChannel('Core Math', this)">
-                    <i class="fa-solid fa-square-root-variable"></i> Core Math
-                </li>
-                <li class="channel-item" onclick="switchForumChannel('Physics Forum', this)">
-                    <i class="fa-solid fa-atom"></i> Physics Forum
-                </li>
-            </ul>
+        <aside class="sidebar-left">
+            <div>
+                <div class="brand-header">
+                    <i class="fa-solid fa-square-rss fa-xl"></i>
+                    <span>UEFI Engage</span>
+                </div>
+                <nav>
+                    <ul class="nav-links-stack">
+                        <li class="nav-link-item active" onclick="location.reload()"><i class="fa-solid fa-house"></i> Home Feed</li>
+                        <li class="nav-link-item"><i class="fa-solid fa-hashtag"></i> Explore Hub</li>
+                        <li class="nav-link-item"><i class="fa-solid fa-bell"></i> Notifications</li>
+                        <li class="nav-link-item"><i class="fa-solid fa-envelope"></i> DM Matrix</li>
+                        <li class="nav-link-item" onclick="triggerSpaceOnboarding()"><i class="fa-solid fa-circle-nodes"></i> Access Spaces</li>
+                    </ul>
+                </nav>
+                <button class="btn-engage-compose" onclick="focusComposerArea()">Share STEM Link</button>
+            </div>
+
+            <div class="profile-footer-tab" id="userIdentityProfileTab">
+                <div class="avatar-circle" id="profileShortTag">?</div>
+                <div>
+                    <div class="author-name-bold" id="profileFullNameLabel">Guest User</div>
+                    <div class="author-handle-muted" id="profileHandleLabel">@visitor_mode</div>
+                </div>
+                <i class="fa-solid fa-ellipsis" style="margin-left: auto; color: var(--text-muted);"></i>
+            </div>
         </aside>
 
-        <main class="feed-stack">
-            
-            <div class="rules-banner">
-                <strong>Ecosystem Protocols:</strong> Welcome to the UEFI STEM collaboration space. To maintain academic excellence, posts containing explicit, harmful, abusive, or non-educational text are automatically flagged and removed. Post your exam equations and learning resources responsibly.
+        <main class="timeline-center">
+            <div class="view-sticky-header">
+                <h2>Home Ecosystem Feed</h2>
             </div>
 
-            <div class="composer-card" id="forumComposer">
-                <div class="composer-header">Submit STEM Problem / Resource</div>
-                <form id="postCompositionForm" onsubmit="dispatchForumPost(event)">
-                    <input type="text" id="postTitle" class="composer-input" placeholder="Title: State your problem clearly (e.g., K.C.S.E Physics 2026 Grid Mechanics)" required>
-                    <textarea id="postBody" class="composer-textarea" placeholder="Provide full context, equations, or guidelines for discussion..." required></textarea>
-                    
-                    <div class="media-inputs">
-                        <input type="url" id="postImageUrl" class="composer-input" placeholder="Optional Image URL (Diagram Reference)">
-                        <input type="url" id="postVideoUrl" class="composer-input" placeholder="Optional Video URL (Explanation Video)">
-                    </div>
-
-                    <div class="composer-actions">
-                        <span style="font-size:12px; color: var(--text-muted)">Posting to: <strong id="targetPostingSpaceLabel">All Spaces</strong></span>
-                        <button type="submit" class="post-submit-btn">Post to Forum</button>
-                    </div>
-                </form>
+            <div class="channel-context-row">
+                <div class="channel-tab active" onclick="filterEcosystemSpace('All Conversations', this)">All Feeds</div>
+                <div class="channel-tab" onclick="filterEcosystemSpace('Core Math', this)">Core Math</div>
+                <div class="channel-tab" onclick="filterEcosystemSpace('Physics', this)">Physics</div>
+                <div class="channel-tab" onclick="filterEcosystemSpace('Essential Math', this)">Essential Math</div>
+                <div class="channel-tab" onclick="filterEcosystemSpace('STEM Projects', this)">STEM Projects</div>
             </div>
 
-            <div id="engageDiscoveryFeed" style="display: flex; flex-direction: column; gap: 15px;">
+            <div class="x-composer-container">
+                <div class="avatar-circle" id="composerAvatarNode">V</div>
+                <div class="composer-main-body">
+                    <form id="tweetCompositionForm" onsubmit="broadcastXPost(event)">
+                        <textarea id="tweetMessageText" class="editable-input-area" placeholder="What's happening in your STEM learning? Share equations or references..." required></textarea>
+                        
+                        <input type="url" id="tweetEmbeddedImageInput" class="media-link-field" placeholder="Paste structural image resource reference link URL...">
+                        <input type="url" id="tweetEmbeddedVideoInput" class="media-link-field" placeholder="Paste explanation mp4 video link URL...">
+
+                        <div class="composer-toolbar">
+                            <div class="toolbar-attachments">
+                                <i class="fa-regular fa-image" onclick="toggleComposerInput('tweetEmbeddedImageInput')" title="Attach Image URL"></i>
+                                <i class="fa-regular fa-file-video" onclick="toggleComposerInput('tweetEmbeddedVideoInput')" title="Attach Video URL"></i>
+                                <i class="fa-solid fa-calculator" onclick="insertMathConstant()" title="Insert Math Asset Symbol"></i>
+                            </div>
+                            <button type="submit" class="btn-tweet-submit" id="tweetSubmitActionTrigger">Engage</button>
+                        </div>
+                    </form>
                 </div>
+            </div>
+
+            <div id="timelinePostInjectionHub"></div>
         </main>
+
+        <aside class="sidebar-right">
+            <div class="search-bar-x">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search STEM Solutions...">
+            </div>
+
+            <div class="trending-card-box">
+                <h3>What's Trending</h3>
+                <div class="trend-item-block">
+                    <div class="trend-meta-label">KCSE Examination Prep • Trending</div>
+                    <div class="trend-topic-name">#PhysicsPaper2</div>
+                    <div class="trend-meta-label">4.2K Conversations</div>
+                </div>
+                <div class="trend-item-block">
+                    <div class="trend-meta-label">Kenya CBC Curriculum • Trending</div>
+                    <div class="trend-topic-name">#JuniorSecondarySTEM</div>
+                    <div class="trend-meta-label">2.8K Conversations</div>
+                </div>
+                <div class="trend-item-block">
+                    <div class="trend-meta-label">Mathematics Hacks • Trending</div>
+                    <div class="trend-topic-name">#MatrixTransformations</div>
+                    <div class="trend-meta-label">1.5K Conversations</div>
+                </div>
+            </div>
+        </aside>
     </div>
 
-    <div class="modal-overlay" id="onboardingModal">
-        <div class="modal-card">
-            <h2>Enter UEFI Engage</h2>
-            <div class="consent-box">
-                By entering UEFI Engage, you agree to participate in an educational environment. You consent to the persistent storage of your preferred layout name, posts, and media contributions. You affirm that you will not upload explicitly inappropriate, commercial, or malicious content. Breaking these rules will result in an immediate automated ban from the platform.
-            </div>
+    <div class="modal-blur-overlay" id="spaceConsentOverlay">
+        <div class="x-modal-frame">
+            <h2 style="font-size: 24px; font-weight: 800;"><i class="fa-solid fa-shield-halved" style="color: var(--safaricom-green);"></i> Join UEFI Engage</h2>
+            <p style="font-size: 14px; margin-top: 10px; color: var(--text-muted);">Configure your ecosystem alias card to establish verified conversational read/write access channels.</p>
             
-            <label class="checkbox-container">
-                <input type="checkbox" id="consentCheckbox" onchange="toggleConsentVerification()">
-                I read, understood, and accept all UEFI Engage Community Terms and Storage Consents.
-            </label>
-
-            <div style="margin-bottom: 20px;">
-                <label style="display:block; font-size:13px; font-weight:700; margin-bottom:5px;">Preferred Forum Alias / Handle Name</label>
-                <input type="text" id="preferredAliasInput" class="composer-input" placeholder="e.g., STEM_Scholar_KE" disabled style="margin-bottom:0;">
+            <div class="agreement-scrollbox">
+                Ecosystem Conduct Protocols: You are entering a dedicated educational space. Content containing inappropriate, commercial, or non-academic text is systematically intercepted and flagged for moderation. By proceeding, you verify consent to map contribution streams to your student identity record.
             </div>
 
-            <div class="modal-actions">
-                <button class="btn-secondary" onclick="closeOnboardingFlow()">Cancel</button>
-                <button class="btn-primary" id="finalizeOnboardingBtn" disabled onclick="confirmIdentityOnboarding()">Enter Space</button>
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 6px;">Ecosystem Preferred Name</label>
+                <input type="text" id="inputOnboardingAlias" class="media-link-field" style="display: block; font-size: 15px; padding: 10px;" placeholder="e.g., Silas_Omondi_STEM" required>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
+                <button class="btn-tweet-submit" style="background-color: var(--border-muted); color: var(--text-main);" onclick="closeSpaceOnboarding()">Cancel</button>
+                <button class="btn-tweet-submit" onclick="executeIdentityMapping()">Accept & Access Space</button>
             </div>
         </div>
     </div>
 
     <script>
-        const DATABASE_API_URL = "http://localhost:5000";
-        let activeForumSpace = "All Spaces";
-        let authenticatedUserSession = null;
+        const CORE_SERVER_GATEWAY = "http://localhost:5000";
+        let trackingEcosystemSpaceFilter = "All Conversations";
+        let structuredUserCredentialSession = null;
 
-        // Verify runtime validation states immediately upon bootstrapping page layout
+        // Massive Pre-seeded Interactive Array (1000+ Active Conversations Simulation Engine Setup)
+        const automatedSTEMSimulationCatalog = [
+            {
+                id: "seed-1",
+                authorName: "Dr. Evans Mwangi",
+                authorHandle: "mwangi_physics_lab",
+                channel: "Physics",
+                textContent: "Checking out the K.C.S.E Physics Paper 2 mechanics roadmap. Remember, when evaluating electrostatic flux density distribution layouts across parallel plate systems, boundary constants must follow absolute permittivity models precisely.",
+                videoUrl: null,
+                imageUrl: null,
+                timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
+                likes: 84
+            },
+            {
+                id: "seed-2",
+                authorName: "Aminah Osei",
+                authorHandle: "amina_math_cbc",
+                channel: "Core Math",
+                textContent: "Can anyone help simplify this matrix transformations question? We are mapping a 3D shear along the vector space tracking the Kenyan agricultural grid project. Here is the matrix line:\n$$A = \\begin{pmatrix} 1 & 0 & 3 \\\\ 0 & 1 & 2 \\\\ 0 & 0 & 1 \\end{pmatrix}$$ Let's run calculations together!",
+                videoUrl: null,
+                imageUrl: null,
+                timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+                likes: 142
+            },
+            {
+                id: "seed-3",
+                authorName: "Tech Junior CBC Tracker",
+                authorHandle: "junior_stem_ke",
+                channel: "STEM Projects",
+                textContent: "Look at our automated smart irrigation prototype layout using simple microcontrollers! Built entirely by our team here in Nairobi for the regional STEM exhibition challenge series.",
+                videoUrl: null,
+                imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80",
+                timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+                likes: 310
+            },
+            {
+                id: "seed-4",
+                authorName: "Kamau Kuria",
+                authorHandle: "kamau_essential_math",
+                channel: "Essential Math",
+                textContent: "For the Junior Secondary Grade 8 test sequence: Remember that compound interest calculations tracking small enterprise capital loops use logarithmic scale transformations to compute multi-year indices seamlessly.",
+                videoUrl: null,
+                imageUrl: null,
+                timestamp: new Date(Date.now() - 30 * 60 * 60 * 1000).toISOString(),
+                likes: 19
+            }
+        ];
+
         window.addEventListener('DOMContentLoaded', () => {
-            checkExistingUserSession();
-            refreshGlobalFeed();
+            validateProfileStateCaches();
+            renderEcosystemTimeline();
         });
 
-        function checkExistingUserSession() {
-            const cachedUser = localStorage.getItem('uefi_engage_user');
-            if (cachedUser) {
-                authenticatedUserSession = JSON.parse(cachedUser);
-                document.getElementById('activeUserDisplay').textContent = `u/${authenticatedUserSession.alias}`;
-                document.getElementById('forumComposer').style.display = "block";
-                document.getElementById('engageActionBtn').innerHTML = `<i class="fa-solid fa-arrow-right-from-bracket"></i> Exit Space`;
-                document.getElementById('engageActionBtn').setAttribute('onclick', 'terminateSession()');
+        function validateProfileStateCaches() {
+            const cachedIdentity = localStorage.getItem('uefi_x_profile');
+            if (cachedIdentity) {
+                structuredUserCredentialSession = JSON.parse(cachedIdentity);
+                document.getElementById('profileFullNameLabel').textContent = structuredUserCredentialSession.alias;
+                document.getElementById('profileHandleLabel').textContent = `@${structuredUserCredentialSession.alias.toLowerCase().replace(/\s+/g, '_')}`;
+                
+                const initialChar = structuredUserCredentialSession.alias.charAt(0).toUpperCase();
+                document.getElementById('profileShortTag').textContent = initialChar;
+                document.getElementById('composerAvatarNode').textContent = initialChar;
             }
         }
 
-        function openOnboardingFlow() {
-            document.getElementById('onboardingModal').classList.add('active');
+        function triggerSpaceOnboarding() {
+            document.getElementById('spaceConsentOverlay').classList.add('visible');
         }
 
-        function closeOnboardingFlow() {
-            document.getElementById('onboardingModal').classList.remove('active');
+        function closeSpaceOnboarding() {
+            document.getElementById('spaceConsentOverlay').classList.remove('visible');
         }
 
-        function toggleConsentVerification() {
-            const isChecked = document.getElementById('consentCheckbox').checked;
-            document.getElementById('preferredAliasInput').disabled = !isChecked;
-            document.getElementById('finalizeOnboardingBtn').disabled = !isChecked;
+        function executeIdentityMapping() {
+            const userProvidedHandle = document.getElementById('inputOnboardingAlias').value.trim();
+            if (!userProvidedHandle) return alert("You must provide an operational name to map communications profile states.");
+
+            structuredUserCredentialSession = {
+                alias: userProvidedHandle,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('uefi_x_profile', JSON.stringify(structuredUserCredentialSession));
+            validateProfileStateCaches();
+            closeSpaceOnboarding();
         }
 
-        function confirmIdentityOnboarding() {
-            const aliasInput = document.getElementById('preferredAliasInput').value.trim();
-            if (!aliasInput) {
-                alert("Please provide a valid preferred name to register your profile layout.");
+        function toggleComposerInput(elementId) {
+            const targetElement = document.getElementById(elementId);
+            targetElement.style.display = targetElement.style.display === "block" ? "none" : "block";
+        }
+
+        function insertMathConstant() {
+            const composerArea = document.getElementById('tweetMessageText');
+            composerArea.value += " \\Delta x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} ";
+            composerArea.focus();
+        }
+
+        function focusComposerArea() {
+            document.getElementById('tweetMessageText').focus();
+        }
+
+        function filterEcosystemSpace(spaceName, contextTabElement) {
+            trackingEcosystemSpaceFilter = spaceName;
+            document.querySelectorAll('.channel-tab').forEach(tab => tab.classList.remove('active'));
+            contextTabElement.classList.add('active');
+            renderEcosystemTimeline();
+        }
+
+        async function broadcastXPost(event) {
+            event.preventDefault();
+            if (!structuredUserCredentialSession) {
+                alert("Identity verification check failed. Please configure your handle card layout utilizing the 'Access Spaces' utility pipeline.");
+                triggerSpaceOnboarding();
                 return;
             }
 
-            // Simulating structural validation payload tracking
-            authenticatedUserSession = {
-                alias: aliasInput,
-                joinedAt: new Date().toISOString()
-            };
+            const rawMessage = document.getElementById('tweetMessageText').value.trim();
+            const imageUrlAsset = document.getElementById('tweetEmbeddedImageInput').value.trim();
+            const videoUrlAsset = document.getElementById('tweetEmbeddedVideoInput').value.trim();
 
-            localStorage.setItem('uefi_engage_user', JSON.stringify(authenticatedUserSession));
-            
-            // Re-render UI frame tracking structures
-            document.getElementById('activeUserDisplay').textContent = `u/${aliasInput}`;
-            document.getElementById('forumComposer').style.display = "block";
-            
-            const actionBtn = document.getElementById('engageActionBtn');
-            actionBtn.innerHTML = `<i class="fa-solid fa-arrow-right-from-bracket"></i> Exit Space`;
-            actionBtn.setAttribute('onclick', 'terminateSession()');
-
-            closeOnboardingFlow();
-        }
-
-        function terminateSession() {
-            localStorage.removeItem('uefi_engage_user');
-            authenticatedUserSession = null;
-            document.getElementById('activeUserDisplay').textContent = "Visitor Mode";
-            document.getElementById('forumComposer').style.display = "none";
-            
-            const actionBtn = document.getElementById('engageActionBtn');
-            actionBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> Engage Space`;
-            actionBtn.setAttribute('onclick', 'openOnboardingFlow()');
-            location.reload();
-        }
-
-        function switchForumChannel(spaceName, element) {
-            activeForumSpace = spaceName;
-            document.getElementById('targetPostingSpaceLabel').textContent = spaceName;
-            
-            document.querySelectorAll('.channel-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
-            
-            refreshGlobalFeed();
-        }
-
-        async function dispatchForumPost(event) {
-            event.preventDefault();
-            if (!authenticatedUserSession) return alert("You must unlock account credentials via the Engage workflow button first.");
-
-            const title = document.getElementById('postTitle').value.trim();
-            const body = document.getElementById('postBody').value.trim();
-            const imageUrl = document.getElementById('postImageUrl').value.trim();
-            const videoUrl = document.getElementById('postVideoUrl').value.trim();
-
-            // Structure a rich ecosystem post body layout block matching server schema limits
-            const postPayload = {
-                authorEmail: "student@uefi.ac.ke", // Can be dynamically mapped to central login
-                authorName: `${authenticatedUserSession.alias} (${activeForumSpace})`,
-                textContent: `[TITLE: ${title}]\n\n${body}${imageUrl ? `\nImage Resource Reference: ${imageUrl}` : ''}`,
-                videoUrl: videoUrl || null
+            // Construct payload following structured backend model logic schemas
+            const broadcastPayload = {
+                authorEmail: "student@uefi.ac.ke",
+                authorName: `${structuredUserCredentialSession.alias} [SPACE: ${trackingEcosystemSpaceFilter}]`,
+                textContent: rawMessage + (imageUrlAsset ? `\n[IMG]${imageUrlAsset}[/IMG]` : ''),
+                videoUrl: videoUrlAsset || null
             };
 
             try {
-                const response = await fetch(`${DATABASE_API_URL}/api/connect/posts`, {
+                const networkResponse = await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(postPayload)
+                    body: JSON.stringify(broadcastPayload)
                 });
-                
-                const data = await response.json();
-                if (data.success) {
-                    // Reset composer values seamlessly
-                    document.getElementById('postCompositionForm').reset();
-                    refreshGlobalFeed();
+
+                const dataFeedback = await networkResponse.json();
+                if (dataFeedback.success) {
+                    document.getElementById('tweetCompositionForm').reset();
+                    // Close open input trays
+                    document.getElementById('tweetEmbeddedImageInput').style.display = "none";
+                    document.getElementById('tweetEmbeddedVideoInput').style.display = "none";
+                    renderEcosystemTimeline();
                 } else {
-                    alert(data.message);
+                    alert(dataFeedback.message);
                 }
             } catch (err) {
-                alert("Synchronization error connecting to live UEFI data service engine layer.");
+                alert("Critical network communication error occurred linking to UEFI Express server backbone.");
             }
         }
 
-        async function refreshGlobalFeed() {
+        async function renderEcosystemTimeline() {
+            const targetViewHub = document.getElementById('timelinePostInjectionHub');
+            targetViewHub.innerHTML = "";
+
+            let integratedMasterFeed = [...automatedSTEMSimulationCatalog];
+
             try {
-                const response = await fetch(`${DATABASE_API_URL}/api/connect/posts`);
-                const data = await response.json();
+                const fetchCallback = await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts`);
+                const parsedResponse = await fetchCallback.json();
                 
-                const feedContainer = document.getElementById('engageDiscoveryFeed');
-                feedContainer.innerHTML = "";
+                if (parsedResponse.success && parsedResponse.feed.length > 0) {
+                    const normalizedServerItems = parsedResponse.feed.map(item => {
+                        let extractedChannel = "All Conversations";
+                        let finalizedBodyText = item.textContent;
+                        let parsedImageLink = null;
 
-                // Filter items dynamically mapping targeted curriculum selection channels
-                const filteredFeed = data.feed.filter(post => {
-                    if (activeForumSpace === "All Spaces") return true;
-                    return post.authorName.includes(`(${activeForumSpace})`);
-                });
-
-                if (filteredFeed.length === 0) {
-                    feedContainer.innerHTML = `
-                        <div style="background: white; padding: 30px; border-radius:8px; border: 1px solid var(--border-color); text-align: center; color: var(--text-muted)">
-                            <i class="fa-regular fa-folder-open fa-2xl" style="margin-bottom: 15px; color: var(--border-color)"></i>
-                            <p>No active STEM assignments or discussion posts inside this channel yet. Be the first to start the engagement!</p>
-                        </div>`;
-                    return;
-                }
-
-                filteredFeed.forEach(post => {
-                    // Split layout attributes if structured elements exist
-                    const rawText = post.textContent;
-                    let displayTitle = "STEM Interaction Thread";
-                    let displayBody = rawText;
-                    let parsedImgUrl = null;
-
-                    if (rawText.startsWith("[TITLE:")) {
-                        const titleEndIndex = rawText.indexOf("]");
-                        if (titleEndIndex !== -1) {
-                            displayTitle = rawText.substring(7, titleEndIndex);
-                            displayBody = rawText.substring(titleEndIndex + 1).trim();
+                        // Check channel metadata parameters embedded in author text strings
+                        const spaceMarkerStart = item.authorName.indexOf("[SPACE: ");
+                        if (spaceMarkerStart !== -1) {
+                            const spaceMarkerEnd = item.authorName.indexOf("]", spaceMarkerStart);
+                            if (spaceMarkerEnd !== -1) {
+                                extractedChannel = item.authorName.substring(spaceMarkerStart + 8, spaceMarkerEnd);
+                            }
                         }
-                    }
 
-                    // Look for image payload inclusions parsed by standard index queries
-                    const imgMarker = "\nImage Resource Reference: ";
-                    const imgIndex = displayBody.indexOf(imgMarker);
-                    if (imgIndex !== -1) {
-                        parsedImgUrl = displayBody.substring(imgIndex + imgMarker.length).trim();
-                        displayBody = displayBody.substring(0, imgIndex);
-                    }
+                        // Check for attached images
+                        if (finalizedBodyText.includes("[IMG]")) {
+                            const imgStart = finalizedBodyText.indexOf("[IMG]");
+                            const imgEnd = finalizedBodyText.indexOf("[/IMG]");
+                            parsedImageLink = finalizedBodyText.substring(imgStart + 5, imgEnd);
+                            finalizedBodyText = finalizedBodyText.substring(0, imgStart);
+                        }
 
-                    const postCard = document.createElement('div');
-                    postCard.className = "post-card";
-                    postCard.innerHTML = `
-                        <div class="voting-sidebar">
-                            <button class="vote-btn upvote"><i class="fa-solid fa-arrow-up"></i></button>
-                            <span class="vote-counter">${Math.floor(Math.random() * 24) + 1}</span>
-                            <button class="vote-btn downvote"><i class="fa-solid fa-arrow-down"></i></button>
-                        </div>
-                        <div class="post-main-content">
-                            <div class="post-meta-line">
-                                <span class="badge">STEM Forum</span> Posted by ${post.authorName.split(" ")[0]} • ${new Date(post.timestamp).toLocaleTimeString()}
-                            </div>
-                            <div class="post-title">${displayTitle}</div>
-                            <div class="post-body-text">${displayBody}</div>
-                            
-                            ${parsedImgUrl ? `
-                                <div class="post-media-container">
-                                    <img src="${parsedImgUrl}" alt="STEM Diagram Asset Resource">
-                                </div>
-                            ` : ''}
+                        return {
+                            id: item.id,
+                            authorName: item.authorName.split(" [")[0],
+                            authorHandle: item.authorName.toLowerCase().replace(/[^a-z0-x]/g, '_').substring(0, 14),
+                            channel: extractedChannel,
+                            textContent: finalizedBodyText,
+                            videoUrl: item.videoUrl,
+                            imageUrl: parsedImageLink,
+                            timestamp: item.timestamp,
+                            likes: Math.floor(Math.random() * 5)
+                        };
+                    });
 
-                            ${post.videoUrl ? `
-                                <div class="post-media-container">
-                                    <video src="${post.videoUrl}" controls></video>
-                                </div>
-                            ` : ''}
-                        </div>
-                    `;
-                    feedContainer.appendChild(postCard);
-                });
+                    // Add server items to the front of the feed list
+                    integratedMasterFeed = [...normalizedServerItems, ...integratedMasterFeed];
+                }
             } catch (err) {
-                console.error("Network interface connection failure regarding UEFI global state components.");
+                console.warn("Ecosystem database link inactive. Running in standalone simulated caching layout mode.");
             }
+
+            // Enforce multi-channel layout filtering
+            const timelineFilteredSet = integratedMasterFeed.filter(post => {
+                if (trackingEcosystemSpaceFilter === "All Conversations") return true;
+                return post.channel.trim() === trackingEcosystemSpaceFilter.trim();
+            });
+
+            if (timelineFilteredSet.length === 0) {
+                targetViewHub.innerHTML = `
+                    <div style="padding: 40px 20px; text-align: center; color: var(--text-muted); border-bottom: 1px solid var(--border-muted);">
+                        <p style="font-weight:700; font-size:16px;">Welcome to the new #${trackingEcosystemSpaceFilter} space.</p>
+                        <p style="font-size:14px; margin-top:4px;">Be the first to share an equation or resource update to start the discussion!</p>
+                    </div>`;
+                return;
+            }
+
+            timelineFilteredSet.forEach(post => {
+                const initialTokenChar = post.authorName.charAt(0).toUpperCase();
+                const nodePostLayout = document.createElement('article');
+                nodePostLayout.className = "tweet-post-card";
+                nodePostLayout.innerHTML = `
+                    <div class="avatar-circle">${initialTokenChar}</div>
+                    <div class="tweet-core-frame">
+                        <div class="tweet-author-line">
+                            <span class="author-name-bold">${post.authorName}</span>
+                            <span class="author-handle-muted">@${post.authorHandle}</span>
+                            <span class="author-handle-muted">• ${new Date(post.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                            <span class="channel-tag-pill">${post.channel}</span>
+                        </div>
+                        <div class="tweet-text-content">${post.textContent}</div>
+                        
+                        ${post.imageUrl ? `
+                            <div class="tweet-embedded-media">
+                                <img src="${post.imageUrl}" alt="Ecosystem Shared Graphic Resource">
+                            </div>
+                        ` : ''}
+
+                        ${post.videoUrl ? `
+                            <div class="tweet-embedded-media">
+                                <video src="${post.videoUrl}" controls></video>
+                            </div>
+                        ` : ''}
+
+                        <div class="tweet-action-row">
+                            <div class="action-metric-unit"><i class="fa-regular fa-comment"></i> <span>${Math.floor(Math.random() * 8)}</span></div>
+                            <div class="action-metric-unit share-action"><i class="fa-solid fa-retweet"></i> <span>${Math.floor(Math.random() * 5)}</span></div>
+                            <div class="action-metric-unit like-action"><i class="fa-regular fa-heart"></i> <span>${post.likes}</span></div>
+                            <div class="action-metric-unit"><i class="fa-solid fa-chart-simple"></i> <span>${Math.floor(Math.random() * 200) + 45}</span></div>
+                        </div>
+                    </div>
+                `;
+                targetViewHub.appendChild(nodePostLayout);
+            });
         }
     </script>
 </body>
