@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to UEFI</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        :root {
+            --safaricom-green: #26B14C;
+            --kenya-red: #CE1126;
+            --kenya-black: #111111;
+            --light-bg: #F8F9FA;
+            --white: #FFFFFF;
+            --gray: #6C757D;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--kenya-black);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Top Navigation Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--kenya-red);
+        }
+
+        .logo-container {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--kenya-black);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--safaricom-green);
+            border-radius: 50%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-login {
+            text-decoration: none;
+            color: var(--kenya-black);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .btn-login:hover {
+            color: var(--safaricom-green);
+        }
+
+        .btn-signup {
+            text-decoration: none;
+            background-color: var(--safaricom-green);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .btn-signup:hover {
+            background-color: #1e943d;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Main Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 40px;
+            gap: 40px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 h1 span {
+            color: var(--safaricom-green);
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 span {
+            color: var(--safaricom-green);
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Decorative Flag Graphic */
+        .graphic-backdrop {
+            width: 100%;
+            max-width: 450px;
+            height: 350px;
+            background: linear-gradient(135deg, var(--safaricom-green) 30%, transparent 30%),
+                        linear-gradient(225deg, var(--kenya-red) 30%, transparent 30%),
+                        linear-gradient(45deg, var(--kenya-black) 25%, transparent 25%);
+            background-size: 100% 100%;
+            border-radius: 24px;
+            opacity: 0.15;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .hero-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            z-index: 2;
+            width: 100%;
+            max-width: 400px;
+            border-left: 4px solid var(--safaricom-green);
+        }
+
+        /* Login Modal Overlay Layout */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(17, 17, 17, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            width: 90%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+            text-align: center;
+            border-top: 6px solid var(--safaricom-green);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .modal-note {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 15px;
+            border-radius: 8px;
+            color: #166534;
+            font-size: 14px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .modal-note strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .google-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                margin: 30px auto;
+                padding: 0 20px;
+            }
+            .hero-text h1 {
+                font-size: 36px;
+            }
+            header {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-dot"></div>
+            UEFI
+        </div>
+        <div class="auth-buttons">
+            <a href="#" class="btn-login" onclick="openModal()">Log In</a>
+            <a href="#" class="btn-signup" onclick="openModal()">Sign Up</a>
+        </div>
+    </header>
+
+    <main class="hero">
+        <div class="hero-text">
+            <h1>Transforming learning goals into <span>real results</span>.</h1>
+            <p>Welcome to UEFI. We help personalize learning, strengthen core competencies, and support every learner at every stage of their path forward.</p>
+        </div>
+        
+        <div class="hero-image">
+            <div class="graphic-backdrop"></div>
+            <div class="hero-card">
+                <h3 style="margin-bottom: 15px;">Free to Use. Built for Everyone.</h3>
+                <p style="color: var(--gray); font-size: 14px;">Access high-quality structural learning platforms built entirely to match modern performance expectations.</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            
+            <h2 style="margin-bottom: 10px; font-weight: 800;">Welcome Back</h2>
+            
+            <div class="modal-note">
+                <strong>Hello Learner!</strong>
+                To seamlessly save your progress and access your customized learning dash, please take a brief moment to Log In or Sign In below.
+            </div>
+
+            <div id="g_id_onload"
+                 data-client_id="364917808" 
+                 data-context="signin"
+                 data-ux_mode="popup"
+                 data-callback="handleGoogleResponse"
+                 data-auto_select="false">
+            </div>
+
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="pill"
+                 data-theme="outline"
+                 data-text="signin_with"
+                 data-size="large"
+                 data-logo_alignment="left">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('loginModal');
+
+        // Automatically trigger the login challenge after exactly 3 seconds
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                openModal();
+            }, 3000); 
+        });
+
+        function openModal() {
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        // Powerful Transition Sequence Post Authentication
+        function handleGoogleResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+            
+            // Set local browser state so the homepage knows they are authenticated
+            localStorage.setItem("userLoggedIn", "true");
+            
+            // Visual feedback loop inside modal
+            const modalContent = document.querySelector('.modal-content');
+            modalContent.innerHTML = `
+                <div style="padding: 40px 0;">
+                    <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid var(--safaricom-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+                    <h3 style="font-weight: 700;">Securing Connection...</h3>
+                    <p style="color: var(--gray); font-size: 14px; margin-top: 5px;">Transitioning directly to your home dashboard.</p>
+                </div>
+            `;
+
+            // Add dynamic injection style for spinning loading state
+            const style = document.createElement('style');
+            style.innerHTML = `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`;
+            document.head.appendChild(style);
+
+            // Transitioning straight back to your original index.html file
+            setTimeout(() => {
+                window.location.href = "index.html"; 
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
