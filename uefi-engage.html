@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Engage</title>
+    <style>
+        :root {
+            --safaricom-green: #30B54A;
+            --kenya-red: #BB0000;
+            --kenya-black: #000000;
+            --kenya-white: #FFFFFF;
+            --bg-main: #FAFAFA;
+            --border-color: #E0E0E0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background: var(--bg-main); color: #333333; }
+        header { background: var(--kenya-black); color: var(--kenya-white); padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--safaricom-green); position: sticky; top: 0; z-index: 100; }
+        .brand { font-size: 1.4rem; font-weight: 800; color: var(--kenya-white); text-decoration: none; }
+        .brand span { color: var(--safaricom-green); }
+        .search-bar { width: 40%; }
+        .search-bar input { width: 100%; padding: 0.5rem 1rem; border-radius: 20px; border: none; outline: none; background: #222222; color: var(--kenya-white); }
+        .nav-links button { background: var(--kenya-red); color: var(--kenya-white); border: none; padding: 0.5rem 1.2rem; border-radius: 20px; font-weight: bold; cursor: pointer; }
+        .container { max-width: 1000px; margin: 2rem auto; display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; padding: 0 1rem; }
+        .post-card { background: var(--kenya-white); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 1rem; display: flex; overflow: hidden; }
+        .vote-sidebar { background: #F8F9FA; padding: 0.8rem 0.5rem; display: flex; flex-direction: column; align-items: center; border-right: 1px solid var(--border-color); }
+        .vote-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #888888; }
+        .vote-btn.up:hover { color: var(--safaricom-green); }
+        .vote-btn.down:hover { color: var(--kenya-red); }
+        .vote-count { font-weight: bold; font-size: 0.9rem; margin: 0.4rem 0; color: var(--kenya-black); }
+        .post-content { padding: 1rem; flex: 1; }
+        .post-meta { font-size: 0.8rem; color: #777777; margin-bottom: 0.5rem; }
+        .post-meta span { color: var(--kenya-red); font-weight: 600; }
+        .post-title { font-size: 1.1rem; font-weight: 700; color: var(--kenya-black); margin-bottom: 0.5rem; cursor: pointer; }
+        .post-title:hover { color: var(--safaricom-green); }
+        .post-snippet { font-size: 0.9rem; color: #555555; line-height: 1.4; margin-bottom: 1rem; }
+        .post-actions { display: flex; gap: 1rem; font-size: 0.85rem; color: #666666; font-weight: 600; }
+        .post-actions div { cursor: pointer; }
+        .sidebar-card { background: var(--kenya-white); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.2rem; height: fit-content; }
+        .sidebar-card h3 { font-size: 1rem; border-bottom: 2px solid var(--safaricom-green); padding-bottom: 0.5rem; margin-bottom: 1rem; color: var(--kenya-black); }
+        .topic-tag { display: inline-block; background: rgba(48, 181, 74, 0.1); color: var(--safaricom-green); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; margin: 0.2rem; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="#" class="brand">UEFI <span>ENGAGE</span></a>
+    <div class="search-bar">
+        <input type="text" placeholder="Search questions, topics, or discussions...">
+    </div>
+    <div class="nav-links">
+        <button onclick="alert('Open Add Question UI')">+ Ask Question</button>
+    </div>
+</header>
+
+<div class="container">
+    <main>
+        <article class="post-card">
+            <div class="vote-sidebar">
+                <button class="vote-btn up" onclick="vote(this, 1)">▲</button>
+                <span class="vote-count">142</span>
+                <button class="vote-btn down" onclick="vote(this, -1)">▼</button>
+            </div>
+            <div class="post-content">
+                <div class="post-meta">Posted by <span>u/TechLead_KE</span> in <strong>r/UEFI_Development</strong></div>
+                <h2 class="post-title">What are the best practices for integrating UEFI modules with enterprise architectures?</h2>
+                <p class="post-snippet">We are currently migrating our internal tools and want to ensure optimal configuration while maintaining security guidelines across systems.</p>
+                <div class="post-actions">
+                    <div>💬 34 Answers</div>
+                    <div>🔄 Share</div>
+                    <div>⭐ Bookmark</div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <aside>
+        <div class="sidebar-card">
+            <h3>Trending Communities</h3>
+            <a href="#" class="topic-tag">#UEFIConnect</a>
+            <a href="#" class="topic-tag">#SafaricomTech</a>
+            <a href="#" class="topic-tag">#KenyaDevelopers</a>
+        </div>
+    </aside>
+</div>
+
+<script>
+    function vote(btn, val) {
+        const countSpan = btn.parentElement.querySelector('.vote-count');
+        let current = parseInt(countSpan.innerText);
+        countSpan.innerText = current + val;
+    }
+</script>
+
+</body>
+</html>
