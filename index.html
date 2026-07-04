@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to UEFI</title>
+    <title>Welcome to UEFI Global</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         :root {
             --safaricom-green: #26B14C;
             --kenya-red: #CE1126;
             --kenya-black: #111111;
-            --light-bg: #F8F9FA;
+            --light-bg: #F4F7F5;
             --white: #FFFFFF;
             --gray: #6C757D;
+            --light-gray: #E9ECEF;
+            --accent-green-light: #E8F5E9;
         }
 
         * {
@@ -34,141 +36,221 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 15px 40px;
             background-color: var(--white);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border-top: 5px solid var(--kenya-red);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-top: 6px solid var(--kenya-red);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo-container {
-            font-size: 24px;
-            font-weight: 800;
+            font-size: 26px;
+            font-weight: 900;
             color: var(--kenya-black);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            letter-spacing: 0.5px;
         }
 
         .logo-dot {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             background-color: var(--safaricom-green);
             border-radius: 50%;
+            box-shadow: 0 0 8px var(--safaricom-green);
         }
 
         .auth-buttons {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
 
-        .btn-login {
+        .btn-nav-login {
             text-decoration: none;
             color: var(--kenya-black);
-            font-weight: 600;
-            font-size: 15px;
+            font-weight: 700;
+            font-size: 16px;
             cursor: pointer;
             transition: color 0.2s ease;
         }
 
-        .btn-login:hover {
+        .btn-nav-login:hover {
             color: var(--safaricom-green);
         }
 
-        .btn-signup {
+        .btn-nav-signup {
             text-decoration: none;
             background-color: var(--safaricom-green);
             color: var(--white);
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 15px;
-            transition: transform 0.2s ease, background-color 0.2s ease;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(38, 177, 76, 0.3);
+            transition: all 0.2s ease;
         }
 
-        .btn-signup:hover {
+        .btn-nav-signup:hover {
             background-color: #1e943d;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(38, 177, 76, 0.4);
         }
 
-        /* Hero Main Section */
-        .hero {
+        /* Khan-Academy Style Multi-Phase Hero Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--kenya-black) 0%, #222222 100%);
+            border-radius: 24px;
+            padding: 60px;
+            color: var(--white);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 40px;
             gap: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-bottom: 40px;
+            border-left: 8px solid var(--safaricom-green);
         }
 
-        .hero-text {
-            flex: 1;
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            right: -100px;
+            bottom: -100px;
+            width: 300px;
+            height: 300px;
+            background: var(--kenya-red);
+            border-radius: 50%;
+            opacity: 0.2;
+            filter: blur(50px);
         }
 
-        .hero-text h1 h1 span {
-            color: var(--safaricom-green);
+        .hero-info {
+            flex: 1.2;
+            z-index: 2;
         }
 
-        .hero-text h1 {
-            font-size: 48px;
-            font-weight: 800;
+        .hero-info h1 {
+            font-size: 44px;
+            font-weight: 900;
             line-height: 1.2;
             margin-bottom: 20px;
         }
 
-        .hero-text h1 span {
+        .hero-info h1 span {
             color: var(--safaricom-green);
         }
 
-        .hero-text p {
+        .hero-info p {
             font-size: 18px;
-            color: var(--gray);
-            margin-bottom: 30px;
+            color: #CCCCCC;
+            margin-bottom: 0;
         }
 
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
+        /* Vibrant Category Cards / Khan Learning Phases */
+        .phase-headline {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 30px;
             position: relative;
         }
-
-        /* Decorative Flag Graphic */
-        .graphic-backdrop {
-            width: 100%;
-            max-width: 450px;
-            height: 350px;
-            background: linear-gradient(135deg, var(--safaricom-green) 30%, transparent 30%),
-                        linear-gradient(225deg, var(--kenya-red) 30%, transparent 30%),
-                        linear-gradient(45deg, var(--kenya-black) 25%, transparent 25%);
-            background-size: 100% 100%;
-            border-radius: 24px;
-            opacity: 0.15;
-            position: absolute;
-            z-index: 1;
+        
+        .phase-headline::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--kenya-red);
+            margin: 10px auto 0;
+            border-radius: 2px;
         }
 
-        .hero-card {
-            background: var(--white);
-            padding: 40px;
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 10fr);
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .phase-card {
+            background-color: var(--white);
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            z-index: 2;
-            width: 100%;
-            max-width: 400px;
-            border-left: 4px solid var(--safaricom-green);
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+            border-bottom: 5px solid var(--light-gray);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        /* Login Modal Overlay Layout */
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+
+        .phase-card.learners:hover { border-bottom-color: var(--safaricom-green); }
+        .phase-card.teachers:hover { border-bottom-color: var(--kenya-red); }
+        .phase-card.parents:hover { border-bottom-color: var(--kenya-black); }
+
+        .phase-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .phase-card h3 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .phase-card p {
+            color: var(--gray);
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn-phase {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 14px;
+            background-color: var(--light-bg);
+            color: var(--kenya-black);
+            transition: all 0.2s ease;
+        }
+
+        .phase-card.learners .btn-phase { color: var(--safaricom-green); }
+        .phase-card.teachers .btn-phase { color: var(--kenya-red); }
+        
+        .phase-card:hover .btn-phase {
+            background-color: var(--kenya-black);
+            color: var(--white) !important;
+        }
+
+        /* Modal Overlay Engine */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(17, 17, 17, 0.6);
-            backdrop-filter: blur(5px);
+            background-color: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(6px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -185,16 +267,15 @@
 
         .modal-content {
             background-color: var(--white);
-            width: 90%;
-            max-width: 450px;
+            width: 95%;
+            max-width: 520px;
             padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
             position: relative;
-            transform: translateY(20px);
+            transform: translateY(30px);
             transition: transform 0.4s ease;
-            text-align: center;
-            border-top: 6px solid var(--safaricom-green);
+            border-top: 8px solid var(--safaricom-green);
         }
 
         .modal-overlay.active .modal-content {
@@ -205,48 +286,151 @@
             position: absolute;
             top: 20px;
             right: 25px;
-            font-size: 24px;
+            font-size: 28px;
             color: var(--gray);
             cursor: pointer;
             background: none;
             border: none;
+            font-weight: 700;
         }
 
-        .modal-note {
-            background-color: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            padding: 15px;
-            border-radius: 8px;
-            color: #166534;
-            font-size: 14px;
+        /* Tab switch style inside Modal */
+        .modal-tabs {
+            display: flex;
+            background-color: var(--light-gray);
+            padding: 5px;
+            border-radius: 30px;
             margin-bottom: 25px;
+        }
+
+        .modal-tab-btn {
+            flex: 1;
+            border: none;
+            background: none;
+            padding: 10px;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.2s ease;
+        }
+
+        .modal-tab-btn.active {
+            background-color: var(--safaricom-green);
+            color: var(--white);
+            box-shadow: 0 4px 10px rgba(38, 177, 76, 0.2);
+        }
+
+        /* Sub-Role Selector for SignUp Phase (Khan Style) */
+        .role-selector-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .role-pill {
+            padding: 6px 16px;
+            border: 2px solid var(--light-gray);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.2s;
+        }
+
+        .role-pill.active {
+            border-color: var(--kenya-red);
+            color: var(--kenya-red);
+            background-color: #FFF5F5;
+        }
+
+        /* Forms Layout & Inputs */
+        .form-group {
+            margin-bottom: 18px;
             text-align: left;
         }
 
-        .modal-note strong {
+        .form-group label {
             display: block;
-            margin-bottom: 4px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--kenya-black);
         }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--safaricom-green);
+        }
+
+        .btn-submit-auth {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--kenya-black);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-submit-auth:hover {
+            background-color: var(--safaricom-green);
+        }
+
+        .divider-container {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--gray);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .divider-container::before, .divider-container::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .divider-container:not(:empty)::before { margin-right: .5em; }
+        .divider-container:not(:empty)::after { margin-left: .5em; }
 
         .google-btn-wrapper {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+        }
+
+        .hidden-pane {
+            display: none;
         }
 
         /* Responsiveness */
         @media (max-width: 768px) {
-            .hero {
+            .hero-banner {
                 flex-direction: column;
-                margin: 30px auto;
-                padding: 0 20px;
+                padding: 40px 20px;
+                text-align: center;
             }
-            .hero-text h1 {
-                font-size: 36px;
-            }
-            header {
-                padding: 20px;
-            }
+            .hero-info h1 { font-size: 32px; }
+            .phases-grid { grid-template-columns: 1fr; }
+            header { padding: 15px 20px; }
         }
     </style>
 </head>
@@ -255,103 +439,211 @@
     <header>
         <div class="logo-container">
             <div class="logo-dot"></div>
-            UEFI
+            UEFI GLOBAL
         </div>
         <div class="auth-buttons">
-            <a href="#" class="btn-login" onclick="openModal()">Log In</a>
-            <a href="#" class="btn-signup" onclick="openModal()">Sign Up</a>
+            <a href="#" class="btn-nav-login" onclick="openAuthModal('login')">Log In</a>
+            <a href="#" class="btn-nav-signup" onclick="openAuthModal('signup')">Sign Up</a>
         </div>
     </header>
 
-    <main class="hero">
-        <div class="hero-text">
-            <h1>Transforming learning goals into <span>real results</span>.</h1>
-            <p>Welcome to UEFI. We help personalize learning, strengthen core competencies, and support every learner at every stage of their path forward.</p>
-        </div>
-        
-        <div class="hero-image">
-            <div class="graphic-backdrop"></div>
-            <div class="hero-card">
-                <h3 style="margin-bottom: 15px;">Free to Use. Built for Everyone.</h3>
-                <p style="color: var(--gray); font-size: 14px;">Access high-quality structural learning platforms built entirely to match modern performance expectations.</p>
+    <main class="main-container">
+        <section class="hero-banner">
+            <div class="hero-info">
+                <h1>A Personalized Learning Odyssey for <span>Every Learner</span>.</h1>
+                <p> UEFI Global pairs core localized performance standards with world-class interactive execution tracks. Free, structural, and custom-built for scaling outcomes.</p>
             </div>
-        </div>
+        </section>
+
+        <h2 class="phase-headline">Start Learning Now</h2>
+        <section class="phases-grid">
+            <div class="phase-card learners" onclick="openAuthModal('signup', 'learner')">
+                <span class="phase-icon">🎓</span>
+                <h3>Learners</h3>
+                <p>Join organized virtual text pathways, practice dynamically, and secure trackable skill metrics.</p>
+                <span class="btn-phase">Start Learning</span>
+            </div>
+
+            <div class="phase-card teachers" onclick="openAuthModal('signup', 'teacher')">
+                <span class="phase-icon">🏫</span>
+                <h3>Teachers</h3>
+                <p>Empower your entire classroom ecosystem with tools to map targets onto structural dashboards.</p>
+                <span class="btn-phase">Start Teaching</span>
+            </div>
+
+            <div class="phase-card parents" onclick="openAuthModal('signup', 'parent')">
+                <span class="phase-icon">🏠</span>
+                <h3>Parents</h3>
+                <p>Keep a real-time tracking pulse on execution pipelines and learning growth metrics easily.</p>
+                <span class="btn-phase">Start Guiding</span>
+            </div>
+        </section>
     </main>
 
-    <div class="modal-overlay" id="loginModal">
+    <div class="modal-overlay" id="authModal">
         <div class="modal-content">
-            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <button class="close-modal" onclick="closeAuthModal()">&times;</button>
             
-            <h2 style="margin-bottom: 10px; font-weight: 800;">Welcome Back</h2>
-            
-            <div class="modal-note">
-                <strong>Hello Learner!</strong>
-                To seamlessly save your progress and access your customized learning dash, please take a brief moment to Log In or Sign In below.
+            <div class="modal-tabs">
+                <button class="modal-tab-btn" id="tabBtnLogin" onclick="switchMode('login')">Log In</button>
+                <button class="modal-tab-btn" id="tabBtnSignup" onclick="switchMode('signup')">Sign Up</button>
             </div>
 
-            <div id="g_id_onload"
-                 data-client_id="364917808477-afe7jv30ki4r6ld2g5rm6a2dt5kuma3l.apps.googleusercontent.com" 
-                 data-context="signin"
-                 data-ux_mode="popup"
-                 data-callback="handleGoogleResponse"
-                 data-auto_select="false">
+            <div id="loginViewPane">
+                <h2 style="font-weight: 800; margin-bottom: 5px;" id="loginTitle">Welcome Back</h2>
+                <p style="color: var(--gray); font-size: 14px; margin-bottom: 20px;">Enter verification details to resume your progress.</p>
+                
+                <form onsubmit="handleManualAuth(event, 'login')">
+                    <div class="form-group">
+                        <label for="loginEmail">Account Email Address</label>
+                        <input type="email" id="loginEmail" class="form-input" placeholder="name@domain.com" required>
+                    </div>
+                    <button type="submit" class="btn-submit-auth">Verify Email & Enter</button>
+                </form>
             </div>
 
-            <div class="g_id_signin"
-                 data-type="standard"
-                 data-shape="pill"
-                 data-theme="outline"
-                 data-text="signin_with"
-                 data-size="large"
-                 data-logo_alignment="left">
+            <div id="signupViewPane" class="hidden-pane">
+                <h2 style="font-weight: 800; margin-bottom: 5px;">Create New Account</h2>
+                <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;">Choose your primary ecosystem role below:</p>
+                
+                <div class="role-selector-bar">
+                    <div class="role-pill active" id="pill-learner" onclick="setSignUpRole('learner')">Learner</div>
+                    <div class="role-pill" id="pill-teacher" onclick="setSignUpRole('teacher')">Teacher</div>
+                    <div class="role-pill" id="pill-parent" onclick="setSignUpRole('parent')">Parent</div>
+                </div>
+
+                <form onsubmit="handleManualAuth(event, 'signup')">
+                    <div class="form-group">
+                        <label for="signupName">Full Legal Name</label>
+                        <input type="text" id="signupName" class="form-input" placeholder="e.g. Juma Amina" required>
+                    </div>
+                    <div class="form-group" id="birthdayGroup">
+                        <label for="signupBirthday">Date of Birth</label>
+                        <input type="date" id="signupBirthday" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email Address</label>
+                        <input type="email" id="signupEmail" class="form-input" placeholder="name@domain.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Create Secure Password</label>
+                        <input type="password" id="signupPassword" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-submit-auth">Complete Account Registration</button>
+                </form>
             </div>
+
+            <div class="divider-container">or continue with authenticated partner</div>
+
+            <div class="google-btn-wrapper">
+                <div id="g_id_onload"
+                     data-client_id="364917808477-afe7jv30ki4r6ld2g5rm6a2dt5kuma3l.apps.googleusercontent.com" 
+                     data-context="signin"
+                     data-ux_mode="popup"
+                     data-callback="handleGoogleResponse"
+                     data-auto_select="false">
+                </div>
+
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-shape="pill"
+                     data-theme="outline"
+                     data-text="signin_with"
+                     data-size="large"
+                     data-logo_alignment="left">
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        const modal = document.getElementById('loginModal');
+        const modal = document.getElementById('authModal');
+        const loginPane = document.getElementById('loginViewPane');
+        const signupPane = document.getElementById('signupViewPane');
+        const tabLogin = document.getElementById('tabBtnLogin');
+        const tabSignup = document.getElementById('tabBtnSignup');
+        
+        let targetSignUpRole = 'learner';
 
-        // Automatically trigger the login challenge after exactly 3 seconds
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                openModal();
-            }, 3000); 
-        });
-
-        function openModal() {
+        function openAuthModal(mode, optionalRole) {
             modal.classList.add('active');
+            switchMode(mode);
+            if (optionalRole) {
+                setSignUpRole(optionalRole);
+            }
         }
 
-        function closeModal() {
+        function closeAuthModal() {
             modal.classList.remove('active');
         }
 
-        // Powerful Transition Sequence Post Authentication
-        function handleGoogleResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
+        function switchMode(mode) {
+            if (mode === 'login') {
+                tabLogin.classList.add('active');
+                tabSignup.classList.remove('active');
+                loginPane.classList.remove('hidden-pane');
+                signupPane.classList.add('hidden-pane');
+            } else {
+                tabSignup.classList.add('active');
+                tabLogin.classList.remove('active');
+                signupPane.classList.remove('hidden-pane');
+                loginPane.classList.add('hidden-pane');
+            }
+        }
+
+        function setSignUpRole(role) {
+            targetSignUpRole = role;
+            document.querySelectorAll('.role-pill').forEach(pill => pill.classList.remove('active'));
+            document.getElementById(`pill-${role}`).classList.add('active');
             
-            // Set local browser state so the homepage knows they are authenticated
+            const dobGroup = document.getElementById('birthdayGroup');
+            // Khan Academy hides birthday field for teachers/parents to keep it minimal
+            if (role === 'learner') {
+                dobGroup.style.display = 'block';
+            } else {
+                dobGroup.style.display = 'none';
+            }
+        }
+
+        // Manual Forms Submission System
+        function handleManualAuth(event, activeSystem) {
+            event.preventDefault();
+            
+            // Set session status keys into local storage
             localStorage.setItem("userLoggedIn", "true");
+            localStorage.setItem("userRole", activeSystem === 'signup' ? targetSignUpRole : 'user');
             
-            // Visual feedback loop inside modal
+            triggerTransitionAnimation();
+        }
+
+        // Google Federated Single Sign-On Script Engine Redirect
+        function handleGoogleResponse(response) {
+            console.log("Encoded JWT ID token verified: " + response.credential);
+            localStorage.setItem("userLoggedIn", "true");
+            localStorage.setItem("userRole", "google-authenticated");
+            
+            triggerTransitionAnimation();
+        }
+
+        // High Fidelity Loader Animation Sequence Redirecting to home.html
+        function triggerTransitionAnimation() {
             const modalContent = document.querySelector('.modal-content');
             modalContent.innerHTML = `
-                <div style="padding: 40px 0;">
-                    <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid var(--safaricom-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
-                    <h3 style="font-weight: 700;">Securing Connection...</h3>
-                    <p style="color: var(--gray); font-size: 14px; margin-top: 5px;">Transitioning directly to your home dashboard.</p>
+                <div style="padding: 50px 0; text-align: center;">
+                    <div style="width: 60px; height: 60px; border: 6px solid #F3F3F3; border-top: 6px solid var(--safaricom-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 25px;"></div>
+                    <h3 style="font-weight: 800; font-size: 22px; color: var(--kenya-black);">Verifying Ecosystem Access...</h3>
+                    <p style="color: var(--gray); font-size: 15px; margin-top: 8px;">Synchronizing your UEFI Global workspace container.</p>
                 </div>
             `;
 
-            // Add dynamic injection style for spinning loading state
             const style = document.createElement('style');
             style.innerHTML = `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`;
             document.head.appendChild(style);
 
-            // Successfully transition directly to home.html instead of looping back to index
             setTimeout(() => {
                 window.location.href = "home.html"; 
-            }, 1500);
+            }, 1600);
         }
     </script>
 </body>
