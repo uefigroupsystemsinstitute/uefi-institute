@@ -69,6 +69,74 @@
             gap: 20px;
         }
 
+        /* Language Dropdown Styling */
+        .lang-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .lang-dropdown-btn {
+            background: none;
+            border: none;
+            color: var(--kenya-black);
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .lang-dropdown-btn:hover {
+            color: var(--safaricom-green);
+            background-color: var(--light-gray);
+        }
+
+        .lang-dropdown-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .lang-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: var(--white);
+            min-width: 160px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            z-index: 200;
+            margin-top: 8px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .lang-dropdown-content a {
+            color: var(--kenya-black);
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }
+
+        .lang-dropdown-content a:hover {
+            background-color: var(--light-gray);
+            color: var(--safaricom-green);
+        }
+
+        /* Show the dropdown menu using JS class toggle */
+        .lang-dropdown-container.show .lang-dropdown-content {
+            display: block;
+        }
+
         .btn-nav-login {
             text-decoration: none;
             color: var(--kenya-black);
@@ -430,7 +498,11 @@
             }
             .hero-info h1 { font-size: 32px; }
             .phases-grid { grid-template-columns: 1fr; }
-            header { padding: 15px 20px; }
+            header { 
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -442,6 +514,31 @@
             UEFI GLOBAL
         </div>
         <div class="auth-buttons">
+            <div class="lang-dropdown-container" id="langDropdownContainer">
+                <button class="lang-dropdown-btn" onclick="toggleLangDropdown(event)">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M17.9,15.39C17.65,14.57 16.9,14 16,14H15V11A1,1 0 0,0 14,10H8V8H10A1,1 0 0,0 11,7V5H12A2,2 0 0,1 14,7V7.5H16A2,2 0 0,1 18,9.5V11.5C18,13.04 17.96,14.28 17.9,15.39Z"/>
+                    </svg>
+                    <span id="currentLangLabel">English</span>
+                </button>
+                <div class="lang-dropdown-content">
+                    <a href="#" onclick="selectLanguage('English', event)">English</a>
+                    <a href="#" onclick="selectLanguage('Kiswahili', event)">Kiswahili</a>
+                    <a href="#" onclick="selectLanguage('Dholuo', event)">Dholuo</a>
+                    <a href="#" onclick="selectLanguage('Kisii', event)">Kisii</a>
+                    <a href="#" onclick="selectLanguage('Kuria', event)">Kuria</a>
+                    <a href="#" onclick="selectLanguage('Maa', event)">Maa</a>
+                    <a href="#" onclick="selectLanguage('Kalenjin', event)">Kalenjin</a>
+                    <a href="#" onclick="selectLanguage('Luhya', event)">Luhya</a>
+                    <a href="#" onclick="selectLanguage('Somali', event)">Somali</a>
+                    <a href="#" onclick="selectLanguage('German', event)">German</a>
+                    <a href="#" onclick="selectLanguage('Hindi', event)">Hindi</a>
+                    <a href="#" onclick="selectLanguage('French', event)">French</a>
+                    <a href="#" onclick="selectLanguage('Chinese', event)">Chinese</a>
+                    <a href="#" onclick="selectLanguage('Spanish', event)">Spanish</a>
+                </div>
+            </div>
+
             <a href="#" class="btn-nav-login" onclick="openAuthModal('login')">Log In</a>
             <a href="#" class="btn-nav-signup" onclick="openAuthModal('signup')">Sign Up</a>
         </div>
@@ -567,8 +664,31 @@
         const signupPane = document.getElementById('signupViewPane');
         const tabLogin = document.getElementById('tabBtnLogin');
         const tabSignup = document.getElementById('tabBtnSignup');
+        const langContainer = document.getElementById('langDropdownContainer');
         
         let targetSignUpRole = 'learner';
+
+        /* Language Selector Logics */
+        function toggleLangDropdown(event) {
+            event.stopPropagation();
+            langContainer.classList.toggle('show');
+        }
+
+        function selectLanguage(lang, event) {
+            event.preventDefault();
+            document.getElementById('currentLangLabel').innerText = lang;
+            langContainer.classList.remove('show');
+            // Store selected preference inside localStorage container
+            localStorage.setItem("uefiLanguagePreference", lang);
+            console.log("Language context switched to: " + lang);
+        }
+
+        // Close language dropdown if clicked anywhere outside
+        window.addEventListener('click', function() {
+            if (langContainer.classList.contains('show')) {
+                langContainer.classList.remove('show');
+            }
+        });
 
         function openAuthModal(mode, optionalRole) {
             modal.classList.add('active');
@@ -613,11 +733,9 @@
         function handleManualAuth(event, activeSystem) {
             event.preventDefault();
             
-            // Set session status keys into local storage
             localStorage.setItem("userLoggedIn", "true");
             localStorage.setItem("userRole", activeSystem === 'signup' ? targetSignUpRole : 'user');
             
-            // Capture Preferred Name if signing up, otherwise set a generic fallback label
             if (activeSystem === 'signup') {
                 const prefName = document.getElementById('signupPreferredName').value;
                 localStorage.setItem("preferredName", prefName || "Anonymous Learner");
