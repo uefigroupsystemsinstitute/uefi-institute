@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Connect</title>
+    <style>
+        :root {
+            --safaricom-green: #30B54A;
+            --kenya-red: #BB0000;
+            --kenya-black: #000000;
+            --kenya-white: #FFFFFF;
+            --bg-linkedin: #F3F2EF;
+            --text-dark: #191919;
+            --text-muted: #666666;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: var(--bg-linkedin); color: var(--text-dark); }
+        
+        .navbar { background: var(--kenya-white); border-bottom: 2px solid var(--kenya-red); display: flex; justify-content: space-between; align-items: center; padding: 0 10%; height: 56px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .nav-left { display: flex; align-items: center; gap: 10px; }
+        .logo-box { background: var(--safaricom-green); color: var(--kenya-white); font-weight: 900; padding: 6px 10px; border-radius: 4px; font-size: 1.2rem; }
+        .search-box { background: #EEF3F8; border-radius: 4px; padding: 0.5rem 1rem; display: flex; align-items: center; width: 250px; }
+        .search-box input { border: none; background: transparent; outline: none; margin-left: 5px; width: 100%; font-size: 0.9rem; }
+        
+        .nav-right { display: flex; gap: 2rem; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; }
+        .nav-item.active, .nav-item:hover { color: var(--kenya-black); font-weight: 600; border-bottom: 2px solid var(--safaricom-green); }
+        .nav-icon { font-size: 1.2rem; margin-bottom: 2px; }
+
+        .main-layout { max-width: 1128px; margin: 20px auto; display: grid; grid-template-columns: 225px 1fr 300px; gap: 20px; padding: 0 15px; }
+        .card { background: var(--kenya-white); border-radius: 8px; border: 1px solid #D0DCE5; overflow: hidden; margin-bottom: 15px; }
+        
+        .profile-banner { height: 60px; background: linear-gradient(135deg, var(--kenya-black) 30%, var(--kenya-red) 70%, var(--safaricom-green) 100%); }
+        .profile-avatar { width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--kenya-white); background: var(--kenya-black); color: var(--safaricom-green); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; margin: -35px auto 10px; }
+        .profile-info { text-align: center; padding: 0 15px 15px; border-bottom: 1px solid #EEEEEE; }
+        .profile-info h3 { font-size: 1rem; color: var(--kenya-black); }
+        .profile-info p { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+        
+        .post-creator { padding: 15px; }
+        .creator-top { display: flex; gap: 10px; margin-bottom: 10px; }
+        .creator-input { flex: 1; border: 1px solid #CCCCCC; border-radius: 35px; padding: 10px 15px; font-size: 0.9rem; outline: none; text-align: left; color: var(--text-muted); background: var(--kenya-white); cursor: pointer; }
+        .creator-actions { display: flex; justify-content: space-around; }
+        .action-btn { background: none; border: none; font-size: 0.85rem; color: var(--text-muted); font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 8px; }
+        
+        .feed-post { padding: 15px; }
+        .post-header { display: flex; gap: 10px; margin-bottom: 12px; }
+        .post-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--safaricom-green); color: var(--kenya-white); display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .post-author h4 { font-size: 0.95rem; color: var(--kenya-black); }
+        .post-author p { font-size: 0.75rem; color: var(--text-muted); }
+        .post-body { font-size: 0.9rem; line-height: 1.4; margin-bottom: 15px; }
+        .post-footer { border-top: 1px solid #EEEEEE; padding-top: 5px; display: flex; justify-content: space-around; }
+
+        .widget-header { padding: 15px 15px 5px; font-size: 0.95rem; font-weight: bold; }
+        .news-list { list-style: none; padding: 10px 15px; }
+        .news-list li { margin-bottom: 12px; font-size: 0.85rem; }
+        .news-list li a { color: var(--kenya-black); text-decoration: none; font-weight: 600; }
+        .news-list li span { font-size: 0.75rem; color: var(--text-muted); display: block; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <div class="logo-box">UC</div>
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" placeholder="Search UEFI Connect">
+        </div>
+    </div>
+    <div class="nav-right">
+        <a href="#" class="nav-item active"><span class="nav-icon">🏠</span>Home</a>
+        <a href="#" class="nav-item"><span class="nav-icon">👥</span>Network</a>
+        <a href="#" class="nav-item"><span class="nav-icon">💼</span>Jobs</a>
+        <a href="#" class="nav-item"><span class="nav-icon">💬</span>Messages</a>
+    </div>
+</nav>
+
+<div class="main-layout">
+    <aside>
+        <div class="card">
+            <div class="profile-banner"></div>
+            <div class="profile-avatar">KE</div>
+            <div class="profile-info">
+                <h3>David Kamau</h3>
+                <p>Systems Engineer | Professional Network Member</p>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <div class="card post-creator">
+            <div class="creator-top">
+                <div style="width:40px; height:40px; border-radius:50%; background:#000; color:#FFF; display:flex; align-items:center; justify-content:center; font-weight:bold;">DK</div>
+                <button class="creator-input" onclick="alert('Launch Composer UI')">Share an update or breakthrough...</button>
+            </div>
+            <div class="creator-actions">
+                <button class="action-btn"><span style="color:var(--safaricom-green)">📷</span> Media</button>
+                <button class="action-btn"><span style="color:var(--kenya-red)">📅</span> Event</button>
+            </div>
+        </div>
+
+        <div class="card feed-post">
+            <div class="post-header">
+                <div class="post-avatar">SF</div>
+                <div class="post-author">
+                    <h4>Safaricom Engineering Partner Network</h4>
+                    <p>Professional Hub Updates</p>
+                </div>
+            </div>
+            <div class="post-body">
+                Excited to welcome members to the new UEFI Connect hub layout. We are optimizing our networking pathways to make sure engineering resources scale cleanly across regions. 🇰🇪 #UEFIConnect #NetworkBuilding
+            </div>
+            <div class="post-footer">
+                <button class="action-btn" onclick="this.style.color='var(--safaricom-green)'">👍 Like</button>
+                <button class="action-btn">💬 Comment</button>
+                <button class="action-btn">🔄 Repost</button>
+            </div>
+        </div>
+    </main>
+
+    <aside>
+        <div class="card">
+            <div class="widget-header">UEFI Network Feed</div>
+            <ul class="news-list">
+                <li>
+                    <a href="#">Engineering Innovations in Nairobi</a>
+                    <span>Top news • 3,420 viewers</span>
+                </li>
+                <li>
+                    <a href="#">Regional Infrastructure Scalability</a>
+                    <span>2d ago • 1,150 viewers</span>
+                </li>
+            </ul>
+        </div>
+    </aside>
+</div>
+
+</body>
+</html>
