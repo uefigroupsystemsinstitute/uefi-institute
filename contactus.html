@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | UEFI Institute</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
@@ -57,6 +58,25 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="5" placeholder="How can we help you?" required></textarea>
                     </div>
+
+                    <div id="g_id_onload"
+                         data-client_id="364917808477-afe7jv30ki4r6ld2g5rm6a2dt5kuma3l.apps.googleusercontent.com"
+                         data-context="signin"
+                         data-ux_mode="popup"
+                         data-callback="handleGoogleResponse"
+                         data-auto_select="false">
+                    </div>
+
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-shape="rectangular"
+                         data-theme="filled_blue"
+                         data-text="signin_with"
+                         data-size="large"
+                         data-logo_alignment="left"
+                         style="margin-bottom: 15px; width: 100%;">
+                    </div>
+
                     <button type="submit" class="btn btn-primary btn-block">Send Message</button>
                 </form>
             </section>
@@ -87,6 +107,27 @@
     <footer>
         <p>&copy; 2026 Universal Empowerment & Future-Tech Institute. All rights reserved.</p>
     </footer>
+
+    <script>
+        function handleGoogleResponse(response) {
+            // Retrieve secure token from Google
+            const idToken = response.credential;
+            
+            // Decode token safely to retrieve profile data
+            const payload = JSON.parse(atob(idToken.split('.')[1]));
+            
+            // Pre-fill the input values dynamically using the data
+            document.getElementById('name').value = payload.name;
+            document.getElementById('email').value = payload.email;
+            
+            console.log("Successfully loaded profile for:", payload.name);
+        }
+
+        // Standard submission behavior remains intact
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            // Keep your existing form handling architecture or backend integration hooks here
+        });
+    </script>
 
 </body>
 </html>
