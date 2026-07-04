@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Zoom</title>
+    <style>
+        :root {
+            --safaricom-green: #30B54A;
+            --kenya-red: #BB0000;
+            --kenya-black: #000000;
+            --kenya-white: #FFFFFF;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: var(--kenya-black); color: var(--kenya-white); display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .connector-card { background: #111111; border: 2px solid var(--safaricom-green); border-radius: 12px; width: 100%; max-width: 480px; padding: 2rem; box-shadow: 0 10px 30px rgba(48, 181, 74, 0.2); text-align: center; }
+        .logo-area { margin-bottom: 1.5rem; }
+        .logo-area h1 { font-size: 1.8rem; color: var(--kenya-white); letter-spacing: 1px; }
+        .logo-area span { color: var(--safaricom-green); }
+        .status-badge { display: inline-block; background: rgba(48, 181, 74, 0.15); color: var(--safaricom-green); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem; border: 1px solid var(--safaricom-green); }
+        .input-group { margin-bottom: 1.2rem; text-align: left; }
+        .input-group label { display: block; font-size: 0.85rem; margin-bottom: 0.4rem; color: #CCCCCC; }
+        .input-group input { width: 100%; padding: 0.8rem; border-radius: 6px; border: 1px solid #333333; background: #1A1A1A; color: var(--kenya-white); font-size: 1rem; }
+        .input-group input:focus { outline: none; border-color: var(--safaricom-green); }
+        .btn-connect { width: 100%; padding: 0.9rem; border: none; border-radius: 6px; background: var(--safaricom-green); color: var(--kenya-white); font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; }
+        .btn-connect:hover { background: #26963c; }
+        .btn-cancel { width: 100%; padding: 0.7rem; border: none; background: transparent; color: var(--kenya-red); font-size: 0.9rem; cursor: pointer; margin-top: 0.8rem; font-weight: 600; }
+        .btn-cancel:hover { text-decoration: underline; }
+        .footer-note { font-size: 0.75rem; color: #777777; margin-top: 1.5rem; border-top: 1px solid #222222; padding-top: 1rem; }
+    </style>
+</head>
+<body>
+
+<div class="connector-card">
+    <div class="logo-area">
+        <h1>UEFI <span>ZOOM</span></h1>
+    </div>
+    <div class="status-badge">● Secure Server Connected</div>
+    
+    <form id="zoomForm" onsubmit="connectToMeeting(event)">
+        <div class="input-group">
+            <label for="meetingId">Meeting ID or Room Name</label>
+            <input type="text" id="meetingId" placeholder="e.g., 812-3456-7890" required value="UEFI-KENYA-2026">
+        </div>
+        <div class="input-group">
+            <label for="userName">Display Name</label>
+            <input type="text" id="userName" placeholder="Enter your full name" required>
+        </div>
+        <button type="submit" class="btn-connect">Join UEFI Meeting</button>
+        <button type="button" class="btn-cancel" onclick="window.history.back()">Return to Dashboard</button>
+    </form>
+
+    <div class="footer-note">
+        Protected by end-to-end encryption. Powered by UEFI Infrastructure & Safaricom Network.
+    </div>
+</div>
+
+<script>
+    function connectToMeeting(event) {
+        event.preventDefault();
+        const meetingId = document.getElementById('meetingId').value;
+        const userName = encodeURIComponent(document.getElementById('userName').value);
+        alert(`Connecting ${userName} directly to UEFI Zoom Room: ${meetingId}...`);
+        window.location.href = `https://zoom.us/wc/join/${meetingId}?uname=${userName}`;
+    }
+</script>
+
+</body>
+</html>
