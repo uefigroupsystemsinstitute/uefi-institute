@@ -657,6 +657,11 @@
     </div>
 
     <script>
+        // REDIRECT CHECK: Run immediately on page load to see if user is already logged in
+        if (localStorage.getItem('uefi_user_session') === 'active') {
+            window.location.href = 'home.html';
+        }
+
         const modal = document.getElementById('authModal');
         const loginPane = document.getElementById('loginViewPane');
         const signupPane = document.getElementById('signupViewPane');
@@ -917,6 +922,8 @@
             }
         };
 
+}; // This closes the translations object
+
         /* Update UI Content across DOM Elements based on keys */
         function applyTranslations(lang) {
             const dictionary = translations[lang];
@@ -957,12 +964,7 @@
             selectLanguage(savedLanguage);
         });
 
-        window.addEventListener('click', function() {
-            if (langContainer && langContainer.classList.contains('show')) {
-                langContainer.classList.remove('show');
-            }
-        });
-
+        /* Modal Visibility and State Control */
         function openAuthModal(mode, optionalRole) {
             modal.classList.add('active');
             switchMode(mode);
@@ -996,15 +998,33 @@
             if (activePill) activePill.classList.add('active');
         }
 
+        // Global window click handler for closing dropdowns and modals
+        window.addEventListener('click', function(event) {
+            if (langContainer && langContainer.classList.contains('show')) {
+                langContainer.classList.remove('show');
+            }
+            if (event.target === modal) {
+                closeAuthModal();
+            }
+        });
+
+        /* Authentication Form Handlers with Home Redirection */
         function handleManualAuth(event, mode) {
             event.preventDefault();
-            alert(`Proceeding to process ${mode.toUpperCase()} request for role: ${targetSignUpRole}`);
-            closeAuthModal();
+            // Set user session active state
+            localStorage.setItem('uefi_user_session', 'active');
+            // Instantly navigate to dashboard home page
+            window.location.href = 'home.html';
         }
 
         function handleGoogleResponse(response) {
-            console.log("Received Google Auth Credential Token:", response.credential);
-            closeAuthModal();
+            if (response.credential) {
+                console.log("Received Google Auth Token.");
+                // Set user session active state
+                localStorage.setItem('uefi_user_session', 'active');
+                // Instantly navigate to dashboard home page
+                window.location.href = 'home.html';
+            }
         }
     </script>
 </body>
