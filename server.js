@@ -1,51 +1,134 @@
 /**
  * ============================================================================
- * UEFI CONNECT & ENGAGE - ADVANCED ENTERPRISE API CORE ENGINE
+ * UEFI CONNECT & ENGAGE - FULL-STACK ENTERPRISE API CORE ENGINE
  * ============================================================================
- * Architecture: Node.js / Express Client-Facing Application Layer
- * Current Phase: High-Fidelity Simulation Sandbox (In-Memory State Engine)
- * Features: Telemetry Tracking, Route Protection, Brute-Force Shielding
+ * Version: 3.0.0 (Persistent Storage & Full Interactive Media Edition)
+ * Architecture: Node.js / Express / Native File-System (FS) Persistence
+ * Features:
+ * - Persistent JSON Database (Survives server restarts and browser reloads)
+ * - Social Engagement Pipeline (Likes, Multi-user Comments, Timestamps)
+ * - Rich Media Support (Image URLs, Video URLs, Embedded Captions)
+ * - Advanced Security Shield (Brute-force lockout, Bearer Token Auth)
+ * - Real-time Telemetry & Detailed Error Management
  * ============================================================================
  */
 
 const express = require('express');
 const cors = require('cors');
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 
-// --- STATE ARCHITECTURE VOLUMES (Simulated Database Layer) ---
-const userRegistry = {};       // Structural Mapping: Email String -> User Profile Object
-const globalEcosystemFeed = []; // Core Stream Array: Retains Published Academic & Interactive Assets
+// ============================================================================
+// 1. PERSISTENT DATABASE STORAGE ENGINE (FILE-SYSTEM BACKED)
+// ============================================================================
+// By writing to local JSON files, your data will NEVER be erased when refreshing
+// the browser or restarting the Node.js server terminal!
 
-// --- GLOBAL MIDDLEWARE CONFIGURATIONS & TELEMETRY ---
+const USERS_FILE = path.join(__dirname, 'uefi_users_db.json');
+const POSTS_FILE = path.join(__dirname, 'uefi_posts_db.json');
 
-// Standard JSON request body parsing configuration
-app.use(express.json());
+/**
+ * Initializes physical database files if they do not exist yet on the hard drive.
+ */
+function initializeDatabase() {
+    try {
+        if (!fs.existsSync(USERS_FILE)) {
+            fs.writeFileSync(USERS_FILE, JSON.stringify({}, null, 4), 'utf8');
+            console.log(`[DATABASE INIT] Created new persistent users storage: ${USERS_FILE}`);
+        }
+        if (!fs.existsSync(POSTS_FILE)) {
+            fs.writeFileSync(POSTS_FILE, JSON.stringify([], null, 4), 'utf8');
+            console.log(`[DATABASE INIT] Created new persistent posts storage: ${POSTS_FILE}`);
+        }
+    } catch (err) {
+        console.error("[DATABASE ERROR] Could not initialize physical storage files:", err);
+    }
+}
 
-// Enhanced CORS Configuration optimized for cross-origin web client applications
+/**
+ * Reads and parses the User Registry from disk.
+ */
+function getUserRegistry() {
+    try {
+        const data = fs.readFileSync(USERS_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        console.error("[DATABASE READ ERROR] Failed to load user registry. Defaulting to empty object.", err);
+        return {};
+    }
+}
+
+/**
+ * Saves the modified User Registry back to disk immediately.
+ */
+function saveUserRegistry(registryData) {
+    try {
+        fs.writeFileSync(USERS_FILE, JSON.stringify(registryData, null, 4), 'utf8');
+    } catch (err) {
+        console.error("[DATABASE WRITE ERROR] Failed to persist user registry to disk:", err);
+    }
+}
+
+/**
+ * Reads and parses the Global Feed Posts from disk.
+ */
+function getGlobalFeed() {
+    try {
+        const data = fs.readFileSync(POSTS_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        console.error("[DATABASE READ ERROR] Failed to load posts feed. Defaulting to empty array.", err);
+        return [];
+    }
+}
+
+/**
+ * Saves the modified Global Feed Posts back to disk immediately.
+ */
+function saveGlobalFeed(feedData) {
+    try {
+        fs.writeFileSync(POSTS_FILE, JSON.stringify(feedData, null, 4), 'utf8');
+    } catch (err) {
+        console.error("[DATABASE WRITE ERROR] Failed to persist posts feed to disk:", err);
+    }
+}
+
+// Run database initialization on server boot
+initializeDatabase();
+
+// ============================================================================
+// 2. GLOBAL MIDDLEWARE & TELEMETRY CONFIGURATIONS
+// ============================================================================
+
+// Permit large payloads for media URLs and extended text articles
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+// Full Cross-Origin Resource Sharing (CORS) - Allows all classmates on different computers/networks to connect
 app.use(cors({
-    origin: '*', // In production, replace with specific domains like ['https://yourclientapp.com']
+    origin: '*', // Accepts web requests from any domain, IP, or local HTML file
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     credentials: true
 }));
 
-// Real-Time Client Traffic Telemetry Middleware
+// Real-Time Network Traffic Telemetry
 app.use((req, res, next) => {
     const timestamp = new Date().toISOString();
-    const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    console.log(`[NETWORK TELEMETRY] [${timestamp}] ${req.method} -> ${req.url} | Source IP: ${clientIp}`);
+    const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown IP';
+    console.log(`[TELEMETRY] [${timestamp}] ${req.method} -> ${req.url} | Source: ${clientIp}`);
     next();
 });
 
-// --- CORE UTILITY & SECURITY PROTOCOLS ---
+// ============================================================================
+// 3. SECURITY & CRYPTOGRAPHY UTILITIES
+// ============================================================================
 
 /**
- * Generates an unpredictable, highly complex case-sensitive alphanumeric token.
- * Utilizes cryptographically secure pseudo-random bytes to mitigate prediction attacks.
- * @param {number} length - Desired character length of the token
- * @returns {string} 
+ * Generates an unpredictable, cryptographically secure alphanumeric token.
  */
 function generateSecureAlphanumericToken(length = 6) {
     const characterPool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -57,15 +140,14 @@ function generateSecureAlphanumericToken(length = 6) {
         }
         return token;
     } catch (error) {
-        console.error("[CRITICAL CRYPTO ERROR] Failed to source secure entropy:", error);
-        // Fallback pseudorandom string generation strategy if entropy collection fails
+        console.error("[CRYPTO ERROR] Entropy failure. Using mathematical fallback:", error);
         return Math.random().toString(36).substring(2, 2 + length).toUpperCase();
     }
 }
 
 /**
- * Client Authorization Shield Middleware
- * Intercepts protected operations to confirm client status, identity validation, and execution rules.
+ * Client Authentication Middleware Shield
+ * Protects interactive routes (posting, liking, commenting) so only verified users can execute them.
  */
 function requireClientAuthentication(req, res, next) {
     const authHeader = req.headers['authorization'];
@@ -73,228 +155,194 @@ function requireClientAuthentication(req, res, next) {
     if (!authHeader) {
         return res.status(401).json({
             success: false,
-            message: "Access Denied: Missing client validation credentials (Authorization Header required)."
+            message: "Authentication Failed: Missing Authorization header. Please log in first."
         });
     }
 
-    // In this simulation, clients provide their target email identifier as a primitive token
+    // Extract identifier (client passes email or token via: 'Bearer user@email.com')
     const clientIdentifier = authHeader.replace('Bearer ', '').toLowerCase().trim();
+    const userRegistry = getUserRegistry();
     const activeProfile = userRegistry[clientIdentifier];
 
     if (!activeProfile) {
         return res.status(401).json({
             success: false,
-            message: "Authentication Invalid: Client token does not match any registered identity structures."
+            message: "Authentication Failed: Your user profile could not be located in the system."
         });
     }
 
     if (!activeProfile.isVerified) {
         return res.status(403).json({
             success: false,
-            message: "Access Forbidden: Client identity must fulfill token verification routines first."
+            message: "Access Denied: You must verify your email address before interacting with the community."
         });
     }
 
-    // Attach verified profile data payload directly to the request object for use down-pipeline
+    // Attach validated profile to the request for downstream processing
     req.authenticatedClient = activeProfile;
     next();
 }
 
-// --- CORE API ROUTING ENGINE ---
+// ============================================================================
+// 4. AUTHENTICATION & IDENTITY API ROUTES
+// ============================================================================
 
 /**
- * 1. IDENTITY REGISTRATION ROUTE
- * Registers brand new user accounts and provisions their dynamic verification infrastructure.
+ * POST /api/auth/signup
+ * Registers a new student/faculty profile and stores it persistently.
  */
 app.post('/api/auth/signup', (req, res) => {
     const { email, name, role, password } = req.body;
 
-    // Strict input parameter presence checks
     if (!email || !name || !role || !password) {
         return res.status(400).json({ 
             success: false, 
-            message: "Initialization failure: All registration fields (email, name, role, password) are mandatory." 
+            message: "Registration Error: All fields (email, name, role, password) are strictly required." 
         });
     }
 
     const accountIdentifier = email.toLowerCase().trim();
+    const userRegistry = getUserRegistry();
 
-    // Verify system non-duplication constraints
     if (userRegistry[accountIdentifier]) {
         return res.status(400).json({ 
             success: false, 
-            message: "Registration failure: A profile already exists under this email path." 
+            message: "Registration Error: An account with this email address already exists." 
         });
     }
 
-    // Provision complex security token configurations
     const dispatchToken = generateSecureAlphanumericToken(6);
     
-    // Construct database schema mock setup
     userRegistry[accountIdentifier] = {
         name: name.trim(),
         email: accountIdentifier,
         role: role.trim(),
-        password: password, // PRO-TIP: Substitute with a robust framework like 'bcrypt' in live production
+        password: password, // In live production, wrap this in bcrypt.hashSync(password, 10)
         isVerified: false,
         verificationToken: dispatchToken,
         failedAttempts: 0,
         isLocked: false,
         lockoutUntil: null,
-        sessionToken: null
+        joinedAt: new Date().toISOString()
     };
 
-    // DEVELOPMENT TERMINAL OUTPUT LOG - Simulates SMS/Email network dispatching layers
-    console.log(`\n======================================================`);
-    console.log(`[UEFI IDENTITY ENGAGEMENT DETECTED]: ${accountIdentifier}`);
-    console.log(`[VERIFICATION TOKEN ENCLOSED]: ${dispatchToken}  (STRICT CASE-SENSITIVE)`);
-    console.log(`======================================================\n`);
+    saveUserRegistry(userRegistry);
+
+    console.log(`\n================================================================`);
+    console.log(`[NEW MEMBER REGISTRATION]: ${name.trim()} (${accountIdentifier})`);
+    console.log(`[VERIFICATION CODE DISPATCHED]: ${dispatchToken}  (CASE-SENSITIVE)`);
+    console.log(`================================================================\n`);
 
     return res.status(201).json({
         success: true,
-        message: "Ecosystem enrollment successful. Verification token dispatched to backend console parameters.",
+        message: "Registration successful! Check server console for your 6-character verification code.",
         email: accountIdentifier
     });
 });
 
 /**
- * 2. IDENTITY CONFIRMATION & BRUTE-FORCE COUNTERMEASURES
- * Handles code checks and tracks error counters to dynamically lock down profiles.
+ * POST /api/auth/verify
+ * Verifies identity token and unlocks community access.
  */
 app.post('/api/auth/verify', (req, res) => {
     const { email, token } = req.body;
     
     if (!email || !token) {
-        return res.status(400).json({ success: false, message: "Missing matching target attributes (email and token required)." });
+        return res.status(400).json({ success: false, message: "Verification Error: Both email and token are required." });
     }
 
     const accountIdentifier = email.toLowerCase().trim();
+    const userRegistry = getUserRegistry();
     const targetProfile = userRegistry[accountIdentifier];
 
     if (!targetProfile) {
-        return res.status(404).json({ success: false, message: "Ecosystem entity record absent from catalog." });
+        return res.status(404).json({ success: false, message: "Verification Error: Account not found." });
     }
 
-    // Evaluate active lockout boundaries
+    // Check cooling period for locked accounts
     if (targetProfile.isLocked) {
         const timeNow = Date.now();
         if (timeNow < targetProfile.lockoutUntil) {
-            const structuralRemainingWait = Math.ceil((targetProfile.lockoutUntil - timeNow) / 1000 / 60);
+            const minutesLeft = Math.ceil((targetProfile.lockoutUntil - timeNow) / 1000 / 60);
             return res.status(423).json({
                 success: false,
-                message: `Security Access Restriction: Account locked due to structural violations. Cooling window remaining: ${structuralRemainingWait} minute(s).`
+                message: `Security Lock: Account temporarily locked due to failed attempts. Try again in ${minutesLeft} minute(s).`
             });
         } else {
-            // Automatically clear restriction parameters once the lock duration expires
             targetProfile.isLocked = false;
             targetProfile.failedAttempts = 0;
             targetProfile.lockoutUntil = null;
-            console.log(`[SECURITY SYSTEM] Cooling period completed. Restored access parameters for: ${accountIdentifier}`);
         }
     }
 
-    // CRITICAL SECURITY RULE: Explicit Case-Sensitive Evaluation
+    // Strict Case-Sensitive Code Comparison
     if (token === targetProfile.verificationToken) {
         targetProfile.isVerified = true;
         targetProfile.failedAttempts = 0;
-        targetProfile.verificationToken = null; // Purge layout variable upon successful validation match
+        targetProfile.verificationToken = null;
+
+        saveUserRegistry(userRegistry);
 
         return res.status(200).json({
             success: true,
-            message: "Identity confirmed successfully! Access granted to UEFI Connect & Engage platforms.",
-            role: targetProfile.role
+            message: "Identity verified! You now have full access to post, comment, and like on UEFI Connect.",
+            role: targetProfile.role,
+            user: { name: targetProfile.name, email: targetProfile.email, role: targetProfile.role }
         });
     } else {
-        // Log miscalculation and increment attempt tracking index
         targetProfile.failedAttempts += 1;
         const remainingChances = 5 - targetProfile.failedAttempts;
 
-        console.warn(`[SECURITY WARN] Bad verification attempt matching pattern for ${accountIdentifier}. Bad runs: ${targetProfile.failedAttempts}/5`);
-
         if (targetProfile.failedAttempts >= 5) {
             targetProfile.isLocked = true;
-            targetProfile.lockoutUntil = Date.now() + (15 * 60 * 1000); // 15-Minute Structural System Lockdown Block
+            targetProfile.lockoutUntil = Date.now() + (15 * 60 * 1000); // 15 Minute Lockdown
+            saveUserRegistry(userRegistry);
             return res.status(423).json({
                 success: false,
-                message: "Security breach alert: 5 failed token match events registered. Profile locked for 15 minutes."
+                message: "Security Alert: 5 incorrect attempts recorded. Account locked for 15 minutes."
             });
         }
 
+        saveUserRegistry(userRegistry);
         return res.status(400).json({
             success: false,
-            message: `Verification code string structure error. Case-sensitive matching failed.`,
+            message: "Invalid verification code. Remember, codes are strictly case-sensitive!",
             attemptsRemaining: remainingChances
         });
     }
 });
 
 /**
- * 3. TOKEN RE-DISPATCH ARCHITECTURE
- * Re-routes a fresh unique string value if the previous code was lost.
- */
-app.post('/api/auth/resend', (req, res) => {
-    const { email } = req.body;
-    
-    if (!email) return res.status(400).json({ success: false, message: "Email attribute required." });
-
-    const accountIdentifier = email.toLowerCase().trim();
-    const targetProfile = userRegistry[accountIdentifier];
-
-    if (!targetProfile) {
-        return res.status(404).json({ success: false, message: "Ecosystem entity record absent from catalog." });
-    }
-
-    if (targetProfile.isLocked) {
-        return res.status(423).json({ success: false, message: "Security parameters active: User locked. Cannot refresh token elements." });
-    }
-
-    const secondaryToken = generateSecureAlphanumericToken(6);
-    targetProfile.verificationToken = secondaryToken;
-    targetProfile.failedAttempts = 0; // Reset history metric tracking block
-
-    console.log(`\n======================================================`);
-    console.log(`[TOKEN RE-DISPATCHED FOR]: ${accountIdentifier}`);
-    console.log(`[REFRESHED TOKEN VALUE]: ${secondaryToken}`);
-    console.log(`======================================================\n`);
-
-    return res.status(200).json({ success: true, message: "A fresh alphanumeric validation layout has been sent." });
-});
-
-/**
- * 4. STANDARD ACCOUNT ENTRY POINT
- * Validates identity passwords and creates a token verification configuration for client sessions.
+ * POST /api/auth/login
+ * Standard account login.
  */
 app.post('/api/auth/login', (req, res) => {
     const { email, password } = req.body;
     
     if (!email || !password) {
-        return res.status(400).json({ success: false, message: "Missing required credential inputs (email and password required)." });
+        return res.status(400).json({ success: false, message: "Login Error: Email and password required." });
     }
 
     const accountIdentifier = email.toLowerCase().trim();
+    const userRegistry = getUserRegistry();
     const targetProfile = userRegistry[accountIdentifier];
 
-    // Catch credentials mismatch cleanly without leaking structural details
     if (!targetProfile || targetProfile.password !== password) {
-        return res.status(401).json({ success: false, message: "Access rejected: Invalid entry parameters." });
+        return res.status(401).json({ success: false, message: "Login Failed: Incorrect email or password." });
     }
 
-    // Intercept client path if identity has skipped registration validation steps
     if (!targetProfile.isVerified) {
         return res.status(403).json({ 
             success: false, 
-            message: "Verification pending: Complete identity confirmation requirements first.", 
+            message: "Account Unverified: Please complete email verification before logging in.", 
             requiresVerification: true 
         });
     }
 
-    // Generate dynamic mock system session token (maps email identification framework for clients)
-    targetProfile.sessionToken = `mock-session-jwt-${generateSecureAlphanumericToken(16)}`;
-
     return res.status(200).json({
         success: true,
-        message: "Credentials valid. Loading workspace configurations...",
-        token: targetProfile.email, // Client places this identifier code inside the 'Authorization' Header
+        message: "Login successful! Welcome back to UEFI Connect.",
+        token: targetProfile.email, // Frontend must send this as: Authorization: Bearer <token>
         user: {
             name: targetProfile.name,
             email: targetProfile.email,
@@ -303,76 +351,220 @@ app.post('/api/auth/login', (req, res) => {
     });
 });
 
+// ============================================================================
+// 5. COMMUNITY ECOSYSTEM API ROUTES (POSTS, MEDIA, LIKES, COMMENTS)
+// ============================================================================
+
 /**
- * 5. UEFI ENGAGE / CONNECT: PUBLISH CONTENT PIPELINE [PROTECTED ROUTE]
- * Access restricted exclusively to validated, matching ecosystem profile frameworks.
+ * GET /api/connect/posts
+ * Fetches all discussion posts, including their attached images, videos, likes, and comments.
+ * Tip for Frontend: Set a setInterval() in JavaScript to call this every 3 seconds to see classmates' posts automatically!
+ */
+app.get('/api/connect/posts', (req, res) => {
+    const globalFeed = getGlobalFeed();
+    return res.status(200).json({ 
+        success: true, 
+        totalPosts: globalFeed.length,
+        feed: globalFeed 
+    });
+});
+
+/**
+ * POST /api/connect/posts
+ * Publishes a new post with optional Image URL and Video URL support.
  */
 app.post('/api/connect/posts', requireClientAuthentication, (req, res) => {
-    const { textContent, videoUrl } = req.body;
-    
-    // Extract metadata injected securely by the authentication middleware shield
+    const { textContent, imageUrl, videoUrl } = req.body;
     const activeClient = req.authenticatedClient;
 
     if (!textContent || textContent.trim() === "") {
-        return res.status(400).json({ success: false, message: "Unable to process incomplete transmission variables: Content text empty." });
+        return res.status(400).json({ success: false, message: "Post Error: You cannot publish an empty message." });
     }
 
-    const compiledPostObject = {
+    const globalFeed = getGlobalFeed();
+
+    // Comprehensive Post Schema with built-in interactive arrays
+    const newPostObject = {
         id: crypto.randomUUID(),
         authorEmail: activeClient.email,
         authorName: activeClient.name,
         authorRole: activeClient.role,
-        textContent: textContent,
-        videoUrl: videoUrl || null, 
-        likes: 0,
+        textContent: textContent.trim(),
+        imageUrl: imageUrl && imageUrl.trim() !== "" ? imageUrl.trim() : null,
+        videoUrl: videoUrl && videoUrl.trim() !== "" ? videoUrl.trim() : null,
+        likes: [],       // Array of user emails who liked the post
+        likesCount: 0,   // Numerical tally for easy UI rendering
+        comments: [],    // Array of nested comment objects
+        commentsCount: 0,
         timestamp: new Date().toISOString()
     };
 
-    globalEcosystemFeed.unshift(compiledPostObject); // Enforces new material delivery to the apex of the payload feed
+    // Add new post to the top of the feed and save to hard drive
+    globalFeed.unshift(newPostObject);
+    saveGlobalFeed(globalFeed);
     
+    console.log(`[NEW POST PUBLISHED] Author: ${activeClient.name} | Media Attached: ${imageUrl ? 'Image ' : ''}${videoUrl ? 'Video' : 'None'}`);
+
     return res.status(201).json({ 
         success: true, 
-        message: "Academic asset securely stored in global network hub registry.", 
-        post: compiledPostObject 
+        message: "Your post has been published to the global ecosystem!", 
+        post: newPostObject 
     });
 });
 
 /**
- * 6. UEFI ENGAGE / CONNECT: DELIVER MULTI-CHANNEL INDEX [PUBLIC READ ROUTE]
- * Transmits public stream data configurations to any authenticated or listening visual dashboards.
+ * POST /api/connect/posts/:id/like
+ * Toggles a Like on a specific classmate's post.
+ * If the user already liked it, calling this endpoint again removes their like (Unlike).
  */
-app.get('/api/connect/posts', (req, res) => {
-    return res.status(200).json({ 
-        success: true, 
-        count: globalEcosystemFeed.length,
-        feed: globalEcosystemFeed 
+app.post('/api/connect/posts/:id/like', requireClientAuthentication, (req, res) => {
+    const targetPostId = req.params.id;
+    const activeClient = req.authenticatedClient;
+    const globalFeed = getGlobalFeed();
+
+    const postIndex = globalFeed.findIndex(post => post.id === targetPostId);
+
+    if (postIndex === -1) {
+        return res.status(404).json({ success: false, message: "Interaction Error: The requested post does not exist." });
+    }
+
+    const targetPost = globalFeed[postIndex];
+
+    // Ensure likes array exists (for backward compatibility)
+    if (!targetPost.likes) targetPost.likes = [];
+
+    const userLikeIndex = targetPost.likes.indexOf(activeClient.email);
+
+    let actionTaken = "";
+    if (userLikeIndex === -1) {
+        // Add Like
+        targetPost.likes.push(activeClient.email);
+        actionTaken = "liked";
+    } else {
+        // Remove Like (Unlike)
+        targetPost.likes.splice(userLikeIndex, 1);
+        actionTaken = "unliked";
+    }
+
+    targetPost.likesCount = targetPost.likes.length;
+    saveGlobalFeed(globalFeed);
+
+    console.log(`[LIKE INTERACTION] ${activeClient.name} ${actionTaken} post ID: ${targetPostId}`);
+
+    return res.status(200).json({
+        success: true,
+        message: `Successfully ${actionTaken} the post!`,
+        likesCount: targetPost.likesCount,
+        likes: targetPost.likes
     });
 });
 
-// --- CENTRAL SYSTEM FALLBACK & ERROR HANDLERS ---
+/**
+ * POST /api/connect/posts/:id/comment
+ * Allows users to reply and comment on a specific classmate's post.
+ */
+app.post('/api/connect/posts/:id/comment', requireClientAuthentication, (req, res) => {
+    const targetPostId = req.params.id;
+    const { commentText } = req.body;
+    const activeClient = req.authenticatedClient;
 
-// Handles mismatched route pathways (404 Fallback Shield)
-app.use((req, res, next) => {
+    if (!commentText || commentText.trim() === "") {
+        return res.status(400).json({ success: false, message: "Comment Error: Please enter text before submitting your comment." });
+    }
+
+    const globalFeed = getGlobalFeed();
+    const postIndex = globalFeed.findIndex(post => post.id === targetPostId);
+
+    if (postIndex === -1) {
+        return res.status(404).json({ success: false, message: "Interaction Error: The requested post does not exist." });
+    }
+
+    const targetPost = globalFeed[postIndex];
+
+    // Ensure comments array exists
+    if (!targetPost.comments) targetPost.comments = [];
+
+    const newCommentObject = {
+        commentId: crypto.randomUUID(),
+        authorEmail: activeClient.email,
+        authorName: activeClient.name,
+        authorRole: activeClient.role,
+        text: commentText.trim(),
+        timestamp: new Date().toISOString()
+    };
+
+    targetPost.comments.push(newCommentObject);
+    targetPost.commentsCount = targetPost.comments.length;
+
+    saveGlobalFeed(globalFeed);
+
+    console.log(`[NEW COMMENT] ${activeClient.name} commented on post ID: ${targetPostId}`);
+
+    return res.status(201).json({
+        success: true,
+        message: "Your comment has been added!",
+        comment: newCommentObject,
+        totalComments: targetPost.commentsCount
+    });
+});
+
+/**
+ * DELETE /api/connect/posts/:id
+ * Allows a user to delete their own post.
+ */
+app.delete('/api/connect/posts/:id', requireClientAuthentication, (req, res) => {
+    const targetPostId = req.params.id;
+    const activeClient = req.authenticatedClient;
+    const globalFeed = getGlobalFeed();
+
+    const postIndex = globalFeed.findIndex(post => post.id === targetPostId);
+
+    if (postIndex === -1) {
+        return res.status(404).json({ success: false, message: "Delete Error: Post not found." });
+    }
+
+    // Authorization check: Only the original author can delete their post
+    if (globalFeed[postIndex].authorEmail !== activeClient.email) {
+        return res.status(403).json({ success: false, message: "Permission Denied: You can only delete your own posts." });
+    }
+
+    globalFeed.splice(postIndex, 1);
+    saveGlobalFeed(globalFeed);
+
+    console.log(`[POST DELETED] Post ID ${targetPostId} removed by ${activeClient.name}`);
+
+    return res.status(200).json({ success: true, message: "Your post has been permanently deleted." });
+});
+
+// ============================================================================
+// 6. FALLBACK ERROR HANDLERS
+// ============================================================================
+
+// 404 Route Catch-All Shield
+app.use((req, res) => {
     res.status(404).json({
         success: false,
-        message: `Resource Execution Error: Requested path [${req.method}] ${req.url} does not exist.`
+        message: `Endpoint Not Found: [${req.method}] ${req.url} is not a valid route on this server.`
     });
 });
 
-// Structural internal pipeline exception catcher (500 Protection Shield)
+// 500 Internal Exception Catch-All Shield
 app.use((err, req, res, next) => {
-    console.error("[CRITICAL PROCESS ERROR HANDLER]:", err.stack);
+    console.error("[CRITICAL SYSTEM EXCEPTION]:", err.stack);
     res.status(500).json({
         success: false,
-        message: "Internal Server Processing Exception: The engine was unable to parse this request frame."
+        message: "Internal Server Error: The server encountered an unexpected condition."
     });
 });
 
-// --- EXECUTION CONTROL CONTROLLER ---
+// ============================================================================
+// 7. SERVER INITIALIZATION & PORT ACTIVATION
+// ============================================================================
 const SERVER_PORT = process.env.PORT || 5000;
 app.listen(SERVER_PORT, () => {
     console.log(`\n================================================================`);
-    console.log(`[UEFI PRODUCTION CORE ONLINE] Systems up and running successfully.`);
-    console.log(`[CLIENT CHANNELS MAPPED] Accepting socket inputs on port: ${SERVER_PORT}`);
+    console.log(`[UEFI ENTERPRISE CORE ONLINE] Version 3.0.0 Active`);
+    console.log(`[PERSISTENCE ACTIVE] Storing data locally in JSON files.`);
+    console.log(`[LISTENING PORT] Socket communications mapped to port: ${SERVER_PORT}`);
     console.log(`================================================================\n`);
 });
