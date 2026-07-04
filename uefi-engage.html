@@ -3,94 +3,699 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Engage</title>
+    <title>UEFI Engage - STEM Ecosystem Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* --- BRAND COLOR PALETTE (Kenyan Flag & Safaricom Fusion) ---
+           Safaricom Green: #1b7340 | Kenya Red: #990000 | Black: #111111 | White: #ffffff
+        */
         :root {
-            --safaricom-green: #30B54A;
-            --kenya-red: #BB0000;
-            --kenya-black: #000000;
-            --kenya-white: #FFFFFF;
-            --bg-main: #FAFAFA;
-            --border-color: #E0E0E0;
+            --safaricom-green: #1b7340;
+            --safaricom-green-hover: #145830;
+            --kenya-red: #990000;
+            --kenya-black: #111111;
+            --bg-light: #f4f6f5;
+            --card-bg: #ffffff;
+            --text-dark: #1c1c1c;
+            --text-muted: #65676b;
+            --border-color: #dbdedc;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        body { background: var(--bg-main); color: #333333; }
-        header { background: var(--kenya-black); color: var(--kenya-white); padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--safaricom-green); position: sticky; top: 0; z-index: 100; }
-        .brand { font-size: 1.4rem; font-weight: 800; color: var(--kenya-white); text-decoration: none; }
-        .brand span { color: var(--safaricom-green); }
-        .search-bar { width: 40%; }
-        .search-bar input { width: 100%; padding: 0.5rem 1rem; border-radius: 20px; border: none; outline: none; background: #222222; color: var(--kenya-white); }
-        .nav-links button { background: var(--kenya-red); color: var(--kenya-white); border: none; padding: 0.5rem 1.2rem; border-radius: 20px; font-weight: bold; cursor: pointer; }
-        .container { max-width: 1000px; margin: 2rem auto; display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; padding: 0 1rem; }
-        .post-card { background: var(--kenya-white); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 1rem; display: flex; overflow: hidden; }
-        .vote-sidebar { background: #F8F9FA; padding: 0.8rem 0.5rem; display: flex; flex-direction: column; align-items: center; border-right: 1px solid var(--border-color); }
-        .vote-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #888888; }
-        .vote-btn.up:hover { color: var(--safaricom-green); }
-        .vote-btn.down:hover { color: var(--kenya-red); }
-        .vote-count { font-weight: bold; font-size: 0.9rem; margin: 0.4rem 0; color: var(--kenya-black); }
-        .post-content { padding: 1rem; flex: 1; }
-        .post-meta { font-size: 0.8rem; color: #777777; margin-bottom: 0.5rem; }
-        .post-meta span { color: var(--kenya-red); font-weight: 600; }
-        .post-title { font-size: 1.1rem; font-weight: 700; color: var(--kenya-black); margin-bottom: 0.5rem; cursor: pointer; }
-        .post-title:hover { color: var(--safaricom-green); }
-        .post-snippet { font-size: 0.9rem; color: #555555; line-height: 1.4; margin-bottom: 1rem; }
-        .post-actions { display: flex; gap: 1rem; font-size: 0.85rem; color: #666666; font-weight: 600; }
-        .post-actions div { cursor: pointer; }
-        .sidebar-card { background: var(--kenya-white); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.2rem; height: fit-content; }
-        .sidebar-card h3 { font-size: 1rem; border-bottom: 2px solid var(--safaricom-green); padding-bottom: 0.5rem; margin-bottom: 1rem; color: var(--kenya-black); }
-        .topic-tag { display: inline-block; background: rgba(48, 181, 74, 0.1); color: var(--safaricom-green); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; margin: 0.2rem; text-decoration: none; }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- NAVIGATION HEADER --- */
+        header {
+            background-color: var(--kenya-black);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--kenya-red);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area h1 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo-area span {
+            color: var(--safaricom-green);
+        }
+
+        .user-status-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .engage-trigger-btn {
+            background-color: var(--safaricom-green);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .engage-trigger-btn:hover {
+            background-color: var(--safaricom-green-hover);
+        }
+
+        /* --- MAIN HUB LAYOUT --- */
+        .hub-container {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            margin: 20px auto;
+            gap: 20px;
+            padding: 0 15px;
+            flex-grow: 1;
+        }
+
+        /* --- SIDEBAR: REDDIT SUB-COMMUNITIES (STEM CHANNELS) --- */
+        .sidebar-channels {
+            width: 260px;
+            flex-shrink: 0;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+        }
+
+        .sidebar-channels h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .channel-list {
+            list-style: none;
+        }
+
+        .channel-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .channel-item:hover, .channel-item.active {
+            background-color: rgba(27, 115, 64, 0.1);
+            color: var(--safaricom-green);
+        }
+
+        .channel-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* --- MAIN FEED STACK --- */
+        .feed-stack {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* --- COMMUNITY RULES BANNER --- */
+        .rules-banner {
+            background: linear-gradient(degress, var(--kenya-black) 0%, #222 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid var(--kenya-red);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .rules-banner strong {
+            color: var(--safaricom-green);
+            font-size: 15px;
+        }
+
+        /* --- COMPOSER: CREATE POST --- */
+        .composer-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            display: none; /* Visible only after profile onboarding activation */
+        }
+
+        .composer-header {
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--safaricom-green);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .composer-input, .composer-textarea {
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .composer-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .media-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .composer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-submit-btn {
+            background-color: var(--kenya-red);
+            color: white;
+            border: none;
+            padding: 8px 24px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .post-submit-btn:hover {
+            background-color: #770000;
+        }
+
+        /* --- REDDIT-STYLE POST CARDS --- */
+        .post-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            overflow: hidden;
+        }
+
+        .voting-sidebar {
+            width: 44px;
+            background-color: rgba(0,0,0,0.02);
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .vote-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 16px;
+            transition: color 0.1s;
+        }
+
+        .vote-btn.upvote:hover { color: var(--safaricom-green); }
+        .vote-btn.downvote:hover { color: var(--kenya-red); }
+        
+        .vote-counter {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .post-main-content {
+            flex-grow: 1;
+            padding: 12px 15px;
+        }
+
+        .post-meta-line {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .post-meta-line .badge {
+            background-color: var(--safaricom-green);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 6px;
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .post-body-text {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            white-space: pre-line;
+        }
+
+        .post-media-container img, .post-media-container video {
+            max-width: 100%;
+            max-height: 450px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* --- OVERLAY MODALS (Consent & Profile Generation) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            padding: 25px;
+            border-top: 5px solid var(--safaricom-green);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .modal-card h2 {
+            margin-bottom: 15px;
+            color: var(--kenya-black);
+        }
+
+        .consent-box {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 6px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 13px;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-container input {
+            margin-top: 3px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--safaricom-green);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-primary:disabled {
+            background-color: var(--border-color);
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <a href="#" class="brand">UEFI <span>ENGAGE</span></a>
-    <div class="search-bar">
-        <input type="text" placeholder="Search questions, topics, or discussions...">
-    </div>
-    <div class="nav-links">
-        <button onclick="alert('Open Add Question UI')">+ Ask Question</button>
-    </div>
-</header>
-
-<div class="container">
-    <main>
-        <article class="post-card">
-            <div class="vote-sidebar">
-                <button class="vote-btn up" onclick="vote(this, 1)">▲</button>
-                <span class="vote-count">142</span>
-                <button class="vote-btn down" onclick="vote(this, -1)">▼</button>
-            </div>
-            <div class="post-content">
-                <div class="post-meta">Posted by <span>u/TechLead_KE</span> in <strong>r/UEFI_Development</strong></div>
-                <h2 class="post-title">What are the best practices for integrating UEFI modules with enterprise architectures?</h2>
-                <p class="post-snippet">We are currently migrating our internal tools and want to ensure optimal configuration while maintaining security guidelines across systems.</p>
-                <div class="post-actions">
-                    <div>💬 34 Answers</div>
-                    <div>🔄 Share</div>
-                    <div>⭐ Bookmark</div>
-                </div>
-            </div>
-        </article>
-    </main>
-
-    <aside>
-        <div class="sidebar-card">
-            <h3>Trending Communities</h3>
-            <a href="#" class="topic-tag">#UEFIConnect</a>
-            <a href="#" class="topic-tag">#SafaricomTech</a>
-            <a href="#" class="topic-tag">#KenyaDevelopers</a>
+    <header>
+        <div class="logo-area">
+            <i class="fa-solid fa-graduation-cap fa-lg" style="color: var(--safaricom-green);"></i>
+            <h1>UEFI <span>Engage</span></h1>
         </div>
-    </aside>
-</div>
+        <div class="user-status-bar">
+            <span id="activeUserDisplay" style="font-size: 14px; font-weight: 600; color: #dbdedc;">Visitor Mode</span>
+            <button class="engage-trigger-btn" id="engageActionBtn" onclick="openOnboardingFlow()">
+                <i class="fa-solid fa-right-to-bracket"></i> Engage Space
+            </button>
+        </div>
+    </header>
 
-<script>
-    function vote(btn, val) {
-        const countSpan = btn.parentElement.querySelector('.vote-count');
-        let current = parseInt(countSpan.innerText);
-        countSpan.innerText = current + val;
-    }
-</script>
+    <div class="hub-container">
+        
+        <aside class="sidebar-channels">
+            <h3>STEM Forums</h3>
+            <ul class="channel-list">
+                <li class="channel-item active" onclick="switchForumChannel('All Spaces', this)">
+                    <i class="fa-solid fa-globe"></i> All Spaces
+                </li>
+                <li class="channel-item" onclick="switchForumChannel('CBE General', this)">
+                    <i class="fa-solid fa-layer-group"></i> CBC General
+                </li>
+                <li class="channel-item" onclick="switchForumChannel('8-4-4 Legacy', this)">
+                    <i class="fa-solid fa-book-open"></i> 8-4-4 Systems
+                </li>
+                <li class="channel-item" onclick="switchForumChannel('Essential Math', this)">
+                    <i class="fa-solid fa-calculator"></i> Essential Math
+                </li>
+                <li class="channel-item" onclick="switchForumChannel('Core Math', this)">
+                    <i class="fa-solid fa-square-root-variable"></i> Core Math
+                </li>
+                <li class="channel-item" onclick="switchForumChannel('Physics Forum', this)">
+                    <i class="fa-solid fa-atom"></i> Physics Forum
+                </li>
+            </ul>
+        </aside>
 
+        <main class="feed-stack">
+            
+            <div class="rules-banner">
+                <strong>Ecosystem Protocols:</strong> Welcome to the UEFI STEM collaboration space. To maintain academic excellence, posts containing explicit, harmful, abusive, or non-educational text are automatically flagged and removed. Post your exam equations and learning resources responsibly.
+            </div>
+
+            <div class="composer-card" id="forumComposer">
+                <div class="composer-header">Submit STEM Problem / Resource</div>
+                <form id="postCompositionForm" onsubmit="dispatchForumPost(event)">
+                    <input type="text" id="postTitle" class="composer-input" placeholder="Title: State your problem clearly (e.g., K.C.S.E Physics 2026 Grid Mechanics)" required>
+                    <textarea id="postBody" class="composer-textarea" placeholder="Provide full context, equations, or guidelines for discussion..." required></textarea>
+                    
+                    <div class="media-inputs">
+                        <input type="url" id="postImageUrl" class="composer-input" placeholder="Optional Image URL (Diagram Reference)">
+                        <input type="url" id="postVideoUrl" class="composer-input" placeholder="Optional Video URL (Explanation Video)">
+                    </div>
+
+                    <div class="composer-actions">
+                        <span style="font-size:12px; color: var(--text-muted)">Posting to: <strong id="targetPostingSpaceLabel">All Spaces</strong></span>
+                        <button type="submit" class="post-submit-btn">Post to Forum</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="engageDiscoveryFeed" style="display: flex; flex-direction: column; gap: 15px;">
+                </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="onboardingModal">
+        <div class="modal-card">
+            <h2>Enter UEFI Engage</h2>
+            <div class="consent-box">
+                By entering UEFI Engage, you agree to participate in an educational environment. You consent to the persistent storage of your preferred layout name, posts, and media contributions. You affirm that you will not upload explicitly inappropriate, commercial, or malicious content. Breaking these rules will result in an immediate automated ban from the platform.
+            </div>
+            
+            <label class="checkbox-container">
+                <input type="checkbox" id="consentCheckbox" onchange="toggleConsentVerification()">
+                I read, understood, and accept all UEFI Engage Community Terms and Storage Consents.
+            </label>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display:block; font-size:13px; font-weight:700; margin-bottom:5px;">Preferred Forum Alias / Handle Name</label>
+                <input type="text" id="preferredAliasInput" class="composer-input" placeholder="e.g., STEM_Scholar_KE" disabled style="margin-bottom:0;">
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeOnboardingFlow()">Cancel</button>
+                <button class="btn-primary" id="finalizeOnboardingBtn" disabled onclick="confirmIdentityOnboarding()">Enter Space</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DATABASE_API_URL = "http://localhost:5000";
+        let activeForumSpace = "All Spaces";
+        let authenticatedUserSession = null;
+
+        // Verify runtime validation states immediately upon bootstrapping page layout
+        window.addEventListener('DOMContentLoaded', () => {
+            checkExistingUserSession();
+            refreshGlobalFeed();
+        });
+
+        function checkExistingUserSession() {
+            const cachedUser = localStorage.getItem('uefi_engage_user');
+            if (cachedUser) {
+                authenticatedUserSession = JSON.parse(cachedUser);
+                document.getElementById('activeUserDisplay').textContent = `u/${authenticatedUserSession.alias}`;
+                document.getElementById('forumComposer').style.display = "block";
+                document.getElementById('engageActionBtn').innerHTML = `<i class="fa-solid fa-arrow-right-from-bracket"></i> Exit Space`;
+                document.getElementById('engageActionBtn').setAttribute('onclick', 'terminateSession()');
+            }
+        }
+
+        function openOnboardingFlow() {
+            document.getElementById('onboardingModal').classList.add('active');
+        }
+
+        function closeOnboardingFlow() {
+            document.getElementById('onboardingModal').classList.remove('active');
+        }
+
+        function toggleConsentVerification() {
+            const isChecked = document.getElementById('consentCheckbox').checked;
+            document.getElementById('preferredAliasInput').disabled = !isChecked;
+            document.getElementById('finalizeOnboardingBtn').disabled = !isChecked;
+        }
+
+        function confirmIdentityOnboarding() {
+            const aliasInput = document.getElementById('preferredAliasInput').value.trim();
+            if (!aliasInput) {
+                alert("Please provide a valid preferred name to register your profile layout.");
+                return;
+            }
+
+            // Simulating structural validation payload tracking
+            authenticatedUserSession = {
+                alias: aliasInput,
+                joinedAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('uefi_engage_user', JSON.stringify(authenticatedUserSession));
+            
+            // Re-render UI frame tracking structures
+            document.getElementById('activeUserDisplay').textContent = `u/${aliasInput}`;
+            document.getElementById('forumComposer').style.display = "block";
+            
+            const actionBtn = document.getElementById('engageActionBtn');
+            actionBtn.innerHTML = `<i class="fa-solid fa-arrow-right-from-bracket"></i> Exit Space`;
+            actionBtn.setAttribute('onclick', 'terminateSession()');
+
+            closeOnboardingFlow();
+        }
+
+        function terminateSession() {
+            localStorage.removeItem('uefi_engage_user');
+            authenticatedUserSession = null;
+            document.getElementById('activeUserDisplay').textContent = "Visitor Mode";
+            document.getElementById('forumComposer').style.display = "none";
+            
+            const actionBtn = document.getElementById('engageActionBtn');
+            actionBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> Engage Space`;
+            actionBtn.setAttribute('onclick', 'openOnboardingFlow()');
+            location.reload();
+        }
+
+        function switchForumChannel(spaceName, element) {
+            activeForumSpace = spaceName;
+            document.getElementById('targetPostingSpaceLabel').textContent = spaceName;
+            
+            document.querySelectorAll('.channel-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            
+            refreshGlobalFeed();
+        }
+
+        async function dispatchForumPost(event) {
+            event.preventDefault();
+            if (!authenticatedUserSession) return alert("You must unlock account credentials via the Engage workflow button first.");
+
+            const title = document.getElementById('postTitle').value.trim();
+            const body = document.getElementById('postBody').value.trim();
+            const imageUrl = document.getElementById('postImageUrl').value.trim();
+            const videoUrl = document.getElementById('postVideoUrl').value.trim();
+
+            // Structure a rich ecosystem post body layout block matching server schema limits
+            const postPayload = {
+                authorEmail: "student@uefi.ac.ke", // Can be dynamically mapped to central login
+                authorName: `${authenticatedUserSession.alias} (${activeForumSpace})`,
+                textContent: `[TITLE: ${title}]\n\n${body}${imageUrl ? `\nImage Resource Reference: ${imageUrl}` : ''}`,
+                videoUrl: videoUrl || null
+            };
+
+            try {
+                const response = await fetch(`${DATABASE_API_URL}/api/connect/posts`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(postPayload)
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    // Reset composer values seamlessly
+                    document.getElementById('postCompositionForm').reset();
+                    refreshGlobalFeed();
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) {
+                alert("Synchronization error connecting to live UEFI data service engine layer.");
+            }
+        }
+
+        async function refreshGlobalFeed() {
+            try {
+                const response = await fetch(`${DATABASE_API_URL}/api/connect/posts`);
+                const data = await response.json();
+                
+                const feedContainer = document.getElementById('engageDiscoveryFeed');
+                feedContainer.innerHTML = "";
+
+                // Filter items dynamically mapping targeted curriculum selection channels
+                const filteredFeed = data.feed.filter(post => {
+                    if (activeForumSpace === "All Spaces") return true;
+                    return post.authorName.includes(`(${activeForumSpace})`);
+                });
+
+                if (filteredFeed.length === 0) {
+                    feedContainer.innerHTML = `
+                        <div style="background: white; padding: 30px; border-radius:8px; border: 1px solid var(--border-color); text-align: center; color: var(--text-muted)">
+                            <i class="fa-regular fa-folder-open fa-2xl" style="margin-bottom: 15px; color: var(--border-color)"></i>
+                            <p>No active STEM assignments or discussion posts inside this channel yet. Be the first to start the engagement!</p>
+                        </div>`;
+                    return;
+                }
+
+                filteredFeed.forEach(post => {
+                    // Split layout attributes if structured elements exist
+                    const rawText = post.textContent;
+                    let displayTitle = "STEM Interaction Thread";
+                    let displayBody = rawText;
+                    let parsedImgUrl = null;
+
+                    if (rawText.startsWith("[TITLE:")) {
+                        const titleEndIndex = rawText.indexOf("]");
+                        if (titleEndIndex !== -1) {
+                            displayTitle = rawText.substring(7, titleEndIndex);
+                            displayBody = rawText.substring(titleEndIndex + 1).trim();
+                        }
+                    }
+
+                    // Look for image payload inclusions parsed by standard index queries
+                    const imgMarker = "\nImage Resource Reference: ";
+                    const imgIndex = displayBody.indexOf(imgMarker);
+                    if (imgIndex !== -1) {
+                        parsedImgUrl = displayBody.substring(imgIndex + imgMarker.length).trim();
+                        displayBody = displayBody.substring(0, imgIndex);
+                    }
+
+                    const postCard = document.createElement('div');
+                    postCard.className = "post-card";
+                    postCard.innerHTML = `
+                        <div class="voting-sidebar">
+                            <button class="vote-btn upvote"><i class="fa-solid fa-arrow-up"></i></button>
+                            <span class="vote-counter">${Math.floor(Math.random() * 24) + 1}</span>
+                            <button class="vote-btn downvote"><i class="fa-solid fa-arrow-down"></i></button>
+                        </div>
+                        <div class="post-main-content">
+                            <div class="post-meta-line">
+                                <span class="badge">STEM Forum</span> Posted by ${post.authorName.split(" ")[0]} • ${new Date(post.timestamp).toLocaleTimeString()}
+                            </div>
+                            <div class="post-title">${displayTitle}</div>
+                            <div class="post-body-text">${displayBody}</div>
+                            
+                            ${parsedImgUrl ? `
+                                <div class="post-media-container">
+                                    <img src="${parsedImgUrl}" alt="STEM Diagram Asset Resource">
+                                </div>
+                            ` : ''}
+
+                            ${post.videoUrl ? `
+                                <div class="post-media-container">
+                                    <video src="${post.videoUrl}" controls></video>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                    feedContainer.appendChild(postCard);
+                });
+            } catch (err) {
+                console.error("Network interface connection failure regarding UEFI global state components.");
+            }
+        }
+    </script>
 </body>
 </html>
