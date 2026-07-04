@@ -138,7 +138,7 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            flex-shrink: 0; /* FIXED: Prevents icon compression layout distortions */
+            flex-shrink: 0;
         }
 
         /* --- CENTER CONVERSATION FEED --- */
@@ -162,7 +162,6 @@
             font-weight: 800;
         }
 
-        /* X-Style Sub-channels Context Row */
         .channel-context-row {
             display: flex;
             overflow-x: auto;
@@ -252,10 +251,6 @@
             cursor: pointer;
         }
 
-        .toolbar-attachments i:hover {
-            color: var(--safaricom-green-hover);
-        }
-
         .btn-tweet-submit {
             background-color: var(--safaricom-green);
             color: white;
@@ -266,23 +261,19 @@
             cursor: pointer;
         }
 
-        .btn-tweet-submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* X-Style Status Post Layout Card */
+        /* Status Post Layout Card */
         .tweet-post-card {
             padding: 16px;
             display: flex;
             gap: 12px;
             border-bottom: 1px solid var(--border-muted);
             transition: background 0.2s;
-            cursor: pointer;
+            flex-direction: column;
         }
 
-        .tweet-post-card:hover {
-            background-color: rgba(0,0,0,0.01);
+        .tweet-main-header-block {
+            display: flex;
+            gap: 12px;
         }
 
         .tweet-core-frame {
@@ -355,7 +346,40 @@
         }
 
         .action-metric-unit:hover.like-action { color: var(--kenya-red); }
-        .action-metric-unit:hover.share-action { color: var(--safaricom-green); }
+        .action-metric-unit:hover.comment-action { color: var(--safaricom-green); }
+        .action-metric-unit:hover.share-action { color: #1d9bf0; }
+
+        /* --- COMMENTS INTERACTIVE SECTION --- */
+        .comments-tray-container {
+            background-color: var(--bg-dim);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .comment-node-row {
+            padding: 6px 0;
+            font-size: 13px;
+            border-bottom: 1px dashed #e1e8ed;
+        }
+
+        .comment-node-row:last-child { border-bottom: none; }
+
+        .comment-input-wrapper {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .comment-text-box {
+            flex: 1;
+            padding: 6px;
+            border: 1px solid var(--border-muted);
+            border-radius: 4px;
+            outline: none;
+            font-size: 13px;
+        }
 
         /* --- RIGHT TRENDING & RESOURCE COLUMN --- */
         .sidebar-right {
@@ -403,9 +427,7 @@
             cursor: pointer;
         }
 
-        .trend-item-block:not(:last-child) {
-            border-bottom: 1px solid #e1e8ed;
-        }
+        .trend-item-block:not(:last-child) { border-bottom: 1px solid #e1e8ed; }
 
         .trend-meta-label {
             font-size: 13px;
@@ -580,8 +602,10 @@
         const CORE_SERVER_GATEWAY = "http://localhost:5000";
         let trackingEcosystemSpaceFilter = "All Conversations";
         let structuredUserCredentialSession = null;
+        let automatedSTEMSimulationCatalog = [];
 
-        const automatedSTEMSimulationCatalog = [
+        // BASELINE SEED DATA CONTAINER
+        const INITIAL_SEED_POSTS = [
             {
                 id: "seed-1",
                 authorName: "Dr. Evans Mwangi",
@@ -591,22 +615,21 @@
                 videoUrl: null,
                 imageUrl: null,
                 timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
-                likes: 84
-            },
-            {
-                id: "seed-2",
-                authorName: "Aminah Osei",
-                authorHandle: "amina_math_cbc",
-                channel: "Core Math",
-                textContent: "Can anyone help simplify this matrix transformations question? Let's run calculations together!",
-                videoUrl: null,
-                imageUrl: null,
-                timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
-                likes: 142
+                likes: 84,
+                shares: 12,
+                comments: [
+                    { author: "KenyanTechStudent", text: "Does this affect calculation variables on question 4?" }
+                ]
             }
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Verify or initialize localStorage DB instances so no data drops on refresh
+            if (!localStorage.getItem('uefi_persistent_posts')) {
+                localStorage.setItem('uefi_persistent_posts', JSON.stringify(INITIAL_SEED_POSTS));
+            }
+            automatedSTEMSimulationCatalog = JSON.parse(localStorage.getItem('uefi_persistent_posts'));
+            
             validateProfileStateCaches();
             renderEcosystemTimeline();
         });
@@ -680,14 +703,6 @@
             const imageUrlAsset = document.getElementById('tweetEmbeddedImageInput').value.trim();
             const videoUrlAsset = document.getElementById('tweetEmbeddedVideoInput').value.trim();
 
-            const broadcastPayload = {
-                authorEmail: "student@uefi.ac.ke",
-                authorName: `${structuredUserCredentialSession.alias} [SPACE: ${trackingEcosystemSpaceFilter}]`,
-                textContent: rawMessage + (imageUrlAsset ? `\n[IMG]${imageUrlAsset}[/IMG]` : ''),
-                videoUrl: videoUrlAsset || null
-            };
-
-            // LOCAL SIMULATION FALLBACK: Adds post instantly to local array if server is down
             const backupLocalPost = {
                 id: "local-" + Date.now(),
                 authorName: structuredUserCredentialSession.alias,
@@ -697,29 +712,71 @@
                 videoUrl: videoUrlAsset || null,
                 imageUrl: imageUrlAsset || null,
                 timestamp: new Date().toISOString(),
-                likes: 0
+                likes: 0,
+                shares: 0,
+                comments: []
             };
 
-            try {
-                const networkResponse = await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(broadcastPayload)
-                });
+            // Commit transaction to dynamic array and local storage to prevent reload memory leaks
+            automatedSTEMSimulationCatalog.unshift(backupLocalPost);
+            localStorage.setItem('uefi_persistent_posts', JSON.stringify(automatedSTEMSimulationCatalog));
 
-                const dataFeedback = await networkResponse.json();
-                if (dataFeedback.success) {
-                    document.getElementById('tweetCompositionForm').reset();
-                    renderEcosystemTimeline();
-                }
-            } catch (err) {
-                // Smooth local injection when testing isolated frontends
-                console.warn("Server backend direct mesh unavailable. Injecting into local runtime catalog.");
-                automatedSTEMSimulationCatalog.unshift(backupLocalPost);
-                document.getElementById('tweetCompositionForm').reset();
-                document.getElementById('tweetEmbeddedImageInput').style.display = "none";
-                document.getElementById('tweetEmbeddedVideoInput').style.display = "none";
+            // Reset UI components
+            document.getElementById('tweetCompositionForm').reset();
+            document.getElementById('tweetEmbeddedImageInput').style.display = "none";
+            document.getElementById('tweetEmbeddedVideoInput').style.display = "none";
+            
+            renderEcosystemTimeline();
+        }
+
+        // --- INTERACTIVE METRICS WORKFLOW PLATFORM ---
+        function executeLikeMetric(postId) {
+            const index = automatedSTEMSimulationCatalog.findIndex(p => p.id === postId);
+            if (index !== -1) {
+                automatedSTEMSimulationCatalog[index].likes += 1;
+                localStorage.setItem('uefi_persistent_posts', JSON.stringify(automatedSTEMSimulationCatalog));
                 renderEcosystemTimeline();
+            }
+        }
+
+        function executeShareMetric(postId) {
+            const index = automatedSTEMSimulationCatalog.findIndex(p => p.id === postId);
+            if (index !== -1) {
+                automatedSTEMSimulationCatalog[index].shares += 1;
+                localStorage.setItem('uefi_persistent_posts', JSON.stringify(automatedSTEMSimulationCatalog));
+                alert("STEM Post URL footprint shared successfully to internal profile clipboard mapping!");
+                renderEcosystemTimeline();
+            }
+        }
+
+        function toggleCommentContainer(postId) {
+            const tray = document.getElementById(`comments-tray-${postId}`);
+            tray.style.display = tray.style.display === "block" ? "none" : "block";
+        }
+
+        function submitComment(event, postId) {
+            event.preventDefault();
+            if (!structuredUserCredentialSession) {
+                return alert("Profile setup error: Please declare a profile name in Access Spaces tab first.");
+            }
+            
+            const inputBox = document.getElementById(`comment-input-${postId}`);
+            const text = inputBox.value.trim();
+            if (!text) return;
+
+            const index = automatedSTEMSimulationCatalog.findIndex(p => p.id === postId);
+            if (index !== -1) {
+                if (!automatedSTEMSimulationCatalog[index].comments) {
+                    automatedSTEMSimulationCatalog[index].comments = [];
+                }
+                automatedSTEMSimulationCatalog[index].comments.push({
+                    author: structuredUserCredentialSession.alias,
+                    text: text
+                });
+                localStorage.setItem('uefi_persistent_posts', JSON.stringify(automatedSTEMSimulationCatalog));
+                inputBox.value = "";
+                renderEcosystemTimeline();
+                document.getElementById(`comments-tray-${postId}`).style.display = "block";
             }
         }
 
@@ -727,52 +784,7 @@
             const targetViewHub = document.getElementById('timelinePostInjectionHub');
             targetViewHub.innerHTML = "";
 
-            let integratedMasterFeed = [...automatedSTEMSimulationCatalog];
-
-            try {
-                const fetchCallback = await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts`);
-                const parsedResponse = await fetchCallback.json();
-                
-                if (parsedResponse.success && parsedResponse.feed.length > 0) {
-                    const normalizedServerItems = parsedResponse.feed.map(item => {
-                        let extractedChannel = "All Conversations";
-                        let finalizedBodyText = item.textContent;
-                        let parsedImageLink = null;
-
-                        const spaceMarkerStart = item.authorName.indexOf("[SPACE: ");
-                        if (spaceMarkerStart !== -1) {
-                            const spaceMarkerEnd = item.authorName.indexOf("]", spaceMarkerStart);
-                            if (spaceMarkerEnd !== -1) {
-                                extractedChannel = item.authorName.substring(spaceMarkerStart + 8, spaceMarkerEnd);
-                            }
-                        }
-
-                        if (finalizedBodyText.includes("[IMG]")) {
-                            const imgStart = finalizedBodyText.indexOf("[IMG]");
-                            const imgEnd = finalizedBodyText.indexOf("[/IMG]");
-                            parsedImageLink = finalizedBodyText.substring(imgStart + 5, imgEnd);
-                            finalizedBodyText = finalizedBodyText.substring(0, imgStart);
-                        }
-
-                        return {
-                            id: item.id,
-                            authorName: item.authorName.split(" [")[0],
-                            authorHandle: item.authorName.toLowerCase().replace(/[^a-z0-x]/g, '_').substring(0, 14),
-                            channel: extractedChannel,
-                            textContent: finalizedBodyText,
-                            videoUrl: item.videoUrl,
-                            imageUrl: parsedImageLink,
-                            timestamp: item.timestamp,
-                            likes: Math.floor(Math.random() * 5)
-                        };
-                    });
-                    integratedMasterFeed = [...normalizedServerItems, ...integratedMasterFeed];
-                }
-            } catch (err) {
-                console.warn("Running in standalone layout fallback engine.");
-            }
-
-            const timelineFilteredSet = integratedMasterFeed.filter(post => {
+            const timelineFilteredSet = automatedSTEMSimulationCatalog.filter(post => {
                 if (trackingEcosystemSpaceFilter === "All Conversations") return true;
                 return post.channel.trim() === trackingEcosystemSpaceFilter.trim();
             });
@@ -786,7 +798,6 @@
                 return;
             }
 
-            // FIXED: Fully completed post engine loop to dynamically map user data to custom UI blocks
             timelineFilteredSet.forEach(post => {
                 const postCard = document.createElement('div');
                 postCard.className = 'tweet-post-card';
@@ -796,20 +807,48 @@
                 if (post.imageUrl) mediaHtml += `<div class="tweet-embedded-media"><img src="${post.imageUrl}"></div>`;
                 if (post.videoUrl) mediaHtml += `<div class="tweet-embedded-media"><video src="${post.videoUrl}" controls></video></div>`;
 
-                postCard.innerHTML = `
-                    <div class="avatar-circle">${initial}</div>
-                    <div class="tweet-core-frame">
-                        <div class="tweet-author-line">
-                            <span class="author-name-bold">${post.authorName}</span>
-                            <span class="author-handle-muted">@${post.authorHandle}</span>
-                            <span class="channel-tag-pill">${post.channel}</span>
+                // Build comments markup payload loop
+                let commentsListHtml = '';
+                const postComments = post.comments || [];
+                postComments.forEach(c => {
+                    commentsListHtml += `
+                        <div class="comment-node-row">
+                            <strong>${c.author}:</strong> ${c.text}
                         </div>
-                        <div class="tweet-text-content">${post.textContent}</div>
-                        ${mediaHtml}
-                        <div class="tweet-action-row">
-                            <div class="action-metric-unit like-action"><i class="fa-regular fa-heart"></i> <span>${post.likes}</span></div>
-                            <div class="action-metric-unit"><i class="fa-regular fa-comment"></i> <span>0</span></div>
-                            <div class="action-metric-unit share-action"><i class="fa-regular fa-share-from-square"></i></div>
+                    `;
+                });
+
+                postCard.innerHTML = `
+                    <div class="tweet-main-header-block">
+                        <div class="avatar-circle">${initial}</div>
+                        <div class="tweet-core-frame">
+                            <div class="tweet-author-line">
+                                <span class="author-name-bold">${post.authorName}</span>
+                                <span class="author-handle-muted">@${post.authorHandle}</span>
+                                <span class="channel-tag-pill">${post.channel}</span>
+                            </div>
+                            <div class="tweet-text-content">${post.textContent}</div>
+                            ${mediaHtml}
+                            
+                            <div class="tweet-action-row">
+                                <div class="action-metric-unit like-action" onclick="executeLikeMetric('${post.id}')">
+                                    <i class="fa-regular fa-heart"></i> <span>${post.likes || 0}</span>
+                                </div>
+                                <div class="action-metric-unit comment-action" onclick="toggleCommentContainer('${post.id}')">
+                                    <i class="fa-regular fa-comment"></i> <span>${postComments.length}</span>
+                                </div>
+                                <div class="action-metric-unit share-action" onclick="executeShareMetric('${post.id}')">
+                                    <i class="fa-regular fa-share-from-square"></i> <span>${post.shares || 0}</span>
+                                </div>
+                            </div>
+
+                            <div class="comments-tray-container" id="comments-tray-${post.id}">
+                                <div id="comments-list-${post.id}">${commentsListHtml || '<p style="font-size:11px;color:var(--text-muted);">No feedback yet.</p>'}</div>
+                                <form onsubmit="submitComment(event, '${post.id}')" class="comment-input-wrapper">
+                                    <input type="text" id="comment-input-${post.id}" class="comment-text-box" placeholder="Write an educational response..." required>
+                                    <button type="submit" class="btn-tweet-submit" style="padding:4px 10px; font-size:12px;">Reply</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 `;
