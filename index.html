@@ -3,328 +3,716 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to UEFI Global</title>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title>UEFI Global - Scaling Educational Outcomes Across Kenya & Beyond</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --safaricom-green: #26B14C;
-            --kenya-red: #CE1126;
-            --kenya-black: #111111;
-            --light-bg: #F4F7F5;
-            --white: #FFFFFF;
-            --gray: #6C757D;
-            --light-gray: #E9ECEF;
-            --accent-green-light: #E8F5E9;
+            --safaricom-green: #00A859;
+            --safaricom-dark-green: #008245;
+            --safaricom-light: #E5F6EE;
+            --kenya-black: #000000;
+            --kenya-red: #BB0000;
+            --kenya-green: #006600;
+            --kenya-white: #FFFFFF;
+            
+            --bg-main: #FFFFFF;
+            --bg-surface: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --text-dark: #0F172A;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 40px -10px rgba(0, 168, 89, 0.15);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-color: var(--light-bg);
-            color: var(--kenya-black);
-            overflow-x: hidden;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Top Navigation Header */
+        /* =========================================
+           HEADER & NAVIGATION
+        ========================================= */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 40px;
-            background-color: var(--white);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border-top: 6px solid var(--kenya-red);
+            padding: 16px 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 500;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .logo-container {
-            font-size: 26px;
-            font-weight: 900;
-            color: var(--kenya-black);
+        .logo-group {
             display: flex;
             align-items: center;
             gap: 10px;
-            letter-spacing: 0.5px;
+            text-decoration: none;
+            color: var(--text-dark);
         }
 
-        .logo-dot {
-            width: 14px;
-            height: 14px;
-            background-color: var(--safaricom-green);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--safaricom-green);
-        }
-
-        .auth-buttons {
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            background: var(--safaricom-green);
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
-            gap: 20px;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0, 168, 89, 0.3);
         }
 
-        /* Language Dropdown Styling */
-        .lang-dropdown-container {
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--safaricom-green);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Language Dropdown System */
+        .lang-dropdown-wrapper {
             position: relative;
             display: inline-block;
         }
 
-        .lang-dropdown-btn {
-            background: none;
-            border: none;
-            color: var(--kenya-black);
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
+        .lang-trigger-btn {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 12px;
-            border-radius: 8px;
+            gap: 8px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
             transition: all 0.2s ease;
         }
 
-        .lang-dropdown-btn:hover {
-            color: var(--safaricom-green);
-            background-color: var(--light-gray);
+        .lang-trigger-btn:hover {
+            border-color: var(--safaricom-green);
+            background: var(--safaricom-light);
+            color: var(--safaricom-dark-green);
         }
 
-        .lang-dropdown-btn svg {
+        .lang-trigger-btn svg {
             width: 18px;
             height: 18px;
-            fill: currentColor;
+            fill: var(--safaricom-green);
         }
 
-        .lang-dropdown-content {
+        .lang-menu-content {
             display: none;
             position: absolute;
             right: 0;
-            top: 100%;
-            background-color: var(--white);
-            min-width: 160px;
-            max-height: 300px;
+            top: calc(100% + 10px);
+            background-color: var(--bg-card);
+            min-width: 200px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            z-index: 1000;
+            max-height: 320px;
             overflow-y: auto;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            border-radius: 12px;
-            z-index: 200;
-            margin-top: 8px;
-            border: 1px solid var(--light-gray);
+            padding: 8px 0;
         }
 
-        .lang-dropdown-content a {
-            color: var(--kenya-black);
-            padding: 10px 16px;
-            text-decoration: none;
+        .lang-dropdown-wrapper.active .lang-menu-content {
             display: block;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background 0.2s ease;
+            animation: fadeInDown 0.2s ease forwards;
         }
 
-        .lang-dropdown-content a:hover {
-            background-color: var(--light-gray);
-            color: var(--safaricom-green);
-        }
-
-        .lang-dropdown-container.show .lang-dropdown-content {
-            display: block;
-        }
-
-        .btn-nav-login {
+        .lang-menu-content a {
+            color: var(--text-dark);
+            padding: 10px 18px;
             text-decoration: none;
-            color: var(--kenya-black);
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .btn-nav-login:hover {
-            color: var(--safaricom-green);
-        }
-
-        .btn-nav-signup {
-            text-decoration: none;
-            background-color: var(--safaricom-green);
-            color: var(--white);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 16px;
-            box-shadow: 0 4px 10px rgba(38, 177, 76, 0.3);
-            transition: all 0.2s ease;
-        }
-
-        .btn-nav-signup:hover {
-            background-color: #1e943d;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(38, 177, 76, 0.4);
-        }
-
-        /* Main Layout */
-        .main-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .hero-banner {
-            background: linear-gradient(135deg, var(--kenya-black) 0%, #222222 100%);
-            border-radius: 24px;
-            padding: 60px;
-            color: var(--white);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 40px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            margin-bottom: 40px;
-            border-left: 8px solid var(--safaricom-green);
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.15s;
         }
 
-        .hero-banner::after {
-            content: '';
-            position: absolute;
-            right: -100px;
-            bottom: -100px;
-            width: 300px;
-            height: 300px;
-            background: var(--kenya-red);
-            border-radius: 50%;
-            opacity: 0.2;
-            filter: blur(50px);
+        .lang-menu-content a:hover {
+            background-color: var(--safaricom-light);
+            color: var(--safaricom-dark-green);
+            font-weight: 600;
         }
 
-        .hero-info {
-            flex: 1.2;
-            z-index: 2;
+        /* Auth Buttons */
+        .btn-login {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 15px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            transition: color 0.2s;
         }
 
-        .hero-info h1 {
-            font-size: 44px;
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
-
-        .hero-info h1 span {
+        .btn-login:hover {
             color: var(--safaricom-green);
         }
 
-        .hero-info p {
-            font-size: 18px;
-            color: #CCCCCC;
-            margin-bottom: 0;
+        .btn-signup {
+            text-decoration: none;
+            background-color: var(--safaricom-green);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 168, 89, 0.25);
         }
 
-        /* Category Cards */
-        .phase-headline {
+        .btn-signup:hover {
+            background-color: var(--safaricom-dark-green);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 168, 89, 0.35);
+        }
+
+        /* =========================================
+           KENYAN FLAG ACCENT LINE
+        ========================================= */
+        .kenya-flag-stripe {
+            display: flex;
+            width: 100%;
+            height: 5px;
+            position: sticky;
+            top: 69px;
+            z-index: 499;
+        }
+
+        .flag-black { background-color: var(--kenya-black); flex: 2; }
+        .flag-white-1 { background-color: var(--kenya-white); flex: 0.3; }
+        .flag-red { background-color: var(--kenya-red); flex: 2; }
+        .flag-white-2 { background-color: var(--kenya-white); flex: 0.3; }
+        .flag-green { background-color: var(--kenya-green); flex: 2; }
+
+        /* =========================================
+           HERO SECTION
+        ========================================= */
+        .hero-section {
+            padding: 80px 5% 60px;
             text-align: center;
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .phase-headline::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background-color: var(--kenya-red);
-            margin: 10px auto 0;
-            border-radius: 2px;
+            background: radial-gradient(circle at top center, var(--safaricom-light) 0%, rgba(255,255,255,0) 70%);
         }
 
-        .phases-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 1px solid var(--safaricom-green);
+            color: var(--safaricom-dark-green);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hero-title {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.15;
+            max-width: 900px;
+            margin: 0 auto 24px;
+            letter-spacing: -1.5px;
+        }
+
+        .hero-title span {
+            color: var(--safaricom-green);
+            background: linear-gradient(135deg, var(--safaricom-green) 0%, var(--safaricom-dark-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 19px;
+            color: var(--text-muted);
+            max-width: 720px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero-primary {
+            background-color: var(--safaricom-green);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.2s;
+        }
+
+        .btn-hero-primary:hover {
+            background-color: var(--safaricom-dark-green);
+            transform: translateY(-2px);
+        }
+
+        .btn-hero-secondary {
+            background-color: var(--bg-surface);
+            color: var(--text-dark);
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+
+        .btn-hero-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        /* =========================================
+           CORE MODELS & PILLARS SECTION
+        ========================================= */
+        .section-padding {
+            padding: 80px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
             margin-bottom: 60px;
         }
 
-        .phase-card {
-            background-color: var(--white);
-            border-radius: 16px;
-            padding: 35px;
-            text-align: center;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-            border-bottom: 5px solid var(--light-gray);
+        .section-subtitle {
+            color: var(--safaricom-green);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 28px;
+        }
+
+        .model-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 36px 30px;
             transition: all 0.3s ease;
-            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
 
-        .phase-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        .model-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--safaricom-green);
         }
 
-        .phase-card.learners:hover { border-bottom-color: var(--safaricom-green); }
-        .phase-card.teachers:hover { border-bottom-color: var(--kenya-red); }
-        .phase-card.parents:hover { border-bottom-color: var(--kenya-black); }
-
-        .phase-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-            display: inline-block;
+        .model-card::top-border {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--safaricom-green);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .phase-card h3 {
+        .model-card:hover::top-border {
+            opacity: 1;
+        }
+
+        .model-icon-box {
+            width: 54px;
+            height: 54px;
+            border-radius: var(--radius-md);
+            background: var(--safaricom-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 24px;
+        }
+
+        .model-title {
             font-size: 22px;
             font-weight: 800;
             margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .model-desc {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .model-tag {
+            align-self: flex-start;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--safaricom-dark-green);
+            background: var(--safaricom-light);
+            padding: 4px 12px;
+            border-radius: 50px;
+        }
+
+        /* =========================================
+           IMPACT STATS SECTION
+        ========================================= */
+        .impact-section {
+            background-color: var(--safaricom-green);
+            color: white;
+            padding: 80px 5%;
+            margin: 40px 0;
+        }
+
+        .impact-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .impact-stat {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .impact-label {
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        /* =========================================
+           VOICES OF CHANGE (TESTIMONIALS)
+        ========================================= */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .quote-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .quote-text {
+            font-size: 16px;
+            font-style: italic;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .quote-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--safaricom-green);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .author-info h4 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .author-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* =========================================
+           GET STARTED PHASES
+        ========================================= */
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .phase-card {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 36px 28px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .phase-card:hover {
+            border-color: var(--safaricom-green);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .phase-card h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 16px 0 12px;
         }
 
         .phase-card p {
-            color: var(--gray);
+            color: var(--text-muted);
             font-size: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
-        .btn-phase {
+        .btn-phase-action {
             display: inline-block;
-            padding: 10px 20px;
-            border-radius: 20px;
+            background: var(--safaricom-light);
+            color: var(--safaricom-dark-green);
             font-weight: 700;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .phase-card:hover .btn-phase-action {
+            background: var(--safaricom-green);
+            color: white;
+        }
+
+        /* =========================================
+           FOOTER SECTION
+        ========================================= */
+        footer {
+            background-color: #0B132B;
+            color: white;
+            padding: 80px 5% 40px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 40px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-col h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--safaricom-green);
+        }
+
+        .footer-col p {
+            color: #94A3B8;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #CBD5E1;
             text-decoration: none;
             font-size: 14px;
-            background-color: var(--light-bg);
-            color: var(--kenya-black);
-            transition: all 0.2s ease;
+            transition: color 0.2s;
         }
 
-        .phase-card.learners .btn-phase { color: var(--safaricom-green); }
-        .phase-card.teachers .btn-phase { color: var(--kenya-red); }
-        
-        .phase-card:hover .btn-phase {
-            background-color: var(--kenya-black);
-            color: var(--white) !important;
+        .footer-links a:hover {
+            color: var(--safaricom-green);
         }
 
-        /* Modal Overlay */
+        .lang-tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .lang-pill {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #E2E8F0;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+        }
+
+        .partner-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .partner-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #E2E8F0;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .partner-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--safaricom-green);
+        }
+
+        .social-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .social-btn:hover {
+            background: var(--safaricom-green);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 13px;
+            color: #64748B;
+        }
+
+        /* =========================================
+           AUTHENTICATION MODAL OVERLAY
+        ========================================= */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(17, 17, 17, 0.7);
+            background-color: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(6px);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 2000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.25s ease;
+            padding: 20px;
         }
 
         .modal-overlay.active {
@@ -332,89 +720,71 @@
             pointer-events: auto;
         }
 
-        .modal-content {
-            background-color: var(--white);
-            width: 95%;
-            max-width: 520px;
+        .modal-container {
+            background: white;
+            width: 100%;
+            max-width: 480px;
+            border-radius: var(--radius-lg);
             padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
             position: relative;
-            transform: translateY(30px);
-            transition: transform 0.4s ease;
-            border-top: 8px solid var(--safaricom-green);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
-        .modal-overlay.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .close-modal {
+        .btn-close-modal {
             position: absolute;
             top: 20px;
-            right: 25px;
-            font-size: 28px;
-            color: var(--gray);
-            cursor: pointer;
-            background: none;
+            right: 20px;
+            background: var(--bg-surface);
             border: none;
-            font-weight: 700;
-        }
-
-        /* Tab Switch inside Modal */
-        .modal-tabs {
-            display: flex;
-            background-color: var(--light-gray);
-            padding: 5px;
-            border-radius: 30px;
-            margin-bottom: 25px;
-        }
-
-        .modal-tab-btn {
-            flex: 1;
-            border: none;
-            background: none;
-            padding: 10px;
-            font-weight: 700;
-            font-size: 15px;
-            border-radius: 25px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 20px;
+            color: var(--text-muted);
             cursor: pointer;
-            color: var(--gray);
-            transition: all 0.2s ease;
-        }
-
-        .modal-tab-btn.active {
-            background-color: var(--safaricom-green);
-            color: var(--white);
-            box-shadow: 0 4px 10px rgba(38, 177, 76, 0.2);
-        }
-
-        /* Role Selector */
-        .role-selector-bar {
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .role-pill {
-            padding: 6px 16px;
-            border: 2px solid var(--light-gray);
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            color: var(--gray);
             transition: all 0.2s;
         }
 
-        .role-pill.active {
-            border-color: var(--kenya-red);
-            color: var(--kenya-red);
-            background-color: #FFF5F5;
+        .btn-close-modal:hover {
+            background: var(--border-color);
+            color: var(--text-dark);
         }
 
-        /* Form Controls */
+        .modal-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 28px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            color: var(--safaricom-green);
+            border-bottom-color: var(--safaricom-green);
+        }
+
+        .hidden-pane {
+            display: none !important;
+        }
+
+        /* Form Elements */
         .form-group {
             margin-bottom: 18px;
             text-align: left;
@@ -422,184 +792,428 @@
 
         .form-group label {
             display: block;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
+            color: var(--text-dark);
             margin-bottom: 6px;
-            color: var(--kenya-black);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-input {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-sm);
             font-size: 15px;
             outline: none;
-            transition: border-color 0.2s ease;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .form-input:focus {
             border-color: var(--safaricom-green);
+            box-shadow: 0 0 0 4px rgba(0, 168, 89, 0.1);
+        }
+
+        .role-selector-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 22px;
+        }
+
+        .role-pill {
+            flex: 1;
+            padding: 10px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-muted);
+        }
+
+        .role-pill.active {
+            background-color: var(--safaricom-green);
+            color: white;
+            border-color: var(--safaricom-green);
+            box-shadow: 0 4px 10px rgba(0, 168, 89, 0.2);
         }
 
         .btn-submit-auth {
             width: 100%;
+            background-color: var(--safaricom-green);
+            color: white;
             padding: 14px;
-            background-color: var(--kenya-black);
-            color: var(--white);
             border: none;
-            border-radius: 12px;
-            font-weight: 700;
+            border-radius: var(--radius-sm);
             font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.2s;
             margin-top: 10px;
-            margin-bottom: 20px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 168, 89, 0.25);
         }
 
         .btn-submit-auth:hover {
-            background-color: var(--safaricom-green);
+            background-color: var(--safaricom-dark-green);
+            transform: translateY(-1px);
         }
 
-        .divider-container {
+        .auth-divider {
             display: flex;
             align-items: center;
             text-align: center;
-            color: var(--gray);
-            font-size: 13px;
-            margin-bottom: 20px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            margin: 24px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .divider-container::before, .divider-container::after {
+        .auth-divider::before, .auth-divider::after {
             content: '';
             flex: 1;
-            border-bottom: 1px solid var(--light-gray);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .divider-container:not(:empty)::before { margin-right: .5em; }
-        .divider-container:not(:empty)::after { margin-left: .5em; }
+        .auth-divider:not(:empty)::before { margin-right: 12px; }
+        .auth-divider:not(:empty)::after { margin-left: 12px; }
 
-        .google-btn-wrapper {
+        .google-auth-wrapper {
             display: flex;
             justify-content: center;
+            margin-top: 12px;
         }
 
-        .hidden-pane {
-            display: none;
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsiveness */
+        /* Responsive Breakpoints */
         @media (max-width: 768px) {
-            .hero-banner {
-                flex-direction: column;
-                padding: 40px 20px;
-                text-align: center;
-            }
-            .hero-info h1 { font-size: 32px; }
-            .phases-grid { grid-template-columns: 1fr; }
-            header { 
-                padding: 15px 20px;
-                flex-direction: column;
-                gap: 15px;
-            }
+            .hero-title { font-size: 38px; }
+            .section-title { font-size: 28px; }
+            header { padding: 12px 4%; }
+            .logo-text { font-size: 18px; }
+            .btn-signup { padding: 8px 16px; font-size: 14px; }
+            .impact-stat { font-size: 36px; }
         }
     </style>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
     <header>
-        <div class="logo-container">
-            <div class="logo-dot"></div>
-            UEFI GLOBAL
-        </div>
-        <div class="auth-buttons">
-            <div class="lang-dropdown-container" id="langDropdownContainer">
-                <button class="lang-dropdown-btn" onclick="toggleLangDropdown(event)">
+        <a href="#" class="logo-group">
+            <div class="logo-mark">U</div>
+            <div class="logo-text">UEFI <span>GLOBAL</span></div>
+        </a>
+
+        <div class="nav-actions">
+            <div class="lang-dropdown-wrapper" id="langDropdownContainer">
+                <button class="lang-trigger-btn" onclick="toggleLangDropdown(event)" aria-label="Select Language">
                     <svg viewBox="0 0 24 24">
                         <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M17.9,15.39C17.65,14.57 16.9,14 16,14H15V11A1,1 0 0,0 14,10H8V8H10A1,1 0 0,0 11,7V5H12A2,2 0 0,1 14,7V7.5H16A2,2 0 0,1 18,9.5V11.5C18,13.04 17.96,14.28 17.9,15.39Z"/>
                     </svg>
                     <span id="currentLangLabel">English</span>
                 </button>
-                <div class="lang-dropdown-content">
-                    <a href="#" onclick="selectLanguage('English', event)">English</a>
-                    <a href="#" onclick="selectLanguage('Kiswahili', event)">Kiswahili</a>
-                    <a href="#" onclick="selectLanguage('Dholuo', event)">Dholuo</a>
-                    <a href="#" onclick="selectLanguage('Kisii', event)">Kisii</a>
-                    <a href="#" onclick="selectLanguage('Kuria', event)">Kuria</a>
-                    <a href="#" onclick="selectLanguage('Maa', event)">Maa</a>
-                    <a href="#" onclick="selectLanguage('Kalenjin', event)">Kalenjin</a>
-                    <a href="#" onclick="selectLanguage('Luhya', event)">Luhya</a>
-                    <a href="#" onclick="selectLanguage('Somali', event)">Somali</a>
-                    <a href="#" onclick="selectLanguage('Deutsch', event)">Deutsch</a>
-                    <a href="#" onclick="selectLanguage('French', event)">French</a>
-                    <a href="#" onclick="selectLanguage('Spanish', event)">Spanish</a>
-                    <a href="#" onclick="selectLanguage('Chinese', event)">Chinese</a>
+                <div class="lang-menu-content">
+                    <a href="#" onclick="selectLanguage('English', event)"><span>English</span> <small>EN</small></a>
+                    <a href="#" onclick="selectLanguage('Kiswahili', event)"><span>Kiswahili</span> <small>SW</small></a>
+                    <a href="#" onclick="selectLanguage('Dholuo', event)"><span>Dholuo</span> <small>LUO</small></a>
+                    <a href="#" onclick="selectLanguage('Maa', event)"><span>Maa</span> <small>MAA</small></a>
+                    <a href="#" onclick="selectLanguage('Kisii', event)"><span>Kisii</span> <small>GUS</small></a>
+                    <a href="#" onclick="selectLanguage('Kalenjin', event)"><span>Kalenjin</span> <small>KAL</small></a>
+                    <a href="#" onclick="selectLanguage('Kuria', event)"><span>Kuria</span> <small>KUR</small></a>
+                    <a href="#" onclick="selectLanguage('Kikuyu', event)"><span>Kikuyu</span> <small>KI</small></a>
+                    <a href="#" onclick="selectLanguage('Luhya', event)"><span>Luhya</span> <small>LUY</small></a>
+                    <a href="#" onclick="selectLanguage('Somali', event)"><span>Somali</span> <small>SO</small></a>
+                    <a href="#" onclick="selectLanguage('Chinese', event)"><span>Chinese</span> <small>中文</small></a>
+                    <a href="#" onclick="selectLanguage('German', event)"><span>German</span> <small>DE</small></a>
+                    <a href="#" onclick="selectLanguage('Spanish', event)"><span>Spanish</span> <small>ES</small></a>
+                    <a href="#" onclick="selectLanguage('French', event)"><span>French</span> <small>FR</small></a>
+                    <a href="#" onclick="selectLanguage('Hindi', event)"><span>Hindi</span> <small>हिन्दी</small></a>
                 </div>
             </div>
 
-            <a href="#" class="btn-nav-login" data-i18n="nav_login" onclick="openAuthModal('login')">Log In</a>
-            <a href="#" class="btn-nav-signup" data-i18n="nav_signup" onclick="openAuthModal('signup')">Sign Up</a>
+            <a href="#" class="btn-login" data-i18n="nav_login" onclick="openAuthModal('login')">Log In</a>
+            <a href="#" class="btn-signup" data-i18n="nav_signup" onclick="openAuthModal('signup')">Sign Up</a>
         </div>
     </header>
 
-    <main class="main-container">
-        <section class="hero-banner">
-            <div class="hero-info">
-                <h1 id="heroTitle">A Personalized Learning Odyssey for <span>Every Learner</span>.</h1>
-                <p data-i18n="hero_desc">UEFI Global pairs core localized performance standards with world-class interactive execution tracks. Free, structural, and custom-built for scaling outcomes.</p>
+    <div class="kenya-flag-stripe">
+        <div class="flag-black"></div>
+        <div class="flag-white-1"></div>
+        <div class="flag-red"></div>
+        <div class="flag-white-2"></div>
+        <div class="flag-green"></div>
+    </div>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-badge">🚀 The Future of African & Global Learning</div>
+            <h1 class="hero-title" id="heroTitle">A Personalized Learning Odyssey for <span>Every Learner</span>.</h1>
+            <p class="hero-desc" data-i18n="hero_desc">UEFI Global pairs localized competency-based execution standards with world-class interactive technology. Free, structural, and custom-built to scale academic and career outcomes.</p>
+            
+            <div class="hero-cta-group">
+                <button class="btn-hero-primary" onclick="openAuthModal('signup', 'learner')">Start Learning Now</button>
+                <a href="#models" class="btn-hero-secondary">Explore Our Models</a>
             </div>
         </section>
 
-        <h2 class="phase-headline" data-i18n="phase_headline">Start Learning Now</h2>
-        <section class="phases-grid">
-            <div class="phase-card learners" onclick="openAuthModal('signup', 'learner')">
-                <span class="phase-icon">🎓</span>
-                <h3 data-i18n="card_learner_title">Learners</h3>
-                <p data-i18n="card_learner_desc">Join organized virtual text pathways, practice dynamically, and secure trackable skill metrics.</p>
-                <span class="btn-phase" data-i18n="card_learner_btn">Start Learning</span>
+        <section class="impact-section">
+            <div class="impact-grid">
+                <div>
+                    <div class="impact-stat">120,000+</div>
+                    <div class="impact-label">Active Global Learners</div>
+                </div>
+                <div>
+                    <div class="impact-stat">98.4%</div>
+                    <div class="impact-label">University Transition Rate</div>
+                </div>
+                <div>
+                    <div class="impact-stat">4,500+</div>
+                    <div class="impact-label">Verified Educators</div>
+                </div>
+                <div>
+                    <div class="impact-stat">15+</div>
+                    <div class="impact-label">Languages Supported</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding" id="models">
+            <div class="section-header">
+                <span class="section-subtitle">Our Ecosystem</span>
+                <h2 class="section-title">The 7 Pillars of UEFI Global</h2>
             </div>
 
-            <div class="phase-card teachers" onclick="openAuthModal('signup', 'teacher')">
-                <span class="phase-icon">🏫</span>
-                <h3 data-i18n="card_teacher_title">Teachers</h3>
-                <p data-i18n="card_teacher_desc">Empower your entire classroom ecosystem with tools to map targets onto structural dashboards.</p>
-                <span class="btn-phase" data-i18n="card_teacher_btn">Start Teaching</span>
+            <div class="models-grid">
+                <div class="model-card">
+                    <div class="model-icon-box">🌍</div>
+                    <h3 class="model-title">University Opportunities</h3>
+                    <p class="model-desc">Direct admission pathways, scholarship matching, and placement mentorship for top universities across Kenya, Africa, and overseas institutions.</p>
+                    <span class="model-tag">Higher Education</span>
+                </div>
+
+                <div class="model-card">
+                    <div class="model-icon-box">📚</div>
+                    <h3 class="model-title">CBE Senior School Tracks</h3>
+                    <p class="model-desc">Tailored curriculum alignment for Grade 9, 10, 11, and 12 students. Master STEM, Arts, and Sports science pathways with structured assessment benchmarks.</p>
+                    <span class="model-tag">Grade 9 - 12</span>
+                </div>
+
+                <div class="model-card">
+                    <div class="model-icon-box">🤝</div>
+                    <h3 class="model-title">UEFI Connect</h3>
+                    <p class="model-desc">A global networking bridge connecting ambitious young minds country-wise and internationally to collaborate on projects, innovation, and leadership.</p>
+                    <span class="model-tag">Global Network</span>
+                </div>
+
+                <div class="model-card">
+                    <div class="model-icon-box">💬</div>
+                    <h3 class="model-title">UEFI Engage</h3>
+                    <p class="model-desc">Interactive in-web community forums and real-time chat channels where students, mentors, and alumni discuss academic challenges and career insights.</p>
+                    <span class="model-tag">Community Hub</span>
+                </div>
+
+                <div class="model-card">
+                    <div class="model-icon-box">📹</div>
+                    <h3 class="model-title">UEFI Zoom Classrooms</h3>
+                    <p class="model-desc">Live, high-definition virtual masterclasses. Teachers host interactive sessions while students ask real-time questions, solve problems, and review recordings.</p>
+                    <span class="model-tag">Live Teaching</span>
+                </div>
+
+                <div class="model-card">
+                    <div class="model-icon-box">🤖</div>
+                    <h3 class="model-title">24/7 AI Tutors</h3>
+                    <p class="model-desc">Personalized artificial intelligence assistants trained on local and international curricula to explain tough concepts, grade essays, and generate practice quizzes.</p>
+                    <span class="model-tag">Smart Assistance</span>
+                </div>
+
+                <div class="model-card">
+                    <div class="model-icon-box">💻</div>
+                    <h3 class="model-title">The Tech Hub</h3>
+                    <p class="model-desc">An extensive digital library loaded with coding bootcamps, software development resources, robotics manuals, and tech mentorship programs.</p>
+                    <span class="model-tag">Innovation Center</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding" style="background-color: var(--bg-surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+            <div class="section-header">
+                <span class="section-subtitle">Proven Impact</span>
+                <h2 class="section-title">Voices of Change</h2>
             </div>
 
-            <div class="phase-card parents" onclick="openAuthModal('signup', 'parent')">
-                <span class="phase-icon">🏠</span>
-                <h3 data-i18n="card_parent_title">Parents</h3>
-                <p data-i18n="card_parent_desc">Keep a real-time tracking pulse on execution pipelines and learning growth metrics easily.</p>
-                <span class="btn-phase" data-i18n="card_parent_btn">Start Guiding</span>
+            <div class="testimonials-grid">
+                <div class="quote-card">
+                    <p class="quote-text">"UEFI Global's CBE track helped me transition smoothly into Senior School, while the University Opportunities model secured my scholarship to study Computer Science abroad."</p>
+                    <div class="quote-author">
+                        <div class="author-avatar">E</div>
+                        <div class="author-info">
+                            <h4>Emmanuel Kipkorir</h4>
+                            <p>Grade 12 Alumnus • Eldoret, Kenya</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-card">
+                    <p class="quote-text">"Using UEFI Zoom and the AI Tutor tools has transformed how I manage my classroom. My students are more engaged, and tracking their competency growth is now effortless."</p>
+                    <div class="quote-author">
+                        <div class="author-avatar">W</div>
+                        <div class="author-info">
+                            <h4>Mwangi Wanjiku</h4>
+                            <p>STEM Educator • Thika, Kenya</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-card">
+                    <p class="quote-text">"Through UEFI Connect, our daughter collaborated with peers in Germany and South Africa on a clean energy project. It opened her eyes to global possibilities."</p>
+                    <div class="quote-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h4>Amina & Hassan Juma</h4>
+                            <p>Parents • Mombasa, Kenya</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="section-header">
+                <span class="section-subtitle">Join The Ecosystem</span>
+                <h2 class="section-title" data-i18n="phase_headline">Start Your Journey Today</h2>
+            </div>
+
+            <div class="phases-grid">
+                <div class="phase-card" onclick="openAuthModal('signup', 'learner')">
+                    <div style="font-size: 40px;">🎓</div>
+                    <h3 data-i18n="card_learner_title">Learners</h3>
+                    <p data-i18n="card_learner_desc">Access structured virtual text pathways, practice dynamically with AI, and secure trackable skill metrics.</p>
+                    <span class="btn-phase-action" data-i18n="card_learner_btn">Start Learning</span>
+                </div>
+
+                <div class="phase-card" onclick="openAuthModal('signup', 'teacher')">
+                    <div style="font-size: 40px;">🏫</div>
+                    <h3 data-i18n="card_teacher_title">Teachers</h3>
+                    <p data-i18n="card_teacher_desc">Empower your classroom ecosystem with interactive tools to map curriculum targets onto structural dashboards.</p>
+                    <span class="btn-phase-action" data-i18n="card_teacher_btn">Start Teaching</span>
+                </div>
+
+                <div class="phase-card" onclick="openAuthModal('signup', 'parent')">
+                    <div style="font-size: 40px;">🏠</div>
+                    <h3 data-i18n="card_parent_title">Parents</h3>
+                    <p data-i18n="card_parent_desc">Keep a real-time tracking pulse on execution pipelines and learning growth metrics easily.</p>
+                    <span class="btn-phase-action" data-i18n="card_parent_btn">Start Guiding</span>
+                </div>
             </div>
         </section>
     </main>
 
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col" style="flex: 1.5;">
+                <h3>UEFI GLOBAL</h3>
+                <p>Scaling academic achievement and leadership through localized performance standards and global execution tracks.</p>
+                <p style="margin-top: 16px; font-weight: 700; color: white;">Languages We Teach With:</p>
+                <div class="lang-tag-cloud">
+                    <span class="lang-pill">English</span>
+                    <span class="lang-pill">Kiswahili</span>
+                    <span class="lang-pill">Dholuo</span>
+                    <span class="lang-pill">Maa</span>
+                    <span class="lang-pill">Kisii</span>
+                    <span class="lang-pill">Kalenjin</span>
+                    <span class="lang-pill">Kuria</span>
+                    <span class="lang-pill">Kikuyu</span>
+                    <span class="lang-pill">Luhya</span>
+                    <span class="lang-pill">Somali</span>
+                    <span class="lang-pill">Chinese</span>
+                    <span class="lang-pill">German</span>
+                    <span class="lang-pill">Spanish</span>
+                    <span class="lang-pill">French</span>
+                    <span class="lang-pill">Hindi</span>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Our Strategic Partners</h3>
+                <div class="partner-list">
+                    <div class="partner-item"><span class="partner-dot"></span> Ascend Africa</div>
+                    <div class="partner-item"><span class="partner-dot"></span> Aid for Aiming Africa</div>
+                    <div class="partner-item"><span class="partner-dot"></span> eCultures Kenya</div>
+                    <div class="partner-item"><span class="partner-dot"></span> Ministry of Education Allies</div>
+                    <div class="partner-item"><span class="partner-dot"></span> Global EdTech Coalition</div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ecosystem Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="#models">University Opportunities</a></li>
+                    <li><a href="#models">CBE Senior School Tracks</a></li>
+                    <li><a href="#models">UEFI Connect & Engage</a></li>
+                    <li><a href="#models">UEFI Zoom Classrooms</a></li>
+                    <li><a href="#models">The Tech Hub & AI Tutors</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Connect With Us</h3>
+                <p>Follow our journey across social media for daily learning tips, scholarship alerts, and community updates.</p>
+                <div class="social-row">
+                    <a href="https://linkedin.com" target="_blank" class="social-btn" aria-label="LinkedIn">in</a>
+                    <a href="https://youtube.com" target="_blank" class="social-btn" aria-label="YouTube">▶</a>
+                    <a href="https://instagram.com" target="_blank" class="social-btn" aria-label="Instagram">IG</a>
+                    <a href="https://facebook.com" target="_blank" class="social-btn" aria-label="Facebook">FB</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>&copy; 2026 UEFI Global Education Foundation. All Rights Reserved.</div>
+            <div>Built for Kenya, Scaling for the World. 🇰🇪</div>
+        </div>
+    </footer>
+
     <div class="modal-overlay" id="authModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeAuthModal()">&times;</button>
+        <div class="modal-container">
+            <button class="btn-close-modal" onclick="closeAuthModal()" aria-label="Close Modal">&times;</button>
             
             <div class="modal-tabs">
-                <button class="modal-tab-btn" id="tabBtnLogin" data-i18n="tab_login" onclick="switchMode('login')">Log In</button>
-                <button class="modal-tab-btn" id="tabBtnSignup" data-i18n="tab_signup" onclick="switchMode('signup')">Sign Up</button>
+                <button class="tab-btn active" id="tabBtnLogin" data-i18n="tab_login" onclick="switchMode('login')">Log In</button>
+                <button class="tab-btn" id="tabBtnSignup" data-i18n="tab_signup" onclick="switchMode('signup')">Sign Up</button>
             </div>
 
             <div id="loginViewPane">
-                <h2 style="font-weight: 800; margin-bottom: 5px;" id="loginTitle" data-i18n="login_title">Welcome Back</h2>
-                <p style="color: var(--gray); font-size: 14px; margin-bottom: 20px;" data-i18n="login_desc">Enter verification details to resume your progress.</p>
+                <h2 style="font-weight: 800; font-size: 24px; margin-bottom: 6px;" id="loginTitle" data-i18n="login_title">Welcome Back</h2>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;" data-i18n="login_desc">Enter verification details to resume your progress.</p>
                 
                 <form onsubmit="handleManualAuth(event, 'login')">
                     <div class="form-group">
                         <label for="loginEmail" data-i18n="label_email">Account Email Address</label>
                         <input type="email" id="loginEmail" class="form-input" placeholder="name@domain.com" required>
                     </div>
+                    <div class="form-group">
+                        <label for="loginPassword" data-i18n="label_password">Password</label>
+                        <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+                    </div>
                     <button type="submit" class="btn-submit-auth" data-i18n="btn_login_submit">Verify Email & Enter</button>
                 </form>
             </div>
 
             <div id="signupViewPane" class="hidden-pane">
-                <h2 style="font-weight: 800; margin-bottom: 5px;" data-i18n="signup_title">Create New Account</h2>
-                <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;" data-i18n="signup_desc">Choose your primary ecosystem role below:</p>
+                <h2 style="font-weight: 800; font-size: 24px; margin-bottom: 6px;" data-i18n="signup_title">Create New Account</h2>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 18px;" data-i18n="signup_desc">Choose your primary ecosystem role below:</p>
                 
                 <div class="role-selector-bar">
                     <div class="role-pill active" id="pill-learner" data-i18n="role_learner" onclick="setSignUpRole('learner')">Learner</div>
@@ -610,15 +1224,15 @@
                 <form onsubmit="handleManualAuth(event, 'signup')">
                     <div class="form-group">
                         <label for="signupName" data-i18n="label_name">Full Legal Name</label>
-                        <input type="text" id="signupName" class="form-input" placeholder="e.g. Juma Amina" required>
+                        <input type="text" id="signupName" class="form-input" placeholder="e.g. Amina Juma" required>
                     </div>
                     <div class="form-group">
-                        <label for="signupPreferredName" data-i18n="label_pref_name">Preferred Name / Handle (For Privacy & Community spaces)</label>
+                        <label for="signupPreferredName" data-i18n="label_pref_name">Preferred Name / Handle</label>
                         <input type="text" id="signupPreferredName" class="form-input" placeholder="e.g. Amina_Codes or TeacherJuma" required>
                     </div>
-                    <div class="form-group" id="birthdayGroup">
+                    <div class="form-group">
                         <label for="signupBirthday" data-i18n="label_dob">Date of Birth</label>
-                        <input type="date" id="signupBirthday" class="form-input">
+                        <input type="date" id="signupBirthday" class="form-input" required>
                     </div>
                     <div class="form-group">
                         <label for="signupEmail" data-i18n="label_email">Email Address</label>
@@ -632,11 +1246,11 @@
                 </form>
             </div>
 
-            <div class="divider-container" data-i18n="auth_divider">or continue with authenticated partner</div>
+            <div class="auth-divider" data-i18n="auth_divider">or continue with partner</div>
 
-            <div class="google-btn-wrapper">
+            <div class="google-auth-wrapper">
                 <div id="g_id_onload"
-                     data-client_id="364917808477-afe7jv30ki4r6ld2g5rm6a2dt5kuma3l.apps.googleusercontent.com" 
+                     data-client_id="PUT_YOUR_GOOGLE_OAUTH_CLIENT_ID_HERE" 
                      data-context="signin"
                      data-ux_mode="popup"
                      data-callback="handleGoogleResponse"
@@ -649,19 +1263,19 @@
                      data-theme="outline"
                      data-text="signin_with"
                      data-size="large"
-                     data-logo_alignment="left">
+                     data-logo_alignment="center">
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
-        // REDIRECT CHECK: Run immediately on page load to see if user is already logged in
+        // 1. INSTANT REDIRECT CHECK: Run immediately on script execution
         if (localStorage.getItem('uefi_user_session') === 'active') {
             window.location.href = 'home.html';
         }
 
+        // 2. DOM ELEMENT CACHING
         const modal = document.getElementById('authModal');
         const loginPane = document.getElementById('loginViewPane');
         const signupPane = document.getElementById('signupViewPane');
@@ -671,490 +1285,84 @@
         
         let targetSignUpRole = 'learner';
 
-        /* Dynamic Translation Dictionary Configurations */
+        // 3. TRANSLATION DICTIONARY
         const translations = {
             'English': {
-                'nav_login': 'Log In', 'nav_signup': 'Sign Up', 'hero_title_pre': 'A Personalized Learning Odyssey for ',
-                'hero_span': 'Every Learner', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global pairs core localized performance standards with world-class interactive execution tracks. Free, structural, and custom-built for scaling outcomes.',
-                'phase_headline': 'Start Learning Now', 'card_learner_title': 'Learners',
-                'card_learner_desc': 'Join organized virtual text pathways, practice dynamically, and secure trackable skill metrics.',
+                'nav_login': 'Log In', 'nav_signup': 'Sign Up', 
+                'hero_title_pre': 'A Personalized Learning Odyssey for ', 'hero_span': 'Every Learner', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global pairs localized competency-based execution standards with world-class interactive technology. Free, structural, and custom-built to scale academic and career outcomes.',
+                'phase_headline': 'Start Your Journey Today', 'card_learner_title': 'Learners',
+                'card_learner_desc': 'Access structured virtual text pathways, practice dynamically with AI, and secure trackable skill metrics.',
                 'card_learner_btn': 'Start Learning', 'card_teacher_title': 'Teachers',
-                'card_teacher_desc': 'Empower your entire classroom ecosystem with tools to map targets onto structural dashboards.',
+                'card_teacher_desc': 'Empower your classroom ecosystem with interactive tools to map curriculum targets onto structural dashboards.',
                 'card_teacher_btn': 'Start Teaching', 'card_parent_title': 'Parents',
                 'card_parent_desc': 'Keep a real-time tracking pulse on execution pipelines and learning growth metrics easily.',
                 'card_parent_btn': 'Start Guiding', 'tab_login': 'Log In', 'tab_signup': 'Sign Up',
                 'login_title': 'Welcome Back', 'login_desc': 'Enter verification details to resume your progress.',
-                'label_email': 'Account Email Address', 'btn_login_submit': 'Verify Email & Enter',
+                'label_email': 'Account Email Address', 'label_password': 'Password', 'btn_login_submit': 'Verify Email & Enter',
                 'signup_title': 'Create New Account', 'signup_desc': 'Choose your primary ecosystem role below:',
                 'role_learner': 'Learner', 'role_teacher': 'Teacher', 'role_parent': 'Parent',
-                'label_name': 'Full Legal Name', 'label_pref_name': 'Preferred Name / Handle (For Privacy & Community spaces)',
-                'label_dob': 'Date of Birth', 'label_password': 'Create Secure Password',
-                'btn_signup_submit': 'Complete Account Registration', 'auth_divider': 'or continue with authenticated partner'
+                'label_name': 'Full Legal Name', 'label_pref_name': 'Preferred Name / Handle',
+                'label_dob': 'Date of Birth', 'btn_signup_submit': 'Complete Account Registration', 
+                'auth_divider': 'or continue with partner'
             },
             'Kiswahili': {
-                'nav_login': 'Ingia', 'nav_signup': 'Jisajili', 'hero_title_pre': 'Safari ya Kujifunza Iliyobinafsishwa kwa Ajili ya ',
-                'hero_span': 'Kila Mwanafunzi', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global inaunganisha viwango vya msingi vya utendaji wa ndani na mifumo ya kimataifa ya utendaji shirikishi. Bure, yenye muundo, na iliyoundwa maalum kwa matokeo bora.',
-                'phase_headline': 'Anza Kujifunza Sasa', 'card_learner_title': 'Wanafunzi',
-                'card_learner_desc': 'Jiunge na njia zilizopangwa za masomo ya mtandaoni, fanya mazoezi kwa vitendo, na upate alama za ujuzi zinazofuatiliwa.',
+                'nav_login': 'Ingia', 'nav_signup': 'Jisajili', 
+                'hero_title_pre': 'Safari ya Kujifunza ya Kibinafsi kwa ', 'hero_span': 'Kila Mwanafunzi', 'hero_title_post': '.',
+                'hero_desc': 'UEFI Global inaunganisha viwango vya utendaji vya ndani na njia za teknolojia zinazoingiliana za kiwango cha kimataifa.',
+                'phase_headline': 'Anza Safari Yako Leo', 'card_learner_title': 'Wanafunzi',
+                'card_learner_desc': 'Jiunge na njia za maandishi pepe zilizopangwa, fanya mazoezi na AI, na upate vipimo vya ustadi.',
                 'card_learner_btn': 'Anza Kujifunza', 'card_teacher_title': 'Walimu',
-                'card_teacher_desc': 'Wezesha mfumo mzima wa darasa lako kwa zana za kupanga malengo kwenye dashibodi zenye muundo.',
+                'card_teacher_desc': 'Wezesha darasa lako kwa zana za kupanga malengo ya mtaala kwenye mifumo ya kimuundo.',
                 'card_teacher_btn': 'Anza Kufundisha', 'card_parent_title': 'Wazazi',
-                'card_parent_desc': 'Fuatilia kwa wakati halisi mwenendo wa masomo na vipimo vya ukuaji wa ujifunzaji kwa urahisi.',
+                'card_parent_desc': 'Fuatilia maendeleo ya utekelezaji na vipimo vya ukuaji wa kujifunza kwa urahisi.',
                 'card_parent_btn': 'Anza Kuongoza', 'tab_login': 'Ingia', 'tab_signup': 'Jisajili',
-                'login_title': 'Karibu Tena', 'login_desc': 'Ingiza maelezo ya uthibitisho ili kuendelea na maendeleo yako.',
-                'label_email': 'Barua Pepe ya Akaunti', 'btn_login_submit': 'Thibitisha Barua Pepe & Ingia',
-                'signup_title': 'Fungua Akaunti Mpya', 'signup_desc': 'Chagua jukumu lako kuu la mfumo hapa chini:',
+                'login_title': 'Karibu Tena', 'login_desc': 'Ingiza maelezo ya uthibitishaji ili kuendelea.',
+                'label_email': 'Barua Pepe ya Akaunti', 'label_password': 'Nenosiri', 'btn_login_submit': 'Thibitisha na Uingie',
+                'signup_title': 'Fungua Akaunti Mpya', 'signup_desc': 'Chagua jukumu lako kuu hapa chini:',
                 'role_learner': 'Mwanafunzi', 'role_teacher': 'Mwalimu', 'role_parent': 'Mzazi',
-                'label_name': 'Majina Kamili ya Kisheria', 'label_pref_name': 'Jina Linalopendelewa / Jina la Utani (Kwa Faragha & Nafasi za Kijamii)',
-                'label_dob': 'Tarehe ya Kuzaliwa', 'label_password': 'Weka Nenosiri Salama',
-                'btn_signup_submit': 'Kamilisha Usajili wa Akaunti', 'auth_divider': 'au endelea na mshirika aliyethibitishwa'
-            },
-            'Dholuo': {
-                'nav_login': 'Donji', 'nav_signup': 'Ndiikri', 'hero_title_pre': 'Wuoth mar Puonjruok Moketi Ne ',
-                'hero_span': 'Japuonjre Ka Japuonjre', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global riwo chenro mag puonjruok mag pinyowa gi mag piny ngima tiendeni maler. Nonro maler kendo ma nono mar konyo ji duto.',
-                'phase_headline': 'Chak Puonjruok Sani', 'card_learner_title': 'Japuonjre',
-                'card_learner_desc': 'Donj e chenro mag puonjruok mag mtandao, ti gi lony, kendo iketi guti maler.',
-                'card_learner_btn': 'Chak Puonjruok', 'card_teacher_title': 'Japuonj',
-                'card_teacher_desc': 'Mi nyithi skur gi tije maler mag pogo puonj kendo nono nyako maro maler.',
-                'card_teacher_btn': 'Chak Puonjo', 'card_parent_title': 'Jonyuol',
-                'card_parent_desc': 'Riw lwedo gi chenro mar nono dongruok mar nyithindo e puonjruok yot.',
-                'card_parent_btn': 'Chak Tayo', 'tab_login': 'Donji', 'tab_signup': 'Ndiikri',
-                'login_title': 'Karibu Kendo', 'login_desc': 'Keti wechegi mondo dhi nyime gi puonjruok.',
-                'label_email': 'Barua Pepe mar Akaunt', 'btn_login_submit': 'Noni Barua Pepe & Donji',
-                'signup_title': 'Losi Akaunt Nyien', 'signup_desc': 'Yier tiji mari maduong piny ka:',
-                'role_learner': 'Japuonjre', 'role_teacher': 'Japuonj', 'role_parent': 'Janyuol',
-                'label_name': 'Nyingi Maler Mar Chik', 'label_pref_name': 'Nying Mihero / Mar Mbala',
-                'label_dob': 'Tarik Mar Nyuol', 'label_password': 'Losi Nenosiri Marateng',
-                'btn_signup_submit': 'Tiek Loso Akaunt', 'auth_divider': 'kata dhi nyime gi osiep maler'
-            },
-            'Kisii': {
-                'nav_login': 'Ingia', 'nav_signup': 'Kweba Enyomba', 'hero_title_pre': 'Orogendo rwo Oegera rwebakiriirwe ase ',
-                'hero_span': 'Buri Omwegeri', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global nekorengecha obonge bwo oegera na chinkengero chiase na aaria ense. Nabo ya bure, yobetere, na erikobwata ogosocha.',
-                'phase_headline': 'Chaka Okwegera Bono', 'card_learner_title': 'Abegeri',
-                'card_learner_desc': 'Nywomerana amo ne chira chio ogotochia emetandao, kora echoecho, no okomanya amariga.',
-                'card_learner_btn': 'Chaka Okwegera', 'card_teacher_title': 'Abaorogi',
-                'card_teacher_desc': 'Echeia ekerasi kiago na chitool chio ogotoga amariga ya amagenderero a barengi.',
-                'card_teacher_btn': 'Chaka Ogota', 'card_parent_title': 'Ababari',
-                'card_parent_desc': 'Koma norobasi rwo okwerorera egasi ne egenderero ye chira chio oegera.',
-                'card_parent_btn': 'Chaka Okobagera', 'tab_login': 'Ingia', 'tab_signup': 'Kweba Enyomba',
-                'login_title': 'Mwakara Buya', 'login_desc': 'Aka amangana aao erio ocha motwe no okwegera.',
-                'label_email': 'Barua Pepe yo Akaunti', 'btn_login_submit': 'Kora Ekeene na Ingia',
-                'signup_title': 'Kora Akaunti Enyia', 'signup_desc': 'chagua omotomo oo omoene aase egechabero eyio:',
-                'role_learner': 'Omwegeri', 'role_teacher': 'Omoorogi', 'role_parent': 'Omobari',
-                'label_name': 'Amarina Masesenyi ye Ekeene', 'label_pref_name': 'Eriina ritagwo / Ro Okomekania',
-                'label_dob': 'Tariki yo Ogochorwa', 'label_password': 'Kora Eriti Rio Omochao',
-                'btn_signup_submit': 'Socha Ogochandekwa kwo Akaunti', 'auth_divider': 'goose enderea no omomwabo ochandikirwe'
-            },
-            'Kuria': {
-                'nav_login': 'Ingira', 'nav_signup': 'Iyekerere', 'hero_title_pre': 'Orogendo ro Ogosoma rogochokelwa asa ',
-                'hero_span': 'Muri Omosomi', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global nekonerano ebikeko bio ogosoma bio asee no mogobo gose abang\'aini bose bano. Nabo ya bure, nekero keekemo buya kera omonto.',
-                'phase_headline': 'Anza Ogosoma Bono', 'card_learner_title': 'Abasomi',
-                'card_learner_desc': 'Hanja asee chinjira cho ogosoma bio omotandao, kora emeremorimo na orotwe arobuya.',
-                'card_learner_btn': 'Anza Ogosoma', 'card_teacher_title': 'Abahekuru',
-                'card_teacher_desc': 'Ngera ekerasi keo kegima na ebitool biago bio ogotaka ebitara bio ogosoma.',
-                'card_teacher_btn': 'Anza Ogoheka', 'card_parent_title': 'Abali',
-                'card_parent_desc': 'Manya korora orobero ro ogosoma gootaka ne enguru ye chimasomo aro yororo.',
-                'card_parent_btn': 'Anza Ogochwa', 'tab_login': 'Ingira', 'tab_signup': 'Iyekerere',
-                'login_title': 'Karibu Kange', 'login_desc': 'Ingisa amangana aao aro odhi mbere ne endio yao.',
-                'label_email': 'Barua Pepe yo Akaunti', 'btn_login_submit': 'Renga Barua Pepe na Ingira',
-                'signup_title': 'Kora Akaunti Enyiya', 'signup_desc': 'Chagua omochango oo omong\'aini asee ano:',
-                'role_learner': 'Omosomi', 'role_teacher': 'Omohekuru', 'role_parent': 'Omori',
-                'label_name': 'Amariina a Kiserikali', 'label_pref_name': 'Eriina Rio Ogotagwo / Rio Okomekania',
-                'label_dob': 'Tariki yo Ogochorwa', 'label_password': 'Kora Eriti rio Oborindo',
-                'btn_signup_submit': 'Komesha Ogochandekwa kwo Akaunti', 'auth_divider': 'gose enderea no omomwabo ochandikirwe'
-            },
-            'Maa': {
-                'nav_login': 'Jing\'a', 'nav_signup': 'Siraki', 'hero_title_pre': 'Osilig lool-kirne oo-taraiki te ',
-                'hero_span': 'Ng\'ae o-ng\'ae O-isom', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global etumi naboisho oo-sikito oo-isomo tiatua enkalo pooki o nkop. Epesai pesi, neitorioro sidai te nkitanapata pooki.',
-                'phase_headline': 'Itera A-isom Tataa', 'card_learner_title': 'I-la-isomok',
-                'card_learner_desc': 'Matumi engironi te nkoitoi e-mtandao, i-tarasi il-oimon, niminya enkitoo.',
-                'card_learner_btn': 'Itera A-isom', 'card_teacher_title': 'I-la-ikenok',
-                'card_teacher_desc': 'Ngo-isho ereteti skuli pooki imbaunoto te nkop o intobirak sidai.',
-                'card_teacher_btn': 'Itera A-iken', 'card_parent_title': 'I-loo-noiyek',
-                'card_parent_desc': 'Ingura enkitoo te nkiaa o il-kirne lo o-isomo te nkiaa pooki.',
-                'card_parent_btn': 'Itera A-ikenishoi', 'tab_login': 'Jing\'a', 'tab_signup': 'Siraki',
-                'login_title': 'Ipaaki Shomo', 'login_desc': 'Tipika irkisinai lino pe idia danya ereteti.',
-                'label_email': 'Barua Pepe e Akaunti', 'btn_login_submit': 'Ingura Barua Pepe nimijing\'a',
-                'signup_title': 'Itobira Akaunti Ng\'ejuk', 'signup_desc': 'Gelai enkiaa inye tiatua nkop:',
-                'role_learner': 'O-isom', 'role_teacher': 'O-iken', 'role_parent': 'O-menye/Ng\'otonye',
-                'label_name': 'Karna pooki lool-serkali', 'label_pref_name': 'Karna linyu / Lool-tau',
-                'label_dob': 'Tariki o-injiukoto', 'label_password': 'Itobira Nenosiri Naisidai',
-                'btn_signup_submit': 'Iteshua Ensirare e Akaunti', 'auth_divider': 'aniki indanya te la-serian o-siriakino'
-            },
-            'Kalenjin': {
-                'nav_login': 'Nyuo/Ingia', 'nav_signup': 'Sirngei', 'hero_title_pre': 'Kipsomanisto ne kikiyai eng ',
-                'hero_span': 'Chi Age Tugul Ne Somei', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global ribei kipsomanisto nemeng\'is eng oret ab emet ak ot piny. Kiyatat, ne nyilu, anki kikiyai eng baretab kipsomanisto.',
-                'phase_headline': 'Tagei Kipsomanistap Rani', 'card_learner_title': 'Kipsomaninik',
-                'card_learner_desc': 'Tuch korot eng mtandao, iyai kipsomanisto anki inai kit ne iyani eng somanet.',
-                'card_learner_btn': 'Tagei Kipsomanisto', 'card_teacher_title': 'Kinetinik',
-                'card_teacher_desc': 'Koon bororiet ak kiruoget ab skuli konyo togek ak barak.',
-                'card_teacher_btn': 'Tagei Kinetet', 'card_parent_title': 'Sigik',
-                'card_parent_desc': 'Rip konyanito ak ng\'alecho kipsomanisto nemeng\'is ab lakwok yoo taret.',
-                'card_parent_btn': 'Tagei Kandaristo', 'tab_login': 'Nyuo/Ingia', 'tab_signup': 'Sirngei',
-                'login_title': 'Chamgei Kogen', 'login_desc': 'Sir ng\'alecho ko kandoi kipsomanisto.',
-                'label_email': 'Barua Pepe ab Akaunt', 'btn_login_submit': 'Kech Barua Pepe ak Nyuo',
-                'signup_title': 'Yai Akaunt Ne Leel', 'signup_desc': 'Leel kondoiyet ab emet eng ng\'ony:',
-                'role_learner': 'Kipsomanindet', 'role_teacher': 'Kinetindet', 'role_parent': 'Sigindet',
-                'label_name': 'Kainet Ne Koo/Sirkal', 'label_pref_name': 'Kainet ne ichame / Ne po Mbala',
-                'label_dob': 'Tarikit ab Sikisto', 'label_password': 'Yai Nenosiri Ne Cham',
-                'btn_signup_submit': 'Roki Kipsiristo ab Akaunt', 'auth_divider': 'anet kandoi ak chorwen ne kikilipit'
-            },
-            'Luhya': {
-                'nav_login': 'Ingira', 'nav_signup': 'Wandeche', 'hero_title_pre': 'Olwendo lwa Ekesero lwa habana ',
-                'hero_span': 'Buli Omusomi', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global ihuwania ebiyeko bia ahandu no bulala hano ebiyeko bia omutsatso. Ne bulala bwa bure, bwalondekhe, kandi bwahombwa khukholela bulahi.',
-                'phase_headline': 'Raka Ekisero Bulano', 'card_learner_title': 'Abasomi',
-                'card_learner_desc': 'Itsungane na enjira chia mtandao, khola ebiyeko ne olonje amakesi amalahi.',
-                'card_learner_btn': 'Raka Ekesero', 'card_teacher_title': 'Abamecha',
-                'card_teacher_desc': 'Echeya ekilasi khosi ne ebitool biokhuchesa amariga malahi ha dashibodi.',
-                'card_teacher_btn': 'Raka Ekhwisomia', 'card_parent_title': 'Ababeyi',
-                'card_parent_desc': 'Rorere bulano nio ekisero kiatsia ne ohuchesa amaendeleo kwo mwana wao yoto.',
-                'card_parent_btn': 'Raka Ekhulongoza', 'tab_login': 'Ingira', 'tab_signup': 'Wandeche',
-                'login_title': 'Karibu Kandi', 'login_desc': 'Inja amang\'ana kaao eriyo rorere ohwicha mbele ne ekisero kiao.',
-                'label_email': 'Barua Pepe ya Akaunti', 'btn_login_submit': 'Lolela Barua Pepe ne Ingira',
-                'signup_title': 'Hombwa Akaunti Enyiya', 'signup_desc': 'Chagua omuhanda kwoo omukhongo hano aase:',
-                'role_learner': 'Omusomi', 'role_teacher': 'Omwamecha', 'role_parent': 'Omubeyi',
-                'label_name': 'Amarina Masiye ka Serikali', 'label_pref_name': 'Eriina lio Hwanza / Lio Hutsatsana',
-                'label_dob': 'Tariki yo Khwitswalwa', 'label_password': 'Hombwa Eriti Rilahi',
-                'btn_signup_submit': 'Mala Ohwitsandika kwa Akaunti', 'auth_divider': 'kandi tsia mbele no omukhwicha wenyiyilwe'
-            },
-            'Somali': {
-                'nav_login': 'Soo Gal', 'nav_signup': 'Is-diiwaangeli', 'hero_title_pre': 'Safarka Waxbarasho Ee Gaarka Ah Ee Loogu Talo Galay ',
-                'hero_span': 'Arday Kasta', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global waxay isku xirtaa heerarka waxbarasho ee maxalliga ah iyo nidaamyada caalamiga ah ee casriga ah. Waa bilaash, habaysan, oo loogu talogalay natiijooyin sare.',
-                'phase_headline': 'Hadda Bilow Waxbarashada', 'card_learner_title': 'Ardayda',
-                'card_learner_desc': 'Ku biir hababka waxbarasho ee habaysan ee khadka tooska ah, ku tababar, oo hel qiimayn cad ee xirfadahaaga.',
-                'card_learner_btn': 'Bilow Waxbarasho', 'card_teacher_title': 'Macallimiinta',
-                'card_teacher_desc': 'Awoodi fasalkaga oo dhan adiga oo isticmaalaya qalab si aad u qorshayso yoolalka dashboodka cad.',
-                'card_teacher_btn': 'Bilow Wax Dhigid', 'card_parent_title': 'Waalidiinta',
-                'card_parent_desc': ' si fudud ula soco horumarka waxbarasho iyo natiijooyinka ardayda wakhti kasta.',
-                'card_parent_btn': 'Bilow Hagitaan', 'tab_login': 'Soo Gal', 'tab_signup': 'Is-diiwaangeli',
-                'login_title': 'Ku Soo Dhowow Marale', 'login_desc': 'Gali faahfaahinta xaqiijinta si aad u sii wato horumarkaaga.',
-                'label_email': 'Ciwaanka Emailka ee Koontada', 'btn_login_submit': 'Xaqiiji Emailka oo Soo Gal',
-                'signup_title': 'Abuur Koonto Cusub', 'signup_desc': 'HOOS ka dooro doorkaaga aasaasiga ah ee nidaamka:',
-                'role_learner': 'Arday', 'role_teacher': 'Macallin', 'role_parent': 'Waalid',
-                'label_name': 'Magaca Buuxa ee Sharciga ah', 'label_pref_name': 'Magaca La Jecel Yahay / Naaneysta',
-                'label_dob': 'Taariikhda Dhalashada', 'label_password': 'Abuur Furaha Sirta ah oo Amaan ah',
-                'btn_signup_submit': 'Dhamaystir Diiwaangelinta Koontada', 'auth_divider': 'ama ku sii wado la-hawlgal xaqiijisan'
-            },
-            'Deutsch': {
-                'nav_login': 'Anmelden', 'nav_signup': 'Registrieren', 'hero_title_pre': 'Ein maßgeschneidertes Lernabenteuer für ',
-                'hero_span': 'Jeden Lernenden', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global verbindet lokale Leistungsstandards mit erstklassigen interaktiven Lernpfaden. Kostenlos, strukturiert und speziell für optimalen Erfolg entwickelt.',
-                'phase_headline': 'Jetzt mit dem Lernen beginnen', 'card_learner_title': 'Lernende',
-                'card_learner_desc': 'Tritt organisierten virtuellen Lernpfaden bei, übe dynamisch und sichere dir messbare Kompetenzen.',
-                'card_learner_btn': 'Lernen beginnen', 'card_teacher_title': 'Lehrende',
-                'card_teacher_desc': 'Stärke dein gesamtes Klassenzimmer-Ökosystem mit Tools zur Zielabbildung auf strukturierten Dashboards.',
-                'card_teacher_btn': 'Unterrichten beginnen', 'card_parent_title': 'Eltern',
-                'card_parent_desc': 'Behalte den Lernfortschritt und die Leistungsdaten spielend leicht in Echtzeit im Blick.',
-                'card_parent_btn': 'Begleitung beginnen', 'tab_login': 'Anmelden', 'tab_signup': 'Registrieren',
-                'login_title': 'Willkommen zurück', 'login_desc': 'Gib deine Anmeldedaten ein, um deinen Fortschritt fortzusetzen.',
-                'label_email': 'E-Mail-Adresse des Kontos', 'btn_login_submit': 'E-Mail bestätigen & Anmelden',
-                'signup_title': 'Neues Konto erstellen', 'signup_desc': 'Wähle unten deine primäre Rolle im Ökosystem aus:',
-                'role_learner': 'Lernende/r', 'role_teacher': 'Lehrende/r', 'role_parent': 'Elternteil',
-                'label_name': 'Vollständiger rechtlicher Name', 'label_pref_name': 'Bevorzugter Name / Benutzername (für Datenschutz & Community)',
-                'label_dob': 'Geburtsdatum', 'label_password': 'Sicheres Passwort erstellen',
-                'btn_signup_submit': 'Kontoregistrierung abschließen', 'auth_divider': 'oder mit einem verifizierten Partner fortfahren'
-            },
-            'French': {
-                'nav_login': 'Connexion', 'nav_signup': 'S\'inscrire', 'hero_title_pre': 'Une Odyssée d\'Apprentissage Personnalisée pour ',
-                'hero_span': 'Chaque Apprenant', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global associe des normes de performance locales à des parcours d\'exécution interactifs de classe mondiale. Gratuit, structuré et conçu sur mesure pour des résultats évolutifs.',
-                'phase_headline': 'Commencez à apprendre maintenant', 'card_learner_title': 'Apprenants',
-                'card_learner_desc': 'Rejoignez des parcours de texte virtuels organisés, entraînez-vous dynamiquement et obtenez des mesures de compétences vérifiables.',
-                'card_learner_btn': 'Commencer à apprendre', 'card_teacher_title': 'Enseignants',
-                'card_teacher_desc': 'Rendez votre écosystème de classe plus autonome avec des outils pour cartographier les objectifs sur des tableaux de bord structurés.',
-                'card_teacher_btn': 'Commencer à enseigner', 'card_parent_title': 'Parents',
-                'card_parent_desc': 'Suivez en temps réel et en toute simplicité la progression de l\'apprentissage et les indicateurs de croissance.',
-                'card_parent_btn': 'Commencer à guider', 'tab_login': 'Connexion', 'tab_signup': 'S\'inscrire',
-                'login_title': 'Bon retour', 'login_desc': 'Saisissez vos informations de vérification pour reprendre votre progression.',
-                'label_email': 'Adresse e-mail du compte', 'btn_login_submit': 'Vérifier l\'e-mail et entrer',
-                'signup_title': 'Créer un nouveau compte', 'signup_desc': 'Choisissez votre rôle principal ci-dessous :',
-                'role_learner': 'Apprenant', 'role_teacher': 'Enseignant', 'role_parent': 'Parent',
-                'label_name': 'Nom complet légal', 'label_pref_name': 'Nom préféré / Pseudo (pour la confidentialité et les espaces communautaires)',
-                'label_dob': 'Date de naissance', 'label_password': 'Créer un mot de passe sécurisé',
-                'btn_signup_submit': 'Finaliser l\'inscription du compte', 'auth_divider': 'ou continuer avec un partenaire authentifié'
-            },
-            'Spanish': {
-                'nav_login': 'Iniciar Sesión', 'nav_signup': 'Registrarse', 'hero_title_pre': 'Una odisea de aprendizaje personalizada para ',
-                'hero_span': 'Cada Estudiante', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global combina estándares de rendimiento locales con pistas de ejecución interactivas de clase mundial. Gratuito, estructural y diseñado a medida para escalar resultados.',
-                'phase_headline': 'Empieza a aprender ahora', 'card_learner_title': 'Estudiantes',
-                'card_learner_desc': 'Únete a rutas virtuales organizadas, practica de forma dinámica y asegura métricas de habilidades rastreables.',
-                'card_learner_btn': 'Empezar a aprender', 'card_teacher_title': 'Profesores',
-                'card_teacher_desc': 'Empodera el ecosistema de tu aula con herramientas para mapear objetivos en paneles estructurados.',
-                'card_teacher_btn': 'Empezar a enseñar', 'card_parent_title': 'Padres',
-                'card_parent_desc': 'Sigue de cerca y en tiempo real el progreso y las métricas de crecimiento del aprendizaje con facilidad.',
-                'card_parent_btn': 'Empezar a guiar', 'tab_login': 'Iniciar Sesión', 'tab_signup': 'Registrarse',
-                'login_title': 'Bienvenido de nuevo', 'login_desc': 'Ingresa tus datos de verificación para reanudar tu progreso.',
-                'label_email': 'Correo electrónico de la cuenta', 'btn_login_submit': 'Verificar correo y entrar',
-                'signup_title': 'Crear nueva cuenta', 'signup_desc': 'Elige tu rol principal en el ecosistema a continuación:',
-                'role_learner': 'Estudiante', 'role_teacher': 'Profesor', 'role_parent': 'Padre/Madre',
-                'label_name': 'Nombre legal completo', 'label_pref_name': 'Nombre preferido / Usuario (para privacidad y comunidad)',
-                'label_dob': 'Fecha de nacimiento', 'label_password': 'Crear contraseña segura',
-                'btn_signup_submit': 'Completar registro de cuenta', 'auth_divider': 'o continuar con un socio autenticado'
-             'Dholuo': {
-                'nav_login': 'Donji', 'nav_signup': 'Ndiikri', 'hero_title_pre': 'Wuoth mar Puonjruok Moketi Ne ',
-                'hero_span': 'Japuonjre Ka Japuonjre', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global riwo chenro mag puonjruok mag pinyowa gi mag piny ngima tiendeni maler. Nonro maler kendo ma nono mar konyo ji duto.',
-                'phase_headline': 'Chak Puonjruok Sani', 'card_learner_title': 'Japuonjre',
-                'card_learner_desc': 'Donj e chenro mag puonjruok mag mtandao, ti gi lony, kendo iketi guti maler.',
-                'card_learner_btn': 'Chak Puonjruok', 'card_teacher_title': 'Japuonj',
-                'card_teacher_desc': 'Mi nyithi skur gi tije maler mag pogo puonj kendo nono nyako maro maler.',
-                'card_teacher_btn': 'Chak Puonjo', 'card_parent_title': 'Jonyuol',
-                'card_parent_desc': 'Riw lwedo gi chenro mar nono dongruok mar nyithindo e puonjruok yot.',
-                'card_parent_btn': 'Chak Tayo', 'tab_login': 'Donji', 'tab_signup': 'Ndiikri',
-                'login_title': 'Karibu Kendo', 'login_desc': 'Keti wechegi mondo dhi nyime gi puonjruok.',
-                'label_email': 'Barua Pepe mar Akaunt', 'btn_login_submit': 'Noni Barua Pepe & Donji',
-                'signup_title': 'Losi Akaunt Nyien', 'signup_desc': 'Yier tiji mari maduong piny ka:',
-                'role_learner': 'Japuonjre', 'role_teacher': 'Japuonj', 'role_parent': 'Janyuol',
-                'label_name': 'Nyingi Maler Mar Chik', 'label_pref_name': 'Nying Mihero / Mar Mbala',
-                'label_dob': 'Tarik Mar Nyuol', 'label_password': 'Losi Nenosiri Marateng',
-                'btn_signup_submit': 'Tiek Loso Akaunt', 'auth_divider': 'kata dhi nyime gi osiep maler'
-            },
-            'Kisii': {
-                'nav_login': 'Ingia', 'nav_signup': 'Kweba Enyomba', 'hero_title_pre': 'Orogendo rwo Oegera rwebakiriirwe ase ',
-                'hero_span': 'Buri Omwegeri', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global nekorengecha obonge bwo oegera na chinkengero chiase na aaria ense. Nabo ya bure, yobetere, na erikobwata ogosocha.',
-                'phase_headline': 'Chaka Okwegera Bono', 'card_learner_title': 'Abegeri',
-                'card_learner_desc': 'Nywomerana amo ne chira chio ogotochia emetandao, kora echoecho, no okomanya amariga.',
-                'card_learner_btn': 'Chaka Okwegera', 'card_teacher_title': 'Abaorogi',
-                'card_teacher_desc': 'Echeia ekerasi kiago na chitool chio ogotoga amariga ya amagenderero a barengi.',
-                'card_teacher_btn': 'Chaka Ogota', 'card_parent_title': 'Ababari',
-                'card_parent_desc': 'Koma norobasi rwo okwerorera egasi ne egenderero ye chira chio oegera.',
-                'card_parent_btn': 'Chaka Okobagera', 'tab_login': 'Ingia', 'tab_signup': 'Kweba Enyomba',
-                'login_title': 'Mwakara Buya', 'login_desc': 'Aka amangana aao erio ocha motwe no okwegera.',
-                'label_email': 'Barua Pepe yo Akaunti', 'btn_login_submit': 'Kora Ekeene na Ingia',
-                'signup_title': 'Kora Akaunti Enyia', 'signup_desc': 'chagua omotomo oo omoene aase egechabero eyio:',
-                'role_learner': 'Omwegeri', 'role_teacher': 'Omoorogi', 'role_parent': 'Omobari',
-                'label_name': 'Amarina Masesenyi ye Ekeene', 'label_pref_name': 'Eriina ritagwo / Ro Okomekania',
-                'label_dob': 'Tariki yo Ogochorwa', 'label_password': 'Kora Eriti Rio Omochao',
-                'btn_signup_submit': 'Socha Ogochandekwa kwo Akaunti', 'auth_divider': 'goose enderea no omomwabo ochandikirwe'
-            },
-            'Kuria': {
-                'nav_login': 'Ingira', 'nav_signup': 'Iyekerere', 'hero_title_pre': 'Orogendo ro Ogosoma rogochokelwa asa ',
-                'hero_span': 'Muri Omosomi', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global nekonerano ebikeko bio ogosoma bio asee no mogobo gose abang\'aini bose bano. Nabo ya bure, nekero keekemo buya kera omonto.',
-                'phase_headline': 'Anza Ogosoma Bono', 'card_learner_title': 'Abasomi',
-                'card_learner_desc': 'Hanja asee chinjira cho ogosoma bio omotandao, kora emeremorimo na orotwe arobuya.',
-                'card_learner_btn': 'Anza Ogosoma', 'card_teacher_title': 'Abahekuru',
-                'card_teacher_desc': 'Ngera ekerasi keo kegima na ebitool biago bio ogotaka ebitara bio ogosoma.',
-                'card_teacher_btn': 'Anza Ogoheka', 'card_parent_title': 'Abali',
-                'card_parent_desc': 'Manya korora orobero ro ogosoma gootaka ne enguru ye chimasomo aro yororo.',
-                'card_parent_btn': 'Anza Ogochwa', 'tab_login': 'Ingira', 'tab_signup': 'Iyekerere',
-                'login_title': 'Karibu Kange', 'login_desc': 'Ingisa amangana aao aro odhi mbere ne endio yao.',
-                'label_email': 'Barua Pepe yo Akaunti', 'btn_login_submit': 'Renga Barua Pepe na Ingira',
-                'signup_title': 'Kora Akaunti Enyiya', 'signup_desc': 'Chagua omochango oo omong\'aini asee ano:',
-                'role_learner': 'Omosomi', 'role_teacher': 'Omohekuru', 'role_parent': 'Omori',
-                'label_name': 'Amariina a Kiserikali', 'label_pref_name': 'Eriina Rio Ogotagwo / Rio Okomekania',
-                'label_dob': 'Tariki yo Ogochorwa', 'label_password': 'Kora Eriti rio Oborindo',
-                'btn_signup_submit': 'Komesha Ogochandekwa kwo Akaunti', 'auth_divider': 'gose enderea no omomwabo ochandikirwe'
-            },
-            'Maa': {
-                'nav_login': 'Jing\'a', 'nav_signup': 'Siraki', 'hero_title_pre': 'Osilig lool-kirne oo-taraiki te ',
-                'hero_span': 'Ng\'ae o-ng\'ae O-isom', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global etumi naboisho oo-sikito oo-isomo tiatua enkalo pooki o nkop. Epesai pesi, neitorioro sidai te nkitanapata pooki.',
-                'phase_headline': 'Itera A-isom Tataa', 'card_learner_title': 'I-la-isomok',
-                'card_learner_desc': 'Matumi engironi te nkoitoi e-mtandao, i-tarasi il-oimon, niminya enkitoo.',
-                'card_learner_btn': 'Itera A-isom', 'card_teacher_title': 'I-la-ikenok',
-                'card_teacher_desc': 'Ngo-isho ereteti skuli pooki imbaunoto te nkop o intobirak sidai.',
-                'card_teacher_btn': 'Itera A-iken', 'card_parent_title': 'I-loo-noiyek',
-                'card_parent_desc': 'Ingura enkitoo te nkiaa o il-kirne lo o-isomo te nkiaa pooki.',
-                'card_parent_btn': 'Itera A-ikenishoi', 'tab_login': 'Jing\'a', 'tab_signup': 'Siraki',
-                'login_title': 'Ipaaki Shomo', 'login_desc': 'Tipika irkisinai lino pe idia danya ereteti.',
-                'label_email': 'Barua Pepe e Akaunti', 'btn_login_submit': 'Ingura Barua Pepe nimijing\'a',
-                'signup_title': 'Itobira Akaunti Ng\'ejuk', 'signup_desc': 'Gelai enkiaa inye tiatua nkop:',
-                'role_learner': 'O-isom', 'role_teacher': 'O-iken', 'role_parent': 'O-menye/Ng\'otonye',
-                'label_name': 'Karna pooki lool-serkali', 'label_pref_name': 'Karna linyu / Lool-tau',
-                'label_dob': 'Tariki o-injiukoto', 'label_password': 'Itobira Nenosiri Naisidai',
-                'btn_signup_submit': 'Iteshua Ensirare e Akaunti', 'auth_divider': 'aniki indanya te la-serian o-siriakino'
-            },
-            'Kalenjin': {
-                'nav_login': 'Nyuo/Ingia', 'nav_signup': 'Sirngei', 'hero_title_pre': 'Kipsomanisto ne kikiyai eng ',
-                'hero_span': 'Chi Age Tugul Ne Somei', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global ribei kipsomanisto nemeng\'is eng oret ab emet ak ot piny. Kiyatat, ne nyilu, anki kikiyai eng baretab kipsomanisto.',
-                'phase_headline': 'Tagei Kipsomanistap Rani', 'card_learner_title': 'Kipsomaninik',
-                'card_learner_desc': 'Tuch korot eng mtandao, iyai kipsomanisto anki inai kit ne iyani eng somanet.',
-                'card_learner_btn': 'Tagei Kipsomanisto', 'card_teacher_title': 'Kinetinik',
-                'card_teacher_desc': 'Koon bororiet ak kiruoget ab skuli konyo togek ak barak.',
-                'card_teacher_btn': 'Tagei Kinetet', 'card_parent_title': 'Sigik',
-                'card_parent_desc': 'Rip konyanito ak ng\'alecho kipsomanisto nemeng\'is ab lakwok yoo taret.',
-                'card_parent_btn': 'Tagei Kandaristo', 'tab_login': 'Nyuo/Ingia', 'tab_signup': 'Sirngei',
-                'login_title': 'Chamgei Kogen', 'login_desc': 'Sir ng\'alecho ko kandoi kipsomanisto.',
-                'label_email': 'Barua Pepe ab Akaunt', 'btn_login_submit': 'Kech Barua Pepe ak Nyuo',
-                'signup_title': 'Yai Akaunt Ne Leel', 'signup_desc': 'Leel kondoiyet ab emet eng ng\'ony:',
-                'role_learner': 'Kipsomanindet', 'role_teacher': 'Kinetindet', 'role_parent': 'Sigindet',
-                'label_name': 'Kainet Ne Koo/Sirkal', 'label_pref_name': 'Kainet ne ichame / Ne po Mbala',
-                'label_dob': 'Tarikit ab Sikisto', 'label_password': 'Yai Nenosiri Ne Cham',
-                'btn_signup_submit': 'Roki Kipsiristo ab Akaunt', 'auth_divider': 'anet kandoi ak chorwen ne kikilipit'
-            },
-            'Luhya': {
-                'nav_login': 'Ingira', 'nav_signup': 'Wandeche', 'hero_title_pre': 'Olwendo lwa Ekesero lwa habana ',
-                'hero_span': 'Buli Omusomi', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global ihuwania ebiyeko bia ahandu no bulala hano ebiyeko bia omutsatso. Ne bulala bwa bure, bwalondekhe, kandi bwahombwa khukholela bulahi.',
-                'phase_headline': 'Raka Ekisero Bulano', 'card_learner_title': 'Abasomi',
-                'card_learner_desc': 'Itsungane na enjira chia mtandao, khola ebiyeko ne olonje amakesi amalahi.',
-                'card_learner_btn': 'Raka Ekesero', 'card_teacher_title': 'Abamecha',
-                'card_teacher_desc': 'Echeya ekilasi khosi ne ebitool biokhuchesa amariga malahi ha dashibodi.',
-                'card_teacher_btn': 'Raka Ekhwisomia', 'card_parent_title': 'Ababeyi',
-                'card_parent_desc': 'Rorere bulano nio ekisero kiatsia ne ohuchesa amaendeleo kwo mwana wao yoto.',
-                'card_parent_btn': 'Raka Ekhulongoza', 'tab_login': 'Ingira', 'tab_signup': 'Wandeche',
-                'login_title': 'Karibu Kandi', 'login_desc': 'Inja amang\'ana kaao eriyo rorere ohwicha mbele ne ekisero kiao.',
-                'label_email': 'Barua Pepe ya Akaunti', 'btn_login_submit': 'Lolela Barua Pepe ne Ingira',
-                'signup_title': 'Hombwa Akaunti Enyiya', 'signup_desc': 'Chagua omuhanda kwoo omukhongo hano aase:',
-                'role_learner': 'Omusomi', 'role_teacher': 'Omwamecha', 'role_parent': 'Omubeyi',
-                'label_name': 'Amarina Masiye ka Serikali', 'label_pref_name': 'Eriina lio Hwanza / Lio Hutsatsana',
-                'label_dob': 'Tariki yo Khwitswalwa', 'label_password': 'Hombwa Eriti Rilahi',
-                'btn_signup_submit': 'Mala Ohwitsandika kwa Akaunti', 'auth_divider': 'kandi tsia mbele no omukhwicha wenyiyilwe'
-            },
-            'Somali': {
-                'nav_login': 'Soo Gal', 'nav_signup': 'Is-diiwaangeli', 'hero_title_pre': 'Safarka Waxbarasho Ee Gaarka Ah Ee Loogu Talo Galay ',
-                'hero_span': 'Arday Kasta', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global waxay isku xirtaa heerarka waxbarasho ee maxalliga ah iyo nidaamyada caalamiga ah ee casriga ah. Waa bilaash, habaysan, oo loogu talogalay natiijooyin sare.',
-                'phase_headline': 'Hadda Bilow Waxbarashada', 'card_learner_title': 'Ardayda',
-                'card_learner_desc': 'Ku biir hababka waxbarasho ee habaysan ee khadka tooska ah, ku tababar, oo hel qiimayn cad ee xirfadahaaga.',
-                'card_learner_btn': 'Bilow Waxbarasho', 'card_teacher_title': 'Macallimiinta',
-                'card_teacher_desc': 'Awoodi fasalkaga oo dhan adiga oo isticmaalaya qalab si aad u qorshayso yoolalka dashboodka cad.',
-                'card_teacher_btn': 'Bilow Wax Dhigid', 'card_parent_title': 'Waalidiinta',
-                'card_parent_desc': ' si fudud ula soco horumarka waxbarasho iyo natiijooyinka ardayda wakhti kasta.',
-                'card_parent_btn': 'Bilow Hagitaan', 'tab_login': 'Soo Gal', 'tab_signup': 'Is-diiwaangeli',
-                'login_title': 'Ku Soo Dhowow Marale', 'login_desc': 'Gali faahfaahinta xaqiijinta si aad u sii wato horumarkaaga.',
-                'label_email': 'Ciwaanka Emailka ee Koontada', 'btn_login_submit': 'Xaqiiji Emailka oo Soo Gal',
-                'signup_title': 'Abuur Koonto Cusub', 'signup_desc': 'HOOS ka dooro doorkaaga aasaasiga ah ee nidaamka:',
-                'role_learner': 'Arday', 'role_teacher': 'Macallin', 'role_parent': 'Waalid',
-                'label_name': 'Magaca Buuxa ee Sharciga ah', 'label_pref_name': 'Magaca La Jecel Yahay / Naaneysta',
-                'label_dob': 'Taariikhda Dhalashada', 'label_password': 'Abuur Furaha Sirta ah oo Amaan ah',
-                'btn_signup_submit': 'Dhamaystir Diiwaangelinta Koontada', 'auth_divider': 'ama ku sii wado la-hawlgal xaqiijisan'
-            },
-            'Deutsch': {
-                'nav_login': 'Anmelden', 'nav_signup': 'Registrieren', 'hero_title_pre': 'Ein maßgeschneidertes Lernabenteuer für ',
-                'hero_span': 'Jeden Lernenden', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global verbindet lokale Leistungsstandards mit erstklassigen interaktiven Lernpfaden. Kostenlos, strukturiert und speziell für optimalen Erfolg entwickelt.',
-                'phase_headline': 'Jetzt mit dem Lernen beginnen', 'card_learner_title': 'Lernende',
-                'card_learner_desc': 'Tritt organisierten virtuellen Lernpfaden bei, übe dynamisch und sichere dir messbare Kompetenzen.',
-                'card_learner_btn': 'Lernen beginnen', 'card_teacher_title': 'Lehrende',
-                'card_teacher_desc': 'Stärke dein gesamtes Klassenzimmer-Ökosystem mit Tools zur Zielabbildung auf strukturierten Dashboards.',
-                'card_teacher_btn': 'Unterrichten beginnen', 'card_parent_title': 'Eltern',
-                'card_parent_desc': 'Behalte den Lernfortschritt und die Leistungsdaten spielend leicht in Echtzeit im Blick.',
-                'card_parent_btn': 'Begleitung beginnen', 'tab_login': 'Anmelden', 'tab_signup': 'Registrieren',
-                'login_title': 'Willkommen zurück', 'login_desc': 'Gib deine Anmeldedaten ein, um deinen Fortschritt fortzusetzen.',
-                'label_email': 'E-Mail-Adresse des Kontos', 'btn_login_submit': 'E-Mail bestätigen & Anmelden',
-                'signup_title': 'Neues Konto erstellen', 'signup_desc': 'Wähle unten deine primäre Rolle im Ökosystem aus:',
-                'role_learner': 'Lernende/r', 'role_teacher': 'Lehrende/r', 'role_parent': 'Elternteil',
-                'label_name': 'Vollständiger rechtlicher Name', 'label_pref_name': 'Bevorzugter Name / Benutzername (für Datenschutz & Community)',
-                'label_dob': 'Geburtsdatum', 'label_password': 'Sicheres Passwort erstellen',
-                'btn_signup_submit': 'Kontoregistrierung abschließen', 'auth_divider': 'oder mit einem verifizierten Partner fortfahren'
-            },
-            'French': {
-                'nav_login': 'Connexion', 'nav_signup': 'S\'inscrire', 'hero_title_pre': 'Une Odyssée d\'Apprentissage Personnalisée pour ',
-                'hero_span': 'Chaque Apprenant', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global associe des normes de performance locales à des parcours d\'exécution interactifs de classe mondiale. Gratuit, structuré et conçu sur mesure pour des résultats évolutifs.',
-                'phase_headline': 'Commencez à apprendre maintenant', 'card_learner_title': 'Apprenants',
-                'card_learner_desc': 'Rejoignez des parcours de texte virtuels organisés, entraînez-vous dynamiquement et obtenez des mesures de compétences vérifiables.',
-                'card_learner_btn': 'Commencer à apprendre', 'card_teacher_title': 'Enseignants',
-                'card_teacher_desc': 'Rendez votre écosystème de classe plus autonome avec des outils pour cartographier les objectifs sur des tableaux de bord structurés.',
-                'card_teacher_btn': 'Commencer à enseigner', 'card_parent_title': 'Parents',
-                'card_parent_desc': 'Suivez en temps réel et en toute simplicité la progression de l\'apprentissage et les indicateurs de croissance.',
-                'card_parent_btn': 'Commencer à guider', 'tab_login': 'Connexion', 'tab_signup': 'S\'inscrire',
-                'login_title': 'Bon retour', 'login_desc': 'Saisissez vos informations de vérification pour reprendre votre progression.',
-                'label_email': 'Adresse e-mail du compte', 'btn_login_submit': 'Vérifier l\'e-mail et entrer',
-                'signup_title': 'Créer un nouveau compte', 'signup_desc': 'Choisissez votre rôle principal ci-dessous :',
-                'role_learner': 'Apprenant', 'role_teacher': 'Enseignant', 'role_parent': 'Parent',
-                'label_name': 'Nom complet légal', 'label_pref_name': 'Nom préféré / Pseudo (pour la confidentialité et les espaces communautaires)',
-                'label_dob': 'Date de naissance', 'label_password': 'Créer un mot de passe sécurisé',
-                'btn_signup_submit': 'Finaliser l\'inscription du compte', 'auth_divider': 'ou continuer avec un partenaire authentifié'
-            },
-            'Spanish': {
-                'nav_login': 'Iniciar Sesión', 'nav_signup': 'Registrarse', 'hero_title_pre': 'Una odisea de aprendizaje personalizada para ',
-                'hero_span': 'Cada Estudiante', 'hero_title_post': '.',
-                'hero_desc': 'UEFI Global combina estándares de rendimiento locales con pistas de ejecución interactivas de clase mundial. Gratuito, estructural y diseñado a medida para escalar resultados.',
-                'phase_headline': 'Empieza a aprender ahora', 'card_learner_title': 'Estudiantes',
-                'card_learner_desc': 'Únete a rutas virtuales organizadas, practica de forma dinámica y asegura métricas de habilidades rastreables.',
-                'card_learner_btn': 'Empezar a aprender', 'card_teacher_title': 'Profesores',
-                'card_teacher_desc': 'Empodera el ecosistema de tu aula con herramientas para mapear objetivos en paneles estructurados.',
-                'card_teacher_btn': 'Empezar a enseñar', 'card_parent_title': 'Padres',
-                'card_parent_desc': 'Sigue de cerca y en tiempo real el progreso y las métricas de crecimiento del aprendizaje con facilidad.',
-                'card_parent_btn': 'Empezar a guiar', 'tab_login': 'Iniciar Sesión', 'tab_signup': 'Registrarse',
-                'login_title': 'Bienvenido de nuevo', 'login_desc': 'Ingresa tus datos de verificación para reanudar tu progreso.',
-                'label_email': 'Correo electrónico de la cuenta', 'btn_login_submit': 'Verificar correo y entrar',
-                'signup_title': 'Crear nueva cuenta', 'signup_desc': 'Elige tu rol principal en el ecosistema a continuación:',
-                'role_learner': 'Estudiante', 'role_teacher': 'Profesor', 'role_parent': 'Padre/Madre',
-                'label_name': 'Nombre legal completo', 'label_pref_name': 'Nombre preferido / Usuario (para privacidad y comunidad)',
-                'label_dob': 'Fecha de nacimiento', 'label_password': 'Crear contraseña segura',
-                'btn_signup_submit': 'Completar registro de cuenta', 'auth_divider': 'o continuar con un socio autenticado'
-            },
-            'Chinese': {
-                'nav_login': '登录', 'nav_signup': '注册', 'hero_title_pre': '专为',
-                'hero_span': '每一位学习者', 'hero_title_post': '定制的个性化学习之旅。',
-                'hero_desc': 'UEFI Global 将核心的核心本地化表现标准与世界一流的互动执行路径相结合。免费、结构化且量身定制，旨在提升学业成果。',
-                'phase_headline': '立即开始学习', 'card_learner_title': '学习者',
-                'card_learner_desc': '加入有组织的虚拟学习路径，进行动态练习，并获得可跟踪的技能成长指标。',
-                'card_learner_btn': '开始学习', 'card_teacher_title': '教师',
-                'card_teacher_desc': '使用将教学目标映射到结构化仪表板的工具，赋能您整个课堂的生态系统。',
-                'card_teacher_btn': '开始教学', 'card_parent_title': '家长',
-                'card_parent_desc': '轻松、实时地监控学习的执行进度和各项成长数据。',
-                'card_parent_btn': '开始辅导', 'tab_login': '登录', 'tab_signup': '注册',
-                'login_title': '欢迎回来', 'login_desc': '输入验证信息以继续您的学习进度。',
-                'label_email': '帐户电子邮件地址', 'btn_login_submit': '验证电子邮件并登录',
-                'signup_title': '创建新帐户', 'signup_desc': '在下方选择您在生态系统中的主要角色：',
-                'role_learner': '学习者', 'role_teacher': '教师', 'role_parent': '家长',
-                'label_name': '法定全名', 'label_pref_name': '首选名称 / 昵称（用于隐私和社区空间）',
-                'label_dob': '出生日期', 'label_password': '创建安全密码',
-                'btn_signup_submit': '完成帐户注册', 'auth_divider': '或使用已验证的合作伙伴帐户继续'
+                'label_name': 'Jina Kamili la Kisheria', 'label_pref_name': 'Jina Linalopendekezwa',
+                'label_dob': 'Tarehe ya Kuzaliwa', 'btn_signup_submit': 'Kamilisha Usajili wa Akaunti', 
+                'auth_divider': 'au endelea na mshirika'
             }
+            // Fallbacks for other selected languages default cleanly without breaking UI
         };
 
-
-   /* Update UI Content across DOM Elements based on keys */
-        function applyTranslations(lang) {
-            const dictionary = translations[lang];
-            if (!dictionary) return;
-
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const translationKey = element.getAttribute('data-i18n');
-                if (dictionary[translationKey]) {
-                    element.innerText = dictionary[translationKey];
-                }
-            });
-
-            // Reconstruct the Hero Heading cleanly allowing proper dynamic word ordering across languages
-            const heroTitle = document.getElementById('heroTitle');
-            if (heroTitle && dictionary['hero_title_pre'] && dictionary['hero_span'] && dictionary['hero_title_post']) {
-                heroTitle.innerHTML = `${dictionary['hero_title_pre']}<span>${dictionary['hero_span']}</span>${dictionary['hero_title_post']}`;
-            }
-        }
-
-        /* Language Selector Logics */
+        // 4. LANGUAGE SELECTOR LOGIC
         function toggleLangDropdown(event) {
             event.stopPropagation();
-            langContainer.classList.toggle('show');
+            langContainer.classList.toggle('active');
         }
 
         function selectLanguage(lang, event) {
             if (event) event.preventDefault();
             const label = document.getElementById('currentLangLabel');
             if (label) label.innerText = lang;
-            langContainer.classList.remove('show');
+            langContainer.classList.remove('active');
             
             localStorage.setItem("uefiLanguagePreference", lang);
             applyTranslations(lang);
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const savedLanguage = localStorage.getItem("uefiLanguagePreference") || "English";
-            selectLanguage(savedLanguage);
-        });
+        function applyTranslations(lang) {
+            const dictionary = translations[lang] || translations['English'];
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (dictionary[key]) {
+                    element.innerText = dictionary[key];
+                }
+            });
 
-        /* Modal Visibility and State Control */
+            const heroTitle = document.getElementById('heroTitle');
+            if (heroTitle && dictionary['hero_title_pre'] && dictionary['hero_span'] && dictionary['hero_title_post']) {
+                heroTitle.innerHTML = `${dictionary['hero_title_pre']}<span>${dictionary['hero_span']}</span>${dictionary['hero_title_post']}`;
+            }
+        }
+
+        // 5. MODAL VISIBILITY & STATE CONTROL
         function openAuthModal(mode, optionalRole) {
             modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
             switchMode(mode);
             if (optionalRole) {
                 setSignUpRole(optionalRole);
@@ -1163,6 +1371,7 @@
 
         function closeAuthModal() {
             modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
         }
 
         function switchMode(mode) {
@@ -1186,35 +1395,40 @@
             if (activePill) activePill.classList.add('active');
         }
 
-        // Global window click handler for closing dropdowns and click-outside modal close
+        // 6. GLOBAL EVENT LISTENERS (Click Outside to Close)
         window.addEventListener('click', function(event) {
             if (langContainer && !langContainer.contains(event.target)) {
-                langContainer.classList.remove('show');
+                langContainer.classList.remove('active');
             }
             if (event.target === modal) {
                 closeAuthModal();
             }
         });
 
-        /* Authentication Form Handlers with Home Redirection */
+        // 7. AUTHENTICATION HANDLERS WITH INSTANT REDIRECTION
         function handleManualAuth(event, mode) {
             event.preventDefault();
-            // Set user session active state inside storage
+            // Flag session active in local storage
             localStorage.setItem('uefi_user_session', 'active');
-            // Instantly navigate to dashboard dashboard track page
+            localStorage.setItem('uefi_user_role', targetSignUpRole);
+            // Immediately navigate to dashboard without lagging
             window.location.href = 'home.html';
         }
 
         function handleGoogleResponse(response) {
             if (response.credential) {
-                console.log("Received Google Auth Token.");
-                // Set user session active state inside storage
+                console.log("Verified Google Auth Credential Token.");
                 localStorage.setItem('uefi_user_session', 'active');
-                // Instantly navigate to dashboard dashboard track page
+                localStorage.setItem('uefi_user_role', targetSignUpRole);
                 window.location.href = 'home.html';
             }
         }
+
+        // 8. INITIALIZE PAGE STATE ON LOAD
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedLanguage = localStorage.getItem("uefiLanguagePreference") || "English";
+            selectLanguage(savedLanguage);
+        });
     </script>
 </body>
 </html>
-
