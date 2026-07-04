@@ -179,7 +179,7 @@
 
         .phases-grid {
             display: grid;
-            grid-template-columns: repeat(3, 10fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 25px;
             margin-bottom: 60px;
         }
@@ -517,6 +517,10 @@
                         <label for="signupName">Full Legal Name</label>
                         <input type="text" id="signupName" class="form-input" placeholder="e.g. Juma Amina" required>
                     </div>
+                    <div class="form-group">
+                        <label for="signupPreferredName">Preferred Name / Handle (For Privacy & Community spaces)</label>
+                        <input type="text" id="signupPreferredName" class="form-input" placeholder="e.g. Amina_Codes or TeacherJuma" required>
+                    </div>
                     <div class="form-group" id="birthdayGroup">
                         <label for="signupBirthday">Date of Birth</label>
                         <input type="date" id="signupBirthday" class="form-input">
@@ -598,7 +602,6 @@
             document.getElementById(`pill-${role}`).classList.add('active');
             
             const dobGroup = document.getElementById('birthdayGroup');
-            // Khan Academy hides birthday field for teachers/parents to keep it minimal
             if (role === 'learner') {
                 dobGroup.style.display = 'block';
             } else {
@@ -614,6 +617,14 @@
             localStorage.setItem("userLoggedIn", "true");
             localStorage.setItem("userRole", activeSystem === 'signup' ? targetSignUpRole : 'user');
             
+            // Capture Preferred Name if signing up, otherwise set a generic fallback label
+            if (activeSystem === 'signup') {
+                const prefName = document.getElementById('signupPreferredName').value;
+                localStorage.setItem("preferredName", prefName || "Anonymous Learner");
+            } else {
+                localStorage.setItem("preferredName", "User");
+            }
+            
             triggerTransitionAnimation();
         }
 
@@ -622,6 +633,7 @@
             console.log("Encoded JWT ID token verified: " + response.credential);
             localStorage.setItem("userLoggedIn", "true");
             localStorage.setItem("userRole", "google-authenticated");
+            localStorage.setItem("preferredName", "Google User");
             
             triggerTransitionAnimation();
         }
