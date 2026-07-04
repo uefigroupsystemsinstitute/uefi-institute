@@ -16,7 +16,7 @@
     <meta property="og:description" content="Engineering Global Transformation through First-Principles. Join the apex of computation.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;600;700;900&family=JetBrains+Mono:wght=400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght=400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -47,6 +47,10 @@
             overflow-x: hidden;
         }
 
+        body.auth-locked {
+            overflow: hidden !important;
+        }
+
         /* --- NAVIGATION --- */
         header {
             background-color: var(--white);
@@ -67,6 +71,62 @@
             height: 80px;
             max-width: 1600px;
             margin: auto;
+            gap: 20px;
+        }
+
+        /* --- TOP LEFT AUTHENTICATED ACCOUNT BADGE --- */
+        .account-badge-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .account-badge-container:hover {
+            background: #e2e8f0;
+        }
+
+        .account-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--kenya-green);
+        }
+
+        .account-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .account-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .account-logout-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--kenya-red);
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .account-logout-btn:hover {
+            text-decoration: underline;
         }
 
         .logo {
@@ -74,6 +134,7 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
+            margin-right: auto;
         }
 
         .logo img {
@@ -123,6 +184,155 @@
         }
 
         .btn-nav:hover { background: var(--kenya-red); color: var(--white) !important; }
+
+        /* --- MANDATORY AUTH OVERLAY GATEKEEPER --- */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 10, 0.96);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .auth-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .auth-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 440px;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border-top: 6px solid var(--kenya-green);
+            text-align: center;
+        }
+
+        .auth-header h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--kenya-black);
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            font-size: 0.85rem;
+            color: var(--muted-gray);
+            margin-bottom: 2rem;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dark);
+        }
+
+        .form-group input {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--kenya-black);
+        }
+
+        .auth-submit-btn {
+            background: var(--bg-obsidian);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            transition: background 0.2s;
+        }
+
+        .auth-submit-btn:hover {
+            background: var(--kenya-red);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--muted-gray);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .auth-divider::before, .auth-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .auth-divider:not(:empty)::before { margin-right: .5em; }
+        .auth-divider:not(:empty)::after { margin-left: .5em; }
+
+        .google-auth-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--white);
+            border: 2px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            transition: all 0.2s;
+        }
+
+        .google-auth-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .google-auth-btn svg {
+            width: 18px;
+            height: 18px;
+        }
 
         /* --- HERO --- */
         .hero {
@@ -482,10 +692,51 @@
         }
     </style>
 </head>
-<body>
+<body class="auth-locked">
+
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>AUTHENTICATION NODES</h2>
+                <p>U.E.F.I computational space access control protocol</p>
+            </div>
+            
+            <form id="emailLoginForm" class="auth-form" onsubmit="handleEmailAuth(event)">
+                <div class="form-group">
+                    <label for="clientEmail">Secure Email Address</label>
+                    <input type="email" id="clientEmail" placeholder="client@domain.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientPassword">Access Key</label>
+                    <input type="password" id="clientPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="auth-submit-btn">Initialize Session</button>
+            </form>
+
+            <div class="auth-divider">OR CONTINUE WITH</div>
+
+            <button class="google-auth-btn" onclick="handleGoogleAuth()">
+                <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Sign in with Google Account
+            </button>
+        </div>
+    </div>
 
     <header>
         <nav>
+            <div id="accountProfileBadge" class="account-badge-container" style="display: none;">
+                <img id="userAvatar" src="" alt="Avatar" class="account-avatar">
+                <div class="account-info">
+                    <span id="userName" class="account-name">Access Granted</span>
+                    <button class="account-logout-btn" onclick="terminateSession()">Terminate</button>
+                </div>
+            </div>
+
             <a href="index.html" class="logo">
                <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo" onerror="this.style.display='none'">
                <span>U.E.F.I. <span>INSTITUTE</span></span>
@@ -750,6 +1001,7 @@
     </footer>
 
     <script>
+        /* --- ORIGINAL SLIDER ENGINE LOGIC --- */
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
         const prevBtn = document.querySelector('.prev-btn');
@@ -782,12 +1034,83 @@
             dot.addEventListener('click', () => { showSlide(index); stopAutoSlide(); startAutoSlide(); });
         });
 
-        // Dynamic adjustment for the dots indicator array size matching slides dynamically
         if(dots.length !== slides.length && dots.length > 0) {
             console.warn("UI Warning: Match your indicators dots count to your slide array elements length.");
         }
 
         startAutoSlide();
+
+
+        /* --- NEW AUTHENTICATION CONTROLLER SYSTEM --- */
+        const authOverlay = document.getElementById('authOverlay');
+        const accountBadge = document.getElementById('accountProfileBadge');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+
+        // Check verification tokens on DOM ready
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUser = localStorage.getItem('uefi_active_session');
+            if (savedUser) {
+                applyAccessGranted(JSON.parse(savedUser));
+            } else {
+                applyAccessLock();
+            }
+        });
+
+        function applyAccessGranted(userData) {
+            authOverlay.classList.add('hidden');
+            document.body.classList.remove('auth-locked');
+            
+            // Populate account data frame elements
+            userAvatar.src = userData.photo;
+            userName.textContent = userData.name;
+            accountBadge.style.display = 'flex';
+        }
+
+        function applyAccessLock() {
+            authOverlay.classList.remove('hidden');
+            document.body.classList.add('auth-locked');
+            accountBadge.style.display = 'none';
+        }
+
+        // Processing Email Login Forms
+        function handleEmailAuth(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('clientEmail').value;
+            
+            // Creates structural session template from email prefix string
+            const derivedName = emailInput.split('@')[0].toUpperCase();
+            const mockUserData = {
+                name: derivedName,
+                email: emailInput,
+                photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" // Fallback UI Avatar placeholder URL
+            };
+
+            localStorage.setItem('uefi_active_session', JSON.stringify(mockUserData));
+            applyAccessGranted(mockUserData);
+        }
+
+        // Processing Google Auth Action Signals
+        function handleGoogleAuth() {
+            // [Integration Node] Swap mock data structure out when connecting to Google APIs Identity services SDK
+            const mockGoogleUserData = {
+                name: "GUEST SCHOLAR",
+                email: "scholar.network@gmail.com",
+                photo: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100" // Modern placeholder profile picture 
+            };
+
+            localStorage.setItem('uefi_active_session', JSON.stringify(mockGoogleUserData));
+            applyAccessGranted(mockGoogleUserData);
+        }
+
+        // Logs out user from state engine
+        function terminateSession() {
+            localStorage.removeItem('uefi_active_session');
+            applyAccessLock();
+            
+            // Reset input values safely
+            document.getElementById('emailLoginForm').reset();
+        }
     </script>
 </body>
 </html>
