@@ -3,138 +3,1961 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Connect</title>
+    <title>UEFI Connect - Professional Education & Networking Network</title>
     <style>
         :root {
             --safaricom-green: #30B54A;
+            --safaricom-dark-green: #259339;
             --kenya-red: #BB0000;
             --kenya-black: #000000;
             --kenya-white: #FFFFFF;
             --bg-linkedin: #F3F2EF;
             --text-dark: #191919;
             --text-muted: #666666;
+            --border-color: #D0DCE5;
+            --link-blue: #0A66C2;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --radius: 10px;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: var(--bg-linkedin); color: var(--text-dark); }
-        
-        .navbar { background: var(--kenya-white); border-bottom: 2px solid var(--kenya-red); display: flex; justify-content: space-between; align-items: center; padding: 0 10%; height: 56px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-        .nav-left { display: flex; align-items: center; gap: 10px; }
-        .logo-box { background: var(--safaricom-green); color: var(--kenya-white); font-weight: 900; padding: 6px 10px; border-radius: 4px; font-size: 1.2rem; }
-        .search-box { background: #EEF3F8; border-radius: 4px; padding: 0.5rem 1rem; display: flex; align-items: center; width: 250px; }
-        .search-box input { border: none; background: transparent; outline: none; margin-left: 5px; width: 100%; font-size: 0.9rem; }
-        
-        .nav-right { display: flex; gap: 2rem; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; }
-        .nav-item.active, .nav-item:hover { color: var(--kenya-black); font-weight: 600; border-bottom: 2px solid var(--safaricom-green); }
-        .nav-icon { font-size: 1.2rem; margin-bottom: 2px; }
 
-        .main-layout { max-width: 1128px; margin: 20px auto; display: grid; grid-template-columns: 225px 1fr 300px; gap: 20px; padding: 0 15px; }
-        .card { background: var(--kenya-white); border-radius: 8px; border: 1px solid #D0DCE5; overflow: hidden; margin-bottom: 15px; }
-        
-        .profile-banner { height: 60px; background: linear-gradient(135deg, var(--kenya-black) 30%, var(--kenya-red) 70%, var(--safaricom-green) 100%); }
-        .profile-avatar { width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--kenya-white); background: var(--kenya-black); color: var(--safaricom-green); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; margin: -35px auto 10px; }
-        .profile-info { text-align: center; padding: 0 15px 15px; border-bottom: 1px solid #EEEEEE; }
-        .profile-info h3 { font-size: 1rem; color: var(--kenya-black); }
-        .profile-info p { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
-        
-        .post-creator { padding: 15px; }
-        .creator-top { display: flex; gap: 10px; margin-bottom: 10px; }
-        .creator-input { flex: 1; border: 1px solid #CCCCCC; border-radius: 35px; padding: 10px 15px; font-size: 0.9rem; outline: none; text-align: left; color: var(--text-muted); background: var(--kenya-white); cursor: pointer; }
-        .creator-actions { display: flex; justify-content: space-around; }
-        .action-btn { background: none; border: none; font-size: 0.85rem; color: var(--text-muted); font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 8px; }
-        
-        .feed-post { padding: 15px; }
-        .post-header { display: flex; gap: 10px; margin-bottom: 12px; }
-        .post-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--safaricom-green); color: var(--kenya-white); display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .post-author h4 { font-size: 0.95rem; color: var(--kenya-black); }
-        .post-author p { font-size: 0.75rem; color: var(--text-muted); }
-        .post-body { font-size: 0.9rem; line-height: 1.4; margin-bottom: 15px; }
-        .post-footer { border-top: 1px solid #EEEEEE; padding-top: 5px; display: flex; justify-content: space-around; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
-        .widget-header { padding: 15px 15px 5px; font-size: 0.95rem; font-weight: bold; }
-        .news-list { list-style: none; padding: 10px 15px; }
-        .news-list li { margin-bottom: 12px; font-size: 0.85rem; }
-        .news-list li a { color: var(--kenya-black); text-decoration: none; font-weight: 600; }
-        .news-list li span { font-size: 0.75rem; color: var(--text-muted); display: block; }
+        body {
+            background-color: var(--bg-linkedin);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            padding-bottom: 60px;
+        }
+
+        /* --- GLOBAL NAVIGATION --- */
+        .navbar {
+            background: var(--kenya-white);
+            border-bottom: 3px solid var(--kenya-red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            height: 65px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-grow: 1;
+            max-width: 450px;
+        }
+
+        .logo-box {
+            background: linear-gradient(135deg, var(--kenya-black) 0%, var(--safaricom-green) 100%);
+            color: var(--kenya-white);
+            font-weight: 900;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .search-box {
+            background: #EEF3F8;
+            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--safaricom-green);
+            background: var(--kenya-white);
+            box-shadow: 0 0 0 1px var(--safaricom-green);
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            margin-left: 8px;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            min-width: 60px;
+            height: 65px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--kenya-black);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--safaricom-green);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item.active::after, .nav-item:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-icon {
+            font-size: 1.4rem;
+            margin-bottom: 3px;
+        }
+
+        .nav-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        /* --- APP VIEW CONTAINERS --- */
+        .view-panel {
+            display: none;
+            max-width: 1200px;
+            margin: 25px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .view-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- TWO & THREE COLUMN LAYOUT CONFIGURATIONS --- */
+        .layout-grid-3 {
+            display: grid;
+            grid-template-columns: 240px 1fr 320px;
+            gap: 25px;
+        }
+
+        .layout-grid-2 {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+        }
+
+        /* --- UTILITY REUSABLE CARDS --- */
+        .card {
+            background: var(--kenya-white);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* --- VIEW: HOME (FEED & ONBOARDING STRIPS) --- */
+        .profile-banner {
+            height: 75px;
+            background: linear-gradient(135deg, var(--kenya-black) 20%, var(--kenya-red) 60%, var(--safaricom-green) 100%);
+        }
+
+        .profile-avatar-container {
+            position: relative;
+            text-align: center;
+            margin-top: -45px;
+            margin-bottom: 12px;
+        }
+
+        .profile-avatar-img {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 4px solid var(--kenya-white);
+            background: var(--kenya-black);
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .profile-info {
+            text-align: center;
+            padding: 0 20px 20px;
+        }
+
+        .profile-info h3 {
+            font-size: 1.15rem;
+            color: var(--kenya-black);
+            font-weight: 700;
+        }
+
+        .profile-info p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+            line-height: 1.3;
+        }
+
+        .profile-stats {
+            border-top: 1px solid #EEDBDB;
+            padding: 12px 20px;
+            background: #FAFAFA;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .stat-row span:last-child {
+            color: var(--link-blue);
+            font-weight: 600;
+        }
+
+        /* --- POST CREATOR ENGAGEMENT --- */
+        .post-creator {
+            padding: 20px;
+        }
+
+        .creator-top {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .creator-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        .creator-input-trigger {
+            flex: 1;
+            border: 1px solid #D3D3D3;
+            border-radius: 35px;
+            padding: 0 20px;
+            font-size: 0.92rem;
+            outline: none;
+            text-align: left;
+            color: var(--text-muted);
+            background: #F3F2EF;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .creator-input-trigger:hover {
+            background: #EBEAE6;
+        }
+
+        .creator-actions {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #F0F0F0;
+            padding-top: 12px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: #EFEFEF;
+            color: var(--kenya-black);
+        }
+
+        /* --- PREMIUM ELITE DONATION MODULE (KHAN STYLE) --- */
+        .donation-widget {
+            background: linear-gradient(180deg, #101F30 0%, #050B14 100%);
+            color: var(--kenya-white);
+            padding: 25px;
+            border-radius: var(--radius);
+            position: relative;
+            border: 1px solid #1E354E;
+            box-shadow: var(--shadow);
+        }
+
+        .donation-widget::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--safaricom-green), var(--kenya-red));
+        }
+
+        .donation-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #FFF;
+            letter-spacing: -0.3px;
+        }
+
+        .donation-quote {
+            font-style: italic;
+            font-size: 0.82rem;
+            color: #A0B3C6;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--safaricom-green);
+            padding-left: 10px;
+        }
+
+        .donation-impact-box {
+            background: rgba(48, 181, 74, 0.1);
+            border: 1px dashed var(--safaricom-green);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 18px;
+            font-weight: 600;
+            color: #E2FFE7;
+        }
+
+        .donation-frequency {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .freq-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #FFF;
+            padding: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .freq-btn.active {
+            background: var(--kenya-white);
+            color: var(--kenya-black);
+            border-color: var(--kenya-white);
+        }
+
+        .donation-tiers {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tier-btn {
+            background: transparent;
+            border: 1px solid #314E6F;
+            color: #C2D6EC;
+            padding: 10px 0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tier-btn:hover, .tier-btn.active {
+            background: var(--safaricom-green);
+            color: #FFF;
+            border-color: var(--safaricom-green);
+            box-shadow: 0 0 10px rgba(48,181,74,0.4);
+        }
+
+        .custom-donation-input {
+            width: 100%;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #314E6F;
+            border-radius: 6px;
+            padding: 12px;
+            color: #FFF;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+            outline: none;
+        }
+
+        .custom-donation-input:focus {
+            border-color: var(--safaricom-green);
+        }
+
+        .submit-donation-btn {
+            width: 100%;
+            background: linear-gradient(90deg, var(--safaricom-green) 0%, #27993E 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(48,181,74,0.3);
+            transition: transform 0.2s;
+        }
+
+        .submit-donation-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* --- RENDERED SOCIAL FEED SYSTEM --- */
+        .feed-post {
+            padding: 20px;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .post-author-block {
+            display: flex;
+            gap: 12px;
+        }
+
+        .post-author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .post-author-meta h4 {
+            font-size: 0.98rem;
+            color: var(--kenya-black);
+            font-weight: 700;
+        }
+
+        .post-author-meta p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .student-badge {
+            background: rgba(11, 102, 194, 0.1);
+            color: var(--link-blue);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .post-body {
+            font-size: 0.94rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            color: #222;
+            word-wrap: break-word;
+        }
+
+        .post-media-attachment {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px solid #EAEAEA;
+        }
+
+        .post-engagement-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            padding-bottom: 8px;
+            border-bottom: 1px solid #F0F0F0;
+            margin-bottom: 8px;
+        }
+
+        /* --- VIEW: NETWORK ENGINE --- */
+        .network-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .network-card {
+            background: var(--kenya-white);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 18px;
+            transition: box-shadow 0.3s;
+        }
+
+        .network-card:hover {
+            box-shadow: var(--shadow);
+        }
+
+        .network-banner {
+            height: 60px;
+            background: #EAEAEA;
+        }
+
+        .network-avatar {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin: -38px auto 10px;
+            object-fit: cover;
+            background: #FFF;
+        }
+
+        .network-card h4 {
+            font-size: 0.95rem;
+            color: var(--kenya-black);
+            font-weight: 700;
+            padding: 0 10px;
+        }
+
+        .network-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin: 4px 0 15px;
+            padding: 0 15px;
+            height: 32px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .connect-btn {
+            width: 85%;
+            background: transparent;
+            border: 1px solid var(--link-blue);
+            color: var(--link-blue);
+            font-weight: 600;
+            padding: 8px 0;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .connect-btn:hover {
+            background: rgba(10, 102, 194, 0.08);
+            border-width: 2px;
+        }
+
+        .connect-btn.connected {
+            border-color: var(--text-muted);
+            color: var(--text-muted);
+            background: #F3F2EF;
+        }
+
+        /* --- VIEW: MESSAGING SYSTEM --- */
+        .messaging-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            height: calc(100vh - 120px);
+            background: var(--kenya-white);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .threads-sidebar {
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            background: #FFF;
+        }
+
+        .thread-item {
+            display: flex;
+            gap: 12px;
+            padding: 15px;
+            border-bottom: 1px solid #F0F2F4;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .thread-item:hover, .thread-item.active {
+            background: #F3F2EF;
+        }
+
+        .thread-item.active {
+            border-left: 4px solid var(--safaricom-green);
+        }
+
+        .thread-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .thread-meta {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .thread-meta h4 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--kenya-black);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .thread-meta h4 span {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .thread-meta p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-window {
+            display: flex;
+            flex-direction: column;
+            background: #F9FAFB;
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            background: #FFF;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+
+        .chat-messages-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message-bubble {
+            max-width: 65%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .message-bubble.incoming {
+            background: var(--kenya-white);
+            align-self: flex-start;
+            border: 1px solid var(--border-color);
+            border-top-left-radius: 2px;
+        }
+
+        .message-bubble.outgoing {
+            background: #E1F5FE;
+            color: #034661;
+            align-self: flex-end;
+            border-top-right-radius: 2px;
+        }
+
+        .chat-input-area {
+            padding: 15px 20px;
+            background: #FFF;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .chat-input-area textarea {
+            flex: 1;
+            height: 44px;
+            border: 1px solid var(--border-color);
+            border-radius: 22px;
+            padding: 12px 20px;
+            resize: none;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .send-chat-btn {
+            background: var(--safaricom-green);
+            color: #FFF;
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .send-chat-btn:hover {
+            background: var(--safaricom-dark-green);
+        }
+
+        /* --- VIEW: JOBS MANAGEMENT PANEL --- */
+        .job-card {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .job-details {
+            display: flex;
+            gap: 15px;
+        }
+
+        .job-logo-placeholder {
+            width: 52px;
+            height: 52px;
+            border-radius: 4px;
+            background: #FFEBEE;
+            color: var(--kenya-red);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .job-meta-text h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--kenya-black);
+        }
+
+        .job-meta-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .job-tags {
+            margin-top: 8px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .job-tag {
+            background: #EEF3F8;
+            color: var(--text-muted);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .apply-btn {
+            background: var(--link-blue);
+            color: white;
+            border: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .apply-btn.applied {
+            background: #EAEAEA;
+            color: var(--text-muted);
+            cursor: default;
+        }
+
+        /* --- VIEW: CV PROFILE SYSTEM --- */
+        .profile-hero {
+            position: relative;
+            background: #FFF;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+        }
+
+        .profile-hero-banner {
+            height: 160px;
+            background: linear-gradient(135deg, var(--kenya-black) 0%, var(--kenya-red) 50%, var(--safaricom-green) 100%);
+            border-top-left-radius: var(--radius);
+            border-top-right-radius: var(--radius);
+        }
+
+        .profile-hero-content {
+            padding: 0 30px 30px;
+            position: relative;
+        }
+
+        .profile-hero-avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid #FFF;
+            margin-top: -75px;
+            object-fit: cover;
+            background: #000;
+            box-shadow: var(--shadow);
+        }
+
+        .edit-profile-trigger {
+            position: absolute;
+            right: 30px;
+            top: 20px;
+            background: transparent;
+            border: 1px solid var(--text-muted);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .edit-profile-trigger:hover {
+            background: #F3F2EF;
+        }
+
+        .cv-section {
+            padding: 25px 30px;
+        }
+
+        .cv-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #F0F0F0;
+            padding-bottom: 6px;
+        }
+
+        .cv-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #EAEAEA;
+        }
+
+        .cv-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        /* --- POPUP COMPOSER AND ONBOARDING ENGINE --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #FFF;
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 550px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: modalSlide 0.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .modal-body {
+            padding: 20px;
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--safaricom-green);
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background: #F9FAFB;
+        }
+
+        /* --- IMMERSIVE CONTEXTUAL PRE-LOADER WIZARD --- */
+        #onboarding-wizard {
+            background: var(--bg-linkedin);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #onboarding-wizard.hidden {
+            display: none;
+        }
+
+        .wizard-container {
+            background: #FFF;
+            width: 100%;
+            max-width: 650px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--safaricom-green);
+            padding: 35px;
+        }
+
+        .wizard-step {
+            display: none;
+        }
+
+        .wizard-step.active {
+            display: block;
+        }
+
+        .wizard-headline {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--kenya-black);
+            margin-bottom: 10px;
+        }
+
+        .wizard-subtext {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .wizard-btn-container {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-prime {
+            background: var(--safaricom-green);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-prime:hover {
+            background: var(--safaricom-dark-green);
+        }
+
+        .btn-sec {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* --- SYSTEM PRE-SETS FOR ATTACHMENT DISPLAY --- */
+        .preview-pane-media {
+            width: 100%;
+            max-height: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
+<div id="onboarding-wizard">
+    <div class="wizard-container">
+        <div class="wizard-step active" id="wiz-step-1">
+            <h2 class="wizard-headline">Create Your UEFI Connect Account</h2>
+            <p class="wizard-subtext">Welcome to the dedicated professional hub for regional builders, educators, and students.</p>
+            
+            <button class="btn-prime" style="width:100%; margin-bottom: 20px; background:#4285F4; display:flex; align-items:center; justify-content:center; gap:10px;" onclick="simulateGoogleOAuth()">
+                <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.47h4.84c-.21 1.12-.84 2.07-1.8 2.71v2.24h2.92c1.71-1.57 2.68-3.88 2.68-6.58z" fill="#4285F4"/><path d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.24c-.81.54-1.85.87-3.04.87-2.34 0-4.33-1.57-5.03-3.68H.92v2.3C2.4 15.96 5.45 18 9 18z" fill="#34A853"/><path d="M3.97 10.77c-.18-.54-.28-1.11-.28-1.7 0-.59.1-1.16.28-1.7V5.08H.92C.33 6.26 0 7.59 0 9s.33 2.74.92 3.92l3.05-2.35z" fill="#FBBC05"/><path d="M9 3.58c1.32 0 2.5.45 3.44 1.35L15 2.3C13.47.89 11.43 0 9 0 5.45 0 2.4 2.04.92 4.97l3.05 2.35c.7-2.11 2.69-3.68 5.03-3.68z" fill="#EA4335"/></svg>
+                Continue securely with Google Account
+            </button>
+
+            <div style="text-align:center; color:var(--text-muted); font-size:0.8rem; margin-bottom:20px;">- OR ENTER PROFILE DETAILS -</div>
+
+            <div class="form-group">
+                <label>First & Last Name (Official Profile Identity)</label>
+                <input type="text" id="wiz-name" placeholder="e.g. David Kamau" value="David Kamau">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="wiz-email" placeholder="name@domain.com" value="kamau.david@uefi.org">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="wiz-pass" placeholder="••••••••" value="securepass123">
+            </div>
+            <div class="wizard-btn-container" style="justify-content: flex-end;">
+                <button class="btn-prime" onclick="advanceWizard(2)">Next Step &rarr;</button>
+            </div>
+        </div>
+
+        <div class="wizard-step" id="wiz-step-2">
+            <h2 class="wizard-headline">Location & Professional Standing</h2>
+            <p class="wizard-subtext">UEFI tailoring aligns updates to your regional tracking and domain metrics.</p>
+            
+            <div class="form-group">
+                <label>Are you currently a student?</label>
+                <select id="wiz-is-student" onchange="toggleStudentWizardFields(this.value)">
+                    <option value="No">No, I am a working Professional / Academic</option>
+                    <option value="Yes">Yes, I am a High School / University Student</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label id="lbl-title">Most Recent Job Title</label>
+                <input type="text" id="wiz-title" placeholder="e.g., Software Engineer, Research Lead" value="Systems Engineer">
+            </div>
+            <div class="form-group" id="group-company">
+                <label id="lbl-company">Most Recent Company / School</label>
+                <input type="text" id="wiz-company" placeholder="e.g. Safaricom PLC" value="UEFI Global Hub Office">
+            </div>
+            <div class="form-group">
+                <label>Location (City & Region)</label>
+                <input type="text" id="wiz-location" placeholder="e.g. Thika, Kiambu County" value="Nairobi, Kenya">
+            </div>
+            <div class="wizard-btn-container">
+                <button class="btn-sec" onclick="advanceWizard(1)">&larr; Back</button>
+                <button class="btn-prime" onclick="advanceWizard(3)">Next Step &rarr;</button>
+            </div>
+        </div>
+
+        <div class="wizard-step" id="wiz-step-3">
+            <h2 class="wizard-headline">Final Setup Verification</h2>
+            <p class="wizard-subtext">Add visual credibility to lock down your network identity routes.</p>
+            
+            <div class="form-group" style="text-align: center;">
+                <label style="text-align:left;">Profile Photo Portrait</label>
+                <div style="margin: 15px 0;">
+                    <img id="wizard-avatar-preview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2330B54A'/><text x='50%25' y='65%25' font-weight='bold' font-size='40' fill='white' text-anchor='middle'>KE</text></svg>" style="width:110px; height:110px; border-radius:50%; object-fit:cover; border:2px solid var(--safaricom-green);">
+                </div>
+                <input type="file" id="wiz-avatar-file" accept="image/*" style="display:none;" onchange="processWizardAvatar(this)">
+                <button class="btn-sec" style="padding:6px 14px; font-size:0.85rem;" onclick="document.getElementById('wiz-avatar-file').click()">Upload Headshot Image</button>
+            </div>
+
+            <div class="form-group">
+                <label>Job Seeking Profile Flag</label>
+                <select id="wiz-seeking">
+                    <option value="Yes">Yes, notify recruiters I am actively open to roles</option>
+                    <option value="No">No, I am satisfied with my active placement</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="background:#F0F4F8; padding:12px; border-radius:6px; display:flex; gap:10px; align-items:center;">
+                <input type="checkbox" id="wiz-sync" checked style="width:auto; cursor:pointer;">
+                <label for="wiz-sync" style="margin-bottom:0; font-weight:normal; font-size:0.8rem; cursor:pointer;">
+                    Sync platform integration directory to map connections automatically.
+                </label>
+            </div>
+
+            <div class="wizard-btn-container">
+                <button class="btn-sec" onclick="advanceWizard(2)">&larr; Back</button>
+                <button class="btn-prime" onclick="finalizeSystemOnboarding()">Finish Configuration &rarr;</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <nav class="navbar">
     <div class="nav-left">
-        <div class="logo-box">UC</div>
+        <div class="logo-box" onclick="uiRouter('home')">UC</div>
         <div class="search-box">
             <span>🔍</span>
-            <input type="text" placeholder="Search UEFI Connect">
+            <input type="text" id="global-search-input" placeholder="Search professionals, students, jobs..." onkeyup="executeGlobalSearch(this.value)">
         </div>
     </div>
     <div class="nav-right">
-        <a href="#" class="nav-item active"><span class="nav-icon">🏠</span>Home</a>
-        <a href="#" class="nav-item"><span class="nav-icon">👥</span>Network</a>
-        <a href="#" class="nav-item"><span class="nav-icon">💼</span>Jobs</a>
-        <a href="#" class="nav-item"><span class="nav-icon">💬</span>Messages</a>
+        <a href="javascript:void(0)" class="nav-item active" id="nav-home" onclick="uiRouter('home')"><span class="nav-icon">🏠</span>Home</a>
+        <a href="javascript:void(0)" class="nav-item" id="nav-network" onclick="uiRouter('network')"><span class="nav-icon">👥</span>Network</a>
+        <a href="javascript:void(0)" class="nav-item" id="nav-jobs" onclick="uiRouter('jobs')"><span class="nav-icon">💼</span>Jobs</a>
+        <a href="javascript:void(0)" class="nav-item" id="nav-messages" onclick="uiRouter('messages')"><span class="nav-icon">💬</span>Messages</a>
+        <a href="javascript:void(0)" class="nav-item" id="nav-profile" onclick="uiRouter('profile')">
+            <img id="nav-avatar-img" class="nav-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><circle cx='25' cy='25' r='25' fill='%23000'/></svg>">
+            Me ▾
+        </a>
     </div>
 </nav>
 
-<div class="main-layout">
-    <aside>
-        <div class="card">
-            <div class="profile-banner"></div>
-            <div class="profile-avatar">KE</div>
-            <div class="profile-info">
-                <h3>David Kamau</h3>
-                <p>Systems Engineer | Professional Network Member</p>
-            </div>
-        </div>
-    </aside>
-
-    <main>
-        <div class="card post-creator">
-            <div class="creator-top">
-                <div style="width:40px; height:40px; border-radius:50%; background:#000; color:#FFF; display:flex; align-items:center; justify-content:center; font-weight:bold;">DK</div>
-                <button class="creator-input" onclick="alert('Launch Composer UI')">Share an update or breakthrough...</button>
-            </div>
-            <div class="creator-actions">
-                <button class="action-btn"><span style="color:var(--safaricom-green)">📷</span> Media</button>
-                <button class="action-btn"><span style="color:var(--kenya-red)">📅</span> Event</button>
-            </div>
-        </div>
-
-        <div class="card feed-post">
-            <div class="post-header">
-                <div class="post-avatar">SF</div>
-                <div class="post-author">
-                    <h4>Safaricom Engineering Partner Network</h4>
-                    <p>Professional Hub Updates</p>
+<div id="view-home" class="view-panel active">
+    <div class="layout-grid-3">
+        <aside>
+            <div class="card">
+                <div class="profile-banner"></div>
+                <div class="profile-avatar-container">
+                    <img id="sidebar-avatar-img" class="profile-avatar-img" src="">
+                </div>
+                <div class="profile-info">
+                    <h3 id="sidebar-user-name">Loading...</h3>
+                    <p id="sidebar-user-headline">Loading configuration data...</p>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-row">
+                        <span>Connections tracking</span>
+                        <span id="stat-connections-count">722</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Profile impressions</span>
+                        <span style="color:var(--safaricom-green);">292</span>
+                    </div>
                 </div>
             </div>
-            <div class="post-body">
-                Excited to welcome members to the new UEFI Connect hub layout. We are optimizing our networking pathways to make sure engineering resources scale cleanly across regions. 🇰🇪 #UEFIConnect #NetworkBuilding
-            </div>
-            <div class="post-footer">
-                <button class="action-btn" onclick="this.style.color='var(--safaricom-green)'">👍 Like</button>
-                <button class="action-btn">💬 Comment</button>
-                <button class="action-btn">🔄 Repost</button>
-            </div>
-        </div>
-    </main>
+        </aside>
 
-    <aside>
-        <div class="card">
-            <div class="widget-header">UEFI Network Feed</div>
-            <ul class="news-list">
-                <li>
-                    <a href="#">Engineering Innovations in Nairobi</a>
-                    <span>Top news • 3,420 viewers</span>
-                </li>
-                <li>
-                    <a href="#">Regional Infrastructure Scalability</a>
-                    <span>2d ago • 1,150 viewers</span>
-                </li>
-            </ul>
-        </div>
-    </aside>
+        <main>
+            <div class="card post-creator">
+                <div class="creator-top">
+                    <img id="creator-avatar-img" class="creator-avatar" src="">
+                    <button class="creator-input-trigger" onclick="openPostComposer()">Share a project update or engineering breakthrough...</button>
+                </div>
+                <div class="creator-actions">
+                    <button class="action-btn" onclick="openPostComposer()"><span style="color:var(--safaricom-green)">📷</span> Media / Asset</button>
+                    <button class="action-btn" onclick="openPostComposer()"><span style="color:var(--kenya-red)">📅</span> Event</button>
+                    <button class="action-btn" onclick="openPostComposer()"><span style="color:#E5A93C">📝</span> Write Article</button>
+                </div>
+            </div>
+
+            <div id="feed-posts-stream"></div>
+        </main>
+
+        <aside>
+            <div class="donation-widget card">
+                <div class="donation-title">Empower UEFI Network Scale</div>
+                <div class="donation-quote">"100 KES = 2 Hours of high-performance cloud workbench access for local high school engineering streams."</div>
+                
+                <div id="donation-impact-panel" class="donation-impact-box">
+                    Your contribution secures developer resources for the community.
+                </div>
+
+                <div class="donation-frequency">
+                    <button class="freq-btn active" id="btn-freq-once" onclick="setDonationFrequency('one-time')">One Time</button>
+                    <button class="freq-btn" id="btn-freq-recur" onclick="setDonationFrequency('monthly')">Monthly Pledge</button>
+                </div>
+
+                <div class="donation-tiers">
+                    <button class="tier-btn" onclick="selectDonationTier(500, this)">500</button>
+                    <button class="tier-btn active" onclick="selectDonationTier(1000, this)">1K</button>
+                    <button class="tier-btn" onclick="selectDonationTier(2500, this)">2.5K</button>
+                    <button class="tier-btn" onclick="selectDonationTier(5000, this)">5K</button>
+                </div>
+
+                <input type="number" id="custom-donation-amt" class="custom-donation-input" value="1000" placeholder="Enter custom amount (KES)" oninput="recalculateDonationImpact(this.value)">
+                
+                <button class="submit-donation-btn" onclick="triggerMpesaDonationFlow()">Initiate Secure M-PESA Pledge</button>
+            </div>
+
+            <div class="card" style="padding:15px;">
+                <h4 style="font-size:0.95rem; font-weight:700; margin-bottom:10px;">UEFI Innovation Trends</h4>
+                <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
+                    <li>
+                        <a href="#" style="color:var(--kenya-black); font-size:0.85rem; font-weight:600; text-decoration:none;">Silicon Savannah Infrastructure Scaling</a>
+                        <span style="display:block; font-size:0.72rem; color:var(--text-muted); margin-top:2px;">Top update • 4,890 software tracks</span>
+                    </li>
+                    <li>
+                        <a href="#" style="color:var(--kenya-black); font-size:0.85rem; font-weight:600; text-decoration:none;">Thika High School Cluster Wins Robotics Track</a>
+                        <span style="display:block; font-size:0.72rem; color:var(--text-muted); margin-top:2px;">2d ago • 1,220 student profiles</span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </div>
 </div>
+
+<div id="view-network" class="view-panel">
+    <div class="layout-grid-2">
+        <aside>
+            <div class="card" style="padding:15px;">
+                <h4 style="margin-bottom:12px; font-size:1rem;">Manage Network</h4>
+                <div style="display:flex; flex-direction:column; gap:10px; font-size:0.9rem; color:var(--text-muted);">
+                    <div style="display:flex; justify-content:between; cursor:pointer;">👥 Connections <span style="margin-left:auto; font-weight:600;" id="net-sidebar-count">722</span></div>
+                    <div style="display:flex; justify-content:between; cursor:pointer;">🏢 Pages <span style="margin-left:auto; font-weight:600;">8</span></div>
+                    <div style="display:flex; justify-content:between; cursor:pointer;">📅 Events <span style="margin-left:auto; font-weight:600;">3</span></div>
+                </div>
+            </div>
+        </aside>
+        <main>
+            <div class="card" style="padding:15px; margin-bottom:15px;">
+                <h3 style="font-size:1.1rem; font-weight:700;">Discover Peers & Mentors across East Africa</h3>
+                <p style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">Based on your tracking configurations and workspace matches.</p>
+            </div>
+            <div class="network-container" id="network-cards-grid">
+                </div>
+        </main>
+    </div>
+</div>
+
+<div id="view-jobs" class="view-panel">
+    <div class="layout-grid-2">
+        <aside>
+            <div class="card" style="padding:15px;">
+                <h4 style="margin-bottom:12px;">Job Preferences</h4>
+                <div style="display:flex; flex-direction:column; gap:10px; font-size:0.88rem;">
+                    <label style="display:flex; gap:8px; cursor:pointer;"><input type="checkbox" checked> Developer Roles</label>
+                    <label style="display:flex; gap:8px; cursor:pointer;"><input type="checkbox" checked> Internships / Student Tracks</label>
+                    <label style="display:flex; gap:8px; cursor:pointer;"><input type="checkbox"> Telecomm / Core Routing</label>
+                </div>
+            </div>
+        </aside>
+        <main>
+            <div class="card" style="padding:15px; margin-bottom:15px;">
+                <h3 style="font-size:1.1rem; font-weight:700;">Targeted Opportunities For Your Track</h3>
+            </div>
+            <div id="jobs-board-list">
+                </div>
+        </main>
+    </div>
+</div>
+
+<div id="view-messages" class="view-panel">
+    <div class="messaging-layout">
+        <div class="threads-sidebar" id="messaging-threads-target">
+            </div>
+
+        <div class="chat-window">
+            <div class="chat-header" id="chat-header-title">Select a contact to engage communication</div>
+            <div class="chat-messages-area" id="chat-bubbles-target">
+                <div style="text-align:center; color:var(--text-muted); font-size:0.9rem; margin-top:20%;">
+                    Select a peer from your Network space to open communications pathways.
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <textarea id="chat-textarea-input" placeholder="Write message... Use Enter key or Send button to transmit." onkeydown="if(event.key==='Enter'&&!event.shiftKey){ event.preventDefault(); sendInstantMessage(); }"></textarea>
+                <button class="send-chat-btn" onclick="sendInstantMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="view-profile" class="view-panel">
+    <div class="profile-hero">
+        <div class="profile-hero-banner"></div>
+        <div class="profile-hero-content">
+            <img id="profile-page-avatar" class="profile-hero-avatar" src="">
+            <button class="edit-profile-trigger" onclick="openProfileEditorModal()">Edit Workspace Data</button>
+            
+            <h2 id="prof-fullname" style="font-size:1.6rem; font-weight:800; margin-top:15px; color:var(--kenya-black);">Loading Profile</h2>
+            <p id="prof-headline" style="font-size:1rem; color:#333; margin-top:4px;">Workspace Definition Status</p>
+            <p id="prof-location" style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">City location coordinate</p>
+            
+            <div style="margin-top:15px; display:flex; gap:10px;">
+                <span id="prof-badge-student" class="student-badge" style="font-size:0.8rem; padding:4px 10px;">Student Route Account</span>
+                <span id="prof-badge-seeking" style="background:#E2FFE7; color:#1B5E20; font-size:0.8rem; padding:4px 10px; font-weight:700; border-radius:4px;">Actively Open to Roles</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card cv-section">
+        <h3>Professional Profile Executive Summary</h3>
+        <p id="cv-target-summary" style="font-size:0.92rem; line-height:1.6; color:#333;">
+            Configured engineering member working to optimize processing pipelines and expand baseline system deployments.
+        </p>
+    </div>
+
+    <div class="card cv-section">
+        <h3>Placement & Experience Pathways</h3>
+        <div id="cv-target-experience">
+            </div>
+    </div>
+
+    <div class="card cv-section">
+        <h3>Core Skills & Technical Competencies</h3>
+        <div id="cv-target-skills" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:5px;">
+            </div>
+    </div>
+</div>
+
+<div class="modal" id="modal-post-composer">
+    <div class="modal-card">
+        <div class="modal-header">
+            <span>Compose Network Update</span>
+            <span class="close-modal" onclick="closePostComposer()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <textarea id="post-text-input" placeholder="What technical milestone or problem have you resolved today?" style="width:100%; height:120px; border:none; resize:none; outline:none; font-size:1rem;" onkeyup="evaluateComposerActions()"></textarea>
+            
+            <div class="form-group" style="margin-top:15px;">
+                <label style="cursor:pointer; color:var(--link-blue); display:inline-flex; align-items:center; gap:6px;">
+                    📎 <span id="asset-upload-label">Attach Media Asset Image</span>
+                    <input type="file" id="post-image-file" accept="image/*" style="display:none;" onchange="previewComposerAsset(this)">
+                </label>
+                <img id="composer-asset-preview" class="preview-pane-media" src="">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-prime" id="post-submit-btn" disabled onclick="executeSubmitPost()">Broadcast Update</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal-profile-editor">
+    <div class="modal-card">
+        <div class="modal-header">
+            <span>Modify Professional Workspace Profile</span>
+            <span class="close-modal" onclick="closeProfileEditorModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Headline Definition Summary</label>
+                <input type="text" id="edit-prof-headline">
+            </div>
+            <div class="form-group">
+                <label>Executive Bio Narrative Summary</label>
+                <textarea id="edit-prof-summary" style="height:80px;"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Technical Skills (Comma separated list)</label>
+                <input type="text" id="edit-prof-skills" placeholder="e.g. JavaScript, CCNA Routing, Python, Data Analytics">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-sec" onclick="closeProfileEditorModal()">Discard Changes</button>
+            <button class="btn-prime" onclick="saveProfileEdits()">Save Modifications</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // GLOBAL STATE MANAGEMENT OBJECT
+    let state = {
+        currentUser: {},
+        donationFrequency: 'one-time',
+        selectedTierAmt: 1000,
+        activeChatUserId: null,
+        
+        // REPLICATED PRE-SETS DATA CONSTRUCTS
+        users: [
+            { id: 'usr-101', name: 'Tony Brian Kiprotich', isStudent: 'No', title: 'Strathmore Tech Lead | Systems Infrastructure', company: 'Strathmore', location: 'Nairobi County', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80', isConnected: false },
+            { id: 'usr-102', name: 'Meshack Mpesa', isStudent: 'Yes', title: 'High School Engineering Scholar', company: 'Mpesa Foundation Academy', location: 'Thika, Kiambu County', avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&q=80', isConnected: false },
+            { id: 'usr-103', name: 'Felidah Nyerere', isStudent: 'No', title: 'Data Operations Intern', company: 'Microsoft ADC', location: 'Nairobi, Kenya', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80', isConnected: false },
+            { id: 'usr-104', name: 'Oigo Okemwa', isStudent: 'No', title: 'LLM & Edge Computing Specialist', company: 'Cisco Partner Track', location: 'Kisumu City', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80', isConnected: false }
+        ],
+        posts: [
+            { id: 'post-001', authorName: 'Safaricom Engineering Partner Network', authorTitle: 'Regional Telecom Backbone Infrastructure Hub', isStudent: 'No', authorAvatar: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=80&q=80', body: 'Excited to complete optimization deployment pipelines alongside UEFI Connect members. We are providing core developer workspace tracks to verify clean data structures map flawlessly across localized testing domains. 🇰🇪 #SavannahTech #SystemVerification', media: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80', likes: 242, hasLiked: false, timestamp: '3 Hours Ago' },
+            { id: 'post-002', authorName: 'Everlyn Chebet', authorTitle: 'University Network Ambassador', isStudent: 'Yes', authorAvatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&q=80', body: 'Just completed mapping local repository caches onto standard deployments. Setting up localized server parameters inside GitHub pages forced me to look deeply at absolute vs relative resource path strings!', media: null, likes: 89, hasLiked: false, timestamp: '1 Day Ago' }
+        ],
+        jobs: [
+            { id: 'job-501', title: 'Information Technology Intern', company: 'AGRA Kenya HQ', tags: ['On-site', 'Full-time', 'Developer Tools'], location: 'Nairobi County, Kenya', initial: 'A', applied: false },
+            { id: 'job-502', title: 'General System Engineering Track Application', company: 'BURN Manufacturing Industrial Plant', tags: ['Hybrid', 'Student Internship', 'Hardware Systems'], location: 'Thika Industrial Zone', initial: 'B', applied: false },
+            { id: 'job-503', title: 'DevOps & Cloud Orchestration Associate', company: 'DeepTrack Analytics East Africa', tags: ['Remote', 'Contract', 'AWS Pipelines'], location: 'Nairobi / Remote', initial: 'D', applied: false }
+        ],
+        messages: {
+            'usr-101': [
+                { sender: 'incoming', content: 'Habari! I saw your documentation work on the UEFI platform layers. Are you working to map deployment nodes onto standard production addresses?' },
+                { sender: 'outgoing', content: 'Yes! I just updated the routing properties inside our GitHub profile repositories. Both index and manual parameters match structural bounds now.' }
+            ],
+            'usr-102': [
+                { sender: 'incoming', content: 'Hello sir, how do I configure my local system variables to avoid throwing credential payload blocks?' }
+            ]
+        },
+        attachedBase64Media: null
+    };
+
+    // WIZARD CONTROLS LOOP
+    function advanceWizard(targetStep) {
+        document.querySelectorAll('.wizard-step').forEach(el => el.classList.remove('active'));
+        document.getElementById(`wiz-step-${targetStep}`).classList.add('active');
+    }
+
+    function toggleStudentWizardFields(statusValue) {
+        if (statusValue === 'Yes') {
+            document.getElementById('lbl-title').innerText = "Current School / Grade / Study Focus";
+            document.getElementById('wiz-title').placeholder = "e.g. Form 4 Student, Computer Science Freshman";
+            document.getElementById('wiz-title').value = "Form 4 STEM Track Scholar";
+            
+            document.getElementById('lbl-company').innerText = "High School Institution / University Campus Location";
+            document.getElementById('wiz-company').placeholder = "e.g. Alliance High School";
+            document.getElementById('wiz-company').value = "Mpesa Foundation Academy";
+        } else {
+            document.getElementById('lbl-title').innerText = "Most Recent Job Title";
+            document.getElementById('wiz-title').placeholder = "e.g. Software Engineer, Tech Lead";
+            document.getElementById('wiz-title').value = "Systems Engineer";
+            
+            document.getElementById('lbl-company').innerText = "Most Recent Company / School";
+            document.getElementById('wiz-company').placeholder = "e.g. Safaricom PLC";
+            document.getElementById('wiz-company').value = "UEFI Global Hub Office";
+        }
+    }
+
+    // BASE64 IMAGE FILE PROCESSOR FOR WIZARD
+    function processWizardAvatar(inputElement) {
+        const file = inputElement.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('wizard-avatar-preview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // SIMULATED AUTH STRIP DEPLOYMENT FALLBACK
+    function simulateGoogleOAuth() {
+        document.getElementById('wiz-name').value = "Elisha O. Alal";
+        document.getElementById('wiz-email').value = "elisha.alal@gmail.com";
+        document.getElementById('wizard-avatar-preview').src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80";
+        alert("Google OAuth Token verified. Identity fields compiled.");
+        advanceWizard(2);
+    }
+
+    // PERSIST DATA IN LOCALSTORAGE & LOAD ENGINE ACTIVE RUNS
+    function finalizeSystemOnboarding() {
+        const nameVal = document.getElementById('wiz-name').value.trim();
+        const titleVal = document.getElementById('wiz-title').value.trim();
+        const companyVal = document.getElementById('wiz-company').value.trim();
+        const locationVal = document.getElementById('wiz-location').value.trim();
+        const isStudentVal = document.getElementById('wiz-is-student').value;
+        const seekingVal = document.getElementById('wiz-seeking').value;
+        const avatarSrc = document.getElementById('wizard-avatar-preview').src;
+
+        if(!nameVal || !titleVal || !companyVal) {
+            alert("Please complete your identity inputs to configure matching data routes.");
+            return;
+        }
+
+        state.currentUser = {
+            name: nameVal,
+            title: titleVal,
+            company: companyVal,
+            location: locationVal,
+            isStudent: isStudentVal,
+            seeking: seekingVal,
+            avatar: avatarSrc,
+            skills: ['Systems Architecture', 'Git Operations', 'Cloud Directives', 'Project Management Pipeline'],
+            summary: `Configured UEFI network operational member. Managing data processing tracks inside ${locationVal} regions while aligning system operations directly to local education clusters.`
+        };
+
+        localStorage.setItem('uefi_connect_session_2026', JSON.stringify(state.currentUser));
+        document.getElementById('onboarding-wizard').classList.add('hidden');
+        
+        initializeUIState();
+    }
+
+    // UI RE-RENDERING CORE FUNCTION
+    function initializeUIState() {
+        // Load active profile metrics into navigation and dashboard columns
+        const user = state.currentUser;
+        document.getElementById('nav-avatar-img').src = user.avatar;
+        document.getElementById('sidebar-avatar-img').src = user.avatar;
+        document.getElementById('creator-avatar-img').src = user.avatar;
+        document.getElementById('profile-page-avatar').src = user.avatar;
+        
+        document.getElementById('sidebar-user-name').innerText = user.name;
+        document.getElementById('sidebar-user-headline').innerText = `${user.title} at ${user.company}`;
+
+        // Populate CV page values
+        document.getElementById('prof-fullname').innerHTML = `${user.name} ${user.isStudent === 'Yes' ? '<span class="student-badge">Student Route</span>' : ''}`;
+        document.getElementById('prof-headline').innerText = `${user.title} | ${user.company}`;
+        document.getElementById('prof-location').innerText = `📍 ${user.location}`;
+        
+        document.getElementById('prof-badge-student').style.display = (user.isStudent === 'Yes') ? 'inline-block' : 'none';
+        document.getElementById('prof-badge-seeking').style.display = (user.seeking === 'Yes') ? 'inline-block' : 'none';
+
+        // Prepopulate editor parameters
+        document.getElementById('edit-prof-headline').value = `${user.title} at ${user.company}`;
+        document.getElementById('edit-prof-summary').value = user.summary;
+        document.getElementById('edit-prof-skills').value = user.skills.join(', ');
+
+        // Render dynamic structures
+        renderFeedStream();
+        renderNetworkCluster();
+        renderJobsBoard();
+        renderMessagingThreads();
+        renderCVContentCards();
+    }
+
+    // ROUTER SWITCH ENGINE
+    function uiRouter(viewId) {
+        document.querySelectorAll('.view-panel').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        
+        document.getElementById(`view-${viewId}`).classList.add('active');
+        document.getElementById(`nav-${viewId}`).classList.add('active');
+        
+        window.scrollTo(0,0);
+    }
+
+    // FEED RENDER IMPLEMENTATION
+    function renderFeedStream() {
+        const streamTarget = document.getElementById('feed-posts-stream');
+        streamTarget.innerHTML = '';
+
+        state.posts.forEach((post, index) => {
+            const mediaBlock = post.media ? `<img class="post-media-attachment" src="${post.media}">` : '';
+            const studentBadge = post.isStudent === 'Yes' ? '<span class="student-badge">Student Track</span>' : '';
+            const likeColor = post.hasLiked ? 'style="color:var(--safaricom-green); font-weight:700;"' : '';
+
+            streamTarget.innerHTML += `
+                <div class="card feed-post">
+                    <div class="post-header">
+                        <div class="post-author-block">
+                            <img class="post-author-avatar" src="${post.authorAvatar}">
+                            <div class="post-author-meta">
+                                <h4>${post.authorName} ${studentBadge}</h4>
+                                <p>${post.authorTitle}</p>
+                                <p style="font-size:0.68rem; color:var(--text-muted);">${post.timestamp}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-body">${post.body}</div>
+                    ${mediaBlock}
+                    <div class="post-engagement-stats">
+                        <span>👍 ${post.likes} reactions</span>
+                        <span>0 comments</span>
+                    </div>
+                    <div class="post-footer">
+                        <button class="action-btn" ${likeColor} onclick="toggleLike(${index})">👍 Like</button>
+                        <button class="action-btn" onclick="alert('Comment expansion model active on local production nodes.')">💬 Comment</button>
+                        <button class="action-btn" onclick="alert('Shared to your personal workspace network.')">🔄 Repost</button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    function toggleLike(index) {
+        const post = state.posts[index];
+        if(post.hasLiked) {
+            post.likes--;
+            post.hasLiked = false;
+        } else {
+            post.likes++;
+            post.hasLiked = true;
+        }
+        renderFeedStream();
+    }
+
+    // MODAL POST INTERACTIVE CALLS
+    function openPostComposer() { document.getElementById('modal-post-composer').classList.add('active'); }
+    function closePostComposer() {
+        document.getElementById('modal-post-composer').classList.remove('active');
+        document.getElementById('post-text-input').value = '';
+        document.getElementById('composer-asset-preview').style.display = 'none';
+        state.attachedBase64Media = null;
+    }
+
+    function previewComposerAsset(inputElement) {
+        const file = inputElement.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('composer-asset-preview');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                state.attachedBase64Media = e.target.result;
+                evaluateComposerActions();
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function evaluateComposerActions() {
+        const text = document.getElementById('post-text-input').value.trim();
+        document.getElementById('post-submit-btn').disabled = (text.length === 0 && !state.attachedBase64Media);
+    }
+
+    function executeSubmitPost() {
+        const text = document.getElementById('post-text-input').value.trim();
+        if(!text && !state.attachedBase64Media) return;
+
+        const newPost = {
+            id: `post-${Date.now()}`,
+            authorName: state.currentUser.name,
+            authorTitle: `${state.currentUser.title} at ${state.currentUser.company}`,
+            isStudent: state.currentUser.isStudent,
+            authorAvatar: state.currentUser.avatar,
+            body: text,
+            media: state.attachedBase64Media,
+            likes: 0,
+            hasLiked: false,
+            timestamp: 'Just Now'
+        };
+
+        state.posts.unshift(newPost);
+        closePostComposer();
+        renderFeedStream();
+        window.scrollTo(0, 200);
+    }
+
+    // NETWORK GENERATION CONTROLLERS
+    function renderNetworkCluster() {
+        const grid = document.getElementById('network-cards-grid');
+        grid.innerHTML = '';
+
+        state.users.forEach((u, i) => {
+            const connText = u.isConnected ? 'Message Base' : 'Connect';
+            const connClass = u.isConnected ? 'connect-btn connected' : 'connect-btn';
+            const clickAction = u.isConnected ? `openDirectUserChat('${u.id}')` : `toggleConnectionRoute(${i})`;
+
+            grid.innerHTML += `
+                <div class="network-card">
+                    <div class="network-banner" style="background:linear-gradient(45deg, #CCC, #EAEAEA)"></div>
+                    <img class="network-avatar" src="${u.avatar}">
+                    <h4>${u.name}</h4>
+                    <p>${u.title} • <b>${u.company}</b></p>
+                    <button class="${connClass}" onclick="${clickAction}">${connText}</button>
+                </div>
+            `;
+        });
+        document.getElementById('net-sidebar-count').innerText = 722 + state.users.filter(u => u.isConnected).length;
+    }
+
+    function toggleConnectionRoute(index) {
+        state.users[index].isConnected = true;
+        renderNetworkCluster();
+        
+        // Initialize new chat thread array if missing
+        const targetUserId = state.users[index].id;
+        if (!state.messages[targetUserId]) {
+            state.messages[targetUserId] = [
+                { sender: 'incoming', content: `Hello! Let's share insights regarding engineering workflows and local deployment frameworks.` }
+            ];
+        }
+        renderMessagingThreads();
+    }
+
+    // JOBS APPLICATION RENDER
+    function renderJobsBoard() {
+        const target = document.getElementById('jobs-board-list');
+        target.innerHTML = '';
+
+        state.jobs.forEach((j, idx) => {
+            const btnText = j.applied ? '✓ Applied' : 'Easy Apply';
+            const btnClass = j.applied ? 'apply-btn applied' : 'apply-btn';
+            const clickAction = j.applied ? '' : `executeJobApplication(${idx})`;
+
+            target.innerHTML += `
+                <div class="card job-card">
+                    <div class="job-details">
+                        <div class="job-logo-placeholder">${j.initial}</div>
+                        <div class="job-meta-text">
+                            <h3>${j.title}</h3>
+                            <p>${j.company} — <i>${j.location}</i></p>
+                            <div class="job-tags">
+                                ${j.tags.map(t => `<span class="job-tag">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <button class="${btnClass}" onclick="${clickAction}">${btnText}</button>
+                </div>
+            `;
+        });
+    }
+
+    function executeJobApplication(idx) {
+        state.jobs[idx].applied = true;
+        alert(`Application framework packet dispatched directly to ${state.jobs[idx].company}. Recruiter review dashboard populated.`);
+        renderJobsBoard();
+    }
+
+    // MESSAGING ENGINE ACTIONS
+    function renderMessagingThreads() {
+        const target = document.getElementById('messaging-threads-target');
+        target.innerHTML = '';
+
+        state.users.forEach(u => {
+            if (state.messages[u.id]) {
+                const thread = state.messages[u.id];
+                const lastMsg = thread[thread.length - 1];
+                const activeClass = state.activeChatUserId === u.id ? 'active' : '';
+
+                target.innerHTML += `
+                    <div class="thread-item ${activeClass}" onclick="openDirectUserChat('${u.id}')">
+                        <img class="thread-avatar" src="${u.avatar}">
+                        <div class="thread-meta">
+                            <h4>${u.name} <span>2026</span></h4>
+                            <p>${lastMsg ? lastMsg.content : 'Open workspace connection channel...'}</p>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+    }
+
+    function openDirectUserChat(userId) {
+        state.activeChatUserId = userId;
+        uiRouter('messages');
+        renderMessagingThreads();
+
+        const userObj = state.users.find(u => u.id === userId);
+        document.getElementById('chat-header-title').innerText = `${userObj.name} — ${userObj.title} [${userObj.company}]`;
+
+        const bubblesTarget = document.getElementById('chat-bubbles-target');
+        bubblesTarget.innerHTML = '';
+
+        state.messages[userId].forEach(msg => {
+            const bubbleType = msg.sender === 'incoming' ? 'incoming' : 'outgoing';
+            bubblesTarget.innerHTML += `<div class="message-bubble ${bubbleType}">${msg.content}</div>`;
+        });
+        
+        // Auto-scroll messaging console
+        setTimeout(() => { bubblesTarget.scrollTop = bubblesTarget.scrollHeight; }, 30);
+    }
+
+    function sendInstantMessage() {
+        const text = document.getElementById('chat-textarea-input').value.trim();
+        if (!text || !state.activeChatUserId) return;
+
+        state.messages[state.activeChatUserId].push({
+            sender: 'outgoing',
+            content: text
+        });
+
+        document.getElementById('chat-textarea-input').value = '';
+        openDirectUserChat(state.activeChatUserId);
+
+        // Simulated asynchronous network echo loop
+        setTimeout(() => {
+            if(state.messages[state.activeChatUserId]) {
+                state.messages[state.activeChatUserId].push({
+                    sender: 'incoming',
+                    content: "Packet acknowledged by remote terminal node. Optimization configurations verified."
+                });
+                if(document.getElementById('view-messages').classList.contains('active')) {
+                    openDirectUserChat(state.activeChatUserId);
+                }
+            }
+        }, 1200);
+    }
+
+    // PROFILE CANVAS RE-RENDERING MECHANICS
+    function renderCVContentCards() {
+        document.getElementById('cv-target-summary').innerText = state.currentUser.summary;
+
+        // Experience profile mapping
+        const expTarget = document.getElementById('cv-target-experience');
+        expTarget.innerHTML = `
+            <div class="cv-item">
+                <h4 style="font-weight:700; font-size:0.95rem;">Active Placement Assignment: ${state.currentUser.title}</h4>
+                <p style="color:var(--safaricom-green); font-size:0.85rem; font-weight:600; margin-top:2px;">${state.currentUser.company}</p>
+                <p style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">January 2025 — Present [2026 Execution Framework]</p>
+            </div>
+            <div class="cv-item">
+                <h4 style="font-weight:700; font-size:0.95rem;">Foundational Computing Trainee Node</h4>
+                <p style="color:var(--text-muted); font-size:0.85rem; margin-top:2px;">Silicon Savannah Cooperative Group</p>
+                <p style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">June 2023 — December 2024</p>
+            </div>
+        `;
+
+        // Skills component tags mapping
+        const skillsTarget = document.getElementById('cv-target-skills');
+        skillsTarget.innerHTML = '';
+        state.currentUser.skills.forEach(sk => {
+            skillsTarget.innerHTML += `<span style="background:#EEF3F8; color:var(--text-dark); padding:6px 14px; border-radius:20px; font-size:0.8rem; font-weight:600; border:1px solid #D0DCE5;">${sk}</span>`;
+        });
+    }
+
+    function openProfileEditorModal() { document.getElementById('modal-profile-editor').classList.add('active'); }
+    function closeProfileEditorModal() { document.getElementById('modal-profile-editor').classList.remove('active'); }
+
+    function saveProfileEdits() {
+        const newHeadline = document.getElementById('edit-prof-headline').value.trim();
+        const newSummary = document.getElementById('edit-prof-summary').value.trim();
+        const rawSkills = document.getElementById('edit-prof-skills').value;
+
+        if(!newHeadline || !newSummary) return alert("Required verification tracks missing.");
+
+        // Parse placement splits
+        const pieces = newHeadline.split(' at ');
+        state.currentUser.title = pieces[0] || "Member Engineer";
+        state.currentUser.company = pieces[1] || "UEFI Global Community";
+        state.currentUser.summary = newSummary;
+        
+        state.currentUser.skills = rawSkills.split(',').map(s => s.trim()).filter(s => s.length > 0);
+
+        localStorage.setItem('uefi_connect_session_2026', JSON.stringify(state.currentUser));
+        closeProfileEditorModal();
+        initializeUIState();
+    }
+
+    // KHAN CONVERSION VALUE DIRECTIVES
+    function setDonationFrequency(freq) {
+        state.donationFrequency = freq;
+        document.getElementById('btn-freq-once').classList.toggle('active', freq === 'one-time');
+        document.getElementById('btn-freq-recur').classList.toggle('active', freq === 'monthly');
+        recalculateDonationImpact(state.selectedTierAmt);
+    }
+
+    function selectDonationTier(amt, buttonElement) {
+        document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
+        buttonElement.classList.add('active');
+        document.getElementById('custom-donation-amt').value = amt;
+        state.selectedTierAmt = amt;
+        recalculateDonationImpact(amt);
+    }
+
+    function recalculateDonationImpact(valueStr) {
+        const val = parseFloat(valueStr) || 0;
+        const panel = document.getElementById('donation-impact-panel');
+        
+        if (val <= 0) {
+            panel.innerText = "Enter a contribution metric to display infrastructure calculations.";
+            return;
+        }
+
+        const hours = Math.floor(val / 50);
+        const cycle = state.donationFrequency === 'monthly' ? '/ month' : '';
+        
+        panel.innerHTML = `⚡ Secures approximately <b>${hours} Hours</b> of low-latency workspace routing ${cycle} for remote rural education streams.`;
+    }
+
+    function triggerMpesaDonationFlow() {
+        const finalAmt = document.getElementById('custom-donation-amt').value;
+        if(parseFloat(finalAmt) <= 0) return alert("Configure an impact budget to allocate resources.");
+
+        alert(`[STK Push Engine Active]\nDestination: UEFI Connect Infrastructure Fund\nAmount: KES ${finalAmt}\n\nCheck your mobile phone terminal for the secure M-PESA PIN entry request prompt.`);
+    }
+
+    // SYSTEM QUERY EXPANSION LOCATIONS
+    function executeGlobalSearch(queryStr) {
+        const cleanQuery = queryStr.toLowerCase().trim();
+        if(cleanQuery.length === 0) {
+            renderNetworkCluster();
+            renderJobsBoard();
+            return;
+        }
+
+        // Filtering Network view cards dynamically
+        const networkCards = document.getElementsByClassName('network-card');
+        state.users.forEach((u, i) => {
+            const matches = u.name.toLowerCase().includes(cleanQuery) || u.title.toLowerCase().includes(cleanQuery);
+            if(networkCards[i]) networkCards[i].style.display = matches ? 'block' : 'none';
+        });
+
+        // Filtering Job arrays dynamically
+        const jobCards = document.getElementsByClassName('job-card');
+        state.jobs.forEach((j, i) => {
+            const matches = j.title.toLowerCase().includes(cleanQuery) || j.company.toLowerCase().includes(cleanQuery);
+            if(jobCards[i]) jobCards[i].style.display = matches ? 'flex' : 'none';
+        });
+    }
+
+    // INITIALIZATION RUNNER BINDINGS
+    window.addEventListener('DOMContentLoaded', () => {
+        const cachedSession = localStorage.getItem('uefi_connect_session_2026');
+        
+        if (cachedSession) {
+            state.currentUser = JSON.parse(cachedSession);
+            document.getElementById('onboarding-wizard').classList.add('hidden');
+            initializeUIState();
+        } else {
+            // Setup defaults in the wizard text fields out of the box
+            toggleStudentWizardFields('No');
+        }
+        
+        // Setup initial interactive state text loops for the pledge container
+        recalculateDonationImpact(1000);
+    });
+</script>
 
 </body>
 </html>
