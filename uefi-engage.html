@@ -138,6 +138,7 @@
             justify-content: center;
             color: white;
             font-weight: bold;
+            flex-shrink: 0; /* FIXED: Prevents icon compression layout distortions */
         }
 
         /* --- CENTER CONVERSATION FEED --- */
@@ -467,7 +468,6 @@
 <body>
 
     <div class="layout-grid">
-        
         <aside class="sidebar-left">
             <div>
                 <div class="brand-header">
@@ -513,16 +513,16 @@
                 <div class="avatar-circle" id="composerAvatarNode">V</div>
                 <div class="composer-main-body">
                     <form id="tweetCompositionForm" onsubmit="broadcastXPost(event)">
-                        <textarea id="tweetMessageText" class="editable-input-area" placeholder="What's happening in your STEM learning? Share equations or references..." required></textarea>
+                        <textarea id="tweetMessageText" class="editable-input-area" placeholder="What's happening in your STEM learning? Share equations..." required></textarea>
                         
-                        <input type="url" id="tweetEmbeddedImageInput" class="media-link-field" placeholder="Paste structural image resource reference link URL...">
-                        <input type="url" id="tweetEmbeddedVideoInput" class="media-link-field" placeholder="Paste explanation mp4 video link URL...">
+                        <input type="url" id="tweetEmbeddedImageInput" class="media-link-field" placeholder="Paste image link URL...">
+                        <input type="url" id="tweetEmbeddedVideoInput" class="media-link-field" placeholder="Paste mp4 video link URL...">
 
                         <div class="composer-toolbar">
                             <div class="toolbar-attachments">
                                 <i class="fa-regular fa-image" onclick="toggleComposerInput('tweetEmbeddedImageInput')" title="Attach Image URL"></i>
                                 <i class="fa-regular fa-file-video" onclick="toggleComposerInput('tweetEmbeddedVideoInput')" title="Attach Video URL"></i>
-                                <i class="fa-solid fa-calculator" onclick="insertMathConstant()" title="Insert Math Asset Symbol"></i>
+                                <i class="fa-solid fa-calculator" onclick="insertMathConstant()" title="Insert Math Symbol"></i>
                             </div>
                             <button type="submit" class="btn-tweet-submit" id="tweetSubmitActionTrigger">Engage</button>
                         </div>
@@ -551,11 +551,6 @@
                     <div class="trend-topic-name">#JuniorSecondarySTEM</div>
                     <div class="trend-meta-label">2.8K Conversations</div>
                 </div>
-                <div class="trend-item-block">
-                    <div class="trend-meta-label">Mathematics Hacks • Trending</div>
-                    <div class="trend-topic-name">#MatrixTransformations</div>
-                    <div class="trend-meta-label">1.5K Conversations</div>
-                </div>
             </div>
         </aside>
     </div>
@@ -563,10 +558,10 @@
     <div class="modal-blur-overlay" id="spaceConsentOverlay">
         <div class="x-modal-frame">
             <h2 style="font-size: 24px; font-weight: 800;"><i class="fa-solid fa-shield-halved" style="color: var(--safaricom-green);"></i> Join UEFI Engage</h2>
-            <p style="font-size: 14px; margin-top: 10px; color: var(--text-muted);">Configure your ecosystem alias card to establish verified conversational read/write access channels.</p>
+            <p style="font-size: 14px; margin-top: 10px; color: var(--text-muted);">Configure your ecosystem alias card to establish verified access channels.</p>
             
             <div class="agreement-scrollbox">
-                Ecosystem Conduct Protocols: You are entering a dedicated educational space. Content containing inappropriate, commercial, or non-academic text is systematically intercepted and flagged for moderation. By proceeding, you verify consent to map contribution streams to your student identity record.
+                Ecosystem Conduct Protocols: You are entering a dedicated educational space. By proceeding, you verify consent to map contribution streams to your profile.
             </div>
 
             <div style="margin-bottom: 15px;">
@@ -586,14 +581,13 @@
         let trackingEcosystemSpaceFilter = "All Conversations";
         let structuredUserCredentialSession = null;
 
-        // Massive Pre-seeded Interactive Array (1000+ Active Conversations Simulation Engine Setup)
         const automatedSTEMSimulationCatalog = [
             {
                 id: "seed-1",
                 authorName: "Dr. Evans Mwangi",
                 authorHandle: "mwangi_physics_lab",
                 channel: "Physics",
-                textContent: "Checking out the K.C.S.E Physics Paper 2 mechanics roadmap. Remember, when evaluating electrostatic flux density distribution layouts across parallel plate systems, boundary constants must follow absolute permittivity models precisely.",
+                textContent: "Checking out the K.C.S.E Physics Paper 2 mechanics roadmap. Remember, boundary constants must follow absolute permittivity models precisely.",
                 videoUrl: null,
                 imageUrl: null,
                 timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
@@ -604,33 +598,11 @@
                 authorName: "Aminah Osei",
                 authorHandle: "amina_math_cbc",
                 channel: "Core Math",
-                textContent: "Can anyone help simplify this matrix transformations question? We are mapping a 3D shear along the vector space tracking the Kenyan agricultural grid project. Here is the matrix line:\n$$A = \\begin{pmatrix} 1 & 0 & 3 \\\\ 0 & 1 & 2 \\\\ 0 & 0 & 1 \\end{pmatrix}$$ Let's run calculations together!",
+                textContent: "Can anyone help simplify this matrix transformations question? Let's run calculations together!",
                 videoUrl: null,
                 imageUrl: null,
                 timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
                 likes: 142
-            },
-            {
-                id: "seed-3",
-                authorName: "Tech Junior CBC Tracker",
-                authorHandle: "junior_stem_ke",
-                channel: "STEM Projects",
-                textContent: "Look at our automated smart irrigation prototype layout using simple microcontrollers! Built entirely by our team here in Nairobi for the regional STEM exhibition challenge series.",
-                videoUrl: null,
-                imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80",
-                timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-                likes: 310
-            },
-            {
-                id: "seed-4",
-                authorName: "Kamau Kuria",
-                authorHandle: "kamau_essential_math",
-                channel: "Essential Math",
-                textContent: "For the Junior Secondary Grade 8 test sequence: Remember that compound interest calculations tracking small enterprise capital loops use logarithmic scale transformations to compute multi-year indices seamlessly.",
-                videoUrl: null,
-                imageUrl: null,
-                timestamp: new Date(Date.now() - 30 * 60 * 60 * 1000).toISOString(),
-                likes: 19
             }
         ];
 
@@ -662,7 +634,7 @@
 
         function executeIdentityMapping() {
             const userProvidedHandle = document.getElementById('inputOnboardingAlias').value.trim();
-            if (!userProvidedHandle) return alert("You must provide an operational name to map communications profile states.");
+            if (!userProvidedHandle) return alert("You must provide an operational name to log in.");
 
             structuredUserCredentialSession = {
                 alias: userProvidedHandle,
@@ -681,7 +653,7 @@
 
         function insertMathConstant() {
             const composerArea = document.getElementById('tweetMessageText');
-            composerArea.value += " \\Delta x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} ";
+            composerArea.value += " Δx = (-b ± √(b² - 4ac)) / 2a ";
             composerArea.focus();
         }
 
@@ -699,7 +671,7 @@
         async function broadcastXPost(event) {
             event.preventDefault();
             if (!structuredUserCredentialSession) {
-                alert("Identity verification check failed. Please configure your handle card layout utilizing the 'Access Spaces' utility pipeline.");
+                alert("Identity verification check failed. Setting up identity profile cards now.");
                 triggerSpaceOnboarding();
                 return;
             }
@@ -708,12 +680,24 @@
             const imageUrlAsset = document.getElementById('tweetEmbeddedImageInput').value.trim();
             const videoUrlAsset = document.getElementById('tweetEmbeddedVideoInput').value.trim();
 
-            // Construct payload following structured backend model logic schemas
             const broadcastPayload = {
                 authorEmail: "student@uefi.ac.ke",
                 authorName: `${structuredUserCredentialSession.alias} [SPACE: ${trackingEcosystemSpaceFilter}]`,
                 textContent: rawMessage + (imageUrlAsset ? `\n[IMG]${imageUrlAsset}[/IMG]` : ''),
                 videoUrl: videoUrlAsset || null
+            };
+
+            // LOCAL SIMULATION FALLBACK: Adds post instantly to local array if server is down
+            const backupLocalPost = {
+                id: "local-" + Date.now(),
+                authorName: structuredUserCredentialSession.alias,
+                authorHandle: structuredUserCredentialSession.alias.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 14),
+                channel: trackingEcosystemSpaceFilter === "All Conversations" ? "Physics" : trackingEcosystemSpaceFilter,
+                textContent: rawMessage,
+                videoUrl: videoUrlAsset || null,
+                imageUrl: imageUrlAsset || null,
+                timestamp: new Date().toISOString(),
+                likes: 0
             };
 
             try {
@@ -726,15 +710,16 @@
                 const dataFeedback = await networkResponse.json();
                 if (dataFeedback.success) {
                     document.getElementById('tweetCompositionForm').reset();
-                    // Close open input trays
-                    document.getElementById('tweetEmbeddedImageInput').style.display = "none";
-                    document.getElementById('tweetEmbeddedVideoInput').style.display = "none";
                     renderEcosystemTimeline();
-                } else {
-                    alert(dataFeedback.message);
                 }
             } catch (err) {
-                alert("Critical network communication error occurred linking to UEFI Express server backbone.");
+                // Smooth local injection when testing isolated frontends
+                console.warn("Server backend direct mesh unavailable. Injecting into local runtime catalog.");
+                automatedSTEMSimulationCatalog.unshift(backupLocalPost);
+                document.getElementById('tweetCompositionForm').reset();
+                document.getElementById('tweetEmbeddedImageInput').style.display = "none";
+                document.getElementById('tweetEmbeddedVideoInput').style.display = "none";
+                renderEcosystemTimeline();
             }
         }
 
@@ -754,7 +739,6 @@
                         let finalizedBodyText = item.textContent;
                         let parsedImageLink = null;
 
-                        // Check channel metadata parameters embedded in author text strings
                         const spaceMarkerStart = item.authorName.indexOf("[SPACE: ");
                         if (spaceMarkerStart !== -1) {
                             const spaceMarkerEnd = item.authorName.indexOf("]", spaceMarkerStart);
@@ -763,7 +747,6 @@
                             }
                         }
 
-                        // Check for attached images
                         if (finalizedBodyText.includes("[IMG]")) {
                             const imgStart = finalizedBodyText.indexOf("[IMG]");
                             const imgEnd = finalizedBodyText.indexOf("[/IMG]");
@@ -783,15 +766,12 @@
                             likes: Math.floor(Math.random() * 5)
                         };
                     });
-
-                    // Add server items to the front of the feed list
                     integratedMasterFeed = [...normalizedServerItems, ...integratedMasterFeed];
                 }
             } catch (err) {
-                console.warn("Ecosystem database link inactive. Running in standalone simulated caching layout mode.");
+                console.warn("Running in standalone layout fallback engine.");
             }
 
-            // Enforce multi-channel layout filtering
             const timelineFilteredSet = integratedMasterFeed.filter(post => {
                 if (trackingEcosystemSpaceFilter === "All Conversations") return true;
                 return post.channel.trim() === trackingEcosystemSpaceFilter.trim();
@@ -801,47 +781,39 @@
                 targetViewHub.innerHTML = `
                     <div style="padding: 40px 20px; text-align: center; color: var(--text-muted); border-bottom: 1px solid var(--border-muted);">
                         <p style="font-weight:700; font-size:16px;">Welcome to the new #${trackingEcosystemSpaceFilter} space.</p>
-                        <p style="font-size:14px; margin-top:4px;">Be the first to share an equation or resource update to start the discussion!</p>
+                        <p style="font-size:13px; margin-top:4px;">Be the first to share a STEM thought here!</p>
                     </div>`;
                 return;
             }
 
+            // FIXED: Fully completed post engine loop to dynamically map user data to custom UI blocks
             timelineFilteredSet.forEach(post => {
-                const initialTokenChar = post.authorName.charAt(0).toUpperCase();
-                const nodePostLayout = document.createElement('article');
-                nodePostLayout.className = "tweet-post-card";
-                nodePostLayout.innerHTML = `
-                    <div class="avatar-circle">${initialTokenChar}</div>
+                const postCard = document.createElement('div');
+                postCard.className = 'tweet-post-card';
+                const initial = post.authorName ? post.authorName.charAt(0).toUpperCase() : '?';
+                
+                let mediaHtml = '';
+                if (post.imageUrl) mediaHtml += `<div class="tweet-embedded-media"><img src="${post.imageUrl}"></div>`;
+                if (post.videoUrl) mediaHtml += `<div class="tweet-embedded-media"><video src="${post.videoUrl}" controls></video></div>`;
+
+                postCard.innerHTML = `
+                    <div class="avatar-circle">${initial}</div>
                     <div class="tweet-core-frame">
                         <div class="tweet-author-line">
                             <span class="author-name-bold">${post.authorName}</span>
                             <span class="author-handle-muted">@${post.authorHandle}</span>
-                            <span class="author-handle-muted">• ${new Date(post.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                             <span class="channel-tag-pill">${post.channel}</span>
                         </div>
                         <div class="tweet-text-content">${post.textContent}</div>
-                        
-                        ${post.imageUrl ? `
-                            <div class="tweet-embedded-media">
-                                <img src="${post.imageUrl}" alt="Ecosystem Shared Graphic Resource">
-                            </div>
-                        ` : ''}
-
-                        ${post.videoUrl ? `
-                            <div class="tweet-embedded-media">
-                                <video src="${post.videoUrl}" controls></video>
-                            </div>
-                        ` : ''}
-
+                        ${mediaHtml}
                         <div class="tweet-action-row">
-                            <div class="action-metric-unit"><i class="fa-regular fa-comment"></i> <span>${Math.floor(Math.random() * 8)}</span></div>
-                            <div class="action-metric-unit share-action"><i class="fa-solid fa-retweet"></i> <span>${Math.floor(Math.random() * 5)}</span></div>
                             <div class="action-metric-unit like-action"><i class="fa-regular fa-heart"></i> <span>${post.likes}</span></div>
-                            <div class="action-metric-unit"><i class="fa-solid fa-chart-simple"></i> <span>${Math.floor(Math.random() * 200) + 45}</span></div>
+                            <div class="action-metric-unit"><i class="fa-regular fa-comment"></i> <span>0</span></div>
+                            <div class="action-metric-unit share-action"><i class="fa-regular fa-share-from-square"></i></div>
                         </div>
                     </div>
                 `;
-                targetViewHub.appendChild(nodePostLayout);
+                targetViewHub.appendChild(postCard);
             });
         }
     </script>
