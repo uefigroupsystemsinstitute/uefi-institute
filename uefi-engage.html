@@ -1,887 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Engage - X-STEM Hub</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* --- CORE DESIGN SYSTEM DEFINITIONS (Safaricom & Kenyan Flag Fusion) --- */
-        :root {
-            --safaricom-green: #1b7340;
-            --safaricom-light-green: rgba(27, 115, 64, 0.08);
-            --kenya-red: #990000;
-            --kenya-black: #111111;
-            --border-muted: #eff3f4;
-            --bg-canvas: #ffffff;
-            --bg-dim: #f7f9f9;
-            --text-main: #0f1419;
-            --text-muted: #536471;
-        }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+<meta charset="UTF-8">
 
-        body {
-            background-color: var(--bg-canvas);
-            color: var(--text-main);
-            overflow-y: scroll;
-        }
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-        .layout-grid {
-            display: grid;
-            grid-template-columns: 275px 600px 350px;
-            max-width: 1232px;
-            margin: 0 auto;
-            min-height: 100vh;
-        }
+<title>UEFI Engage</title>
 
-        /* --- LEFT NAVIGATION COLUMN --- */
-        .sidebar-left {
-            border-right: 1px solid var(--border-muted);
-            padding: 12px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-        }
+<link rel="stylesheet" href="css/engage.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/animations.css">
 
-        .brand-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            color: var(--safaricom-green);
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-        .nav-links-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-top: 20px;
-            list-style: none;
-        }
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
-        .nav-link-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 12px 20px;
-            font-size: 19px;
-            font-weight: 700;
-            border-radius: 9999px;
-            cursor: pointer;
-            color: var(--text-main);
-            transition: background 0.2s;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
 
-        .nav-link-item:hover, .nav-link-item.active {
-            background-color: var(--safaricom-light-green);
-            color: var(--safaricom-green);
-        }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-        .nav-link-item i {
-            width: 26px;
-            font-size: 22px;
-            text-align: center;
-        }
-
-        .btn-engage-compose {
-            background-color: var(--kenya-red);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 14px;
-            border-radius: 9999px;
-            font-size: 17px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 15px;
-            box-shadow: 0 4px 12px rgba(153, 0, 0, 0.15);
-            transition: background 0.2s;
-        }
-
-        .btn-engage-compose:hover {
-            background-color: #770000;
-        }
-
-        .profile-footer-tab {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 9999px;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
-
-        .profile-footer-tab:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-
-        .avatar-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--safaricom-green), var(--kenya-red));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        /* --- CENTER FEED CONVERSATION --- */
-        .timeline-center {
-            border-right: 1px solid var(--border-muted);
-            min-height: 100vh;
-        }
-
-        .view-sticky-header {
-            position: sticky;
-            top: 0;
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-muted);
-            padding: 16px;
-            z-index: 10;
-        }
-
-        .view-sticky-header h2 {
-            font-size: 20px;
-            font-weight: 800;
-        }
-
-        .channel-context-row {
-            display: flex;
-            overflow-x: auto;
-            border-bottom: 1px solid var(--border-muted);
-            scrollbar-width: none;
-        }
-
-        .channel-tab {
-            flex: 1;
-            text-align: center;
-            padding: 15px 10px;
-            font-weight: 700;
-            font-size: 15px;
-            color: var(--text-muted);
-            cursor: pointer;
-            position: relative;
-            white-space: nowrap;
-        }
-
-        .channel-tab:hover {
-            background-color: rgba(0,0,0,0.02);
-        }
-
-        .channel-tab.active {
-            color: var(--safaricom-green);
-        }
-
-        .channel-tab.active::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 4px;
-            background-color: var(--safaricom-green);
-            border-radius: 9999px;
-        }
-
-        /* Composer Controls */
-        .x-composer-container {
-            padding: 16px;
-            display: flex;
-            gap: 12px;
-            border-bottom: 8px solid var(--border-muted);
-        }
-
-        .composer-main-body {
-            flex-grow: 1;
-        }
-
-        .editable-input-area {
-            width: 100%;
-            border: none;
-            outline: none;
-            font-size: 20px;
-            color: var(--text-main);
-            resize: none;
-            min-height: 60px;
-        }
-
-        .media-link-field {
-            width: 100%;
-            border: 1px solid var(--border-muted);
-            padding: 8px 10px;
-            border-radius: 6px;
-            font-size: 14px;
-            margin-top: 8px;
-            outline: none;
-            display: none;
-        }
-
-        .composer-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 12px;
-            padding-top: 10px;
-            border-top: 1px solid var(--border-muted);
-        }
-
-        .toolbar-attachments {
-            display: flex;
-            gap: 15px;
-            color: var(--safaricom-green);
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .btn-tweet-submit {
-            background-color: var(--safaricom-green);
-            color: white;
-            border: none;
-            padding: 8px 18px;
-            font-weight: 700;
-            border-radius: 9999px;
-            cursor: pointer;
-        }
-
-        /* Card Feed Layout Post Elements */
-        .tweet-post-card {
-            padding: 16px;
-            display: flex;
-            gap: 12px;
-            border-bottom: 1px solid var(--border-muted);
-            transition: background 0.2s;
-        }
-
-        .tweet-core-frame {
-            flex-grow: 1;
-        }
-
-        .tweet-author-line {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 15px;
-        }
-
-        .author-name-bold {
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .author-handle-muted {
-            color: var(--text-muted);
-        }
-
-        .channel-tag-pill {
-            background-color: var(--border-muted);
-            color: var(--kenya-red);
-            font-size: 11px;
-            font-weight: 800;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: auto;
-        }
-
-        .tweet-text-content {
-            font-size: 15px;
-            line-height: 1.5;
-            margin-top: 4px;
-            color: var(--text-main);
-            white-space: pre-wrap;
-        }
-
-        .tweet-embedded-media {
-            margin-top: 12px;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border-muted);
-            max-height: 380px;
-        }
-
-        .tweet-embedded-media img, .tweet-embedded-media video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .tweet-action-row {
-            display: flex;
-            justify-content: space-between;
-            max-width: 425px;
-            margin-top: 12px;
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-
-        .action-metric-unit {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: color 0.1s;
-        }
-
-        .action-metric-unit:hover.like-action { color: var(--kenya-red); }
-        .action-metric-unit:hover.comment-action { color: var(--safaricom-green); }
-        .action-metric-unit:hover.share-action { color: #00acee; }
-
-        /* --- COMMENTS TRAY WORKSPACE --- */
-        .comments-tray-box {
-            background-color: var(--bg-dim);
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 12px;
-            display: none;
-        }
-
-        .comment-node-row {
-            padding: 6px 0;
-            font-size: 13px;
-            border-bottom: 1px dashed #eff3f4;
-        }
-
-        .comment-node-row:last-child {
-            border-bottom: none;
-        }
-
-        .comment-input-wrapper {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .comment-text-box {
-            flex-grow: 1;
-            padding: 6px 10px;
-            border: 1px solid var(--border-muted);
-            border-radius: 6px;
-            outline: none;
-            font-size: 13px;
-        }
-
-        /* --- RIGHT TRENDING & RESOURCE COLUMN --- */
-        .sidebar-right {
-            padding: 12px 20px;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-        }
-
-        .search-bar-x {
-            background-color: var(--border-muted);
-            border-radius: 9999px;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
-
-        .search-bar-x input {
-            background: none;
-            border: none;
-            outline: none;
-            width: 100%;
-            font-size: 15px;
-            color: var(--text-main);
-        }
-
-        .trending-card-box {
-            background-color: var(--bg-dim);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-
-        .trending-card-box h3 {
-            font-size: 20px;
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
-
-        .trend-item-block {
-            padding: 10px 0;
-            cursor: pointer;
-        }
-
-        .trend-item-block:not(:last-child) {
-            border-bottom: 1px solid #e1e8ed;
-        }
-
-        .trend-meta-label {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .trend-topic-name {
-            font-size: 15px;
-            font-weight: 700;
-            margin-top: 2px;
-        }
-
-        /* --- INTERACTIVE ONBOARDING MODAL --- */
-        .modal-blur-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-
-        .modal-blur-overlay.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .x-modal-frame {
-            background-color: var(--bg-canvas);
-            border-radius: 16px;
-            width: 100%;
-            max-width: 520px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            border-top: 6px solid var(--safaricom-green);
-        }
-
-        .agreement-scrollbox {
-            background-color: var(--bg-dim);
-            border: 1px solid var(--border-muted);
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            color: var(--text-muted);
-            max-height: 120px;
-            overflow-y: auto;
-            margin: 15px 0;
-            line-height: 1.5;
-        }
-    </style>
 </head>
+
 <body>
 
-    <div class="layout-grid">
-        <aside class="sidebar-left">
-            <div>
-                <div class="brand-header">
-                    <i class="fa-solid fa-square-rss fa-xl"></i>
-                    <span>UEFI Engage</span>
-                </div>
-                <nav>
-                    <ul class="nav-links-stack">
-                        <li class="nav-link-item active" onclick="location.reload()"><i class="fa-solid fa-house"></i> Home Feed</li>
-                        <li class="nav-link-item"><i class="fa-solid fa-hashtag"></i> Explore Hub</li>
-                        <li class="nav-link-item"><i class="fa-solid fa-bell"></i> Notifications</li>
-                        <li class="nav-link-item"><i class="fa-solid fa-envelope"></i> DM Matrix</li>
-                        <li class="nav-link-item" onclick="triggerSpaceOnboarding()"><i class="fa-solid fa-circle-nodes"></i> Access Spaces</li>
-                    </ul>
-                </nav>
-                <button class="btn-engage-compose" onclick="focusComposerArea()">Share STEM Link</button>
-            </div>
+<nav class="navbar">
 
-            <div class="profile-footer-tab" id="userIdentityProfileTab">
-                <div class="avatar-circle" id="profileShortTag">?</div>
-                <div>
-                    <div class="author-name-bold" id="profileFullNameLabel">Guest User</div>
-                    <div class="author-handle-muted" id="profileHandleLabel">@visitor_mode</div>
-                </div>
-                <i class="fa-solid fa-ellipsis" style="margin-left: auto; color: var(--text-muted);"></i>
-            </div>
-        </aside>
+<div class="logo">
 
-        <main class="timeline-center">
-            <div class="view-sticky-header">
-                <h2>Home Ecosystem Feed</h2>
-            </div>
+<h2>UEFI Engage</h2>
 
-            <div class="channel-context-row">
-                <div class="channel-tab active" onclick="filterEcosystemSpace('All Conversations', this)">All Feeds</div>
-                <div class="channel-tab" onclick="filterEcosystemSpace('Core Math', this)">Core Math</div>
-                <div class="channel-tab" onclick="filterEcosystemSpace('Physics', this)">Physics</div>
-                <div class="channel-tab" onclick="filterEcosystemSpace('Essential Math', this)">Essential Math</div>
-                <div class="channel-tab" onclick="filterEcosystemSpace('STEM Projects', this)">STEM Projects</div>
-            </div>
+</div>
 
-            <div class="x-composer-container">
-                <div class="avatar-circle" id="composerAvatarNode">V</div>
-                <div class="composer-main-body">
-                    <form id="tweetCompositionForm" onsubmit="broadcastXPost(event)">
-                        <textarea id="tweetMessageText" class="editable-input-area" placeholder="What's happening in your STEM learning? Share equations..." required></textarea>
-                        
-                        <input type="url" id="tweetEmbeddedImageInput" class="media-link-field" placeholder="Paste image link URL (e.g., https://example.com/image.jpg)">
-                        <input type="url" id="tweetEmbeddedVideoInput" class="media-link-field" placeholder="Paste mp4 video link URL (e.g., https://example.com/video.mp4)">
+<div class="search">
 
-                        <div class="composer-toolbar">
-                            <div class="toolbar-attachments">
-                                <i class="fa-regular fa-image" onclick="toggleComposerInput('tweetEmbeddedImageInput')" title="Attach Image URL"></i>
-                                <i class="fa-regular fa-file-video" onclick="toggleComposerInput('tweetEmbeddedVideoInput')" title="Attach Video URL"></i>
-                                <i class="fa-solid fa-calculator" onclick="insertMathConstant()" title="Insert Math Symbol"></i>
-                            </div>
-                            <button type="submit" class="btn-tweet-submit" id="tweetSubmitActionTrigger">Engage</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<input
+type="text"
+placeholder="Search discussions...">
 
-            <div id="timelinePostInjectionHub"></div>
-        </main>
+</div>
 
-        <aside class="sidebar-right">
-            <div class="search-bar-x">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Search STEM Solutions...">
-            </div>
+<div class="login">
 
-            <div class="trending-card-box">
-                <h3>What's Trending</h3>
-                <div class="trend-item-block">
-                    <div class="trend-meta-label">KCSE Examination Prep • Trending</div>
-                    <div class="trend-topic-name">#PhysicsPaper2</div>
-                    <div class="trend-meta-label">4.2K Conversations</div>
-                </div>
-                <div class="trend-item-block">
-                    <div class="trend-meta-label">Kenya CBC Curriculum • Trending</div>
-                    <div class="trend-topic-name">#JuniorSecondarySTEM</div>
-                    <div class="trend-meta-label">2.8K Conversations</div>
-                </div>
-            </div>
-        </aside>
-    </div>
+<button id="loginBtn">
 
-    <div class="modal-blur-overlay" id="spaceConsentOverlay">
-        <div class="x-modal-frame">
-            <h2 style="font-size: 24px; font-weight: 800;"><i class="fa-solid fa-shield-halved" style="color: var(--safaricom-green);"></i> Join UEFI Engage</h2>
-            <p style="font-size: 14px; margin-top: 10px; color: var(--text-muted);">Configure your ecosystem alias card to establish verified access channels.</p>
-            
-            <div class="agreement-scrollbox">
-                Ecosystem Conduct Protocols: You are entering a dedicated educational space. By proceeding, you verify consent to map contribution streams to your profile.
-            </div>
+Sign In
 
-            <div style="margin-bottom: 15px;">
-                <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 6px;">Ecosystem Preferred Name</label>
-                <input type="text" id="inputOnboardingAlias" class="media-link-field" style="display: block; font-size: 15px; padding: 10px;" placeholder="e.g., Silas_Omondi_STEM" required>
-            </div>
+</button>
 
-            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
-                <button class="btn-tweet-submit" style="background-color: var(--border-muted); color: var(--text-main);" onclick="closeSpaceOnboarding()">Cancel</button>
-                <button class="btn-tweet-submit" onclick="executeIdentityMapping()">Accept & Access Space</button>
-            </div>
-        </div>
-    </div>
+</div>
 
-    <script>
-        const CORE_SERVER_GATEWAY = "http://localhost:5000";
-        let trackingEcosystemSpaceFilter = "All Conversations";
-        let structuredUserCredentialSession = null;
-        let localRuntimeCatalogFallback = [];
+</nav>
 
-        // Standalone Baseline Seed Posts in case DB connection hasn't finished routing
-        const DEFAULT_LOCAL_SEED = [
-            {
-                _id: "seed-1",
-                authorName: "Dr. Evans Mwangi",
-                authorHandle: "mwangi_physics_lab",
-                channel: "Physics",
-                textContent: "Checking out the K.C.S.E Physics Paper 2 mechanics roadmap. Remember, boundary constants must follow absolute permittivity models precisely.",
-                videoUrl: null,
-                imageUrl: null,
-                likes: 84,
-                shares: 12,
-                comments: [{ author: "Alice_STEM", text: "Excellent pointer, Doc!" }]
-            }
-        ];
 
-        window.addEventListener('DOMContentLoaded', () => {
-            // Load state data safely from storage blocks
-            if(!localStorage.getItem('uefi_local_posts')) {
-                localStorage.setItem('uefi_local_posts', JSON.stringify(DEFAULT_LOCAL_SEED));
-            }
-            localRuntimeCatalogFallback = JSON.parse(localStorage.getItem('uefi_local_posts'));
 
-            validateProfileStateCaches();
-            renderEcosystemTimeline();
-        });
+<div class="mainContainer">
 
-        function validateProfileStateCaches() {
-            const cachedIdentity = localStorage.getItem('uefi_x_profile');
-            if (cachedIdentity) {
-                structuredUserCredentialSession = JSON.parse(cachedIdentity);
-                document.getElementById('profileFullNameLabel').textContent = structuredUserCredentialSession.alias;
-                document.getElementById('profileHandleLabel').textContent = `@${structuredUserCredentialSession.alias.toLowerCase().replace(/\s+/g, '_')}`;
-                
-                const initialChar = structuredUserCredentialSession.alias.charAt(0).toUpperCase();
-                document.getElementById('profileShortTag').textContent = initialChar;
-                document.getElementById('composerAvatarNode').textContent = initialChar;
-            }
-        }
+<aside class="leftSidebar">
 
-        function triggerSpaceOnboarding() {
-            document.getElementById('spaceConsentOverlay').classList.add('visible');
-        }
+<ul>
 
-        function closeSpaceOnboarding() {
-            document.getElementById('spaceConsentOverlay').classList.remove('visible');
-        }
+<li><i class="fa-solid fa-house"></i> Home</li>
 
-        function executeIdentityMapping() {
-            const userProvidedHandle = document.getElementById('inputOnboardingAlias').value.trim();
-            if (!userProvidedHandle) return alert("You must provide an operational name to log in.");
+<li><i class="fa-solid fa-book"></i> Subjects</li>
 
-            structuredUserCredentialSession = {
-                alias: userProvidedHandle,
-                timestamp: new Date().toISOString()
-            };
+<li><i class="fa-solid fa-fire"></i> Trending</li>
 
-            localStorage.setItem('uefi_x_profile', JSON.stringify(structuredUserCredentialSession));
-            validateProfileStateCaches();
-            closeSpaceOnboarding();
-        }
+<li><i class="fa-solid fa-trophy"></i> Leaderboard</li>
 
-        function toggleComposerInput(elementId) {
-            const targetElement = document.getElementById(elementId);
-            targetElement.style.display = targetElement.style.display === "block" ? "none" : "block";
-        }
+<li><i class="fa-solid fa-bookmark"></i> Saved</li>
 
-        function insertMathConstant() {
-            const composerArea = document.getElementById('tweetMessageText');
-            composerArea.value += " Δx = (-b ± √(b² - 4ac)) / 2a ";
-            composerArea.focus();
-        }
+<li><i class="fa-solid fa-gear"></i> Settings</li>
 
-        function focusComposerArea() {
-            document.getElementById('tweetMessageText').focus();
-        }
+</ul>
 
-        function filterEcosystemSpace(spaceName, contextTabElement) {
-            trackingEcosystemSpaceFilter = spaceName;
-            document.querySelectorAll('.channel-tab').forEach(tab => tab.classList.remove('active'));
-            contextTabElement.classList.add('active');
-            renderEcosystemTimeline();
-        }
+</aside>
 
-        // --- CORE ACTION PIPELINES (With Fallbacks to protect content) ---
-        async function broadcastXPost(event) {
-            event.preventDefault();
-            if (!structuredUserCredentialSession) {
-                alert("Identity verification check failed. Setting up identity profile cards now.");
-                triggerSpaceOnboarding();
-                return;
-            }
 
-            const rawMessage = document.getElementById('tweetMessageText').value.trim();
-            const imageUrlAsset = document.getElementById('tweetEmbeddedImageInput').value.trim();
-            const videoUrlAsset = document.getElementById('tweetEmbeddedVideoInput').value.trim();
 
-            const postPayload = {
-                authorName: structuredUserCredentialSession.alias,
-                authorHandle: structuredUserCredentialSession.alias.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 14),
-                channel: trackingEcosystemSpaceFilter === "All Conversations" ? "Physics" : trackingEcosystemSpaceFilter,
-                textContent: rawMessage,
-                imageUrl: imageUrlAsset || null,
-                videoUrl: videoUrlAsset || null
-            };
 
-            try {
-                const response = await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(postPayload)
-                });
-                const data = await response.json();
-                if (!data.success) throw new Error("Server rejected request");
-            } catch (err) {
-                console.warn("Server gateway down. Saving data securely to LocalStorage sandbox.");
-                const localPost = { ...postPayload, _id: "local-" + Date.now(), likes: 0, shares: 0, comments: [] };
-                localRuntimeCatalogFallback.unshift(localPost);
-                localStorage.setItem('uefi_local_posts', JSON.stringify(localRuntimeCatalogFallback));
-            }
 
-            document.getElementById('tweetCompositionForm').reset();
-            document.getElementById('tweetEmbeddedImageInput').style.display = "none";
-            document.getElementById('tweetEmbeddedVideoInput').style.display = "none";
-            renderEcosystemTimeline();
-        }
+<main class="feed">
 
-        async function handleLikeAction(postId) {
-            if (postId.toString().startsWith("local-")) {
-                const target = localRuntimeCatalogFallback.find(p => p._id === postId);
-                if (target) target.likes++;
-                localStorage.setItem('uefi_local_posts', JSON.stringify(localRuntimeCatalogFallback));
-                renderEcosystemTimeline();
-                return;
-            }
+<section class="hero">
 
-            try {
-                await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts/${postId}/like', { method: 'POST' });
-            } catch (err) {
-                console.error("Failed syncing live interaction counter.");
-            }
-            renderEcosystemTimeline();
-        }
+<h1>UEFI Engage</h1>
 
-        async function handleShareAction(postId) {
-            if (postId.toString().startsWith("local-")) {
-                const target = localRuntimeCatalogFallback.find(p => p._id === postId);
-                if (target) target.shares++;
-                localStorage.setItem('uefi_local_posts', JSON.stringify(localRuntimeCatalogFallback));
-                alert("Link copied successfully to your sandbox profile feed!");
-                renderEcosystemTimeline();
-                return;
-            }
+<p>
 
-            try {
-                await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts/${postId}/share`, { method: 'POST' });
-                alert("Link shared to live database mesh!");
-            } catch (err) {
-                console.error("Dynamic sync error on action distribution frame.");
-            }
-            renderEcosystemTimeline();
-        }
+Empowering Students To Solve Academic Challenges Together.
 
-        function toggleCommentsDrawer(postId) {
-            const drawer = document.getElementById(`comments-tray-${postId}`);
-            drawer.style.display = drawer.style.display === "block" ? "none" : "block";
-        }
+</p>
 
-        async function submitCommentBox(event, postId) {
-            event.preventDefault();
-            if (!structuredUserCredentialSession) return triggerSpaceOnboarding();
-            
-            const inputBox = document.getElementById(`comment-input-${postId}`);
-            const commentText = inputBox.value.trim();
-            if (!commentText) return;
+</section>
 
-            if (postId.toString().startsWith("local-")) {
-                const target = localRuntimeCatalogFallback.find(p => p._id === postId);
-                if (target) {
-                    target.comments.push({ author: structuredUserCredentialSession.alias, text: commentText });
-                }
-                localStorage.setItem('uefi_local_posts', JSON.stringify(localRuntimeCatalogFallback));
-                inputBox.value = "";
-                renderEcosystemTimeline();
-                document.getElementById(`comments-tray-${postId}`).style.display = "block";
-                return;
-            }
 
-            try {
-                await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts/${postId}/comment`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ author: structuredUserCredentialSession.alias, text: commentText })
-                });
-                inputBox.value = "";
-            } catch (err) {
-                console.error("Error communicating with master route.");
-            }
-            renderEcosystemTimeline();
-        }
 
-        async function renderEcosystemTimeline() {
-            const targetViewHub = document.getElementById('timelinePostInjectionHub');
-            targetViewHub.innerHTML = "";
-            let masterFeed = [];
+<section class="createPost">
 
-            try {
-                const response = await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts`);
-                const data = await response.json();
-                if (data.success) masterFeed = data.feed;
-            } catch (err) {
-                masterFeed = JSON.parse(localStorage.getItem('uefi_local_posts')) || [];
-            }
+<textarea
+placeholder="Ask a question or share a solution..."></textarea>
 
-            const filteredSet = masterFeed.filter(post => {
-                if (trackingEcosystemSpaceFilter === "All Conversations") return true;
-                return post.channel === trackingEcosystemSpaceFilter;
-            });
+<button>
 
-            if (filteredSet.length === 0) {
-                targetViewHub.innerHTML = `
-                    <div style="padding: 40px 20px; text-align: center; color: var(--text-muted);">
-                        <p style="font-weight:700;">Welcome to the new #${trackingEcosystemSpaceFilter} feed room.</p>
-                        <p style="font-size:13px; margin-top:4px;">Be the first one to post a media update or equation here!</p>
-                    </div>`;
-                return;
-            }
+Post
 
-            filteredSet.forEach(post => {
-                const postCard = document.createElement('div');
-                postCard.className = 'tweet-post-card';
-                const initial = post.authorName ? post.authorName.charAt(0).toUpperCase() : '?';
-                
-                let mediaHtml = '';
-                if (post.imageUrl) mediaHtml += `<div class="tweet-embedded-media"><img src="${post.imageUrl}"></div>`;
-                if (post.videoUrl) mediaHtml += `<div class="tweet-embedded-media"><video src="${post.videoUrl}" controls></video></div>`;
+</button>
 
-                let commentsHtml = '';
-                const postComments = post.comments || [];
-                postComments.forEach(c => {
-                    commentsHtml += `
-                        <div class="comment-node-row">
-                            <strong>${c.author}:</strong> ${c.text}
-                        </div>`;
-                });
+</section>
 
-                postCard.innerHTML = `
-                    <div class="avatar-circle">${initial}</div>
-                    <div class="tweet-core-frame">
-                        <div class="tweet-author-line">
-                            <span class="author-name-bold">${post.authorName}</span>
-                            <span class="author-handle-muted">@${post.authorHandle || 'user'}</span>
-                            <span class="channel-tag-pill">${post.channel}</span>
-                        </div>
-                        <div class="tweet-text-content">${post.textContent}</div>
-                        ${mediaHtml}
-                        <div class="tweet-action-row">
-                            <div class="action-metric-unit like-action" onclick="handleLikeAction('${post._id}')">
-                                <i class="fa-regular fa-heart"></i> <span>${post.likes || 0}</span>
-                            </div>
-                            <div class="action-metric-unit comment-action" onclick="toggleCommentsDrawer('${post._id}')">
-                                <i class="fa-regular fa-comment"></i> <span>${postComments.length}</span>
-                            </div>
-                            <div class="action-metric-unit share-action" onclick="handleShareAction('${post._id}')">
-                                <i class="fa-regular fa-share-from-square"></i> <span>${post.shares || 0}</span>
-                            </div>
-                        </div>
 
-                        <div class="comments-tray-box" id="comments-tray-${post._id}">
-                            <div>${commentsHtml || '<p style="font-size:11px; color:var(--text-muted);">No responses shared yet.</p>'}</div>
-                            <form class="comment-input-wrapper" onsubmit="submitCommentBox(event, '${post._id}')">
-                                <input type="text" id="comment-input-${post._id}" class="comment-text-box" placeholder="Write a calculated answer..." required>
-                                <button type="submit" class="btn-tweet-submit" style="padding: 4px 12px; font-size:12px;">Reply</button>
-                            </form>
-                        </div>
-                    </div>
-                `;
-                targetViewHub.appendChild(postCard);
-            });
-        }
-    </script>
+
+<section class="posts">
+
+<div class="post">
+
+<h3>
+
+Zenith
+
+</h3>
+
+<p>
+
+How can I derive Gauss' Law for a spherical conductor?
+
+</p>
+
+<div class="actions">
+
+<span>
+
+<i class="fa-regular fa-heart"></i>
+
+24
+
+</span>
+
+<span>
+
+<i class="fa-regular fa-comment"></i>
+
+8
+
+</span>
+
+<span>
+
+<i class="fa-solid fa-share"></i>
+
+Share
+
+</span>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="post">
+
+<h3>
+
+Brian
+
+</h3>
+
+<p>
+
+Can someone explain Integration by Parts with intuition?
+
+</p>
+
+<div class="actions">
+
+<span>
+
+<i class="fa-regular fa-heart"></i>
+
+16
+
+</span>
+
+<span>
+
+<i class="fa-regular fa-comment"></i>
+
+3
+
+</span>
+
+<span>
+
+<i class="fa-solid fa-share"></i>
+
+Share
+
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+
+<aside class="rightSidebar">
+
+<div class="card">
+
+<h3>
+
+Trending
+
+</h3>
+
+<p>#Physics</p>
+
+<p>#AAHL</p>
+
+<p>#ComputerScience</p>
+
+<p>#TOK</p>
+
+<p>#Economics</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>
+
+Top Contributors
+
+</h3>
+
+<p>🥇 Zenith</p>
+
+<p>🥈 Brian</p>
+
+<p>🥉 Sarah</p>
+
+</div>
+
+</aside>
+
+</div>
+
+<script src="js/firebase.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/engage.js"></script>
+
 </body>
+
 </html>
