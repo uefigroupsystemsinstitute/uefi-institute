@@ -52,11 +52,11 @@ body{
 
 background:
 
-radial-gradient(circle at top right,#14354c 0%,transparent 35%),
+radial-gradient(circle at 0% 0%,rgba(0,166,81,.08),transparent 30%),
 
-radial-gradient(circle at bottom left,#002b16 0%,transparent 30%),
+radial-gradient(circle at 100% 100%,rgba(187,30,16,.08),transparent 30%),
 
-var(--bg);
+linear-gradient(180deg,#090d16,#0c1220);
 
 color:var(--text);
 
@@ -66,22 +66,6 @@ overflow-x:hidden;
 
 }
 
-
-/* Scrollbar */
-
-::-webkit-scrollbar{
-
-width:8px;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-background:var(--green);
-
-border-radius:20px;
-
-}
 
 
 /* ======================================
