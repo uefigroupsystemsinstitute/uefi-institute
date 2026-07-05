@@ -141,7 +141,7 @@
             flex-shrink: 0;
         }
 
-        /* --- CENTER CONVERSATION FEED --- */
+        /* --- CENTER FEED CONVERSATION --- */
         .timeline-center {
             border-right: 1px solid var(--border-muted);
             min-height: 100vh;
@@ -201,7 +201,7 @@
             border-radius: 9999px;
         }
 
-        /* Real-time Tweet Composer Box */
+        /* Composer Controls */
         .x-composer-container {
             padding: 16px;
             display: flex;
@@ -226,10 +226,10 @@
         .media-link-field {
             width: 100%;
             border: 1px solid var(--border-muted);
-            padding: 6px 10px;
+            padding: 8px 10px;
             border-radius: 6px;
-            font-size: 13px;
-            margin-top: 5px;
+            font-size: 14px;
+            margin-top: 8px;
             outline: none;
             display: none;
         }
@@ -261,19 +261,13 @@
             cursor: pointer;
         }
 
-        /* Status Post Layout Card */
+        /* Card Feed Layout Post Elements */
         .tweet-post-card {
             padding: 16px;
             display: flex;
             gap: 12px;
             border-bottom: 1px solid var(--border-muted);
             transition: background 0.2s;
-            flex-direction: column;
-        }
-
-        .tweet-main-header-block {
-            display: flex;
-            gap: 12px;
         }
 
         .tweet-core-frame {
@@ -347,36 +341,38 @@
 
         .action-metric-unit:hover.like-action { color: var(--kenya-red); }
         .action-metric-unit:hover.comment-action { color: var(--safaricom-green); }
-        .action-metric-unit:hover.share-action { color: #1d9bf0; }
+        .action-metric-unit:hover.share-action { color: #00acee; }
 
-        /* --- COMMENTS INTERACTIVE SECTION --- */
-        .comments-tray-container {
+        /* --- COMMENTS TRAY WORKSPACE --- */
+        .comments-tray-box {
             background-color: var(--bg-dim);
             border-radius: 8px;
-            padding: 10px;
-            margin-top: 10px;
+            padding: 12px;
+            margin-top: 12px;
             display: none;
         }
 
         .comment-node-row {
             padding: 6px 0;
             font-size: 13px;
-            border-bottom: 1px dashed #e1e8ed;
+            border-bottom: 1px dashed #eff3f4;
         }
 
-        .comment-node-row:last-child { border-bottom: none; }
+        .comment-node-row:last-child {
+            border-bottom: none;
+        }
 
         .comment-input-wrapper {
             display: flex;
             gap: 8px;
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .comment-text-box {
-            flex: 1;
-            padding: 6px;
+            flex-grow: 1;
+            padding: 6px 10px;
             border: 1px solid var(--border-muted);
-            border-radius: 4px;
+            border-radius: 6px;
             outline: none;
             font-size: 13px;
         }
@@ -427,7 +423,9 @@
             cursor: pointer;
         }
 
-        .trend-item-block:not(:last-child) { border-bottom: 1px solid #e1e8ed; }
+        .trend-item-block:not(:last-child) {
+            border-bottom: 1px solid #e1e8ed;
+        }
 
         .trend-meta-label {
             font-size: 13px;
@@ -537,8 +535,8 @@
                     <form id="tweetCompositionForm" onsubmit="broadcastXPost(event)">
                         <textarea id="tweetMessageText" class="editable-input-area" placeholder="What's happening in your STEM learning? Share equations..." required></textarea>
                         
-                        <input type="url" id="tweetEmbeddedImageInput" class="media-link-field" placeholder="Paste image link URL...">
-                        <input type="url" id="tweetEmbeddedVideoInput" class="media-link-field" placeholder="Paste mp4 video link URL...">
+                        <input type="url" id="tweetEmbeddedImageInput" class="media-link-field" placeholder="Paste image link URL (e.g., https://example.com/image.jpg)">
+                        <input type="url" id="tweetEmbeddedVideoInput" class="media-link-field" placeholder="Paste mp4 video link URL (e.g., https://example.com/video.mp4)">
 
                         <div class="composer-toolbar">
                             <div class="toolbar-attachments">
@@ -602,34 +600,31 @@
         const CORE_SERVER_GATEWAY = "http://localhost:5000";
         let trackingEcosystemSpaceFilter = "All Conversations";
         let structuredUserCredentialSession = null;
-        let automatedSTEMSimulationCatalog = [];
+        let localRuntimeCatalogFallback = [];
 
-        // BASELINE SEED DATA CONTAINER
-        const INITIAL_SEED_POSTS = [
+        // Standalone Baseline Seed Posts in case DB connection hasn't finished routing
+        const DEFAULT_LOCAL_SEED = [
             {
-                id: "seed-1",
+                _id: "seed-1",
                 authorName: "Dr. Evans Mwangi",
                 authorHandle: "mwangi_physics_lab",
                 channel: "Physics",
                 textContent: "Checking out the K.C.S.E Physics Paper 2 mechanics roadmap. Remember, boundary constants must follow absolute permittivity models precisely.",
                 videoUrl: null,
                 imageUrl: null,
-                timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
                 likes: 84,
                 shares: 12,
-                comments: [
-                    { author: "KenyanTechStudent", text: "Does this affect calculation variables on question 4?" }
-                ]
+                comments: [{ author: "Alice_STEM", text: "Excellent pointer, Doc!" }]
             }
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
-            // Verify or initialize localStorage DB instances so no data drops on refresh
-            if (!localStorage.getItem('uefi_persistent_posts')) {
-                localStorage.setItem('uefi_persistent_posts', JSON.stringify(INITIAL_SEED_POSTS));
+            // Load state data safely from storage blocks
+            if(!localStorage.getItem('uefi_local_posts')) {
+                localStorage.setItem('uefi_local_posts', JSON.stringify(DEFAULT_LOCAL_SEED));
             }
-            automatedSTEMSimulationCatalog = JSON.parse(localStorage.getItem('uefi_persistent_posts'));
-            
+            localRuntimeCatalogFallback = JSON.parse(localStorage.getItem('uefi_local_posts'));
+
             validateProfileStateCaches();
             renderEcosystemTimeline();
         });
@@ -691,6 +686,7 @@
             renderEcosystemTimeline();
         }
 
+        // --- CORE ACTION PIPELINES (With Fallbacks to protect content) ---
         async function broadcastXPost(event) {
             event.preventDefault();
             if (!structuredUserCredentialSession) {
@@ -703,102 +699,138 @@
             const imageUrlAsset = document.getElementById('tweetEmbeddedImageInput').value.trim();
             const videoUrlAsset = document.getElementById('tweetEmbeddedVideoInput').value.trim();
 
-            const backupLocalPost = {
-                id: "local-" + Date.now(),
+            const postPayload = {
                 authorName: structuredUserCredentialSession.alias,
                 authorHandle: structuredUserCredentialSession.alias.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 14),
                 channel: trackingEcosystemSpaceFilter === "All Conversations" ? "Physics" : trackingEcosystemSpaceFilter,
                 textContent: rawMessage,
-                videoUrl: videoUrlAsset || null,
                 imageUrl: imageUrlAsset || null,
-                timestamp: new Date().toISOString(),
-                likes: 0,
-                shares: 0,
-                comments: []
+                videoUrl: videoUrlAsset || null
             };
 
-            // Commit transaction to dynamic array and local storage to prevent reload memory leaks
-            automatedSTEMSimulationCatalog.unshift(backupLocalPost);
-            localStorage.setItem('uefi_persistent_posts', JSON.stringify(automatedSTEMSimulationCatalog));
+            try {
+                const response = await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(postPayload)
+                });
+                const data = await response.json();
+                if (!data.success) throw new Error("Server rejected request");
+            } catch (err) {
+                console.warn("Server gateway down. Saving data securely to LocalStorage sandbox.");
+                const localPost = { ...postPayload, _id: "local-" + Date.now(), likes: 0, shares: 0, comments: [] };
+                localRuntimeCatalogFallback.unshift(localPost);
+                localStorage.setItem('uefi_local_posts', JSON.stringify(localRuntimeCatalogFallback));
+            }
 
-            // Reset UI components
             document.getElementById('tweetCompositionForm').reset();
             document.getElementById('tweetEmbeddedImageInput').style.display = "none";
             document.getElementById('tweetEmbeddedVideoInput').style.display = "none";
-            
             renderEcosystemTimeline();
         }
 
-        // --- INTERACTIVE METRICS WORKFLOW PLATFORM ---
-        function executeLikeMetric(postId) {
-            const index = automatedSTEMSimulationCatalog.findIndex(p => p.id === postId);
-            if (index !== -1) {
-                automatedSTEMSimulationCatalog[index].likes += 1;
-                localStorage.setItem('uefi_persistent_posts', JSON.stringify(automatedSTEMSimulationCatalog));
+        async function handleLikeAction(postId) {
+            if (postId.toString().startsWith("local-")) {
+                const target = localRuntimeCatalogFallback.find(p => p._id === postId);
+                if (target) target.likes++;
+                localStorage.setItem('uefi_local_posts', JSON.stringify(localRuntimeCatalogFallback));
                 renderEcosystemTimeline();
+                return;
             }
+
+            try {
+                await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts/${postId}/like', { method: 'POST' });
+            } catch (err) {
+                console.error("Failed syncing live interaction counter.");
+            }
+            renderEcosystemTimeline();
         }
 
-        function executeShareMetric(postId) {
-            const index = automatedSTEMSimulationCatalog.findIndex(p => p.id === postId);
-            if (index !== -1) {
-                automatedSTEMSimulationCatalog[index].shares += 1;
-                localStorage.setItem('uefi_persistent_posts', JSON.stringify(automatedSTEMSimulationCatalog));
-                alert("STEM Post URL footprint shared successfully to internal profile clipboard mapping!");
+        async function handleShareAction(postId) {
+            if (postId.toString().startsWith("local-")) {
+                const target = localRuntimeCatalogFallback.find(p => p._id === postId);
+                if (target) target.shares++;
+                localStorage.setItem('uefi_local_posts', JSON.stringify(localRuntimeCatalogFallback));
+                alert("Link copied successfully to your sandbox profile feed!");
                 renderEcosystemTimeline();
+                return;
             }
+
+            try {
+                await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts/${postId}/share`, { method: 'POST' });
+                alert("Link shared to live database mesh!");
+            } catch (err) {
+                console.error("Dynamic sync error on action distribution frame.");
+            }
+            renderEcosystemTimeline();
         }
 
-        function toggleCommentContainer(postId) {
-            const tray = document.getElementById(`comments-tray-${postId}`);
-            tray.style.display = tray.style.display === "block" ? "none" : "block";
+        function toggleCommentsDrawer(postId) {
+            const drawer = document.getElementById(`comments-tray-${postId}`);
+            drawer.style.display = drawer.style.display === "block" ? "none" : "block";
         }
 
-        function submitComment(event, postId) {
+        async function submitCommentBox(event, postId) {
             event.preventDefault();
-            if (!structuredUserCredentialSession) {
-                return alert("Profile setup error: Please declare a profile name in Access Spaces tab first.");
-            }
+            if (!structuredUserCredentialSession) return triggerSpaceOnboarding();
             
             const inputBox = document.getElementById(`comment-input-${postId}`);
-            const text = inputBox.value.trim();
-            if (!text) return;
+            const commentText = inputBox.value.trim();
+            if (!commentText) return;
 
-            const index = automatedSTEMSimulationCatalog.findIndex(p => p.id === postId);
-            if (index !== -1) {
-                if (!automatedSTEMSimulationCatalog[index].comments) {
-                    automatedSTEMSimulationCatalog[index].comments = [];
+            if (postId.toString().startsWith("local-")) {
+                const target = localRuntimeCatalogFallback.find(p => p._id === postId);
+                if (target) {
+                    target.comments.push({ author: structuredUserCredentialSession.alias, text: commentText });
                 }
-                automatedSTEMSimulationCatalog[index].comments.push({
-                    author: structuredUserCredentialSession.alias,
-                    text: text
-                });
-                localStorage.setItem('uefi_persistent_posts', JSON.stringify(automatedSTEMSimulationCatalog));
+                localStorage.setItem('uefi_local_posts', JSON.stringify(localRuntimeCatalogFallback));
                 inputBox.value = "";
                 renderEcosystemTimeline();
                 document.getElementById(`comments-tray-${postId}`).style.display = "block";
+                return;
             }
+
+            try {
+                await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts/${postId}/comment`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ author: structuredUserCredentialSession.alias, text: commentText })
+                });
+                inputBox.value = "";
+            } catch (err) {
+                console.error("Error communicating with master route.");
+            }
+            renderEcosystemTimeline();
         }
 
         async function renderEcosystemTimeline() {
             const targetViewHub = document.getElementById('timelinePostInjectionHub');
             targetViewHub.innerHTML = "";
+            let masterFeed = [];
 
-            const timelineFilteredSet = automatedSTEMSimulationCatalog.filter(post => {
+            try {
+                const response = await fetch(`${CORE_SERVER_GATEWAY}/api/connect/posts`);
+                const data = await response.json();
+                if (data.success) masterFeed = data.feed;
+            } catch (err) {
+                masterFeed = JSON.parse(localStorage.getItem('uefi_local_posts')) || [];
+            }
+
+            const filteredSet = masterFeed.filter(post => {
                 if (trackingEcosystemSpaceFilter === "All Conversations") return true;
-                return post.channel.trim() === trackingEcosystemSpaceFilter.trim();
+                return post.channel === trackingEcosystemSpaceFilter;
             });
 
-            if (timelineFilteredSet.length === 0) {
+            if (filteredSet.length === 0) {
                 targetViewHub.innerHTML = `
-                    <div style="padding: 40px 20px; text-align: center; color: var(--text-muted); border-bottom: 1px solid var(--border-muted);">
-                        <p style="font-weight:700; font-size:16px;">Welcome to the new #${trackingEcosystemSpaceFilter} space.</p>
-                        <p style="font-size:13px; margin-top:4px;">Be the first to share a STEM thought here!</p>
+                    <div style="padding: 40px 20px; text-align: center; color: var(--text-muted);">
+                        <p style="font-weight:700;">Welcome to the new #${trackingEcosystemSpaceFilter} feed room.</p>
+                        <p style="font-size:13px; margin-top:4px;">Be the first one to post a media update or equation here!</p>
                     </div>`;
                 return;
             }
 
-            timelineFilteredSet.forEach(post => {
+            filteredSet.forEach(post => {
                 const postCard = document.createElement('div');
                 postCard.className = 'tweet-post-card';
                 const initial = post.authorName ? post.authorName.charAt(0).toUpperCase() : '?';
@@ -807,48 +839,43 @@
                 if (post.imageUrl) mediaHtml += `<div class="tweet-embedded-media"><img src="${post.imageUrl}"></div>`;
                 if (post.videoUrl) mediaHtml += `<div class="tweet-embedded-media"><video src="${post.videoUrl}" controls></video></div>`;
 
-                // Build comments markup payload loop
-                let commentsListHtml = '';
+                let commentsHtml = '';
                 const postComments = post.comments || [];
                 postComments.forEach(c => {
-                    commentsListHtml += `
+                    commentsHtml += `
                         <div class="comment-node-row">
                             <strong>${c.author}:</strong> ${c.text}
-                        </div>
-                    `;
+                        </div>`;
                 });
 
                 postCard.innerHTML = `
-                    <div class="tweet-main-header-block">
-                        <div class="avatar-circle">${initial}</div>
-                        <div class="tweet-core-frame">
-                            <div class="tweet-author-line">
-                                <span class="author-name-bold">${post.authorName}</span>
-                                <span class="author-handle-muted">@${post.authorHandle}</span>
-                                <span class="channel-tag-pill">${post.channel}</span>
+                    <div class="avatar-circle">${initial}</div>
+                    <div class="tweet-core-frame">
+                        <div class="tweet-author-line">
+                            <span class="author-name-bold">${post.authorName}</span>
+                            <span class="author-handle-muted">@${post.authorHandle || 'user'}</span>
+                            <span class="channel-tag-pill">${post.channel}</span>
+                        </div>
+                        <div class="tweet-text-content">${post.textContent}</div>
+                        ${mediaHtml}
+                        <div class="tweet-action-row">
+                            <div class="action-metric-unit like-action" onclick="handleLikeAction('${post._id}')">
+                                <i class="fa-regular fa-heart"></i> <span>${post.likes || 0}</span>
                             </div>
-                            <div class="tweet-text-content">${post.textContent}</div>
-                            ${mediaHtml}
-                            
-                            <div class="tweet-action-row">
-                                <div class="action-metric-unit like-action" onclick="executeLikeMetric('${post.id}')">
-                                    <i class="fa-regular fa-heart"></i> <span>${post.likes || 0}</span>
-                                </div>
-                                <div class="action-metric-unit comment-action" onclick="toggleCommentContainer('${post.id}')">
-                                    <i class="fa-regular fa-comment"></i> <span>${postComments.length}</span>
-                                </div>
-                                <div class="action-metric-unit share-action" onclick="executeShareMetric('${post.id}')">
-                                    <i class="fa-regular fa-share-from-square"></i> <span>${post.shares || 0}</span>
-                                </div>
+                            <div class="action-metric-unit comment-action" onclick="toggleCommentsDrawer('${post._id}')">
+                                <i class="fa-regular fa-comment"></i> <span>${postComments.length}</span>
                             </div>
+                            <div class="action-metric-unit share-action" onclick="handleShareAction('${post._id}')">
+                                <i class="fa-regular fa-share-from-square"></i> <span>${post.shares || 0}</span>
+                            </div>
+                        </div>
 
-                            <div class="comments-tray-container" id="comments-tray-${post.id}">
-                                <div id="comments-list-${post.id}">${commentsListHtml || '<p style="font-size:11px;color:var(--text-muted);">No feedback yet.</p>'}</div>
-                                <form onsubmit="submitComment(event, '${post.id}')" class="comment-input-wrapper">
-                                    <input type="text" id="comment-input-${post.id}" class="comment-text-box" placeholder="Write an educational response..." required>
-                                    <button type="submit" class="btn-tweet-submit" style="padding:4px 10px; font-size:12px;">Reply</button>
-                                </form>
-                            </div>
+                        <div class="comments-tray-box" id="comments-tray-${post._id}">
+                            <div>${commentsHtml || '<p style="font-size:11px; color:var(--text-muted);">No responses shared yet.</p>'}</div>
+                            <form class="comment-input-wrapper" onsubmit="submitCommentBox(event, '${post._id}')">
+                                <input type="text" id="comment-input-${post._id}" class="comment-text-box" placeholder="Write a calculated answer..." required>
+                                <button type="submit" class="btn-tweet-submit" style="padding: 4px 12px; font-size:12px;">Reply</button>
+                            </form>
                         </div>
                     </div>
                 `;
