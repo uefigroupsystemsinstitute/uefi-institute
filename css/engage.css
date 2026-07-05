@@ -1,1 +1,652 @@
+/* ==========================================
+   UEFI Engage
+   Main Stylesheet
+========================================== */
 
+:root{
+
+    --bg:#0b0f19;
+    --bg2:#101827;
+
+    --card:#182231;
+
+    --green:#00A651;
+    --green-dark:#00874a;
+
+    --red:#BB1E10;
+
+    --gold:#F2C94C;
+
+    --white:#ffffff;
+
+    --text:#d7dce5;
+
+    --muted:#98a5b8;
+
+    --border:#273243;
+
+    --shadow:
+    0 15px 35px rgba(0,0,0,.45);
+
+    --radius:18px;
+
+    --transition:.30s ease;
+
+}
+
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+font-family:'Poppins',sans-serif;
+
+}
+
+
+body{
+
+background:
+
+radial-gradient(circle at top right,#14354c 0%,transparent 35%),
+
+radial-gradient(circle at bottom left,#002b16 0%,transparent 30%),
+
+var(--bg);
+
+color:var(--text);
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+}
+
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:var(--green);
+
+border-radius:20px;
+
+}
+
+
+/* ======================================
+NAVBAR
+====================================== */
+
+.navbar{
+
+height:80px;
+
+padding:0 45px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+position:sticky;
+
+top:0;
+
+background:rgba(11,15,25,.85);
+
+backdrop-filter:blur(18px);
+
+border-bottom:1px solid rgba(255,255,255,.05);
+
+z-index:999;
+
+}
+
+
+.logo h2{
+
+color:white;
+
+font-size:28px;
+
+font-weight:700;
+
+letter-spacing:1px;
+
+}
+
+
+.logo h2 span{
+
+color:var(--green);
+
+}
+
+
+.search{
+
+flex:1;
+
+display:flex;
+
+justify-content:center;
+
+}
+
+
+.search input{
+
+width:60%;
+
+padding:14px 22px;
+
+border-radius:40px;
+
+background:#111827;
+
+border:1px solid var(--border);
+
+color:white;
+
+outline:none;
+
+transition:.3s;
+
+}
+
+
+.search input:focus{
+
+border-color:var(--green);
+
+box-shadow:0 0 15px rgba(0,166,81,.25);
+
+}
+
+
+.login button{
+
+background:var(--green);
+
+border:none;
+
+padding:12px 24px;
+
+border-radius:40px;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
+color:white;
+
+}
+
+
+.login button:hover{
+
+background:var(--green-dark);
+
+transform:translateY(-2px);
+
+}
+
+
+/* =======================================
+MAIN GRID
+======================================= */
+
+.mainContainer{
+
+display:grid;
+
+grid-template-columns:
+
+260px
+
+1fr
+
+320px;
+
+gap:35px;
+
+padding:35px;
+
+}
+
+
+/* =======================================
+LEFT SIDEBAR
+======================================= */
+
+.leftSidebar{
+
+background:rgba(24,34,49,.55);
+
+backdrop-filter:blur(25px);
+
+border:1px solid rgba(255,255,255,.05);
+
+padding:25px;
+
+border-radius:22px;
+
+height:fit-content;
+
+box-shadow:var(--shadow);
+
+position:sticky;
+
+top:110px;
+
+}
+
+
+.leftSidebar ul{
+
+list-style:none;
+
+}
+
+
+.leftSidebar li{
+
+padding:18px;
+
+border-radius:15px;
+
+margin-bottom:8px;
+
+cursor:pointer;
+
+transition:.3s;
+
+font-weight:500;
+
+}
+
+
+.leftSidebar li i{
+
+width:30px;
+
+color:var(--green);
+
+}
+
+
+.leftSidebar li:hover{
+
+background:rgba(0,166,81,.15);
+
+transform:translateX(5px);
+
+}
+
+
+/* ======================================
+CENTER FEED
+====================================== */
+
+.feed{
+
+display:flex;
+
+flex-direction:column;
+
+gap:30px;
+
+}
+
+
+.hero{
+
+background:
+
+linear-gradient(
+
+135deg,
+
+rgba(0,166,81,.18),
+
+rgba(255,255,255,.03)
+
+);
+
+padding:50px;
+
+border-radius:22px;
+
+box-shadow:var(--shadow);
+
+}
+
+
+.hero h1{
+
+font-size:42px;
+
+color:white;
+
+margin-bottom:15px;
+
+}
+
+
+.hero p{
+
+font-size:17px;
+
+color:var(--muted);
+
+line-height:1.7;
+
+}
+
+
+/* =======================================
+POST BOX
+======================================= */
+
+.createPost{
+
+background:rgba(24,34,49,.70);
+
+padding:30px;
+
+border-radius:22px;
+
+box-shadow:var(--shadow);
+
+}
+
+
+.createPost textarea{
+
+width:100%;
+
+height:140px;
+
+resize:none;
+
+padding:20px;
+
+border-radius:18px;
+
+background:#101827;
+
+border:1px solid var(--border);
+
+color:white;
+
+font-size:15px;
+
+outline:none;
+
+}
+
+
+.createPost textarea:focus{
+
+border-color:var(--green);
+
+}
+
+
+.createPost button{
+
+margin-top:20px;
+
+padding:14px 35px;
+
+background:var(--green);
+
+border:none;
+
+border-radius:50px;
+
+cursor:pointer;
+
+font-size:16px;
+
+font-weight:600;
+
+color:white;
+
+transition:.3s;
+
+}
+
+
+.createPost button:hover{
+
+transform:translateY(-2px);
+
+background:var(--green-dark);
+
+}
+
+
+/* ======================================
+POSTS
+====================================== */
+
+.posts{
+
+display:flex;
+
+flex-direction:column;
+
+gap:25px;
+
+}
+
+
+.post{
+
+background:rgba(24,34,49,.70);
+
+padding:28px;
+
+border-radius:20px;
+
+transition:.35s;
+
+box-shadow:var(--shadow);
+
+border:1px solid rgba(255,255,255,.03);
+
+}
+
+
+.post:hover{
+
+transform:translateY(-6px);
+
+border-color:rgba(0,166,81,.4);
+
+}
+
+
+.post h3{
+
+color:white;
+
+margin-bottom:12px;
+
+}
+
+
+.post p{
+
+color:var(--text);
+
+line-height:1.7;
+
+margin-bottom:25px;
+
+}
+
+
+.actions{
+
+display:flex;
+
+gap:35px;
+
+color:var(--muted);
+
+font-size:15px;
+
+}
+
+
+.actions span{
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+
+.actions span:hover{
+
+color:var(--green);
+
+}
+
+
+/* =======================================
+RIGHT SIDEBAR
+======================================= */
+
+.rightSidebar{
+
+display:flex;
+
+flex-direction:column;
+
+gap:25px;
+
+}
+
+
+.card{
+
+background:rgba(24,34,49,.70);
+
+padding:28px;
+
+border-radius:20px;
+
+box-shadow:var(--shadow);
+
+}
+
+
+.card h3{
+
+color:white;
+
+margin-bottom:20px;
+
+}
+
+
+.card p{
+
+padding:10px 0;
+
+color:var(--muted);
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+
+.card p:hover{
+
+color:var(--green);
+
+padding-left:8px;
+
+}
+
+
+/* =======================================
+RESPONSIVE
+======================================= */
+
+@media(max-width:1200px){
+
+.mainContainer{
+
+grid-template-columns:
+
+220px
+
+1fr;
+
+}
+
+.rightSidebar{
+
+display:none;
+
+}
+
+}
+
+
+@media(max-width:850px){
+
+.mainContainer{
+
+grid-template-columns:1fr;
+
+}
+
+.leftSidebar{
+
+display:none;
+
+}
+
+.search input{
+
+width:90%;
+
+}
+
+.hero h1{
+
+font-size:34px;
+
+}
+
+.navbar{
+
+padding:0 20px;
+
+}
+
+}
