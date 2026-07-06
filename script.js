@@ -183,3 +183,33 @@ function printToTerminal(text) {
     p.innerHTML = text;
     terminalOutput.appendChild(p);
 }
+
+
+
+
+
+
+
+
+
+function sendEmailDirectly(event) {
+    event.preventDefault();
+    
+    const fullName = document.getElementById('fullname-field').value;
+    const email = document.getElementById('email-field').value;
+    const location = document.getElementsByName('Location')[0].value;
+    const track = document.getElementsByName('Track')[0].value;
+    const vision = document.getElementsByName('Vision')[0].value;
+    
+    const subject = encodeURIComponent("GLOBAL ADMISSION: UEFI 2026");
+    const body = encodeURIComponent(
+        `Full Name: ${fullName}\n` +
+        `Professional Email: ${email}\n` +
+        `Origin / Residency: ${location}\n` +
+        `Academy Track: ${track}\n` +
+        `Statement of Intent: ${vision}`
+    );
+    
+    // Opens a secure, browser-approved window straight to Gmail/email client
+    window.location.href = `mailto:PUT YOUR EMAIL ADDRESS HERE?subject=${subject}&body=${body}`;
+}
