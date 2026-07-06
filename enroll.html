@@ -335,7 +335,7 @@
                 <h2>Candidate Portfolio</h2>
             </div>
 
-            <form action="https://formspree.io/f/xnjoplag" method="POST" class="enroll-form" id="enrollment-form">
+            <form action="#" method="POST" class="enroll-form" id="enrollment-form" onsubmit="sendEmailDirectly(event)">
                 
                 <div class="input-group full">
                     <label>Full Name</label>
@@ -408,12 +408,33 @@
     </div>
 
     <script>
+        // Secure browser redirection event compiler
+        function sendEmailDirectly(event) {
+            event.preventDefault();
+            
+            const fullName = document.getElementById('fullname-field').value;
+            const email = document.getElementById('email-field').value;
+            const location = document.getElementsByName('Location')[0].value;
+            const track = document.getElementsByName('Track')[0].value;
+            const vision = document.getElementsByName('Vision')[0].value;
+            
+            const subject = encodeURIComponent("GLOBAL ADMISSION: UEFI 2026");
+            const body = encodeURIComponent(
+                `Full Name: ${fullName}\n` +
+                `Professional Email: ${email}\n` +
+                `Origin / Residency: ${location}\n` +
+                `Academy Track: ${track}\n` +
+                `Statement of Intent: ${vision}`
+            );
+            
+            window.location.href = `mailto:uefiglobal.com@gmail.com?subject=${subject}&body=${body}`;
+        }
+
         // Google Identity processing logic
         function handleGoogleEnrollmentResponse(response) {
             const idToken = response.credential;
             const payload = JSON.parse(atob(idToken.split('.')[1]));
             
-            // Map token variables directly onto form targets
             document.getElementById('fullname-field').value = payload.name;
             document.getElementById('email-field').value = payload.email;
             
@@ -466,8 +487,3 @@
 
 </body>
 </html>
-
-
-
-
-
