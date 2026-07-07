@@ -3,323 +3,724 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI: CyberShield Arcade</title>
+    <title>UEFI: Cyber Shield - Guardian Edition</title>
     <style>
-        /* Kenyan Flag & Safaricom Green Theme */
         :root {
-            --green: #43B02A;
-            --black: #000000;
-            --red: #CE1126;
-            --white: #FFFFFF;
-            --dark-green: #006600;
+            --navy-deep: #0a192f;
+            --navy-surface: #172a45;
+            --navy-bright: #1f3a60;
+            --safaricom-green: #38B000;
+            --safaricom-glow: #70e000;
+            --text-main: #ccd6f6;
+            --text-heading: #ffffff;
+            --kenya-red: #bb0000;
+            --kenya-black: #000000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4; color: var(--black);
-            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+            background-color: var(--navy-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+            padding-bottom: 40px;
         }
 
-        .header-strip {
-            width: 100%; height: 10px; display: flex;
+        /* Kenyan Flag Accent Ribbon */
+        .flag-ribbon {
+            display: flex;
+            height: 10px;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        .strip-black { flex: 1; background: var(--black); }
-        .strip-white { flex: 0.1; background: var(--white); }
-        .strip-red { flex: 1; background: var(--red); }
-        .strip-green { flex: 1; background: var(--dark-green); }
+        .ribbon-black { background-color: var(--kenya-black); flex: 1; }
+        .ribbon-red { background-color: var(--kenya-red); flex: 1; border-top: 2px solid #fff; border-bottom: 2px solid #fff; }
+        .ribbon-green { background-color: #006600; flex: 1; }
 
         header {
-            width: 100%; background: var(--black); color: var(--white);
-            padding: 15px 0; text-align: center; border-bottom: 4px solid var(--green);
+            background-color: var(--navy-surface);
+            padding: 20px 40px;
+            border-bottom: 3px solid var(--safaricom-green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand h1 {
+            color: var(--text-heading);
+            font-size: 26px;
+            letter-spacing: 1px;
+        }
+
+        .brand span {
+            color: var(--safaricom-green);
         }
 
         .container {
-            width: 90%; max-width: 1000px; margin: 20px auto;
-            background: var(--white); padding: 20px; border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
-        .hud {
-            display: flex; justify-content: space-between; margin-bottom: 15px;
-            font-weight: bold; font-size: 18px; color: var(--dark-green);
+        .game-wrapper {
+            background-color: var(--navy-surface);
+            border-radius: 12px;
+            border: 2px solid var(--navy-bright);
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Game Canvas */
+        /* Stage Stepper Interface */
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            background: var(--navy-deep);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--navy-bright);
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--navy-bright);
+            position: relative;
+        }
+
+        .step.active {
+            color: var(--safaricom-green);
+        }
+
+        .step.completed {
+            color: var(--text-heading);
+        }
+
+        /* Interactive Canvas Display */
         #gameCanvas {
-            background: #e0f7fa; border: 4px solid var(--black);
-            border-radius: 8px; display: block; margin: 0 auto;
+            background-color: #050c16;
+            display: block;
+            margin: 20px auto;
+            border: 2px solid var(--safaricom-green);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(56, 176, 0, 0.2);
             max-width: 100%;
         }
 
-        /* Modals & Overlays */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 100;
+        .panel {
+            display: none;
+            animation: paneFade 0.4s ease forwards;
         }
 
-        .modal-content {
-            background: var(--white); padding: 30px; border-radius: 10px;
-            width: 90%; max-width: 500px; text-align: center; border-top: 6px solid var(--green);
+        .panel.active {
+            display: block;
         }
 
-        .options button {
-            display: block; width: 100%; margin: 10px 0; padding: 12px;
-            background: #f4f4f4; border: 2px solid #ddd; border-radius: 5px;
-            cursor: pointer; font-size: 16px; transition: 0.3s;
+        @keyframes paneFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .options button:hover {
-            background: var(--green); color: var(--white); border-color: var(--green);
+        /* UI Elements & Typography */
+        h2 { color: var(--text-heading); margin-bottom: 15px; font-size: 22px; }
+        p { margin-bottom: 15px; line-height: 1.6; }
+
+        .btn {
+            background-color: var(--safaricom-green);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .btn-primary {
-            background: var(--green); color: var(--white); border: none;
-            padding: 12px 24px; font-size: 18px; border-radius: 5px; cursor: pointer;
-            margin-top: 15px; font-weight: bold;
+        .btn:hover {
+            background-color: var(--safaricom-glow);
+            color: var(--navy-deep);
+            box-shadow: 0 0 15px var(--safaricom-green);
         }
 
-        .hidden { display: none !important; }
+        .btn-option {
+            background-color: var(--navy-deep);
+            color: var(--text-main);
+            border: 1px solid var(--navy-bright);
+            padding: 14px;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.2s;
+        }
 
-        /* Video & Survey containers */
-        #videoStage, #surveyStage, #feedbackStage { text-align: center; }
-        iframe { width: 100%; height: 450px; border-radius: 8px; margin-top: 15px; }
-        textarea { width: 100%; height: 100px; margin-top: 10px; padding: 10px; border-radius: 5px; }
+        .btn-option:hover {
+            background-color: var(--navy-bright);
+            border-color: var(--safaricom-green);
+            color: var(--text-heading);
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            background: var(--navy-deep);
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .metric-card {
+            background: var(--navy-deep);
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid var(--safaricom-green);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--navy-bright);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            background: var(--navy-deep);
+            color: #fff;
+            border: 1px solid var(--navy-bright);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 15px;
+            margin-bottom: 15px;
+            resize: none;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--safaricom-green);
+        }
+
+        .radio-group {
+            margin-bottom: 15px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .radio-option input {
+            margin-right: 10px;
+            accent-color: var(--safaricom-green);
+        }
+
+        #victoryScreen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .celebration-txt {
+            color: var(--safaricom-green);
+            font-size: 28px;
+            font-weight: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(56,176,0,0.4);
+        }
     </style>
 </head>
 <body>
 
-    <div class="header-strip">
-        <div class="strip-black"></div><div class="strip-white"></div>
-        <div class="strip-red"></div><div class="strip-white"></div>
-        <div class="strip-green"></div>
+    <div class="flag-ribbon">
+        <div class="ribbon-black"></div>
+        <div class="ribbon-red"></div>
+        <div class="ribbon-green"></div>
     </div>
 
     <header>
-        <h1>UEFI: CyberShield Arcade</h1>
-        <p id="stageTitle">Stage 1: Digital Wellbeing</p>
+        <div class="brand">
+            <h1>UEFI: <span>Cyber Shield</span></h1>
+        </div>
+        <div id="globalClock" style="font-family: monospace; font-size: 16px;">STAGE RUNNER ACTIVE</div>
     </header>
 
-    <div class="container" id="gameContainer">
-        <div class="hud">
-            <span id="timeDisplay">Time: 10:00</span>
-            <span id="scoreDisplay">Score: 0</span>
-        </div>
-        <canvas id="gameCanvas" width="800" height="400"></canvas>
-        <div style="text-align: center; margin-top: 15px;">
-            <button class="btn-primary" id="startBtn" onclick="startGame()">Start Game</button>
-        </div>
-    </div>
+    <div class="container">
+        <div class="game-wrapper">
+            
+            <div class="stepper">
+                <div class="step active" id="step1">STAGE 1: WELLBEING</div>
+                <div class="step" id="step2">STAGE 2: PROTECTION</div>
+                <div class="step" id="step3">STAGE 3: EXPERIENCE</div>
+                <div class="step" id="step4">STAGE 4: SURVEY PLEDGE</div>
+            </div>
 
-    <div class="container hidden" id="feedbackStage">
-        <h2 style="color: var(--red);">Stage 1 Complete: Wellbeing Analysis</h2>
-        <p>Based on your gameplay, it's vital to balance screen time. Remember to turn off non-essential notifications and prioritize real-life connections to avoid digital burnout.</p>
-        <button class="btn-primary" onclick="startStage2()">Proceed to Stage 2: Internet Safety</button>
-    </div>
+            <div id="panelStart" class="panel active">
+                <h2>Welcome Explorer</h2>
+                <p>Welcome to UEFI: Cyber Shield, a universal digital learning playground designed to sharpen your online defensive skills while tracking your digital balance. Pilot your data ship, safely gather clean data fragments, and outmaneuver active network hazards.</p>
+                <button class="btn" onclick="advancePanel('panelStart', 'panelGame')">Launch Engine</button>
+            </div>
 
-    <div class="container hidden" id="videoStage">
-        <h2 style="color: var(--dark-green);">Stage 3: Real Stories, Real Survival</h2>
-        <p>Listen to this advice on overcoming online threats and cyberbullying.</p>
-        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-        <button class="btn-primary" onclick="startSurvey()">I have finished the video</button>
-    </div>
+            <div id="panelGame" class="panel">
+                <div class="score-board">
+                    <span id="labelStage">Current Module: Stage 1</span>
+                    <span id="displayScore">Score: 0</span>
+                    <span id="displayTimer">Simulated Log Time: 00:00</span>
+                </div>
+                <canvas id="gameCanvas" width="800" height="400"></canvas>
+                <p style="text-align: center; font-size: 13px; color: var(--text-main);">Controls: Use your mouse cursor or touch drag within the canvas box to navigate your Data Ship vertically.</p>
+            </div>
 
-    <div class="container hidden" id="surveyStage">
-        <h2>Final Survey: Be a Digital Defender</h2>
-        <p>How can you help others stop cyberbullying and stay safe online?</p>
-        <textarea placeholder="Write your ideas here..."></textarea>
-        <p>Do you feel more confident managing your digital wellbeing?</p>
-        <select style="width: 100%; padding: 10px; margin-bottom: 15px;">
-            <option>Yes, definitely</option>
-            <option>Somewhat</option>
-            <option>I need to learn more</option>
-        </select>
-        <button class="btn-primary" onclick="finishExperience()">Submit & Complete UEFI Course</button>
-    </div>
+            <div id="panelQuestion" class="panel">
+                <h2 id="questionCategory">🧠 Digital Wellbeing Audit</h2>
+                <p id="questionPrompt">Loading evaluation parameters...</p>
+                <div id="optionsContainer"></div>
+            </div>
 
-    <div class="modal" id="questionModal">
-        <div class="modal-content">
-            <h3 id="questionText">Question goes here</h3>
-            <div class="options" id="optionsContainer"></div>
+            <div id="panelWellbeingFeedback" class="panel">
+                <h2>📊 Your Diagnostic Digital Wellbeing Card</h2>
+                <p>Based on your live metric answers gathered during Stage 1, our engine has evaluated your alignment with sustainable digital health indicators:</p>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4>Melatonin &amp; Sleep Hygiene</h4>
+                        <p id="feedbackSleep">Analyzing metrics...</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Real-World Presence Zone</h4>
+                        <p id="feedbackPresence">Analyzing metrics...</p>
+                    </div>
+                </div>
+                <button class="btn" style="margin-top:25px;" onclick="startStage2Gameplay()">Initialize Stage 2 Matrix</button>
+            </div>
+
+            <div id="panelVictory" class="panel">
+                <div id="victoryScreen">
+                    <div class="celebration-txt">HURRAY! COMPLETED YOUR SECOND UEFI: CYBER SHIELD</div>
+                    <p>Your hardware defense modules have passed authorization tests. You successfully isolated phishing hazards, identified structural password vulnerabilities, and recognized network encryption layers.</p>
+                    <button class="btn" onclick="advancePanel('panelVictory', 'panelExperience')">Load Awareness Theater</button>
+                </div>
+            </div>
+
+            <div id="panelExperience" class="panel">
+                <h2>🤝 Stage 3: Peer-to-Peer Awareness Theater</h2>
+                <p>Digital resilience is more than just secure passwords—it means building safety networks and knowing how to reclaim your space when facing intense online bullying, harassment, or manipulation. Watch this story detailing how youth indicators navigate modern cyberthreats and access trusted protection networks.</p>
+                
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/HffWFd_6bE0" title="Digital Safety & Wellbeing" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+                <button class="btn" onclick="advancePanel('panelExperience', 'panelSurvey')">Proceed to Shield Pledge</button>
+            </div>
+
+            <div id="panelSurvey" class="panel">
+                <h2>📋 Stage 4: Strategic Safety Survey &amp; Youth Pledge</h2>
+                <p>Help shape your local digital environment. Your responses assist community safety teams and policy regulators in establishing clean, respectful online interaction zones across schools and communities.</p>
+                
+                <form id="uefiSurveyForm" onsubmit="processFinalPledge(event)">
+                    <div class="radio-group">
+                        <p><strong>1. If a classmate or online peer experiences intense harassment or tracking, what is your immediate recommended response strategy?</strong></p>
+                        <label class="radio-option"><input type="radio" name="q1" value="A" required> Ignore the situation entirely to maintain safety boundaries.</label>
+                        <label class="radio-option"><input type="radio" name="q1" value="B"> Guide them to securely document evidence, block the sender, and notify a verified guardian or teacher.</label>
+                        <label class="radio-option"><input type="radio" name="q1" value="C"> Engage with the malicious sender directly to defend the peer.</label>
+                    </div>
+
+                    <div class="radio-group">
+                        <p><strong>2. How frequently do you audit app settings to secure background tracking layers?</strong></p>
+                        <label class="radio-option"><input type="radio" name="q2" value="A" required> Every month or immediately following system patch configurations.</label>
+                        <label class="radio-option"><input type="radio" name="q2" value="B"> Only if an account flag notifies me of unauthorized activities.</label>
+                        <label class="radio-option"><input type="radio" name="q2" value="C"> Rarely or never audited tracking layers.</label>
+                    </div>
+
+                    <p><strong>3. Write your personal Digital Shield Pledge detailing how you will help prevent cyberbullying and foster a safe online space for peers:</strong></p>
+                    <textarea id="pledgeText" required placeholder="Example: I pledge to consistently practice mindful screen moderation, preserve strict password privacy, block malicious network entities, and proactively shield my peers against cyber intimidation..."></textarea>
+
+                    <button type="submit" class="btn">Authorize Shield Endorsement</button>
+                </form>
+            </div>
+
+            <div id="panelFinal" class="panel">
+                <h2 style="color: var(--safaricom-green);">🏅 UEFI Digital Shield Endorsement Confirmed</h2>
+                <p>Thank you for validating your metrics through the UEFI Portal. Your profile has successfully integrated the core digital safety principles and structural wellness habits necessary for safe digital exploration.</p>
+                <div class="metric-card" style="margin-top:20px; background: var(--navy-deep);">
+                    <h4>Your System Status: FULLY SHIELDED</h4>
+                    <p>Remember: The web has no global delete switch. Treat your private data trail like treasure, schedule tech-free zones to foster connection, and always rely on verified parental or community avenues when facing digital tracking or intimidation threats.</p>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        // --- GAME ENGINE VARIABLES ---
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        let gameLoop, timerInterval;
-        let isPlaying = false;
-        let stage = 1; // 1: Wellbeing, 2: Safety
-        let timeRemaining = 600; // 10 minutes per stage
-        let score = 0;
-        
-        // Universal Player
-        let player = { x: 380, y: 180, size: 20, speed: 5, color: '#CE1126' };
-        let tokens = [];
-
-        // --- QUESTION DATABASE ---
-        const questions = {
-            1: [
-                { q: "How often do you check your social media when you should be studying or sleeping?", opts: ["Constantly", "Sometimes", "Rarely"] },
-                { q: "If you see a post that makes you angry or sad, what's the best reaction?", opts: ["Reply aggressively", "Log off and take a breath", "Share it to complain"] },
-                { q: "Do you keep your phone next to your bed at night?", opts: ["Yes, under my pillow", "Yes, on the nightstand", "No, in another room"] }
-            ],
-            2: [
-                { q: "You get an email saying 'You won a free iPhone! Click here.' What do you do?", opts: ["Click immediately", "Ignore and delete it", "Forward to friends"] },
-                { q: "What makes a strong password?", opts: ["My pet's name", "12345678", "A mix of letters, numbers & symbols"] },
-                { q: "If a stranger online starts threatening you, you should:", opts: ["Threaten them back", "Keep it a secret", "Block, report, and tell an adult"] }
-            ]
-        };
-
-        // --- INPUT HANDLING ---
-        let keys = {};
-        window.addEventListener('keydown', e => keys[e.key] = true);
-        window.addEventListener('keyup', e => keys[e.key] = false);
-
-        // --- CORE GAME LOOP ---
-        function update() {
-            if (!isPlaying) return;
-
-            // Movement
-            if (keys['ArrowUp'] && player.y > 0) player.y -= player.speed;
-            if (keys['ArrowDown'] && player.y < canvas.height - player.size) player.y += player.speed;
-            if (keys['ArrowLeft'] && player.x > 0) player.x -= player.speed;
-            if (keys['ArrowRight'] && player.x < canvas.width - player.size) player.x += player.speed;
-
-            // Spawn Tokens
-            if (Math.random() < 0.02) {
-                tokens.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: 10 });
+        // Data Structures and Question Sets
+        const wellbeingQuestions = [
+            {
+                prompt: "How long before bedtime do you usually disconnect completely from mobile devices or background social notifications?",
+                choices: [
+                    { text: "At least 1 hour before bed (Optimal Sleep Hygiene Framework)", points: "optimal" },
+                    { text: "Within 30 minutes of attempting to fall asleep", points: "moderate" },
+                    { text: "I check my live feed actively in bed right up until sleeping", points: "critical" }
+                ]
+            },
+            {
+                prompt: "When enjoying meals or interacting directly with close family and friends, how do you manage personal screen interaction?",
+                choices: [
+                    { text: "Keep the phone tucked completely away to stay fully present", points: "presence-high" },
+                    { text: "Keep the phone on the table face up, checking flags casually", points: "presence-mid" },
+                    { text: "Actively browse feeds while maintaining partial conversation", points: "presence-low" }
+                ]
+            },
+            {
+                prompt: "Do you ever notice patterns of fatigue, heightened stress, or focus drift after extensive sessions scrolling your feed?",
+                choices: [
+                    { text: "Rarely, I implement app block timers to enforce balanced tech usage", points: "wellbeing-high" },
+                    { text: "Occasionally, but I find it tough to break the loop manually", points: "wellbeing-mid" },
+                    { text: "Frequently, it impacts my daily routines or rest patterns", points: "wellbeing-low" }
+                ]
             }
+        ];
 
-            // Collect Tokens
-            tokens.forEach((t, index) => {
-                let dist = Math.hypot(player.x - t.x, player.y - t.y);
-                if (dist - player.size - t.size < 1) {
-                    tokens.splice(index, 1);
-                    score += 10;
-                    document.getElementById('scoreDisplay').innerText = `Score: ${score}`;
-                }
-            });
+        const securityQuestions = [
+            {
+                prompt: "You receive an urgent message from an unrecognized source providing an exclusive voucher code via link. Your priority action is to:",
+                choices: [
+                    { text: "Isolate the threat: avoid clicking, evaluate sender credibility, and delete", correct: true },
+                    { text: "Click the link cautiously to verify if the site contains SSL locks", correct: false },
+                    { text: "Forward it directly to contacts to check if anyone else redeemed it", correct: false }
+                ]
+            },
+            {
+                prompt: "Which element combination represents a resilient and modern password policy for personal profile protection?",
+                choices: [
+                    { text: "Your pet's name or birth year combined with a special symbol", correct: false },
+                    { text: "12+ characters incorporating assorted letter casing, unique values, numbers, and symbols", correct: true },
+                    { text: "A standard sequence that is updated every few weeks", correct: false }
+                ]
+            },
+            {
+                prompt: "When forced to complete personal financial profile management over public open Wi-Fi infrastructures, how do you secure data streams?",
+                choices: [
+                    { text: "Proceed if the interface displays verified branding images", correct: false },
+                    { text: "Route traffic through a Virtual Private Network (VPN) with real-time encryption", correct: true },
+                    { text: "Rely completely on private browser tab configurations", correct: false }
+                ]
+            }
+        ];
 
-            draw();
-            gameLoop = requestAnimationFrame(update);
-        }
+        // System State Engines
+        let currentStage = 1;
+        let gameActive = false;
+        let gameScore = 0;
+        let loggedSeconds = 0;
+        let timeMultiplier = 20; // Fast time scaling for simulation pacing
+        let loopIntervalId, canvasIntervalId;
+        
+        let questionCycleCounter = 0;
+        let metricsProfile = { sleep: "", presence: "" };
 
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Canvas Game Engine Declarations
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        
+        let playerY = 180;
+        let playerX = 80;
+        let playerSize = 25;
+        let gameEntities = [];
+        let mousePos = { y: 180 };
+
+        // Handle Mouse and Touch inputs smoothly
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mousePos.y = e.clientY - rect.top;
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                const rect = canvas.getBoundingClientRect();
+                mousePos.y = e.touches[0].clientY - rect.top;
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        function advancePanel(currentId, targetId) {
+            document.getElementById(currentId).classList.remove('active');
+            document.getElementById(targetId).classList.add('active');
             
-            // Draw Player
-            ctx.fillStyle = player.color;
-            ctx.beginPath();
-            ctx.arc(player.x, player.y, player.size, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Draw Tokens
-            ctx.fillStyle = '#43B02A';
-            tokens.forEach(t => {
-                ctx.beginPath();
-                ctx.arc(t.x, t.y, t.size, 0, Math.PI * 2);
-                ctx.fill();
-            });
+            if (targetId === 'panelGame') {
+                initiateGameLoop();
+            }
         }
 
-        // --- TIMER & EVENT SYSTEM ---
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                if (!isPlaying) return;
-                timeRemaining--;
+        function initiateGameLoop() {
+            gameActive = true;
+            gameEntities = [];
+            
+            // Core Game loop timing logic
+            loopIntervalId = setInterval(() => {
+                loggedSeconds += 5; 
+                updateTimeDisplay();
                 
-                let m = Math.floor(timeRemaining / 60);
-                let s = timeRemaining % 60;
-                document.getElementById('timeDisplay').innerText = `Time: ${m}:${s < 10 ? '0' : ''}${s}`;
-
-                // Trigger Question every 3 minutes (180 seconds passed -> at 420, 240, 60 seconds left)
-                if (timeRemaining === 420 || timeRemaining === 240 || timeRemaining === 60) {
-                    pauseForQuestion();
+                // Paced Interruption Intervals (Simulating 3 Minute Checks via scaled math blocks)
+                if (loggedSeconds === 180 || loggedSeconds === 360 || loggedSeconds === 540) {
+                    pauseAndQuery();
                 }
-
-                // End Stage
-                if (timeRemaining <= 0) {
-                    endStage();
+                
+                if (loggedSeconds >= 600) {
+                    concludeActiveStage();
                 }
             }, 1000);
+
+            // Canvas Drawing Frame loop
+            canvasIntervalId = setInterval(() => {
+                runFrameUpdate();
+            }, 1000 / 60);
         }
 
-        function startGame() {
-            document.getElementById('startBtn').style.display = 'none';
-            isPlaying = true;
-            update();
-            startTimer();
+        function updateTimeDisplay() {
+            let minutes = Math.floor(loggedSeconds / 60);
+            let displaySecs = loggedSeconds % 60;
+            document.getElementById("displayTimer").innerText = 
+                `Simulated Log Time: ${(minutes < 10 ? "0" : "") + minutes}:${(displaySecs < 10 ? "0" : "") + displaySecs}`;
         }
 
-        // --- MODAL LOGIC ---
-        function pauseForQuestion() {
-            isPlaying = false;
-            let qArray = questions[stage];
-            // Pick a random question from the current stage array
-            let qObj = qArray[Math.floor(Math.random() * qArray.length)];
-            
-            document.getElementById('questionText').innerText = qObj.q;
-            let optsContainer = document.getElementById('optionsContainer');
-            optsContainer.innerHTML = '';
-            
-            qObj.opts.forEach(opt => {
-                let btn = document.createElement('button');
-                btn.innerText = opt;
-                btn.onclick = () => resumeGame();
-                optsContainer.appendChild(btn);
-            });
+        function runFrameUpdate() {
+            if (!gameActive) return;
 
-            document.getElementById('questionModal').style.display = 'flex';
-        }
+            // Clear Screen
+            ctx.fillStyle = "#050c16";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        function resumeGame() {
-            document.getElementById('questionModal').style.display = 'none';
-            isPlaying = true;
-            update();
-        }
+            // Draw Background Cyber Grid Aesthetics
+            ctx.strokeStyle = "rgba(31, 58, 96, 0.2)";
+            ctx.lineWidth = 1;
+            for(let i = 0; i < canvas.width; i += 40) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+            }
+            for(let j = 0; j < canvas.height; j += 40) {
+                ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(canvas.width, j); ctx.stroke();
+            }
 
-        // --- STAGE TRANSITIONS ---
-        function endStage() {
-            isPlaying = false;
-            clearInterval(timerInterval);
-            document.getElementById('gameContainer').classList.add('hidden');
-            
-            if (stage === 1) {
-                document.getElementById('feedbackStage').classList.remove('hidden');
-            } else if (stage === 2) {
-                // Hurray Sound & Proceed to Video
-                alert("HURAAY COMPLETED YOUR SECOND UEFI STAGE! Cyber Threats Neutralized.");
-                document.getElementById('videoStage').classList.remove('hidden');
-                document.getElementById('stageTitle').innerText = "Stage 3: Real Life Experiences";
+            // Interpolate Player movement towards pointer target
+            let targetDiff = mousePos.y - playerY;
+            playerY += targetDiff * 0.1;
+            if(playerY < playerSize) playerY = playerSize;
+            if(playerY > canvas.height - playerSize) playerY = canvas.height - playerSize;
+
+            // Draw Player Ship (Stylized Shield Triangle)
+            ctx.fillStyle = varColor('--safaricom-green');
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = varColor('--safaricom-green');
+            ctx.beginPath();
+            ctx.moveTo(playerX + playerSize, playerY);
+            ctx.lineTo(playerX - playerSize, playerY - playerSize/1.5);
+            ctx.lineTo(playerX - playerSize, playerY + playerSize/1.5);
+            ctx.closePath();
+            ctx.fill();
+            ctx.shadowBlur = 0; // Reset blur
+
+            // Spawn Game Entities periodically
+            if (Math.random() < 0.04) {
+                let isHazard = Math.random() > 0.55;
+                gameEntities.push({
+                    x: canvas.width,
+                    y: Math.random() * (canvas.height - 40) + 20,
+                    speed: Math.random() * 3 + 3,
+                    type: isHazard ? "HAZARD" : "SECURE",
+                    radius: isHazard ? 12 : 10
+                });
+            }
+
+            // Collision Detection Array Management
+            for (let idx = gameEntities.length - 1; idx >= 0; idx--) {
+                let ent = gameEntities[idx];
+                ent.x -= ent.speed;
+
+                // Render Entities
+                if (ent.type === "SECURE") {
+                    ctx.fillStyle = varColor('--safaricom-green');
+                    ctx.beginPath();
+                    ctx.arc(ent.x, ent.y, ent.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.fillStyle = varColor('--kenya-red');
+                    ctx.fillRect(ent.x - ent.radius, ent.y - ent.radius, ent.radius * 2, ent.radius * 2);
+                }
+
+                // Check Proximity Collisions
+                let distanceX = ent.x - playerX;
+                let distanceY = ent.y - playerY;
+                let actualDistance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+                if (actualDistance < playerSize + ent.radius) {
+                    if (ent.type === "SECURE") {
+                        gameScore += 50;
+                    } else {
+                        gameScore = Math.max(0, gameScore - 30);
+                    }
+                    document.getElementById("displayScore").innerText = `Score: ${gameScore}`;
+                    gameEntities.splice(idx, 1);
+                    continue;
+                }
+
+                // Splice off-screen units
+                if (ent.x < -20) {
+                    gameEntities.splice(idx, 1);
+                }
             }
         }
 
-        function startStage2() {
-            stage = 2;
-            timeRemaining = 600; // Reset to 10 mins
-            score = 0;
-            tokens = [];
-            document.getElementById('scoreDisplay').innerText = `Score: 0`;
-            document.getElementById('stageTitle').innerText = "Stage 2: Internet Safety & Threats";
-            
-            document.getElementById('feedbackStage').classList.add('hidden');
-            document.getElementById('gameContainer').classList.remove('hidden');
-            
-            isPlaying = true;
-            startTimer();
-            update();
+        function varColor(variableName) {
+            return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
         }
 
-        function startSurvey() {
-            document.getElementById('videoStage').classList.add('hidden');
-            document.getElementById('surveyStage').classList.remove('hidden');
-            document.getElementById('stageTitle').innerText = "Stage 4: UEFI Final Survey";
+        function pauseAndQuery() {
+            gameActive = false;
+            clearInterval(loopIntervalId);
+            clearInterval(canvasIntervalId);
+
+            document.getElementById('panelGame').classList.remove('active');
+            document.getElementById('panelQuestion').classList.add('active');
+
+            let query = currentStage === 1 ? wellbeingQuestions[questionCycleCounter] : securityQuestions[questionCycleCounter];
+            
+            document.getElementById("questionCategory").innerText = currentStage === 1 ? "🧠 Digital Wellbeing Audit" : "🛡️ Structural Cyber Defense Check";
+            document.getElementById("questionPrompt").innerText = query.prompt;
+
+            let container = document.getElementById("optionsContainer");
+            container.innerHTML = "";
+
+            query.choices.forEach(choice => {
+                let optBtn = document.createElement("button");
+                optBtn.className = "btn-option";
+                optBtn.innerText = choice.text;
+                optBtn.onclick = () => recordQueryResponse(choice);
+                container.appendChild(optBtn);
+            });
         }
 
-        function finishExperience() {
-            alert("Thank you! Your feedback helps build a safer internet. Remember to always be a Digital Defender!");
-            location.reload(); // Reset the experience
+        function recordQueryResponse(selectedChoice) {
+            // Metrics assignment
+            if (currentStage === 1) {
+                if (selectedChoice.points === "optimal") metricsProfile.sleep = "Excellent sleep boundary setup detected. Keeping tech-free buffers stabilizes natural melatonin release patterns.";
+                if (selectedChoice.points === "moderate") metricsProfile.sleep = "Acceptable window, though blue light emissions within 30 minutes of sleeping can interrupt deeper REM phases.";
+                if (selectedChoice.points === "critical") metricsProfile.sleep = "Actionable Risk: Late night passive browsing schedules block vital neural restoration routines.";
+                
+                if (selectedChoice.points === "presence-high") metricsProfile.presence = "Stellar real-world netiquette profile. Preserving device-free meals shields primary real-life social frameworks.";
+                if (selectedChoice.points === "presence-mid" || selectedChoice.points === "presence-low") metricsProfile.presence = "Attention Balance Required: Regular notification checks chip away at critical human connections.";
+            } else {
+                if (selectedChoice.correct) {
+                    gameScore += 150;
+                    alert("Verification Success: Cybersecurity protocols correctly mapped!");
+                } else {
+                    alert("System Notice: Selected methodology shows high vulnerability to attack payloads.");
+                }
+                document.getElementById("displayScore").innerText = `Score: ${gameScore}`;
+            }
+
+            questionCycleCounter++;
+            
+            // Toggle panels back to game execution
+            document.getElementById('panelQuestion').classList.remove('active');
+            document.getElementById('panelGame').classList.add('active');
+            initiateGameLoop();
+        }
+
+        function concludeActiveStage() {
+            gameActive = false;
+            clearInterval(loopIntervalId);
+            clearInterval(canvasIntervalId);
+            loggedSeconds = 0;
+            questionCycleCounter = 0;
+
+            document.getElementById('panelGame').classList.remove('active');
+
+            if (currentStage === 1) {
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step1').classList.add('completed');
+                document.getElementById('step2').classList.add('active');
+                
+                // Display custom text cards built dynamically
+                document.getElementById("feedbackSleep").innerText = metricsProfile.sleep || "Balanced parameters logged.";
+                document.getElementById("feedbackPresence").innerText = metricsProfile.presence || "Connection parameters normalized.";
+                document.getElementById('panelWellbeingFeedback').classList.add('active');
+            } else {
+                document.getElementById('step2').classList.remove('active');
+                document.getElementById('step2').classList.add('completed');
+                document.getElementById('step3').classList.add('active');
+                
+                triggerAudioChime();
+                document.getElementById('panelVictory').classList.add('active');
+            }
+        }
+
+        function startStage2Gameplay() {
+            currentStage = 2;
+            document.getElementById("labelStage").innerText = "Current Module: Stage 2 (Cyber Protection)";
+            advancePanel('panelWellbeingFeedback', 'panelGame');
+        }
+
+        function triggerAudioChime() {
+            try {
+                let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                let notes = [523.25, 659.25, 783.99, 1046.50]; // Arpeggio build
+                notes.forEach((freq, index) => {
+                    let osc = audioCtx.createOscillator();
+                    let gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.12);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.12);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + index * 0.12 + 0.4);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(audioCtx.currentTime + index * 0.12);
+                    osc.stop(audioCtx.currentTime + index * 0.12 + 0.4);
+                });
+            } catch(e) {
+                console.log("Audio contexts blocked or unsupported on client layer.");
+            }
+        }
+
+        function processFinalPledge(event) {
+            event.preventDefault();
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step3').classList.add('completed');
+            document.getElementById('step4').classList.add('completed');
+            
+            advancePanel('panelSurvey', 'panelFinal');
         }
     </script>
 </body>
