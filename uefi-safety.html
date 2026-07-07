@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Safety Portal - Universal Electronic & Digital Frontiers Initiative</title>
+    <style>
+        :root {
+            --navy-dark: #0a192f;
+            --navy-light: #172a45;
+            --navy-card: #1f3a60;
+            --safaricom-green: #38B000;
+            --safaricom-hover: #2d8a00;
+            --text-light: #ccd6f6;
+            --text-white: #ffffff;
+            --kenya-black: #000000;
+            --kenya-red: #bb0000;
+            --kenya-green: #006600;
+            --kenya-white: #ffffff;
+            --accent-blue: #4361ee;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--navy-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Kenyan Flag Top Banner */
+        .kenyan-banner {
+            display: flex;
+            height: 8px;
+            width: 100%;
+        }
+        .kb-black { background-color: var(--kenya-black); flex: 1; }
+        .kb-red { background-color: var(--kenya-red); flex: 1; border-top: 1px solid white; border-bottom: 1px solid white;}
+        .kb-green { background-color: var(--kenya-green); flex: 1; }
+
+        header {
+            background-color: var(--navy-light);
+            padding: 20px 40px;
+            border-bottom: 3px solid var(--safaricom-green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-area h1 {
+            color: var(--text-white);
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        .logo-area span {
+            color: var(--safaricom-green);
+            font-weight: bold;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background-color: var(--navy-dark);
+            padding: 10px 40px 0;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--navy-card);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            background-color: var(--navy-card);
+            color: var(--text-white);
+        }
+
+        .tab-btn.active {
+            background-color: var(--safaricom-green);
+            color: var(--text-white);
+        }
+
+        /* Main Content Area */
+        .content-container {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--text-white);
+            border-left: 5px solid var(--safaricom-green);
+            padding-left: 15px;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        h3 {
+            color: var(--safaricom-green);
+            margin: 20px 0 10px;
+            font-size: 20px;
+        }
+
+        h4 {
+            color: var(--text-white);
+            margin: 15px 0 5px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: var(--navy-light);
+            border-radius: 8px;
+            padding: 25px;
+            border-top: 3px solid var(--accent-blue);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .card.green-border {
+            border-top-color: var(--safaricom-green);
+        }
+
+        .card.red-border {
+            border-top-color: var(--kenya-red);
+        }
+
+        .highlight-box {
+            background-color: var(--navy-card);
+            border-left: 4px solid var(--safaricom-green);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-box {
+            background-color: rgba(187, 0, 0, 0.15);
+            border-left: 4px solid var(--kenya-red);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--navy-dark);
+            color: var(--safaricom-green);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border: 1px solid var(--safaricom-green);
+        }
+
+        /* Game Simulation Section */
+        .game-screen {
+            background-color: #050b14;
+            border: 2px solid var(--safaricom-green);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-action {
+            background-color: var(--safaricom-green);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 10px;
+        }
+
+        .btn-action:hover {
+            background-color: var(--safaricom-hover);
+        }
+
+        footer {
+            background-color: var(--navy-light);
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid var(--navy-card);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            header, .content-container, .nav-tabs {
+                padding: 15px;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="kenyan-banner">
+        <div class="kb-black"></div>
+        <div class="kb-red"></div>
+        <div class="kb-green"></div>
+    </div>
+
+    <header>
+        <div class="logo-area">
+            <h1>UEFI <span>Safety Portal</span></h1>
+            <div class="tagline">Universal Electronic & Digital Frontiers Initiative | Kenya & Global Hub</div>
+        </div>
+        <div>
+            <span style="color: var(--safaricom-green); font-weight: bold;">🛡️ Protected by UEFI Framework</span>
+        </div>
+    </header>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'overview')">🏛️ National Plan & Leadership</button>
+        <button class="tab-btn" onclick="openTab(event, 'principles')">🛡️ Core Principles</button>
+        <button class="tab-btn" onclick="openTab(event, 'students')">🎓 Student & Youth Rules</button>
+        <button class="tab-btn" onclick="openTab(event, 'parents')">👨‍👩‍👧 Parents & Guardians</button>
+        <button class="tab-btn" onclick="openTab(event, 'threats')">⚠️ Internet Dangers & Tips</button>
+        <button class="tab-btn" onclick="openTab(event, 'footprint')">👣 Digital Footprint & Social Eng.</button>
+        <button class="tab-btn" onclick="openTab(event, 'harassment')">🚫 Harassment Response & Directives</button>
+        <button class="tab-btn" onclick="openTab(event, 'game-hub')">🎮 UEFI Game Hub</button>
+    </div>
+
+    <div class="content-container">
+
+        <div id="overview" class="tab-content active">
+            <h2>Leadership and Coordination on Child Online Protection</h2>
+            <p>The UEFI Safety Portal operationalizes critical mandates to safeguard our digital ecosystem, aligning with national and global standards to protect children, youth, and families online.</p>
+            
+            <div class="highlight-box">
+                <strong>Mandate Checklist:</strong> What this initiative actively includes and enforces:
+            </div>
+
+            <div class="grid-2">
+                <div class="card green-border">
+                    <span class="badge">Policy & Leadership</span>
+                    <h3>National Coordination</h3>
+                    <ul>
+                        <li>Provide leadership and coordination on child online protection, including prevention, response, and support services.</li>
+                        <li>Implement the <strong>National Plan of Action to Tackle Online Child Sexual Exploitation and Abuse (OCSEA) in Kenya (2022–2026)</strong>.</li>
+                        <li>Develop manuals, guidelines, and handbooks to operationalize the NPA on OCSEA.</li>
+                        <li>Analyse data on online child safety issues to inform policy and interventions.</li>
+                    </ul>
+                </div>
+
+                <div class="card green-border">
+                    <span class="badge">Regulation & Content</span>
+                    <h3>Stakeholder Collaboration</h3>
+                    <ul>
+                        <li>Collaborate with Internet Service Providers (ISPs), the Communication Authority (CA), the Kenya Film Classification Board (KFCB), and other regulators to develop and enforce guidelines for regulating film, broadcast, and digital content.</li>
+                        <li>Enforce classification standards to safeguard children from inappropriate content.</li>
+                        <li>Promote media content that upholds strong family values, child welfare, and traditional Kenyan values.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="badge">Education & Empowerment</span>
+                <h3>Awareness & Training Goals</h3>
+                <div class="grid-3" style="margin-bottom: 0;">
+                    <div>
+                        <h4>For Children & Youth</h4>
+                        <p>Create public awareness on child online protection among children, caregivers, and stakeholders. Empower children with knowledge and skills to stay safe in the digital environment.</p>
+                    </div>
+                    <div>
+                        <h4>For Parents & Guardians</h4>
+                        <p>Train parents and guardians on digital parenting to bridge the gap between technology and traditional home guidance.</p>
+                    </div>
+                    <div>
+                        <h4>For Professionals & Society</h4>
+                        <p>Train professionals on tackling online child sexual exploitation and abuse. Mark the annual <strong>Safer Internet Day</strong> to promote safe online behavior globally and locally.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="principles" class="tab-content">
+            <h2>The Three Pillars of Digital Navigation</h2>
+            <p>Here are the most important principles to keep in mind, broken down by category to ensure holistic protection and wellness.</p>
+
+            <div class="grid-3">
+                <div class="card green-border">
+                    <h3>🛡️ Digital Safety</h3>
+                    <p><strong>Guard Personal Information:</strong> Treat personal details (like your address, phone number, or bank details) like treasure. Limit oversharing on social networks.</p>
+                    <p><strong>Strong Authentication:</strong> Use long, unique passwords for every site and enable Two-Factor Authentication wherever possible to keep accounts secure from breaches.</p>
+                    <p><strong>Safe Browsing Habits:</strong> Think before you click on suspicious links or attachments to avoid phishing scams and malware. Verify website credibility before entering sensitive data.</p>
+                    <p><strong>Lock Down Privacy Settings:</strong> Review app and social media permissions to control who can view your posts and track your location.</p>
+                    <p><strong>Update Software:</strong> Keep your devices updated, as system updates contain vital security patches that protect against cyber threats.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🧠 Digital Wellbeing</h3>
+                    <p><strong>Mindful Screen Time:</strong> Pay attention to how much time you spend on your devices and the content you consume. Set screen time limits or schedule tech-free periods to prevent burnout and fatigue.</p>
+                    <p><strong>Digital Detox & Sleep Hygiene:</strong> Stop screen use at least an hour before bed to allow your brain to produce melatonin for quality sleep. Avoid keeping phones in the bedroom if they disrupt your rest.</p>
+                    <p><strong>Cultivate Real-Life Connections:</strong> When spending time with friends and family, practice being fully present. Establish tech-free zones, such as during meals.</p>
+                    <p><strong>Manage Notifications:</strong> Turn off non-essential app notifications to reclaim your focus and avoid constant, stressful interruptions.</p>
+                </div>
+
+                <div class="card red-border">
+                    <h3>❤️ Mental Health & Netiquette</h3>
+                    <p><strong>Address Cyberbullying:</strong> The internet is an extension of our real world. Treat others with respect, and if you are facing online harassment, use block and report tools.</p>
+                    <p><strong>Critical Thinking:</strong> Be aware of misinformation, fake news, and altered AI content. Fact-check information before believing or sharing it.</p>
+                    <p><strong>Curate Your Feed:</strong> Limit your exposure to negativity, toxic content, or people who drain your energy. Follow accounts that inspire and educate you.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="students" class="tab-content">
+            <h2>Young Internet Explorers: Rules of the Playground</h2>
+            <p>The internet is like a giant playground where you can learn new things, have fun, and meet new friends. But, just like on a real playground, there are rules we need to follow to stay safe. Some of these rules protect us from misuse and discomfort that can happen when we share things online. So, never share your personal information, like your address, phone number, or where you go to school, with people you meet on the internet. If someone online asks for such information or you feel uneasy about something you’ve seen or read, it’s important to tell a parent or teacher right away. Staying safe online means protecting yourself and your friends, just like we look out for each other at home, surrounded by family and loved ones.</p>
+            
+            <div class="highlight-box">
+                To help you have fun and learn safely, we’ve prepared some key, super tips and rules. Remember, internet safety is like a puzzle—every piece is important for the whole picture.
+            </div>
+
+            <div class="grid-2">
+                <div class="card green-border">
+                    <h3>For Elementary Students 🎒</h3>
+                    <ul>
+                        <li><strong>Never share private information online:</strong> This includes your name, address, phone number, school name, and details about family or friends. If asked, get help from an adult.</li>
+                        <li><strong>Keep passwords secret:</strong> Never reveal your password to anyone except your parents. Not even your best friends!</li>
+                        <li><strong>Do not respond to threats:</strong> If you receive an uncomfortable or threatening message, don’t respond. Show it to a parent, teacher, or trusted adult.</li>
+                        <li><strong>Avoid unknown emails:</strong> Don’t open emails from someone you don’t know; they could contain malware.</li>
+                        <li><strong>Think before posting:</strong> Don’t post anything you wouldn’t want everyone to see—including classmates!</li>
+                        <li><strong>Control your emotions:</strong> Never send messages when you’re angry. Ask yourself how you’d feel receiving it.</li>
+                        <li><strong>Speak up against bullying:</strong> If you see someone bullying kids, animals, or anyone online, tell an adult to help stop violence.</li>
+                        <li><strong>Be kind:</strong> Treat online friends kindly, just like in the real world.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>For High School Students 🎓</h3>
+                    <p><em>The internet is your second home, but you need to stay cautious there too:</em></p>
+                    <ul>
+                        <li><strong>Protect sensitive data:</strong> Never share private information or compromising photos online.</li>
+                        <li><strong>Zero password sharing:</strong> Keep your password to yourself, even from your BFF.</li>
+                        <li><strong>De-escalate conflicts:</strong> Don’t engage in online conflicts; block and report malicious messages.</li>
+                        <li><strong>Filter communications:</strong> Ignore emails and messages from unknowns.</li>
+                        <li><strong>Protect your future:</strong> Think before you post online—will you be proud of it later?</li>
+                        <li><strong>Practice impulse control:</strong> Don’t react impulsively; think before you respond.</li>
+                        <li><strong>Be an ally:</strong> Help others who are in trouble online.</li>
+                        <li><strong>Spread positivity:</strong> Treat others with respect and positivity.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="parents" class="tab-content">
+            <h2>Digital Upbringing: A Guide for Parents & Guardians</h2>
+            <p>Your role in the digital upbringing of children is crucial. Talk to them about safety and privacy. Together, we can create a safer digital environment. This platform offers tools and resources for navigating the digital world securely. Thank you for being part of this mission!</p>
+
+            <div class="grid-2">
+                <div class="card green-border">
+                    <h3>Key Parental Responsibilities</h3>
+                    <ul>
+                        <li><strong>Explain Long-Term Consequences:</strong> Discuss how online posts and communications leave a permanent digital footprint that can impact college and career prospects.</li>
+                        <li><strong>Teach Privacy Settings:</strong> Actively demonstrate the importance of privacy and how to configure account privacy settings on their devices and apps.</li>
+                        <li><strong>Lead by Example:</strong> Be a role model of how to use the internet safely and practice healthy digital wellbeing habits yourself.</li>
+                        <li><strong>Foster Empathy:</strong> Discuss empathy, respect, and netiquette when interacting with diverse people across the web.</li>
+                        <li><strong>Maintain Open Dialogue:</strong> Be consistently available and approachable to talk about any online issues or uncomfortable encounters without immediate judgment.</li>
+                        <li><strong>Leverage Resources:</strong> Use validated educational resources to stay up to date on evolving digital safety threats.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>3 Online Safety Rules for Kids (Home Network Defense)</h3>
+                    <p>Although many tips are the same for adults and children, explaining them requires clear categorization. Kids can accidentally be a gateway for cybercriminals to access your home network:</p>
+                    
+                    <h4>1. Digital Footprint</h4>
+                    <p>Teach children that what exists online after usage is permanent. Focus on how information is readily available and how identifying data (email addresses, usernames) can be used for criminal activity. Set clear boundaries on what cannot be shared: photos, home addresses, phone numbers, and middle names.</p>
+
+                    <h4>2. Passwords</h4>
+                    <p>Instruct children from a young age about strong passwords (at least 12 characters, mixing letters, numbers, and symbols) and proper storage. Consider implementing a family password management system.</p>
+
+                    <h4>3. Communication</h4>
+                    <p>Online messaging is a primary route for cybercriminals. Teach kids how to identify and avoid suspicious links, downloads, or messages from strangers. Educate them on detecting phishing and cyberbullying, emphasizing polite communication and knowing when to disengage and report.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="threats" class="tab-content">
+            <h2>Key Internet Dangers & 15 Essential Safety Tips</h2>
+            <p>So much of our daily life revolves around the internet, from work to education and talking with friends. A 2021 survey found that the average US household had around 25 internet-connected devices, up from 11 in 2019. The more accounts and devices you have, the greater the scope for cybercriminals to cause harm.</p>
+
+            <div class="alert-box">
+                <strong>The Key Dangers to Watch Out For:</strong> Identity theft • Data breaches • Malware and viruses • Phishing and scam emails • Fake websites • Online scams • Romance scams • Inappropriate content • Cyberbullying • Faulty privacy settings.
+            </div>
+
+            <h3>15 Essential Internet Safety Tips</h3>
+            <div class="grid-3">
+                <div class="card">
+                    <h4>1. Secure Internet Connection</h4>
+                    <p>Avoid public Wi-Fi for personal transactions (banking, shopping). If unavoidable, use a Virtual Private Network (VPN) for real-time encryption.</p>
+                </div>
+                <div class="card">
+                    <h4>2. Choose Strong Passwords</h4>
+                    <p>Make them long (12+ characters), mix upper/lower case, symbols, and numbers. Avoid obvious sequences (1234), birth dates, or pet names. Use a password manager.</p>
+                </div>
+                <div class="card">
+                    <h4>3. Enable Multi-Factor (MFA)</h4>
+                    <p>Require 2+ verification methods (SMS OTP, authenticator apps like Google Authenticator or Authy, or biometrics) to block unauthorized logins.</p>
+                </div>
+                <div class="card">
+                    <h4>4. Keep Software Updated</h4>
+                    <p>Regularly update OS and apps to benefit from the latest security patches against vulnerabilities, especially on banking and health apps.</p>
+                </div>
+                <div class="card">
+                    <h4>5. Check Website Reliability</h4>
+                    <p>Look for SSL certificates ("HTTPS" and padlock icon). Watch out for poor grammar, pixelated images, weird URLs, and unsecure payment gateways.</p>
+                </div>
+                <div class="card">
+                    <h4>6. Review Privacy Settings</h4>
+                    <p>Take charge of third-party data access on web browsers, mobile OS, and social media. Review privacy policies to understand data collection.</p>
+                </div>
+                <div class="card">
+                    <h4>7. Careful Where You Click</h4>
+                    <p>Avoid suspicious links, unsolicited ads, online quizzes, and spam emails. Verify unexpected emails by contacting the institution directly.</p>
+                </div>
+                <div class="card">
+                    <h4>8. Secure All Devices</h4>
+                    <p>Protect phones, tablets, and smart TVs with passcodes, passwords, or biometrics to prevent unauthorized access if lost or stolen.</p>
+                </div>
+                <div class="card">
+                    <h4>9. Backup Data Regularly</h4>
+                    <p>Store important personal info on external hard drives or secure cloud storage. Regular backups mitigate the impact of ransomware attacks.</p>
+                </div>
+                <div class="card">
+                    <h4>10. Close Unused Accounts</h4>
+                    <p>Old accounts have weaker passwords and poor data policies. Delete old profiles so cybercriminals can't piece together your identity.</p>
+                </div>
+                <div class="card">
+                    <h4>11. Careful What You Download</h4>
+                    <p>Only download from official stores. Watch out for malware disguised as games or weather apps, and check download folders for drive-by downloads.</p>
+                </div>
+                <div class="card">
+                    <h4>12. Careful What You Post</h4>
+                    <p>The internet has no delete key. Avoid posting sensitive info (address, birth date) in bios. Use secondary throwaway emails for online subscriptions.</p>
+                </div>
+                <div class="card">
+                    <h4>13. Careful Who You Meet</h4>
+                    <p>People online may use fake profiles to groom users or conduct dating scams. Apply in-person social caution to online interactions.</p>
+                </div>
+                <div class="card">
+                    <h4>14. Double Check Information</h4>
+                    <p>Combat fake news, misinformation, and disinformation by verifying facts and checking if reliable websites reference original source materials.</p>
+                </div>
+                <div class="card">
+                    <h4>15. Use Quality Antivirus</h4>
+                    <p>Install reliable security software (e.g., Kaspersky Safe Kids, Kaspersky Home Security, Kaspersky Password Manager) and keep it updated against spy apps and cryptolockers.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="footprint" class="tab-content">
+            <h2>The Shift to Cyberspace & Social Engineering</h2>
+            <p>Technological advances have transformed how we live, work, and interact. Beyond physical conveniences, the most profound change is the rise of cyberspace—a parallel environment where interactions are shaped by individual perceptions, behaviors, and identities. Every interaction leaves behind a digital footprint: the sum of all information about a person available online, from casual photos to sensitive personal data.</p>
+
+            <div class="grid-2">
+                <div class="card red-border">
+                    <h3>The Risk of Social Engineering</h3>
+                    <p>Just as in the physical world, cyberspace has its dangers. Attackers leverage emotional and motivational vulnerabilities through social engineering.</p>
+                    <ul>
+                        <li><strong>Phishing:</strong> Mass-distributed fraudulent messages seeking to trick recipients.</li>
+                        <li><strong>Spear Phishing:</strong> Personalized, targeted attacks designed to be more convincing and harder to detect.</li>
+                    </ul>
+                    <p>The more publicly available information about an individual—such as tastes, routines, and job details—the easier it is for attackers to craft convincing messages.</p>
+                </div>
+
+                <div class="card green-border">
+                    <h3>Case Study: What Happened to Zed?</h3>
+                    <p>Zed, a young woman, received a message from a “distant friend” on Facebook asking for help voting in an online competition. After a system “crash,” the friend requested her account password to restore the votes. Trusting the request, Zed complied—unwittingly giving access to a malicious attacker.</p>
+                    <p>The attacker exploited her data, including her passport, bank details, and private photos, changed her passwords, and enabled two-factor authentication to lock her out. They then escalated the harassment, threatening to publish explicit content unless she complied with further demands.</p>
+                    
+                    <h4>Why Zed Was Targeted:</h4>
+                    <ul>
+                        <li>The attacker had detailed knowledge of her lifestyle from public posts.</li>
+                        <li>They impersonated someone she genuinely knew.</li>
+                        <li>They tailored the approach to increase emotional pressure.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Consequences & Best Practices for Footprint Management</h3>
+                <div class="grid-2" style="margin-bottom:0;">
+                    <div>
+                        <h4>Potential Consequences of Attacks</h4>
+                        <ul>
+                            <li><strong>Confidentiality breach:</strong> Unauthorized access to sensitive data.</li>
+                            <li><strong>Loss of availability:</strong> Locked-out accounts and systems.</li>
+                            <li><strong>Reputational and emotional harm:</strong> Public exposure of personal content.</li>
+                            <li><strong>Workplace risk:</strong> If attacks occur on company devices or accounts.</li>
+                        </ul>
+                        <p><em>*Organizational approaches like Kymatio help reduce risk by identifying employee exposure levels and reinforcing awareness.</em></p>
+                    </div>
+                    <div>
+                        <h4>Best Practices to Manage Footprint</h4>
+                        <ul>
+                            <li><strong>Search yourself online:</strong> Check Google results; use "Remove result" or Google's "Results about you" tool.</li>
+                            <li><strong>Check data breaches:</strong> Use <em>Have I Been Pwned</em> to check your email; change passwords immediately if compromised.</li>
+                            <li><strong>Avoid unnecessary accounts:</strong> Use guest checkout whenever possible.</li>
+                            <li><strong>Use Alternate Contact Info:</strong> Set up secondary email addresses or intermediate phone numbers (e.g., Google Voice).</li>
+                            <li><strong>Enable Multi-factor Authentication (MFA):</strong> Adds critical security beyond passwords.</li>
+                            <li><strong>Delist from Directories:</strong> Adjust student/staff profile settings in institutional directories (like Harvard directories) if privacy is a concern.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="harassment" class="tab-content">
+            <h2>Steps to Take if You’ve Become the Target of Harassment</h2>
+            <p>If you are being harassed online, there are concrete steps you can take to combat potential harms, including requesting takedowns of abusive content or false statements, managing attacks on social media, documenting evidence, and managing email settings.</p>
+
+            <div class="alert-box">
+                <strong>EMERGENCY DIRECTIVE:</strong> If you or those close to you are in imminent physical danger or there has been a direct threat of physical violence, immediately call emergency services (911) or campus police (e.g., Harvard University Police Department at 617-495-1212 if on campus). In Kenya, report threats to local law enforcement, DCI Child Protection Unit, or call toll-free child helplines (116).
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Social Media Settings & Tactics</h3>
+                    <p>Consider temporarily disabling your social media profiles or switching them to private. Although your first instinct may be to respond and defend yourself online, responding to harassing messages can tend to prolong and inflame incidents. Online attacks can be intense, but they are not usually sustained for long periods of time.</p>
+                    
+                    <ul>
+                        <li><strong>Ignore:</strong> The goal of social media agitators (trolls) is to elicit a response. In many cases, trolls move on if you ignore them long enough.</li>
+                        <li><strong>Mute:</strong> Change settings to mute distressing commenters without notifying them. If worried comments may become threatening, ask a friend to check your feed on your behalf.</li>
+                        <li><strong>Block:</strong> Selectively prevent others from following you or seeing your content. Be aware they might see they are blocked and criticize you on their own channels.</li>
+                        <li><strong>Report:</strong> Report behavior violating platform guidelines to suspend accounts. Note: Harassers may use multiple accounts, and some harassing posts may not technically violate platform rules.</li>
+                    </ul>
+                </div>
+
+                <div class="card green-border">
+                    <h3>Professional Profiles & Account Monitoring</h3>
+                    <h4>Protecting Professional Networks (e.g., LinkedIn)</h4>
+                    <p>LinkedIn professional connections can be at particular risk if they are found to be engaging in political activities. To disable the public visibility of your profile:</p>
+                    <ol>
+                        <li>Go to your public profile settings.</li>
+                        <li>On the right-hand side, locate <strong>“Your profile’s public visibility.”</strong></li>
+                        <li>Switch this setting to <strong>“off”</strong>.</li>
+                    </ol>
+
+                    <h4 style="margin-top: 20px;">Monitor Your Accounts</h4>
+                    <p>Create a way to monitor what’s going on so you can assess any risks:</p>
+                    <ul>
+                        <li>Set a <strong>Google Alert</strong> for your name or relevant keywords.</li>
+                        <li>Add specialized filters in your Gmail/email client to segregate abusive mails for documentation without reading them daily.</li>
+                        <li>Ask a trusted friend or colleague to monitor your accounts and email you important updates.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-hub" class="tab-content">
+            <h2>🎮 UEFI: THE CYBER GRID (Interactive Game Simulation)</h2>
+            <p>Welcome to the Universal Electronic & Digital Frontiers Initiative Game Hub! This universal game is built for boys, girls, and explorers of all ages to test their digital survival skills.</p>
+
+            <div class="game-screen">
+                <h3 id="game-title" style="color: var(--text-white); font-size: 28px;">UEFI: The Cyber Grid - Stage 1</h3>
+                <p id="game-desc">You are navigating the Digital Wellbeing Grid. Avoid notification storms and collect healthy habits!</p>
+                
+                <div style="margin: 30px 0; padding: 20px; background: #0a192f; border-radius: 8px; display: inline-block; min-width: 60%;">
+                    <h4 id="timer-display" style="color: var(--safaricom-green); font-size: 36px;">00:00</h4>
+                    <p id="game-status">Status: Ready to Launch</p>
+                </div>
+
+                <div id="interactive-area" style="margin: 20px auto; max-width: 600px;">
+                    </div>
+
+                <div>
+                    <button class="btn-action" id="start-btn" onclick="startGame()">▶ Start Stage 1 (Wellbeing)</button>
+                    <button class="btn-action" id="stage2-btn" onclick="startStage2()" style="display:none; background-color: var(--accent-blue);">▶ Start Stage 2 (Cyber Defense)</button>
+                    <button class="btn-action" id="stage3-btn" onclick="startStage3()" style="display:none; background-color: var(--kenya-red);">▶ Start Stage 3 (Survivor Story & Action)</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p><strong>UEFI Safety Portal</strong> - In proud collaboration with national frameworks, implementing the NPA on OCSEA (2022–2026).</p>
+        <p>Upholding strong family values, child welfare, and traditional values through digital empowerment.</p>
+        <p style="color: var(--safaricom-green); margin-top: 10px;">Marking the Annual Safer Internet Day • Stay Safe Online</p>
+    </footer>
+
+    <script>
+        // Tab Navigation Logic
+        function openTab(evt, tabName) {
+            let i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tabbuttons = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Game Simulation Logic
+        let gameTimer;
+        let seconds = 0;
+        let currentStage = 1;
+
+        function formatTime(sec) {
+            let mins = Math.floor(sec / 60);
+            let remSec = sec % 60;
+            return (mins < 10 ? "0" : "") + mins + ":" + (remSec < 10 ? "0" : "") + remSec;
+        }
+
+        function startGame() {
+            document.getElementById("start-btn").style.display = "none";
+            document.getElementById("game-status").innerText = "Status: Navigating Data Streams... (Simulating 3-Minute Checkpoint)";
+            seconds = 0;
+            
+            clearInterval(gameTimer);
+            gameTimer = setInterval(() => {
+                seconds += 10; // Speeding up time for web simulation
+                document.getElementById("timer-display").innerText = formatTime(seconds);
+
+                // Stage 1: 3 Minute Checkpoint
+                if (seconds === 180 && currentStage === 1) {
+                    clearInterval(gameTimer);
+                    triggerQuestion("Digital Wellbeing Check", "How many hours before sleep do you usually stop looking at screens to let your brain produce melatonin?", ["Less than 15 mins", "30 minutes", "At least 1 hour before bed (Optimal Hygiene)"], resumeGame);
+                }
+                // Stage 1 End (10 Mins simulated as 600s)
+                if (seconds >= 600 && currentStage === 1) {
+                    clearInterval(gameTimer);
+                    completeStage1();
+                }
+            }, 500);
+        }
+
+        function resumeGame() {
+            document.getElementById("interactive-area").innerHTML = "<p style='color:var(--safaricom-green); font-weight:bold;'>Data Recorded! Resuming grid navigation...</p>";
+            gameTimer = setInterval(() => {
+                seconds += 20;
+                document.getElementById("timer-display").innerText = formatTime(seconds);
+                if (seconds >= 600 && currentStage === 1) {
+                    clearInterval(gameTimer);
+                    completeStage1();
+                }
+            }, 500);
+        }
+
+        function triggerQuestion(title, qText, options, callback) {
+            let area = document.getElementById("interactive-area");
+            let html = `<div class='card green-border' style='text-align:left;'>
+                            <h4 style='color:var(--safaricom-green);'>⏱️ CHECKPOINT: ${title}</h4>
+                            <p>${qText}</p>`;
+            options.forEach((opt, idx) => {
+                html += `<button class='btn-action' style='display:block; width:100%; margin: 5px 0; background:#172a45; border:1px solid #38B000;' onclick='${callback.name}()'>${opt}</button>`;
+            });
+            html += `</div>`;
+            area.innerHTML = html;
+        }
+
+        function completeStage1() {
+            document.getElementById("game-status").innerText = "Status: Stage 1 Completed!";
+            document.getElementById("interactive-area").innerHTML = `
+                <div class='card' style='border-top:3px solid var(--safaricom-green);'>
+                    <h3>📊 Stage 1 Feedback: Your Digital Wellbeing Report</h3>
+                    <p>You survived the Notification Storms! Remember: set tech-free periods to prevent fatigue, practice digital detox before bed for better sleep, and keep phones out of meal times to cultivate real-life connections.</p>
+                </div>
+            `;
+            document.getElementById("stage2-btn").style.display = "inline-block";
+        }
+
+        function startStage2() {
+            currentStage = 2;
+            seconds = 0;
+            document.getElementById("stage2-btn").style.display = "none";
+            document.getElementById("game-title").innerText = "UEFI: The Cyber Grid - Stage 2 (Cyber Defense)";
+            document.getElementById("game-desc").innerText = "Defend your network against malware, phishing hooks, and hackers!";
+            document.getElementById("interactive-area").innerHTML = "";
+            document.getElementById("game-status").innerText = "Status: Deploying Firewalls... (Simulating Checkpoints)";
+
+            gameTimer = setInterval(() => {
+                seconds += 30;
+                document.getElementById("timer-display").innerText = formatTime(seconds);
+
+                if (seconds === 180) {
+                    clearInterval(gameTimer);
+                    triggerQuestion("Cyber Threat Alert", "You receive an email from an unknown sender with an attachment claiming you won a prize. What is your move?", ["Open it immediately", "Forward to friends", "Ignore, do not click, and verify source (Safe Browsing)"], resumeStage2);
+                }
+                if (seconds >= 600) {
+                    clearInterval(gameTimer);
+                    completeStage2();
+                }
+            }, 400);
+        }
+
+        function resumeStage2() {
+            document.getElementById("interactive-area").innerHTML = "<p style='color:var(--safaricom-green); font-weight:bold;'>Threat Neutralized! Shields at 100%...</p>";
+            gameTimer = setInterval(() => {
+                seconds += 30;
+                document.getElementById("timer-display").innerText = formatTime(seconds);
+                if (seconds >= 600) {
+                    clearInterval(gameTimer);
+                    completeStage2();
+                }
+            }, 400);
+        }
+
+        function completeStage2() {
+            // Play gaming audio simulation (Visual cue + Web Audio API beep)
+            let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let osc = audioCtx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+            osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.2); // A5
+            osc.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.6);
+
+            document.getElementById("game-status").innerText = "Status: VICTORY!";
+            document.getElementById("interactive-area").innerHTML = `
+                <div class='card' style='background-color:#112233; border: 2px solid var(--safaricom-green);'>
+                    <h2 style='color:#38B000; border:none; font-size:28px;'>🎉 HURRAY COMPLETED YOUR SECOND UEFI: THE CYBER GRID! 🎉</h2>
+                    <p style='margin-top:15px;'>You successfully encrypted your data, avoided social engineering traps, and maintained multi-factor authentication shields!</p>
+                </div>
+            `;
+            document.getElementById("stage3-btn").style.display = "inline-block";
+        }
+
+        function startStage3() {
+            currentStage = 3;
+            document.getElementById("stage3-btn").style.display = "none";
+            document.getElementById("game-title").innerText = "UEFI: The Cyber Grid - Stage 3 (Real Stories & Action)";
+            document.getElementById("game-desc").innerText = "Empathy, Recovery, and Taking the Pledge.";
+            document.getElementById("timer-display").style.display = "none";
+            document.getElementById("game-status").style.display = "none";
+
+            document.getElementById("interactive-area").innerHTML = `
+                <div class='card red-border' style='text-align:left;'>
+                    <h3>🤝 Real Experience: Overcoming Online Threats</h3>
+                    <div style='background:#000; height:200px; display:flex; align-items:center; justify-content:center; border-radius:8px; margin:15px 0;'>
+                        <p style='color:#fff;'>▶️ [Simulated YouTube Video: Survivor Testimony on Overcoming Cyberbullying & Social Engineering through Digital Wellbeing Resources & Trusted Support]</p>
+                    </div>
+                    <p><strong>The Takeaway:</strong> Behind every digital avatar is a real human being. Seeking help from parents, teachers, and reporting tools can rescue lives and stop harassment.</p>
+                    
+                    <hr style='border:1px solid #1f3a60; margin:20px 0;'>
+                    
+                    <h4>📋 Final Action Survey & Pledge</h4>
+                    <p>How will you help stop cyberbullying and online threats in your community?</p>
+                    <textarea style='width:100%; height:80px; padding:10px; border-radius:5px; background:#0a192f; color:#fff; border:1px solid #38B000; margin-top:10px;' placeholder='I pledge to treat others with respect, report OCSEA/harassment immediately, and never share private data...'></textarea>
+                    <button class='btn-action' style='width:100%; margin: 15px 0 0;' onclick='finishPortal()'>Submit Pledge & Earn UEFI Guardian Badge</button>
+                </div>
+            `;
+        }
+
+        function finishPortal() {
+            document.getElementById("interactive-area").innerHTML = `
+                <div class='card green-border' style='text-align:center;'>
+                    <h2 style='color:var(--safaricom-green); border:none;'>🛡️ YOU ARE NOW A CERTIFIED UEFI DIGITAL GUARDIAN! 🛡️</h2>
+                    <p style='font-size:18px; margin-top:15px;'>Thank you for playing and committing to digital safety, family values, and netiquette. Together, we can create a safer digital environment for everyone!</p>
+                    <div style='font-size:50px; margin:20px 0;'>🏅🇰🇪🌐</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
