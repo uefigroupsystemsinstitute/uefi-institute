@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI: CyberShield Arcade</title>
+    <style>
+        /* Kenyan Flag & Safaricom Green Theme */
+        :root {
+            --green: #43B02A;
+            --black: #000000;
+            --red: #CE1126;
+            --white: #FFFFFF;
+            --dark-green: #006600;
+        }
+
+        body {
+            margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4; color: var(--black);
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+        }
+
+        .header-strip {
+            width: 100%; height: 10px; display: flex;
+        }
+        .strip-black { flex: 1; background: var(--black); }
+        .strip-white { flex: 0.1; background: var(--white); }
+        .strip-red { flex: 1; background: var(--red); }
+        .strip-green { flex: 1; background: var(--dark-green); }
+
+        header {
+            width: 100%; background: var(--black); color: var(--white);
+            padding: 15px 0; text-align: center; border-bottom: 4px solid var(--green);
+        }
+
+        .container {
+            width: 90%; max-width: 1000px; margin: 20px auto;
+            background: var(--white); padding: 20px; border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .hud {
+            display: flex; justify-content: space-between; margin-bottom: 15px;
+            font-weight: bold; font-size: 18px; color: var(--dark-green);
+        }
+
+        /* Game Canvas */
+        #gameCanvas {
+            background: #e0f7fa; border: 4px solid var(--black);
+            border-radius: 8px; display: block; margin: 0 auto;
+            max-width: 100%;
+        }
+
+        /* Modals & Overlays */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 100;
+        }
+
+        .modal-content {
+            background: var(--white); padding: 30px; border-radius: 10px;
+            width: 90%; max-width: 500px; text-align: center; border-top: 6px solid var(--green);
+        }
+
+        .options button {
+            display: block; width: 100%; margin: 10px 0; padding: 12px;
+            background: #f4f4f4; border: 2px solid #ddd; border-radius: 5px;
+            cursor: pointer; font-size: 16px; transition: 0.3s;
+        }
+
+        .options button:hover {
+            background: var(--green); color: var(--white); border-color: var(--green);
+        }
+
+        .btn-primary {
+            background: var(--green); color: var(--white); border: none;
+            padding: 12px 24px; font-size: 18px; border-radius: 5px; cursor: pointer;
+            margin-top: 15px; font-weight: bold;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Video & Survey containers */
+        #videoStage, #surveyStage, #feedbackStage { text-align: center; }
+        iframe { width: 100%; height: 450px; border-radius: 8px; margin-top: 15px; }
+        textarea { width: 100%; height: 100px; margin-top: 10px; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-strip">
+        <div class="strip-black"></div><div class="strip-white"></div>
+        <div class="strip-red"></div><div class="strip-white"></div>
+        <div class="strip-green"></div>
+    </div>
+
+    <header>
+        <h1>UEFI: CyberShield Arcade</h1>
+        <p id="stageTitle">Stage 1: Digital Wellbeing</p>
+    </header>
+
+    <div class="container" id="gameContainer">
+        <div class="hud">
+            <span id="timeDisplay">Time: 10:00</span>
+            <span id="scoreDisplay">Score: 0</span>
+        </div>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div style="text-align: center; margin-top: 15px;">
+            <button class="btn-primary" id="startBtn" onclick="startGame()">Start Game</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="feedbackStage">
+        <h2 style="color: var(--red);">Stage 1 Complete: Wellbeing Analysis</h2>
+        <p>Based on your gameplay, it's vital to balance screen time. Remember to turn off non-essential notifications and prioritize real-life connections to avoid digital burnout.</p>
+        <button class="btn-primary" onclick="startStage2()">Proceed to Stage 2: Internet Safety</button>
+    </div>
+
+    <div class="container hidden" id="videoStage">
+        <h2 style="color: var(--dark-green);">Stage 3: Real Stories, Real Survival</h2>
+        <p>Listen to this advice on overcoming online threats and cyberbullying.</p>
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+        <button class="btn-primary" onclick="startSurvey()">I have finished the video</button>
+    </div>
+
+    <div class="container hidden" id="surveyStage">
+        <h2>Final Survey: Be a Digital Defender</h2>
+        <p>How can you help others stop cyberbullying and stay safe online?</p>
+        <textarea placeholder="Write your ideas here..."></textarea>
+        <p>Do you feel more confident managing your digital wellbeing?</p>
+        <select style="width: 100%; padding: 10px; margin-bottom: 15px;">
+            <option>Yes, definitely</option>
+            <option>Somewhat</option>
+            <option>I need to learn more</option>
+        </select>
+        <button class="btn-primary" onclick="finishExperience()">Submit & Complete UEFI Course</button>
+    </div>
+
+    <div class="modal" id="questionModal">
+        <div class="modal-content">
+            <h3 id="questionText">Question goes here</h3>
+            <div class="options" id="optionsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- GAME ENGINE VARIABLES ---
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let gameLoop, timerInterval;
+        let isPlaying = false;
+        let stage = 1; // 1: Wellbeing, 2: Safety
+        let timeRemaining = 600; // 10 minutes per stage
+        let score = 0;
+        
+        // Universal Player
+        let player = { x: 380, y: 180, size: 20, speed: 5, color: '#CE1126' };
+        let tokens = [];
+
+        // --- QUESTION DATABASE ---
+        const questions = {
+            1: [
+                { q: "How often do you check your social media when you should be studying or sleeping?", opts: ["Constantly", "Sometimes", "Rarely"] },
+                { q: "If you see a post that makes you angry or sad, what's the best reaction?", opts: ["Reply aggressively", "Log off and take a breath", "Share it to complain"] },
+                { q: "Do you keep your phone next to your bed at night?", opts: ["Yes, under my pillow", "Yes, on the nightstand", "No, in another room"] }
+            ],
+            2: [
+                { q: "You get an email saying 'You won a free iPhone! Click here.' What do you do?", opts: ["Click immediately", "Ignore and delete it", "Forward to friends"] },
+                { q: "What makes a strong password?", opts: ["My pet's name", "12345678", "A mix of letters, numbers & symbols"] },
+                { q: "If a stranger online starts threatening you, you should:", opts: ["Threaten them back", "Keep it a secret", "Block, report, and tell an adult"] }
+            ]
+        };
+
+        // --- INPUT HANDLING ---
+        let keys = {};
+        window.addEventListener('keydown', e => keys[e.key] = true);
+        window.addEventListener('keyup', e => keys[e.key] = false);
+
+        // --- CORE GAME LOOP ---
+        function update() {
+            if (!isPlaying) return;
+
+            // Movement
+            if (keys['ArrowUp'] && player.y > 0) player.y -= player.speed;
+            if (keys['ArrowDown'] && player.y < canvas.height - player.size) player.y += player.speed;
+            if (keys['ArrowLeft'] && player.x > 0) player.x -= player.speed;
+            if (keys['ArrowRight'] && player.x < canvas.width - player.size) player.x += player.speed;
+
+            // Spawn Tokens
+            if (Math.random() < 0.02) {
+                tokens.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: 10 });
+            }
+
+            // Collect Tokens
+            tokens.forEach((t, index) => {
+                let dist = Math.hypot(player.x - t.x, player.y - t.y);
+                if (dist - player.size - t.size < 1) {
+                    tokens.splice(index, 1);
+                    score += 10;
+                    document.getElementById('scoreDisplay').innerText = `Score: ${score}`;
+                }
+            });
+
+            draw();
+            gameLoop = requestAnimationFrame(update);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw Player
+            ctx.fillStyle = player.color;
+            ctx.beginPath();
+            ctx.arc(player.x, player.y, player.size, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw Tokens
+            ctx.fillStyle = '#43B02A';
+            tokens.forEach(t => {
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, t.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        // --- TIMER & EVENT SYSTEM ---
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (!isPlaying) return;
+                timeRemaining--;
+                
+                let m = Math.floor(timeRemaining / 60);
+                let s = timeRemaining % 60;
+                document.getElementById('timeDisplay').innerText = `Time: ${m}:${s < 10 ? '0' : ''}${s}`;
+
+                // Trigger Question every 3 minutes (180 seconds passed -> at 420, 240, 60 seconds left)
+                if (timeRemaining === 420 || timeRemaining === 240 || timeRemaining === 60) {
+                    pauseForQuestion();
+                }
+
+                // End Stage
+                if (timeRemaining <= 0) {
+                    endStage();
+                }
+            }, 1000);
+        }
+
+        function startGame() {
+            document.getElementById('startBtn').style.display = 'none';
+            isPlaying = true;
+            update();
+            startTimer();
+        }
+
+        // --- MODAL LOGIC ---
+        function pauseForQuestion() {
+            isPlaying = false;
+            let qArray = questions[stage];
+            // Pick a random question from the current stage array
+            let qObj = qArray[Math.floor(Math.random() * qArray.length)];
+            
+            document.getElementById('questionText').innerText = qObj.q;
+            let optsContainer = document.getElementById('optionsContainer');
+            optsContainer.innerHTML = '';
+            
+            qObj.opts.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.innerText = opt;
+                btn.onclick = () => resumeGame();
+                optsContainer.appendChild(btn);
+            });
+
+            document.getElementById('questionModal').style.display = 'flex';
+        }
+
+        function resumeGame() {
+            document.getElementById('questionModal').style.display = 'none';
+            isPlaying = true;
+            update();
+        }
+
+        // --- STAGE TRANSITIONS ---
+        function endStage() {
+            isPlaying = false;
+            clearInterval(timerInterval);
+            document.getElementById('gameContainer').classList.add('hidden');
+            
+            if (stage === 1) {
+                document.getElementById('feedbackStage').classList.remove('hidden');
+            } else if (stage === 2) {
+                // Hurray Sound & Proceed to Video
+                alert("HURAAY COMPLETED YOUR SECOND UEFI STAGE! Cyber Threats Neutralized.");
+                document.getElementById('videoStage').classList.remove('hidden');
+                document.getElementById('stageTitle').innerText = "Stage 3: Real Life Experiences";
+            }
+        }
+
+        function startStage2() {
+            stage = 2;
+            timeRemaining = 600; // Reset to 10 mins
+            score = 0;
+            tokens = [];
+            document.getElementById('scoreDisplay').innerText = `Score: 0`;
+            document.getElementById('stageTitle').innerText = "Stage 2: Internet Safety & Threats";
+            
+            document.getElementById('feedbackStage').classList.add('hidden');
+            document.getElementById('gameContainer').classList.remove('hidden');
+            
+            isPlaying = true;
+            startTimer();
+            update();
+        }
+
+        function startSurvey() {
+            document.getElementById('videoStage').classList.add('hidden');
+            document.getElementById('surveyStage').classList.remove('hidden');
+            document.getElementById('stageTitle').innerText = "Stage 4: UEFI Final Survey";
+        }
+
+        function finishExperience() {
+            alert("Thank you! Your feedback helps build a safer internet. Remember to always be a Digital Defender!");
+            location.reload(); // Reset the experience
+        }
+    </script>
+</body>
+</html>
