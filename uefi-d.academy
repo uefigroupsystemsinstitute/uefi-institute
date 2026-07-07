@@ -1,1 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Global Digital Academy - Digital Survival Center</title>
+    <style>
+        /* --- BRANDING & CSS VARIABLES (Safaricom & Kenyan Flag Palette) --- */
+        :root {
+            --color-black: #111111;
+            --color-dark-gray: #1A1A1A;
+            --color-card-bg: #222222;
+            --color-safaricom-green: #49A844;
+            --color-kenya-red: #E31A22;
+            --color-white: #FFFFFF;
+            --color-muted-text: #BBBBBB;
+            --color-safe: #2ECC71;
+            --color-suspicious: #F1C40F;
+            --color-danger: #E74C3C;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --transition-speed: 0.3s;
+        }
 
+        /* --- GLOBAL RESETS --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-black);
+            color: var(--color-white);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--color-safaricom-green);
+            text-decoration: none;
+            transition: color var(--transition-speed);
+        }
+
+        a:hover {
+            color: var(--color-kenya-red);
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            width: 92%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .text-center { text-align: center; }
+        .flex { display: flex; }
+        .grid { display: grid; }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .badge.safe { background-color: var(--color-safe); color: var(--color-black); }
+        .badge.suspicious { background-color: var(--color-suspicious); color: var(--color-black); }
+        .badge.danger { background-color: var(--color-danger); color: var(--color-white); }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--color-dark-gray);
+            border-bottom: 4px solid var(--color-safaricom-green);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 4%;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .flag-strip {
+            display: flex;
+            flex-direction: column;
+            width: 24px;
+            height: 16px;
+        }
+        .flag-line { height: 33.3%; width: 100%; }
+        .flag-line.black { background-color: #000000; }
+        .flag-line.red { background-color: var(--color-kenya-red); border-top: 1px solid var(--color-white); border-bottom: 1px solid var(--color-white); }
+        .flag-line.green { background-color: var(--color-safaricom-green); }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .logo-text span { color: var(--color-safaricom-green); }
+        .logo-text .sub-brand { color: var(--color-kenya-red); }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        nav ul li a.active, nav ul li a:hover {
+            background-color: var(--color-safaricom-green);
+            color: var(--color-white);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(135deg, rgba(26,26,26,0.95) 0%, rgba(17,17,17,0.9) 100%), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23111" width="100" height="100"/><circle fill="%2349A844" opacity="0.05" cx="50" cy="50" r="40"/></svg>');
+            padding: 80px 0;
+            text-center: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+        .hero h1 span { color: var(--color-kenya-red); }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            color: var(--color-muted-text);
+        }
+
+        .un-sdg-badge {
+            background-color: #007DBC;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            border-left: 5px solid var(--color-safaricom-green);
+        }
+
+        /* --- CORE PLATFORM ARCHITECTURE (5 PILLARS SYSTEM OVERVIEW) --- */
+        .architecture-bar {
+            background-color: var(--color-dark-gray);
+            padding: 20px 0;
+            border-bottom: 2px solid #333;
+        }
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+        .arch-card {
+            background-color: var(--color-card-bg);
+            padding: 15px;
+            text-align: center;
+            border-radius: 6px;
+            border-top: 3px solid var(--color-muted-text);
+        }
+        .arch-card.safety { border-top-color: var(--color-kenya-red); }
+        .arch-card.wellbeing { border-top-color: var(--color-safaricom-green); }
+        .arch-card.ai { border-top-color: #9B59B6; }
+        .arch-card.media { border-top-color: #3498DB; }
+        .arch-card.future { border-top-color: #E67E22; }
+        .arch-card h4 { font-size: 1rem; margin-bottom: 5px; color: var(--color-white); }
+        .arch-card p { font-size: 0.75rem; color: var(--color-muted-text); }
+
+        /* --- FLAGSHIP EXPERIENCE: LIFE SIMULATOR --- */
+        .flagship-box {
+            background-color: var(--color-dark-gray);
+            border: 2px solid var(--color-safaricom-green);
+            border-radius: 12px;
+            padding: 35px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .flagship-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .simulator-window {
+            background-color: var(--color-black);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 25px;
+            min-height: 250px;
+        }
+
+        /* --- UEFI THREAT DETECTOR INTERFACE --- */
+        .threat-detector {
+            background-color: var(--color-dark-gray);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 1px solid #333;
+        }
+        .detector-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        @media(max-width: 768px) { .detector-grid { grid-template-columns: 1fr; } }
+        
+        .account-linker h3 { margin-bottom: 15px; }
+        .account-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--color-card-bg);
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 4px solid #555;
+        }
+        .account-row.connected { border-left-color: var(--color-safaricom-green); }
+        .account-info { display: flex; align-items: center; gap: 10px; }
+        .account-info .icon { font-weight: bold; width: 24px; text-align: center; }
+        
+        .detector-console {
+            background-color: var(--color-black);
+            border-radius: 6px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .scan-pulse-box {
+            text-align: center;
+            padding: 30px 0;
+        }
+        .scan-btn {
+            background-color: var(--color-kenya-red);
+            color: var(--color-white);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background var(--transition-speed);
+        }
+        .scan-btn:hover { background-color: #b31217; }
+        .scan-btn:disabled { background-color: #555; cursor: not-allowed; }
+
+        .progress-bar-container {
+            background-color: #222;
+            border-radius: 10px;
+            height: 12px;
+            width: 100%;
+            margin-top: 20px;
+            display: none;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--color-safaricom-green);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* --- THE 12 ACADEMY PILLARS TABBED/GRID LAB --- */
+        .pillars-section h2 { margin-bottom: 25px; text-transform: uppercase; font-weight: 800; }
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .pillar-card {
+            background-color: var(--color-dark-gray);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform var(--transition-speed), border-color var(--transition-speed);
+        }
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-safaricom-green);
+        }
+        .pillar-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pillar-card h3 .num {
+            background-color: var(--color-kenya-red);
+            color: var(--color-white);
+            font-size: 0.75rem;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .pillar-card p {
+            font-size: 0.9rem;
+            color: var(--color-muted-text);
+            margin-bottom: 20px;
+        }
+        .pillar-action-btn {
+            background-color: transparent;
+            border: 1px solid var(--color-safaricom-green);
+            color: var(--color-safaricom-green);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+            transition: all var(--transition-speed);
+        }
+        .pillar-action-btn:hover {
+            background-color: var(--color-safaricom-green);
+            color: var(--color-white);
+        }
+
+        /* --- VIRTUAL SIMULATION MODALS ENGINE --- */
+        .simulation-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0,0,0,0.85);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .simulation-modal {
+            background-color: var(--color-dark-gray);
+            border: 2px solid var(--color-kenya-red);
+            border-radius: 10px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .sim-content { margin-top: 20px; }
+
+        /* --- INTERACTIVE CHAT SPECIFICS (PILLAR 1) --- */
+        .chat-container {
+            background-color: var(--color-black);
+            border-radius: 6px;
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        .chat-bubble.guardian {
+            background-color: #2D5A27;
+            align-self: flex-start;
+            border-left: 4px solid var(--color-safaricom-green);
+        }
+        .chat-bubble.user {
+            background-color: #444;
+            align-self: flex-end;
+        }
+        .chat-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .opt-btn {
+            background-color: var(--color-card-bg);
+            border: 1px solid #444;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background var(--transition-speed);
+        }
+        .opt-btn:hover { background-color: #333; border-color: var(--color-safaricom-green); }
+
+        /* --- GAMING CENTER SECTION --- */
+        .games-section { margin: 60px 0; }
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        .game-card {
+            background-color: var(--color-card-bg);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--color-safaricom-green), var(--color-kenya-red));
+        }
+        .game-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .game-card h3 { margin-bottom: 10px; }
+        .game-card p { font-size: 0.85rem; color: var(--color-muted-text); margin-bottom: 20px; }
+
+        /* --- DASHBOARD FORMS & METERS --- */
+        .health-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .health-slider-box { background: #111; padding: 10px; border-radius: 4px; }
+        .health-slider-box label { display: block; font-size: 0.8rem; margin-bottom: 5px; }
+        .health-slider-box input { width: 100%; accent-color: var(--color-safaricom-green); }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--color-dark-gray);
+            border-top: 4px solid var(--color-kenya-red);
+            padding: 40px 0;
+            margin-top: 80px;
+            font-size: 0.9rem;
+            color: var(--color-muted-text);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        @media(max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } }
+        .footer-logo h3 { color: white; margin-bottom: 10px; font-weight: 800; }
+        .footer-links h4 { color: white; margin-bottom: 15px; }
+        .footer-links ul { list-style: none; }
+        .footer-links ul li { margin-bottom: 8px; }
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo-area">
+                <div class="flag-strip">
+                    <div class="flag-line black"></div>
+                    <div class="flag-line red"></div>
+                    <div class="flag-line green"></div>
+                </div>
+                <div class="logo-text">UEFI <span>GLOBAL</span><span class="sub-brand"> ACADEMY</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Survival Center</a></li>
+                    <li><a href="#pillars">12 Pillars Lab</a></li>
+                    <li><a href="#games">Arcade</a></li>
+                    <li><a href="#simulator">Life Simulator</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container text-center">
+            <h1>Digital <span>Survival</span> Academy</h1>
+            <p>Welcome to the hardline sandbox training ground inside UEFI Global. We don't lecture you on cyber policies; we arm you with the sharp technical judgment, critical logic, and systemic habits necessary to master and secure the digital world.</p>
+            <div>
+                <span class="un-sdg-badge">Aligned with UN SDG 4 (Quality Education) & SDG 16 (Peace, Justice & Strong Institutions)</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="architecture-bar">
+        <div class="container">
+            <div class="architecture-grid">
+                <div class="arch-card safety">
+                    <h4>Digital Safety</h4>
+                    <p>Scams, Advanced Cryptography, Defenses</p>
+                </div>
+                <div class="arch-card wellbeing">
+                    <h4>Digital Wellbeing</h4>
+                    <p>Neuro-habits, Screen Autonomy, Ergonomics</p>
+                </div>
+                <div class="arch-card ai">
+                    <h4>AI Literacy</h4>
+                    <p>Responsible Frameworks, Algorithmic Logic</p>
+                </div>
+                <div class="arch-card media">
+                    <h4>Media Literacy</h4>
+                    <p>Deepfakes, Information Disruption Vectors</p>
+                </div>
+                <div class="arch-card future">
+                    <h4>Future Tech</h4>
+                    <p>Quantum, IoT Protocols, Ecosystem Architectures</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+
+        <section class="flagship-box" id="simulator">
+            <div class="flagship-header">
+                <div>
+                    <span class="badge danger" style="background-color: var(--color-safaricom-green);">Flagship Core</span>
+                    <h2 style="font-size: 1.8rem; margin-top: 5px;">AI-Powered Digital Life Simulator</h2>
+                </div>
+                <p style="max-width: 500px; text-align: right; font-size: 0.85rem; color: var(--color-muted-text);">
+                    A dynamic, algorithmic simulation environment testing choices through a simulated week of online pressure, messaging exploits, and tech-induced stress.
+                </p>
+            </div>
+            <div class="simulator-window" id="lifeSimulatorWindow">
+                <div id="simScreenStart" class="text-center" style="padding: 40px 0;">
+                    <h3>Boot up your Virtual Week</h3>
+                    <p style="margin-bottom: 20px; font-size: 0.95rem; color: var(--color-muted-text);">Can you survive online traps, optimize mental health scores, and configure absolute privacy profiles under extreme situational tests?</p>
+                    <button class="scan-btn" onclick="startLifeSimulator()">Initialize Sandbox</button>
+                </div>
+                <div id="simScreenActive" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                        <div><strong>Day Count:</strong> <span id="simDay">Monday</span></div>
+                        <div><strong>Reputation Score:</strong> <span id="simRep">100</span>%</div>
+                        <div><strong>Wellbeing Index:</strong> <span id="simWell">100</span>%</div>
+                    </div>
+                    <p id="simPromptText" style="font-size: 1.1rem; margin-bottom: 20px; font-weight: 600; color: #fff;"></p>
+                    <div class="chat-options" id="simChoicesContainer"></div>
+                </div>
+                <div id="simScreenEnd" style="display: none;" class="text-center">
+                    <h3>Simulation Assessment Concluded</h3>
+                    <div id="simResultsDump" style="margin: 20px 0; padding: 15px; background: #111; border-radius: 6px;"></div>
+                    <button class="pillar-action-btn" onclick="resetLifeSimulator()">Run Alternate Timeline</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="threat-detector">
+            <div class="detector-grid">
+                <div class="account-linker">
+                    <h2>UEFI Threat Detector Console</h2>
+                    <p style="color: var(--color-muted-text); font-size: 0.9rem; margin-bottom: 20px;">
+                        Connect external vector accounts below to simulate profile exposure analysis, leaked database checks, credential reuse risks, and third-party credential configuration tracking.
+                    </p>
+                    
+                    <div class="account-row connected">
+                        <div class="account-info">
+                            <span class="icon" style="color: #4285F4;">G</span>
+                            <div>
+                                <div>Google Core Account</div>
+                                <div style="font-size: 0.75rem; color: var(--color-muted-text);">Linked Secure via OAuth Token Simulation</div>
+                            </div>
+                        </div>
+                        <input type="checkbox" checked disabled>
+                    </div>
+
+                    <div class="account-row connected">
+                        <div class="account-info">
+                            <span class="icon" style="color: #000000;">T</span>
+                            <div>
+                                <div>TikTok Identity Profile</div>
+                                <div style="font-size: 0.75rem; color: var(--color-muted-text);">Public API Handler Node Connected</div>
+                            </div>
+                        </div>
+                        <input type="checkbox" checked disabled>
+                    </div>
+
+                    <div class="account-row connected">
+                        <div class="account-info">
+                            <span class="icon" style="color: #1877F2;">F</span>
+                            <div>
+                                <div>Facebook Data Node</div>
+                                <div style="font-size: 0.75rem; color: var(--color-muted-text);">Graph API Simulation Mapping Enabled</div>
+                            </div>
+                        </div>
+                        <input type="checkbox" checked disabled>
+                    </div>
+
+                    <div class="account-row connected">
+                        <div class="account-info">
+                            <span class="icon" style="color: #FF0000;">Y</span>
+                            <div>
+                                <div>YouTube Content Channel</div>
+                                <div style="font-size: 0.75rem; color: var(--color-muted-text);">Metadata Stream Audit Ready</div>
+                            </div>
+                        </div>
+                        <input type="checkbox" checked disabled>
+                    </div>
+                </div>
+
+                <div class="detector-console">
+                    <div class="scan-pulse-box">
+                        <h4 id="detectorStatusText" style="margin-bottom: 10px; font-size: 1.2rem;">System Status: Idle</h4>
+                        <p id="detectorSubtext" style="font-size: 0.85rem; color: var(--color-muted-text); margin-bottom: 20px;">All accounts synchronized. Run security cross-reference analysis.</p>
+                        <button class="scan-btn" id="startScanBtn" onclick="triggerThreatDetectorScan()">Execute Threat Diagnostics</button>
+                        
+                        <div class="progress-bar-container" id="detectorProgressContainer">
+                            <div class="progress-bar-fill" id="detectorProgressBarFill"></div>
+                        </div>
+                    </div>
+                    <div id="detectorResults" style="display:none; padding-top:15px; border-top:1px solid #333;">
+                        <h4 style="margin-bottom: 10px;">Security Profile Assessment:</h4>
+                        <div style="display:flex; flex-direction:column; gap:8px; font-size:0.85rem;" id="detectorResultsLogs"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pillars-section" id="pillars">
+            <h2>The 12 Operational Infrastructure Pillars</h2>
+            <div class="pillars-grid">
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">1</span> UEFI Guardian</h3>
+                        <p>An interactive, logic-driven mentor that challenges user thinking rather than providing immediate answers, guiding students through detailed critical breakdowns of real threats.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('guardian')">Deploy Guardian</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">2</span> AI Story Mode</h3>
+                        <p>Interactive story models demonstrating exactly how public data aggregation, oversharing, and social engineering scale into highly targeted compromises.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('story')">Initialize Narrative</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">3</span> Cyber Escape Room</h3>
+                        <p>Solve cryptographic puzzles, detect deepfakes, inspect payload code vectors, and handle ransomware cleanups to unlock successive secure containment chambers.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('escaperoom')">Enter Escape Room</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">4</span> Social Media Simulator</h3>
+                        <p>An isolated feed mimicking viral timelines, mixing organic content with deepfakes, coordinated misinformation campaigns, and algorithmic clickbait payloads.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('feed')">Launch Feed Engine</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">5</span> Reputation Scanner</h3>
+                        <p>Evaluate credential configuration patterns, cross-profile username footprints, and data leak vectors to compile a formal structural Digital Footprint Score.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('reputation')">Analyze Footprint</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">6</span> Health Dashboard</h3>
+                        <p>Monitor personal cognitive wellness, analyze simulated night-time device usage, manage eye strain vectors, and build sustainable balance frameworks.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('health')">Open Dashboard</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">7</span> Fake News Detective</h3>
+                        <p>Daily structural breakdown tasks identifying propaganda patterns, logical fallacies, emotional language manipulation, and unbacked claims in news cycles.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('fakenews')">Deconstruct Headlines</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">8</span> Cyber Olympics</h3>
+                        <p>Global multi-school team challenges mapping competitive skill assessments in verification, investigative forensic paths, and cryptographic optimization.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('olympics')">View Leaderboard</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">9</span> Emotional Companion</h3>
+                        <p>A private, supportive reflecting interface designed to combat online toxicity, social pressure vectors, and algorithmic feedback loop anxiety.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('emotional')">Engage Companion</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">10</span> Build Your Own Scam</h3>
+                        <p>Deconstruct adversarial tactics by assembling educational exploit campaigns, learning structural urgency traps, and studying social manipulation architectures.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('buildscam')">Initialize Sandbox</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">11</span> AI Debate Arena</h3>
+                        <p>Challenge highly advanced automated AI opposition nodes on structural societal ethics, technological boundaries, and digital restriction arguments.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('debate')">Enter Arena</button>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3><span class="num">12</span> Future Tech Lab</h3>
+                        <p>Deep-dive infrastructure training covering Quantum Key Distributions, Smart Grid IoT topologies, Blockchain state ledgers, and Green tech computing.</p>
+                    </div>
+                    <button class="pillar-action-btn" onclick="openPillarModal('futuretech')">Access Tech Lab</button>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="games-section" id="games">
+            <h2>Core Simulations & Arcade Environments</h2>
+            <p style="color: var(--color-muted-text);">Deep interactive software frameworks formatted into competitive tactical gamified platforms.</p>
+            <div class="games-grid">
+                
+                <div class="game-card">
+                    <div class="game-icon">🏙️</div>
+                    <h3>Cyber City</h3>
+                    <p>Balance defensive capital allocations against citizen personal liberties. Decide structural spending on deep automated network surveillance versus critical digital privacy education.</p>
+                    <button class="pillar-action-btn" onclick="openGameModal('cybercity')">Launch Simulator</button>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">🕵️‍♂️</div>
+                    <h3>Detective AI</h3>
+                    <p>Investigate newly randomized digital forensics chains daily. Sift through manipulated headers, deepfakes, malicious domains, and credential leaks to locate active threat actors.</p>
+                    <button class="pillar-action-btn" onclick="openGameModal('detective')">Initialize Case</button>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">🏕️</div>
+                    <h3>Digital Survivor</h3>
+                    <p>A brutal story-driven campaign tracking network exposure vectors. Single incorrect operational security configuration steps can ripple down across weeks of character finances.</p>
+                    <button class="pillar-action-btn" onclick="openGameModal('survivor')">Deploy Campaign</button>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">⚡</div>
+                    <h3>Cyber Clash</h3>
+                    <p>Rapid multi-node speed challenges sorting verified records from coordinated deceptive campaigns. Compete alongside active technical cohorts on low-latency leaderboards.</p>
+                    <button class="pillar-action-btn" onclick="openGameModal('clash')">Join Arena Match</button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div class="simulation-overlay" id="simulationOverlay">
+        <div class="simulation-modal">
+            <button class="close-modal" onclick="closePillarModal()">&times;</button>
+            <h2 id="modalTitle">Simulation Interface</h2>
+            <hr style="border: 0; height: 1px; background: #444; margin: 15px 0;">
+            <div class="sim-content" id="modalDynamicContent"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo">
+                    <h3>UEFI Global Digital Academy</h3>
+                    <p>Engineering resilient digital citizens through structural educational sandboxes. Powered by UEFI Global AI infrastructure nodes.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Directives</h4>
+                    <ul>
+                        <li><a href="#home">Digital Survival Center</a></li>
+                        <li><a href="#pillars">12 Pillars Interface</a></li>
+                        <li><a href="#games">Simulation Games</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Framework</h4>
+                    <ul>
+                        <li><a href="#">UN SDG Pillars</a></li>
+                        <li><a href="#">Safaricom Community Directives</a></li>
+                        <li><a href="#">Child Safety Operations</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 UEFI Global. Developed in alignment with Safaricom and Kenyan National Digital Literacy Frameworks. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA DICTIONARIES FOR PILLARS INTERACTIVITY ---
+        const pillarSimulations = {
+            guardian: {
+                title: "Pillar 1: UEFI Guardian (AI Mentor Session)",
+                render: () => `
+                    <div class="chat-container" id="guardianChatBox">
+                        <div class="chat-bubble guardian">Salutations. I am UEFI Guardian. I see you flagged an email stating: 'URGENT: You have won an iPhone 17 Pro Max from Safaricom! Click here immediately to redeem.' Let's break this down together. What element looks suspicious to you first?</div>
+                    </div>
+                    <div class="chat-options" id="guardianOptions">
+                        <button class="opt-btn" onclick="advanceGuardianChat(1)">'The fact that they are giving away a free phone out of nowhere'</button>
+                        <button class="opt-btn" onclick="advanceGuardianChat(2)">'I should check the actual sender address domain string first'</button>
+                        <button class="opt-btn" onclick="advanceGuardianChat(3)">'Nothing, looks completely real, I want my phone right now'</button>
+                    </div>
+                `
+            },
+            story: {
+                title: "Pillar 2: AI Story Mode (Oversharing Exposure Track)",
+                render: () => `
+                    <p><strong>Scenario:</strong> You're sitting in class when an unknown handle slides into your Discord/TikTok DMs: <em>"Hey, aren't you Elisha? Saw you crushing it at the school football match last Thursday!"</em></p>
+                    <p style="margin: 10px 0; color: var(--color-muted-text); font-size: 0.9rem;">How do you react to this opening gambit?</p>
+                    <div class="chat-options" style="margin-top:15px;">
+                        <button class="opt-btn" onclick="advanceStoryMode('A')">Option A: Reply immediately: "Yeah that's me! Thanks bro! Who's this?"</button>
+                        <button class="opt-btn" onclick="advanceStoryMode('B')">Option B: Lock down profile details and ask: "How do you know my location and schedule?"</button>
+                        <button class="opt-btn" onclick="advanceStoryMode('C')">Option C: Delete the conversation thread immediately and audit personal public posting channels.</button>
+                    </div>
+                    <div id="storyFeedback" style="margin-top:15px; padding:10px; background:#111; display:none; border-radius:4px;"></div>
+                `
+            },
+            escaperoom: {
+                title: "Pillar 3: Cyber Escape Room (Chamber 1 / 5)",
+                render: () => `
+                    <p style="margin-bottom:15px;"><strong>Chamber 1 Challenge:</strong> The terminal door is locked down by a simple cryptographic salt block. Analyze the payload structure snippet below and identify the insecure component:</p>
+                    <pre style="background:#111; padding:10px; border-radius:4px; font-size:0.8rem; color:#0f0; overflow-x:auto; margin-bottom:15px;">
+function storeCredentials(usr, psw) {
+   let connectionString = "DATABASE_NODE_SECURE_MBI_KEY";
+   let storageToken = sha1(psw); // System processing hash
+   return db.save({username: usr, pass: storageToken});
+}</pre>
+                    <div class="chat-options">
+                        <button class="opt-btn" onclick="solveEscapeRoom(false)">The connection string name configuration is too long</button>
+                        <button class="opt-btn" onclick="solveEscapeRoom(true)">The system uses SHA-1 encryption, which is structurally broken and prone to collision vulnerabilities</button>
+                        <button class="opt-btn" onclick="solveEscapeRoom(false)">The variable parameters are missing explicit type safety casts</button>
+                    </div>
+                    <div id="escapeFeedback" style="margin-top:15px; padding:10px; display:none; border-radius:4px;"></div>
+                `
+            },
+            feed: {
+                title: "Pillar 4: AI Social Media Simulator Feed",
+                render: () => `
+                    <p style="margin-bottom:15px; font-size:0.9rem; color:var(--color-muted-text);">Scroll this simulated local updates feed. Detect anomalies, clickbait metrics, and deepfakes before trusting.</p>
+                    <div style="background:#111; border:1px solid #333; border-radius:6px; padding:15px; margin-bottom:15px;">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.8rem;">
+                            <strong>@TechInsiderKenya [Verified Badge Simulation]</strong>
+                            <span style="color:var(--color-kenya-red);">Sponsored Trend</span>
+                        </div>
+                        <p style="font-size:0.95rem; margin-bottom:10px;">🚨 BREAKING: National regulatory bodies announce absolute cellular data shutdown across all counties starting tonight at midnight due to standard line maintenance upgrades! Click this link to register for exemption server access routing!</p>
+                        <div style="display:flex; gap:10px;">
+                            <button class="pillar-action-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="evaluateFeedItem('flag')">Flag as Misinformation / Scam</button>
+                            <button class="pillar-action-btn" style="font-size:0.8rem; padding:4px 10px; border-color:#888; color:#888;" onclick="evaluateFeedItem('trust')">Trust and Retweet Feed Node</button>
+                        </div>
+                    </div>
+                    <div id="feedFeedback" style="padding:10px; background:#222; border-radius:4px; display:none; font-size:0.9rem;"></div>
+                `
+            },
+            reputation: {
+                title: "Pillar 5: AI Reputation & Profile Aggregator Score",
+                render: () => `
+                    <p style="margin-bottom:15px;">Run a quick self-assessment matrix to compile your current estimated global Digital Footprint Score.</p>
+                    <div class="health-grid">
+                        <div class="health-slider-box">
+                            <label>Do you reuse standard variations of your main password?</label>
+                            <select id="repQ1" style="width:100%; background:#222; color:white; border:1px solid #444; padding:5px; border-radius:4px;">
+                                <option value="30">Yes, across almost all profiles for ease of memory</option>
+                                <option value="15">Only across minor non-critical entertainment nodes</option>
+                                <option value="0">Never, I deploy independent strong unique keys via password manager</option>
+                            </select>
+                        </div>
+                        <div class="health-slider-box">
+                            <label>What is your typical public profile visibility configuration?</label>
+                            <select id="repQ2" style="width:100%; background:#222; color:white; border:1px solid #444; padding:5px; border-radius:4px;">
+                                <option value="35">Everything is public (Stories, Location tags, School check-ins)</option>
+                                <option value="15">Semi-private fields, but anyone can search or find my profile data</option>
+                                <option value="0">Strict end-point lock down, friends/verified followers only</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="scan-btn" style="width:100%; font-size:0.95rem; padding:10px;" onclick="calculateFootprintScore()">Compile Profile Score Matrix</button>
+                    <div id="reputationResultBox" style="margin-top:15px; display:none; padding:15px; border-radius:6px; background:#111; text-align:center;"></div>
+                `
+            },
+            health: {
+                title: "Pillar 6: Digital Health Architecture Console",
+                render: () => `
+                    <p style="margin-bottom:15px; font-size:0.9rem; color:var(--color-muted-text);">Log your typical daily usage metrics. The UEFI systems engine will analyze behavioral burnout vectors.</p>
+                    <div class="health-grid">
+                        <div class="health-slider-box">
+                            <label>Average Daily Screen Duration (Hours): <span id="valH1">7</span>h</label>
+                            <input type="range" min="1" max="18" value="7" oninput="document.getElementById('valH1').innerText=this.value" id="healthH1">
+                        </div>
+                        <div class="health-slider-box">
+                            <label>Late-Night Screen Use After 11:00 PM?</label>
+                            <select id="healthH2" style="width:100%; background:#222; color:white; border:1px solid #444; padding:5px; border-radius:4px;">
+                                <option value="high">Every single night, scrolling before sleeping</option>
+                                <option value="med">Occasional use when finishing project files</option>
+                                <option value="low">Never, devices are checked out outside bedroom perimeter</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="scan-btn" style="width:100%; font-size:0.95rem; padding:10px;" onclick="analyzeDigitalHealthMetrics()">Process Diagnostics</button>
+                    <div id="healthAnalysisResult" style="margin-top:15px; display:none; padding:15px; border-radius:6px; background:#111;"></div>
+                `
+            },
+            fakenews: {
+                title: "Pillar 7: Fake News Detective (Headline Verification Node)",
+                render: () => `
+                    <p style="margin-bottom:15px;">Analyze these three headlines appearing concurrently. One is structured **fact**, one is **misleading**, one is outright **fabricated**.</p>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div style="background:#111; padding:10px; border-radius:4px; border-left:3px solid var(--color-kenya-red);">
+                            <strong>Headline Alpha:</strong> "Local scientific body confirms new water mineral compound guarantees zero dehydration across arid counties within 48 hours of consumption!"
+                            <button class="pillar-action-btn" style="display:block; font-size:0.75rem; padding:2px 8px; margin-top:5px;" onclick="solveFakeNews('Alpha')">Classify Headline</button>
+                        </div>
+                        <div style="background:#111; padding:10px; border-radius:4px; border-left:3px solid var(--color-suspicious);">
+                            <strong>Headline Beta:</strong> "Telecommunications market shifts reports note slight structural service standard adjustments across rural base tower installations next quarter."
+                            <button class="pillar-action-btn" style="display:block; font-size:0.75rem; padding:2px 8px; margin-top:5px;" onclick="solveFakeNews('Beta')">Classify Headline</button>
+                        </div>
+                        <div style="background:#111; padding:10px; border-radius:4px; border-left:3px solid var(--color-safe);">
+                            <strong>Headline Gamma:</strong> "Ministry of Education rolls out specialized computational hardware labs targeting seventy secondary units this cycle."
+                            <button class="pillar-action-btn" style="display:block; font-size:0.75rem; padding:2px 8px; margin-top:5px;" onclick="solveFakeNews('Gamma')">Classify Headline</button>
+                        </div>
+                    </div>
+                    <div id="newsFeedback" style="margin-top:15px; padding:10px; background:#222; border-radius:4px; display:none;"></div>
+                `
+            },
+            olympics: {
+                title: "Pillar 8: Cyber Olympics Regional Dashboard",
+                render: () => `
+                    <p style="margin-bottom:15px; font-size:0.9rem; color:var(--color-muted-text);">Live structural point leaderboard tracking automated regional multi-school validation challenges.</p>
+                    <table style="width:100%; border-collapse:collapse; background:#111; font-size:0.9rem; text-align:left;">
+                        <thead>
+                            <tr style="background:#222; color:var(--color-safaricom-green);">
+                                <th style="padding:8px;">Rank</th>
+                                <th style="padding:8px;">Institution Node</th>
+                                <th style="padding:8px;">Completed Sprints</th>
+                                <th style="padding:8px;">Total Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding:8px; border-bottom:1px solid #222;">🥇 1</td>
+                                <td style="padding:8px; border-bottom:1px solid #222;">Nairobi Technical Science Track A</td>
+                                <td style="padding:8px; border-bottom:1px solid #222;">142 / 150</td>
+                                <td style="padding:8px; border-bottom:1px solid #222; font-weight:bold; color:var(--color-safaricom-green);">12,450</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:8px; border-bottom:1px solid #222;">🥈 2</td>
+                                <td style="padding:8px; border-bottom:1px solid #222;">Mombasa Academic Cyber Unit</td>
+                                <td style="padding:8px; border-bottom:1px solid #222;">138 / 150</td>
+                                <td style="padding:8px; border-bottom:1px solid #222; font-weight:bold; color:var(--color-safaricom-green);">11,890</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:8px; border-bottom:1px solid #222;">🥉 3</td>
+                                <td style="padding:8px; border-bottom:1px solid #222;">Kisumu Tech Pioneers Alliance</td>
+                                <td style="padding:8px; border-bottom:1px solid #222;">120 / 150</td>
+                                <td style="padding:8px; border-bottom:1px solid #222; font-weight:bold; color:var(--color-safaricom-green);">10,120</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top:15px; font-size:0.8rem; text-align:center; color:var(--color-kenya-red);">Next regional network validation challenge sprint boots in 14 hours.</p>
+                `
+            },
+            emotional: {
+                title: "Pillar 9: AI Emotional Companion Reflective System",
+                render: () => `
+                    <p style="margin-bottom:15px;">The algorithmic feed architecture is designed to capture your attention loop. Take a beat to ground yourself. How has your online experience felt today?</p>
+                    <div class="chat-options">
+                        <button class="opt-btn" onclick="triggerEmotionalFeedback('toxic')">"Exhausting. I feel constant pressure to stay connected and compare myself to others."</button>
+                        <button class="opt-btn" onclick="triggerEmotionalFeedback('fomo')">"Anxious. I feel stuck in a loop of endless scrolling and fear missing updates."</button>
+                        <button class="opt-btn" onclick="triggerEmotionalFeedback('balanced')">"Managed. I keep clear screen limits and feel fine."</button>
+                    </div>
+                    <div id="emotionalFeedbackBox" style="margin-top:15px; padding:12px; background:#111; display:none; border-radius:4px; line-height:1.4;"></div>
+                `
+            },
+            buildscam: {
+                title: "Pillar 10: Reverse Engineering Attack Vectors (Build Your Own Scam)",
+                render: () => `
+                    <p style="margin-bottom:12px; font-size:0.85rem; color:var(--color-muted-text);">Select structural components below to synthesize an educational phishing payload module. The system will dissect your exploit vectors.</p>
+                    <div class="health-grid">
+                        <div class="health-slider-box">
+                            <label>Urgency Trigger Mechanism:</label>
+                            <select id="scamUrgency" style="width:100%; background:#222; color:white; border:1px solid #444; padding:5px;">
+                                <option value="immediate">"Your account will be terminated permanently in 10 minutes!"</option>
+                                <option value="passive">"Please review minor policy modifications updates at leisure."</option>
+                            </select>
+                        </div>
+                        <div class="health-slider-box">
+                            <label>Visual Identity Spoofing Array:</label>
+                            <select id="scamLogo" style="width:100%; background:#222; color:white; border:1px solid #444; padding:5px;">
+                                <option value="clone">High-resolution cloned Safaricom corporate logo array</option>
+                                <option value="none">Standard non-branded raw textual format notification</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="scan-btn" style="width:100%; margin-top:10px; font-size:0.9rem;" onclick="processScamSynthesis()">Synthesize Phishing Matrix</button>
+                    <div id="scamOutputBox" style="margin-top:15px; padding:12px; background:#111; display:none; border-radius:4px; font-size:0.85rem;"></div>
+                `
+            },
+            debate: {
+                title: "Pillar 11: AI Debate Arena Core Node",
+                render: () => `
+                    <p style="margin-bottom:12px;"><strong>Active Motion Arena:</strong> <em>"Resolved: National policies must legally enforce absolute smartphone bans for children under 16 years of age."</em></p>
+                    <p style="font-size:0.85rem; color:var(--color-muted-text); margin-bottom:15px;">Select your stance argument vector to engage the debate processor node:</p>
+                    <div class="chat-options">
+                        <button class="opt-btn" onclick="submitDebateVector('pro')">Affirmative Stance: "Enforce it. It protects developing brains from targeted engagement algorithms and malicious contact loops."</button>
+                        <button class="opt-btn" onclick="submitDebateVector('con')">Negative Stance: "Oppose it. It cuts off youth from digital literacy tools, modern inclusion networks, and localized emergency safety channels."</button>
+                    </div>
+                    <div id="debateResponseArea" style="margin-top:15px; padding:12px; background:#111; display:none; border-radius:4px; font-size:0.9rem; border-left:3px solid var(--color-kenya-red);"></div>
+                `
+            },
+            futuretech: {
+                title: "Pillar 12: Future Tech Lab Simulation Suite",
+                render: () => `
+                    <p style="margin-bottom:15px; font-size:0.9rem;">Select an emerging future technology environment track to deploy interactive blueprint documentation:</p>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <button class="opt-btn" onclick="loadFutureTechTrack('Quantum Key Distribution (QKD)')">🔐 Quantum Key Cryptography</button>
+                        <button class="opt-btn" onclick="loadFutureTechTrack('Smart City Mesh IoT Protocols')">🌐 Mesh Topology IoT Networks</button>
+                        <button class="opt-btn" onclick="loadFutureTechTrack('Decentralized Sovereign Identity Ledgers')">⛓️ Blockchain State Ledgers</button>
+                        <button class="opt-btn" onclick="loadFutureTechTrack('Low-Orbit Satellite Telemetry Pipelines')">🛰️ Space Communications Data</button>
+                    </div>
+                    <div id="futureTechTrackResult" style="margin-top:15px; padding:12px; background:#111; display:none; border-radius:4px; border-top:2px solid var(--color-safaricom-green); font-size:0.85rem;"></div>
+                `
+            }
+        };
+
+        const gameSimulations = {
+            cybercity: {
+                title: "Arcade Module: Cyber City Grid Sandbox",
+                render: () => `
+                    <p style="margin-bottom:15px;">You are the Master Infrastructure Director of Cyber City. Budget points remaining: **100 Units**.</p>
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <div style="background:#111; padding:10px; border-radius:4px;">
+                            <h5>Strategy Alpha: Massive Predictive Surveillance Matrix</h5>
+                            <p style="font-size:0.8rem; color:var(--color-muted-text); margin-bottom:5px;">Deploys extensive algorithmic scanning across all private data pools to pre-emptively intercept malware pipelines. Cost: 70 units.</p>
+                            <button class="pillar-action-btn" style="padding:2px 8px; font-size:0.75rem;" onclick="playGameAction('surveillance')">Deploy Strategy Matrix</button>
+                        </div>
+                        <div style="background:#111; padding:10px; border-radius:4px;">
+                            <h5>Strategy Beta: Decentralized Open Encryption & Open Source Security Labs</h5>
+                            <p style="font-size:0.8rem; color:var(--color-muted-text); margin-bottom:5px;">Arm citizens with strict cryptographic privacy tools and hardware-level network defense firewalls. Cost: 50 units.</p>
+                            <button class="pillar-action-btn" style="padding:2px 8px; font-size:0.75rem;" onclick="playGameAction('privacy')">Deploy Privacy Labs</button>
+                        </div>
+                    </div>
+                    <div id="gameOutputLogs" style="margin-top:15px; padding:10px; background:#222; display:none; border-radius:4px; font-size:0.85rem;"></div>
+                `
+            },
+            detective: {
+                title: "Arcade Module: Detective AI Forensic Case File",
+                render: () => `
+                    <p style="margin-bottom:10px;"><strong>Active Alert:</strong> An elderly citizen in Nakuru was tricked into transferring their retirement savings via mobile money after receiving an automated phone call that cloned their grandchild's voice. The attacker used a temporary burner profile to mask the routing.</p>
+                    <p style="font-size:0.85rem; color:var(--color-muted-text); margin-bottom:15px;">Your digital forensics unit has pulled three server trace data strings. Where do you look first?</p>
+                    <div class="chat-options">
+                        <button class="opt-btn" onclick="resolveDetectiveCase('audio')">Analyze the audio payload files for synthesized voice frequency anomalies and deepfake generation noise patterns.</button>
+                        <button class="opt-btn" onclick="resolveDetectiveCase('telecom')">Audit telecom routing switches for base-station IMSI-catcher spoofing trails.</button>
+                        <button class="opt-btn" onclick="resolveDetectiveCase('social')">Scrape public social media profiles to see where the grandchild's voice files were harvested from.</button>
+                    </div>
+                    <div id="detectiveOutput" style="margin-top:15px; padding:12px; background:#111; display:none; border-radius:4px; font-size:0.9rem;"></div>
+                `
+            },
+            survivor: {
+                title: "Arcade Module: Digital Survivor Campaign Path",
+                render: () => `
+                    <p style="margin-bottom:12px;">You are stranded in an unfamiliar city, and your primary digital credential wallet asset tracking node suddenly reports an access attempt lockout notification. You need to verify your location or lose access to your operational funds within 1 hour.</p>
+                    <p style="font-size:0.85rem; color:var(--color-muted-text); margin-bottom:15px;">A nearby open, unencrypted coffee-shop Wi-Fi network is active. What is your survival directive?</p>
+                    <div class="chat-options">
+                        <button class="opt-btn" onclick="resolveSurvivorPath('wifi')">Connect instantly to the free Wi-Fi to stop the financial lockout before the countdown hits zero.</button>
+                        <button class="opt-btn" onclick="resolveSurvivorPath('cellular')">Ignore the public Wi-Fi entirely. Boot up an encrypted mobile hotspot routing through standard cellular lines, regardless of roaming cost spikes.</button>
+                    </div>
+                    <div id="survivorOutput" style="margin-top:15px; padding:12px; background:#111; display:none; border-radius:4px; font-size:0.9rem;"></div>
+                `
+            },
+            clash: {
+                title: "Arcade Module: Cyber Clash Low-Latency Multi-Node Speed Match",
+                render: () => `
+                    <p style="margin-bottom:12px;">The enemy team is flooding your infrastructure nodes with a mock Distributed Denial of Service (DDoS) attack utilizing botnet traffic vectors. You have exactly 10 seconds to isolate the malicious telemetry packets.</p>
+                    <div style="background:#111; font-family:monospace; font-size:0.75rem; padding:10px; border-radius:4px; margin-bottom:15px;">
+                        [Node 1] IP: 192.168.1.45 - Request Count: 12/min (Normal)<br>
+                        [Node 2] IP: 45.223.19.102 - Request Count: 84,000/sec (SYN-Flood anomaly Vector)<br>
+                        [Node 3] IP: 10.0.0.8 - Request Count: 3/min (Internal System Loop)
+                    </div>
+                    <div class="chat-options">
+                        <button class="opt-btn" onclick="triggerClashOutcome('node1')">Null-route Node 1 Connections</button>
+                        <button class="opt-btn" onclick="triggerClashOutcome('node2')">Deploy Immediate Firewall Drop Rules on Node 2 Source IP Pool</button>
+                        <button class="opt-btn" onclick="triggerClashOutcome('node3')">Isolate Node 3 Internal Loop Back</button>
+                    </div>
+                    <div id="clashOutput" style="margin-top:15px; padding:12px; background:#111; display:none; border-radius:4px; font-size:0.9rem;"></div>
+                `
+            }
+        };
+
+        // --- GLOBAL OVERLAY MANAGEMENT ---
+        function openPillarModal(key) {
+            const config = pillarSimulations[key];
+            if (!config) return;
+            document.getElementById('modalTitle').innerText = config.title;
+            document.getElementById('modalDynamicContent').innerHTML = config.render();
+            document.getElementById('simulationOverlay').style.display = 'flex';
+        }
+
+        function openGameModal(key) {
+            const config = gameSimulations[key];
+            if (!config) return;
+            document.getElementById('modalTitle').innerText = config.title;
+            document.getElementById('modalDynamicContent').innerHTML = config.render();
+            document.getElementById('simulationOverlay').style.display = 'flex';
+        }
+
+        function closePillarModal() {
+            document.getElementById('simulationOverlay').style.display = 'none';
+        }
+
+        // --- PILLAR SYSTEM SUBSYSTEM ACTIONS ---
+        function advanceGuardianChat(choice) {
+            const box = document.getElementById('guardianChatBox');
+            const opts = document.getElementById('guardianOptions');
+            
+            if (choice === 1) {
+                box.innerHTML += `<div class="chat-bubble user">The fact that they are giving away a free phone out of nowhere.</div>`;
+                box.innerHTML += `<div class="chat-bubble guardian">Intuition is a great first shield, but attackers rely on emotional greed to bypass it. Let's look deeper. Look at the sender field structure: <code>safaricom-rewards-portal@net-security-verification-node.xyz</code>. Does that match the official corporate domain pattern?</div>`;
+                opts.innerHTML = `
+                    <button class="opt-btn" onclick="advanceGuardianChat(4)">No, it uses a convoluted subdomain mask string to deceive users</button>
+                    <button class="opt-btn" onclick="advanceGuardianChat(5)">Yes, it includes the word Safaricom so it must be authentic</button>
+                `;
+            } else if (choice === 2) {
+                box.innerHTML += `<div class="chat-bubble user">I should check the actual sender address domain string first.</div>`;
+                box.innerHTML += `<div class="chat-bubble guardian">Excellent structural deduction! The domain reads <code>safaricom-rewards-portal@net-security-verification-node.xyz</code>. Notice how the authentic corporate brand is placed as a misleading subdomain prefix, while the real root domain is an anonymous registration. What would happen if you clicked the payload link to verify?</div>`;
+                opts.innerHTML = `
+                    <button class="opt-btn" onclick="advanceGuardianChat(4)">It could trigger session hijacking cookies or execute malicious cross-site scripts</button>
+                    <button class="opt-btn" onclick="advanceGuardianChat(5)">Nothing bad, my device browser sandboxing protects me from everything</button>
+                `;
+            } else if (choice === 3) {
+                box.innerHTML += `<div class="chat-bubble user">Nothing, looks completely real, I want my phone right now.</div>`;
+                box.innerHTML += `<div class="chat-bubble guardian" style="border-left-color:var(--color-kenya-red);">Warning: That blind response profile is exactly what social engineers exploit. The link redirects to a credential harvesting node designed to steal personal account authentications. Let's pause and analyze the sender address layout.</div>`;
+                opts.innerHTML = `
+                    <button class="opt-btn" onclick="advanceGuardianChat(2)">Let's check the sender domain string structure properly</button>
+                `;
+            } else if (choice === 4) {
+                box.innerHTML += `<div class="chat-bubble user">Correct analysis path selected.</div>`;
+                box.innerHTML += `<div class="chat-bubble guardian" style="border-left-color:var(--color-safaricom-green);">Threat neutralized. You've successfully applied critical structural breakdown logic instead of emotional reaction pathways. Session terminated with core competence points recorded!</div>`;
+                opts.innerHTML = `<p style="color:var(--color-safaricom-green); font-weight:bold;">Challenge Mastered successfully.</p>`;
+            } else {
+                box.innerHTML += `<div class="chat-bubble user">Incorrect choice track path selection.</div>`;
+                box.innerHTML += `<div class="chat-bubble guardian" style="border-left-color:var(--color-kenya-red);">Incorrect. Attackers rely on exactly that false sense of safety. Re-evaluate the technical evidence layout string carefully.</div>`;
+            }
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function advanceStoryMode(choice) {
+            const el = document.getElementById('storyFeedback');
+            el.style.display = 'block';
+            if (choice === 'A') {
+                el.style.borderLeft = `4px solid var(--color-kenya-red)`;
+                el.innerHTML = `<strong>Outcome Dangerous:</strong> By confirming your name, schedule, and school, the adversary validates that your public profile information is accurate. They begin cross-referencing your other public images to map your exact daily routines and build an escalation blueprint.`;
+            } else if (choice === 'B') {
+                el.style.borderLeft = `4px solid var(--color-suspicious)`;
+                el.innerHTML = `<strong>Outcome Suspicious:</strong> Engaging directly puts you into a confrontational dialogue. While defensive, you have given confirmation that this handle reaches an active user. The threat actor pivots to guilt tactics. Better containment models are available.`;
+            } else {
+                el.style.borderLeft = `4px solid var(--color-safaricom-green)`;
+                el.innerHTML = `<strong>Outcome Optimal Secure:</strong> Absolute containment. By closing the channel and auditing your public visibility metrics, you break the reconnaissance stage of the threat vector. The attacker loses visibility footprint completely.`;
+            }
+        }
+
+        function solveEscapeRoom(isCorrect) {
+            const el = document.getElementById('escapeFeedback');
+            el.style.display = 'block';
+            if (isCorrect) {
+                el.style.backgroundColor = '#1E3A27';
+                el.style.color = 'var(--color-safaricom-green)';
+                el.innerHTML = `<strong>Success! Chamber 1 containment unlocked!</strong> SHA-1 algorithm configurations are highly vulnerable to hash collision attacks, meaning distinct inputs can resolve into identical output blocks, destroying access validation integrity. Preparing Chamber 2 vectors...`;
+            } else {
+                el.style.backgroundColor = '#3A1E1E';
+                el.style.color = 'var(--color-kenya-red)';
+                el.innerHTML = `<strong>Structural Breach Detected!</strong> That parameter field choice does not impact cryptographic parsing vulnerability matrices. System locked down. Re-analyze logic flow charts.`;
+            }
+        }
+
+        function evaluateFeedItem(type) {
+            const el = document.getElementById('feedFeedback');
+            el.style.display = 'block';
+            if (type === 'flag') {
+                el.style.color = 'var(--color-safaricom-green)';
+                el.innerHTML = `<strong>Correct Action Pattern:</strong> Outstanding analytical eye! A real regulatory entity or carrier node will never use an external, unverified temporary registration token link to coordinate critical national infrastructure status alerts. This campaign pattern mimics classic phishing setups designed to siphon routing credentials.`;
+            } else {
+                el.style.color = 'var(--color-kenya-red)';
+                el.innerHTML = `<strong>Critical System Error:</strong> Sharing or engaging with unverified, sensationalist administrative notification vectors amplifies coordinated structural misinformation loops, creating massive regional panic. Always audit source signatures first.`;
+            }
+        }
+
+        function calculateFootprintScore() {
+            const q1 = parseInt(document.getElementById('repQ1').value);
+            const q2 = parseInt(document.getElementById('repQ2').value);
+            const rawScore = q1 + q2;
+            const finalScore = 100 - rawScore;
+            
+            const out = document.getElementById('reputationResultBox');
+            out.style.display = 'block';
+            
+            let status = "";
+            let color = "";
+            if (finalScore >= 80) { status = "Fortified System Profile"; color = 'var(--color-safaricom-green)'; }
+            else if (finalScore >= 50) { status = "Moderate Vulnerability Footprint"; color = 'var(--color-suspicious)'; }
+            else { status = "Critical Identity Risk Vector"; color = 'var(--color-kenya-red)'; }
+            
+            out.innerHTML = `
+                <h4 style="color:${color};">Footprint Score Matrix: ${finalScore} / 100</h4>
+                <p style="font-size:0.9rem; margin-top:5px;"><strong>Classification:</strong> ${status}</p>
+                <p style="font-size:0.8rem; color:var(--color-muted-text); margin-top:5px;">Recommendations: Ensure unique password keys across all accounts via an isolated local manager vault and disable global metadata localization tags on your device camera setups.</p>
+            `;
+        }
+
+        function analyzeDigitalHealthMetrics() {
+            const hours = document.getElementById('healthH1').value;
+            const night = document.getElementById('healthH2').value;
+            const out = document.getElementById('healthAnalysisResult');
+            out.style.display = 'block';
+            
+            let report = `<h5>Cognitive Architecture Analysis:</h5>`;
+            if (hours > 8) {
+                report += `<p style="font-size:0.85rem; color:var(--color-kenya-red); margin-top:5px;">⚠️ Extreme High exposure metrics noticed. Extended continuous tracking induces severe neural engagement dependency loops and reduces focused memory consolidation models.</p>`;
+            } else {
+                report += `<p style="font-size:0.85rem; color:var(--color-safaricom-green); margin-top:5px;">✓ Exposure limits sit within optimal cognitive boundaries.</p>`;
+            }
+            
+            if (night === 'high') {
+                report += `<p style="font-size:0.85rem; color:var(--color-kenya-red); margin-top:5px;">⚠️ Late-night blue-light spectrum immersion disrupts pineal melatonin synthesis cycles, generating degraded sleep stages and lowering next-day computational analysis limits.</p>`;
+            } else {
+                report += `<p style="font-size:0.85rem; color:var(--color-safaricom-green); margin-top:5px;">✓ Evening systemic winding down configuration looks sound.</p>`;
+            }
+            out.innerHTML = report;
+        }
+
+        function solveFakeNews(choice) {
+            const el = document.getElementById('newsFeedback');
+            el.style.display = 'block';
+            if (choice === 'Alpha') {
+                el.innerHTML = `<span style="color:var(--color-kenya-red); font-weight:bold;">Correct ID: Fabricated Headline.</span> Notice the total lack of credible laboratory attribution, absolute pseudoscientific health claims, and highly sensationalized emotional triggers designed to bypass critical evaluation logic.`;
+            } else if (choice === 'Beta') {
+                el.innerHTML = `<span style="color:var(--color-suspicious); font-weight:bold;">Correct ID: Misleading / Obfuscated Headline.</span> This copy minimizes major technical infrastructure disruptions by packaging them as soft administrative phrasing, hiding structural problems from early consumer observation fields.`;
+            } else {
+                el.innerHTML = `<span style="color:var(--color-safaricom-green); font-weight:bold;">Correct ID: Verifiable Fact Base.</span> This represents a standard objective journalistic update framework tracking structural allocations with verifiable metrics and no hyper-inflated emotional rhetoric hooks.`;
+            }
+        }
+
+        function triggerEmotionalFeedback(profile) {
+            const el = document.getElementById('emotionalFeedbackBox');
+            el.style.display = 'block';
+            if (profile === 'toxic' || profile === 'fomo') {
+                el.style.borderLeft = `3px solid var(--color-kenya-red)`;
+                el.innerHTML = `<strong>UEFI Guidance Protocol:</strong> Your feelings are incredibly valid. Remember, social media software stacks are intentionally compiled around variable-ratio schedule dopamine loops—the exact architecture used in gaming machines to make you feel like you are missing something if you look away. Try setting a physical boundary: disconnect completely for 2 hours, take a brief outdoor walk, and talk face-to-face with a trusted peer or parent to reset your nervous system equilibrium.`;
+            } else {
+                el.style.borderLeft = `3px solid var(--color-safaricom-green)`;
+                el.innerHTML = `<strong>UEFI Guidance Protocol:</strong> Outstanding baseline resilience indicators. Continue maintaining intentional interface parameters. Your digital tools must always serve as conscious secondary assets, never as default drivers of your emotional baseline state.`;
+            }
+        }
+
+        function processScamSynthesis() {
+            const urgency = document.getElementById('scamUrgency').value;
+            const logo = document.getElementById('scamLogo').value;
+            const out = document.getElementById('scamOutputBox');
+            out.style.display = 'block';
+            
+            let analysis = `<strong>Exploit Architecture Blueprint Deconstructed:</strong><br>`;
+            if (urgency === 'immediate') {
+                analysis += `• <span style="color:var(--color-kenya-red);">Panic Hijack Hook:</span> By setting an artificial 10-minute timer, you short-circuit the target's logical brain pathways, forcing immediate compliance before they can double-check the server validity.<br>`;
+            }
+            if (logo === 'clone') {
+                analysis += `• <span style="color:var(--color-suspicious);">Visual Trust Exploitation:</span> Cloned brand elements abuse subconscious recognition systems. Because users recognize the color scheme instantly, they instinctively drop their standard defensive profile filters.`;
+            }
+            out.innerHTML = analysis + `<br><em style="color:var(--color-safaricom-green); font-size:0.8rem;">Conclusion: Recognizing how these traps are engineered structurally ensures you can instantly spot them when an adversary uses them against you.</em>`;
+        }
+
+        function submitDebateVector(stance) {
+            const el = document.getElementById('debateResponseArea');
+            el.style.display = 'block';
+            if (stance === 'pro') {
+                el.innerHTML = `<strong>AI Counter-Argument Module deployed:</strong> While your point on psychological protection is statistically sound, absolute prohibition models frequently create hidden, unregulated secondary networks. If teenagers are blocked from open visibility, how do they develop resilience, technical defense training, and adaptive media judgment before they transition into complete digital autonomy adulthood at 18? Give a stronger evidence counter.`;
+            } else {
+                el.innerHTML = `<strong>AI Counter-Argument Module deployed:</strong> True accessibility has massive benefits, but raw metrics show that current predictive optimization algorithms are systematically engineered to maximize screen retention time, resulting in significant increases in youth sleep disruption and clinical focus erosion profiles. How does your position propose to neutralize predatory engagement design parameters without strict external statutory enforcement rules? Defend your logic.`;
+            }
+        }
+
+        function loadFutureTechTrack(name) {
+            const el = document.getElementById('futureTechTrackResult');
+            el.style.display = 'block';
+            el.innerHTML = `<strong>Simulating System Sandbox: [${name}]</strong><br>
+            Deploying operational simulation matrices... State parameters loaded. Current learning paths verify that mastering this infrastructure module equips you to architect secure, high-integrity technical structures for the next generation of global communications network environments. Ensure your background mathematics parameters are solid!`;
+        }
+
+        // --- ARCADES INTERACTIVE ENGINE ---
+        function playGameAction(type) {
+            const el = document.getElementById('gameOutputLogs');
+            el.style.display = 'block';
+            if (type === 'surveillance') {
+                el.innerHTML = `<span style="color:var(--color-kenya-red);">System Warning:</span> City crime metrics drop by 40%, but citizen data trust indices plummet into deep systemic degradation. Creative development circles collapse under constant observational profiling pressure. You built a safe city, but destroyed its human culture hub.`;
+            } else {
+                el.innerHTML = `<span style="color:var(--color-safaricom-green);">System Evaluation Success:</span> Initial system exploit cleanups require slightly longer timeline processing windows, but citizens build extreme technological resilience, engineering independent localized defensive firewalls that isolate malicious cyber-attacks natively. Long-term structural city health hits optimized green zones.`;
+            }
+        }
+
+        function resolveDetectiveCase(choice) {
+            const el = document.getElementById('detectiveOutput');
+            el.style.display = 'block';
+            if (choice === 'audio') {
+                el.innerHTML = `🔬 <span style="color:var(--color-safaricom-green);">Forensic Hit!</span> Your frequency sweep uncovers specific synthesis phase distortion gaps located around the 4kHz sound waveband—the definitive digital signature of an AI voice-cloning generator. You trace the rendering API processing token directly back to a specific regional server proxy node. Case file advanced to local authorities!`;
+            } else {
+                el.innerHTML = `❌ <span style="color:var(--color-muted-text);">Cold Trail.</span> The network logs show standard telecom switching sequences. The attacker executed the audio generation out-of-band before feeding it into the telecom line. Re-route your investigative strategy vector.`;
+            }
+        }
+
+        function resolveSurvivorPath(choice) {
+            const el = document.getElementById('survivorOutput');
+            el.style.display = 'block';
+            if (choice === 'wifi') {
+                el.innerHTML = `💥 <span style="color:var(--color-kenya-red);">Exploit Triggered!</span> The unencrypted coffee-shop Wi-Fi was an active rogue access point ('Man-in-the-Middle' trap setup) deployed by local network thieves. The second you entered your wallet access confirmation parameters, they intercepted your cryptographic keys and swept the balance clean. Game Over.`;
+            } else {
+                el.innerHTML = `🛡️ <span style="color:var(--color-safaricom-green);">Survival Confirmed!</span> Smart choice. By using cellular routing arrays with strict localized data encryption, you prevented nearby snooping hardware nodes from capturing your validation packets. You cleared the lockout warning safely with system assets secure.`;
+            }
+        }
+
+        function triggerClashOutcome(node) {
+            const el = document.getElementById('clashOutput');
+            el.style.display = 'block';
+            if (node === 'node2') {
+                el.innerHTML = `⚡ <span style="color:var(--color-safaricom-green);">CRITICAL HIT MATRIX!</span> You identified and blocked the automated botnet payload origin vector cleanly within the window limit. Your defensive line holds strong, and your team claims victory in the low-latency match sprint!`;
+            } else {
+                el.innerHTML = `❌ <span style="color:var(--color-kenya-red);">Node Disruption Failure!</span> That target address pool was standard legitimate operational user traffic. By dropping it, you assisted the attacker's objective by self-sabotaging your own network availability streams! Match lost.`;
+            }
+        }
+
+        // --- THE FLAGSHIP FLAG INTERACTIVE DIGITAL LIFE SIMULATOR LOGIC ---
+        let currentSimStage = 0;
+        let simReputation = 100;
+        let simWellbeing = 100;
+        
+        const simScenarios = [
+            {
+                day: "Monday",
+                prompt: "A classmate sends you a WhatsApp message containing a link to a leaked school exam answer key sheet. They tell you to forward it to your group chats immediately before the server gets pulled down.",
+                choices: [
+                    { text: "Forward the link to all your friends immediately to help them out.", repMod: -20, wellMod: -5, feedback: "The link contained an active keylogger payload script that compromised your friends' session cookies. Your reputation score takes a massive hit." },
+                    { text: "Ignore it and privately inspect the domain string layout first.", repMod: 0, wellMod: 0, feedback: "You notice the domain is a cloned phishing node setup. Smart pause." },
+                    { text: "Delete the message instantly and advise your classmate to run a local malware scan.", repMod: +10, wellMod: +5, feedback: "Perfect containment response. You protected both your own profile and your classmate's network safety." }
+                ]
+            },
+            {
+                day: "Wednesday",
+                prompt: "You've been grinding inside a competitive gaming environment for 4 continuous hours. Your head is throbbing, your focus is fading, but your teammate screams at you to stay online for a critical rank promotion match.",
+                choices: [
+                    { text: "Push through the eye strain and play another 2 hours.", repMod: +5, wellMod: -25, feedback: "You secure the rank points, but severe cognitive exhaustion set in, destroying your sleep cycle and memory performance indexes." },
+                    { text: "Log off cleanly, tell your team you are offline for recovery, and drink water.", repMod: -5, wellMod: +20, feedback: "Your competitive team complains briefly, but your cognitive balance indexes regenerate to optimized levels." }
+                ]
+            },
+            {
+                day: "Friday",
+                prompt: "An unknown Instagram handle tags you in an image containing a generic sweepstakes winner badge. They ask you to confirm your phone number and home address fields to organize package delivery routing safely.",
+                choices: [
+                    { text: "Input your actual personal contact detail parameters into their DM block.", repMod: -30, wellMod: -15, feedback: "Your personal details are indexed into open spam telemarketing lists and data aggregation grids. Exposure warnings spike." },
+                    { text: "Flag the account profile for scam impersonation behaviors and reject interaction.", repMod: +10, wellMod: +10, feedback: "Exceptional security mindset deployed. The platform blocks the malicious actor from further network outreach vectors." }
+                ]
+            }
+        ];
+
+        function startLifeSimulator() {
+            document.getElementById('simScreenStart').style.display = 'none';
+            document.getElementById('simScreenActive').style.display = 'block';
+            currentSimStage = 0;
+            simReputation = 100;
+            simWellbeing = 100;
+            renderSimStage();
+        }
+
+        function renderSimStage() {
+            if (currentSimStage >= simScenarios.length) {
+                endLifeSimulator();
+                return;
+            }
+            const stage = simScenarios[currentSimStage];
+            document.getElementById('simDay').innerText = stage.day;
+            document.getElementById('simRep').innerText = simReputation;
+            document.getElementById('simWell').innerText = simWellbeing;
+            document.getElementById('simPromptText').innerText = stage.prompt;
+            
+            const container = document.getElementById('simChoicesContainer');
+            container.innerHTML = "";
+            stage.choices.forEach((choice, index) => {
+                const btn = document.createElement('button');
+                btn.className = "opt-btn";
+                btn.innerText = choice.text;
+                btn.onclick = () => processSimChoice(index);
+                container.appendChild(btn);
+            });
+        }
+
+        function processSimChoice(index) {
+            const stage = simScenarios[currentSimStage];
+            const choice = stage.choices[index];
+            
+            simReputation = Math.max(0, Math.min(100, simReputation + choice.repMod));
+            simWellbeing = Math.max(0, Math.min(100, simWellbeing + choice.wellMod));
+            
+            alert(`[Simulation Logic Update]\n\n${choice.feedback}`);
+            
+            currentSimStage++;
+            renderSimStage();
+        }
+
+        function endLifeSimulator() {
+            document.getElementById('simScreenActive').style.display = 'none';
+            document.getElementById('simScreenEnd').style.display = 'block';
+            
+            let evaluationResult = `<strong>Final Metrics Evaluation Matrix:</strong><br>
+            • Reputation Integrity: ${simReputation}%<br>
+            • Cognitive Wellbeing Level: ${simWellbeing}%<br><br>`;
+            
+            if (simReputation >= 80 && simWellbeing >= 80) {
+                evaluationResult += `<span style="color:var(--color-safaricom-green); font-weight:bold;">Status: Elite Digital Citizen Node</span><br>You navigated the week with flawless critical judgment, protecting your technical infrastructure without sacrificing your structural mental health indicators. Outstanding performance profile!`;
+            } else if (simReputation < 60 || simWellbeing < 60) {
+                evaluationResult += `<span style="color:var(--color-kenya-red); font-weight:bold;">Status: High Vulnerability Threat Vector Profile</span><br>Your choices left gaps that allowed adversarial engineering to breach your security nodes or exhaust your mental stability markers. Deploy the 12 Pillars labs to strengthen your core defenses before running again!`;
+            } else {
+                evaluationResult += `<span style="color:var(--color-suspicious); font-weight:bold;">Status: Intermediate Competency Tier</span><br>Balanced execution, but minor oversight adjustments are recommended to reinforce your end-point system defenses against social engineering tricks.`;
+            }
+            
+            document.getElementById('simResultsDump').innerHTML = evaluationResult;
+        }
+
+        function resetLifeSimulator() {
+            document.getElementById('simScreenEnd').style.display = 'none';
+            document.getElementById('simScreenStart').style.display = 'block';
+        }
+
+        // --- THE UEFI THREAT DETECTOR SCAN ACTION LOGIC ---
+        function triggerThreatDetectorScan() {
+            const btn = document.getElementById('startScanBtn');
+            const progressContainer = document.getElementById('detectorProgressContainer');
+            const progressFill = document.getElementById('detectorProgressBarFill');
+            const statusText = document.getElementById('detectorStatusText');
+            const subtext = document.getElementById('detectorSubtext');
+            const resultsBox = document.getElementById('detectorResults');
+            const resultsLogs = document.getElementById('detectorResultsLogs');
+            
+            btn.disabled = true;
+            resultsBox.style.display = 'none';
+            progressContainer.style.display = 'block';
+            progressFill.style.width = '0%';
+            statusText.innerText = "Scanning Active Sync Channels...";
+            
+            let width = 0;
+            const interval = setInterval(() => {
+                width += 2;
+                progressFill.style.width = width + '%';
+                
+                if (width === 20) subtext.innerText = "Auditing Google OAuth authentication authorization chains...";
+                if (width === 50) subtext.innerText = "Analyzing TikTok metadata visibility matrix constraints...";
+                if (width === 80) subtext.innerText = "Cross-referencing global database breach leaked tables...";
+                
+                if (width >= 100) {
+                    clearInterval(interval);
+                    btn.disabled = false;
+                    progressContainer.style.display = 'none';
+                    statusText.innerText = "Audit Analysis Complete.";
+                    subtext.innerText = "System has compiled simulated security findings.";
+                    
+                    resultsLogs.innerHTML = `
+                        <div><span class="badge safe">Google Account</span> Passwords secure. However, 2 stale third-party platform authorization nodes remain active. Revoke them to prevent supply-chain access vectors.</div>
+                        <div><span class="badge suspicious">TikTok Profile</span> Public visibility metadata exposes your precise location coordinates via camera EXIF header strings. Privacy settings adjustments strongly advised.</div>
+                        <div><span class="badge danger">Facebook/Data Track</span> Your linked email address was found in an external 2024 database leak repository list. Credential reuse warning is highly critical!</div>
+                        <div><span class="badge safe">YouTube Metadata</span> Channels verified clean. Zero unauthorized API ingest pipelines detected.</div>
+                    `;
+                    resultsBox.style.display = 'block';
+                }
+            }, 80);
+        }
+    </script>
+</body>
+</html>
