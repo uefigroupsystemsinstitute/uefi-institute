@@ -280,6 +280,8 @@
         <div id="globalClock" style="font-family: monospace; font-size: 16px;">STAGE RUNNER ACTIVE</div>
     </header>
 
+    <audio id="bgMusic" loop src="https://upload.wikimedia.org/wikipedia/commons/3/34/8-bit_loop.ogg"></audio>
+
     <div class="container">
         <div class="game-wrapper">
             
@@ -476,12 +478,60 @@
             }
         }, { passive: false });
 
+        // --- ADDED: AUDIO SYNTHESIZER ENGINE ---
+        const getAudioContext = () => {
+            if (!window.gameAudioCtx) {
+                window.gameAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return window.gameAudioCtx;
+        };
+
+        function playCollectSound() {
+            try {
+                let audioCtx = getAudioContext();
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine'; // Smooth, pleasant sound
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime); // High pitch start
+                osc.frequency.exponentialRampToValueAtTime(1760, audioCtx.currentTime + 0.1); // Quick pitch up
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } catch(e) {}
+        }
+
+        function playHitSound() {
+            try {
+                let audioCtx = getAudioContext();
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sawtooth'; // Harsh, buzzy sound
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime); // Low pitch
+                osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.2); // Pitch down
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.2);
+            } catch(e) {}
+        }
+        // ---------------------------------------
+
         function advancePanel(currentId, targetId) {
             document.getElementById(currentId).classList.remove('active');
             document.getElementById(targetId).classList.add('active');
             
             if (targetId === 'panelGame') {
                 initiateGameLoop();
+                
+                // ADDED: Start playing background music on launch
+                let bgm = document.getElementById('bgMusic');
+                bgm.volume = 0.15; // Kept low so it doesn't overpower the game
+                bgm.play().catch(e => console.log("User interaction needed for audio"));
             }
         }
 
@@ -588,8 +638,10 @@
                 if (actualDistance < playerSize + ent.radius) {
                     if (ent.type === "SECURE") {
                         gameScore += 50;
+                        playCollectSound(); // ADDED: Trigger positive sound
                     } else {
                         gameScore = Math.max(0, gameScore - 30);
+                        playHitSound(); // ADDED: Trigger negative sound
                     }
                     document.getElementById("displayScore").innerText = `Score: ${gameScore}`;
                     gameEntities.splice(idx, 1);
@@ -677,12 +729,14 @@
                 document.getElementById("feedbackSleep").innerText = metricsProfile.sleep || "Balanced parameters logged.";
                 document.getElementById("feedbackPresence").innerText = metricsProfile.presence || "Connection parameters normalized.";
                 document.getElementById('panelWellbeingFeedback').classList.add('active');
+                
+                triggerAudioChime(); // ADDED: Play encouragement sound at end of Stage 1
             } else {
                 document.getElementById('step2').classList.remove('active');
                 document.getElementById('step2').classList.add('completed');
                 document.getElementById('step3').classList.add('active');
                 
-                triggerAudioChime();
+                triggerAudioChime(); 
                 document.getElementById('panelVictory').classList.add('active');
             }
         }
@@ -693,26 +747,36 @@
             advancePanel('panelWellbeingFeedback', 'panelGame');
         }
 
+        // --- MODIFIED: Duolingo Style "Da-Ding!" Encouragement Sound ---
         function triggerAudioChime() {
             try {
-                let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                let notes = [523.25, 659.25, 783.99, 1046.50]; // Arpeggio build
-                notes.forEach((freq, index) => {
+                let audioCtx = getAudioContext();
+                // Duolingo-style positive 2-note jump
+                let notes = [
+                    { freq: 587.33, delay: 0,   duration: 0.1 }, // D5
+                    { freq: 987.77, delay: 0.15, duration: 0.4 }  // B5
+                ];
+                
+                notes.forEach(note => {
                     let osc = audioCtx.createOscillator();
                     let gain = audioCtx.createGain();
                     osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.12);
-                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.12);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + index * 0.12 + 0.4);
+                    
+                    osc.frequency.setValueAtTime(note.freq, audioCtx.currentTime + note.delay);
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime + note.delay);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + note.delay + note.duration);
+                    
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
-                    osc.start(audioCtx.currentTime + index * 0.12);
-                    osc.stop(audioCtx.currentTime + index * 0.12 + 0.4);
+                    
+                    osc.start(audioCtx.currentTime + note.delay);
+                    osc.stop(audioCtx.currentTime + note.delay + note.duration);
                 });
             } catch(e) {
                 console.log("Audio contexts blocked or unsupported on client layer.");
             }
         }
+        // -------------------------------------------------------------
 
         function processFinalPledge(event) {
             event.preventDefault();
@@ -720,8 +784,7 @@
             document.getElementById('step3').classList.add('completed');
             document.getElementById('step4').classList.add('completed');
             
+            triggerAudioChime(); // ADDED: Final congratulations sound
             advancePanel('panelSurvey', 'panelFinal');
         }
     </script>
-</body>
-</html>
