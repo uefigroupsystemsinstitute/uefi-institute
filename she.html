@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI She Podcast - Empowering Girls</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- COLOR PALETTE & VARIABLES --- */
+        :root {
+            --bg-color: #ffe6f2; /* Soft pastel pink */
+            --primary-pink: #ff4da6; /* Vibrant pink */
+            --dark-pink: #cc0066;
+            --light-pink: #ffb3d9;
+            --box-pink: #ff66b2;
+            --purple: #9933ff;
+            --white: #ffffff;
+            --text-dark: #4d0026;
+            --sticky-yellow: #fff740;
+            --sticky-pink: #ff99cc;
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            color: var(--dark-pink);
+            text-align: center;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary-pink), var(--purple));
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom-left-radius: 50% 20px;
+            border-bottom-right-radius: 50% 20px;
+            box-shadow: 0 10px 20px rgba(204, 0, 102, 0.2);
+        }
+
+        header h1 {
+            color: var(--white);
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* --- EMPOWERMENT TOPICS --- */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .topic-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(255, 77, 166, 0.15);
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-top: 5px solid var(--primary-pink);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .topic-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* --- VIDEO SECTION --- */
+        .video-section {
+            margin: 4rem 0;
+            background: var(--light-pink);
+            padding: 3rem;
+            border-radius: 30px;
+        }
+
+        .video-section h2 {
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .video-placeholder {
+            background: var(--dark-pink);
+            color: var(--white);
+            height: 200px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .video-placeholder:hover {
+            background: var(--purple);
+        }
+
+        /* --- INTERACTIVE AI BOX SECTION --- */
+        .interactive-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            margin: 5rem 0;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(204, 0, 102, 0.1);
+        }
+
+        .interaction-panel {
+            flex: 1;
+            min-width: 300px;
+            padding: 2rem;
+        }
+
+        .interaction-panel h2 {
+            text-align: left;
+            margin-bottom: 1rem;
+        }
+
+        /* Sticky Note Input */
+        textarea.sticky-input {
+            width: 100%;
+            height: 150px;
+            background-color: var(--sticky-pink);
+            border: none;
+            padding: 1.5rem;
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            border-radius: 2px 20px 2px 20px;
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.1);
+            resize: none;
+            margin-bottom: 1.5rem;
+            outline: none;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-hide {
+            background: var(--primary-pink);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(255, 77, 166, 0.4);
+        }
+
+        .btn-hide:hover {
+            background: var(--dark-pink);
+            transform: scale(1.05);
+        }
+
+        .btn-pick {
+            background: var(--purple);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(153, 51, 255, 0.4);
+        }
+
+        .btn-pick:hover {
+            background: #7a29cc;
+            transform: scale(1.05);
+        }
+
+        /* Display Area for Picked Note */
+        #pickedNoteArea {
+            margin-top: 2rem;
+            min-height: 150px;
+            display: none;
+        }
+
+        .returned-sticky {
+            background-color: var(--sticky-yellow);
+            padding: 2rem;
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            transform: rotate(-3deg);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.15);
+            border-radius: 2px 15px 2px 15px;
+        }
+
+        /* --- 3D PINK BOX CSS --- */
+        .box-wrapper {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px; /* Gives the 3D depth */
+            margin-top: 2rem;
+        }
+
+        .cube {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 15s infinite linear;
+            transition: transform 0.5s ease;
+        }
+
+        .cube:hover {
+            animation-play-state: paused;
+        }
+
+        .cube.absorb-animation {
+            animation: absorbNote 1s ease-in-out;
+        }
+
+        .face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 102, 178, 0.85); /* Semi-transparent pink */
+            border: 2px solid var(--white);
+            box-shadow: inset 0 0 20px rgba(204, 0, 102, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--white);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        /* Positioning the 6 faces of the 3D Cube */
+        .front  { transform: translateZ(100px); }
+        .back   { transform: rotateY(180deg) translateZ(100px); }
+        .right  { transform: rotateY(90deg) translateZ(100px); }
+        .left   { transform: rotateY(-90deg) translateZ(100px); }
+        .top    { transform: rotateX(90deg) translateZ(100px); background: rgba(255, 153, 204, 0.9); }
+        .bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+        @keyframes rotateCube {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        @keyframes absorbNote {
+            0% { transform: scale(1) rotateX(0deg) rotateY(0deg); }
+            50% { transform: scale(1.2) rotateX(180deg) rotateY(180deg); box-shadow: 0 0 50px var(--primary-pink); }
+            100% { transform: scale(1) rotateX(360deg) rotateY(360deg); }
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--dark-pink);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* --- RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            .interactive-section { flex-direction: column; }
+            .box-wrapper { margin-top: 5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>UEFI She Podcast</h1>
+        <p>A safe space for girls to explore maturity, embrace their experiences, learn to code, and build unstoppable courage. You have everything you need inside you!</p>
+    </header>
+
+    <div class="container">
+        
+        <section class="topics-grid">
+            <div class="topic-card">
+                <h3>🌸 Maturity & Menstruation</h3>
+                <p>Understanding your body is a superpower. We talk openly about periods, growing up, and setting healthy expectations for yourself.</p>
+            </div>
+            <div class="topic-card">
+                <h3>💖 Loving Yourself</h3>
+                <p>Self-love isn't just a trend; it's a daily practice. Learn how to be your own best friend and silence your inner critic.</p>
+            </div>
+            <div class="topic-card">
+                <h3>🦁 Having Courage</h3>
+                <p>Fear is normal, but courage is acting anyway. Discover how to step out of your comfort zone and own your story.</p>
+            </div>
+            <div class="topic-card">
+                <h3>💻 Girls That Code</h3>
+                <p>The future is built with code, and girls belong in tech! Explore AI, programming, and how you can build the digital world.</p>
+            </div>
+        </section>
+
+        <section class="video-section">
+            <h2>Watch & Learn 🎥</h2>
+            <div class="video-grid">
+                <div class="video-placeholder">Episode 1: Embrace the Change</div>
+                <div class="video-placeholder">Episode 2: Intro to AI & Coding</div>
+                <div class="video-placeholder">Episode 3: The Courage Habit</div>
+            </div>
+        </section>
+
+        <section class="interactive-section">
+            
+            <div class="interaction-panel">
+                <h2>Your AI Memory Box ✨</h2>
+                <p>After watching a video, write down your thoughts, a promise to yourself, or something you learned. Hide it in the pink box. Later, pick a random note to remind yourself of how far you've come!</p>
+                
+                <textarea id="noteInput" class="sticky-input" placeholder="Dear future me, today I learned..."></textarea>
+                
+                <div class="btn-group">
+                    <button class="btn-hide" onclick="hideInBox()">HIDE IN THE BOX</button>
+                    <button class="btn-pick" onclick="pickRandomly()">PICK RANDOMLY</button>
+                </div>
+
+                <div id="pickedNoteArea">
+                    <div class="returned-sticky" id="stickyDisplay">
+                        </div>
+                </div>
+            </div>
+
+            <div class="box-wrapper">
+                <div class="cube" id="pinkBox">
+                    <div class="face front">Dreams</div>
+                    <div class="face back">Courage</div>
+                    <div class="face right">Love</div>
+                    <div class="face left">Strength</div>
+                    <div class="face top">AI Magic</div>
+                    <div class="face bottom">Growth</div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 UEFI She Podcast. Built with love and code for girls everywhere.</p>
+    </footer>
+
+    <script>
+        // Array to hold our notes, loaded from the browser's Local Storage so they don't disappear on refresh!
+        let girlNotes = JSON.parse(localStorage.getItem('uefiSheNotes')) || [];
+
+        // Function triggered when "HIDE IN THE BOX" is clicked
+        function hideInBox() {
+            const inputField = document.getElementById('noteInput');
+            const noteText = inputField.value.trim();
+            const pinkBox = document.getElementById('pinkBox');
+
+            if (noteText === "") {
+                alert("Oops! Please write something beautiful before hiding it in the box. 💖");
+                return;
+            }
+
+            // Save the note to our array and local storage
+            girlNotes.push(noteText);
+            localStorage.setItem('uefiSheNotes', JSON.stringify(girlNotes));
+
+            // Clear the input field
+            inputField.value = "";
+
+            // Hide any currently displayed picked note
+            document.getElementById('pickedNoteArea').style.display = "none";
+
+            // Trigger the Box "Absorb" Animation
+            pinkBox.classList.remove('absorb-animation'); // reset just in case
+            // Use a tiny timeout to ensure the browser registers the removal before adding it back
+            setTimeout(() => {
+                pinkBox.classList.add('absorb-animation');
+            }, 10);
+
+            // Optional: Show a cute confirmation message
+            setTimeout(() => {
+                alert("Your note is safely hidden in the AI Magic Box! 🌸");
+            }, 1000); // Waits for animation to finish
+        }
+
+        // Function triggered when "PICK RANDOMLY" is clicked
+        function pickRandomly() {
+            const displayArea = document.getElementById('pickedNoteArea');
+            const stickyDisplay = document.getElementById('stickyDisplay');
+
+            // Check if there are any notes saved
+            if (girlNotes.length === 0) {
+                alert("The box is empty! Write a sticky note and hide it first. ✨");
+                return;
+            }
+
+            // Pick a random index from the array
+            const randomIndex = Math.floor(Math.random() * girlNotes.length);
+            const randomNote = girlNotes[randomIndex];
+
+            // Display it in the UI
+            stickyDisplay.innerText = randomNote;
+            displayArea.style.display = "block";
+        }
+    </script>
+</body>
+</html>
