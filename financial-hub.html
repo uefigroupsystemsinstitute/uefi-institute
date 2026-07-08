@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Financial Empowerment Hub</title>
+    <style>
+        /* --- CORE CONFIGURATION & BRAND SOLID COLORS --- */
+        :root {
+            --safaricom-green: #00A859;
+            --flag-red: #BB0000;
+            --flag-black: #111111;
+            --clean-white: #FFFFFF;
+            --bg-light: #F4F6F4;
+            --border-gray: #E0E4E0;
+            --text-muted: #555555;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-pill: 50px;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-stack);
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--flag-black);
+            padding-bottom: 60px;
+        }
+
+        /* --- UNIQUE UEFI NAVIGATION HEADER --- */
+        header {
+            background-color: var(--flag-black);
+            color: var(--clean-white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 5px solid var(--safaricom-green);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .flag-accent {
+            width: 24px;
+            height: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        .flag-accent .b { background: #000; flex: 1; }
+        .flag-accent .r { background: var(--flag-red); height: 4px; }
+        .flag-accent .g { background: var(--safaricom-green); flex: 1; }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .logo-text span {
+            color: var(--safaricom-green);
+        }
+
+        .hub-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            background-color: var(--flag-red);
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* --- MAIN LAYOUT CONTROLLER --- */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 900px) {
+            .container {
+                grid-template-columns: 2.5fr 1.5fr;
+            }
+        }
+
+        /* --- HERO & METRICS VIEW --- */
+        .dashboard-hero {
+            background-color: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: 4px 4px 0px var(--flag-black);
+        }
+
+        .hero-header h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .hero-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+        }
+
+        /* --- METRICS SUB-GRID --- */
+        .metrics-bar-container {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .progress-track {
+            background-color: var(--border-gray);
+            height: 14px;
+            border-radius: var(--radius-pill);
+            overflow: hidden;
+            border: 1px solid var(--flag-black);
+        }
+
+        .progress-fill {
+            background-color: var(--safaricom-green);
+            height: 100%;
+            width: 35%; /* Updated via JS */
+            transition: width 0.5s ease-in-out;
+        }
+
+        /* --- THE SOLID DYNAMIC CAPSULES --- */
+        .capsule-section-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .capsule-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .capsule {
+            background-color: var(--clean-white);
+            color: var(--flag-black);
+            border: 2px solid var(--flag-black);
+            padding: 10px 20px;
+            border-radius: var(--radius-pill);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .capsule:hover {
+            background-color: var(--bg-light);
+            transform: translateY(-2px);
+        }
+
+        .capsule.active {
+            background-color: var(--safaricom-green);
+            color: var(--clean-white);
+            border-color: var(--flag-black);
+            box-shadow: 2px 2px 0px var(--flag-black);
+        }
+
+        /* --- DYNAMIC CONTENT DISPLAY AREA --- */
+        .content-card {
+            background-color: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            min-height: 220px;
+            box-shadow: 4px 4px 0px var(--flag-black);
+        }
+
+        .content-card h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: var(--flag-black);
+        }
+
+        .content-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .action-button {
+            background-color: var(--flag-black);
+            color: var(--clean-white);
+            border: none;
+            padding: 12px 24px;
+            font-weight: 700;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .action-button:hover {
+            background-color: var(--safaricom-green);
+        }
+
+        /* --- LIVE INTERACTIVE TOOLS (SIDEBAR) --- */
+        .sidebar-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .tool-box {
+            background-color: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            box-shadow: 4px 4px 0px var(--flag-black);
+        }
+
+        .tool-box h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--flag-black);
+            padding-bottom: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .tool-btn {
+            width: 100%;
+            background-color: var(--safaricom-green);
+            color: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            padding: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--flag-black);
+        }
+
+        .tool-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px var(--flag-black);
+        }
+
+        .ledger-display {
+            background-color: var(--flag-black);
+            color: #00FF00;
+            font-family: monospace;
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            margin-top: 15px;
+            font-size: 0.85rem;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-container">
+            <div class="flag-accent">
+                <div class="b"></div>
+                <div class="r"></div>
+                <div class="g"></div>
+            </div>
+            <div class="logo-text">UEFI<span>.global</span></div>
+        </div>
+        <div class="hub-title">💰 Financial Empowerment</div>
+    </header>
+
+    <div class="container">
+        
+        <main style="display: flex; flex-direction: column; gap: 30px;">
+            <div class="dashboard-hero">
+                <div class="hero-header">
+                    <h1>Succeed in the Modern Digital Economy</h1>
+                    <p>Master money, build scalable ventures, and claim global funding opportunities.</p>
+                </div>
+
+                <div class="metrics-bar-container">
+                    <div class="metric-row">
+                        <span>UEFI Financial Literacy Progress</span>
+                        <span id="progress-text">35%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progress-bar" style="width: 35%;"></div>
+                    </div>
+                </div>
+
+                <div class="capsule-section-title">Select an Action Track</div>
+                <div class="capsule-container" id="capsules-wrapper">
+                    </div>
+            </div>
+
+            <div class="content-card" id="display-card">
+                <h3 id="card-title">Select a track above</h3>
+                <p id="card-description">Click any solid capsule to explore targeted challenges, resources, and growth mechanics.</p>
+                <div id="card-action-container"></div>
+            </div>
+        </main>
+
+        <aside class="sidebar-panel">
+            
+            <div class="tool-box">
+                <h2>Ledger & Budget Simulation</h2>
+                <div class="input-group">
+                    <label for="transaction-type">Transaction Target</label>
+                    <select id="transaction-type">
+                        <option value="freelance">Freelancing Income (+)</option>
+                        <option value="business">Digital Business Sale (+)</option>
+                        <option value="expense">Expense / Input Cost (-)</option>
+                        <option value="saving">Locked Savings Account (->)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="amount">Amount (KES)</label>
+                    <input type="number" id="amount" placeholder="e.g. 2500" value="1000">
+                </div>
+                <button class="tool-btn" onclick="executeSimulatedTransaction()">Log to UEFI Ledger</button>
+                
+                <div class="ledger-display" id="ledger-box">
+                    [System Initialized]<br>
+                    > Wallet Ready...
+                </div>
+            </div>
+
+            <div class="tool-box">
+                <h2>Grant & Pitch Simulator</h2>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">
+                    Simulate a submission for your venture funding.
+                </p>
+                <div class="input-group">
+                    <label for="pitch-type">Funding Avenue</label>
+                    <select id="pitch-type">
+                        <option value="grant">Innovation Grant (Zero Equity)</option>
+                        <option value="fundraise">Angel Pre-seed Round</option>
+                    </select>
+                </div>
+                <button class="tool-btn" style="background-color: var(--flag-black);" onclick="simulatePitch()">Submit Pitch Deck</button>
+            </div>
+
+        </aside>
+    </div>
+
+    <script>
+        // Core Hub content matrix directly mapping user specific parameters
+        const hubData = {
+            "budgeting": {
+                title: "Smart Budgeting Frameworks",
+                desc: "Learn to build defensive and tactical spending maps. Move past basic records into automated sub-accounts engineered to preserve your capital before allocation.",
+                actionText: "Launch Budget Builder Challenge (+10% Progress)"
+            },
+            "saving": {
+                title: "High-Yield Saving Strategies",
+                desc: "Discover compounding mechanisms within defensive localized ecosystems. Learn how structural interest counters inflationary forces across local markets.",
+                actionText: "Lock Simulated Savings Vault (+5% Progress)"
+            },
+            "investing basics": {
+                title: "Introduction to Asset Classes",
+                desc: "Unpack risk management profiles, index allocations, and capital market variables. Understand how market dynamics interact without speculative hype.",
+                actionText: "Analyze Mock Portfolio (+10% Progress)"
+            },
+            "entrepreneurship": {
+                title: "Venture Ideation & Execution",
+                desc: "Transform structural inefficiencies into viable services. Learn Lean Startup methodologies, customer discovery, and minimal operational structures.",
+                actionText: "Build Venture Model Canvas (+15% Progress)"
+            },
+            "digital business": {
+                title: "Building Borderless Digital Pipelines",
+                desc: "Deploy online assets that process international value. Master product positioning, dropshipping frameworks, digital product design, and processing nodes.",
+                actionText: "Audit System Pipeline (+10% Progress)"
+            },
+            "freelancing": {
+                title: "Monetizing High-Value Skills",
+                desc: "Package tech, design, or writing competencies into cross-border contracts. Master global platform mechanics, client acquisition, and cross-border invoicing.",
+                actionText: "Draft Freelance Proposal (+5% Progress)"
+            },
+            "financial planning": {
+                title: "Strategic Lifecycle Mapping",
+                desc: "Construct micro-milestones for cash allocation over continuous cycles. Mitigate existential risk while maximizing structural leverage across tech assets.",
+                actionText: "Generate Roadmap (+10% Progress)"
+            },
+            "responsible use of digital finance": {
+                title: "Digital Security & Consumer Protection",
+                desc: "Avoid systemic traps found inside mobile lending vectors and high-interest digital credit algorithms. Protect digital wallets and securely optimize transactional metadata.",
+                actionText: "Take Digital Safety Audit (+10% Progress)"
+            },
+            "fundraising": {
+                title: "Venture Capital & Pre-Seed Pooling",
+                desc: "Learn the exact processes used to approach syndicates, value your startup, orchestrate cap tables, and preserve structural governance.",
+                actionText: "Initialize Term Sheet Demo (+15% Progress)"
+            },
+            "grant writing": {
+                title: "Securing Non-Dilutive Capital",
+                desc: "Structure bulletproof proposals tailored for international research, climate innovation, and economic empowerment grants. Write tracking indices that secure awards.",
+                actionText: "Review Winning Grant Template (+15% Progress)"
+            }
+        };
+
+        // Initialize state inside local storage for persistent judges presentation
+        let currentProgress = parseInt(localStorage.getItem('uefi_hub_progress')) || 35;
+        
+        function updateProgressBar(amount) {
+            currentProgress = Math.min(currentProgress + amount, 100);
+            localStorage.setItem('uefi_hub_progress', currentProgress);
+            document.getElementById('progress-bar').style.width = currentProgress + '%';
+            document.getElementById('progress-text').innerText = currentProgress + '%';
+        }
+
+        // Generate Capsular Architecture
+        const wrapper = document.getElementById('capsules-wrapper');
+        Object.keys(hubData).forEach((key, index) => {
+            const btn = document.createElement('div');
+            btn.className = `capsule ${index === 0 ? 'active' : ''}`;
+            btn.innerText = key.charAt(0).toUpperCase() + key.slice(1);
+            btn.onclick = function() {
+                document.querySelectorAll('.capsule').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                renderContentCard(key);
+            };
+            wrapper.appendChild(btn);
+        });
+
+        // Dynamic Card Engine
+        function renderContentCard(key) {
+            const item = hubData[key];
+            document.getElementById('card-title').innerText = item.title;
+            document.getElementById('card-description').innerText = item.desc;
+            
+            const actionArea = document.getElementById('card-action-container');
+            actionArea.innerHTML = '';
+            
+            const actionBtn = document.createElement('button');
+            actionBtn.className = 'action-button';
+            actionBtn.innerText = item.actionText;
+            actionBtn.onclick = function() {
+                alert(`🎉 Challenge complete! Added metric growth points to your UEFI Dashboard profile.`);
+                updateProgressBar(5);
+            };
+            actionArea.appendChild(actionBtn);
+        }
+
+        // Ledger Simulator Operation
+        function executeSimulatedTransaction() {
+            const type = document.getElementById('transaction-type').value;
+            const amount = document.getElementById('amount').value;
+            const ledger = document.getElementById('ledger-box');
+            
+            if(!amount || amount <= 0) return alert("Enter valid numerical values.");
+
+            const timestamp = new Date().toLocaleTimeString();
+            let logLine = "";
+
+            if(type === 'freelance' || type === 'business') {
+                logLine = `>[${timestamp}] CR: +KES ${amount} via Verified Node.`;
+                updateProgressBar(2);
+            } else if (type === 'expense') {
+                logLine = `>[${timestamp}] DR: -KES ${amount} Allocation Logged.`;
+            } else {
+                logLine = `>[${timestamp}] MV: -> KES ${amount} Locked in Asset Vault.`;
+                updateProgressBar(3);
+            }
+
+            ledger.innerHTML += `<br>${logLine}`;
+            ledger.scrollTop = ledger.scrollHeight;
+        }
+
+        // Pitch Simulator
+        function simulatePitch() {
+            const type = document.getElementById('pitch-type').value;
+            alert(`🚀 Your UEFI ecosystem venture profile has generated a automated submission log for the chosen ${type.toUpperCase()} track. Data package sent to simulated evaluation queue!`);
+            updateProgressBar(10);
+        }
+
+        // Trigger default state presentation
+        renderContentCard(Object.keys(hubData)[0]);
+        document.getElementById('progress-bar').style.width = currentProgress + '%';
+        document.getElementById('progress-text').innerText = currentProgress + '%';
+    </script>
+</body>
+</html>
