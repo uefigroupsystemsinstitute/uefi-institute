@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Smart Learning Hub - AI Studio</title>
+    <style>
+        /* --- CONFIGURATION OF CRITICAL BRAND COLORS --- */
+        :root {
+            --uefi-navy: #0F1E36;
+            --safaricom-green: #00A859;
+            --flag-red: #BB0000;
+            --flag-black: #111111;
+            --clean-white: #FFFFFF;
+            --bg-canvas: #F4F6F9;
+            --panel-border: #E2E8F0;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --radius-sm: 4px;
+            --radius-md: 10px;
+            --radius-pill: 50px;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- STICKY INTEGRATED HEADER SYSTEM --- */
+        header {
+            background-color: var(--uefi-navy);
+            color: var(--clean-white);
+            padding: 15px 3%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--safaricom-green);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .kenya-ribbon {
+            display: flex;
+            flex-direction: column;
+            width: 20px;
+            height: 15px;
+        }
+        .kenya-ribbon .blk { background: var(--flag-black); flex: 1; }
+        .kenya-ribbon .rd { background: var(--flag-red); height: 3px; }
+        .kenya-ribbon .grn { background: var(--safaricom-green); flex: 1; }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+        .logo span { color: var(--safaricom-green); }
+
+        .system-badge {
+            background-color: var(--flag-red);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            padding: 5px 14px;
+            border-radius: var(--radius-sm);
+            letter-spacing: 1px;
+        }
+
+        /* --- HUB CONTENT LAYOUT WRAPPER --- */
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 25px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        @media (min-width: 1100px) {
+            .workspace {
+                grid-template-columns: 320px 1fr 400px;
+            }
+        }
+
+        /* --- COLUMN 1: INTERACTIVE CURRICULUM ARCHITECTURE --- */
+        .curriculum-sidebar {
+            background: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: 4px 4px 0px var(--flag-black);
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        .panel-heading {
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--flag-black);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .curriculum-selector {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            background: var(--bg-canvas);
+            padding: 4px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--flag-black);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            text-transform: uppercase;
+            color: var(--text-dark);
+        }
+
+        .tab-btn.active {
+            background-color: var(--uefi-navy);
+            color: var(--clean-white);
+        }
+
+        .track-group {
+            margin-bottom: 18px;
+        }
+
+        .track-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--flag-red);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .subject-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .subject-item {
+            background: var(--bg-canvas);
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-left: 4px solid var(--uefi-navy);
+            transition: all 0.2s ease;
+        }
+
+        .subject-item:hover {
+            border-left-color: var(--safaricom-green);
+            background: var(--panel-border);
+            transform: translateX(3px);
+        }
+
+        .subject-item.active {
+            background: var(--safaricom-green);
+            color: var(--clean-white);
+            border-left-color: var(--flag-black);
+        }
+
+        /* --- COLUMN 2: STUDIO NOTE MATRIX & TRANSCRIPT SCANNERS --- */
+        .studio-center {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* AI AUDIO CAPTURE SIMULATOR PANEL */
+        .media-dock {
+            background: var(--flag-black);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            color: var(--clean-white);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--flag-black);
+            box-shadow: 4px 4px 0px var(--uefi-navy);
+        }
+
+        .video-placeholder {
+            background: #1E293B;
+            width: 100%;
+            height: 240px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed var(--safaricom-green);
+            position: relative;
+        }
+
+        .pulse-indicator {
+            width: 14px;
+            height: 14px;
+            background-color: var(--flag-red);
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            animation: pulse 1.5s infinite;
+            display: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.4; }
+            100% { transform: scale(0.9); opacity: 1; }
+        }
+
+        .transcript-ticker {
+            background: rgba(255, 255, 255, 0.08);
+            border-left: 3px solid var(--safaricom-green);
+            padding: 12px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            min-height: 50px;
+            color: #A7F3D0;
+        }
+
+        .media-controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            padding: 10px 18px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            border: none;
+            text-transform: uppercase;
+        }
+
+        .btn-green { background: var(--safaricom-green); color: var(--clean-white); }
+        .btn-red { background: var(--flag-red); color: var(--clean-white); }
+
+        /* THE SYSTEM DYNAMIC CORNELL NOTE FRAMEWORK */
+        .cornell-notebook {
+            background: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-md);
+            box-shadow: 6px 6px 0px var(--flag-black);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notebook-header {
+            background: var(--uefi-navy);
+            color: var(--clean-white);
+            padding: 15px 20px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-bottom: 3px solid var(--safaricom-green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cornell-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            border-bottom: 2px solid var(--flag-black);
+        }
+
+        @media (min-width: 650px) {
+            .cornell-grid {
+                grid-template-columns: 240px 1fr;
+            }
+        }
+
+        .cornell-cues {
+            background: #F8FAFC;
+            border-bottom: 2px solid var(--flag-black);
+            padding: 20px;
+        }
+
+        @media (min-width: 650px) {
+            .cornell-cues {
+                border-bottom: none;
+                border-right: 2px solid var(--flag-black);
+            }
+        }
+
+        .cornell-notes-area {
+            padding: 20px;
+            background: #FFFFFD; /* Traditional organic note tone */
+        }
+
+        .cornell-summary {
+            background: #F1F5F9;
+            padding: 20px;
+            border-top: 1px solid var(--flag-black);
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: var(--uefi-navy);
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .note-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            resize: none;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--flag-black);
+            outline: none;
+        }
+
+        .tag-pill-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .tag-capsule {
+            background: var(--uefi-navy);
+            color: var(--clean-white);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            text-transform: uppercase;
+        }
+
+        /* --- COLUMN 3: INTERACTIVE EVALUATION METRICS (SIDEBAR) --- */
+        .workspace-sidebar-right {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .interactive-widget {
+            background: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: 4px 4px 0px var(--flag-black);
+        }
+
+        .widget-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--flag-black);
+            padding-bottom: 6px;
+            color: var(--flag-black);
+        }
+
+        /* FLASHCARD PLAYER SYSTEM */
+        .flashcard-deck {
+            background: var(--uefi-navy);
+            color: var(--clean-white);
+            padding: 25px;
+            border-radius: var(--radius-sm);
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform 0.2s;
+            border: 2px solid var(--flag-black);
+        }
+
+        .flashcard-deck:active {
+            transform: scale(0.98);
+        }
+
+        /* PRACTICE SIMULATION ENGINE */
+        .quiz-option {
+            background: var(--bg-canvas);
+            border: 1px solid var(--panel-border);
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:hover {
+            background: var(--panel-border);
+            border-color: var(--flag-black);
+        }
+
+        .quiz-option.correct {
+            background: var(--safaricom-green) !important;
+            color: var(--clean-white);
+            border-color: var(--flag-black);
+        }
+
+        .save-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .save-btn {
+            background: var(--flag-black);
+            color: var(--clean-white);
+            border: none;
+            padding: 10px 16px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .save-btn:hover {
+            background: var(--safaricom-green);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <div class="kenya-ribbon">
+                <div class="blk"></div>
+                <div class="rd"></div>
+                <div class="grn"></div>
+            </div>
+            <div class="logo">UEFI<span>.hub</span></div>
+        </div>
+        <div id="active-track-display" style="font-weight: 700; font-size: 0.9rem; color: #E2E8F0;">CBE Track • Physics</div>
+        <div class="system-badge">📚 Smart Learning Hub</div>
+    </header>
+
+    <div class="workspace">
+
+        <aside class="curriculum-sidebar">
+            <div class="panel-heading">Curriculum Matrix</div>
+            
+            <div class="curriculum-selector">
+                <button class="tab-btn active" onclick="switchCurriculum('cbe', this)">CBE</button>
+                <button class="tab-btn" onclick="switchCurriculum('ibmyp', this)">IB MYP</button>
+                <button class="tab-btn" onclick="switchCurriculum('ibdp', this)">IB DP</button>
+                <button class="tab-btn" onclick="switchCurriculum('igcse', this)">IGCSE</button>
+            </div>
+
+            <div id="curriculum-data-mount">
+                </div>
+        </aside>
+
+        <main class="studio-center">
+            
+            <div class="media-dock">
+                <div class="panel-heading" style="color: var(--clean-white); border-bottom-color: rgba(255,255,255,0.2);">
+                    AI Live Sound-Scanned Transcript Studio
+                </div>
+                <div class="video-placeholder" id="video-box">
+                    <div class="pulse-indicator" id="pulse-node"></div>
+                    <div style="font-weight: 800; font-size: 1.1rem; color: #F8FAFC; margin-bottom: 5px;">
+                        Integrated Class Resource Player
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--safaricom-green); font-weight: 700;" id="video-subtext">
+                        System Ready • Awaiting Audio Broadcast Scan
+                    </div>
+                </div>
+
+                <div class="transcript-ticker" id="ticker-output">
+                    [System Status: Silent] Press "Simulate Class Lecture Scan" below to hear and transform live speech audio streams directly into structured notes.
+                </div>
+
+                <div class="media-controls">
+                    <button class="control-btn btn-green" onclick="startAudioScanningSimulation()">Simulate Class Lecture Scan</button>
+                    <button class="control-btn btn-red" style="background:#475569;" onclick="clearNotebookFields()">Reset Slate</button>
+                </div>
+            </div>
+
+            <div class="cornell-notebook">
+                <div class="notebook-header">
+                    <span id="notebook-subject-title">Physics Module Studio</span>
+                    <span style="font-size: 0.75rem; background: var(--safaricom-green); padding: 4px 10px; border-radius: var(--radius-pill);">
+                        Cornell Format Architecture
+                    </span>
+                </div>
+                
+                <div class="cornell-grid">
+                    <div class="cornell-cues">
+                        <span class="section-label">Keywords & Cues</span>
+                        <textarea class="note-input" id="note-cues" rows="10" placeholder="AI generation nodes / core trigger phrases populate here..."></textarea>
+                        
+                        <span class="section-label" style="margin-top: 20px;">Automated Core Tagging</span>
+                        <div class="tag-pill-box" id="tag-container">
+                            <div class="tag-capsule">Core Module</div>
+                            <div class="tag-capsule">UEFI AI</div>
+                        </div>
+                    </div>
+
+                    <div class="cornell-notes-area">
+                        <span class="section-label">Detailed Lecture Notes</span>
+                        <textarea class="note-input" id="note-details" rows="14" placeholder="Detailed transcripts automatically organize into hierarchy outlines here... Make your manual edits dynamically at any moment."></textarea>
+                    </div>
+                </div>
+
+                <div class="cornell-summary">
+                    <span class="section-label">Executive Core Summary</span>
+                    <textarea class="note-input" id="note-summary" rows="3" placeholder="A single consolidated conceptual takeaway generated by the backend engine..."></textarea>
+                    
+                    <div class="save-banner">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Data saves automatically to browser space.</div>
+                        <button class="save-btn" onclick="saveCornellSessionData()">Commit Changes to Archive</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="workspace-sidebar-right">
+            
+            <div class="interactive-widget">
+                <div class="widget-title">Adaptive Active Recall Flashcards</div>
+                <div class="flashcard-deck" id="flashcard-box" onclick="flipActiveFlashcard()">
+                    Click a subject track on the left to initialize flashcard decks.
+                </div>
+                <div style="text-align: center; font-size: 0.75rem; margin-top: 8px; color: var(--text-muted); font-weight: bold;">
+                    Click Card To Reveal Target Concept Flip
+                </div>
+            </div>
+
+            <div class="interactive-widget">
+                <div class="widget-title">AI Targeted Evaluation Engine</div>
+                <div id="quiz-question-field" style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; color: var(--uefi-navy);">
+                    Select a course track to spawn simulated conceptual test environments.
+                </div>
+                <div id="quiz-options-field">
+                    </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <script>
+        // COMPREHENSIVE CURRICULUM ARCHITECTURE SYSTEM CONFIG
+        const curriculumData = {
+            cbe: [
+                { track: "Pure & Applied Sciences Track", subjects: ["Biology", "Chemistry", "Physics"] },
+                { track: "Technology & Engineering Track", subjects: ["Computer Studies / ICT", "Engineering Sciences", "Aviation", "Robotics & Mechatronics", "Electronics", "Environmental Expertise"] },
+                { track: "Agriculture & Technical Sciences Track", subjects: ["Agriculture", "Home Science"] }
+            ],
+            ibmyp: [
+                { track: "Mathematics (Group 5)", subjects: ["Standard Mathematics", "Extended Mathematics"] },
+                { track: "Sciences (Group 4)", subjects: ["Biology", "Chemistry", "Physics", "Integrated Sciences"] },
+                { track: "Design (Group 8)", subjects: ["Digital Design"] }
+            ],
+            ibdp: [
+                { track: "Group 4: Sciences", subjects: ["Biology", "Chemistry", "Physics", "Computer Science", "Design Technology", "Sports, Exercise & Health Science", "Environmental Systems & Societies"] },
+                { track: "Group 5: Mathematics", subjects: ["Mathematics: Analysis & Approaches (AA)", "Mathematics: Applications & Interpretation (AI)"] }
+            ],
+            igcse: [
+                { track: "1. Mathematics", subjects: ["Mathematics (0580)", "Additional Mathematics (0606)", "International Mathematics (0607)"] },
+                { track: "2. Sciences", subjects: ["Biology (0610)", "Chemistry (0620)", "Physics (0625)", "Combined Science (0653)", "Co-ordinated Sciences (0654)"] },
+                { track: "3. Applied Sciences", subjects: ["Environmental Management (0680)"] },
+                { track: "4. Technology & Computer Science", subjects: ["Computer Science (0478)", "Information & Communication Technology (0417)", "Design & Technology (0445)"] }
+            ]
+        };
+
+        // INTERACTIVE MEDIA SPECIFIC CORNELL DATA POOL
+        const knowledgeSimulationMatrix = {
+            "Physics": {
+                transcript: "Broadcasting Audio Track: 'When observing mechanics, forces are vectors meaning they hold both precise magnitude and specific direction. Newton's second law formalizes this relationship mathematically stating force equals mass multiplied by acceleration, represented as F equals m a...'",
+                cues: "- Force Vectors\n- Magnitude & Direction\n- Newton's Second Law\n- Quantitative Expression (F=ma)",
+                details: "1. Core Mechanics Framework\n   - Forces must always be analyzed as vector coordinates.\n   - Direction dictates positional alteration over timeframe metrics.\n\n2. Acceleration Principles\n   - Directly proportional to the net acting force vector.\n   - Inversely correlated with object structural mass parameters.",
+                summary: "Forces require multi-variable vector calculation. Acceleration directly maps force inputs normalized against structural inertia parameters.",
+                tags: ["Mechanics", "F=ma", "Vectors"],
+                flashcard: "What mathematical outcome occurs to acceleration if mass values double while structural forces remain constant? [Click to flip]\n\nAnswer: Acceleration drops by exactly 50%.",
+                question: "Which specific mathematical attribute differentiates a scalar quantity cleanly away from a vector tracking field?",
+                options: ["Inherent Density Profile", "Direction Dependency Profile", "Mass Invariance Factors", "Thermal Transfer Coefficients"],
+                correctIndex: 1
+            },
+            "Chemistry": {
+                transcript: "Broadcasting Audio Track: 'An ionic bond crystallizes through structural electrostatic attractions between positively charged cations and negatively charged anions, typically triggered via total valence electron transfers...'",
+                cues: "- Ionic Bonds\n- Electrostatic Attractions\n- Cation vs Anion\n- Valence Electron Shifts",
+                details: "1. Bond Formations\n   - Transfers take place directly from high metallic profiles to reactive non-metals.\n   - Results in crystalline grid arrays with elevated thermal thresholds.",
+                summary: "Ionic configurations require complete electron relocation to achieve stable electron configurations, producing high melting point structures.",
+                tags: ["Bonding", "Valence", "Electrostatics"],
+                flashcard: "Why do ionic structures fail to conduct electrical energy while maintaining solid physical states? [Click to flip]\n\nAnswer: Ions are restricted inside static lattice arrays.",
+                question: "What distinct moniker is given to an atom that successfully gives up outer valence shell electron arrays?",
+                options: ["Isotope Grid", "Anion Compound", "Cation Molecule", "Halogen Node"],
+                correctIndex: 2
+            }
+        };
+
+        let activeSubject = "Physics";
+
+        // CURRICULUM TOGGLE DISPLAY ENGINE
+        function switchCurriculum(key, element) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            
+            const mount = document.getElementById('curriculum-data-mount');
+            mount.innerHTML = '';
+
+            curriculumData[key].forEach(group => {
+                const block = document.createElement('div');
+                block.className = 'track-group';
+                
+                const title = document.createElement('div');
+                title.className = 'track-title';
+                title.innerText = group.track;
+                block.appendChild(title);
+
+                const list = document.createElement('ul');
+                list.className = 'subject-list';
+
+                group.subjects.forEach(sub => {
+                    const li = document.createElement('li');
+                    li.className = `subject-item ${sub === activeSubject ? 'active' : ''}`;
+                    // Normalize checking strings matching lookup maps
+                    let baseMatch = sub.includes("Physics") ? "Physics" : (sub.includes("Chemistry") ? "Chemistry" : "Physics");
+                    li.innerText = sub;
+                    li.onclick = () => {
+                        document.querySelectorAll('.subject-item').forEach(item => item.classList.remove('active'));
+                        li.classList.add('active');
+                        loadSubjectWorkspaceContext(baseMatch, key.toUpperCase() + " • " + sub);
+                    };
+                    list.appendChild(li);
+                });
+
+                block.appendChild(list);
+                mount.appendChild(block);
+            });
+        }
+
+        // LOAD SELECTED FOCUS ELEMENTS INTO CORE SLATES
+        function loadSubjectWorkspaceContext(dataKey, displayLabel) {
+            activeSubject = dataKey;
+            document.getElementById('active-track-display').innerText = displayLabel;
+            document.getElementById('notebook-subject-title').innerText = `${dataKey} Analysis Studio`;
+            
+            // Clear current active streaming simulation indicators safely
+            document.getElementById('pulse-node').style.display = 'none';
+            document.getElementById('ticker-output').innerText = `[Channel Shifted] System re-aligned to ${dataKey}. Press Simulation button to scan data.`;
+            
+            // Pop raw content baselines out of matrix configuration maps
+            const content = knowledgeSimulationMatrix[dataKey] || knowledgeSimulationMatrix["Physics"];
+            
+            document.getElementById('flashcard-box').innerText = content.flashcard;
+            document.getElementById('quiz-question-field').innerText = content.question;
+            
+            const optBox = document.getElementById('quiz-options-field');
+            optBox.innerHTML = '';
+            content.options.forEach((opt, idx) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-option';
+                div.innerText = opt;
+                div.onclick = () => {
+                    if(idx === content.correctIndex) {
+                        div.classList.add('correct');
+                        alert("🎉 Superb! Conceptual framework answered correctly.");
+                    } else {
+                        div.style.background = "var(--flag-red)";
+                        div.style.color = "white";
+                    }
+                };
+                optBox.appendChild(div);
+            });
+        }
+
+        // SIMULATED REAL-TIME AI SCANNING TRANSCRIPT ENGINE
+        function startAudioScanningSimulation() {
+            const ticker = document.getElementById('ticker-output');
+            const pulse = document.getElementById('pulse-node');
+            const subtext = document.getElementById('video-subtext');
+            const content = knowledgeSimulationMatrix[activeSubject] || knowledgeSimulationMatrix["Physics"];
+
+            pulse.style.display = 'block';
+            subtext.innerText = "🚨 AUDIO SPEECH CAPTURE SCANNING IN REAL-TIME ACTIVE STATE...";
+            ticker.innerText = "> Initializing tracking vectors... listening to spectrum frequency...";
+
+            setTimeout(() => {
+                ticker.innerText = content.transcript;
+                
+                // Directly populates structured notes to give the instant Cornell transcription effect
+                document.getElementById('note-cues').value = content.cues;
+                document.getElementById('note-details').value = content.details;
+                document.getElementById('note-summary').value = content.summary;
+                
+                // Regenerate matching tag array capsules
+                const tagBox = document.getElementById('tag-container');
+                tagBox.innerHTML = '';
+                content.tags.forEach(t => {
+                    const pill = document.createElement('div');
+                    pill.className = 'tag-capsule';
+                    pill.innerText = t;
+                    tagBox.appendChild(pill);
+                });
+
+                subtext.innerText = "✅ AI CONVERGENCE PROCESSING COMPLETE. NOTES EXTRACTED SUCCESFULLY.";
+            }, 2200);
+        }
+
+        // UTILITY SYSTEM HANDLERS
+        function clearNotebookFields() {
+            document.getElementById('note-cues').value = '';
+            document.getElementById('note-details').value = '';
+            document.getElementById('note-summary').value = '';
+            document.getElementById('ticker-output').innerText = '[System Status: Cleared Workspace]';
+        }
+
+        function saveCornellSessionData() {
+            const payload = {
+                cues: document.getElementById('note-cues').value,
+                details: document.getElementById('note-details').value,
+                summary: document.getElementById('note-summary').value
+            };
+            localStorage.setItem(`uefi_cornell_save_${activeSubject}`, JSON.stringify(payload));
+            alert(`💾 Local Save Action Registered. ${activeSubject} workspace data structured perfectly inside Browser Storage.`);
+        }
+
+        function flipActiveFlashcard() {
+            const card = document.getElementById('flashcard-box');
+            card.style.transform = "rotateY(360deg)";
+            card.style.transition = "transform 0.5s ease";
+            card.style.background = "var(--safaricom-green)";
+        }
+
+        // INITIALIZATION
+        window.onload = () => {
+            switchCurriculum('cbe', document.querySelector('.tab-btn'));
+            loadSubjectWorkspaceContext('Physics', 'CBE Track • Physics');
+        };
+    </script>
+</body>
+</html>
