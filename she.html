@@ -8,23 +8,27 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        /* --- DESIGN DESIGN SYSTEM & GLOBAL VARIABLES --- */
+        /* --- DESIGN DESIGN SYSTEM & SOLID GLOBAL VARIABLES --- */
         :root {
-            --bg-color: #fdf2f8; 
-            --primary-pink: #ec4899;
-            --dark-pink: #be185d;
-            --light-pink: #fbcfe8;
-            --purple: #8b5cf6;
-            --dark-purple: #6d28d9;
-            --white: #ffffff;
-            --text-dark: #4c1d95;
-            --sticky-yellow: #fef08a;
+            /* STRICT UEFI SOLID COLORS - NO GRADIENTS ALLOWED */
+            --bg-color: #FFF1F2; /* Solid ultra soft rose pink */
+            --primary-pink: #EC4899; /* Solid vibrant pink */
+            --dark-pink: #BE185D; /* Solid deep magenta pink */
+            --light-pink: #FBCFE8; /* Solid soft pastel pink */
+            --purple: #8B5CF6; /* Solid electric violet */
+            --dark-purple: #6D28D9; /* Solid deep majestic purple */
+            --white: #FFFFFF; /* Solid clean white */
+            --text-dark: #4C1D95; /* Solid deep plum purple */
+            --sticky-yellow: #FEF08A; /* Solid sticky yellow */
             
-            /* Diary Specific Palette */
-            --diary-red: #ef4444;
-            --diary-blue: #38bdf8;
-            --diary-light-blue: #e0f2fe;
-            --diary-light-red: #fee2e2;
+            /* Diary & Element Specific Solid Palette */
+            --diary-red: #EF4444; /* Solid pure crimson red */
+            --diary-blue: #38BDF8; /* Solid bright sky blue */
+            --diary-light-blue: #E0F2FE; /* Solid pastel water blue */
+            --diary-light-red: #FEE2E2; /* Solid soft red tint */
+            --leaf-green: #22C55E; /* Solid vivid emerald leaf green */
+            --dark-leaf: #15803D; /* Solid deep forest green */
+            --star-gold: #FBBF24; /* Solid shiny star gold */
             
             /* Transitions */
             --bezier-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -41,13 +45,12 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at top right, var(--light-pink), transparent 45%),
-                              radial-gradient(circle at bottom left, #ddd6fe, transparent 45%);
             color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
             padding-bottom: 5rem;
+            position: relative;
         }
 
         h1, h2, h3, h4 { 
@@ -55,16 +58,126 @@
             font-weight: 700;
         }
 
-        /* --- LUXURY HERO HEADER --- */
+        /* ==========================================================================
+           IMMERSIVE DECORATIVE MODULES (LEAVES, STARS, FLOWERS & HEARTS)
+           ========================================================================== */
+        
+        /* 1. Hanging Leaves Array in Header */
+        .hanging-leaves-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            pointer-events: none;
+            display: flex;
+            justify-content: space-between;
+            z-index: 20;
+            padding: 0 4rem;
+        }
+
+        .leaf-vine {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform-origin: top center;
+            animation: swayVine 4s ease-in-out infinite alternate;
+        }
+
+        .leaf-vine:nth-child(even) {
+            animation-duration: 5s;
+            animation-delay: -1s;
+        }
+
+        .leaf-vine:nth-child(3n) {
+            animation-duration: 3.5s;
+            animation-delay: -0.5s;
+        }
+
+        .vine-stem {
+            width: 3px;
+            height: 50px;
+            background-color: var(--dark-leaf);
+        }
+
+        .attached-leaf {
+            width: 24px;
+            height: 14px;
+            background-color: var(--leaf-green);
+            border-radius: 0 15px 0 15px;
+            margin: -2px 0;
+            transform: rotate(-15deg);
+        }
+
+        .attached-leaf.flipped {
+            border-radius: 15px 0 15px 0;
+            transform: rotate(15deg);
+        }
+
+        /* 2. Twinkling Background Stars Scape */
+        .star-particle {
+            position: fixed;
+            color: var(--star-gold);
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 1;
+            animation: starTwinkle 3s linear infinite;
+        }
+
+        /* 3. Growing & Glowing Flowers */
+        .glowing-flower-element {
+            position: absolute;
+            font-size: 2.5rem;
+            pointer-events: none;
+            animation: flowerGrowGlow 6s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 8px var(--primary-pink));
+        }
+
+        /* 4. Floating Red Hearts Ambient Containers */
+        .floating-heart-accent {
+            display: inline-block;
+            color: var(--diary-red);
+            font-size: 1.4rem;
+            animation: pulseHeart 2s ease-in-out infinite;
+            margin: 0 0.4rem;
+            vertical-align: middle;
+        }
+
+        /* ==========================================================================
+           CORE INTERFACE ANIMATION KEYFRAMES
+           ========================================================================== */
+        @keyframes swayVine {
+            0% { transform: rotate(-8deg); }
+            100% { transform: rotate(8deg); }
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8) translateY(0px); }
+            50% { opacity: 1; transform: scale(1.3) translateY(-10px); }
+        }
+
+        @keyframes flowerGrowGlow {
+            0% { transform: scale(0.9); filter: drop-shadow(0 0 2px var(--primary-pink)); }
+            100% { transform: scale(1.2); filter: drop-shadow(0 0 15px var(--primary-pink)); }
+        }
+
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+        }
+
+
+        /* --- LUXURY HERO HEADER WITH SOLID FILL --- */
         header {
-            background: linear-gradient(135deg, var(--primary-pink), var(--purple));
+            background-color: var(--dark-pink); /* Solid Base Color */
             color: var(--white);
-            padding: 5rem 2rem 6rem 2rem;
+            padding: 6rem 2rem 7rem 2rem;
             text-align: center;
             border-bottom-left-radius: 50% 40px;
             border-bottom-right-radius: 50% 40px;
             box-shadow: 0 15px 35px rgba(190, 24, 93, 0.25);
             position: relative;
+            overflow: hidden;
         }
 
         header h1 {
@@ -72,8 +185,10 @@
             font-size: 4.2rem;
             font-weight: 800;
             letter-spacing: -1px;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.2);
+            text-shadow: 3px 3px 0px var(--text-dark); /* Solid clean shadow step */
             margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 5;
         }
 
         header p {
@@ -82,6 +197,8 @@
             margin: 0 auto;
             font-weight: 300;
             opacity: 0.95;
+            position: relative;
+            z-index: 5;
         }
 
         /* --- LAYOUT WRAPPER --- */
@@ -93,17 +210,16 @@
             z-index: 10;
         }
 
-        /* --- THE CORE IN-BUILT NAVIGATION TABS --- */
+        /* --- THE CORE IN-BUILT NAVIGATION TABS (SOLID STYLING) --- */
         .tab-navigation-bar {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
+            background-color: var(--white); /* Solid base setup */
             padding: 0.8rem;
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(76, 29, 149, 0.08);
-            border: 1px solid var(--white);
+            border: 3px solid var(--light-pink);
             margin-bottom: 3rem;
         }
 
@@ -112,7 +228,7 @@
             font-size: 1.1rem;
             font-weight: 700;
             color: var(--text-dark);
-            background: transparent;
+            background-color: var(--white);
             border: none;
             border-radius: 25px;
             cursor: pointer;
@@ -124,20 +240,21 @@
 
         .tab-btn:hover {
             color: var(--primary-pink);
-            background: rgba(253, 242, 248, 0.8);
+            background-color: var(--bg-color);
             transform: translateY(-2px);
         }
 
         .tab-btn.active-tab-link {
             color: var(--white);
-            background: linear-gradient(135deg, var(--primary-pink), var(--purple));
+            background-color: var(--primary-pink); /* Pure solid primary active color */
             box-shadow: 0 8px 20px rgba(236, 72, 153, 0.35);
         }
 
         /* --- TAB CONTENT CONTAINERS MANAGER --- */
         .tab-content-panel {
-            display: none; /* Controlled programmatically via JavaScript */
+            display: none; 
             animation: paneFadeIn 0.5s var(--bezier-bounce);
+            position: relative;
         }
 
         .tab-content-panel.active-panel {
@@ -150,7 +267,7 @@
         }
 
         /* ==========================================================================
-           TAB 1: THE SHE VIDEOS STYLES
+           TAB 1: THE SHE VIDEOS STYLES (SOLID ARCHITECTURE)
            ========================================================================== */
         .video-dashboard-grid {
             display: grid;
@@ -160,23 +277,25 @@
         }
 
         .video-card {
-            background: var(--white);
+            background-color: var(--white);
             border-radius: 30px;
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(0,0,0,0.04);
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 3px solid var(--light-pink);
             transition: var(--transition-smooth);
+            position: relative;
         }
 
         .video-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(236, 72, 153, 0.12);
+            border-color: var(--primary-pink);
         }
 
         .video-screen-mock {
             width: 100%;
             height: 220px;
-            background: linear-gradient(135deg, #4c1d95, #be185d);
+            background-color: var(--text-dark); /* Solid Deep Backdrop */
             position: relative;
             display: flex;
             align-items: center;
@@ -187,21 +306,19 @@
         .play-icon-shape {
             width: 70px;
             height: 70px;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(5px);
+            background-color: var(--primary-pink);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
-            border: 2px solid var(--white);
+            border: 3px solid var(--white);
             transition: var(--transition-smooth);
         }
 
         .video-card:hover .play-icon-shape {
             transform: scale(1.15);
-            background: var(--primary-pink);
-            border-color: var(--primary-pink);
+            background-color: var(--dark-pink);
         }
 
         .video-info-box {
@@ -211,7 +328,7 @@
         .video-tag-pill {
             display: inline-block;
             padding: 0.3rem 1rem;
-            background: var(--light-pink);
+            background-color: var(--light-pink);
             color: var(--dark-pink);
             border-radius: 20px;
             font-size: 0.85rem;
@@ -227,7 +344,7 @@
         }
 
         /* ==========================================================================
-           TAB 2: MY IMPACT DIARY STYLES (Pink, Red, Light-Blue System)
+           TAB 2: MY IMPACT DIARY STYLES (Solid Pink, Red, Light-Blue System)
            ========================================================================== */
         .diary-workspace {
             display: grid;
@@ -241,10 +358,13 @@
         }
 
         .diary-book-container {
-            background: var(--white);
+            background-color: var(--white);
             border-radius: 35px;
             padding: 3rem;
-            border-left: 15px solid var(--diary-red);
+            border-left: 15px solid var(--diary-red); /* Solid Red Book Spine Binding */
+            border-top: 3px solid var(--light-pink);
+            border-right: 3px solid var(--light-pink);
+            border-bottom: 3px solid var(--light-pink);
             box-shadow: 5px 20px 45px rgba(190, 24, 93, 0.08);
             position: relative;
         }
@@ -254,7 +374,7 @@
             position: absolute;
             left: 0; top: 0; bottom: 0;
             width: 1px;
-            background: rgba(0,0,0,0.08);
+            background-color: rgba(0,0,0,0.08);
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
         }
 
@@ -264,14 +384,14 @@
             color: var(--diary-red);
         }
 
-        /* Custom Toggle Switch for Timeframes */
+        /* Custom Solid Toggle Switch for Timeframes */
         .timeframe-selector-zone {
             display: flex;
-            background: var(--bg-color);
+            background-color: var(--bg-color);
             padding: 0.4rem;
             border-radius: 50px;
             margin: 1.5rem 0;
-            border: 1px solid var(--light-pink);
+            border: 2px solid var(--light-pink);
             width: fit-content;
         }
 
@@ -283,30 +403,35 @@
             border-radius: 50px;
             transition: var(--transition-smooth);
             color: var(--text-dark);
+            background-color: transparent;
         }
 
         input[type="radio"].timeframe-actual-input {
             display: none;
         }
 
-        input[type="radio"]#todayFrame:checked ~ .timeframe-selector-zone label[for="todayFrame"],
-        input[type="radio"]#weekFrame:checked ~ .timeframe-selector-zone label[for="weekFrame"] {
-            background: linear-gradient(135deg, var(--diary-red), var(--primary-pink));
+        input[type="radio"]#todayFrame:checked ~ .timeframe-selector-zone label[for="todayFrame"] {
+            background-color: var(--diary-red);
             color: var(--white);
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        input[type="radio"]#weekFrame:checked ~ .timeframe-selector-zone label[for="weekFrame"] {
+            background-color: var(--purple);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
         }
 
         .diary-input-textarea {
             width: 100%;
             height: 160px;
-            background: linear-gradient(rgba(56, 189, 248, 0.05) 95%, rgba(56, 189, 248, 0.2) 5%);
-            background-size: 100% 32px;
+            background-color: var(--diary-light-blue); /* Solid soft clean blue background lines environment */
             line-height: 32px;
-            border: 2px solid var(--diary-light-blue);
+            border: 3px solid var(--diary-blue);
             padding: 1rem 1.5rem;
             font-family: 'Caveat', cursive;
             font-size: 1.8rem;
-            color: #1e3a8a;
+            color: #1E3A8A;
             border-radius: 15px;
             resize: none;
             outline: none;
@@ -315,12 +440,12 @@
         }
 
         .diary-input-textarea:focus {
-            border-color: var(--diary-blue);
-            background-color: #f0f9ff;
+            border-color: var(--dark-purple);
+            background-color: var(--white);
         }
 
         .btn-diary-save {
-            background: linear-gradient(135deg, var(--diary-red), #dc2626);
+            background-color: var(--diary-red);
             color: var(--white);
             box-shadow: 0 8px 20px rgba(239, 68, 68, 0.35);
             width: 100%;
@@ -328,6 +453,7 @@
 
         .btn-diary-save:hover {
             transform: translateY(-3px);
+            background-color: #DC2626;
             box-shadow: 0 12px 25px rgba(239, 68, 68, 0.5);
         }
 
@@ -342,17 +468,18 @@
             width: 8px;
         }
         .diary-stream-panel::-webkit-scrollbar-thumb {
-            background: var(--light-pink);
+            background-color: var(--light-pink);
             border-radius: 10px;
         }
 
         .diary-entry-card {
-            background: var(--white);
+            background-color: var(--white);
             border-radius: 22px;
             padding: 2rem;
             margin-bottom: 1.5rem;
             box-shadow: 0 8px 20px rgba(0,0,0,0.02);
-            border-left: 8px solid var(--diary-blue);
+            border: 3px solid var(--light-pink);
+            border-left: 10px solid var(--diary-blue); /* Solid blue accent */
             transition: var(--transition-smooth);
             position: relative;
         }
@@ -363,6 +490,7 @@
 
         .diary-entry-card:hover {
             transform: translateX(5px);
+            border-color: var(--primary-pink);
         }
 
         .diary-meta-row {
@@ -380,8 +508,8 @@
             text-transform: uppercase;
         }
 
-        .diary-badge.badge-today { background: var(--diary-light-red); color: var(--diary-red); }
-        .diary-badge.badge-week { background: #f3e8ff; color: var(--purple); }
+        .diary-badge.badge-today { background-color: var(--diary-light-red); color: var(--diary-red); }
+        .diary-badge.badge-week { background-color: #F3E8FF; color: var(--purple); }
 
         .diary-timestamp { color: #64748b; }
 
@@ -393,7 +521,7 @@
         }
 
         /* ==========================================================================
-           TAB 3: MY SECRET BOX STYLES (Preserved Core Modules + Added Calendar Layout)
+           TAB 3: MY SECRET BOX STYLES (Preserved Core Modules + Solid Customizations)
            ========================================================================== */
         .secret-box-workspace {
             display: grid;
@@ -407,31 +535,29 @@
         }
 
         .interactive-section {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--white);
+            background-color: var(--white);
+            border: 3px solid var(--light-pink);
             border-radius: 40px;
             box-shadow: 0 20px 45px rgba(236, 72, 153, 0.08);
             padding: 3rem;
+            position: relative;
         }
 
         .interaction-panel h2 {
             font-size: 2.6rem;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--primary-pink), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--dark-pink);
         }
 
         textarea.sticky-input {
             width: 100%;
             height: 180px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            border: 2px solid var(--white);
+            background-color: var(--light-pink); /* Solid Base Color configuration */
+            border: 3px solid var(--primary-pink);
             padding: 2rem;
             font-family: 'Caveat', cursive;
             font-size: 1.9rem;
-            color: #4a044e;
+            color: #4A044E;
             border-radius: 5px 35px 5px 35px;
             box-shadow: 5px 12px 25px rgba(236, 72, 153, 0.15);
             resize: none;
@@ -442,28 +568,50 @@
 
         textarea.sticky-input:focus {
             transform: translateY(-5px);
+            background-color: var(--white);
             box-shadow: 5px 18px 30px rgba(236, 72, 153, 0.3);
         }
 
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 800;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .btn-hide {
-            background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+            background-color: var(--primary-pink);
             color: var(--white);
             box-shadow: 0 10px 22px rgba(236, 72, 153, 0.4);
         }
 
         .btn-hide:hover {
             transform: scale(1.04) translateY(-3px);
+            background-color: var(--dark-pink);
             box-shadow: 0 15px 28px rgba(236, 72, 153, 0.55);
         }
 
         .btn-pick {
-            background: linear-gradient(135deg, var(--purple), var(--dark-purple));
+            background-color: var(--purple);
             color: var(--white);
             box-shadow: 0 10px 22px rgba(139, 92, 246, 0.4);
         }
 
         .btn-pick:hover {
             transform: scale(1.04) translateY(-3px);
+            background-color: var(--dark-purple);
             box-shadow: 0 15px 28px rgba(139, 92, 246, 0.55);
         }
 
@@ -484,6 +632,7 @@
             box-shadow: 8px 12px 25px rgba(0,0,0,0.12);
             border-radius: 2px 25px 2px 25px;
             position: relative;
+            border: 2px solid #E4E4E7;
         }
 
         .returned-sticky::before {
@@ -495,7 +644,7 @@
             font-size: 2.2rem;
         }
 
-        /* --- THE PROFESSIONAL 3D GLASS BOX SYSTEM --- */
+        /* --- THE PROFESSIONAL 3D GLASS BOX SYSTEM (SOLID COMPONENT HIGHLIGHTS) --- */
         .box-wrapper {
             display: flex;
             justify-content: center;
@@ -520,10 +669,9 @@
             position: absolute;
             width: 220px;
             height: 220px;
-            background: rgba(255, 154, 190, 0.45);
-            backdrop-filter: blur(6px);
-            border: 2px solid rgba(255, 255, 255, 0.65);
-            box-shadow: 0 0 35px rgba(236, 72, 153, 0.25), inset 0 0 25px rgba(255, 255, 255, 0.6);
+            background-color: rgba(255, 154, 190, 0.7); /* Increased Opacity for Solid Rendering Feel */
+            border: 3px solid var(--white);
+            box-shadow: 0 0 35px rgba(236, 72, 153, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -532,7 +680,7 @@
             color: var(--dark-pink);
             text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 1px 1px 2px var(--white);
+            text-shadow: 2px 2px 0px var(--white);
             border-radius: 18px;
         }
 
@@ -542,7 +690,7 @@
             top: 50%; left: 50%;
             width: 110px; height: 110px;
             transform: translate(-50%, -50%) translateZ(0);
-            background: radial-gradient(circle, var(--white), var(--primary-pink));
+            background-color: var(--primary-pink); /* Solid Core Specifier */
             border-radius: 50%;
             filter: blur(25px);
             opacity: 0.85;
@@ -552,27 +700,27 @@
         .back   { transform: rotateY(180deg) translateZ(110px); }
         .right  { transform: rotateY(90deg) translateZ(110px); }
         .left   { transform: rotateY(-90deg) translateZ(110px); }
-        .top    { transform: rotateX(90deg) translateZ(110px); background: rgba(251, 207, 232, 0.65); }
+        .top    { transform: rotateX(90deg) translateZ(110px); background-color: var(--light-pink); }
         .bottom { transform: rotateX(-90deg) translateZ(110px); }
 
         /* ==========================================================================
-           UEFI CALENDAR ENGINE STYLES
+           UEFI CALENDAR ENGINE STYLES (SOLID GRAPHIC TREATMENTS)
            ========================================================================== */
         .uefi-calendar-container {
             grid-column: 1 / -1; 
-            background: var(--white);
+            background-color: var(--white);
             border-radius: 35px;
             padding: 3rem;
             margin-top: 3rem;
             box-shadow: 0 15px 40px rgba(76, 29, 149, 0.05);
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 3px solid var(--light-pink);
         }
 
         .calendar-header-group {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--bg-color);
+            border-bottom: 3px solid var(--bg-color);
             padding-bottom: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -595,10 +743,13 @@
         }
 
         .calendar-log-item {
-            background: var(--bg-color);
+            background-color: var(--bg-color);
             border-radius: 20px;
             padding: 1.25rem;
-            border-left: 5px solid var(--primary-pink);
+            border-left: 6px solid var(--primary-pink); /* Solid Crimson Accent */
+            border-top: 1px solid var(--light-pink);
+            border-right: 1px solid var(--light-pink);
+            border-bottom: 1px solid var(--light-pink);
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
@@ -607,7 +758,8 @@
 
         .calendar-log-item:hover {
             transform: translateY(-2px);
-            background: #fae8ff;
+            background-color: var(--light-pink);
+            border-left-color: var(--dark-pink);
         }
 
         .log-timestamp-badge {
@@ -664,9 +816,9 @@
         }
 
         @keyframes boxSuccess {
-            0% { transform: scale(1) rotateX(0deg) rotateY(0deg); box-shadow: 0 0 0 rgba(236,72,153,0); }
-            50% { transform: scale(1.2) rotateX(180deg) rotateY(180deg); box-shadow: 0 0 100px var(--primary-pink); }
-            100% { transform: scale(1) rotateX(360deg) rotateY(360deg); box-shadow: 0 0 0 rgba(236,72,153,0); }
+            0% { transform: scale(1) rotateX(0deg) rotateY(0deg); }
+            50% { transform: scale(1.2) rotateX(180deg) rotateY(180deg); }
+            100% { transform: scale(1) rotateX(360deg) rotateY(360deg); }
         }
 
         .box-success-anim {
@@ -676,8 +828,53 @@
 </head>
 <body>
 
+    <div class="hanging-leaves-container">
+        <div class="leaf-vine">
+            <div class="vine-stem"></div>
+            <div class="attached-leaf"></div>
+            <div class="attached-leaf flipped"></div>
+            <div class="attached-leaf"></div>
+        </div>
+        <div class="leaf-vine" style="animation-delay: -0.8s;">
+            <div class="vine-stem" style="height: 70px;"></div>
+            <div class="attached-leaf"></div>
+            <div class="attached-leaf flipped"></div>
+            <div class="attached-leaf"></div>
+            <div class="attached-leaf flipped"></div>
+        </div>
+        <div class="leaf-vine" style="animation-delay: -2.3s;">
+            <div class="vine-stem" style="height: 40px;"></div>
+            <div class="attached-leaf flipped"></div>
+            <div class="attached-leaf"></div>
+        </div>
+        <div class="leaf-vine" style="animation-delay: -1.5s;">
+            <div class="vine-stem" style="height: 85px;"></div>
+            <div class="attached-leaf"></div>
+            <div class="attached-leaf flipped"></div>
+            <div class="attached-leaf"></div>
+            <div class="attached-leaf flipped"></div>
+            <div class="attached-leaf"></div>
+        </div>
+        <div class="leaf-vine" style="animation-delay: -3.1s;">
+            <div class="vine-stem" style="height: 55px;"></div>
+            <div class="attached-leaf flipped"></div>
+            <div class="attached-leaf"></div>
+            <div class="attached-leaf flipped"></div>
+        </div>
+    </div>
+
+    <div class="glowing-flower-element" style="top: 15%; left: 3%; animation-delay: 0s;">🌸</div>
+    <div class="glowing-flower-element" style="top: 65%; right: 2%; animation-delay: -2s;">🌺</div>
+    <div class="glowing-flower-element" style="bottom: 5%; left: 2%; animation-delay: -4s;">🌸</div>
+
+    <div class="star-particle" style="top: 25%; left: 10%; animation-delay: 0s;">★</div>
+    <div class="star-particle" style="top: 45%; right: 12%; animation-delay: 0.5s;">★</div>
+    <div class="star-particle" style="top: 80%; left: 18%; animation-delay: 1.2s;">★</div>
+    <div class="star-particle" style="top: 12%; right: 25%; animation-delay: 1.8s;">★</div>
+    <div class="star-particle" style="bottom: 15%; right: 8%; animation-delay: 2.3s;">★</div>
+
     <header>
-        <h1>UEFI She Podcast</h1>
+        <h1>UEFI She Podcast <span class="floating-heart-accent">❤️</span></h1>
         <p>An innovative, empowering sanctuary designed for girls to explore maturity, process life experiences, discover engineering via AI, and master unconditional self-love.</p>
     </header>
 
@@ -697,29 +894,29 @@
                         <div class="play-icon-shape">▶</div>
                     </div>
                     <div class="video-info-box">
-                        <span class="video-tag-pill">Maturity & Anatomy</span>
+                        <span class="video-tag-pill">Maturity & Anatomy <span class="floating-heart-accent">❤️</span></span>
                         <h3>Episode 1: Embracing Natural Cycles</h3>
                         <p>An elegant, friendly, open guide demystifying menstruation, body transitions, and the psychological adaptations of maturation.</p>
                     </div>
                 </div>
 
                 <div class="video-card">
-                    <div class="video-screen-mock" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">
+                    <div class="video-screen-mock" style="background-color: var(--purple);">
                         <div class="play-icon-shape">▶</div>
                     </div>
                     <div class="video-info-box">
-                        <span class="video-tag-pill">Girls Who Code</span>
+                        <span class="video-tag-pill">Girls Who Code <span class="floating-heart-accent">❤️</span></span>
                         <h3>Episode 2: Algorithms, Logic, and AI Magic</h3>
                         <p>Break the structural entry glass ceilings. Discover how programming gives you a voice to construct future neural models.</p>
                     </div>
                 </div>
 
                 <div class="video-card">
-                    <div class="video-screen-mock" style="background: linear-gradient(135deg, #be185d, #4c1d95);">
+                    <div class="video-screen-mock" style="background-color: var(--dark-pink);">
                         <div class="play-icon-shape">▶</div>
                     </div>
                     <div class="video-info-box">
-                        <span class="video-tag-pill">Self-Esteem</span>
+                        <span class="video-tag-pill">Self-Esteem <span class="floating-heart-accent">❤️</span></span>
                         <h3>Episode 3: The Architecture of Courage</h3>
                         <p>Practical strategy maps teaching internal self-preservation, handling social expectations, and cultivating quiet boldness.</p>
                     </div>
@@ -733,7 +930,7 @@
                 
                 <div class="diary-book-container">
                     <div class="diary-title-area">
-                        <h2>My Impact Journal</h2>
+                        <h2>My Impact Journal <span class="floating-heart-accent">❤️</span></h2>
                         <p style="color: #64748b; font-size: 0.95rem;">Document your positive contributions, coding milestones, or displays of personal bravery.</p>
                     </div>
 
@@ -751,7 +948,7 @@
                 </div>
 
                 <div>
-                    <h3 style="margin-bottom: 1.5rem; font-size: 1.6rem; color: var(--text-dark);">Historical Impact Feed 📈</h3>
+                    <h3 style="margin-bottom: 1.5rem; font-size: 1.6rem; color: var(--text-dark);">Historical Impact Feed 📈 <span class="floating-heart-accent">❤️</span></h3>
                     <div class="diary-stream-panel" id="diaryFeedContainer">
                         </div>
                 </div>
@@ -764,7 +961,7 @@
                 
                 <div class="interactive-section">
                     <div class="interaction-panel">
-                        <h2>Your Secret AI Box ✨</h2>
+                        <h2>Your Secret AI Box ✨ <span class="floating-heart-accent">❤️</span></h2>
                         <p style="margin-bottom: 2rem; color: #4b5563;">Synthesize your internal transformation. Process your responses to the podcast, encapsulate your vulnerabilities or goals, then safely lock them away.</p>
                         
                         <textarea id="noteInput" class="sticky-input" placeholder="Dear future me, today's video taught me that my capabilities scale infinitely..."></textarea>
@@ -784,7 +981,7 @@
                     <div class="cube" id="pinkBox">
                         <div class="face front">Dreams</div>
                         <div class="face back">Courage</div>
-                        <div class="face right">Love</div>
+                        <div class="face right">Love ❤️</div>
                         <div class="face left">Strength</div>
                         <div class="face top">AI Magic</div>
                         <div class="face bottom">Growth</div>
@@ -793,7 +990,7 @@
 
                 <div class="uefi-calendar-container">
                     <div class="calendar-header-group">
-                        <h3>📅 UEFI Security Vault Calendar</h3>
+                        <h3>📅 UEFI Security Vault Calendar <span class="floating-heart-accent">❤️</span></h3>
                         <p style="color: #64748b; font-size: 0.9rem; font-weight: 600;">Automated Real-Time Chronological Synchronization</p>
                     </div>
                     <div class="calendar-timeline-ledger" id="calendarLedgerBox">
@@ -878,14 +1075,14 @@
                     angle: 60,
                     spread: 60,
                     origin: { x: 0, y: 0.75 },
-                    colors: ['#ec4899', '#be185d', '#fbcfe8', '#fef08a', '#38bdf8']
+                    colors: ['#ec4899', '#be185d', '#fbcfe8', '#ef4444', '#38bdf8']
                 });
                 confetti({
                     particleCount: 6,
                     angle: 120,
                     spread: 60,
                     origin: { x: 1, y: 0.75 },
-                    colors: ['#ec4899', '#be185d', '#fbcfe8', '#fef08a', '#38bdf8']
+                    colors: ['#ec4899', '#be185d', '#fbcfe8', '#ef4444', '#38bdf8']
                 });
 
                 if (Date.now() < operationalThreshold) {
