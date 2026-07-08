@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Personal Growth Dashboard | The Whole Individual</title>
+    <style>
+        /* ==========================================
+           1. CORE DESIGN SYSTEM & BRAND PALETTE
+           ========================================== */
+        :root {
+            --safaricom-green: #00A859;
+            --flag-red: #BB0000;
+            --flag-black: #111111;
+            --prestige-gold: #D4AF37;
+            --deep-navy: #0A1424;
+            --slate-gray: #1E293B;
+            --light-bg: #F4F6F9;
+            --clean-white: #FFFFFF;
+            --border-color: #CBD5E1;
+            --text-dark: #0F172A;
+            --text-muted: #475569;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-pill: 50px;
+            --shadow-solid: 4px 4px 0px var(--flag-black);
+            --shadow-lg: 6px 6px 0px var(--flag-black);
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-stack);
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 80px;
+        }
+
+        /* ==========================================
+           2. STICKY BRAND NAVIGATION & PROTOCOL BAR
+           ========================================== */
+        header {
+            background-color: var(--flag-black);
+            color: var(--clean-white);
+            padding: 16px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 5px solid var(--prestige-gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .flag-emblem {
+            width: 28px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .flag-emblem .b { background: #000; flex: 1; }
+        .flag-emblem .r { background: var(--flag-red); height: 6px; }
+        .flag-emblem .g { background: var(--safaricom-green); flex: 1; }
+
+        .brand-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+        .brand-title span { color: var(--safaricom-green); }
+
+        .user-status-pill {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--slate-gray);
+            padding: 6px 16px;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--prestige-gold);
+        }
+
+        .streak-indicator {
+            color: var(--prestige-gold);
+            font-weight: 800;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .profile-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--clean-white);
+        }
+
+        /* ==========================================
+           3. MAIN LAYOUT CONTROLLER & TAB SYSTEM
+           ========================================== */
+        .workspace {
+            max-width: 1400px;
+            width: 100%;
+            margin: 25px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .nav-tabs-bar {
+            display: flex;
+            gap: 10px;
+            background: var(--clean-white);
+            padding: 10px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--flag-black);
+            box-shadow: var(--shadow-solid);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 18px;
+            background: transparent;
+            border: 2px solid transparent;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .tab-btn:hover {
+            background: var(--light-bg);
+            border-color: var(--border-color);
+        }
+
+        .tab-btn.active {
+            background: var(--flag-black);
+            color: var(--clean-white);
+            border-color: var(--flag-black);
+            box-shadow: 2px 2px 0px var(--safaricom-green);
+        }
+
+        .view-section {
+            display: none;
+        }
+        .view-section.active {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* ==========================================
+           4. HERO OVERVIEW & GLOBAL GROWTH INDEX
+           ========================================== */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--flag-black) 100%);
+            color: var(--clean-white);
+            border-radius: var(--radius-lg);
+            padding: 35px;
+            border: 3px solid var(--flag-black);
+            box-shadow: var(--shadow-lg);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 900px) {
+            .hero-banner {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .hero-banner::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,168,89,0.15) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+        }
+
+        .hero-text h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        .hero-text h1 span { color: var(--safaricom-green); }
+
+        .hero-text p {
+            font-size: 1.05rem;
+            color: #CBD5E1;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            max-width: 700px;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .hero-badge {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--prestige-gold);
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--prestige-gold);
+            text-transform: uppercase;
+        }
+
+        /* SCORE CIRCLE DISPLAY */
+        .index-display {
+            background: var(--clean-white);
+            color: var(--flag-black);
+            padding: 25px;
+            border-radius: var(--radius-md);
+            border: 3px solid var(--prestige-gold);
+            text-align: center;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .index-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--safaricom-green);
+            line-height: 1;
+            margin: 10px 0;
+        }
+
+        .index-label {
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================
+           5. THE 11-DIMENSION METRICS MATRIX
+           ========================================== */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 700px) {
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1100px) {
+            .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .metric-card {
+            background: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            box-shadow: var(--shadow-solid);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--safaricom-green);
+        }
+
+        .metric-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .metric-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--flag-black);
+        }
+
+        .metric-level-badge {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            background: var(--flag-black);
+            color: var(--clean-white);
+        }
+
+        .metric-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 18px;
+            min-height: 50px;
+        }
+
+        .progress-section {
+            margin-top: auto;
+        }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 12px;
+            background: var(--light-bg);
+            border: 1px solid var(--flag-black);
+            border-radius: var(--radius-pill);
+            overflow: hidden;
+            padding: 1px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: var(--radius-pill);
+            background: var(--safaricom-green);
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Specific Accent Fills for Visual Diversity */
+        .fill-red { background: var(--flag-red); }
+        .fill-gold { background: var(--prestige-gold); }
+        .fill-navy { background: var(--deep-navy); }
+
+        .action-log-btn {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            background: var(--light-bg);
+            border: 1px solid var(--flag-black);
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s;
+            color: var(--flag-black);
+        }
+
+        .action-log-btn:hover {
+            background: var(--flag-black);
+            color: var(--clean-white);
+        }
+
+        /* ==========================================
+           6. TRANSFORMATION THEATER (VIDEOS & STORIES)
+           ========================================== */
+        .theater-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media (min-width: 900px) {
+            .theater-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .story-card {
+            background: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-solid);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-viewport {
+            background: var(--slate-gray);
+            width: 100%;
+            height: 260px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--clean-white);
+            border-bottom: 2px solid var(--flag-black);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .play-overlay-btn {
+            width: 64px;
+            height: 64px;
+            background: var(--flag-red);
+            border: 3px solid var(--clean-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .play-overlay-btn:hover {
+            transform: scale(1.1);
+            background: var(--safaricom-green);
+        }
+
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 18px solid var(--clean-white);
+            margin-left: 4px;
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.8);
+            color: var(--clean-white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .story-content {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .story-tag {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--flag-red);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .story-content h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--flag-black);
+            margin-bottom: 10px;
+        }
+
+        .story-content p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .takeaway-box {
+            background: var(--light-bg);
+            border-left: 4px solid var(--safaricom-green);
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* ==========================================
+           7. INTERACTIVE REFLECTION & ACTION ENGINE
+           ========================================== */
+        .action-engine-panel {
+            background: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: var(--shadow-solid);
+        }
+
+        .panel-header {
+            border-bottom: 2px solid var(--flag-black);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .panel-header h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .panel-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        .action-form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 800px) {
+            .action-form-grid { grid-template-columns: 2fr 1fr; }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--flag-black);
+        }
+
+        .form-group select, .form-group input, .form-group textarea {
+            padding: 12px;
+            border: 2px solid var(--flag-black);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-weight: 600;
+            outline: none;
+            background: var(--light-bg);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-growth-btn {
+            background: var(--safaricom-green);
+            color: var(--clean-white);
+            border: 2px solid var(--flag-black);
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--flag-black);
+            transition: all 0.15s;
+        }
+
+        .submit-growth-btn:hover {
+            background: var(--flag-black);
+            color: var(--prestige-gold);
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--flag-black);
+        }
+
+        .reflection-history-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .history-item {
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--prestige-gold);
+            padding: 14px;
+            border-radius: var(--radius-sm);
+        }
+
+        .history-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .history-meta span {
+            color: var(--flag-red);
+            text-transform: uppercase;
+        }
+
+        .history-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+
+        /* SIMULATED MODAL FOR VIDEO PLAYBACK */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--flag-black);
+            border: 3px solid var(--prestige-gold);
+            border-radius: var(--radius-md);
+            width: 100%;
+            max-width: 800px;
+            color: var(--clean-white);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-close-btn {
+            background: var(--flag-red);
+            color: var(--clean-white);
+            border: none;
+            padding: 6px 12px;
+            font-weight: 800;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+        }
+
+        .modal-video-screen {
+            background: #000;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .simulated-wave {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .wave-bar {
+            width: 8px;
+            height: 30px;
+            background: var(--safaricom-green);
+            animation: bounce 1s infinite alternate;
+        }
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; background: var(--prestige-gold); }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; background: var(--flag-red); }
+        .wave-bar:nth-child(4) { animation-delay: 0.6s; background: var(--clean-white); }
+        .wave-bar:nth-child(5) { animation-delay: 0.8s; background: var(--safaricom-green); }
+
+        @keyframes bounce {
+            from { height: 15px; }
+            to { height: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-wrapper">
+            <div class="flag-emblem">
+                <div class="b"></div>
+                <div class="r"></div>
+                <div class="g"></div>
+            </div>
+            <div class="brand-title">UEFI<span>.growth</span></div>
+        </div>
+        <div class="user-status-pill">
+            <div class="streak-indicator">🔥 14-Day Streak</div>
+            <div class="profile-name">Student Explorer • Kiambu, KE</div>
+        </div>
+    </header>
+
+    <main class="workspace">
+
+        <section class="hero-banner">
+            <div class="hero-text">
+                <h1>Measuring The <span>Whole Individual</span></h1>
+                <p>Grades only reflect memorization. The UEFI Personal Growth Engine measures real-world readiness, digital safety, emotional resilience, and innovative execution. Transform yourself daily.</p>
+                <div class="hero-badges">
+                    <span class="hero-badge">✨ 11 Core Dimensions Active</span>
+                    <span class="hero-badge">🚀 AI Mentor Synced</span>
+                    <span class="hero-badge">🛡️ Zero-Data-Loss Architecture</span>
+                </div>
+            </div>
+            <div class="index-display">
+                <span class="index-label">Global Growth Index</span>
+                <span class="index-number" id="global-index-val">68%</span>
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--safaricom-green);">▲ +4.2% This Month</span>
+            </div>
+        </section>
+
+        <nav class="nav-tabs-bar">
+            <button class="tab-btn active" onclick="switchTab('metrics-view', this)">📊 11 Core Metrics</button>
+            <button class="tab-btn" onclick="switchTab('theater-view', this)">🎬 Transformation Stories</button>
+            <button class="tab-btn" onclick="switchTab('engine-view', this)">⚡ Action & Reflection Engine</button>
+        </nav>
+
+        <section class="view-section active" id="metrics-view">
+            <div class="metrics-grid" id="metrics-grid-mount">
+                </div>
+        </section>
+
+        <section class="view-section" id="theater-view">
+            <div class="theater-grid">
+                
+                <article class="story-card">
+                    <div class="video-viewport" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\" viewBox=\"0 0 400 300\"><rect width=\"400\" height=\"300\" fill=\"%230A1424\"/><text x=\"200\" y=\"150\" fill=\"%23FFFFFF\" font-family=\"sans-serif\" font-size=\"18\" text-anchor=\"middle\">Solar Grid Pioneer</text></svg>');">
+                        <div class="play-overlay-btn" onclick="openSimulatedVideo('Amara\'s Solar Tracker in Kiambu', 'How a 16-year-old student leveraged the Future-Tech Institute to build automated solar arrays for local dairy farms.')">
+                            <div class="play-icon"></div>
+                        </div>
+                        <span class="video-duration">04:12 • High Definition</span>
+                    </div>
+                    <div class="story-content">
+                        <div>
+                            <span class="story-tag">Innovation & Resilience Track</span>
+                            <h3>Amara’s Solar Tracker in Kiambu</h3>
+                            <p>Discover how Amara moved from struggling with standard textbook physics to designing an automated IoT solar tracking device that increased local farm dairy output by 22%.</p>
+                        </div>
+                        <div class="takeaway-box">
+                            💡 Key Takeaway: True academic progress happens when theory meets community problem-solving.
+                        </div>
+                    </div>
+                </article>
+
+                <article class="story-card">
+                    <div class="video-viewport" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\" viewBox=\"0 0 400 300\"><rect width=\"400\" height=\"300\" fill=\"%23111111\"/><text x=\"200\" y=\"150\" fill=\"%2300A859\" font-family=\"sans-serif\" font-size=\"18\" text-anchor=\"middle\">AI Agrotech Breakthrough</text></svg>');">
+                        <div class="play-overlay-btn" onclick="openSimulatedVideo('Kevin\'s AI Disease Scanner', 'Combining AI Readiness with Agriculture to detect maize crop diseases using standard smartphone cameras.')">
+                            <div class="play-icon"></div>
+                        </div>
+                        <span class="video-duration">05:45 • High Definition</span>
+                    </div>
+                    <div class="story-content">
+                        <div>
+                            <span class="story-tag">AI Readiness & Leadership</span>
+                            <h3>Kevin’s AI Crop Disease Scanner</h3>
+                            <p>Kevin used the UEFI AI Mentor to master Python and TensorFlow, building a lightweight mobile scanner that helps smallholder farmers identify blight before it spreads.</p>
+                        </div>
+                        <div class="takeaway-box">
+                            💡 Key Takeaway: AI is not just a subject; it is an amplification tool for African agricultural self-reliance.
+                        </div>
+                    </div>
+                </article>
+
+                <article class="story-card">
+                    <div class="video-viewport" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\" viewBox=\"0 0 400 300\"><rect width=\"400\" height=\"300\" fill=\"%231E293B\"/><text x=\"200\" y=\"150\" fill=\"%23D4AF37\" font-family=\"sans-serif\" font-size=\"18\" text-anchor=\"middle\">Digital Safety Advocate</text></svg>');">
+                        <div class="play-overlay-btn" onclick="openSimulatedVideo('Wanjiku\'s Cyber Safety Shield', 'Building a peer-to-peer cyber bullying reporting network across East African secondary schools.')">
+                            <div class="play-icon"></div>
+                        </div>
+                        <span class="video-duration">03:30 • High Definition</span>
+                    </div>
+                    <div class="story-content">
+                        <div>
+                            <span class="story-tag">Cybersecurity & Wellbeing</span>
+                            <h3>Wanjiku’s Cyber Safety Shield</h3>
+                            <p>After witnessing online harassment, Wanjiku utilized the Digital Wellbeing Academy frameworks to launch an encrypted student support network active in over 15 schools.</p>
+                        </div>
+                        <div class="takeaway-box">
+                            💡 Key Takeaway: Digital citizenship requires active leadership to protect vulnerable peers online.
+                        </div>
+                    </div>
+                </article>
+
+                <article class="story-card">
+                    <div class="video-viewport" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"400\" height=\"300\" viewBox=\"0 0 400 300\"><rect width=\"400\" height=\"300\" fill=\"%23BB0000\"/><text x=\"200\" y=\"150\" fill=\"%23FFFFFF\" font-family=\"sans-serif\" font-size=\"18\" text-anchor=\"middle\">Financial Freedom Roadmap</text></svg>');">
+                        <div class="play-overlay-btn" onclick="openSimulatedVideo('David\'s Digital Freelance Hub', 'Mastering responsible digital finance and cross-border invoicing while still completing high school.')">
+                            <div class="play-icon"></div>
+                        </div>
+                        <span class="video-duration">06:10 • High Definition</span>
+                    </div>
+                    <div class="story-content">
+                        <div>
+                            <span class="story-tag">Financial Literacy & Communication</span>
+                            <h3>David’s Digital Freelance Venture</h3>
+                            <p>Learn how David applied the Financial Empowerment Hub’s grant writing and budgeting lessons to secure seed funding for a student graphic design agency.</p>
+                        </div>
+                        <div class="takeaway-box">
+                            💡 Key Takeaway: Practical financial planning is the bridge between a good idea and a sustainable business.
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="view-section" id="engine-view">
+            <div class="action-engine-panel">
+                <div class="panel-header">
+                    <h2>Log Real-World Growth Actions</h2>
+                    <p>Select a growth dimension and submit verified activities or reflections. Our system automatically updates your scores and preserves your timeline in browser storage.</p>
+                </div>
+
+                <div class="action-form-grid">
+                    <form id="growth-log-form" onsubmit="handleGrowthSubmission(event)">
+                        <div class="form-group">
+                            <label for="target-metric">Target Growth Dimension</label>
+                            <select id="target-metric" required>
+                                <option value="academic">Academic Progress</option>
+                                <option value="wellbeing">Digital Wellbeing</option>
+                                <option value="cyber">Cybersecurity Awareness</option>
+                                <option value="innovation">Innovation</option>
+                                <option value="leadership">Leadership</option>
+                                <option value="communication">Communication</option>
+                                <option value="finance">Financial Literacy</option>
+                                <option value="ai">AI Readiness</option>
+                                <option value="collaboration">Collaboration</option>
+                                <option value="creativity">Creativity</option>
+                                <option value="resilience">Resilience</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="activity-title">Activity / Milestone Title</label>
+                            <input type="text" id="activity-title" placeholder="e.g., Completed Python Data Structures Module" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reflection-notes">Reflective Analysis (What did you learn? How did you grow?)</label>
+                            <textarea id="reflection-notes" placeholder="Describe the challenges faced and how this activity transformed your perspective..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-growth-btn">⚡ Register Action & Boost Score</button>
+                    </form>
+
+                    <div>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 15px; color: var(--flag-black); text-transform: uppercase;">
+                            🛡️ Verified Action Ledger
+                        </h3>
+                        <ul class="reflection-history-list" id="history-feed-mount">
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="modal-backdrop" id="video-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-video-title">Streaming Transformation Story</h3>
+                <button class="modal-close-btn" onclick="closeSimulatedVideo()">Close X</button>
+            </div>
+            <div class="modal-video-screen">
+                <div style="font-size: 3rem; margin-bottom: 10px;">▶️</div>
+                <h2 id="modal-stream-name" style="color: var(--safaricom-green); margin-bottom: 10px;">Loading Video Stream...</h2>
+                <p id="modal-stream-desc" style="max-width: 600px; color: #CBD5E1; font-size: 0.95rem; line-height: 1.5;"></p>
+                <div class="simulated-wave">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+                <span style="margin-top: 20px; font-size: 0.8rem; color: var(--prestige-gold); font-weight: 700; text-transform: uppercase;">
+                    📡 Simulated High-Speed Stream Active • Zero Data Lag
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* --- 11-DIMENSION METRICS DATA MASTER MATRIX --- */
+        const initialMetricsState = {
+            academic: {
+                title: "Academic Progress",
+                level: "Advanced Track",
+                score: 75,
+                fillClass: "fill-navy",
+                desc: "Tracking mastery across CBE Pure Sciences, IB MYP/DP calculus, and IGCSE technical modules without rote memorization."
+            },
+            wellbeing: {
+                title: "Digital Wellbeing",
+                level: "Balanced Mind",
+                score: 82,
+                fillClass: "",
+                desc: "Managing screen time ergonomics, healthy online boundaries, and maintaining emotional stability during intensive study sprints."
+            },
+            cyber: {
+                title: "Cybersecurity Awareness",
+                level: "Vigilant Guard",
+                score: 64,
+                fillClass: "fill-red",
+                desc: "Understanding encryption primitives, identifying social engineering vectors, and securing personal data across mobile lending apps."
+            },
+            innovation: {
+                title: "Innovation",
+                level: "Venture Builder",
+                score: 70,
+                fillClass: "fill-gold",
+                desc: "Transforming local community problems in Kiambu and beyond into scalable technical solutions and hackathon prototypes."
+            },
+            leadership: {
+                title: "Leadership",
+                level: "Team Catalyst",
+                score: 58,
+                fillClass: "fill-navy",
+                desc: "Taking initiative in collaborative study groups, mentoring junior peers, and orchestrating ethical project governance."
+            },
+            communication: {
+                title: "Communication",
+                level: "Clear Orator",
+                score: 80,
+                fillClass: "",
+                desc: "Articulating complex technical concepts clearly through written grant proposals, pitch decks, and persuasive panel interviews."
+            },
+            finance: {
+                title: "Financial Literacy",
+                level: "Capital Planner",
+                score: 62,
+                fillClass: "fill-gold",
+                desc: "Mastering practical cashflow ledgers, micro-investing fundamentals, budgeting, and non-dilutive grant fundraising."
+            },
+            ai: {
+                title: "AI Readiness",
+                level: "Future Adapted",
+                score: 88,
+                fillClass: "",
+                desc: "Leveraging machine learning tutors, understanding algorithmic bias, and building functional AI-integrated workflows."
+            },
+            collaboration: {
+                title: "Collaboration",
+                level: "Global Connect",
+                score: 74,
+                fillClass: "fill-navy",
+                desc: "Partnering seamlessly with international student innovators across cross-border research and engineering initiatives."
+            },
+            creativity: {
+                title: "Creativity",
+                level: "Design Thinker",
+                score: 69,
+                fillClass: "fill-red",
+                desc: "Applying human-centered design cycles, lateral problem-solving, and aesthetic synthesis to technical challenges."
+            },
+            resilience: {
+                title: "Resilience",
+                level: "Unbreakable",
+                score: 85,
+                fillClass: "fill-gold",
+                desc: "Overcoming project debugging failures, adapting to academic setbacks, and maintaining continuous effort over time."
+            }
+        };
+
+        /* --- STATE INITIALIZATION & LOCAL STORAGE ENGINE --- */
+        function getStoredMetrics() {
+            const stored = localStorage.getItem('uefi_growth_metrics_v1');
+            return stored ? JSON.parse(stored) : initialMetricsState;
+        }
+
+        function saveMetrics(metricsObj) {
+            localStorage.setItem('uefi_growth_metrics_v1', JSON.stringify(metricsObj));
+            calculateAndRenderGlobalIndex(metricsObj);
+        }
+
+        function getStoredHistory() {
+            const stored = localStorage.getItem('uefi_growth_history_v1');
+            if (stored) return JSON.parse(stored);
+            
+            // Default sample historical entries for immediate visual impact
+            const defaults = [
+                {
+                    metric: "AI Readiness",
+                    title: "Completed Gemini Prompt Engineering Lab",
+                    notes: "Learned how to structure multi-turn system instructions for educational AI tutors.",
+                    date: "Today, 11:30 AM"
+                },
+                {
+                    metric: "Financial Literacy",
+                    title: "Simulated M-Pesa Cashflow Budgeting",
+                    notes: "Built a localized spreadsheet balancing freelance income against monthly educational expenses.",
+                    date: "Yesterday"
+                },
+                {
+                    metric: "Cybersecurity Awareness",
+                    title: "Peer Safety Audit",
+                    notes: "Enabled two-factor authentication on all developer accounts and secured public API keys.",
+                    date: "July 6, 2026"
+                }
+            ];
+            localStorage.setItem('uefi_growth_history_v1', JSON.stringify(defaults));
+            return defaults;
+        }
+
+        function saveHistoryItem(item) {
+            const history = getStoredHistory();
+            history.unshift(item); // Add to beginning of array
+            localStorage.setItem('uefi_growth_history_v1', JSON.stringify(history));
+            renderHistoryFeed();
+        }
+
+        /* --- RENDER 11-DIMENSION MATRIX CARDS --- */
+        function renderMetricsGrid() {
+            const mount = document.getElementById('metrics-grid-mount');
+            const metrics = getStoredMetrics();
+            mount.innerHTML = '';
+
+            Object.keys(metrics).forEach(key => {
+                const data = metrics[key];
+                const card = document.createElement('div');
+                card.className = 'metric-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="metric-card-header">
+                            <span class="metric-title">${data.title}</span>
+                            <span class="metric-level-badge">${data.level}</span>
+                        </div>
+                        <p class="metric-desc">${data.desc}</p>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-meta">
+                            <span>Development Mastery</span>
+                            <span style="color: var(--safaricom-green);">${data.score}%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill ${data.fillClass}" style="width: ${data.score}%;"></div>
+                        </div>
+                        <button class="action-log-btn" onclick="quickLogTrigger('${key}')">▲ Log Growth Activity</button>
+                    </div>
+                `;
+                mount.appendChild(card);
+            });
+
+            calculateAndRenderGlobalIndex(metrics);
+        }
+
+        /* --- GLOBAL INDEX CALCULATOR --- */
+        function calculateAndRenderGlobalIndex(metricsObj) {
+            const keys = Object.keys(metricsObj);
+            const sum = keys.reduce((acc, key) => acc + metricsObj[key].score, 0);
+            const average = Math.round(sum / keys.length);
+            
+            const displayVal = document.getElementById('global-index-val');
+            if(displayVal) {
+                displayVal.innerText = `${average}%`;
+            }
+        }
+
+        /* --- RENDER HISTORICAL ACTION LEDGER --- */
+        function renderHistoryFeed() {
+            const mount = document.getElementById('history-feed-mount');
+            const history = getStoredHistory();
+            mount.innerHTML = '';
+
+            if (history.length === 0) {
+                mount.innerHTML = '<li class="history-item">No actions logged yet. Start submitting activities above!</li>';
+                return;
+            }
+
+            history.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'history-item';
+                li.innerHTML = `
+                    <div class="history-meta">
+                        <span>🚀 ${item.metric}</span>
+                        <span>${item.date}</span>
+                    </div>
+                    <div style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; color: var(--flag-black);">
+                        ${item.title}
+                    </div>
+                    <p class="history-text">${item.notes}</p>
+                `;
+                mount.appendChild(li);
+            });
+        }
+
+        /* --- HANDLE FORM SUBMISSIONS & DYNAMIC SCORE BOOSTING --- */
+        function handleGrowthSubmission(event) {
+            event.preventDefault();
+            
+            const metricKey = document.getElementById('target-metric').value;
+            const title = document.getElementById('activity-title').value;
+            const notes = document.getElementById('reflection-notes').value;
+            
+            const metrics = getStoredMetrics();
+            
+            // Increment score safely by 4% up to a cap of 100%
+            if (metrics[metricKey]) {
+                const oldScore = metrics[metricKey].score;
+                metrics[metricKey].score = Math.min(oldScore + 4, 100);
+                saveMetrics(metrics);
+            }
+
+            // Record timestamp
+            const now = new Date();
+            const dateStr = `Today, ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+
+            saveHistoryItem({
+                metric: metrics[metricKey] ? metrics[metricKey].title : "General Growth",
+                title: title,
+                notes: notes,
+                date: dateStr
+            });
+
+            // Reset UI Form
+            document.getElementById('growth-log-form').reset();
+            renderMetricsGrid();
+
+            alert(`🎉 Action Verified! Your ${metrics[metricKey].title} score increased to ${metrics[metricKey].score}%. The Whole Individual index has been recalibrated.`);
+        }
+
+        /* --- QUICK LOG BUTTON HELPER --- */
+        function quickLogTrigger(metricKey) {
+            switchTab('engine-view', document.querySelectorAll('.tab-btn')[2]);
+            const selectBox = document.getElementById('target-metric');
+            if(selectBox) {
+                selectBox.value = metricKey;
+                selectBox.focus();
+            }
+        }
+
+        /* --- TAB SWITCHER PROTOCOL --- */
+        function switchTab(viewId, clickedButton) {
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            const target = document.getElementById(viewId);
+            if (target) target.classList.add('active');
+            if (clickedButton) clickedButton.classList.add('active');
+        }
+
+        /* --- SIMULATED VIDEO MODAL CONTROLLER --- */
+        function openSimulatedVideo(title, description) {
+            document.getElementById('modal-stream-name').innerText = title;
+            document.getElementById('modal-stream-desc').innerText = description;
+            document.getElementById('video-modal').style.display = 'flex';
+        }
+
+        function closeSimulatedVideo() {
+            document.getElementById('video-modal').style.display = 'none';
+        }
+
+        /* --- INITIALIZE SYSTEM ON DOM LOAD --- */
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMetricsGrid();
+            renderHistoryFeed();
+        });
+    </script>
+</body>
+</html>
