@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI IB MYP Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --uefi-blue: #0056B3; --uefi-navy: #0A2540; --border-color: #E2E8F0; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #F8FAFC; color: var(--uefi-navy); }
+        header { background: var(--uefi-navy); color: #fff; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .back-btn { color: #fff; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .container { max-width: 1300px; margin: 40px auto; padding: 0 20px; }
+        .subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 20px; }
+        .subject-card { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 30px 25px; cursor: pointer; transition: all 0.3s ease; }
+        .subject-card:hover { transform: translateY(-5px); border-color: var(--uefi-blue); }
+        .subject-card h3 { margin: 0 0 5px 0; font-size: 1.4rem; font-weight: 800; text-transform: uppercase; color: #000; }
+        .subject-card span { color: #64748B; font-size: 0.9rem; font-weight: 500; }
+        .module-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 30px; }
+        .module-card { background: #fff; border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; text-align: center; font-weight: 700; cursor: pointer; }
+        .module-card:hover { background: var(--uefi-blue); color: #fff; }
+        .workspace-view { display: none; background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; margin-top: 30px; }
+        .topic-list { list-style: none; padding: 0; }
+        .topic-item { padding: 15px 20px; border: 1px solid var(--border-color); margin-bottom: 10px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .split-workspace { display: none; grid-template-columns: 1fr 450px; gap: 30px; margin-top: 30px; }
+        .pdf-frame-panel { background: #fff; border-radius: 12px; border: 1px solid var(--border-color); padding: 20px; display: flex; flex-direction: column; min-height: 650px; }
+        iframe { width: 100%; height: 550px; border: 1px solid var(--border-color); border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="entry-gate.html" class="back-btn"><i class="fas fa-arrow-left"></i> UEFI Core Hub</a>
+        <h2>IB MYP Pathway Station</h2>
+        <div style="width: 100px;"></div>
+    </header>
+
+    <div class="container">
+        <h2>Select Core MYP Courseware Module</h2>
+        <div class="subject-grid">
+            <div class="subject-card" onclick="selectSubject('MYP Standard Mathematics')">
+                <h3>STANDARD MATH</h3><span>IB MYP Core Tracking</span>
+            </div>
+            <div class="subject-card" onclick="selectSubject('MYP Extended Mathematics')">
+                <h3>EXTENDED MATH</h3><span>IB MYP Accelerated Tracking</span>
+            </div>
+            <div class="subject-card" onclick="selectSubject('MYP Sciences')">
+                <h3>MYP SCIENCES</h3><span>Integrated Matrix Pack</span>
+            </div>
+        </div>
+
+        <h2 id="moduleTitle" style="margin-top: 50px; display:none;"></h2>
+        <div class="module-grid" id="moduleSelector">
+            <div class="module-card" onclick="selectModule('Question Bank')"><i class="fas fa-database"></i> Question Bank</div>
+            <div class="module-card" onclick="selectModule('Revision Notes')"><i class="fas fa-book-open"></i> Revision Notes</div>
+            <div class="module-card" onclick="selectModule('Study Videos')"><i class="fas fa-video"></i> Study Videos</div>
+        </div>
+
+        <div class="workspace-view" id="topicsView">
+            <h3>Available Core Units</h3>
+            <ul class="topic-list" id="topicTargetContainer"></ul>
+        </div>
+
+        <div class="split-workspace" id="splitWorkspace">
+            <div class="pdf-frame-panel">
+                <div id="gudaNoticeBox"></div>
+                <div id="timerInterfaceContainer"></div>
+                <div id="mediaRenderContainer" style="margin-top:15px; flex:1;"></div>
+                <div id="soloRevealControlBlock"></div>
+            </div>
+            <div class="interactive-sidebar" style="display:flex; flex-direction:column; gap:20px;">
+                <div id="desmosCalculatorAppMount"></div>
+                <div id="richNotePadAppMount"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="workspace.js"></script>
+    <script>
+        let currentSubject = ''; let currentModule = '';
+        function selectSubject(subj) {
+            currentSubject = subj;
+            const title = document.getElementById('moduleTitle');
+            title.innerHTML = `Configure Workspace: <span style="color:var(--uefi-blue)">${subj}</span>`;
+            title.style.display = 'block';
+            document.getElementById('moduleSelector').style.display = 'grid';
+        }
+        function selectModule(mod) {
+            currentModule = mod; document.getElementById('topicsView').style.display = 'block';
+            const container = document.getElementById('topicTargetContainer'); container.innerHTML = '';
+            let sampleTopics = ['Algebraic Reasoning', 'Linear Geometry', 'Probability Engines'];
+            sampleTopics.forEach(topic => {
+                const li = document.createElement('li'); li.className = 'topic-item';
+                li.innerHTML = `<i class="fas fa-folder" style="color:var(--uefi-blue); margin-right:10px;"></i> ${topic}`;
+                li.onclick = () => initWorkspaceEnvironment(topic);
+                container.appendChild(li);
+            });
+        }
+        function initWorkspaceEnvironment(topic) {
+            document.getElementById('splitWorkspace').style.display = 'grid';
+            window.UEFI_Engine.bootUp({
+                subject: currentSubject, module: currentModule, topic: topic,
+                pdfUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+                videoEmbed: '<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>'
+            });
+        }
+    </script>
+</body>
+</html>
