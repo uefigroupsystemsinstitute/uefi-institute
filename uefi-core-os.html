@@ -3,1078 +3,1328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Core OS — Educational Operating System Engine</title>
+    <title>UEFI Study Pool - High Quality Educational Resources</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         /* ==========================================================================
-           1. CUSTOM STYLING ARCHITECTURE & DESIGN LIFECYCLE (UEFI PALETTE)
+           1. UEFI BRAND COLOR PALETTE & GLOBAL VARIABLES
            ========================================================================== */
         :root {
-            --safaricom-green: #00A859;
-            --flag-red: #BB0000;
-            --flag-black: #111111;
-            --prestige-gold: #D4AF37;
-            --slate-space: #0F172A;
-            --panel-dark: #1E293B;
-            --workspace-bg: #F8FAFC;
-            --text-primary: #0F172A;
-            --text-secondary: #475569;
-            --text-ghost: #94A3B8;
-            --border-heavy: #111111;
-            --border-subtle: #E2E8F0;
+            /* Safaricom & Kenyan Flag Influenced Colors */
+            --uefi-green: #00A859;
+            --uefi-green-light: #e6f6ed;
+            --uefi-green-hover: #008f4c;
+            
+            --uefi-navy: #0A2540; /* Deep professional blue */
+            --uefi-blue-bright: #0044CC; /* Vibrant blue similar to IITian */
+            --uefi-blue-light: #F0F4FA;
+            
+            --uefi-red: #BB0000;
+            --uefi-red-light: #fdeded;
+            
+            --uefi-black: #111111;
+            --uefi-dark-gray: #333333;
+            --uefi-text-muted: #64748b;
+            
+            --bg-main: #FAFBFC;
+            --bg-card: #FFFFFF;
+            
+            /* Exam Portal Dark Mode Colors */
+            --exam-bg: #121212;
+            --exam-card: #1E1E1E;
+            --exam-border: #333333;
+            --exam-accent: #3B82F6;
+            
+            /* UI Elements */
             --radius-sm: 6px;
             --radius-md: 12px;
-            --radius-lg: 24px;
-            --radius-pill: 9999px;
-            --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            --shadow-hard: 5px 5px 0px #111111;
+            --radius-lg: 20px;
             --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-stack);
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--workspace-bg);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--uefi-dark-gray);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--uefi-navy);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
         /* ==========================================================================
-           2. UNIVERSAL SYSTEM STATUS & OPERATING SYSTEM BANNER
+           2. NAVIGATION BAR (IITian Style with Dropdowns)
            ========================================================================== */
-        header {
-            background-color: var(--flag-black);
-            color: #FFFFFF;
-            padding: 14px 2%;
+        .uefi-navbar {
+            background-color: var(--uefi-blue-bright);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4%;
+            height: 70px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-brand span {
+            color: var(--uefi-green);
+            background: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-item {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            padding: 0 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .nav-link:hover, .nav-item:hover .nav-link {
+            color: #fff;
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            background: #fff;
+            min-width: 220px;
+            box-shadow: var(--shadow-hover);
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            padding: 10px 0;
+            border-top: 3px solid var(--uefi-green);
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            color: var(--uefi-navy);
+            font-size: 0.9rem;
+            font-weight: 500;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 4px solid var(--prestige-gold);
-            position: sticky;
-            top: 0;
-            z-index: 2000;
+            transition: var(--transition);
         }
 
-        .os-identity {
+        .dropdown-item:hover {
+            background-color: var(--uefi-blue-light);
+            color: var(--uefi-blue-bright);
+            padding-left: 25px;
+        }
+
+        /* Nested Dropdown (Flyout) */
+        .dropdown-submenu {
+            position: relative;
+        }
+        
+        .dropdown-flyout {
+            position: absolute;
+            top: -13px;
+            left: 100%;
+            background: #fff;
+            min-width: 200px;
+            box-shadow: var(--shadow-hover);
+            border-radius: var(--radius-md);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(10px);
+            transition: var(--transition);
+            padding: 10px 0;
+            border-left: 3px solid var(--uefi-red);
+        }
+
+        .dropdown-submenu:hover .dropdown-flyout {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .nav-actions {
             display: flex;
+            gap: 15px;
             align-items: center;
-            gap: 12px;
         }
 
-        .kenya-badge-strip {
-            width: 32px;
-            height: 20px;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
+        .btn-outline-light {
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-outline-light:hover {
+            background: #fff;
+            color: var(--uefi-blue-bright);
+        }
+
+        /* ==========================================================================
+           3. HERO SECTION
+           ========================================================================== */
+        .hero-section {
+            background: linear-gradient(135deg, var(--uefi-blue-bright) 0%, var(--uefi-navy) 100%);
+            color: #fff;
+            padding: 80px 4% 100px;
+            position: relative;
             overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
         }
-        .kenya-badge-strip .black { background: #000000; flex: 1; }
-        .kenya-badge-strip .red { background: var(--flag-red); height: 5px; }
-        .kenya-badge-strip .green { background: var(--safaricom-green); flex: 1; }
 
-        .os-logo {
-            font-size: 1.4rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
+        /* Abstract shapes in background */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: var(--uefi-blue-bright);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 1;
         }
-        .os-logo span { color: var(--safaricom-green); }
 
-        .system-runtime-pill {
-            background: var(--panel-dark);
-            border: 1px solid var(--prestige-gold);
-            padding: 6px 14px;
-            border-radius: var(--radius-pill);
-            font-size: 0.8rem;
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3rem;
             font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .search-container {
+            display: flex;
+            background: #fff;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            max-width: 500px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-container button {
+            background: var(--uefi-text-muted);
+            color: #fff;
+            border: none;
+            padding: 0 25px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-container button:hover {
+            background: var(--uefi-navy);
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .hero-image-wrapper img {
+            width: 90%;
+            max-width: 500px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* ==========================================================================
+           4. STATS BAR (Trusted by Many)
+           ========================================================================== */
+        .stats-bar {
+            background: #fff;
+            padding: 40px 4%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--uefi-blue-bright);
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--uefi-text-muted);
+            font-weight: 600;
+        }
+
+        /* ==========================================================================
+           5. FEATURES SECTION (What makes us unique)
+           ========================================================================== */
+        .features-section {
+            padding: 80px 4%;
+            background-color: var(--bg-main);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--uefi-green);
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 40px 30px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid #f0f0f0;
+            transition: var(--transition);
+            border-top: 4px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Distinct colors for each feature based on Kenyan/Safaricom vibe */
+        .feature-card:nth-child(1) { border-top-color: var(--uefi-green); }
+        .feature-card:nth-child(2) { border-top-color: var(--uefi-red); }
+        .feature-card:nth-child(3) { border-top-color: #8b5cf6; } /* Purple accent */
+        .feature-card:nth-child(4) { border-top-color: var(--uefi-blue-bright); }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            border-radius: 16px;
+            font-size: 1.8rem;
+            color: #fff;
         }
 
-        .runtime-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--safaricom-green);
-            border-radius: 50%;
-            animation: pulse 1.8s infinite;
+        .feature-card:nth-child(1) .feature-icon { background: var(--uefi-green); }
+        .feature-card:nth-child(2) .feature-icon { background: var(--uefi-red); }
+        .feature-card:nth-child(3) .feature-icon { background: #8b5cf6; }
+        .feature-card:nth-child(4) .feature-icon { background: var(--uefi-blue-bright); }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(0.9); opacity: 0.6; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(0.9); opacity: 0.6; }
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--uefi-text-muted);
         }
 
         /* ==========================================================================
-           3. ROUTING MATRIX ENCLOSURE & ISOLATION SYSTEM
+           6. THE STUDY POOL (Resource Viewer & Curriculum Tabs)
            ========================================================================== */
-        .workspace-enclosure {
-            max-width: 1600px;
+        .study-pool-section {
+            padding: 60px 4% 100px;
+            background: #fff;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .pool-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Sub-Navigation Tabs (Exam Style, Flashcards, etc) */
+        .resource-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--uefi-blue-light);
+            padding-bottom: 15px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--uefi-text-muted);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .tab-btn:hover {
+            color: var(--uefi-navy);
+        }
+
+        .tab-btn.active {
+            color: var(--uefi-blue-bright);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -17px;
+            left: 0;
             width: 100%;
-            margin: 20px auto;
-            padding: 0 20px;
-            flex: 1;
+            height: 4px;
+            background: var(--uefi-blue-bright);
+            border-radius: 4px 4px 0 0;
+        }
+
+        /* Layout for Resource Content */
+        .resource-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
         }
 
-        @media (min-width: 1200px) {
-            .workspace-enclosure {
-                grid-template-columns: 280px 1fr;
-            }
-        }
-
-        /* ==========================================================================
-           4. SYSTEM ARCHITECTURE LEFT BLOCKS — SUBSYSTEM MAPPER
-           ========================================================================== */
-        .system-sidebar {
-            background: #FFFFFF;
-            border: 2px solid var(--border-heavy);
+        /* Left Sidebar: Subject & Curriculum Accordion */
+        .curriculum-sidebar {
+            background: var(--bg-main);
+            border: 1px solid #eaeaea;
             border-radius: var(--radius-md);
             padding: 20px;
-            box-shadow: var(--shadow-hard);
             height: fit-content;
         }
 
-        .sidebar-title {
-            font-size: 0.75rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--border-subtle);
-        }
-
-        .subsystem-tree {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .subsystem-node {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.15s ease-in-out;
-            border-left: 3px solid transparent;
-        }
-
-        .subsystem-node:hover {
-            background: var(--workspace-bg);
-            color: var(--text-primary);
-        }
-
-        .subsystem-node.active {
-            background: var(--slate-space);
-            color: #FFFFFF;
-            border-left: 3px solid var(--safaricom-green);
-        }
-
-        /* ==========================================================================
-           5. INTERACTIVE CORE ROUTER BLOCK — CONTROLLER HUB
-           ========================================================================== */
-        .stage-pane {
-            display: none;
-            animation: fadeIn 0.25s ease-out;
-        }
-        .stage-pane.active {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* NEO-BRUTALIST SYSTEM CARDS */
-        .neocard {
-            background: #FFFFFF;
-            border: 2px solid var(--border-heavy);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            box-shadow: var(--shadow-hard);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .neocard-title {
-            font-size: 1.3rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* ==========================================================================
-           6. ARCHITECTURE MODULE: AUTHENTICATION GATEWAY
-           ========================================================================== */
-        .gateway-layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            max-width: 900px;
-            margin: 40px auto;
-            width: 100%;
-        }
-
-        @media (min-width: 650px) {
-            .gateway-layout { grid-template-columns: 1fr 1fr; }
-        }
-
-        .auth-selector-box {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .selector-pill {
-            background: #FFFFFF;
-            border: 2px solid var(--border-heavy);
-            padding: 14px 20px;
-            border-radius: var(--radius-md);
-            font-weight: 800;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.15s;
-        }
-        .selector-pill:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 3px 3px 0px var(--border-heavy);
-        }
-        .selector-pill.selected {
-            background: var(--prestige-gold);
-            color: var(--flag-black);
-            box-shadow: 1px 1px 0px var(--border-heavy);
-        }
-
-        .form-input-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .form-field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .form-field label {
-            font-size: 0.8rem;
-            font-weight: 900;
-            text-transform: uppercase;
-        }
-        .form-field input {
-            padding: 12px;
-            border: 2px solid var(--border-heavy);
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            outline: none;
-            background: var(--workspace-bg);
-        }
-
-        .system-action-button {
-            background: var(--safaricom-green);
-            color: #FFFFFF;
-            border: 2px solid var(--border-heavy);
-            padding: 14px;
-            font-weight: 800;
-            text-transform: uppercase;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            box-shadow: 3px 3px 0px var(--border-heavy);
-            transition: all 0.1s;
-        }
-        .system-action-button:hover {
-            transform: translate(1px, 1px);
-            box-shadow: 1px 1px 0px var(--border-heavy);
-        }
-
-        /* ==========================================================================
-           7. SUBSYSTEM INTERFACE: UEFI FOLLETT MULTI-TENANT SYSTEM
-           ========================================================================== */
-        .tenant-banner-strip {
-            background: linear-gradient(90deg, var(--panel-dark) 0%, var(--flag-black) 100%);
-            color: #FFFFFF;
-            padding: 16px 24px;
-            border-radius: var(--radius-md);
-            border: 2px solid var(--border-heavy);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .tenant-profile-block h3 {
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: var(--prestige-gold);
-        }
-        .tenant-profile-block span {
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-ghost);
-        }
-
-        .follett-split-matrix {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-        @media (min-width: 950px) {
-            .follett-split-matrix { grid-template-columns: 260px 1fr; }
-        }
-
-        .follett-sub-nav {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .follett-sub-btn {
-            padding: 12px 16px;
-            background: #FFFFFF;
-            border: 1px solid var(--border-heavy);
-            border-radius: var(--radius-sm);
-            font-weight: 800;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-        }
-        .follett-sub-btn.active {
-            background: var(--safaricom-green);
-            color: #FFFFFF;
-            border-color: var(--border-heavy);
-        }
-
-        /* SEMANTIC ENGINE INPUT */
-        .semantic-search-box {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 10px;
-            background: #FFFFFF;
-            padding: 10px;
-            border: 2px solid var(--border-heavy);
-            border-radius: var(--radius-md);
-            margin-bottom: 20px;
-        }
-        .semantic-search-box input {
-            border: none;
-            outline: none;
-            padding: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            width: 100%;
-        }
-
-        .catalog-grid-system {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-        @media (min-width: 600px) {
-            .catalog-grid-system { grid-template-columns: 1fr 1fr; }
-        }
-
-        .resource-asset-card {
-            background: var(--workspace-bg);
-            border: 1px solid var(--border-heavy);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .asset-meta-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        .asset-tag {
-            font-size: 0.65rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            padding: 3px 6px;
-            background: var(--flag-black);
-            color: #FFFFFF;
-            border-radius: 3px;
-        }
-
-        .asset-title {
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-        .asset-author {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-
-        .asset-action-footer {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            margin-top: 10px;
-        }
-        .asset-btn {
-            padding: 8px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            border: 1px solid var(--border-heavy);
-            background: #FFFFFF;
-            cursor: pointer;
-            text-align: center;
-            border-radius: var(--radius-sm);
-        }
-        .asset-btn:hover {
-            background: var(--flag-black);
-            color: #FFFFFF;
-        }
-
-        /* ==========================================================================
-           8. COURSE DROPDOWN SYSTEM ENGINE (NETFLIX & SAVE MY EXAMS LAYER)
-           ========================================================================== */
-        .selection-matrix-dashboard {
-            background: var(--panel-dark);
-            color: #FFFFFF;
-            padding: 20px;
-            border-radius: var(--radius-md);
-            border: 2px solid var(--border-heavy);
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-        @media (min-width: 768px) {
-            .selection-matrix-dashboard {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        .matrix-selector-unit {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .matrix-selector-unit label {
-            font-size: 0.75rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: var(--prestige-gold);
-            letter-spacing: 0.5px;
-        }
-        .matrix-selector-unit select {
-            padding: 12px;
-            background: #FFFFFF;
-            color: var(--text-primary);
-            font-weight: 700;
-            border: 2px solid var(--border-heavy);
-            border-radius: var(--radius-sm);
-            outline: none;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        /* LESSON ARCHITECTURE CONTAINER LAYOUT */
-        .lesson-delivery-blueprint {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-            margin-top: 10px;
-        }
-        @media (min-width: 1000px) {
-            .lesson-delivery-blueprint {
-                grid-template-columns: 1.8fr 1.2fr;
-            }
-        }
-
-        .main-instruction-vault {
-            background: #FFFFFF;
-            border: 2px solid var(--border-heavy);
-            border-radius: var(--radius-md);
-            padding: 30px;
-            box-shadow: var(--shadow-hard);
-        }
-
-        .lesson-breadcrumbs {
-            font-size: 0.8rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: var(--flag-red);
+        .accordion-item {
             margin-bottom: 10px;
         }
 
-        .lesson-main-heading {
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--border-subtle);
-            padding-bottom: 10px;
+        .accordion-header {
+            background: var(--uefi-blue-bright);
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
         }
 
-        .instructional-prose {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: var(--text-secondary);
+        .accordion-header:hover {
+            background: var(--uefi-navy);
+        }
+
+        .accordion-content {
+            background: #fff;
+            border: 1px solid #eaeaea;
+            border-top: none;
+            border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+            display: none; /* Toggled via JS later */
+        }
+        
+        .accordion-content.open {
+            display: block;
+        }
+
+        .subject-list {
+            list-style: none;
+        }
+
+        .subject-list li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .subject-list li:last-child {
+            border-bottom: none;
+        }
+
+        .subject-list a {
+            display: block;
+            padding: 10px 15px;
+            color: var(--uefi-dark-gray);
+            font-size: 0.85rem;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .subject-list a:hover, .subject-list a.active {
+            background: var(--uefi-green-light);
+            color: var(--uefi-green-hover);
+            border-left: 3px solid var(--uefi-green);
+        }
+
+        /* Right Side: Content Viewer */
+        .content-viewer {
+            background: #fff;
+            border: 1px solid #eaeaea;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .viewer-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .viewer-title {
+            font-size: 1.5rem;
+        }
+
+        /* Dynamic Tool Containers (GeoGebra, YouTube, etc.) */
+        .embed-container {
+            width: 100%;
+            background: #f8f9fa;
+            border: 2px dashed #ccc;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Specific Aspect Ratios */
+        .embed-video { padding-bottom: 56.25%; /* 16:9 */ }
+        .embed-tool { height: 500px; }
+        
+        .embed-placeholder {
+            position: absolute;
+            text-align: center;
+            color: var(--uefi-text-muted);
+        }
+        
+        .embed-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--uefi-blue-bright);
+        }
+
+        /* Question Cards (Like IITian Academy) */
+        .question-card {
+            background: var(--bg-main);
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-sm);
+            padding: 20px;
             margin-bottom: 20px;
         }
 
-        /* COGNITIVE AI UTILITY ACTIONS PLATFORM */
-        .cognitive-ai-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 25px;
-        }
-        @media (min-width: 600px) {
-            .cognitive-ai-grid { grid-template-columns: repeat(4, 1fr); }
+        .question-header {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--uefi-navy);
         }
 
-        .ai-cognitive-trigger {
-            background: var(--workspace-bg);
-            border: 1px solid var(--border-heavy);
-            padding: 10px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            text-align: center;
-            cursor: pointer;
-            border-radius: var(--radius-sm);
-            transition: all 0.15s;
-        }
-        .ai-cognitive-trigger:hover {
-            background: var(--flag-black);
-            color: var(--prestige-gold);
+        .question-text {
+            margin-bottom: 20px;
         }
 
-        /* RUNTIME DIAGNOSTIC SIMULATOR OUTPUT FIELD */
-        .ai-runtime-terminal {
-            background: var(--slate-space);
-            color: #4AF626;
-            font-family: monospace;
-            padding: 15px;
-            border-radius: var(--radius-sm);
-            margin-top: 15px;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            display: none;
-            border: 1px solid var(--border-heavy);
-        }
-
-        /* ==========================================================================
-           9. REPLICATED ROADMAP ARCHITECTURE — ADVANCED FUTURE PATHWAYS
-           ========================================================================== */
-        .pipeline-track {
+        .mcq-options {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            position: relative;
-            padding-left: 20px;
-            border-left: 3px dashed var(--border-heavy);
-            margin-left: 10px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        .pipeline-node-card {
-            background: #FFFFFF;
-            border: 2px solid var(--border-heavy);
-            border-radius: var(--radius-md);
-            padding: 16px 20px;
-            position: relative;
-        }
-        .pipeline-node-card::before {
-            content: "";
-            position: absolute;
-            left: -29px;
-            top: 22px;
-            width: 15px;
-            height: 15px;
-            background: var(--prestige-gold);
-            border: 2px solid var(--border-heavy);
-            border-radius: 50%;
+        .option {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
-        .pipeline-meta {
-            font-size: 0.7rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: var(--flag-red);
+        .option:hover {
+            border-color: var(--uefi-green);
+            background: var(--uefi-green-light);
         }
-        .pipeline-heading {
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin: 2px 0 6px 0;
+
+        .btn-explain {
+            background: none;
+            border: none;
+            color: #d946ef; /* Bright purple/pink accent */
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
-        .pipeline-summary {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+        
+        .btn-exam-mode {
+            background: var(--uefi-red);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(187, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .btn-exam-mode:hover {
+            background: #990000;
+            transform: translateY(-2px);
         }
 
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="os-identity">
-            <div class="kenya-badge-strip">
-                <div class="black"></div>
-                <div class="red"></div>
-                <div class="green"></div>
-            </div>
-            <div class="os-logo">UEFI<span>.CoreOS</span></div>
+    <header class="uefi-navbar">
+        <div class="nav-brand">
+            <span>UEFI</span> Study Pool
         </div>
-        <div class="system-runtime-pill">
-            <div class="runtime-dot"></div>
-            <div id="system-tenant-status">LOGGED_OUT // ISOLATED_MODE</div>
+        
+        <nav class="nav-menu">
+            <ul style="display: flex; height: 100%;">
+                <li class="nav-item"><a href="#" class="nav-link">HOME</a></li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">IB DP <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item dropdown-submenu">
+                            IB Biology <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i>
+                            <div class="dropdown-flyout">
+                                <a href="#" class="dropdown-item">Biology HL 2026</a>
+                                <a href="#" class="dropdown-item">Biology SL 2026</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-item dropdown-submenu">
+                            IB Math <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i>
+                            <div class="dropdown-flyout">
+                                <a href="#" class="dropdown-item">Math AA HL</a>
+                                <a href="#" class="dropdown-item">Math AA SL</a>
+                                <a href="#" class="dropdown-item">Math AI HL</a>
+                                <a href="#" class="dropdown-item">Math AI SL</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">IB Physics</div>
+                        <div class="dropdown-item">IB Chemistry</div>
+                        <div class="dropdown-item">IB History</div>
+                        <div class="dropdown-item">IB Economics</div>
+                        <div class="dropdown-item">IB Computer Science</div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">IB MYP <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item">MYP Mathematics</div>
+                        <div class="dropdown-item">MYP Sciences</div>
+                        <div class="dropdown-item">MYP Individuals & Societies</div>
+                        <div class="dropdown-item">MYP Language & Literature</div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">CBE <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item">Junior Secondary</div>
+                        <div class="dropdown-item">Senior Secondary</div>
+                        <div class="dropdown-item">STEM Pathways</div>
+                    </div>
+                </li>
+                
+                <li class="nav-item"><a href="#" class="nav-link">AS & A Level</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">iGCSE</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="#" class="btn-outline-light">Log In / Register</a>
         </div>
     </header>
 
-    <div class="workspace-enclosure">
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Exam Style Questions and High-Quality Resources</h1>
+            <p class="hero-subtitle">Leverage UEFI Follett Expertise and Technology to Ace Your Exams! Access the ultimate study pool customized for IB DP, IB MYP, and CBE curriculums.</p>
+            
+            <div class="search-container">
+                <input type="text" placeholder="Search Courses, Lessons, or Past Papers...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        
+        <div class="hero-image-wrapper">
+            <div style="width: 100%; height: 350px; background: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800') center/cover; border-radius: var(--radius-lg); border: 8px solid rgba(255,255,255,0.1);"></div>
+        </div>
+    </section>
 
-        <aside class="system-sidebar">
-            <div class="sidebar-title">Core Operating Engines</div>
-            <ul class="subsystem-tree">
-                <li class="subsystem-node active" id="node-auth" onclick="routeToSystemPane('pane-auth', this)">🔐 System Access Gate</li>
-                <li class="subsystem-node" id="node-follett" onclick="routeToSystemPane('pane-follett', this)">📚 UEFI Follett Campus</li>
-                <li class="subsystem-node" id="node-courses" onclick="routeToSystemPane('pane-courses', this)">🎓 System Courses Matrix</li>
-                <li class="subsystem-node" id="node-roadmap" onclick="routeToSystemPane('pane-roadmap', this)">🧭 Career Pipeline Map</li>
-            </ul>
-        </aside>
+    <section class="stats-bar">
+        <div class="stat-item">
+            <h3>50+</h3>
+            <p>Courses Offered</p>
+        </div>
+        <div class="stat-item">
+            <h3>1,000+</h3>
+            <p>Schools Using UEFI</p>
+        </div>
+        <div class="stat-item">
+            <h3>100,000+</h3>
+            <p>Registered Students & Teachers</p>
+        </div>
+    </section>
 
-        <main>
+    <section class="features-section">
+        <div class="section-header">
+            <h2>What makes UEFI Study Pool Unique</h2>
+            <p style="margin-top: 15px; color: var(--uefi-text-muted);">Built for the modern learner, integrating seamless tools and comprehensive data.</p>
+        </div>
 
-            <section class="stage-pane active" id="pane-auth">
-                <div class="neocard">
-                    <div class="neocard-title">System Entry Protocol</div>
-                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px;">
-                        Select your structural identity tier below. Schools authenticate into protected workspaces; independent learners enter via the UEFI Global Core network.
-                    </p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-file-signature"></i></div>
+                <h3 class="feature-title">Exam Style Questions</h3>
+                <p class="feature-desc">High-quality resources for every topic. Helps students practice questions for each topic, making you ready for actual and assessment exams.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                <h3 class="feature-title">Past Papers & Solutions</h3>
+                <p class="feature-desc">Past papers available with detailed step-by-step solutions. Yearly and topical arrangements to test your preparedness effectively.</p>
+            </div>
 
-                    <div class="gateway-layout">
-                        <div class="auth-selector-box">
-                            <div class="selector-pill selected" onclick="updateAuthRoleSelection('School', this)">
-                                <span>🏫 Institutional Campus (School)</span> ➔
-                            </div>
-                            <div class="selector-pill" onclick="updateAuthRoleSelection('Student', this)">
-                                <span>🎒 Registered Student Private Track</span> ➔
-                            </div>
-                            <div class="selector-pill" onclick="updateAuthRoleSelection('Teacher', this)">
-                                <span>🧑‍🏫 Faculty / Educator Console</span> ➔
-                            </div>
-                            <div class="selector-pill" onclick="updateAuthRoleSelection('Parent', this)">
-                                <span>👥 Parent Guardian Monitoring Portal</span> ➔
-                            </div>
-                            <div class="selector-pill" onclick="updateAuthRoleSelection('Global', this)">
-                                <span>🌐 UEFI Global Shared Network Member</span> ➔
-                            </div>
-                        </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                <h3 class="feature-title">Dynamic Revision Notes</h3>
+                <p class="feature-desc">Prepared by subject matter experts. Integrated with interactive embeds like GeoGebra to enhance memory and identify knowledge gaps.</p>
+            </div>
 
-                        <div class="form-input-stack" id="auth-dynamic-form-block">
-                            </div>
-                    </div>
-                </div>
-            </section>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-desktop"></i></div>
+                <h3 class="feature-title">Time Bound Exam Portal</h3>
+                <p class="feature-desc">Simulate exam conditions with our strict, dark-mode Mock Exam environment. Test speed, accuracy, and boost your confidence.</p>
+            </div>
+        </div>
+    </section>
 
-            <section class="stage-pane" id="pane-follett">
-                <div class="tenant-banner-strip">
-                    <div class="tenant-profile-block">
-                        <span id="tenant-scope-pill-label">Active Workspace Node</span>
-                        <h3 id="tenant-display-heading">UEFI Global Core Engine</h3>
-                    </div>
-                    <div style="font-size: 0.8rem; font-weight: 800; background: var(--safaricom-green); color:#FFF; padding:6px 12px; border-radius:4px;">
-                        🔒 Isolated Tenant Memory Lock Active
-                    </div>
-                </div>
+    <section class="study-pool-section">
+        <div class="section-header">
+            <h2>Exam Style Questions including Flashcards and Past Papers</h2>
+            <p style="margin-top: 10px; color: var(--uefi-text-muted); font-size: 0.95rem;">Resources like exam-style questions, flashcards, and interactive study aids.</p>
+        </div>
 
-                <div class="follett-split-matrix">
-                    <aside>
-                        <ul class="follett-sub-nav">
-                            <li class="follett-sub-btn active">📖 Destiny Digital Library</li>
-                            <li class="follett-sub-btn">📝 Saved Past Examination Papers</li>
-                            <li class="follett-sub-btn">🧑‍💻 Faculty Lesson Blueprints</li>
-                            <li class="follett-sub-btn">📊 Institutional Analytics Hub</li>
-                            <li class="follett-sub-btn">⚙️ Campus Administrative Ledger</li>
-                        </ul>
-                    </aside>
+        <div class="pool-container">
+            <div class="resource-tabs">
+                <button class="tab-btn active">Exam Style Questions</button>
+                <button class="tab-btn">Flashcards</button>
+                <button class="tab-btn">Study Notes (Interactive)</button>
+                <button class="tab-btn">Past Papers Explanations</button>
+            </div>
 
-                    <div>
-                        <div class="semantic-search-box">
-                            <input type="text" id="library-semantic-query" placeholder="Type concepts natively (e.g., 'Thermodynamic momentum models in experimental lab manuals')...">
-                            <button class="system-action-button" style="padding: 10px 20px;" onclick="executeSemanticLibraryAnalysis()">Query Library AI</button>
-                        </div>
-
-                        <div class="catalog-grid-system" id="library-catalog-mount">
-                            </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="stage-pane" id="pane-courses">
-                <div class="selection-matrix-dashboard">
-                    <div class="matrix-selector-unit">
-                        <label>Select Curriculum Tier</label>
-                        <select id="course-curriculum-selector" onchange="synchronizeSystemDropdowns()">
-                            <option value="MYP">IB MYP (Middle Years Program)</option>
-                            <option value="DP">IB DP (Diploma Program)</option>
-                            <option value="CBE">CBE (Competency Based Education)</option>
-                            <option value="IGCSE">Cambridge IGCSE Core</option>
-                        </select>
-                    </div>
-
-                    <div class="matrix-selector-unit">
-                        <label>Academic Track Year</label>
-                        <select id="course-year-selector">
-                            </select>
-                    </div>
-
-                    <div class="matrix-selector-unit">
-                        <label>Subject Allocation Matrix</label>
-                        <select id="course-subject-selector">
-                            </select>
-                    </div>
-
-                    <div class="matrix-selector-unit">
-                        <label>Resource Delivery Type</label>
-                        <select id="course-resource-selector" onchange="renderActiveLessonModule()">
-                            <option value="Lessons">Core Interactive Lessons</option>
-                            <option value="Videos">Widescreen Streaming Videos</option>
-                            <option value="Notes">High-Intensity Revision Notes</option>
-                            <option value="PastPapers">Validated Past Exam Papers</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="lesson-delivery-blueprint">
+            <div class="resource-grid">
+                <aside class="curriculum-sidebar">
+                    <div style="margin-bottom: 20px; font-weight: 700; color: var(--uefi-navy);">Select Study Resource</div>
                     
-                    <div class="main-instruction-vault">
-                        <div class="lesson-breadcrumbs" id="lesson-crumbs-display">IB MYP 5 • PHYSICS • CORE THEORY</div>
-                        <h2 class="lesson-main-heading" id="lesson-title-display">Topic 3.1: Kinetic Energy Vector Profiles</h2>
-                        <div class="instructional-prose" id="lesson-body-display">
-                            Select standard options within the matrix selectors above to change resource views. 
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span><i class="fas fa-plus" style="margin-right: 10px;"></i> IB DP Study Resources</span>
                         </div>
-
-                        <div class="cognitive-ai-grid">
-                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Explain Simpler Model')">🤖 Explain Simpler</button>
-                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Generate Harder Problem Set')">🤖 Harder Examples</button>
-                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Compile Exam Style Matrix')">🤖 IB Style Questions</button>
-                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Recalibrate For Age 10 Delivery')">🤖 Explain Like I'm 10</button>
-                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Build Real-time Practice Evaluation Quiz')">🤖 Create Quiz</button>
-                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Assess Active Sandbox Answer Text')">🤖 Mark My Answer</button>
-                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Synthesize Core Knowledge Flashcards')">🤖 Create Flashcards</button>
-                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Generate Complete Executive Summary Text')">🤖 Generate Summary</button>
-                        </div>
-
-                        <div class="ai-runtime-terminal" id="terminal-output-block">
-                            Executing query payload diagnostics across active node profile...
+                        <div class="accordion-content open"> <ul class="subject-list">
+                                <li><a href="#" class="active">IB DP Physics (Paper 1 & 2)</a></li>
+                                <li><a href="#">IB DP Biology 2026, 2027 & 2028</a></li>
+                                <li><a href="#">IB DP Mathematics AA</a></li>
+                                <li><a href="#">IB DP Computer Science</a></li>
+                                <li><a href="#">IB DP Economics</a></li>
+                            </ul>
                         </div>
                     </div>
 
-                    <div style="display: flex; flex-direction: column; gap: 20px;">
-                        <div class="neocard" style="border-top: 4px solid var(--safaricom-green);">
-                            <div class="neocard-title" style="font-size:1rem;">🤖 Automated Lab Simulation</div>
-                            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
-                                This lesson block is synced to the UEFI AI Lab Sandbox. Complete activities to unlock active certificates.
-                            </p>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span><i class="fas fa-plus" style="margin-right: 10px;"></i> IB MYP Study Resources</span>
+                        </div>
+                        <div class="accordion-content">
+                            <ul class="subject-list">
+                                <li><a href="#">MYP Extended Math</a></li>
+                                <li><a href="#">MYP Integrated Sciences</a></li>
+                            </ul>
                         </div>
                     </div>
 
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span><i class="fas fa-plus" style="margin-right: 10px;"></i> CBE Core Curriculum</span>
+                        </div>
+                        <div class="accordion-content">
+                            <ul class="subject-list">
+                                <li><a href="#">Grade 9 Pre-Tech</a></li>
+                                <li><a href="#">Grade 10 Applied Sciences</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+
+                <main class="content-viewer">
+                    
+                    <div class="viewer-header">
+                        <h3 class="viewer-title">Topic: A.1 Kinematics SL (Paper 1)</h3>
+                        <button class="btn-exam-mode" id="enterExamModeBtn">
+                            <i class="fas fa-laptop-code"></i> Enter Mock Exam Portal
+                        </button>
+                    </div>
+
+                    <div class="embed-container embed-video">
+                        <div class="embed-placeholder">
+                            <i class="fab fa-youtube" style="color: #FF0000;"></i>
+                            <h4>Concept Explanation Video</h4>
+                            <p style="font-size: 0.8rem;">(Embedded iframe will render here)</p>
+                        </div>
+                        </div>
+
+                    <div class="embed-container embed-tool" style="border-color: var(--uefi-green);">
+                        <div class="embed-placeholder">
+                            <i class="fas fa-chart-line" style="color: var(--uefi-green);"></i>
+                            <h4>GeoGebra Classic Graphing / Demo Calculator</h4>
+                            <p style="font-size: 0.8rem;">(Interactive canvas renders here)</p>
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-header">Question 1 - A.1 Kinematics</div>
+                        <div class="question-text">
+                            A block of mass 2.0 kg accelerates uniformly at a rate of 1.0 m s⁻² when a force of 4.0 N acts on it. The force is doubled while resistive forces stay the same. What is the block's acceleration?
+                        </div>
+                        <div class="mcq-options">
+                            <div class="option">A. 4.0 m s⁻²</div>
+                            <div class="option">B. 3.0 m s⁻²</div>
+                            <div class="option">C. 2.0 m s⁻²</div>
+                            <div class="option">D. 1.0 m s⁻²</div>
+                        </div>
+                        <button class="btn-explain"><i class="fas fa-caret-right"></i> Answer/Explanation</button>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+    </section>
+    <section class="exam-portal" id="examPortal" style="display: none;">
+        <div class="exam-header">
+            <div class="exam-brand">
+                <i class="fas fa-shield-alt" style="color: var(--exam-accent);"></i> UEFI Secure Testing Environment
+            </div>
+            <div class="exam-timer" id="examTimer">
+                <i class="far fa-clock"></i> <span id="timeDisplay">45:00</span>
+            </div>
+            <button class="btn-exit-exam" id="exitExamBtn">Submit & Exit</button>
+        </div>
+
+        <div class="exam-layout">
+            <div class="exam-sidebar">
+                <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Question Palette</h4>
+                <div class="question-grid">
+                    <div class="q-box active">1</div>
+                    <div class="q-box answered">2</div>
+                    <div class="q-box answered">3</div>
+                    <div class="q-box flagged">4</div>
+                    <div class="q-box">5</div>
+                    <div class="q-box">6</div>
+                    <div class="q-box">7</div>
+                    <div class="q-box">8</div>
+                    <div class="q-box">9</div>
+                    <div class="q-box">10</div>
                 </div>
-            </section>
-
-            <section class="stage-pane" id="pane-roadmap">
-                <div class="neocard">
-                    <div class="neocard-title">Adaptive Professional Future Pathway</div>
-                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 25px;">
-                        Your customized learning roadmap calculates automatically across performance fields.
-                    </p>
-
-                    <div class="pipeline-track">
-                        <div class="pipeline-node-card">
-                            <span class="pipeline-meta">Step 01 // Structural Framework Focus</span>
-                            <h4 class="pipeline-heading">Target Dynamic Career Profile Chosen</h4>
-                            <p class="pipeline-summary">Autonomous Micro-Grid Cloud Systems Architect</p>
-                        </div>
-                        <div class="pipeline-node-card">
-                            <span class="pipeline-meta">Step 02 // University Pipeline Track</span>
-                            <h4 class="pipeline-heading">Strategic University Matrix Synced</h4>
-                            <p class="pipeline-summary">Ashesi University (Engineering Major Matrix) / Strathmore Infrastructure Division</p>
-                        </div>
-                        <div class="pipeline-node-card">
-                            <span class="pipeline-meta">Step 03 // Curricular Directives</span>
-                            <h4 class="pipeline-heading">Recommended Core Mastery Subjects</h4>
-                            <p class="pipeline-summary">IB MYP Extended Mathematics, Advanced Engineering Physics, and Digital Design Core</p>
-                        </div>
-                        <div class="pipeline-node-card">
-                            <span class="pipeline-meta">Step 04 // UEFI Autonomous AI Engine Scraping Target</span>
-                            <h4 class="pipeline-heading">Live Targeted Matches Found</h4>
-                            <p class="pipeline-summary" style="color: var(--safaricom-green); font-weight: 700;">
-                                🎯 Matches calculated: 12 Local Engineering Competitions • 3 Full-Tuition Academic Grants • 2 Technical Apprenticeship Positions
-                            </p>
-                        </div>
-                    </div>
+                
+                <div class="exam-legend">
+                    <div class="legend-item"><span class="box-sample active-sample"></span> Current</div>
+                    <div class="legend-item"><span class="box-sample answered-sample"></span> Answered</div>
+                    <div class="legend-item"><span class="box-sample flagged-sample"></span> Flagged</div>
+                    <div class="legend-item"><span class="box-sample unread-sample"></span> Unread</div>
                 </div>
-            </section>
+            </div>
 
-        </main>
+            <div class="exam-main">
+                <div class="exam-question-header">
+                    <h3>Question 1 of 10</h3>
+                    <div style="color: var(--uefi-text-muted); font-size: 0.85rem;">Topic: Kinematics SL | 1 Mark</div>
+                </div>
+                
+                <div class="exam-question-body">
+                    A block of mass 2.0 kg accelerates uniformly at a rate of 1.0 m s⁻² when a force of 4.0 N acts on it. The force is doubled while resistive forces stay the same. What is the block's acceleration?
+                </div>
+
+                <div class="exam-options">
+                    <label class="exam-option-label">
+                        <input type="radio" name="q1" value="A">
+                        <span class="exam-option-text">A. 4.0 m s⁻²</span>
+                    </label>
+                    <label class="exam-option-label">
+                        <input type="radio" name="q1" value="B">
+                        <span class="exam-option-text">B. 3.0 m s⁻²</span>
+                    </label>
+                    <label class="exam-option-label">
+                        <input type="radio" name="q1" value="C">
+                        <span class="exam-option-text">C. 2.0 m s⁻²</span>
+                    </label>
+                    <label class="exam-option-label">
+                        <input type="radio" name="q1" value="D">
+                        <span class="exam-option-text">D. 1.0 m s⁻²</span>
+                    </label>
+                </div>
+
+                <div class="exam-controls">
+                    <button class="exam-btn btn-secondary">Previous</button>
+                    <button class="exam-btn btn-warning"><i class="far fa-flag"></i> Flag for Review</button>
+                    <button class="exam-btn btn-primary">Save & Next</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal-overlay" id="explanationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detailed Solution</h3>
+                <button class="close-modal" id="closeModalBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div style="background: var(--uefi-green-light); color: var(--uefi-green-hover); padding: 10px; border-radius: var(--radius-sm); margin-bottom: 20px; font-weight: 700;">
+                    Correct Answer: B. 3.0 m s⁻²
+                </div>
+                <p><strong>Step-by-Step Explanation:</strong></p>
+                <ol style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
+                    <li>First, determine the resistive force. Using Newton's Second Law: <em>F_net = ma</em></li>
+                    <li><em>F_applied - F_resistive = ma</em></li>
+                    <li>4.0 N - F_resistive = (2.0 kg)(1.0 m s⁻²)</li>
+                    <li>F_resistive = 4.0 - 2.0 = 2.0 N</li>
+                    <li>Now, double the applied force to 8.0 N.</li>
+                    <li>New F_net = 8.0 N - 2.0 N = 6.0 N</li>
+                    <li>New acceleration <em>a = F_net / m</em> = 6.0 N / 2.0 kg = 3.0 m s⁻²</li>
+                </ol>
+            </div>
+        </div>
     </div>
 
+    <footer style="background: var(--uefi-navy); color: #fff; padding: 60px 4% 20px; margin-top: auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; max-width: 1400px; margin-left: auto; margin-right: auto;">
+            <div>
+                <div class="nav-brand" style="margin-bottom: 20px; color: #fff;">
+                    <span style="color: var(--uefi-green); background: #fff;">UEFI</span> Follett
+                </div>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">The ultimate educational operating system. Empowering the next generation of innovators across Kenya and the globe.</p>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 20px;">Curriculums</h4>
+                <ul style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 2;">
+                    <li><a href="#" style="transition: color 0.3s;">IB Diploma Programme</a></li>
+                    <li><a href="#" style="transition: color 0.3s;">IB Middle Years Programme</a></li>
+                    <li><a href="#" style="transition: color 0.3s;">Competency Based Education (CBE)</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 20px;">Resources</h4>
+                <ul style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 2;">
+                    <li><a href="#">Topical Past Papers</a></li>
+                    <li><a href="#">Interactive Simulations</a></li>
+                    <li><a href="#">Mock Examination Portal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 0.8rem;">
+            &copy; 2026 UEFI Global Ecosystem. All rights reserved.
+        </div>
+    </footer>
+
+    <style>
+        /* Exam Portal Styles */
+        .exam-portal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--exam-bg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        .exam-header {
+            background: var(--exam-card);
+            border-bottom: 1px solid var(--exam-border);
+            padding: 15px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exam-brand { font-size: 1.2rem; font-weight: 700; color: #fff; }
+        
+        .exam-timer {
+            font-family: monospace;
+            font-size: 1.5rem;
+            color: #ef4444; /* Alert red */
+            background: rgba(239, 68, 68, 0.1);
+            padding: 5px 15px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-exit-exam {
+            background: transparent;
+            border: 1px solid var(--exam-border);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-exit-exam:hover { background: var(--uefi-red); border-color: var(--uefi-red); }
+
+        .exam-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .exam-sidebar {
+            background: var(--exam-card);
+            border-right: 1px solid var(--exam-border);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .q-box {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            border: 1px solid var(--exam-border);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .q-box:hover { background: #333; }
+        .q-box.active { background: var(--exam-accent); color: #fff; border-color: var(--exam-accent); }
+        .q-box.answered { background: var(--uefi-green); color: #fff; border-color: var(--uefi-green); }
+        .q-box.flagged { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+
+        .exam-legend { font-size: 0.8rem; display: flex; flex-direction: column; gap: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 10px; color: #aaa; }
+        .box-sample { width: 15px; height: 15px; border-radius: 3px; border: 1px solid var(--exam-border); }
+        .active-sample { background: var(--exam-accent); border-color: var(--exam-accent); }
+        .answered-sample { background: var(--uefi-green); border-color: var(--uefi-green); }
+        .flagged-sample { background: #f59e0b; border-color: #f59e0b; }
+        .unread-sample { background: transparent; }
+
+        .exam-main { padding: 40px 10%; overflow-y: auto; }
+        
+        .exam-question-header { margin-bottom: 20px; border-bottom: 1px solid var(--exam-border); padding-bottom: 15px; }
+        .exam-question-header h3 { color: #fff; margin-bottom: 5px; }
+        
+        .exam-question-body { font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; }
+        
+        .exam-options { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
+        .exam-option-label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--exam-card);
+            padding: 15px 20px;
+            border: 1px solid var(--exam-border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .exam-option-label:hover { border-color: #555; }
+        .exam-option-label:has(input:checked) { border-color: var(--exam-accent); background: rgba(59, 130, 246, 0.1); }
+        
+        .exam-controls { display: flex; justify-content: space-between; border-top: 1px solid var(--exam-border); padding-top: 20px; }
+        .exam-btn { padding: 12px 24px; border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: var(--transition); }
+        .btn-secondary { background: var(--exam-card); color: #fff; border: 1px solid var(--exam-border); }
+        .btn-secondary:hover { background: #333; }
+        .btn-warning { background: transparent; color: #f59e0b; border: 1px solid #f59e0b; }
+        .btn-warning:hover { background: rgba(245, 158, 11, 0.1); }
+        .btn-primary { background: var(--exam-accent); color: #fff; }
+        .btn-primary:hover { background: #2563eb; }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: var(--transition);
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        
+        .modal-content {
+            background: #fff; width: 90%; max-width: 600px;
+            border-radius: var(--radius-md); overflow: hidden;
+            box-shadow: var(--shadow-hover);
+            transform: translateY(20px); transition: var(--transition);
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        
+        .modal-header {
+            background: var(--uefi-blue-bright); color: #fff;
+            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .close-modal { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; }
+        .modal-body { padding: 25px; color: var(--uefi-dark-gray); }
+
+    </style>
+
     <script>
-        /* --- CORE CONFIGURATION ARRAYS FOR DYNAMIC DROP DOWNS --- */
-        const MYP_SUBJECTS = [
-            "Extended Mathematics", "Physics", "Biology", "Chemistry", 
-            "Integrated Science", "Integrated Humanities", "Economics", 
-            "History", "Geography", "Personal Project", "Digital Design"
-        ];
-
-        const UNIVERSAL_CURRICULUM_MAP = {
-            "MYP": { years: ["MYP 1", "MYP 2", "MYP 3", "MYP 4", "MYP 5"], subjects: MYP_SUBJECTS },
-            "DP": { years: ["DP Grade 11", "DP Grade 12"], subjects: ["Physics HL", "Mathematics AA", "Chemistry HL", "Global Politics"] },
-            "CBE": { years: ["Grade 7", "Grade 8", "Grade 9", "Senior School 10"], subjects: ["Core STEM Science", "Social Inquiries", "Agriculture Systems"] },
-            "IGCSE": { years: ["Year 10 Core", "Year 11 Extended"], subjects: ["Extended Mathematics 0580", "Physics 0625", "Computer Science 0478"] }
-        };
-
-        const INSTANTIATED_MOCK_DATABASE = {
-            "Mpesa Foundation Academy": {
-                code: "MFA-7742",
-                books: [
-                    { title: "Advanced Fluid Dynamics Lab Manual", author: "MFA Physics Faculty", type: "Lab Guide", code: "ISBN-MFA-002" },
-                    { title: "Calculus Matrix Paradigms for MYP 5", author: "Dr. K. Kamau", type: "Textbook", code: "ISBN-MFA-981" },
-                    { title: "2025 Term 3 Integrated Humanities Mock Exam", author: "MFA Humanities Dept", type: "Past Paper", code: "REF-MFA-PP" }
-                ]
-            },
-            "Alliance High School": {
-                code: "AHS-1925",
-                books: [
-                    { title: "Alliance Physics Practical Guide Book", author: "Alliance Science Panel", type: "Lab Guide", code: "ISBN-AHS-441" },
-                    { title: "KIE History Revision Digest Vol 4", author: "H. Omondi", type: "Revision Notes", code: "ISBN-KIE-112" }
-                ]
-            },
-            "UEFI Global Core": {
-                code: "GLOBAL-SYSTEM",
-                books: [
-                    { title: "Global AI Literacy and Python Paradigms", author: "UEFI Core Research Team", type: "Digital Textbook", code: "ISBN-UEFI-001" },
-                    { title: "Cybersecurity Fundamentals and Threat Mitigation Protocols", author: "UEFI Security Org", type: "Whitepaper", code: "ISBN-UEFI-009" }
-                ]
-            }
-        };
-
-        // Runtimes Dynamic Variable State Tracking
-        let currentSystemRole = "School";
-        let activeAuthenticatedTenant = "UEFI Global Core";
-
-        /* --- SUBSYSTEM UNIT ONE: MULTI-TENANT PROFILE ROUTER CONTROLLER --- */
-        function updateAuthRoleSelection(roleType, selectorNode) {
-            currentSystemRole = roleType;
-            document.querySelectorAll('.selector-pill').forEach(pill => pill.classList.remove('selected'));
-            selectorNode.classList.add('selected');
-
-            const formMount = document.getElementById('auth-dynamic-form-block');
+        document.addEventListener('DOMContentLoaded', () => {
             
-            if (roleType === "School") {
-                formMount.innerHTML = `
-                    <div class="form-field">
-                        <label>Select Target School Campus</label>
-                        <select id="auth-school-dropdown-selector" style="padding: 12px; border: 2px solid var(--border-heavy); border-radius: var(--radius-sm); font-weight:600;">
-                            <option value="Mpesa Foundation Academy">Mpesa Foundation Academy</option>
-                            <option value="Alliance High School">Alliance High School</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>Campus Security Code Verification</label>
-                        <input type="text" id="auth-school-code-field" placeholder="Enter alphanumeric system token">
-                    </div>
-                    <button type="button" class="system-action-button" onclick="executeAuthenticationProcess()">Access Campus Workspace</button>
-                `;
-            } else if (roleType === "Global") {
-                formMount.innerHTML = `
-                    <p style="font-size:0.85rem; color: var(--text-secondary); line-height:1.4;">
-                        No corporate institutional workspace code required. Accessing universal non-siloed open-source open platform.
-                    </p>
-                    <button type="button" class="system-action-button" onclick="executeAuthenticationProcess(true)">Enter Open Global Engine</button>
-                `;
-            } else {
-                formMount.innerHTML = `
-                    <div class="form-field">
-                        <label>Universal User Identity / Email Address</label>
-                        <input type="email" placeholder="student.name@uefiglobal.org">
-                    </div>
-                    <div class="form-field">
-                        <label>Security Phase Password</label>
-                        <input type="password" placeholder="••••••••••••">
-                    </div>
-                    <button type="button" class="system-action-button" onclick="executeAuthenticationProcess(true)">Authenticate Profile Pipeline</button>
-                `;
-            }
-        }
+            // 1. Accordion Logic for Curriculum Sidebar
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    // Toggle the clicked accordion
+                    content.classList.toggle('open');
+                    
+                    // Change Icon
+                    if(content.classList.contains('open')) {
+                        icon.classList.remove('fa-plus');
+                        icon.classList.add('fa-minus');
+                    } else {
+                        icon.classList.remove('fa-minus');
+                        icon.classList.add('fa-plus');
+                    }
+                });
+            });
 
-        function executeAuthenticationProcess(forceGlobal = false) {
-            if (forceGlobal) {
-                activeAuthenticatedTenant = "UEFI Global Core";
-            } else {
-                const selectedSchool = document.getElementById('auth-school-dropdown-selector').value;
-                const enteredCode = document.getElementById('auth-school-code-field').value.trim();
-                const actualRecord = INSTANTIATED_MOCK_DATABASE[selectedSchool];
+            // Set initial icons correctly based on HTML 'open' class
+            document.querySelectorAll('.accordion-content.open').forEach(openContent => {
+                const icon = openContent.previousElementSibling.querySelector('i');
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+            });
 
-                if (!enteredCode) {
-                    alert(`Verification Error: Please provide an access token. Try using the default test token for this demo: ${actualRecord.code}`);
-                    return;
+            // 2. Resource Tabs Logic
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    // In a full app, this would trigger an AJAX fetch or hide/show content blocks.
+                });
+            });
+
+            // 3. Modal Logic for Explanations
+            const explainBtns = document.querySelectorAll('.btn-explain');
+            const explanationModal = document.getElementById('explanationModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+
+            explainBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    explanationModal.classList.add('active');
+                });
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                explanationModal.classList.remove('active');
+            });
+
+            // Close modal when clicking outside content
+            explanationModal.addEventListener('click', (e) => {
+                if(e.target === explanationModal) {
+                    explanationModal.classList.remove('active');
                 }
+            });
 
-                if (enteredCode !== actualRecord.code) {
-                    alert(`Tenant Violation: Access token mismatch. Access denied for workspace node: ${selectedSchool}`);
-                    return;
+            // 4. Mock Exam Portal Logic
+            const enterExamBtn = document.getElementById('enterExamModeBtn');
+            const exitExamBtn = document.getElementById('exitExamBtn');
+            const examPortal = document.getElementById('examPortal');
+            let examInterval;
+
+            enterExamBtn.addEventListener('click', () => {
+                // Hide body overflow to prevent background scrolling
+                document.body.style.overflow = 'hidden';
+                examPortal.style.display = 'flex';
+                startExamTimer(45); // Start 45 min timer
+            });
+
+            exitExamBtn.addEventListener('click', () => {
+                if(confirm("Are you sure you want to submit and exit the exam environment?")) {
+                    document.body.style.overflow = 'auto';
+                    examPortal.style.display = 'none';
+                    clearInterval(examInterval);
                 }
-                activeAuthenticatedTenant = selectedSchool;
+            });
+
+            // Timer Function
+            function startExamTimer(minutes) {
+                let timeInSeconds = minutes * 60;
+                const timeDisplay = document.getElementById('timeDisplay');
+                
+                clearInterval(examInterval); // Reset if already running
+
+                examInterval = setInterval(() => {
+                    const m = Math.floor(timeInSeconds / 60);
+                    const s = timeInSeconds % 60;
+                    
+                    timeDisplay.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+                    
+                    if (timeInSeconds <= 0) {
+                        clearInterval(examInterval);
+                        alert("Time is up! Submitting exam automatically.");
+                        document.body.style.overflow = 'auto';
+                        examPortal.style.display = 'none';
+                    }
+                    timeInSeconds--;
+                }, 1000);
             }
 
-            // Sync Runtime Displays
-            document.getElementById('system-tenant-status').innerText = `TENANT_ID // ${activeAuthenticatedTenant.toUpperCase().replace(/ /g, '_')}`;
-            document.getElementById('tenant-display-heading').innerText = activeAuthenticatedTenant;
-            document.getElementById('tenant-scope-pill-label').innerText = forceGlobal ? "Universal Network Mode" : "Private Dedicated Multi-Tenant Workspace";
-
-            renderFollettLibraryCatalog();
-            
-            // Redirect routing automatically to Follett Core
-            routeToSystemPane('pane-follett', document.getElementById('node-follett'));
-            alert(`Access Granted. Security boundaries active for: "${activeAuthenticatedTenant}". Content isolation confirmed.`);
-        }
-
-        /* --- SUBSYSTEM UNIT TWO: MOUNT FOLLETT LIBRARY ASSETS --- */
-        function renderFollettLibraryCatalog() {
-            const mount = document.getElementById('library-catalog-mount');
-            mount.innerHTML = '';
-            
-            const currentTenantData = INSTANTIATED_MOCK_DATABASE[activeAuthenticatedTenant] || INSTANTIATED_MOCK_DATABASE["UEFI Global Core"];
-
-            currentTenantData.books.forEach(asset => {
-                const card = document.createElement('div');
-                card.className = 'resource-asset-card';
-                card.innerHTML = `
-                    <div>
-                        <div class="asset-meta-row">
-                            <span class="asset-tag">${asset.type}</span>
-                            <span style="font-size:0.7rem; font-weight:700; color:var(--text-ghost);">${asset.code}</span>
-                        </div>
-                        <h4 class="asset-title">${asset.title}</h4>
-                        <div class="asset-author">By ${asset.author}</div>
-                    </div>
-                    <div class="asset-action-footer">
-                        <button class="asset-btn" onclick="alert('Accessing document rendering layer...')">Preview</button>
-                        <button class="asset-btn" style="background:var(--safaricom-green); color:#FFF;" onclick="alert('Downloading asset cache locally...')">Download</button>
-                        <button class="asset-btn" onclick="alert('Adding reference layout card to tracking database...')">Cite</button>
-                    </div>
-                `;
-                mount.appendChild(card);
-            });
-        }
-
-        function executeSemanticLibraryAnalysis() {
-            const query = document.getElementById('library-semantic-query').value.trim();
-            if(!query) return alert("Please supply an execution concept query parameter string first.");
-            alert(`🧠 AI Follett Semantic Engine Parse:\n\nSearching content for conceptual meaning match matching: "${query}".\nFound 1 exact contextual cross-reference inside current secured silo database.`);
-        }
-
-        /* --- SUBSYSTEM UNIT THREE: METRIFIED MATRIX COURSE DROPDOWN SYNCHRONIZER --- */
-        function synchronizeSystemDropdowns() {
-            const chosenCurriculum = document.getElementById('course-curriculum-selector').value;
-            const configurationProfile = UNIVERSAL_CURRICULUM_MAP[chosenCurriculum];
-
-            const yearBox = document.getElementById('course-year-selector');
-            const subjectBox = document.getElementById('course-subject-selector');
-
-            // Map Years
-            yearBox.innerHTML = '';
-            configurationProfile.years.forEach(y => {
-                const opt = document.createElement('option');
-                opt.value = y; opt.innerText = y;
-                yearBox.appendChild(opt);
+            // Interactive Question Palette (Demo Logic)
+            const qBoxes = document.querySelectorAll('.q-box');
+            qBoxes.forEach(box => {
+                box.addEventListener('click', (e) => {
+                    qBoxes.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    // Simulating changing questions...
+                    document.querySelector('.exam-question-header h3').textContent = `Question ${e.target.textContent} of 10`;
+                });
             });
 
-            // Map Subjects
-            subjectBox.innerHTML = '';
-            configurationProfile.subjects.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s; opt.innerText = s;
-                subjectBox.appendChild(opt);
-            });
-
-            renderActiveLessonModule();
-        }
-
-        function renderActiveLessonModule() {
-            const curr = document.getElementById('course-curriculum-selector').value;
-            const year = document.getElementById('course-year-selector').value;
-            const sub = document.getElementById('course-subject-selector').value;
-            const type = document.getElementById('course-resource-selector').value;
-
-            document.getElementById('lesson-crumbs-display').innerText = `${curr} • ${year} • ${sub} • ${type.toUpperCase()}`;
-            document.getElementById('lesson-title-display').innerText = `${sub} Core Learning Module Target`;
-
-            // Structural Content Template Definitions
-            if (curr === "MYP" && sub === "Physics") {
-                document.getElementById('lesson-body-display').innerHTML = `
-                    <p style="margin-bottom:12px; font-weight:700;">Welcome to Advanced Kinetic Energy Vector Profiling under the IB MYP 5 Science syllabus framework.</p>
-                    <p>In this instructional block, we explore the mechanical matrix where structural velocity components undergo independent vectors allocation. Observe the fundamental computational equation profile mapping dynamic systems:</p>
-                    <div style="background:var(--workspace-bg); padding:15px; border-left:4px solid var(--flag-red); font-family:serif; font-size:1.2rem; margin:15px 0;">
-                        E_k = \\frac{1}{2} m v^2
-                    </div>
-                    <p>Ensure your experimental portfolio logs trace exact metric coordinates before executing terminal testing scripts.</p>
-                `;
-            } else {
-                document.getElementById('lesson-body-display').innerHTML = `
-                    <p style="margin-bottom:12px;">Displaying dynamic system information for target choice match configuration asset profiles.</p>
-                    <p>Active core content structures loaded from central UEFI Knowledge Vault modules successfully. Engage cognitive options below to execute customized AI processing.</p>
-                `;
-            }
-        }
-
-        function runCognitiveSimulation(promptIntentType) {
-            const terminal = document.getElementById('terminal-output-block');
-            terminal.style.display = "block";
-            terminal.innerText = `[PROCESSING PAYLOAD]: Communicating core parameters with UEFI AI Workspace Matrix... \n[INTENT INTERCEPTED]: "${promptIntentType}"\n\n[PROCESSED RECONSTRUCTION]: System output compiled successfully. Re-rendering target educational models with optimized algorithmic layout parameters inside primary dashboard space.`;
-        }
-
-        /* --- CORE PAGE STAGE ROUTING REGISTRATION CONTROLS --- */
-        function routeToSystemPane(paneTargetId, treeNodeLink) {
-            document.querySelectorAll('.stage-pane').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.subsystem-node').forEach(n => n.classList.remove('active'));
-
-            document.getElementById(paneTargetId).classList.add('active');
-            treeNodeLink.classList.add('active');
-        }
-
-        /* --- INITIALIZATION HOOK RUNTIME --- */
-        window.addEventListener('DOMContentLoaded', () => {
-            updateAuthRoleSelection('School', document.querySelector('.selector-pill'));
-            synchronizeSystemDropdowns();
-            renderFollettLibraryCatalog();
         });
     </script>
 </body>
