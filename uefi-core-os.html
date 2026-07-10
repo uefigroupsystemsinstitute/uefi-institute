@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Core OS — Educational Operating System Engine</title>
+    <style>
+        /* ==========================================================================
+           1. CUSTOM STYLING ARCHITECTURE & DESIGN LIFECYCLE (UEFI PALETTE)
+           ========================================================================== */
+        :root {
+            --safaricom-green: #00A859;
+            --flag-red: #BB0000;
+            --flag-black: #111111;
+            --prestige-gold: #D4AF37;
+            --slate-space: #0F172A;
+            --panel-dark: #1E293B;
+            --workspace-bg: #F8FAFC;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-ghost: #94A3B8;
+            --border-heavy: #111111;
+            --border-subtle: #E2E8F0;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 24px;
+            --radius-pill: 9999px;
+            --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --shadow-hard: 5px 5px 0px #111111;
+            --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-stack);
+        }
+
+        body {
+            background-color: var(--workspace-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ==========================================================================
+           2. UNIVERSAL SYSTEM STATUS & OPERATING SYSTEM BANNER
+           ========================================================================== */
+        header {
+            background-color: var(--flag-black);
+            color: #FFFFFF;
+            padding: 14px 2%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--prestige-gold);
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+
+        .os-identity {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .kenya-badge-strip {
+            width: 32px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .kenya-badge-strip .black { background: #000000; flex: 1; }
+        .kenya-badge-strip .red { background: var(--flag-red); height: 5px; }
+        .kenya-badge-strip .green { background: var(--safaricom-green); flex: 1; }
+
+        .os-logo {
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        .os-logo span { color: var(--safaricom-green); }
+
+        .system-runtime-pill {
+            background: var(--panel-dark);
+            border: 1px solid var(--prestige-gold);
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .runtime-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--safaricom-green);
+            border-radius: 50%;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        /* ==========================================================================
+           3. ROUTING MATRIX ENCLOSURE & ISOLATION SYSTEM
+           ========================================================================== */
+        .workspace-enclosure {
+            max-width: 1600px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 20px;
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media (min-width: 1200px) {
+            .workspace-enclosure {
+                grid-template-columns: 280px 1fr;
+            }
+        }
+
+        /* ==========================================================================
+           4. SYSTEM ARCHITECTURE LEFT BLOCKS — SUBSYSTEM MAPPER
+           ========================================================================== */
+        .system-sidebar {
+            background: #FFFFFF;
+            border: 2px solid var(--border-heavy);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: var(--shadow-hard);
+            height: fit-content;
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .subsystem-tree {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .subsystem-node {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+            border-left: 3px solid transparent;
+        }
+
+        .subsystem-node:hover {
+            background: var(--workspace-bg);
+            color: var(--text-primary);
+        }
+
+        .subsystem-node.active {
+            background: var(--slate-space);
+            color: #FFFFFF;
+            border-left: 3px solid var(--safaricom-green);
+        }
+
+        /* ==========================================================================
+           5. INTERACTIVE CORE ROUTER BLOCK — CONTROLLER HUB
+           ========================================================================== */
+        .stage-pane {
+            display: none;
+            animation: fadeIn 0.25s ease-out;
+        }
+        .stage-pane.active {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* NEO-BRUTALIST SYSTEM CARDS */
+        .neocard {
+            background: #FFFFFF;
+            border: 2px solid var(--border-heavy);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-hard);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .neocard-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ==========================================================================
+           6. ARCHITECTURE MODULE: AUTHENTICATION GATEWAY
+           ========================================================================== */
+        .gateway-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 900px;
+            margin: 40px auto;
+            width: 100%;
+        }
+
+        @media (min-width: 650px) {
+            .gateway-layout { grid-template-columns: 1fr 1fr; }
+        }
+
+        .auth-selector-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .selector-pill {
+            background: #FFFFFF;
+            border: 2px solid var(--border-heavy);
+            padding: 14px 20px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.15s;
+        }
+        .selector-pill:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 3px 3px 0px var(--border-heavy);
+        }
+        .selector-pill.selected {
+            background: var(--prestige-gold);
+            color: var(--flag-black);
+            box-shadow: 1px 1px 0px var(--border-heavy);
+        }
+
+        .form-input-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-field label {
+            font-size: 0.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+        .form-field input {
+            padding: 12px;
+            border: 2px solid var(--border-heavy);
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            outline: none;
+            background: var(--workspace-bg);
+        }
+
+        .system-action-button {
+            background: var(--safaricom-green);
+            color: #FFFFFF;
+            border: 2px solid var(--border-heavy);
+            padding: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-heavy);
+            transition: all 0.1s;
+        }
+        .system-action-button:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px var(--border-heavy);
+        }
+
+        /* ==========================================================================
+           7. SUBSYSTEM INTERFACE: UEFI FOLLETT MULTI-TENANT SYSTEM
+           ========================================================================== */
+        .tenant-banner-strip {
+            background: linear-gradient(90deg, var(--panel-dark) 0%, var(--flag-black) 100%);
+            color: #FFFFFF;
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border-heavy);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tenant-profile-block h3 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--prestige-gold);
+        }
+        .tenant-profile-block span {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-ghost);
+        }
+
+        .follett-split-matrix {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media (min-width: 950px) {
+            .follett-split-matrix { grid-template-columns: 260px 1fr; }
+        }
+
+        .follett-sub-nav {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .follett-sub-btn {
+            padding: 12px 16px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-heavy);
+            border-radius: var(--radius-sm);
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+        .follett-sub-btn.active {
+            background: var(--safaricom-green);
+            color: #FFFFFF;
+            border-color: var(--border-heavy);
+        }
+
+        /* SEMANTIC ENGINE INPUT */
+        .semantic-search-box {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            background: #FFFFFF;
+            padding: 10px;
+            border: 2px solid var(--border-heavy);
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+        }
+        .semantic-search-box input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .catalog-grid-system {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        @media (min-width: 600px) {
+            .catalog-grid-system { grid-template-columns: 1fr 1fr; }
+        }
+
+        .resource-asset-card {
+            background: var(--workspace-bg);
+            border: 1px solid var(--border-heavy);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .asset-meta-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .asset-tag {
+            font-size: 0.65rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 3px 6px;
+            background: var(--flag-black);
+            color: #FFFFFF;
+            border-radius: 3px;
+        }
+
+        .asset-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .asset-author {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .asset-action-footer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .asset-btn {
+            padding: 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: 1px solid var(--border-heavy);
+            background: #FFFFFF;
+            cursor: pointer;
+            text-align: center;
+            border-radius: var(--radius-sm);
+        }
+        .asset-btn:hover {
+            background: var(--flag-black);
+            color: #FFFFFF;
+        }
+
+        /* ==========================================================================
+           8. COURSE DROPDOWN SYSTEM ENGINE (NETFLIX & SAVE MY EXAMS LAYER)
+           ========================================================================== */
+        .selection-matrix-dashboard {
+            background: var(--panel-dark);
+            color: #FFFFFF;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border-heavy);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        @media (min-width: 768px) {
+            .selection-matrix-dashboard {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .matrix-selector-unit {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .matrix-selector-unit label {
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--prestige-gold);
+            letter-spacing: 0.5px;
+        }
+        .matrix-selector-unit select {
+            padding: 12px;
+            background: #FFFFFF;
+            color: var(--text-primary);
+            font-weight: 700;
+            border: 2px solid var(--border-heavy);
+            border-radius: var(--radius-sm);
+            outline: none;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* LESSON ARCHITECTURE CONTAINER LAYOUT */
+        .lesson-delivery-blueprint {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 10px;
+        }
+        @media (min-width: 1000px) {
+            .lesson-delivery-blueprint {
+                grid-template-columns: 1.8fr 1.2fr;
+            }
+        }
+
+        .main-instruction-vault {
+            background: #FFFFFF;
+            border: 2px solid var(--border-heavy);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: var(--shadow-hard);
+        }
+
+        .lesson-breadcrumbs {
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--flag-red);
+            margin-bottom: 10px;
+        }
+
+        .lesson-main-heading {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-subtle);
+            padding-bottom: 10px;
+        }
+
+        .instructional-prose {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* COGNITIVE AI UTILITY ACTIONS PLATFORM */
+        .cognitive-ai-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 25px;
+        }
+        @media (min-width: 600px) {
+            .cognitive-ai-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .ai-cognitive-trigger {
+            background: var(--workspace-bg);
+            border: 1px solid var(--border-heavy);
+            padding: 10px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-align: center;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all 0.15s;
+        }
+        .ai-cognitive-trigger:hover {
+            background: var(--flag-black);
+            color: var(--prestige-gold);
+        }
+
+        /* RUNTIME DIAGNOSTIC SIMULATOR OUTPUT FIELD */
+        .ai-runtime-terminal {
+            background: var(--slate-space);
+            color: #4AF626;
+            font-family: monospace;
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            margin-top: 15px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            display: none;
+            border: 1px solid var(--border-heavy);
+        }
+
+        /* ==========================================================================
+           9. REPLICATED ROADMAP ARCHITECTURE — ADVANCED FUTURE PATHWAYS
+           ========================================================================== */
+        .pipeline-track {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px dashed var(--border-heavy);
+            margin-left: 10px;
+        }
+
+        .pipeline-node-card {
+            background: #FFFFFF;
+            border: 2px solid var(--border-heavy);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            position: relative;
+        }
+        .pipeline-node-card::before {
+            content: "";
+            position: absolute;
+            left: -29px;
+            top: 22px;
+            width: 15px;
+            height: 15px;
+            background: var(--prestige-gold);
+            border: 2px solid var(--border-heavy);
+            border-radius: 50%;
+        }
+
+        .pipeline-meta {
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--flag-red);
+        }
+        .pipeline-heading {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 2px 0 6px 0;
+        }
+        .pipeline-summary {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="os-identity">
+            <div class="kenya-badge-strip">
+                <div class="black"></div>
+                <div class="red"></div>
+                <div class="green"></div>
+            </div>
+            <div class="os-logo">UEFI<span>.CoreOS</span></div>
+        </div>
+        <div class="system-runtime-pill">
+            <div class="runtime-dot"></div>
+            <div id="system-tenant-status">LOGGED_OUT // ISOLATED_MODE</div>
+        </div>
+    </header>
+
+    <div class="workspace-enclosure">
+
+        <aside class="system-sidebar">
+            <div class="sidebar-title">Core Operating Engines</div>
+            <ul class="subsystem-tree">
+                <li class="subsystem-node active" id="node-auth" onclick="routeToSystemPane('pane-auth', this)">🔐 System Access Gate</li>
+                <li class="subsystem-node" id="node-follett" onclick="routeToSystemPane('pane-follett', this)">📚 UEFI Follett Campus</li>
+                <li class="subsystem-node" id="node-courses" onclick="routeToSystemPane('pane-courses', this)">🎓 System Courses Matrix</li>
+                <li class="subsystem-node" id="node-roadmap" onclick="routeToSystemPane('pane-roadmap', this)">🧭 Career Pipeline Map</li>
+            </ul>
+        </aside>
+
+        <main>
+
+            <section class="stage-pane active" id="pane-auth">
+                <div class="neocard">
+                    <div class="neocard-title">System Entry Protocol</div>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px;">
+                        Select your structural identity tier below. Schools authenticate into protected workspaces; independent learners enter via the UEFI Global Core network.
+                    </p>
+
+                    <div class="gateway-layout">
+                        <div class="auth-selector-box">
+                            <div class="selector-pill selected" onclick="updateAuthRoleSelection('School', this)">
+                                <span>🏫 Institutional Campus (School)</span> ➔
+                            </div>
+                            <div class="selector-pill" onclick="updateAuthRoleSelection('Student', this)">
+                                <span>🎒 Registered Student Private Track</span> ➔
+                            </div>
+                            <div class="selector-pill" onclick="updateAuthRoleSelection('Teacher', this)">
+                                <span>🧑‍🏫 Faculty / Educator Console</span> ➔
+                            </div>
+                            <div class="selector-pill" onclick="updateAuthRoleSelection('Parent', this)">
+                                <span>👥 Parent Guardian Monitoring Portal</span> ➔
+                            </div>
+                            <div class="selector-pill" onclick="updateAuthRoleSelection('Global', this)">
+                                <span>🌐 UEFI Global Shared Network Member</span> ➔
+                            </div>
+                        </div>
+
+                        <div class="form-input-stack" id="auth-dynamic-form-block">
+                            </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stage-pane" id="pane-follett">
+                <div class="tenant-banner-strip">
+                    <div class="tenant-profile-block">
+                        <span id="tenant-scope-pill-label">Active Workspace Node</span>
+                        <h3 id="tenant-display-heading">UEFI Global Core Engine</h3>
+                    </div>
+                    <div style="font-size: 0.8rem; font-weight: 800; background: var(--safaricom-green); color:#FFF; padding:6px 12px; border-radius:4px;">
+                        🔒 Isolated Tenant Memory Lock Active
+                    </div>
+                </div>
+
+                <div class="follett-split-matrix">
+                    <aside>
+                        <ul class="follett-sub-nav">
+                            <li class="follett-sub-btn active">📖 Destiny Digital Library</li>
+                            <li class="follett-sub-btn">📝 Saved Past Examination Papers</li>
+                            <li class="follett-sub-btn">🧑‍💻 Faculty Lesson Blueprints</li>
+                            <li class="follett-sub-btn">📊 Institutional Analytics Hub</li>
+                            <li class="follett-sub-btn">⚙️ Campus Administrative Ledger</li>
+                        </ul>
+                    </aside>
+
+                    <div>
+                        <div class="semantic-search-box">
+                            <input type="text" id="library-semantic-query" placeholder="Type concepts natively (e.g., 'Thermodynamic momentum models in experimental lab manuals')...">
+                            <button class="system-action-button" style="padding: 10px 20px;" onclick="executeSemanticLibraryAnalysis()">Query Library AI</button>
+                        </div>
+
+                        <div class="catalog-grid-system" id="library-catalog-mount">
+                            </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stage-pane" id="pane-courses">
+                <div class="selection-matrix-dashboard">
+                    <div class="matrix-selector-unit">
+                        <label>Select Curriculum Tier</label>
+                        <select id="course-curriculum-selector" onchange="synchronizeSystemDropdowns()">
+                            <option value="MYP">IB MYP (Middle Years Program)</option>
+                            <option value="DP">IB DP (Diploma Program)</option>
+                            <option value="CBE">CBE (Competency Based Education)</option>
+                            <option value="IGCSE">Cambridge IGCSE Core</option>
+                        </select>
+                    </div>
+
+                    <div class="matrix-selector-unit">
+                        <label>Academic Track Year</label>
+                        <select id="course-year-selector">
+                            </select>
+                    </div>
+
+                    <div class="matrix-selector-unit">
+                        <label>Subject Allocation Matrix</label>
+                        <select id="course-subject-selector">
+                            </select>
+                    </div>
+
+                    <div class="matrix-selector-unit">
+                        <label>Resource Delivery Type</label>
+                        <select id="course-resource-selector" onchange="renderActiveLessonModule()">
+                            <option value="Lessons">Core Interactive Lessons</option>
+                            <option value="Videos">Widescreen Streaming Videos</option>
+                            <option value="Notes">High-Intensity Revision Notes</option>
+                            <option value="PastPapers">Validated Past Exam Papers</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="lesson-delivery-blueprint">
+                    
+                    <div class="main-instruction-vault">
+                        <div class="lesson-breadcrumbs" id="lesson-crumbs-display">IB MYP 5 • PHYSICS • CORE THEORY</div>
+                        <h2 class="lesson-main-heading" id="lesson-title-display">Topic 3.1: Kinetic Energy Vector Profiles</h2>
+                        <div class="instructional-prose" id="lesson-body-display">
+                            Select standard options within the matrix selectors above to change resource views. 
+                        </div>
+
+                        <div class="cognitive-ai-grid">
+                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Explain Simpler Model')">🤖 Explain Simpler</button>
+                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Generate Harder Problem Set')">🤖 Harder Examples</button>
+                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Compile Exam Style Matrix')">🤖 IB Style Questions</button>
+                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Recalibrate For Age 10 Delivery')">🤖 Explain Like I'm 10</button>
+                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Build Real-time Practice Evaluation Quiz')">🤖 Create Quiz</button>
+                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Assess Active Sandbox Answer Text')">🤖 Mark My Answer</button>
+                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Synthesize Core Knowledge Flashcards')">🤖 Create Flashcards</button>
+                            <button class="ai-cognitive-trigger" onclick="runCognitiveSimulation('Generate Complete Executive Summary Text')">🤖 Generate Summary</button>
+                        </div>
+
+                        <div class="ai-runtime-terminal" id="terminal-output-block">
+                            Executing query payload diagnostics across active node profile...
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="neocard" style="border-top: 4px solid var(--safaricom-green);">
+                            <div class="neocard-title" style="font-size:1rem;">🤖 Automated Lab Simulation</div>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+                                This lesson block is synced to the UEFI AI Lab Sandbox. Complete activities to unlock active certificates.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="stage-pane" id="pane-roadmap">
+                <div class="neocard">
+                    <div class="neocard-title">Adaptive Professional Future Pathway</div>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 25px;">
+                        Your customized learning roadmap calculates automatically across performance fields.
+                    </p>
+
+                    <div class="pipeline-track">
+                        <div class="pipeline-node-card">
+                            <span class="pipeline-meta">Step 01 // Structural Framework Focus</span>
+                            <h4 class="pipeline-heading">Target Dynamic Career Profile Chosen</h4>
+                            <p class="pipeline-summary">Autonomous Micro-Grid Cloud Systems Architect</p>
+                        </div>
+                        <div class="pipeline-node-card">
+                            <span class="pipeline-meta">Step 02 // University Pipeline Track</span>
+                            <h4 class="pipeline-heading">Strategic University Matrix Synced</h4>
+                            <p class="pipeline-summary">Ashesi University (Engineering Major Matrix) / Strathmore Infrastructure Division</p>
+                        </div>
+                        <div class="pipeline-node-card">
+                            <span class="pipeline-meta">Step 03 // Curricular Directives</span>
+                            <h4 class="pipeline-heading">Recommended Core Mastery Subjects</h4>
+                            <p class="pipeline-summary">IB MYP Extended Mathematics, Advanced Engineering Physics, and Digital Design Core</p>
+                        </div>
+                        <div class="pipeline-node-card">
+                            <span class="pipeline-meta">Step 04 // UEFI Autonomous AI Engine Scraping Target</span>
+                            <h4 class="pipeline-heading">Live Targeted Matches Found</h4>
+                            <p class="pipeline-summary" style="color: var(--safaricom-green); font-weight: 700;">
+                                🎯 Matches calculated: 12 Local Engineering Competitions • 3 Full-Tuition Academic Grants • 2 Technical Apprenticeship Positions
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        /* --- CORE CONFIGURATION ARRAYS FOR DYNAMIC DROP DOWNS --- */
+        const MYP_SUBJECTS = [
+            "Extended Mathematics", "Physics", "Biology", "Chemistry", 
+            "Integrated Science", "Integrated Humanities", "Economics", 
+            "History", "Geography", "Personal Project", "Digital Design"
+        ];
+
+        const UNIVERSAL_CURRICULUM_MAP = {
+            "MYP": { years: ["MYP 1", "MYP 2", "MYP 3", "MYP 4", "MYP 5"], subjects: MYP_SUBJECTS },
+            "DP": { years: ["DP Grade 11", "DP Grade 12"], subjects: ["Physics HL", "Mathematics AA", "Chemistry HL", "Global Politics"] },
+            "CBE": { years: ["Grade 7", "Grade 8", "Grade 9", "Senior School 10"], subjects: ["Core STEM Science", "Social Inquiries", "Agriculture Systems"] },
+            "IGCSE": { years: ["Year 10 Core", "Year 11 Extended"], subjects: ["Extended Mathematics 0580", "Physics 0625", "Computer Science 0478"] }
+        };
+
+        const INSTANTIATED_MOCK_DATABASE = {
+            "Mpesa Foundation Academy": {
+                code: "MFA-7742",
+                books: [
+                    { title: "Advanced Fluid Dynamics Lab Manual", author: "MFA Physics Faculty", type: "Lab Guide", code: "ISBN-MFA-002" },
+                    { title: "Calculus Matrix Paradigms for MYP 5", author: "Dr. K. Kamau", type: "Textbook", code: "ISBN-MFA-981" },
+                    { title: "2025 Term 3 Integrated Humanities Mock Exam", author: "MFA Humanities Dept", type: "Past Paper", code: "REF-MFA-PP" }
+                ]
+            },
+            "Alliance High School": {
+                code: "AHS-1925",
+                books: [
+                    { title: "Alliance Physics Practical Guide Book", author: "Alliance Science Panel", type: "Lab Guide", code: "ISBN-AHS-441" },
+                    { title: "KIE History Revision Digest Vol 4", author: "H. Omondi", type: "Revision Notes", code: "ISBN-KIE-112" }
+                ]
+            },
+            "UEFI Global Core": {
+                code: "GLOBAL-SYSTEM",
+                books: [
+                    { title: "Global AI Literacy and Python Paradigms", author: "UEFI Core Research Team", type: "Digital Textbook", code: "ISBN-UEFI-001" },
+                    { title: "Cybersecurity Fundamentals and Threat Mitigation Protocols", author: "UEFI Security Org", type: "Whitepaper", code: "ISBN-UEFI-009" }
+                ]
+            }
+        };
+
+        // Runtimes Dynamic Variable State Tracking
+        let currentSystemRole = "School";
+        let activeAuthenticatedTenant = "UEFI Global Core";
+
+        /* --- SUBSYSTEM UNIT ONE: MULTI-TENANT PROFILE ROUTER CONTROLLER --- */
+        function updateAuthRoleSelection(roleType, selectorNode) {
+            currentSystemRole = roleType;
+            document.querySelectorAll('.selector-pill').forEach(pill => pill.classList.remove('selected'));
+            selectorNode.classList.add('selected');
+
+            const formMount = document.getElementById('auth-dynamic-form-block');
+            
+            if (roleType === "School") {
+                formMount.innerHTML = `
+                    <div class="form-field">
+                        <label>Select Target School Campus</label>
+                        <select id="auth-school-dropdown-selector" style="padding: 12px; border: 2px solid var(--border-heavy); border-radius: var(--radius-sm); font-weight:600;">
+                            <option value="Mpesa Foundation Academy">Mpesa Foundation Academy</option>
+                            <option value="Alliance High School">Alliance High School</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Campus Security Code Verification</label>
+                        <input type="text" id="auth-school-code-field" placeholder="Enter alphanumeric system token">
+                    </div>
+                    <button type="button" class="system-action-button" onclick="executeAuthenticationProcess()">Access Campus Workspace</button>
+                `;
+            } else if (roleType === "Global") {
+                formMount.innerHTML = `
+                    <p style="font-size:0.85rem; color: var(--text-secondary); line-height:1.4;">
+                        No corporate institutional workspace code required. Accessing universal non-siloed open-source open platform.
+                    </p>
+                    <button type="button" class="system-action-button" onclick="executeAuthenticationProcess(true)">Enter Open Global Engine</button>
+                `;
+            } else {
+                formMount.innerHTML = `
+                    <div class="form-field">
+                        <label>Universal User Identity / Email Address</label>
+                        <input type="email" placeholder="student.name@uefiglobal.org">
+                    </div>
+                    <div class="form-field">
+                        <label>Security Phase Password</label>
+                        <input type="password" placeholder="••••••••••••">
+                    </div>
+                    <button type="button" class="system-action-button" onclick="executeAuthenticationProcess(true)">Authenticate Profile Pipeline</button>
+                `;
+            }
+        }
+
+        function executeAuthenticationProcess(forceGlobal = false) {
+            if (forceGlobal) {
+                activeAuthenticatedTenant = "UEFI Global Core";
+            } else {
+                const selectedSchool = document.getElementById('auth-school-dropdown-selector').value;
+                const enteredCode = document.getElementById('auth-school-code-field').value.trim();
+                const actualRecord = INSTANTIATED_MOCK_DATABASE[selectedSchool];
+
+                if (!enteredCode) {
+                    alert(`Verification Error: Please provide an access token. Try using the default test token for this demo: ${actualRecord.code}`);
+                    return;
+                }
+
+                if (enteredCode !== actualRecord.code) {
+                    alert(`Tenant Violation: Access token mismatch. Access denied for workspace node: ${selectedSchool}`);
+                    return;
+                }
+                activeAuthenticatedTenant = selectedSchool;
+            }
+
+            // Sync Runtime Displays
+            document.getElementById('system-tenant-status').innerText = `TENANT_ID // ${activeAuthenticatedTenant.toUpperCase().replace(/ /g, '_')}`;
+            document.getElementById('tenant-display-heading').innerText = activeAuthenticatedTenant;
+            document.getElementById('tenant-scope-pill-label').innerText = forceGlobal ? "Universal Network Mode" : "Private Dedicated Multi-Tenant Workspace";
+
+            renderFollettLibraryCatalog();
+            
+            // Redirect routing automatically to Follett Core
+            routeToSystemPane('pane-follett', document.getElementById('node-follett'));
+            alert(`Access Granted. Security boundaries active for: "${activeAuthenticatedTenant}". Content isolation confirmed.`);
+        }
+
+        /* --- SUBSYSTEM UNIT TWO: MOUNT FOLLETT LIBRARY ASSETS --- */
+        function renderFollettLibraryCatalog() {
+            const mount = document.getElementById('library-catalog-mount');
+            mount.innerHTML = '';
+            
+            const currentTenantData = INSTANTIATED_MOCK_DATABASE[activeAuthenticatedTenant] || INSTANTIATED_MOCK_DATABASE["UEFI Global Core"];
+
+            currentTenantData.books.forEach(asset => {
+                const card = document.createElement('div');
+                card.className = 'resource-asset-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="asset-meta-row">
+                            <span class="asset-tag">${asset.type}</span>
+                            <span style="font-size:0.7rem; font-weight:700; color:var(--text-ghost);">${asset.code}</span>
+                        </div>
+                        <h4 class="asset-title">${asset.title}</h4>
+                        <div class="asset-author">By ${asset.author}</div>
+                    </div>
+                    <div class="asset-action-footer">
+                        <button class="asset-btn" onclick="alert('Accessing document rendering layer...')">Preview</button>
+                        <button class="asset-btn" style="background:var(--safaricom-green); color:#FFF;" onclick="alert('Downloading asset cache locally...')">Download</button>
+                        <button class="asset-btn" onclick="alert('Adding reference layout card to tracking database...')">Cite</button>
+                    </div>
+                `;
+                mount.appendChild(card);
+            });
+        }
+
+        function executeSemanticLibraryAnalysis() {
+            const query = document.getElementById('library-semantic-query').value.trim();
+            if(!query) return alert("Please supply an execution concept query parameter string first.");
+            alert(`🧠 AI Follett Semantic Engine Parse:\n\nSearching content for conceptual meaning match matching: "${query}".\nFound 1 exact contextual cross-reference inside current secured silo database.`);
+        }
+
+        /* --- SUBSYSTEM UNIT THREE: METRIFIED MATRIX COURSE DROPDOWN SYNCHRONIZER --- */
+        function synchronizeSystemDropdowns() {
+            const chosenCurriculum = document.getElementById('course-curriculum-selector').value;
+            const configurationProfile = UNIVERSAL_CURRICULUM_MAP[chosenCurriculum];
+
+            const yearBox = document.getElementById('course-year-selector');
+            const subjectBox = document.getElementById('course-subject-selector');
+
+            // Map Years
+            yearBox.innerHTML = '';
+            configurationProfile.years.forEach(y => {
+                const opt = document.createElement('option');
+                opt.value = y; opt.innerText = y;
+                yearBox.appendChild(opt);
+            });
+
+            // Map Subjects
+            subjectBox.innerHTML = '';
+            configurationProfile.subjects.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s; opt.innerText = s;
+                subjectBox.appendChild(opt);
+            });
+
+            renderActiveLessonModule();
+        }
+
+        function renderActiveLessonModule() {
+            const curr = document.getElementById('course-curriculum-selector').value;
+            const year = document.getElementById('course-year-selector').value;
+            const sub = document.getElementById('course-subject-selector').value;
+            const type = document.getElementById('course-resource-selector').value;
+
+            document.getElementById('lesson-crumbs-display').innerText = `${curr} • ${year} • ${sub} • ${type.toUpperCase()}`;
+            document.getElementById('lesson-title-display').innerText = `${sub} Core Learning Module Target`;
+
+            // Structural Content Template Definitions
+            if (curr === "MYP" && sub === "Physics") {
+                document.getElementById('lesson-body-display').innerHTML = `
+                    <p style="margin-bottom:12px; font-weight:700;">Welcome to Advanced Kinetic Energy Vector Profiling under the IB MYP 5 Science syllabus framework.</p>
+                    <p>In this instructional block, we explore the mechanical matrix where structural velocity components undergo independent vectors allocation. Observe the fundamental computational equation profile mapping dynamic systems:</p>
+                    <div style="background:var(--workspace-bg); padding:15px; border-left:4px solid var(--flag-red); font-family:serif; font-size:1.2rem; margin:15px 0;">
+                        E_k = \\frac{1}{2} m v^2
+                    </div>
+                    <p>Ensure your experimental portfolio logs trace exact metric coordinates before executing terminal testing scripts.</p>
+                `;
+            } else {
+                document.getElementById('lesson-body-display').innerHTML = `
+                    <p style="margin-bottom:12px;">Displaying dynamic system information for target choice match configuration asset profiles.</p>
+                    <p>Active core content structures loaded from central UEFI Knowledge Vault modules successfully. Engage cognitive options below to execute customized AI processing.</p>
+                `;
+            }
+        }
+
+        function runCognitiveSimulation(promptIntentType) {
+            const terminal = document.getElementById('terminal-output-block');
+            terminal.style.display = "block";
+            terminal.innerText = `[PROCESSING PAYLOAD]: Communicating core parameters with UEFI AI Workspace Matrix... \n[INTENT INTERCEPTED]: "${promptIntentType}"\n\n[PROCESSED RECONSTRUCTION]: System output compiled successfully. Re-rendering target educational models with optimized algorithmic layout parameters inside primary dashboard space.`;
+        }
+
+        /* --- CORE PAGE STAGE ROUTING REGISTRATION CONTROLS --- */
+        function routeToSystemPane(paneTargetId, treeNodeLink) {
+            document.querySelectorAll('.stage-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.subsystem-node').forEach(n => n.classList.remove('active'));
+
+            document.getElementById(paneTargetId).classList.add('active');
+            treeNodeLink.classList.add('active');
+        }
+
+        /* --- INITIALIZATION HOOK RUNTIME --- */
+        window.addEventListener('DOMContentLoaded', () => {
+            updateAuthRoleSelection('School', document.querySelector('.selector-pill'));
+            synchronizeSystemDropdowns();
+            renderFollettLibraryCatalog();
+        });
+    </script>
+</body>
+</html>
