@@ -1,962 +1,702 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UEFI Global Academic Powerhouse - Advanced Revision Engine</title>
-  <style>
-    /* ==========================================================================
-       1. EXTENSIVE BRAND COLOR MATRIX & CORE STYLING
-       ========================================================================== */
-    :root {
-      --iitian-navy-dark: #060d1a;
-      --iitian-navy-deep: #0a192f;
-      --iitian-navy-medium: #172a45;
-      --iitian-blue-accent: #30b0ff;
-      --safaricom-green: #00a340;
-      --safaricom-green-hover: #008533;
-      --safaricom-red: #e60000;
-      --safaricom-red-hover: #b80000;
-      --glass-bg: rgba(255, 255, 255, 0.06);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --slate-light: #f1f5f9;
-      --slate-text: #334155;
-      --border-muted: #cbd5e1;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: bold;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    body {
-      background-color: var(--iitian-navy-dark);
-      color: #ffffff;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ==========================================================================
-       2. TOP-LEFT CONCENTRATED NAVIGATION LAYER
-       ========================================================================== */
-    header {
-      background: linear-gradient(135deg, var(--iitian-navy-deep) 0%, var(--iitian-navy-medium) 100%);
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      border-bottom: 3px solid var(--safaricom-green);
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    .top-left-branding {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .uefi-logo-box {
-      background: linear-gradient(90deg, #ffffff 0%, #e2e8f0 100%);
-      color: var(--iitian-navy-dark);
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-size: 0.95rem;
-      letter-spacing: -0.5px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .app-title-badge {
-      font-size: 0.85rem;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-left: 2px solid var(--glass-border);
-      padding-left: 12px;
-    }
-
-    .top-right-controls {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .pomodoro-display-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 4px 12px;
-      border-radius: 6px;
-      border: 1px solid var(--safaricom-green);
-    }
-
-    .pomodoro-label {
-      font-size: 0.75rem;
-      color: #cbd5e1;
-      letter-spacing: 0.5px;
-    }
-
-    #timer-clock {
-      font-size: 1.35rem;
-      color: #ffffff;
-      font-family: 'Courier New', Courier, monospace;
-      text-shadow: 0 0 6px var(--safaricom-green);
-    }
-
-    /* ==========================================================================
-       3. INTERACTIVE COMPONENT BUTTON ARCHITECTURE
-       ========================================================================== */
-    .btn {
-      cursor: pointer;
-      padding: 8px 14px;
-      border: none;
-      border-radius: 4px;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      letter-spacing: 0.5px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .btn-safaricom-green {
-      background-color: var(--safaricom-green);
-      color: white;
-    }
-    .btn-safaricom-green:hover {
-      background-color: var(--safaricom-green-hover);
-      transform: translateY(-1px);
-    }
-
-    .btn-safaricom-red {
-      background-color: var(--safaricom-red);
-      color: white;
-    }
-    .btn-safaricom-red:hover {
-      background-color: var(--safaricom-red-hover);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #cbd5e1;
-      border: 1px solid var(--glass-border);
-    }
-    .btn-secondary:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-      color: white;
-    }
-
-    /* ==========================================================================
-       4. EXTENSIVE WORKSPACE PRODUCTION GRID (LEFT TO RIGHT FILL)
-       ========================================================================== */
-    .workspace-matrix {
-      display: grid;
-      grid-template-columns: 310px 1fr 450px; /* Initial configuration sizing */
-      height: calc(100vh - 52px);
-      width: 100vw;
-      position: relative;
-      background-color: var(--iitian-navy-dark);
-    }
-
-    /* ==========================================================================
-       5. SIDEBAR LEFT: FILTER ARRAYS & BOOKMARK ARCHIVE
-       ========================================================================== */
-    .pane-left-sidebar {
-      background: linear-gradient(180deg, var(--iitian-navy-deep) 0%, #0d1e36 100%);
-      border-right: 2px solid rgba(255, 255, 255, 0.08);
-      padding: 20px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-    }
-
-    .pane-left-sidebar::-webkit-scrollbar {
-      width: 6px;
-    }
-    .pane-left-sidebar::-webkit-scrollbar-thumb {
-      background: var(--glass-border);
-      border-radius: 3px;
-    }
-
-    .section-title-wrapper {
-      border-bottom: 2px solid var(--safaricom-green);
-      padding-bottom: 6px;
-      margin-bottom: 4px;
-    }
-
-    .section-title {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .filter-wrapper-card {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .input-descriptor {
-      font-size: 0.75rem;
-      color: #94a3b8;
-      text-transform: uppercase;
-    }
-
-    .custom-select-element, .custom-text-input {
-      background-color: rgba(0, 0, 0, 0.4);
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      border-radius: 6px;
-      padding: 10px;
-      color: white;
-      font-size: 0.88rem;
-      outline: none;
-      transition: all 0.2s ease;
-    }
-
-    .custom-select-element:focus, .custom-text-input:focus {
-      border-color: var(--iitian-blue-accent);
-      background-color: rgba(0, 0, 0, 0.6);
-    }
-
-    .custom-select-element option {
-      background-color: var(--iitian-navy-deep);
-      color: white;
-    }
-
-    /* Core Listing Inventory UI Elements */
-    .inventory-scroll-container {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .examination-item-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 2px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-      padding: 14px;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .examination-item-card:hover {
-      background: rgba(255, 255, 255, 0.07);
-      border-color: var(--iitian-blue-accent);
-      transform: scale(1.01);
-    }
-
-    .examination-item-card.active-selection {
-      border-color: var(--safaricom-green);
-      background: rgba(0, 163, 64, 0.08);
-      box-shadow: inset 0 0 8px rgba(0, 163, 64, 0.2);
-    }
-
-    .examination-item-card h4 {
-      font-size: 0.88rem;
-      color: #ffffff;
-      line-height: 1.3;
-    }
-
-    .examination-item-card p {
-      font-size: 0.7rem;
-      color: #64748b;
-      margin-top: 6px;
-      text-transform: uppercase;
-    }
-
-    /* CONSULT LATER / DIFFICULT QUESTIONS CONTAINER */
-    .consult-later-pool-box {
-      background: rgba(230, 0, 0, 0.04);
-      border: 2px dashed rgba(230, 0, 0, 0.25);
-      border-radius: 8px;
-      padding: 12px;
-      min-height: 100px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .consult-empty-state {
-      font-size: 0.78rem;
-      color: #64748b;
-      text-align: center;
-      margin: auto 0;
-      font-style: italic;
-    }
-
-    /* ==========================================================================
-       6. CENTER PANEL: DOCUMENT MATRIX & CONTROLS (ASSESSPREP STYLE)
-       ========================================================================== */
-    .pane-center-viewport {
-      display: flex;
-      flex-direction: column;
-      background-color: #2e3136;
-      position: relative;
-    }
-
-    .assessment-utility-bar {
-      background: linear-gradient(90deg, #12223a 0%, #091324 100%);
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .active-document-title {
-      font-size: 0.92rem;
-      color: #e2e8f0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 50%;
-    }
-
-    .center-utility-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* Flag Status Modifiers */
-    .btn-flag-action {
-      background-color: rgba(255, 255, 255, 0.05);
-      color: #e2e8f0;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-    .btn-flag-action.is-flagged {
-      background: linear-gradient(135deg, var(--safaricom-red) 0%, #990000 100%);
-      color: white;
-      border-color: white;
-      box-shadow: 0 0 10px rgba(230, 0, 0, 0.4);
-    }
-
-    /* OGUNNA REVEAL INTERACTIVE MECHANISM */
-    .btn-ogunna-reveal {
-      background: linear-gradient(135deg, var(--safaricom-red) 0%, #a30000 100%);
-      color: white;
-      padding: 10px 18px;
-      font-size: 0.85rem;
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(230, 0, 0, 0.3);
-    }
-
-    .btn-ogunna-reveal:hover {
-      background: linear-gradient(135deg, #ff3b3b 0%, var(--safaricom-red) 100%);
-      transform: scale(1.02);
-    }
-
-    .pdf-render-frame {
-      flex: 1;
-      width: 100%;
-      height: 100%;
-      border: none;
-      background-color: #525659;
-    }
-
-    /* ==========================================================================
-       7. MOUSE DRAGGABLE MESH LAYER (DYNAMIC DIVISION PANEL)
-       ========================================================================== */
-    .resize-divider-bar {
-      width: 8px;
-      background-color: var(--iitian-navy-deep);
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      border-right: 1px solid rgba(0, 0, 0, 0.5);
-      cursor: col-resize;
-      position: relative;
-      transition: background-color 0.2s;
-      z-index: 50;
-    }
-
-    .resize-divider-bar:hover, .resize-divider-bar.is-dragging {
-      background-color: var(--iitian-blue-accent);
-    }
-
-    .resize-divider-bar::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 2px;
-      transform: translateY(-50%);
-      width: 2px;
-      height: 30px;
-      background-color: rgba(255, 255, 255, 0.3);
-      border-radius: 1px;
-    }
-
-    /* ==========================================================================
-       8. SIDEBAR RIGHT: COMPUTATIONAL FRAMEWORKS (MAXIMIZED MATRIX)
-       ========================================================================== */
-    .pane-right-sidebar {
-      background-color: var(--iitian-navy-deep);
-      border-left: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    .calculator-tab-strip {
-      display: flex;
-      background-color: var(--iitian-navy-dark);
-      border-bottom: 2px solid var(--safaricom-green);
-    }
-
-    .calc-tab-trigger {
-      flex: 1;
-      padding: 12px;
-      background: transparent;
-      color: #64748b;
-      border: none;
-      cursor: pointer;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: all 0.2s ease;
-      border-bottom: 3px solid transparent;
-    }
-
-    .calc-tab-trigger.active-tab {
-      color: white;
-      background-color: rgba(255, 255, 255, 0.04);
-      border-bottom-color: var(--safaricom-green);
-    }
-
-    .calculator-sandbox-viewport {
-      flex: 1;
-      position: relative;
-      background-color: #ffffff;
-    }
-
-    .calculator-embedded-iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: none;
-    }
-
-    .calculator-embedded-iframe.active-iframe {
-      display: block;
-    }
-
-    /* ==========================================================================
-       9. DIALOGUE INTERSTITIAL SCREENS & ANIMATION LAYER
-       ========================================================================== */
-    .interstitial-modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(6, 13, 26, 0.9);
-      backdrop-filter: blur(6px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
-
-    .modal-structural-box {
-      background: linear-gradient(180deg, var(--iitian-navy-deep) 0%, #0c1a2e 100%);
-      border: 2px solid var(--glass-border);
-      border-top: 6px solid var(--safaricom-green);
-      padding: 36px;
-      border-radius: 12px;
-      width: 520px;
-      text-align: center;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-    }
-
-    .modal-structural-box h2 {
-      font-size: 1.5rem;
-      color: #ffffff;
-      margin-bottom: 8px;
-      letter-spacing: 0.5px;
-    }
-
-    .modal-structural-box p {
-      color: #94a3b8;
-      font-size: 0.88rem;
-      line-height: 1.5;
-      margin-bottom: 24px;
-    }
-
-    .grid-configuration-timer-selectors {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .selector-timer-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 2px solid rgba(255, 255, 255, 0.08);
-      padding: 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: left;
-    }
-
-    .selector-timer-card:hover {
-      border-color: var(--safaricom-green);
-      background: rgba(0, 163, 64, 0.04);
-    }
-
-    .selector-timer-card.trial-highlight {
-      border-color: var(--iitian-blue-accent);
-      background: rgba(48, 176, 255, 0.04);
-    }
-    .selector-timer-card.trial-highlight:hover {
-      background: rgba(48, 176, 255, 0.1);
-    }
-
-    .selector-timer-card span {
-      display: block;
-      font-size: 1rem;
-      color: white;
-    }
-
-    .selector-timer-card small {
-      display: block;
-      font-size: 0.72rem;
-      color: #64748b;
-      margin-top: 4px;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="interstitial-modal-overlay" id="session-init-modal">
-    <div class="modal-structural-box">
-      <h2>UEFI ASSESSMENT POWERHOUSE</h2>
-      <p>Select your timed execution parameters below. Choose the 2 Minutes Trial to evaluate audio signals and tools before starting a full mock exam.</p>
-      
-      <div class="grid-configuration-timer-selectors">
-        <div class="selector-timer-card trial-highlight" onclick="executeSystemInitialization(2)">
-          <span>⚡ 2 Minutes Trial</span>
-          <small>System sandbox check & quick test</small>
-        </div>
-        <div class="selector-timer-card" onclick="executeSystemInitialization(25)">
-          <span>⏱️ 25 Minutes</span>
-          <small>Sprint interval mode</small>
-        </div>
-        <div class="selector-timer-card" onclick="executeSystemInitialization(50)">
-          <span>⏱️ 50 Minutes</span>
-          <small>Standard revision window</small>
-        </div>
-        <div class="selector-timer-card" onclick="executeSystemInitialization(90)">
-          <span>⏱️ 90 Minutes</span>
-          <small>Extended mock criteria</small>
-        </div>
-      </div>
-      
-      <button class="btn btn-safaricom-green" style="width: 100%; padding: 12px; font-size: 0.9rem;" onclick="executeSystemInitialization(50)">
-        Initialize Default Workspace Matrix
-      </button>
-    </div>
-  </div>
-
-  <header>
-    <div class="top-left-branding">
-      <div class="uefi-logo-box">UEFI Study Pool</div>
-      <div class="app-title-badge">IB DP NUMBERS & ALGEBRA POWERHOUSE</div>
-    </div>
-    
-    <div class="top-right-controls">
-      <div class="pomodoro-display-wrapper">
-        <span class="pomodoro-label">SESSION CLOCK</span>
-        <div id="timer-clock">00:00</div>
-      </div>
-      <button class="btn btn-secondary" id="timer-toggle-action" onclick="toggleTimerState()">Pause Execution</button>
-      <button class="btn btn-safaricom-red" onclick="reinitializeWorkspaceEngine()">Reset Engine</button>
-    </div>
-  </header>
-
-  <div class="workspace-matrix" id="core-workspace-layout">
-    
-    <aside class="pane-left-sidebar">
-      
-      <div class="section-title-wrapper">
-        <div class="section-title">🔍 Context Filtering</div>
-      </div>
-
-      <div class="filter-wrapper-card">
-        <label class="input-descriptor" for="filter-topic-node">Sub-topic Matrix</label>
-        <select class="custom-select-element" id="filter-topic-node" onchange="processInventoryFiltering()">
-          <option value="all">All Sub-topics (Numbers & Algebra)</option>
-          <option value="exponents">Exponents & Logarithms</option>
-          <option value="sequences">Sequences & Series (AP/GP)</option>
-          <option value="binomial">Binomial Theorem</option>
-          <option value="complex">Complex Numbers (HL)</option>
-        </select>
-      </div>
-
-      <div class="filter-wrapper-card">
-        <label class="input-descriptor" for="filter-year-node">Examination Window</label>
-        <select class="custom-select-element" id="filter-year-node" onchange="processInventoryFiltering()">
-          <option value="all">All Matrix Years</option>
-          <option value="2026">2026 Cohort Release</option>
-          <option value="2025">2025 Production Run</option>
-          <option value="2024">2024 Past Papers</option>
-          <option value="2023">2023 Past Papers</option>
-        </select>
-      </div>
-
-      <div class="filter-wrapper-card">
-        <label class="input-descriptor" for="search-input-node">Keyword Extraction</label>
-        <input type="text" class="custom-text-input" id="search-input-node" placeholder="Type key phrases..." onkeyup="processInventoryFiltering()">
-      </div>
-
-      <div class="section-title-wrapper">
-        <div class="section-title">📋 Document Inventory</div>
-      </div>
-      <div class="inventory-scroll-container" id="inventory-render-target">
-        </div>
-
-      <div class="section-title-wrapper">
-        <div class="section-title" style="color: var(--safaricom-red);">⭐ Consult Later Pool</div>
-      </div>
-      <div class="consult-later-pool-box" id="flagged-repository-target">
-        <div class="consult-empty-state">No items flagged for consultation yet. Click flag icon to save.</div>
-      </div>
-
-    </aside>
-
-    <main class="pane-center-viewport">
-      <div class="assessment-utility-bar">
-        <div class="active-document-title" id="active-document-title-label">Initialize an archive item...</div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBDP Ultimate Study Space | Powered by Alal Focus</title>
+    <style>
+        /* ==========================================================================
+           PRINT PROTECTION & ANTI-DOWNLOAD MEASURES
+           ========================================================================== */
+        @media print {
+            html, body {
+                display: none !important;
+                visibility: hidden !important;
+                background-color: white;
+            }
+            body::before {
+                content: "Printing and downloading are strictly disabled for this secure study space.";
+                display: block;
+                font-size: 24px;
+                color: red;
+                text-align: center;
+                margin-top: 20%;
+            }
+        }
+
+        .no-select {
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+        }
+
+        /* ==========================================================================
+           BASE STYLING & IITIAN ACADEMY THEME
+           ========================================================================== */
+        :root {
+            --primary-color: #003366; /* Deep Academy Blue */
+            --secondary-color: #ff9900; /* Empowering Orange */
+            --accent-color: #e6f2ff;
+            --text-main: #333333;
+            --bg-color: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            /* Extra scroll space requested */
+            padding-bottom: 200vh; 
+        }
+
+        /* ==========================================================================
+           HEADER & NAVIGATION
+           ========================================================================== */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-brand h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .header-brand p {
+            font-size: 12px;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        /* Empowering Header Images (using inline SVG for self-containment) */
+        .empowerment-icons {
+            display: flex;
+            gap: 15px;
+        }
         
-        <div class="center-utility-actions">
-          <button class="btn btn-flag-action" id="flag-toggle-trigger" onclick="toggleActiveItemFlagState()">
-            ⭐ Flag As Difficult
-          </button>
-          
-          <button class="btn btn-ogunna-reveal" id="ogunna-reveal-trigger" onclick="toggleCriteriaRevealState()">
-            ⚡ OGUNNA REVEAL: MARK SCHEME
-          </button>
-        </div>
-      </div>
+        .empowerment-icons svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--secondary-color);
+        }
 
-      <iframe class="pdf-render-frame" id="pdf-core-viewport" src=""></iframe>
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background 0.3s, color 0.3s;
+            border: 1px solid transparent;
+        }
+
+        nav a:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border-color: var(--secondary-color);
+        }
+
+        /* ==========================================================================
+           ALAL FOCUS TIMER
+           ========================================================================== */
+        .timer-container {
+            background-color: var(--accent-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .timer-display {
+            font-size: 32px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--primary-color);
+            background: white;
+            padding: 5px 20px;
+            border-radius: 5px;
+            border: 2px solid var(--primary-color);
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .timer-controls button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .timer-controls button:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+        
+        .timer-inputs input {
+            padding: 8px;
+            font-size: 16px;
+            width: 80px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* ==========================================================================
+           PAST PAPERS SECTION (STRETCHED LEFT TO RIGHT)
+           ========================================================================== */
+        .papers-section {
+            width: 100%;
+            padding: 0; /* Removing side padding to stretch left to right */
+        }
+
+        .paper-module {
+            background: white;
+            margin-bottom: 40px;
+            border-top: 5px solid var(--primary-color);
+            border-bottom: 5px solid var(--primary-color);
+        }
+
+        .paper-title {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: 90vh; /* Extremely tall for easy reading */
+            background: #525659;
+        }
+
+        .pdf-container iframe, .pdf-container embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ==========================================================================
+           OGUNNA REVEAL (MARKSCHEME)
+           ========================================================================== */
+        .ogunna-btn {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .ogunna-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .markscheme-content {
+            display: none; /* Hidden by default */
+            background: #eef7e6;
+            padding: 20px;
+            border: 2px dashed #4caf50;
+            margin-top: 5px;
+        }
+
+        .markscheme-content h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        /* ==========================================================================
+           RESIZABLE CALCULATORS (DESMOS & GEOGEBRA)
+           ========================================================================== */
+        .tools-section {
+            padding: 40px 30px;
+            background: #e0e6ed;
+            margin-top: 50px;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .section-heading {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .calculators-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Resizable Magic */
+        .resizable-wrapper {
+            width: 100%;
+            min-height: 400px;
+            height: 500px; /* Default height */
+            resize: vertical; /* Allows student to squeeze/expand up and down */
+            overflow: auto;
+            border: 4px solid var(--primary-color);
+            background: white;
+            position: relative;
+            padding-top: 30px; /* Space for title bar */
+        }
+
+        .resizable-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .resizable-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* ==========================================================================
+           REFLECTION & QUICK NOTES SPACE
+           ========================================================================== */
+        .reflection-section {
+            padding: 60px 30px;
+            background: white;
+            margin-top: 40px;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.05);
+        }
+
+        .reflection-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        textarea#reflection-notes {
+            width: 100%;
+            height: 300px;
+            padding: 20px;
+            font-size: 18px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            resize: vertical;
+            background: #fafafa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-bottom: 20px;
+        }
+
+        textarea#reflection-notes:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
+        }
+
+        .download-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            background-color: #218838;
+        }
+
+    </style>
+</head>
+<body class="no-select">
+
+    <!-- ==========================================================================
+         HEADER & IITIAN STYLE NAVIGATION
+         ========================================================================== -->
+    <header>
+        <div class="header-brand">
+            <div class="empowerment-icons">
+                <!-- Academic Cap SVG -->
+                <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+                <!-- Flame/Power SVG -->
+                <svg viewBox="0 0 24 24"><path d="M11.71 19.33c-.59 0-1.12-.22-1.55-.66-.43-.44-.66-.99-.66-1.58 0-.58.23-1.14.66-1.57.43-.44.96-.66 1.55-.66.58 0 1.11.22 1.54.66.44.43.66.99.66 1.57 0 .59-.22 1.14-.66 1.58-.43.44-.96.66-1.54.66zm.29-17.33l-1.5 1.5c-3.1 3.1-4.5 4.97-4.5 7.5 0 3.31 2.69 6 6 6s6-2.69 6-6c0-2.53-1.4-4.4-4.5-7.5l-1.5-1.5z"/></svg>
+            </div>
+            <div>
+                <h1>IITian Academy</h1>
+                <p>IBDP EXCLUSIVE PREPARATION SPACE</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#desmos-section">Desmos Scientific</a></li>
+                <li><a href="#geogebra-section">GeoGebra Graphing</a></li>
+                <li><a href="#reflection-section">Reflection Point</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ==========================================================================
+         ALAL FOCUS TIMER SECTION
+         ========================================================================== -->
+    <div class="timer-container">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <strong style="font-size: 20px; color: var(--primary-color);">ALAL FOCUS TIMER</strong>
+            <div class="timer-inputs">
+                <input type="number" id="minutes-input" placeholder="Min" min="0" value="45">
+            </div>
+        </div>
+        
+        <div class="timer-display" id="time-display">45:00</div>
+        
+        <div class="timer-controls">
+            <button onclick="startTimer()">START</button>
+            <button onclick="pauseTimer()">PAUSE</button>
+            <button onclick="resetTimer()">RESET</button>
+        </div>
+    </div>
+
+    <!-- Hidden Audio for Cock Crow Sound (Using a reliable public domain sound URL) -->
+    <audio id="cock-crow-sound" src="https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg" preload="auto"></audio>
+
+    <!-- ==========================================================================
+         MAIN CONTENT: STRETCHED PAST PAPERS
+         ========================================================================== -->
+    <main class="papers-section">
+        
+        <!-- PAPER 1: BT PP1 -->
+        <div class="paper-module">
+            <div class="paper-title">
+                <span>IBDP Paper Analysis: <strong>BT PP1 .pdf</strong></span>
+            </div>
+            <div class="pdf-container">
+                <!-- Using embed/object with #toolbar=0 to restrict built-in PDF print/download UI -->
+                <embed src="archives/BT PP1 .pdf#toolbar=0&navpanes=0&scrollbar=1" type="application/pdf">
+            </div>
+            <button class="ogunna-btn" onclick="toggleReveal('reveal-1')">▼ OGUNNA REVEAL: CHECK MARKSCHEME ▼</button>
+            <div class="markscheme-content" id="reveal-1">
+                <h3>Markscheme / Solutions for BT PP1</h3>
+                <p><em>Add your specific markscheme images or text here by referencing the assets, e.g., <code>&lt;img src="archives/markscheme1.png"&gt;</code></em></p>
+                <p>Ensure to cross-reference your working with the steps provided in the official breakdown.</p>
+            </div>
+        </div>
+
+        <!-- PAPER 2: Bivariate Stats -->
+        <div class="paper-module">
+            <div class="paper-title">
+                <span>IBDP Paper Analysis: <strong>Bivariate Stats.pdf</strong></span>
+            </div>
+            <div class="pdf-container">
+                <embed src="archives/Bivariate Stats.pdf#toolbar=0&navpanes=0&scrollbar=1" type="application/pdf">
+            </div>
+            <button class="ogunna-btn" onclick="toggleReveal('reveal-2')">▼ OGUNNA REVEAL: CHECK MARKSCHEME ▼</button>
+            <div class="markscheme-content" id="reveal-2">
+                <h3>Markscheme / Solutions for Bivariate Stats</h3>
+                <p><em>Workspace for Bivariate Stats solutions.</em></p>
+            </div>
+        </div>
+
+        <!-- PAPER 3: EXOLOGS PP1 AA HL -->
+        <div class="paper-module">
+            <div class="paper-title">
+                <span>IBDP Paper Analysis: <strong>EXOLOGS PP1 AA HL.pdf</strong></span>
+            </div>
+            <div class="pdf-container">
+                <embed src="archives/EXOLOGS PP1 AA HL.pdf#toolbar=0&navpanes=0&scrollbar=1" type="application/pdf">
+            </div>
+            <button class="ogunna-btn" onclick="toggleReveal('reveal-3')">▼ OGUNNA REVEAL: CHECK MARKSCHEME ▼</button>
+            <div class="markscheme-content" id="reveal-3">
+                <h3>Markscheme / Solutions for EXOLOGS PP1 AA HL</h3>
+                <p><em>Workspace for EXOLOGS AA HL solutions. Check your logarithm laws carefully!</em></p>
+            </div>
+        </div>
+
     </main>
 
-    <div class="resize-divider-bar" id="pane-resize-handle"></div>
-
-    <aside class="pane-right-sidebar">
-      <div class="calculator-tab-strip">
-        <button class="calc-tab-trigger active-tab" onclick="switchComputationalEngine('desmos-scientific', this)">Desmos Scientific</button>
-        <button class="calc-tab-trigger" onclick="switchComputationalEngine('geogebra-graphing', this)">GeoGebra Graphing</button>
-      </div>
-      
-      <div class="calculator-sandbox-viewport">
-        <iframe class="calculator-embedded-iframe active-iframe" id="desmos-scientific" src="https://www.desmos.com/scientific"></iframe>
-        <iframe class="calculator-embedded-iframe" id="geogebra-graphing" src="https://www.geogebra.org/classic/graphing"></iframe>
-      </div>
-    </aside>
-
-  </div>
-
-  <audio id="rooster-alarm-stream" src="https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg" preload="auto"></audio>
-
-  <script>
-    /* ==========================================================================
-       ARCHIVE SYSTEM INVENTORY MATRIX (RELATIVE ARCHIVE MAPPING)
-       ========================================================================== */
-    const systemArchiveDatabase = [
-      {
-        id: "uefi-01",
-        title: "Exponents & Logarithms Validation Run",
-        year: "2026",
-        topic: "exponents",
-        questionPdf: "./archives/EXOLOGS PP1 AA HL.pdf",
-        markschemePdf: "./archives/EXOLOGS PP1 AA HL MS.pdf"
-      },
-      {
-        id: "uefi-02",
-        title: "Arithmetic & Geometric Matrix Evaluation",
-        year: "2025",
-        topic: "sequences",
-        questionPdf: "./archives/SEQUENCES PP2 AA.pdf",
-        markschemePdf: "./archives/SEQUENCES PP2 AA MS.pdf"
-      },
-      {
-        id: "uefi-03",
-        title: "HL Complex Numbers Advanced Test Matrix",
-        year: "2024",
-        topic: "complex",
-        questionPdf: "./archives/COMPLEX NUMBERS HL.pdf",
-        markschemePdf: "./archives/COMPLEX NUMBERS HL MS.pdf"
-      },
-      {
-        id: "uefi-04",
-        title: "Binomial Expansion Theorem Parameters",
-        year: "2023",
-        topic: "binomial",
-        questionPdf: "./archives/BINOMIAL THEOREM AA.pdf",
-        markschemePdf: "./archives/BINOMIAL THEOREM AA MS.pdf"
-      }
-    ];
-
-    // Core Runtime Application State Tracking Pools
-    let activeExaminationItem = null;
-    let criteriaRevealActive = false;
-    let applicationTimerInterval = null;
-    let runningSecondsRemaining = 0;
-    let executionIsPaused = false;
-    
-    // Consult Later Tracked Primary Key Hash Set
-    const flaggedConsultationIds = new Set();
-
-    /* ==========================================================================
-       MOUSE DRAG INTERACTIVE PANEL RESIZE SYSTEM
-       ========================================================================== */
-    const layoutWrapper = document.getElementById('core-workspace-layout');
-    const resizeHandle = document.getElementById('pane-resize-handle');
-
-    resizeHandle.addEventListener('mousedown', function(initialEvent) {
-      initialEvent.preventDefault();
-      resizeHandle.classList.add('is-dragging');
-      
-      document.addEventListener('mousemove', processPanelResizeCalculation);
-      document.addEventListener('mouseup', terminatePanelResizeTracking);
-    });
-
-    function processPanelResizeCalculation(moveEvent) {
-      const globalViewportWidth = window.innerWidth;
-      // Calculate layout coordinates left-to-right relative path calculations
-      const rightSidebarDynamicWidth = globalViewportWidth - moveEvent.clientX;
-      
-      // Structural boundary enforcement matrices
-      if (rightSidebarDynamicWidth > 280 && rightSidebarDynamicWidth < (globalViewportWidth - 450)) {
-        layoutWrapper.style.gridTemplateColumns = `310px 1fr ${rightSidebarDynamicWidth}px`;
-      }
-    }
-
-    function terminatePanelResizeTracking() {
-      resizeHandle.classList.remove('is-dragging');
-      document.removeEventListener('mousemove', processPanelResizeCalculation);
-      document.removeEventListener('mouseup', terminatePanelResizeTracking);
-    }
-
-    /* ==========================================================================
-       POMODORO SCHEDULER ENGINE & ALARM TRIGGER LOGIC
-       ========================================================================== */
-    function executeSystemInitialization(selectedMinutes) {
-      document.getElementById("session-init-modal").style.display = "none";
-      runningSecondsRemaining = selectedMinutes * 60;
-      updateVisualClockDisplay();
-      
-      if (applicationTimerInterval) clearInterval(applicationTimerInterval);
-      
-      applicationTimerInterval = setInterval(() => {
-        if (!executionIsPaused && runningSecondsRemaining > 0) {
-          runningSecondsRemaining--;
-          updateVisualClockDisplay();
-          
-          if (runningSecondsRemaining === 0) {
-            clearInterval(applicationTimerInterval);
-            dispatchSystemAlarmRoutine();
-          }
-        }
-      }, 1000);
-
-      renderInventoryCollectionFeed(systemArchiveDatabase);
-      if(systemArchiveDatabase.length > 0) processArchiveItemSelection(systemArchiveDatabase[0].id);
-    }
-
-    function updateVisualClockDisplay() {
-      const minutesSegment = Math.floor(runningSecondsRemaining / 60);
-      const secondsSegment = runningSecondsRemaining % 60;
-      document.getElementById("timer-clock").innerText = 
-        `${String(minutesSegment).padStart(2, '0')}:${String(secondsSegment).padStart(2, '0')}`;
-    }
-
-    function toggleTimerState() {
-      executionIsPaused = !executionIsPaused;
-      const toggleButton = document.getElementById("timer-toggle-action");
-      toggleButton.innerText = executionIsPaused ? "Resume Session" : "Pause Execution";
-      toggleButton.style.backgroundColor = executionIsPaused ? "var(--safaricom-green)" : "rgba(255,255,255,0.1)";
-    }
-
-    function reinitializeWorkspaceEngine() {
-      executionIsPaused = true;
-      document.getElementById("session-init-modal").style.display = "flex";
-    }
-
-    function dispatchSystemAlarmRoutine() {
-      const audioObject = document.getElementById("rooster-alarm-stream");
-      audioObject.play().catch(err => console.log("Audio resource interaction deferred: ", err));
-      
-      alert("⏰ EVALUATION WINDOW CLOSURE: Session complete. Activate the Ogunna Reveal routine to cross-reference criteria matrices.");
-    }
-
-    /* ==========================================================================
-       INVENTORY ENGINE AND TOPICAL FILTER OPERATIONS
-       ========================================================================== */
-    function renderInventoryCollectionFeed(dataset) {
-      const listContainer = document.getElementById("inventory-render-target");
-      listContainer.innerHTML = "";
-      
-      if(dataset.length === 0) {
-        listContainer.innerHTML = `<div class="consult-empty-state">No matches found within criteria.</div>`;
-        return;
-      }
-
-      dataset.forEach(item => {
-        const structuralCard = document.createElement("div");
-        const isActive = activeExaminationItem && activeExaminationItem.id === item.id;
-        structuralCard.className = `examination-item-card ${isActive ? 'active-selection' : ''}`;
-        structuralCard.onclick = () => processArchiveItemSelection(item.id);
+    <!-- ==========================================================================
+         RESIZABLE CALCULATORS (DESMOS & GEOGEBRA)
+         ========================================================================== -->
+    <section class="tools-section">
+        <h2 class="section-heading">Powerful Computational Space</h2>
+        <p style="text-align: center; margin-bottom: 20px;"><em>Drag the bottom right corner of the containers below to squeeze or expand the workspace as you solve papers above.</em></p>
         
-        structuralCard.innerHTML = `
-          <h4>${item.title}</h4>
-          <p>Window: ${item.year} | Cluster: ${item.topic.toUpperCase()}</p>
-        `;
-        listContainer.appendChild(structuralCard);
-      });
-    }
+        <div class="calculators-grid">
+            
+            <!-- Desmos Container -->
+            <div class="resizable-wrapper" id="desmos-section">
+                <div class="resizable-title">Desmos Scientific Calculator (Resizable)</div>
+                <!-- Embedded Desmos Scientific -->
+                <iframe src="https://www.desmos.com/scientific" allowfullscreen></iframe>
+            </div>
 
-    function processInventoryFiltering() {
-      const targetTopicNode = document.getElementById("filter-topic-node").value;
-      const targetYearNode = document.getElementById("filter-year-node").value;
-      const searchKeyPhrase = document.getElementById("search-input-node").value.toLowerCase();
+            <!-- GeoGebra Container -->
+            <div class="resizable-wrapper" id="geogebra-section">
+                <div class="resizable-title">GeoGebra Classic Graphing (Resizable)</div>
+                <!-- Embedded GeoGebra Classic -->
+                <iframe src="https://www.geogebra.org/classic" allowfullscreen></iframe>
+            </div>
 
-      const calculatedSubsets = systemArchiveDatabase.filter(item => {
-        const contextTopicMatch = (targetTopicNode === "all" || item.topic === targetTopicNode);
-        const contextYearMatch = (targetYearNode === "all" || item.year === targetYearNode);
-        const contextualStringMatch = item.title.toLowerCase().includes(searchKeyPhrase);
-        return contextTopicMatch && contextYearMatch && contextualStringMatch;
-      });
+        </div>
+    </section>
 
-      renderInventoryCollectionFeed(calculatedSubsets);
-    }
+    <!-- ==========================================================================
+         REFLECTION & NOTES POINT
+         ========================================================================== -->
+    <section class="reflection-section" id="reflection-section">
+        <div class="reflection-container">
+            <h2 class="section-heading">Reflection Point & Quick Notes</h2>
+            <p style="margin-bottom: 15px; font-weight: bold;">Document the questions you found challenging, conceptual gaps, and strategic reflections below:</p>
+            
+            <textarea id="reflection-notes" placeholder="Example: In BT PP1, question 4, I struggled with the chain rule application. I need to review..."></textarea>
+            
+            <button class="download-btn" onclick="downloadNotes()">
+                <!-- Download Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download Reflections to Local Drive
+            </button>
+        </div>
+    </section>
 
-    function processArchiveItemSelection(targetPrimaryKeyId) {
-      activeExaminationItem = systemArchiveDatabase.find(doc => doc.id === targetPrimaryKeyId);
-      criteriaRevealActive = false;
-      
-      document.getElementById("active-document-title-label").innerText = `[EXAM CORPUS] ${activeExaminationItem.title}`;
-      document.getElementById("pdf-core-viewport").src = activeExaminationItem.questionPdf;
-      
-      const revealTriggerElement = document.getElementById("ogunna-reveal-trigger");
-      revealTriggerElement.innerHTML = "⚡ OGUNNA REVEAL: MARK SCHEME";
-      revealTriggerElement.style.background = "linear-gradient(135deg, var(--safaricom-red) 0%, #a30000 100%)";
-      
-      synchronizeInterfaceFlagIndicatorState();
-      processInventoryFiltering(); // Keeps current list selections structurally unified
-    }
+    <!-- ==========================================================================
+         JAVASCRIPT LOGIC
+         ========================================================================== -->
+    <script>
+        /* --------------------------------------------------------------------------
+           1. ANTI-PRINT & ANTI-DOWNLOAD KEYSTROKE BLOCKER
+           -------------------------------------------------------------------------- */
+        document.addEventListener("keydown", function(event) {
+            // Block Ctrl+P (Windows/Linux) and Cmd+P (Mac)
+            if ((event.ctrlKey || event.metaKey) && (event.key === "p" || event.key === "P")) {
+                event.preventDefault();
+                alert("ACCESS DENIED: Printing is strictly disabled to protect the integrity of this study space.");
+                return false;
+            }
+            // Block Ctrl+S / Cmd+S
+            if ((event.ctrlKey || event.metaKey) && (event.key === "s" || event.key === "S")) {
+                event.preventDefault();
+                alert("ACCESS DENIED: Direct page saving is disabled. Please use the Reflection Point to download your notes.");
+                return false;
+            }
+        });
 
-    /* ==========================================================================
-       OGUNNA CRITERIA INTEGRATED REVEAL LOGIC
-       ========================================================================== */
-    function toggleCriteriaRevealState() {
-      if (!activeExaminationItem) return;
-      criteriaRevealActive = !criteriaRevealActive;
-      
-      const viewportElement = document.getElementById("pdf-core-viewport");
-      const buttonTriggerNode = document.getElementById("ogunna-reveal-trigger");
-      const dynamicLabelNode = document.getElementById("active-document-title-label");
+        // Disable Context Menu (Right Click) to prevent simple "Save As" or "Print" via mouse
+        document.addEventListener("contextmenu", function(event) {
+            event.preventDefault();
+            alert("Context menu is disabled in the active focus zone.");
+        });
 
-      if (criteriaRevealActive) {
-        viewportElement.src = activeExaminationItem.markschemePdf;
-        buttonTriggerNode.innerHTML = "◀ RETURN TO TEST CORE";
-        buttonTriggerNode.style.background = "linear-gradient(135deg, var(--safaricom-green) 0%, var(--safaricom-green-hover) 100%)";
-        dynamicLabelNode.innerText = `[CRITERIA ARCHIVE VAL] ${activeExaminationItem.title}`;
-      } else {
-        viewportElement.src = activeExaminationItem.questionPdf;
-        buttonTriggerNode.innerHTML = "⚡ OGUNNA REVEAL: MARK SCHEME";
-        buttonTriggerNode.style.background = "linear-gradient(135deg, var(--safaricom-red) 0%, #a30000 100%)";
-        dynamicLabelNode.innerText = `[EXAM CORPUS] ${activeExaminationItem.title}`;
-      }
-    }
+        /* --------------------------------------------------------------------------
+           2. ALAL FOCUS TIMER LOGIC
+           -------------------------------------------------------------------------- */
+        let timerInterval;
+        let totalSeconds = 0;
+        let isRunning = false;
+        
+        const display = document.getElementById('time-display');
+        const minutesInput = document.getElementById('minutes-input');
+        const audioAlarm = document.getElementById('cock-crow-sound');
 
-    /* ==========================================================================
-       DYNAMIC CONSULTATION & DIFFICULT BOOKMARK LOGIC MATRIX
-       ========================================================================== */
-    function toggleActiveItemFlagState() {
-      if (!activeExaminationItem) return;
-      
-      const targetId = activeExaminationItem.id;
-      if (flaggedConsultationIds.has(targetId)) {
-        flaggedConsultationIds.delete(targetId);
-      } else {
-        flaggedConsultationIds.add(targetId);
-      }
-      
-      synchronizeInterfaceFlagIndicatorState();
-      rebuildFlaggedConsultationDisplayPool();
-    }
-
-    function synchronizeInterfaceFlagIndicatorState() {
-      const flagButton = document.getElementById("flag-toggle-trigger");
-      if (activeExaminationItem && flaggedConsultationIds.has(activeExaminationItem.id)) {
-        flagButton.classList.add('is-flagged');
-        flagButton.innerText = "⭐ Item Flagged for Review";
-      } else {
-        flagButton.classList.remove('is-flagged');
-        flagButton.innerText = "⭐ Flag As Difficult";
-      }
-    }
-
-    function rebuildFlaggedConsultationDisplayPool() {
-      const storageBoxContainer = document.getElementById("flagged-repository-target");
-      storageBoxContainer.innerHTML = "";
-      
-      if (flaggedConsultationIds.size === 0) {
-        storageBoxContainer.innerHTML = `<div class="consult-empty-state">No items flagged for consultation yet. Click flag icon to save.</div>`;
-        return;
-      }
-
-      systemArchiveDatabase.forEach(item => {
-        if (flaggedConsultationIds.has(item.id)) {
-          const customFlaggedRowElement = document.createElement("div");
-          customFlaggedRowElement.className = "examination-item-card";
-          customFlaggedRowElement.style.borderColor = "rgba(230, 0, 0, 0.4)";
-          customFlaggedRowElement.style.background = "rgba(230, 0, 0, 0.02)";
-          customFlaggedRowElement.onclick = () => processArchiveItemSelection(item.id);
-          
-          customFlaggedRowElement.innerHTML = `
-            <h4 style="font-size: 0.82rem; color: #fecaca;">⚠️ ${item.title}</h4>
-            <p style="color: #fda4af;">Review Core: ${item.topic.toUpperCase()}</p>
-          `;
-          storageBoxContainer.appendChild(customFlaggedRowElement);
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
         }
-      });
-    }
 
-    /* ==========================================================================
-       COMPUTATIONAL ENGINE SANDBOX TOGGLE MECHANICS
-       ========================================================================== */
-    function switchComputationalEngine(selectedSandboxId, matchingTabControlNode) {
-      document.querySelectorAll(".calculator-embedded-iframe").forEach(frameNode => {
-        frameNode.classList.remove("active-iframe");
-      });
-      document.querySelectorAll(".calc-tab-trigger").forEach(tabControlNode => {
-        tabControlNode.classList.remove("active-tab");
-      });
-      
-      document.getElementById(selectedSandboxId).classList.add("active-iframe");
-      matchingTabControlNode.classList.add("active-tab");
-    }
-  </script>
+        function updateDisplay() {
+            display.textContent = formatTime(totalSeconds);
+        }
+
+        function startTimer() {
+            if (isRunning) return;
+            
+            // If starting from 0, grab the input value
+            if (totalSeconds <= 0) {
+                let mins = parseInt(minutesInput.value);
+                if (isNaN(mins) || mins <= 0) mins = 45; // Default 45 mins
+                totalSeconds = mins * 60;
+            }
+            
+            updateDisplay();
+            isRunning = true;
+            
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                updateDisplay();
+                
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    totalSeconds = 0;
+                    updateDisplay();
+                    triggerAlalFocusAlarm();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            let mins = parseInt(minutesInput.value);
+            if (isNaN(mins) || mins <= 0) mins = 45;
+            totalSeconds = mins * 60;
+            updateDisplay();
+            
+            // Stop audio if it's currently playing
+            audioAlarm.pause();
+            audioAlarm.currentTime = 0;
+        }
+
+        function triggerAlalFocusAlarm() {
+            // Play the Cock Crow sound
+            audioAlarm.play().catch(e => {
+                console.log("Audio play blocked by browser. Please interact with the document first.");
+                alert("ALAL FOCUS! Time is up! (Audio was blocked by your browser settings).");
+            });
+            
+            // Flash the timer display for visual cue
+            let flashCount = 0;
+            let flashInterval = setInterval(() => {
+                display.style.backgroundColor = display.style.backgroundColor === 'red' ? 'white' : 'red';
+                display.style.color = display.style.color === 'white' ? 'var(--primary-color)' : 'white';
+                flashCount++;
+                if(flashCount > 10) {
+                    clearInterval(flashInterval);
+                    display.style.backgroundColor = 'white';
+                    display.style.color = 'var(--primary-color)';
+                }
+            }, 300);
+        }
+
+        /* --------------------------------------------------------------------------
+           3. OGUNNA REVEAL (MARKSCHEME TOGGLE)
+           -------------------------------------------------------------------------- */
+        function toggleReveal(elementId) {
+            const el = document.getElementById(elementId);
+            if (el.style.display === "block") {
+                el.style.display = "none";
+            } else {
+                el.style.display = "block";
+                // Smooth scroll to the reveal section so the student immediately sees it
+                el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        /* --------------------------------------------------------------------------
+           4. REFLECTION NOTES DOWNLOADER
+           -------------------------------------------------------------------------- */
+        function downloadNotes() {
+            const textContent = document.getElementById('reflection-notes').value;
+            
+            if (textContent.trim() === "") {
+                alert("Your reflection space is empty. Write some notes before downloading!");
+                return;
+            }
+
+            // Create a blob with the text data
+            const blob = new Blob([textContent], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+            
+            // Create a temporary anchor element to trigger download
+            const a = document.createElement("a");
+            
+            // Generate a timestamp for the filename
+            const date = new Date();
+            const dateString = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`;
+            
+            a.href = url;
+            a.download = `IBDP_Reflections_${dateString}.txt`;
+            
+            document.body.appendChild(a);
+            a.click();
+            
+            // Cleanup
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        /* --------------------------------------------------------------------------
+           5. SMOOTH SCROLLING FOR NAVIGATION LINKS
+           -------------------------------------------------------------------------- */
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetEl = document.getElementById(targetId);
+                
+                if (targetEl) {
+                    // Offset for the fixed header
+                    const headerOffset = 80;
+                    const elementPosition = targetEl.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  
+                    window.scrollTo({
+                         top: offsetPosition,
+                         behavior: "smooth"
+                    });
+                }
+            });
+        });
+
+    </script>
 </body>
 </html>
