@@ -972,7 +972,7 @@
         </div>
     </div>
 
-    <!-- TI-84 Plus GDC Calculator Window -->
+    <!-- TI-84 Plus GDC Calculator Window (Embed-Locked) -->
     <div class="tool-window" id="window-ti84">
         <div class="window-header" onmousedown="initDragWindow(event, 'window-ti84')">
             <div class="window-title">
@@ -984,10 +984,16 @@
             </div>
         </div>
         <div class="window-body">
-            <iframe src="https://ti84calc.com" title="TI-84 Plus GDC Emulator"></iframe>
+            <iframe 
+                src="https://ading2210.github.io/ti84pce-html5/" 
+                title="TI-84 Plus GDC Emulator"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                style="width: 100%; height: 100%; border: none;">
+            </iframe>
             <div class="resize-grip"></div>
         </div>
     </div>
+
 
 
     <!-- Rough Notes / Scratchpad Window -->
@@ -1475,6 +1481,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
