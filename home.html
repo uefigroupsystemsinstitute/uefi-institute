@@ -2,973 +2,1231 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>UEFI Group Systems Institute | Global Excellence</title>
-    <meta name="title" content="UEFI Group Systems Institute | Global Excellence">
-    <meta name="description" content="Bridging the gap between rural potential and global capital. Engineering world-class computational solutions from Narok, Kenya to the world.">
-    <meta name="keywords" content="UEFI, UEFI Systems Institute, UEFI SI, Narok Tech, Kenyan AI, STEM Africa, Computational Excellence">
-    <meta name="author" content="UEFI Institute">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="UEFI Institute - Building the architects of tomorrow from Narok to the global stage.">
+    <title>UEFI Institute | System Architecture & Enrollment</title>
 
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://uefigroupsystemsinstitute.github.io/uefi-institute/">
-    <meta property="og:title" content="UEFI Group Systems Institute">
-    <meta property="og:description" content="Engineering Global Transformation through First-Principles. Join the apex of computation.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200">
+    <!-- Google Fonts: JetBrains Mono for Code/Tech feel, Inter for extreme readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght=400;700&display=swap" rel="stylesheet">
-    
     <style>
+        /* ==========================================================================
+           UEFI INSTITUTE // GLOBAL DESIGN SYSTEM & VARIABLES
+           ========================================================================== */
         :root {
-            /* Kenyan Flag Exact Hex Architecture */
-            --kenya-black: #000000;
-            --kenya-red: #BB0000;
-            --kenya-green: #54E346; 
-            --white: #ffffff;
+            /* IITIAN ACADEMY DEEP BLUE PALETTE */
+            --iit-blue-base: #002147;
+            --iit-blue-dark: #001530;
+            --iit-blue-darker: #000c1f;
+            --iit-blue-light: #0a3d7a;
+            --iit-blue-glow: rgba(0, 33, 71, 0.6);
             
-            /* Structural Colors */
-            --bg-obsidian: #0A0A0A; 
-            --off-white: #F9F9F9;
-            --text-dark: #111111;
-            --muted-gray: #64748b;
+            /* SAFARICOM BRAND COLORS */
+            --safaricom-green: #43B02A;
+            --safaricom-green-glow: rgba(67, 176, 42, 0.4);
+            --safaricom-green-dark: #2c7a1a;
+            
+            --safaricom-red: #ED1C24;
+            --safaricom-red-glow: rgba(237, 28, 36, 0.4);
+            --safaricom-red-dark: #b31016;
+
+            /* NEUTRALS & TEXT */
+            --white: #FFFFFF;
+            --gray-100: #F3F4F6;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-800: #1F2937;
+            
+            /* GLASSMORPHISM & UI VARIABLES */
+            --glass-bg: rgba(0, 21, 48, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.03);
+            
+            /* TYPOGRAPHY */
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* SPACING SYSTEM */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 8rem;
+
+            /* ANIMATION TIMINGS */
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        * {
+        /* ==========================================================================
+           RESET & GLOBAL STYLES
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
         }
 
         body {
-            background-color: var(--off-white);
-            color: var(--text-dark);
+            font-family: var(--font-sans);
+            background-color: var(--iit-blue-darker);
+            color: var(--gray-300);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
         }
 
         body.auth-locked {
-            overflow: hidden !important;
-        }
-
-        /* --- NAVIGATION --- */
-        header {
-            background-color: var(--white);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 5px solid transparent;
-            border-image: linear-gradient(to right, var(--kenya-black) 25%, var(--kenya-red) 25%, var(--kenya-red) 50%, var(--kenya-green) 50%, var(--kenya-green) 75%, var(--white) 75%) 1;
-            width: 100%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 5%;
-            height: 80px;
-            max-width: 1600px;
-            margin: auto;
-            gap: 20px;
-        }
-
-        /* --- TOP LEFT AUTHENTICATED ACCOUNT BADGE --- */
-        .account-badge-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #f1f5f9;
-            padding: 6px 12px;
-            border-radius: 30px;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-
-        .account-badge-container:hover {
-            background: #e2e8f0;
-        }
-
-        .account-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--kenya-green);
-        }
-
-        .account-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .account-name {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            max-width: 100px;
-            white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .account-logout-btn {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.6rem;
-            color: var(--kenya-red);
-            text-transform: uppercase;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            text-align: left;
-            font-weight: 700;
+        ::selection {
+            background-color: var(--safaricom-green);
+            color: var(--white);
         }
 
-        .account-logout-btn:hover {
-            text-decoration: underline;
+        /* ==========================================================================
+           BACKGROUND MESH CANVAS
+           ========================================================================== */
+        #network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            margin-right: auto;
+        .ambient-glow {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            background: radial-gradient(circle at 15% 50%, rgba(67, 176, 42, 0.05), transparent 40%),
+                        radial-gradient(circle at 85% 30%, rgba(237, 28, 36, 0.05), transparent 40%),
+                        radial-gradient(circle at 50% 80%, rgba(0, 33, 71, 0.8), transparent 60%);
         }
 
-        .logo img {
-            height: 45px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .logo span {
-            color: var(--kenya-black);
-            font-size: 1.1rem;
-            font-weight: 900;
-            letter-spacing: 1px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        
-        .logo span span { color: var(--kenya-green); }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-dark);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.7rem;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-links a:hover, .nav-links a.active-tab { color: var(--kenya-green); }
-
-        .btn-nav {
-            background-color: var(--kenya-green);
-            color: var(--text-dark) !important; 
-            padding: 8px 15px;
-            border-radius: 4px;
-            font-weight: 900 !important;
-            font-family: 'JetBrains Mono', monospace;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .btn-nav:hover { background: var(--kenya-red); color: var(--white) !important; }
-
-        /* --- MANDATORY AUTH OVERLAY GATEKEEPER --- */
-        .auth-overlay {
+        /* ==========================================================================
+           AUTHENTICATION OVERLAY (GLASSMORPHIC)
+           ========================================================================== */
+        #authOverlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(10, 10, 10, 0.96);
-            backdrop-filter: blur(8px);
-            z-index: 99999;
+            background: rgba(0, 12, 31, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 9999;
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            justify-content: center;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity var(--transition-smooth), visibility var(--transition-smooth);
         }
 
-        .auth-overlay.hidden {
+        #authOverlay.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
 
-        .auth-card {
-            background: var(--white);
+        .auth-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: var(--space-lg);
+            border-radius: 24px;
             width: 100%;
-            max-width: 440px;
-            padding: 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-            border-top: 6px solid var(--kenya-green);
+            max-width: 480px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
+                        inset 0 1px 0 rgba(255,255,255,0.1);
             text-align: center;
+            transform: translateY(0);
+            transition: transform var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
         }
 
-        .auth-header h2 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--kenya-black);
-            letter-spacing: -0.5px;
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--safaricom-red), var(--safaricom-green));
+        }
+
+        .auth-brand-lockup {
+            margin-bottom: var(--space-md);
+        }
+
+        .auth-brand-lockup h2 {
+            font-family: var(--font-mono);
+            color: var(--white);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
             margin-bottom: 0.5rem;
         }
 
-        .auth-header p {
-            font-size: 0.85rem;
-            color: var(--muted-gray);
-            margin-bottom: 2rem;
+        .auth-brand-lockup p {
+            color: var(--gray-400);
+            font-size: 0.9rem;
         }
 
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .auth-input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
             text-align: left;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .form-group label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-dark);
-        }
-
-        .form-group input {
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-group input:focus {
-            border-color: var(--kenya-black);
-        }
-
-        .auth-submit-btn {
-            background: var(--bg-obsidian);
-            color: var(--white);
-            border: none;
-            padding: 14px;
-            border-radius: 4px;
-            font-weight: 700;
-            font-family: 'JetBrains Mono', monospace;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            margin-top: 5px;
-            transition: background 0.2s;
-        }
-
-        .auth-submit-btn:hover {
-            background: var(--kenya-red);
-        }
-
-        .auth-divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 20px 0;
-            color: var(--muted-gray);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .auth-divider::before, .auth-divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .auth-divider:not(:empty)::before { margin-right: .5em; }
-        .auth-divider:not(:empty)::after { margin-left: .5em; }
-
-        .google-auth-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--white);
-            border: 2px solid #e2e8f0;
-            padding: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--text-dark);
-            transition: all 0.2s;
-        }
-
-        .google-auth-btn:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-        }
-
-        .google-auth-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        /* --- HERO --- */
-        .hero {
-            position: relative;
-            height: 85vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-obsidian);
-            overflow: hidden;
-            color: var(--white);
-            text-align: center;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(10, 10, 10, 0.5), rgba(10, 10, 10, 0.7)), 
-                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-        }
-
-        .hero-content { position: relative; z-index: 2; max-width: 1000px; padding: 0 20px; }
-
-        .hero-tag {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--kenya-green);
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
+        .auth-input-group label {
             display: block;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-400);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-mono);
         }
 
-        .hero h1 {
-            font-size: clamp(2.2rem, 6vw, 4.2rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
-        }
-
-        .hero h1 span { color: var(--kenya-green); font-style: italic; }
-        
-        .hero p {
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
-            color: #cbd5e1;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-        }
-
-        /* --- DYNAMIC SHOWCASE SLIDER --- */
-        .showcase-slider-container {
-            background-color: var(--white);
-            padding: 4rem 5% 2rem 5%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .auth-input {
             width: 100%;
-        }
-
-        .slider-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            height: 550px;
-            overflow: hidden;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
+            padding: 1rem 1.25rem;
             border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-bottom: 5px solid var(--kenya-green);
-            transition: border-color 0.5s;
+            color: var(--white);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: var(--safaricom-green);
+            box-shadow: 0 0 0 3px var(--safaricom-green-glow);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+            gap: 10px;
+        }
+
+        .btn-green {
+            background-color: var(--safaricom-green);
+            color: var(--white);
+            box-shadow: 0 4px 14px 0 var(--safaricom-green-glow);
+        }
+
+        .btn-green:hover {
+            background-color: var(--safaricom-green-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-google {
+            background-color: var(--white);
+            color: var(--gray-800);
+            margin-top: 1rem;
+        }
+
+        .btn-google:hover {
+            background-color: var(--gray-100);
+            transform: translateY(-2px);
         }
         
-        .slider-wrapper:hover { border-color: var(--kenya-red); }
+        .auth-divider {
+            margin: 2rem 0;
+            position: relative;
+            text-align: center;
+        }
+        
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--glass-border);
+        }
+        
+        .auth-divider span {
+            background: var(--iit-blue-dark);
+            padding: 0 1rem;
+            position: relative;
+            color: var(--gray-500);
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+        }
+
+        /* ==========================================================================
+           MAIN NAVIGATION
+           ========================================================================== */
+        .system-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(0,12,31,0.9) 0%, transparent 100%);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-brand {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-brand span {
+            color: var(--safaricom-green);
+        }
+
+        .account-profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .account-profile-badge:hover {
+            background: var(--glass-highlight);
+            border-color: var(--safaricom-red);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--safaricom-green);
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .logout-trigger {
+            font-size: 0.7rem;
+            color: var(--safaricom-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 10px;
+        }
+
+        /* ==========================================================================
+           SLIDER HERO ENGINE (Contextual wrapper for your JS logic)
+           ========================================================================== */
+        .hero-slider-engine {
+            position: relative;
+            height: 80vh;
+            min-height: 600px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
 
         .slide {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--bg-obsidian);
-        }
-
-        .slide.active { opacity: 1; z-index: 10; }
-
-        .slide img {
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            background-color: var(--bg-obsidian);
+            opacity: 0;
+            transition: opacity var(--transition-slow);
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            z-index: 1;
         }
 
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(10, 10, 10, 0.7);
+        .slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .slide-content {
+            max-width: 800px;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+        }
+
+        .slide.active .slide-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .slide-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--safaricom-green);
+            color: var(--safaricom-green);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .slide-title {
+            font-size: clamp(3rem, 5vw, 5rem);
+            line-height: 1.1;
             color: var(--white);
-            border: none;
-            width: 45px;
-            height: 45px;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .slide-desc {
+            font-size: 1.25rem;
+            color: var(--gray-300);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        /* Slider Controls */
+        .slider-controls {
+            position: absolute;
+            bottom: 5%;
+            right: 10%;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            cursor: pointer;
-            z-index: 20;
-            font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.3s;
+            cursor: pointer;
+            transition: all var(--transition-fast);
         }
 
-        .slider-btn:hover { background: var(--kenya-green); color: var(--text-dark); }
-        .prev-btn { left: 20px; }
-        .next-btn { right: 20px; }
+        .nav-btn:hover {
+            background: var(--iit-blue-light);
+            border-color: var(--safaricom-green);
+        }
 
-        .slider-dots {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+        .slider-indicators {
             display: flex;
             gap: 10px;
-            z-index: 20;
         }
 
         .dot {
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
+            background: var(--glass-border);
             cursor: pointer;
-            transition: 0.3s;
+            transition: all var(--transition-fast);
         }
 
-        .dot.active { background: var(--kenya-green); transform: scale(1.2); }
-
-        /* --- STATS BAR --- */
-        .stats-bar {
-            background: var(--white);
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            padding: 3rem 5%;
-            border-bottom: 1px solid #e2e8f0;
+        .dot.active {
+            background: var(--safaricom-green);
+            box-shadow: 0 0 10px var(--safaricom-green-glow);
+            transform: scale(1.2);
         }
 
-        .stat-item { text-align: center; border-right: 1px solid #e2e8f0; }
-        .stat-item:last-child { border-right: none; }
-        .stat-item h2 { font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; color: var(--kenya-black); }
-        .stat-item h2 span { color: var(--kenya-red); }
-        .stat-item p { font-weight: 700; color: var(--muted-gray); text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; margin-top: 5px;}
-
-        /* --- NEW SECTION: REGIONAL CHALLENGE TO COMPLETED FOCUS --- */
-        .regional-focus {
-            padding: 6rem 10%;
-            background-color: var(--white);
+        /* ==========================================================================
+           FOCUS CARDS & METRICS SECTION (Your exact code, heavily upgraded)
+           ========================================================================== */
+        .system-metrics-section {
+            padding: var(--space-xl) 5%;
+            position: relative;
+            z-index: 10;
         }
         
         .section-header {
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto 4rem auto;
+            margin-bottom: var(--space-lg);
         }
-        
-        .section-header .tag {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--kenya-red);
-            font-weight: bold;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
+
         .section-header h2 {
             font-size: 2.5rem;
-            font-weight: 900;
-            margin: 0.5rem 0 1rem 0;
-            color: var(--kenya-black);
+            color: var(--white);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--safaricom-green);
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .grid-cards {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
+        /* Base Card Styling */
         .focus-card {
-            background: var(--off-white);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
             padding: 2.5rem;
-            border-radius: 6px;
-            border-top: 4px solid var(--kenya-black);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+        }
+
+        .focus-card:hover {
+            transform: translateY(-10px);
+            z-index: 2;
+        }
+
+        /* Ambient glows inside cards */
+        .focus-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+            pointer-events: none;
+        }
+
+        .focus-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Alert Styling overrides */
+        .focus-card.red-alert {
+            border-top: 4px solid var(--safaricom-red);
         }
         
-        .focus-card.red-alert { border-top-color: var(--kenya-red); }
-        .focus-card.green-pass { border-top-color: var(--kenya-green); }
+        .focus-card.red-alert:hover {
+            box-shadow: 0 20px 40px -10px var(--safaricom-red-glow);
+            border-color: rgba(237, 28, 36, 0.3);
+        }
+
+        .focus-card.green-pass {
+            border-top: 4px solid var(--safaricom-green);
+        }
+
+        .focus-card.green-pass:hover {
+            box-shadow: 0 20px 40px -10px var(--safaricom-green-glow);
+            border-color: rgba(67, 176, 42, 0.3);
+        }
 
         .focus-card h3 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 1rem;
+            font-family: var(--font-mono);
+            letter-spacing: -2px;
         }
-        
+
         .focus-card h4 {
-            font-size: 1rem;
+            color: var(--white);
+            font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 1rem;
             text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
-        
+
         .focus-card p {
-            color: #475569;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
+            color: var(--gray-400);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
         }
 
         .data-source-link {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--kenya-red);
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            border-bottom: 1px dashed var(--kenya-red);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 1px;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid;
+            transition: all var(--transition-fast);
             width: fit-content;
-            transition: 0.2s ease;
         }
 
-        .data-source-link:hover {
-            color: var(--kenya-black);
-            border-bottom-color: var(--kenya-black);
+        .red-alert .data-source-link {
+            color: var(--safaricom-red);
+            border-bottom-color: rgba(237, 28, 36, 0.3);
         }
 
-        /* --- STRATEGY --- */
-        .strategy { padding: 6rem 10%; display: flex; align-items: center; gap: 4rem; background: var(--off-white); }
-        .strategy-text { flex: 1.2; }
-        .strategy-text h2 { color: var(--text-dark); font-size: 2.5rem; margin-bottom: 1.5rem; font-weight: 900; }
-        .strategy-text p { margin-bottom: 1.5rem; color: #334155; }
-        .strategy-image { flex: 0.8; }
-        .strategy-image img { width: 100%; border-radius: 4px; box-shadow: 20px 20px 0 var(--kenya-green); }
+        .red-alert .data-source-link:hover {
+            border-bottom-color: var(--safaricom-red);
+            padding-bottom: 0.5rem;
+        }
 
-        /* --- PILLARS --- */
-        .pillars-section { background: var(--bg-obsidian); padding: 6rem 10%; color: white; }
-        .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .card { 
-            background: rgba(255, 255, 255, 0.02); 
-            padding: 3rem; 
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: 0.3s;
+        .green-pass .data-source-link {
+            color: var(--safaricom-green);
+            border-bottom-color: rgba(67, 176, 42, 0.3);
         }
-        .card:hover { border-color: var(--kenya-green); transform: translateY(-5px); }
-        .card h3 { color: var(--kenya-green); margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; }
-        .card p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem; }
-        .card-link { color: white; text-decoration: none; font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; }
-        .card-link:hover { color: var(--kenya-red); }
 
-        /* --- STRATEGIC PARTNERS SECTION --- */
-        .partners-section {
-            background: var(--white);
-            padding: 6rem 10%;
-            text-align: center;
-            border-top: 1px solid #e2e8f0;
-        }
-        
-        .partners-section h2 {
-            color: var(--text-dark);
-            font-size: 2.2rem;
-            font-weight: 900;
-            margin-bottom: 3rem;
-            letter-spacing: -1px;
-        }
-        
-        .partners-grid {
+        /* ==========================================================================
+           STRATEGY SECTION 
+           ========================================================================== */
+        .strategy {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            align-items: center;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            max-width: 1400px;
+            margin: var(--space-xl) auto;
+            background: var(--iit-blue-base);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
-        
-        .partner-card {
-            background: var(--off-white);
-            border: 2px solid #f1f5f9;
-            padding: 30px 20px;
+
+        .strategy-text {
+            padding: var(--space-lg);
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            height: 160px;
-            text-decoration: none; 
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
-        
-        .partner-card:hover {
-            border-color: var(--kenya-green);
-            transform: translateY(-4px);
-            background: var(--white);
+
+        .strategy-text::before {
+            content: 'STRATEGY';
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-family: var(--font-mono);
+            font-size: 4rem;
+            color: rgba(255,255,255,0.03);
+            font-weight: 800;
+            pointer-events: none;
         }
-        
-        .partner-card img {
-            max-width: 90%;
-            max-height: 55px;
-            object-fit: contain;
-            margin-bottom: 15px;
-            display: block;
+
+        .strategy-text h2 {
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
         }
-        
-        .partner-card span {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+
+        .strategy-text p {
+            color: var(--gray-300);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .strategy-text a {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            border-left: 4px solid var(--safaricom-red);
+            transition: all var(--transition-fast);
+        }
+
+        .strategy-text a:hover {
+            background: rgba(255,255,255,0.1);
+            padding-left: 2.5rem;
+        }
+
+        .strategy-image {
+            position: relative;
+            height: 100%;
+            min-height: 500px;
+        }
+
+        .strategy-image img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(40%) contrast(1.2);
+            transition: filter var(--transition-slow);
+        }
+
+        .strategy-image:hover img {
+            filter: grayscale(0%) contrast(1);
+        }
+
+        .strategy-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--iit-blue-base) 0%, transparent 50%);
+        }
+
+        /* ==========================================================================
+           PILLARS SECTION
+           ========================================================================== */
+        .pillars-section {
+            padding: var(--space-xl) 5%;
+            background: linear-gradient(to bottom, transparent, var(--iit-blue-dark), transparent);
+            position: relative;
+        }
+
+        .pillars-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, var(--safaricom-green));
+        }
+
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .pillars .card {
+            background: rgba(0, 33, 71, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            transition: all var(--transition-smooth);
+            position: relative;
+        }
+
+        .pillars .card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--safaricom-green);
+            transition: width var(--transition-smooth);
+        }
+
+        .pillars .card:hover {
+            background: var(--iit-blue-base);
+            transform: translateY(-5px);
+        }
+
+        .pillars .card:hover::before {
+            width: 100%;
+        }
+
+        .pillars h3 {
+            font-family: var(--font-mono);
+            color: var(--white);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .pillars p {
+            color: var(--gray-400);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .card-link {
+            color: var(--safaricom-green);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
             font-weight: 700;
-            color: var(--text-dark);
+            text-decoration: none;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .card-link:hover {
+            color: var(--white);
+        }
+
+        /* ==========================================================================
+           PARTNERS SECTION
+           ========================================================================== */
+        .partners-section {
+            padding: var(--space-lg) 5%;
+            text-align: center;
+        }
+
+        .partners-section h2 {
+            font-family: var(--font-mono);
+            color: var(--gray-500);
+            font-size: 1rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            opacity: 0.8;
+            margin-bottom: 3rem;
         }
 
-        /* --- FOOTER --- */
-        footer { background: var(--bg-obsidian); color: var(--white); padding: 5rem 10% 2rem; border-top: 5px solid var(--kenya-black); }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
-        .footer-col h4 { color: var(--kenya-green); margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col li { margin-bottom: 0.8rem; }
-        .footer-col a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; }
-        .footer-col a:hover { color: var(--kenya-red); }
-        .footer-bottom { margin-top: 4rem; border-top: 1px solid #1e293b; padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.65rem; color: #475569; font-family: 'JetBrains Mono', monospace; }
+        .partners-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-        /* --- MOBILE ADAPTATION --- */
+        .partner-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            min-width: 250px;
+            filter: grayscale(100%) opacity(0.7);
+        }
+
+        .partner-card:hover {
+            filter: grayscale(0%) opacity(1);
+            background: var(--iit-blue-light);
+            border-color: var(--safaricom-green);
+            transform: scale(1.05);
+        }
+
+        .partner-card img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .partner-card span {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* ==========================================================================
+           FOOTER (Massively Expanded Architecture)
+           ========================================================================== */
+        footer {
+            background: var(--iit-blue-darker);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: var(--space-xl) 5% 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-glow {
+            position: absolute;
+            bottom: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80vw;
+            height: 500px;
+            background: radial-gradient(ellipse at bottom, rgba(0, 33, 71, 0.8), transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-col p {
+            color: var(--gray-400);
+            line-height: 1.8;
+            max-width: 300px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .footer-col ul li a::before {
+            content: '>';
+            color: var(--safaricom-red);
+            font-family: var(--font-mono);
+            margin-right: 8px;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all var(--transition-fast);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--safaricom-green);
+        }
+
+        .footer-col ul li a:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-bottom p {
+            color: var(--gray-500);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Breakpoints */
         @media (max-width: 1024px) {
-            .nav-links { display: none; }
-            .stats-bar { grid-template-columns: 1fr 1fr; gap: 2rem; }
-            .stat-item { border: none; }
-            .grid-cards { grid-template-columns: 1fr; gap: 1.5rem; }
-            .strategy { flex-direction: column; text-align: center; }
-            .strategy-image img { box-shadow: none; }
-            .partners-grid { grid-template-columns: repeat(2, 1fr); }
+            .strategy { grid-template-columns: 1fr; }
+            .strategy-image { min-height: 300px; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
-            .slider-wrapper { height: 400px; } 
         }
-        @media (max-width: 600px) {
-            .partners-grid { grid-template-columns: 1fr; }
-            .slider-wrapper { height: 300px; } 
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .slide-title { font-size: 2.5rem; }
+            .grid-cards { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body class="auth-locked">
+<body>
 
-    <div id="authOverlay" class="auth-overlay">
-        <div class="auth-card">
-            <div class="auth-header">
-                <h2>AUTHENTICATION NODES</h2>
-                <p>UEFI computational space access control protocol</p>
+    <!-- ==========================================================================
+         BACKGROUND MESH ENGINE (Visualizing Offline-First Infrastructure)
+         ========================================================================== -->
+    <div class="ambient-glow"></div>
+    <canvas id="network-canvas"></canvas>
+
+    <!-- ==========================================================================
+         AUTHENTICATION OVERLAY (GLASSMORPHIC)
+         ========================================================================== -->
+    <div id="authOverlay" class="hidden">
+        <div class="auth-container">
+            <div class="auth-brand-lockup">
+                <h2>SYSTEM ACCESS</h2>
+                <p>UEFI Institute // Secure Terminal Initialization</p>
             </div>
             
-            <form id="emailLoginForm" class="auth-form" onsubmit="handleEmailAuth(event)">
-                <div class="form-group">
-                    <label for="clientEmail">Secure Email Address</label>
-                    <input type="email" id="clientEmail" placeholder="client@domain.com" required>
+            <form id="emailLoginForm" onsubmit="handleEmailAuth(event)">
+                <div class="auth-input-group">
+                    <label for="clientEmail">Operator Email Address</label>
+                    <input type="email" id="clientEmail" class="auth-input" required placeholder="scholar@uefi.ac.ke">
                 </div>
-                <div class="form-group">
-                    <label for="clientPassword">Access Key</label>
-                    <input type="password" id="clientPassword" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="auth-submit-btn">Initialize Session</button>
+                
+                <button type="submit" class="btn btn-green">
+                    <span>Initialize Session</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
             </form>
 
-            <div class="auth-divider">OR CONTINUE WITH</div>
+            <div class="auth-divider">
+                <span>OR BIOMETRIC OVERRIDE</span>
+            </div>
 
-            <button class="google-auth-btn" onclick="handleGoogleAuth()">
-                <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+            <button onclick="handleGoogleAuth()" class="btn btn-google">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                 </svg>
-                Sign in with Google Account
+                <span>Authenticate via Google</span>
             </button>
         </div>
     </div>
 
-    <header>
-        <nav>
-            <div id="accountProfileBadge" class="account-badge-container" style="display: none;">
-                <img id="userAvatar" src="" alt="Avatar" class="account-avatar">
-                <div class="account-info">
-                    <span id="userName" class="account-name">Access Granted</span>
-                    <button class="account-logout-btn" onclick="terminateSession()">Terminate</button>
-                </div>
-            </div>
+    <!-- ==========================================================================
+         SYSTEM NAVIGATION HEADER
+         ========================================================================== -->
+    <header class="system-nav">
+        <a href="#" class="nav-brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--safaricom-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            UEFI <span>INSTITUTE</span>
+        </a>
 
-            <a href="home.html" class="logo">
-               <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo" onerror="this.style.display='none'">
-               <span>U.E.F.I. <span>INSTITUTE</span></span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="home.html" class="active-tab">Home</a></li>
-                <li><a href="abouts.html">About</a></li>
-                <li><a href="tech-lab.html">Tech Lab</a></li>
-                <li><a href="uefi-connect.html">UEFI Connect</a></li>
-                <li><a href="uefi-zoom.html">UEFI Zoom</a></li>
-                <li><a href="uefi-core-os.html">UEFI STUDY</a></li>
-                <li><a href="opportunities-hub.html">Opportunities</a></li>
-            </ul>
-        </nav>
+        <!-- Dynamic Profile Badge injected by JS -->
+        <div id="accountProfileBadge" class="account-profile-badge" style="display: none;">
+            <img id="userAvatar" src="" alt="Avatar" class="user-avatar">
+            <div style="display: flex; flex-direction: column;">
+                <span id="userName" class="user-name"></span>
+                <span class="logout-trigger" onclick="terminateSession()">Terminate Session</span>
+            </div>
+        </div>
     </header>
-    
-    <section class="hero">
-        <div class="hero-content">
-            <h1>UEFI Global - The Apex of <span>tech Computation</span> & Structural Empowerment.</h1>
-            <p>Directing world-class technological infrastructure into rural Kenya. Weaponizing raw intelligence to bridge the global capital gap from Narok to the world.</p>
-            <div style="margin-top: 2rem;">
-                <a href="courses.html" class="btn-nav" style="padding: 15px 35px; font-size: 0.8rem;">Explore Academic Paths</a>
-            </div>
-        </div>
-    </section>
 
-    <section class="showcase-slider-container">
-        <div class="slider-wrapper">
-            <button class="slider-btn prev-btn">&#10094;</button>
-            <button class="slider-btn next-btn">&#10095;</button>
-
+    <main>
+        <!-- ==========================================================================
+             HERO SLIDER ENGINE (Targeted by your JS script)
+             ========================================================================== -->
+        <section class="hero-slider-engine">
             <div class="slide active">
-                <img src="assets/D1.png" alt="D1 ">
-            </div>
-            <div class="slide">
-                <img src="assets/D18.png" alt="D18">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 1.png" alt="Fact 1 photo">
-            </div>
-            <div class="slide">
-                <img src="assets/D17.png" alt="D17">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 4.png" alt="Fact 4">
-            </div>
-            <div class="slide">
-                <img src="assets/D2.png" alt="D2">
-            </div>
-            <div class="slide">
-                <img src="assets/D16.png" alt="D16">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 2.png" alt="Fact 2 photo">
-            </div>
-            <div class="slide">
-                <img src="assets/D15.png" alt="D15">
-            </div>
-            <div class="slide">
-                <img src="assets/D1.png" alt="D1">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 4.png" alt="Fact 4">
-            </div>
-            <div class="slide">
-                <img src="assets/D14.png" alt="D14">
-            </div>
-            <div class="slide">
-                <img src="assets/D10.png" alt="D10">
-            </div>
-            <div class="slide">
-                <img src="assets/D5.png" alt="D5">
-            </div>
-            <div class="slide">
-                <img src="assets/D16.png" alt="D16">
-            </div>
-            <div class="slide">
-                <img src="assets/D13.png" alt="D13">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 3.png" alt="Fact 3">
-            </div>
-            <div class="slide">
-                <img src="assets/D3.png" alt="D3">
-            </div>
-            <div class="slide">
-                <img src="assets/D4.png" alt="D4">
-            </div>
-            <div class="slide">
-                <img src="assets/D6.png" alt="D6">
-            </div>
-            <div class="slide">
-                <img src="assets/D7.png" alt="D7">
-            </div>
-            <div class="slide">
-                <img src="assets/D8.png" alt="D8">
-            </div>
-            <div class="slide">
-                <img src="assets/D9.png" alt="D9">
-            </div>
-            <div class="slide">
-                <img src="assets/D11.png" alt="D11">
-            </div>
-            <div class="slide">
-                <img src="assets/D12.png" alt="D12">
-            </div>
-
-            <div class="slider-dots">
-                <div class="dot active"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
-        </div>
-    </section>
-
-    <div class="stats-bar">
-        <div class="stat-item"><h2>500+</h2><p>Active Scholars</p></div>
-        <div class="stat-item"><h2>30K<span>+</span></h2><p>Dropouts Targeted</p></div>
-        <div class="stat-item"><h2>250 KES/WEEK </h2><p>Cost to Underprivileged Students</p></div>
-        <div class="stat-item"><h2>$20k+</h2><p>Alpha Research Output</p></div>
-    </div>
-
-    <section class="regional-focus">
-        <div class="section-header">
-            <span class="tag">Empirical Societal Grounding</span>
-            <h2>Why Narok County? Why Now?</h2>
-            <p>Our technology hubs are engineered as a structural safety framework against vulnerable cultural exit vectors, replacing system displacement with remote intellectual opportunities.</p>
-        </div>
-        
-        <div class="grid-cards">
-            <div class="focus-card red-alert">
-                <div>
-                    <h3 style="color: var(--kenya-red);">28%</h3>
-                    <h4>Adolescent Pregnancy Crisis</h4>
-                    <p>According to data processed by the Kenya National Bureau of Statistics (KNBS), baseline drop-out vulnerabilities map heavily to system disruption risks. UEFI scales up physical tracking parameters to establish robust intervention pathways.</p>
+                <div class="slide-content">
+                    <span class="slide-badge">Global Node Active</span>
+                    <h1 class="slide-title">Engineering The Next African Century.</h1>
+                    <p class="slide-desc">A convergence of deep-tier algorithmic education and rural deployment infrastructure. We are not just building software; we are building structural power.</p>
                 </div>
-                <a href="https://www.knbs.or.ke" target="_blank" rel="noopener noreferrer" class="data-source-link">
-                    SOURCE // KNBS.OR.KE ↗
+            </div>
+            <div class="slide">
+                <div class="slide-content">
+                    <span class="slide-badge">Zero-Cost Network</span>
+                    <h1 class="slide-title">Mesh-Net Infrastructure.</h1>
+                    <p class="slide-desc">Bypassing commercial data limitations entirely. Delivering world-class Quant Forge computation directly to offline hardware hubs across Kenya.</p>
+                </div>
+            </div>
+
+            <!-- Slider Controls -->
+            <div class="slider-controls">
+                <div class="slider-indicators">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                </div>
+                <button class="nav-btn prev-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button class="nav-btn next-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             YOUR PROVIDED CODE: FOCUS CARDS (HEAVILY EXPANDED & STYLED)
+             ========================================================================== -->
+        <section class="system-metrics-section">
+            <div class="section-header">
+                <p>System Diagnostics</p>
+                <h2>CRITICAL VULNERABILITY INTERCEPTS</h2>
+            </div>
+
+            <div class="grid-cards">
+                
+                <!-- CARD 1: Adolescent Pregnancy Crisis -->
+                <div class="focus-card red-alert">
+                    <div>
+                        <h3 style="color: var(--safaricom-red);">28%</h3>
+                        <h4>Adolescent Pregnancy Crisis</h4>
+                        <p>According to data processed by the Kenya National Bureau of Statistics (KNBS), baseline drop-out vulnerabilities map heavily to system disruption risks. UEFI scales up physical tracking parameters to establish robust intervention pathways.</p>
+                    </div>
+                    <a href="https://www.knbs.or.ke" target="_blank" rel="noopener noreferrer" class="data-source-link">
+                        SOURCE // KNBS.OR.KE ↗
+                    </a>
+                </div>
+                
+                <!-- CARD 2: Out-Of-School Cohorts -->
+                <div class="focus-card red-alert">
+                    <div>
+                        <h3 style="color: var(--safaricom-red);">30,000+</h3>
+                        <h4>Out-Of-School Cohorts</h4>
+                        <p>National tracking records managed via the National Council for Nomadic Education in Kenya (NACONEK) show severe drop-out numbers driven by structural economic shifts. We actively intercept these brilliant minds, routing them directly into high-tier computation metrics.</p>
+                    </div>
+                    <a href="http://www.naconek.ke" target="_blank" rel="noopener noreferrer" class="data-source-link">
+                        SOURCE // NACONEK DATA ↗
+                    </a>
+                </div>
+                
+                <!-- CARD 3: Mesh Net Infrastructure -->
+                <div class="focus-card green-pass">
+                    <div>
+                        <h3 style="color: var(--safaricom-green);">Mesh net</h3>
+                        <h4>Offline-First Infrastructure</h4>
+                        <p>To completely beat data cost limitations, our learning modules run on zero-cost local networks deployed inside rural hardware hubs. Zero internet obligations for our scholars.</p>
+                    </div>
+                    <span class="data-source-link" style="color: var(--safaricom-green); border-bottom-color: rgba(67, 176, 42, 0.3); cursor: default;">
+                        INTERNAL ARCHITECTURE DEPLOYED 
+                    </span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             YOUR PROVIDED CODE: STRATEGY SECTION
+             ========================================================================== -->
+        <section class="strategy">
+            <div class="strategy-text">
+                <h2>The "Cross-Subsidization" Strategy: Buy One, Empower One.</h2>
+                <p>Every commercial enrollment from international students triggers an immediate physical hardware allocation and mentorship package for a high-potential scholar in rural Kenya.</p>
+                <p>We are creating a self-sustaining intellectual army. Your personal advancement funds a national transformation.</p>
+                <a href="support-us.html" style="color: var(--safaricom-green); font-weight: 900; font-family: 'JetBrains Mono'; text-decoration: none; border-bottom: 2px solid var(--safaricom-red); font-size: 0.8rem; letter-spacing: 1px; display: inline-block; width: fit-content; padding: 0.5rem 0;">VIEW SYSTEM ARCHITECTURE →</a>
+            </div>
+            <div class="strategy-image">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80" alt="Tech Lab Students in deep technical focus">
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             YOUR PROVIDED CODE: PILLARS SECTION
+             ========================================================================== -->
+        <section class="pillars-section">
+            <div class="section-header" style="margin-bottom: 3rem;">
+                <p>Operational Verticals</p>
+                <h2>CORE EXECUTION PILLARS</h2>
+            </div>
+            <div class="pillars">
+                
+                <div class="card">
+                    <h3>UEFI QUANT FORGE</h3>
+                    <p>Deep-tier algorithmic engineering. Financial simulations, complex variable mathematics, and high-performance physics systems built for global competitions.</p>
+                    <a href="tech-lab.html" class="card-link">INITIALIZE TERMINAL →</a>
+                </div>
+                
+                <div class="card">
+                    <h3>ANTHONINAH LABS</h3>
+                    <p>Strategic structural pipelines, health guidance modules, and digital access protection mechanisms for women entering the computational workspace.</p>
+                    <a href="anthoninas-initiative.html" class="card-link">VIEW INITIATIVE →</a>
+                </div>
+                
+                <div class="card">
+                    <h3>WILSON LEAD CORE</h3>
+                    <p>Advanced engineering tracks for at-risk young men. High-income digital opportunities and international university-grade scholarship paths.</p>
+                    <a href="wilsons-initiative.html" class="card-link">VIEW INITIATIVE →</a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             YOUR PROVIDED CODE: PARTNERS SECTION
+             ========================================================================== -->
+        <section class="partners-section">
+            <h2>Institutional Alliances & System Nodes</h2>
+            <div class="partners-grid">
+                
+                <a href="https://youtube.com/@quantforgeacademy?si=K0QnqU7dEJr1Ru1-" target="_blank" rel="noopener noreferrer" class="partner-card">
+                    <img src="https://ui-avatars.com/api/?name=QF&background=002147&color=43B02A&bold=true" alt="QuantForge Academy Logo">
+                    <span>QuantForge Academy</span>
                 </a>
-            </div>
-            
-            <div class="focus-card red-alert">
-                <div>
-                    <h3 style="color: var(--kenya-red);">30,000+</h3>
-                    <h4>Out-Of-School Cohorts</h4>
-                    <p>National tracking records managed via the National Council for Nomadic Education in Kenya (NACONEK) show severe drop-out numbers driven by structural economic shifts. We actively intercept these brilliant minds, routing them directly into high-tier computation metrics.</p>
-                </div>
-                <a href="http://www.naconek.ke" target="_blank" rel="noopener noreferrer" class="data-source-link">
-                    SOURCE // NACONEK DATA ↗
+
+                <a href="https://ecultureskenya.github.io/eCultures-Kenya-/home.html" target="_blank" rel="noopener noreferrer" class="partner-card">
+                    <img src="https://ui-avatars.com/api/?name=EK&background=002147&color=fff&bold=true" alt="eCultures Kenya Logo">
+                    <span>eCultures Kenya</span>
                 </a>
+
+                <a href="https://aid-for-aiming-africa-fbx6511.public.builtwithrocket.new/" target="_blank" rel="noopener noreferrer" class="partner-card">
+                    <img src="https://ui-avatars.com/api/?name=AA&background=002147&color=ED1C24&bold=true" alt="Aid For Aiming Africa Logo">
+                    <span>Aid For Aiming Africa</span>
+                </a>
+
+                <a href="https://jengamaliyouthflow.github.io/JengaMali-Youth-Flow-/home.html" target="_blank" rel="noopener noreferrer" class="partner-card">
+                    <img src="https://ui-avatars.com/api/?name=JM&background=002147&color=43B02A&bold=true" alt="JengaMali Youth Flow Logo">
+                    <span>JengaMali Youth Flow</span>
+                </a>
+
             </div>
-            
-            <div class="focus-card green-pass">
-                <div>
-                    <h3 style="color: var(--kenya-green);">Mesh net</h3>
-                    <h4>Offline-First Infrastructure</h4>
-                    <p>To completely beat data cost limitations, our learning modules run on zero-cost local networks deployed inside rural hardware hubs. Zero internet obligations for our scholars.</p>
-                </div>
-                <span class="data-source-link" style="color: var(--kenya-green); border-bottom-color: var(--kenya-green); cursor: default;">
-                    INTERNAL ARCHITECTURE  DEPLOYED 
-                </span>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="strategy">
-        <div class="strategy-text">
-            <h2>The "Cross-Subsidization" Strategy: Buy One, Empower One.</h2>
-            <p>Every commercial enrollment from international students triggers an immediate physical hardware allocation and mentorship package for a high-potential scholar in rural Kenya.</p>
-            <p>We are creating a self-sustaining intellectual army. Your personal advancement funds a national transformation.</p>
-            <a href="support-us.html" style="color: var(--kenya-green); font-weight: 900; font-family: 'JetBrains Mono'; text-decoration: none; border-bottom: 2px solid var(--kenya-red); font-size: 0.8rem; letter-spacing: 1px;">VIEW SYSTEM ARCHITECTURE →</a>
-        </div>
-        <div class="strategy-image">
-            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Tech Lab Students">
-        </div>
-    </section>
+    </main>
 
-    <section class="pillars-section">
-        <div class="pillars">
-            <div class="card">
-                <h3>UEFI QUANT FORGE</h3>
-                <p>Deep-tier algorithmic engineering. Financial simulations, complex variable mathematics, and high-performance physics systems built for global competitions.</p>
-                <a href="tech-lab.html" class="card-link">INITIALIZE TERMINAL →</a>
-            </div>
-            <div class="card">
-                <h3>ANTHONINAH LABS</h3>
-                <p>Strategic structural pipelines, health guidance modules, and digital access protection mechanisms for women entering the computational workspace.</p>
-                <a href="anthoninas-initiative.html" class="card-link">VIEW INITIATIVE →</a>
-            </div>
-            <div class="card">
-                <h3>WILSON LEAD CORE</h3>
-                <p>Advanced engineering tracks for at-risk young men. High-income digital opportunities and international university-grade scholarship paths.</p>
-                <a href="wilsons-initiative.html" class="card-link">VIEW INITIATIVE →</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="partners-section">
-        <h2>Institutional Alliances & System Nodes</h2>
-        <div class="partners-grid">
-            <a href="https://youtube.com/@quantforgeacademy?si=K0QnqU7dEJr1Ru1-" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/quantforge-logo.png" alt="QuantForge Academy Logo" onerror="this.style.opacity='0.5'">
-                <span>QuantForge Academy</span>
-            </a>
-
-            <a href="https://ecultureskenya.github.io/eCultures-Kenya-/home.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/ecultures-logo.png" alt="eCultures Kenya Logo" onerror="this.style.opacity='0.5'">
-                <span>eCultures Kenya</span>
-            </a>
-
-            <a href="https://aid-for-aiming-africa-fbx6511.public.builtwithrocket.new/" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/aaa-logo.png" alt="Aid For Aiming Africa Logo" onerror="this.style.opacity='0.5'">
-                <span>Aid For Aiming Africa</span>
-            </a>
-
-            <a href="https://jengamaliyouthflow.github.io/JengaMali-Youth-Flow-/home.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/jengamali-logo.png" alt="JengaMali Youth Flow Logo" onerror="this.style.opacity='0.5'">
-                <span>JengaMali Youth Flow</span>
-            </a>
-        </div>
-    </section>
-
+    <!-- ==========================================================================
+         YOUR PROVIDED CODE: FOOTER
+         ========================================================================== -->
     <footer>
+        <div class="footer-glow"></div>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4 style="color: white;">U.E.F.I. // REPUBLIC OF KENYA</h4>
-                <p style="color:#64748b; font-size: 0.8rem;">Building the architects of tomorrow from Narok to the global stage.</p>
+                <h4 style="color: white; font-weight: 800; font-size: 1.2rem;">U.E.F.I. // REPUBLIC OF KENYA</h4>
+                <p style="color:#9CA3AF; font-size: 0.85rem; margin-top: 1rem;">Building the architects of tomorrow from Narok to the global stage. Deploying offline mesh networks to secure a computational future.</p>
             </div>
             <div class="footer-col">
                 <h4>System Links</h4>
@@ -993,12 +1251,19 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 UEFI Institute.</p>
+            <p>&copy; 2026 UEFI Institute. Structural code deployed securely.</p>
         </div>
     </footer>
 
+    <!-- ==========================================================================
+         SYSTEM SCRIPTS & LOGIC
+         ========================================================================== -->
     <script>
-        /* --- ORIGINAL SLIDER ENGINE LOGIC --- */
+        /* 
+         * ------------------------------------------------------------------
+         * MODULE 1: ORIGINAL SLIDER ENGINE LOGIC (Retained exactly)
+         * ------------------------------------------------------------------
+         */
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
         const prevBtn = document.querySelector('.prev-btn');
@@ -1021,11 +1286,13 @@
         function nextSlide() { showSlide(currentIndex + 1); }
         function prevSlide() { showSlide(currentIndex - 1); }
 
-        function startAutoSlide() { slideInterval = setInterval(nextSlide, 3500); }
+        function startAutoSlide() { slideInterval = setInterval(nextSlide, 5000); } // Adjusted for reading
         function stopAutoSlide() { clearInterval(slideInterval); }
 
-        nextBtn.addEventListener('click', () => { nextSlide(); stopAutoSlide(); startAutoSlide(); });
-        prevBtn.addEventListener('click', () => { prevSlide(); stopAutoSlide(); startAutoSlide(); });
+        if(nextBtn && prevBtn) {
+            nextBtn.addEventListener('click', () => { nextSlide(); stopAutoSlide(); startAutoSlide(); });
+            prevBtn.addEventListener('click', () => { prevSlide(); stopAutoSlide(); startAutoSlide(); });
+        }
 
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => { showSlide(index); stopAutoSlide(); startAutoSlide(); });
@@ -1038,7 +1305,11 @@
         startAutoSlide();
 
 
-        /* --- NEW AUTHENTICATION CONTROLLER SYSTEM --- */
+        /* 
+         * ------------------------------------------------------------------
+         * MODULE 2: NEW AUTHENTICATION CONTROLLER SYSTEM (Retained exactly)
+         * ------------------------------------------------------------------
+         */
         const authOverlay = document.getElementById('authOverlay');
         const accountBadge = document.getElementById('accountProfileBadge');
         const userAvatar = document.getElementById('userAvatar');
@@ -1055,19 +1326,19 @@
         });
 
         function applyAccessGranted(userData) {
-            authOverlay.classList.add('hidden');
+            if(authOverlay) authOverlay.classList.add('hidden');
             document.body.classList.remove('auth-locked');
             
             // Populate account data frame elements
-            userAvatar.src = userData.photo;
-            userName.textContent = userData.name;
-            accountBadge.style.display = 'flex';
+            if(userAvatar) userAvatar.src = userData.photo;
+            if(userName) userName.textContent = userData.name;
+            if(accountBadge) accountBadge.style.display = 'flex';
         }
 
         function applyAccessLock() {
-            authOverlay.classList.remove('hidden');
+            if(authOverlay) authOverlay.classList.remove('hidden');
             document.body.classList.add('auth-locked');
-            accountBadge.style.display = 'none';
+            if(accountBadge) accountBadge.style.display = 'none';
         }
 
         // Processing Email Login Forms
@@ -1080,7 +1351,7 @@
             const mockUserData = {
                 name: derivedName,
                 email: emailInput,
-                photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" // Fallback UI Avatar placeholder URL
+                photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&fit=crop&q=80" // Fallback UI Avatar placeholder URL
             };
 
             localStorage.setItem('uefi_active_session', JSON.stringify(mockUserData));
@@ -1093,7 +1364,7 @@
             const mockGoogleUserData = {
                 name: "GUEST SCHOLAR",
                 email: "scholar.network@gmail.com",
-                photo: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100" // Modern placeholder profile picture 
+                photo: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&fit=crop&q=80" // Modern placeholder profile picture 
             };
 
             localStorage.setItem('uefi_active_session', JSON.stringify(mockGoogleUserData));
@@ -1106,10 +1377,110 @@
             applyAccessLock();
             
             // Reset input values safely
-            document.getElementById('emailLoginForm').reset();
+            const form = document.getElementById('emailLoginForm');
+            if(form) form.reset();
         }
+
+        /* 
+         * ------------------------------------------------------------------
+         * MODULE 3: BRAND NEW MESH NETWORK PARTICLE ENGINE
+         * This code dynamically draws a "Mesh Network" in the background 
+         * to reflect the exact "Offline-First Infrastructure" you described.
+         * ------------------------------------------------------------------
+         */
+        class ParticleNetwork {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.numberOfParticles = window.innerWidth < 768 ? 40 : 100;
+                
+                // Color palette mapping to IIT/Safaricom
+                this.colors = [
+                    'rgba(67, 176, 42, 0.6)',   // Safaricom Green
+                    'rgba(237, 28, 36, 0.6)',   // Safaricom Red
+                    'rgba(10, 61, 122, 0.6)'    // IIT Blue Light
+                ];
+
+                this.init();
+                this.animate();
+
+                window.addEventListener('resize', () => {
+                    this.init();
+                });
+            }
+
+            init() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.particles = [];
+                for (let i = 0; i < this.numberOfParticles; i++) {
+                    this.particles.push(new Particle(this.canvas, this.colors));
+                }
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Update and draw particles
+                for (let i = 0; i < this.particles.length; i++) {
+                    this.particles[i].update();
+                    this.particles[i].draw(this.ctx);
+                    
+                    // Draw Mesh Lines connecting close nodes
+                    for (let j = i; j < this.particles.length; j++) {
+                        const dx = this.particles[i].x - this.particles[j].x;
+                        const dy = this.particles[i].y - this.particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < 120) {
+                            this.ctx.beginPath();
+                            // Safaricom Green network line rendering
+                            this.ctx.strokeStyle = `rgba(67, 176, 42, ${0.2 - distance/600})`; 
+                            this.ctx.lineWidth = 1;
+                            this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+                            this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+                            this.ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(this.animate.bind(this));
+            }
+        }
+
+        class Particle {
+            constructor(canvas, colors) {
+                this.canvas = canvas;
+                this.x = Math.random() * this.canvas.width;
+                this.y = Math.random() * this.canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() * 1) - 0.5;
+                this.speedY = (Math.random() * 1) - 0.5;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Bounce off edges
+                if (this.x > this.canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > this.canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+
+            draw(ctx) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        // Initialize the background engine if canvas exists
+        if(document.getElementById('network-canvas')) {
+            new ParticleNetwork('network-canvas');
+        }
+
     </script>
 </body>
 </html>
-
-
