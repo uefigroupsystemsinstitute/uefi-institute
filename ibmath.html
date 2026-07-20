@@ -4,82 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>IBDP Ultimate Study Space | IITian Academy</title>
+    <title>UEFI IB DP MATHEMATICS | Ultimate Exam & Resource Portal</title>
     
-    <!-- Include MathJax for advanced Markscheme Math Rendering -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <!-- MathJax Configuration for LaTeX Math Rendering -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
         /* ==========================================================================
-           1. CSS VARIABLES & THEMING
+           1. CORE SYSTEM VARIABLES & THEME ENGINE (IITian Academy Inspired)
            ========================================================================== */
         :root {
-            /* Color Palette */
-            --primary-dark: #001a33;
-            --primary-color: #003366; /* IITian Academy Deep Blue */
-            --primary-light: #004c99;
-            --secondary-color: #ff9900; /* Empowering Orange */
-            --secondary-hover: #e68a00;
-            --accent-bg: #e6f2ff;
-            --text-dark: #222222;
-            --text-muted: #555555;
-            --bg-page: #f4f7f6;
-            --bg-card: #ffffff;
-            --border-color: #dddddd;
+            --brand-primary: #0a2540;       /* Deep Navy Blue */
+            --brand-secondary: #1976d2;     /* Vibrant Royal Blue */
+            --brand-accent: #ff9800;        /* Bright Accent Orange */
+            --brand-accent-hover: #f57c00;  /* Darker Orange */
+            --brand-dark: #061727;          /* Ultra Dark Blue */
+            --bg-body: #f4f7fa;             /* Crisp Light Grey Background */
+            --bg-panel: #ffffff;            /* Pure White Panels */
+            --bg-sidebar: #0f2d4a;          /* Dark Sidebar Background */
+            --text-main: #2c3e50;           /* High Contrast Main Text */
+            --text-light: #ffffff;          /* Pure White Text */
+            --text-muted: #7f8c8d;          /* Soft Grey Text */
+            --border-color: #e2e8f0;        /* Subtle Border Grey */
+            --success: #2e7d32;             /* Success Green */
+            --danger: #d32f2f;              /* Alert Red */
             
-            /* Success & Alerts */
-            --success: #28a745;
-            --success-hover: #218838;
-            --danger: #dc3545;
-            --danger-hover: #c82333;
-            
-            /* Typography */
-            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --font-mono: 'Courier New', Courier, monospace;
-            
-            /* Spacing */
-            --spacing-xs: 5px;
-            --spacing-sm: 10px;
-            --spacing-md: 20px;
-            --spacing-lg: 40px;
-            --spacing-xl: 80px;
-
-            /* Shadows & Radii */
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 8px rgba(0,0,0,0.1);
-            --shadow-lg: 0 8px 16px rgba(0,0,0,0.15);
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
+            --header-height: 70px;
+            --hero-height: 160px;
+            --sidebar-width: 340px;
+            --shadow-soft: 0 4px 15px rgba(0,0,0,0.08);
+            --shadow-deep: 0 10px 30px rgba(0,0,0,0.3);
+            --transition-speed: 0.25s;
         }
 
         /* ==========================================================================
-           2. ANTI-PRINT & SECURITY MEASURES (STRICT)
+           2. STRICT SECURITY & CONTENT PROTECTION (ANTI-PRINT & DOWNLOAD)
            ========================================================================== */
         @media print {
             html, body {
                 display: none !important;
                 visibility: hidden !important;
-                width: 0 !important;
                 height: 0 !important;
-                background-color: white !important;
+                width: 0 !important;
+                overflow: hidden !important;
             }
             body::before {
-                content: "SECURITY ALERT: Printing, saving, and downloading are strictly disabled to protect the integrity of the IITian Academy IBDP secure study space.";
+                content: "RESTRICTED ACCESS: Printing, downloading, or exporting materials from UEFI IB DP MATHEMATICS is strictly prohibited.";
                 display: block !important;
                 visibility: visible !important;
-                font-family: var(--font-main);
-                font-size: 28px;
+                font-size: 22px;
+                font-weight: bold;
                 color: var(--danger);
                 text-align: center;
-                margin-top: 20%;
+                margin-top: 15%;
                 padding: 40px;
-                border: 5px solid var(--danger);
-                background: #ffe6e6;
-            }
-            * {
-                display: none !important;
+                border: 3px solid var(--danger);
+                background: #fff;
             }
         }
 
@@ -91,1141 +80,1413 @@
         }
 
         /* ==========================================================================
-           3. GLOBAL RESET & BASE STYLES
+           3. BASE RESET & LAYOUT CONTAINER
            ========================================================================== */
-        *, *::before, *::after {
+        * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            background-color: var(--bg-page);
-            color: var(--text-dark);
-            font-family: var(--font-main);
-            line-height: 1.6;
-            /* Extra scroll space requested to prevent struggling at the bottom */
-            padding-bottom: 250vh; 
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            line-height: 1.2;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        button {
-            font-family: var(--font-main);
-            cursor: pointer;
-            outline: none;
-            border: none;
-        }
-
-        /* ==========================================================================
-           4. HEADER & NAVIGATION (IITIAN ACADEMY STYLE)
-           ========================================================================== */
-        header {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
-            color: white;
-            padding: var(--spacing-md) var(--spacing-lg);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-lg);
-            position: sticky;
-            top: 0;
-            z-index: 9999;
-            border-bottom: 4px solid var(--secondary-color);
-        }
-
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-        }
-
-        .empowerment-icons {
-            display: flex;
-            gap: var(--spacing-sm);
-            align-items: center;
-        }
-        
-        .empowerment-icons svg {
-            width: 45px;
-            height: 45px;
-            fill: var(--secondary-color);
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-            transition: transform 0.3s ease;
-        }
-
-        .empowerment-icons svg:hover {
-            transform: scale(1.1);
-        }
-
-        .brand-text h1 {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin: 0;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
-
-        .brand-text p {
-            font-size: 13px;
-            color: var(--accent-bg);
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin: 0;
-        }
-
-        nav.main-nav ul {
-            display: flex;
-            gap: var(--spacing-md);
-        }
-
-        nav.main-nav a {
-            color: white;
-            font-weight: 700;
-            font-size: 15px;
-            padding: 10px 20px;
-            border-radius: var(--radius-sm);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        nav.main-nav a:hover {
-            background-color: var(--secondary-color);
-            color: var(--primary-dark);
-            border-color: white;
-            box-shadow: var(--shadow-md);
-        }
-
-        /* ==========================================================================
-           5. ALAL FOCUS TIMER & DASHBOARD
-           ========================================================================== */
-        .dashboard-container {
-            background-color: var(--bg-card);
-            margin: var(--spacing-md) 0;
-            padding: var(--spacing-lg);
-            box-shadow: var(--shadow-sm);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .timer-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: var(--spacing-lg);
-            background: var(--accent-bg);
-            padding: var(--spacing-lg);
-            border-radius: var(--radius-lg);
-            border: 3px solid var(--primary-light);
-        }
-
-        .timer-info {
-            text-align: center;
-        }
-
-        .timer-info h2 {
-            color: var(--primary-dark);
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .timer-info p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .timer-display-box {
-            background: white;
-            padding: 20px 40px;
-            border-radius: var(--radius-md);
-            border: 4px solid var(--primary-color);
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .time-readout {
-            font-size: 64px;
-            font-weight: 900;
-            font-family: var(--font-mono);
-            color: var(--primary-dark);
-            line-height: 1;
-            letter-spacing: 2px;
-        }
-
-        .timer-controls {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden; /* App-like structure, prevents outer scrolling */
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-sm);
         }
 
-        .timer-settings {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .timer-settings input {
-            padding: 10px;
-            font-size: 16px;
-            width: 90px;
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            text-align: center;
-            font-family: var(--font-mono);
-            font-weight: bold;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: var(--spacing-sm);
-        }
-
-        .btn {
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: var(--radius-sm);
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: var(--primary-dark);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--secondary-hover);
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: var(--danger-hover);
-            transform: translateY(-2px);
-        }
-
-        /* Flash Animation for Timer Completion */
-        @keyframes flashAlarm {
-            0% { background-color: white; color: var(--primary-dark); }
-            50% { background-color: var(--danger); color: white; }
-            100% { background-color: white; color: var(--primary-dark); }
-        }
-
-        .alarm-active {
-            animation: flashAlarm 0.5s infinite;
-        }
+        ul { list-style: none; }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; border: none; outline: none; font-family: inherit; }
+        input, select, textarea { font-family: inherit; }
 
         /* ==========================================================================
-           6. PAST PAPERS WORKSPACE (FULL WIDTH)
+           4. TOP HEADER & INTERACTIVE NAVIGATION BAR
            ========================================================================== */
-        .papers-container {
-            width: 100%;
-            padding: 0; /* Stretches left to right */
-        }
-
-        .paper-module {
-            background: var(--bg-card);
-            margin-bottom: var(--spacing-xl);
-            border-top: 8px solid var(--primary-color);
-            border-bottom: 8px solid var(--primary-color);
-            box-shadow: var(--shadow-md);
-        }
-
-        .paper-header {
-            background: var(--primary-color);
-            color: white;
-            padding: 20px 40px;
+        header {
+            height: var(--header-height);
+            background: var(--brand-primary);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-        }
-
-        .paper-header h2 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .paper-header .badge {
-            background: var(--secondary-color);
-            color: var(--primary-dark);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 900;
-            text-transform: uppercase;
-        }
-
-        .pdf-wrapper {
-            width: 100%;
-            height: 95vh; /* Very long for easy scrolling without struggling */
-            background: #323639; /* Standard PDF viewer background */
+            justify-content: space-between;
+            padding: 0 30px;
+            color: var(--text-light);
+            box-shadow: var(--shadow-soft);
+            z-index: 1000;
             position: relative;
         }
 
-        .pdf-wrapper embed, .pdf-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .pdf-overlay-blocker {
-            /* Invisible overlay to prevent right clicking on the PDF directly if needed */
-            position: absolute;
-            top: 0; right: 0; width: 50px; height: 100%;
-            background: transparent;
-            z-index: 10;
-        }
-
-        /* ==========================================================================
-           7. OGUNNA REVEAL (MARKSCHEME LOGIC)
-           ========================================================================== */
-        .ogunna-toggle {
-            display: block;
-            width: 100%;
-            background-color: var(--secondary-color);
-            color: var(--primary-dark);
-            border: none;
-            border-top: 2px solid var(--primary-dark);
-            padding: 20px;
-            font-size: 20px;
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--brand-accent), #ffb74d);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-weight: 900;
+            font-size: 20px;
+            color: var(--brand-primary);
+            box-shadow: 0 2px 8px rgba(255, 152, 0, 0.4);
+        }
+
+        .brand-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            line-height: 1.1;
+        }
+
+        .brand-title span {
+            font-size: 11px;
+            color: var(--brand-accent);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        /* Dropdown Navigation Menu */
+        .nav-menu {
+            display: flex;
+            height: 100%;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #d1d5db;
+            transition: var(--transition-speed);
             cursor: pointer;
-            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
         }
 
-        .ogunna-toggle:hover {
-            background-color: var(--primary-dark);
-            color: var(--secondary-color);
+        .nav-item:hover, .nav-item.active {
+            color: var(--text-light);
+            background-color: rgba(255, 255, 255, 0.05);
+            border-bottom: 3px solid var(--brand-accent);
         }
 
-        .markscheme-container {
-            display: none; /* Hidden by default */
-            background-color: #fcfdfc;
-            padding: 40px;
-            border-top: 4px dashed var(--success);
-            animation: slideDown 0.4s ease-out;
+        .nav-item svg {
+            margin-left: 6px;
+            transition: transform var(--transition-speed);
         }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .nav-item:hover svg {
+            transform: rotate(180deg);
         }
 
-        .ms-header {
-            color: var(--success);
-            border-bottom: 2px solid var(--success);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+        /* Submenu Dropdown List */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--bg-panel);
+            color: var(--text-main);
+            min-width: 240px;
+            box-shadow: var(--shadow-deep);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all var(--transition-speed) ease;
+            border-radius: 0 0 6px 6px;
+            border-top: 3px solid var(--brand-accent);
+            overflow: hidden;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition-speed);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dropdown-item:last-child { border-bottom: none; }
+
+        .dropdown-item:hover {
+            background-color: #f0f7ff;
+            color: var(--brand-secondary);
+            padding-left: 25px;
+        }
+
+        .dropdown-item .badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            background: #e3f2fd;
+            color: var(--brand-secondary);
+            border-radius: 4px;
+        }
+
+        /* Header Quick Status */
+        .user-status {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .ms-content {
-            font-size: 16px;
-            line-height: 1.8;
-            color: var(--text-dark);
-        }
-
-        .ms-step {
-            background: var(--accent-bg);
-            padding: 15px;
-            border-left: 4px solid var(--primary-color);
-            margin-bottom: 15px;
-            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-        }
-
-        .ms-marks {
-            float: right;
-            background: var(--primary-dark);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
+        .status-badge {
+            background: rgba(46, 125, 50, 0.15);
+            color: #81c784;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 12px;
-            font-weight: bold;
-        }
-
-        /* ==========================================================================
-           8. COMPUTATIONAL SPACE (DESMOS & GEOGEBRA RESIZABLE)
-           ========================================================================== */
-        .computational-space {
-            padding: var(--spacing-xl) var(--spacing-lg);
-            background: linear-gradient(to bottom, #e0e8f0, #ffffff);
-            border-top: 5px solid var(--primary-color);
-            margin-top: var(--spacing-xl);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 36px;
-            color: var(--primary-dark);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 18px;
-            margin-bottom: var(--spacing-lg);
-            font-style: italic;
-        }
-
-        .tools-grid {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-lg);
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .resizable-container {
-            width: 100%;
-            min-height: 400px;
-            height: 600px; /* Default height */
-            background: white;
-            border: 5px solid var(--primary-dark);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            padding-top: 40px; /* Space for the custom header */
-            resize: vertical; /* CORE REQUIREMENT: Allows vertical squeezing/expanding */
-            overflow: hidden; /* Contains the iframe */
-        }
-
-        .tool-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 40px;
-            background: var(--primary-dark);
-            color: white;
+            font-weight: 600;
+            border: 1px solid rgba(129, 199, 132, 0.3);
             display: flex;
             align-items: center;
-            padding: 0 var(--spacing-md);
-            font-weight: bold;
-            font-size: 16px;
-            letter-spacing: 1px;
-            z-index: 10;
-            pointer-events: none; /* Let clicks pass through if necessary, though mostly for visual */
+            gap: 6px;
         }
 
-        .tool-header span {
-            color: var(--secondary-color);
-            margin-left: auto;
-            font-size: 12px;
-            font-weight: normal;
-        }
-
-        .resizable-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: #ffffff;
-        }
-
-        /* Customizing the resize handle for better visibility */
-        .resizable-container::-webkit-resizer {
-            background-color: var(--secondary-color);
-            border-left: 2px solid var(--primary-dark);
-            border-top: 2px solid var(--primary-dark);
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #66bb6a;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #66bb6a;
         }
 
         /* ==========================================================================
-           9. REFLECTION POINT & QUICK NOTES
+           5. HERO HEADER & INTEGRATED SEARCH BAR
            ========================================================================== */
-        .reflection-point {
-            padding: var(--spacing-xl) var(--spacing-lg);
-            background: white;
-            margin-top: var(--spacing-lg);
-            box-shadow: inset 0 10px 20px rgba(0,0,0,0.05);
+        .hero-banner {
+            height: var(--hero-height);
+            background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+            color: white;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: inset 0 -5px 15px rgba(0,0,0,0.15);
         }
 
-        .reflection-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
+        .hero-text h2 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
         }
 
-        .reflection-controls {
+        .hero-text p {
+            font-size: 14px;
+            opacity: 0.85;
+            max-width: 600px;
+        }
+
+        .search-box-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--bg-panel);
+            border-radius: 8px;
+            padding: 4px;
+            box-shadow: var(--shadow-deep);
+            border: 2px solid transparent;
+            transition: var(--transition-speed);
+        }
+
+        .search-box:focus-within {
+            border-color: var(--brand-accent);
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .search-box button {
+            background: var(--brand-primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition-speed);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .search-box button:hover {
+            background: var(--brand-accent);
+            color: var(--brand-primary);
+        }
+
+        /* ==========================================================================
+           6. MAIN APP WORKSPACE (SPLIT PANE ARCHITECTURE)
+           ========================================================================== */
+        .workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- LEFT SIDEBAR: TOPICS & PAPERS LIST --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-sidebar);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 20;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 18px 20px;
+            background: var(--brand-dark);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--spacing-md);
         }
 
-        .status-indicator {
+        .sidebar-header h3 {
             font-size: 14px;
-            color: var(--success);
-            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--brand-accent);
+            font-weight: 800;
+        }
+
+        .item-counter {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #ccc;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 0;
+        }
+
+        /* Custom Scrollbar for Sidebar */
+        .sidebar-content::-webkit-scrollbar { width: 6px; }
+        .sidebar-content::-webkit-scrollbar-track { background: var(--brand-dark); }
+        .sidebar-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+        .sidebar-content::-webkit-scrollbar-thumb:hover { background: var(--brand-accent); }
+
+        .category-header {
+            padding: 10px 20px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: rgba(255, 255, 255, 0.4);
+            background: rgba(0, 0, 0, 0.15);
+            margin-top: 10px;
+        }
+
+        .category-header:first-child { margin-top: 0; }
+
+        .paper-card {
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+            transition: var(--transition-speed);
             display: flex;
             align-items: center;
-            gap: 5px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .status-indicator.visible {
-            opacity: 1;
-        }
-
-        .editor-container {
+            justify-content: space-between;
             position: relative;
         }
 
-        textarea#reflection-editor {
-            width: 100%;
-            height: 400px;
-            padding: var(--spacing-md);
-            font-size: 18px;
-            font-family: var(--font-main);
-            color: var(--text-dark);
-            background: #fdfdfd;
-            border: 3px solid var(--primary-light);
-            border-radius: var(--radius-md);
-            resize: vertical;
-            line-height: 1.6;
-            box-shadow: inner 0 2px 5px rgba(0,0,0,0.05);
-            transition: border-color 0.3s, box-shadow 0.3s;
+        .paper-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            padding-left: 25px;
         }
 
-        textarea#reflection-editor:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
-            background: white;
+        .paper-card.active {
+            background: linear-gradient(90deg, rgba(255, 152, 0, 0.2) 0%, rgba(255, 152, 0, 0) 100%);
+            border-left: 4px solid var(--brand-accent);
         }
 
-        .action-bar {
+        .paper-info {
             display: flex;
-            justify-content: flex-end;
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-md);
+            flex-direction: column;
+            gap: 3px;
         }
 
-        .btn-download {
-            background-color: var(--success);
-            color: white;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: var(--radius-sm);
+        .paper-info .title {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .paper-info .meta {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            display: flex;
+            gap: 8px;
+        }
+
+        .paper-tag {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .tag-topical { background: rgba(25 118 210 / 30%); color: #64b5f6; }
+        .tag-yearly { background: rgba(255 152 0 / 25%); color: #ffb74d; }
+
+        /* --- RIGHT MAIN VIEWER: DOCUMENT & MARKSCHEME --- */
+        .content-viewer {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #404448; /* Standard PDF Grey Surround */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pdf-frame-wrapper {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #525659;
+        }
+
+        .pdf-frame-wrapper embed,
+        .pdf-frame-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Security Glass Shield over PDF Right Edge (Prevents native context menu download clicks) */
+        .security-shield-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 100%;
+            background: transparent;
+            z-index: 10;
+        }
+
+        /* --- MARKSCHEME "OGUNNA REVEAL" SECTION --- */
+        .ogunna-container {
+            background: var(--bg-panel);
+            border-top: 4px solid var(--brand-accent);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            z-index: 15;
+            max-height: 45vh;
+            transition: all 0.3s ease;
+        }
+
+        .ogunna-trigger-btn {
+            background: linear-gradient(90deg, var(--brand-accent) 0%, var(--brand-accent-hover) 100%);
+            color: var(--brand-primary);
+            padding: 14px 24px;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            transition: background 0.3s;
+            justify-content: space-between;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .btn-download:hover {
-            background-color: var(--success-hover);
+        .ogunna-trigger-btn:hover {
+            filter: brightness(1.05);
         }
 
-        .btn-clear {
-            background-color: transparent;
-            color: var(--text-muted);
-            border: 2px solid var(--border-color);
-            padding: 15px 30px;
+        .markscheme-panel {
+            padding: 25px;
+            overflow-y: auto;
+            display: none;
+            background: #fffdfa;
+            color: var(--text-main);
+            font-size: 14.5px;
+            line-height: 1.6;
+        }
+
+        .markscheme-panel h4 {
+            color: var(--brand-primary);
+            margin-bottom: 12px;
             font-size: 16px;
-            font-weight: bold;
-            border-radius: var(--radius-sm);
-            transition: all 0.3s;
+            border-bottom: 2px solid #ffe0b2;
+            padding-bottom: 6px;
         }
 
-        .btn-clear:hover {
-            border-color: var(--danger);
-            color: var(--danger);
+        .markscheme-step {
+            margin-bottom: 12px;
+            padding: 10px 15px;
+            background: #fdf8f0;
+            border-left: 3px solid var(--brand-accent);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .mark-badge {
+            display: inline-block;
+            background: var(--brand-primary);
+            color: white;
+            font-weight: bold;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: 6px;
+        }
+
+        /* ==========================================================================
+           7. FLOATING TOOLS DOCK & INTERACTIVE WINDOWS
+           ========================================================================== */
+        .tools-dock {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 2000;
+        }
+
+        .dock-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--brand-primary);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--shadow-deep);
+            transition: all var(--transition-speed);
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dock-btn:hover {
+            background: var(--brand-secondary);
+            transform: scale(1.12);
+            border-color: var(--brand-accent);
+        }
+
+        .dock-btn svg { width: 24px; height: 24px; fill: white; }
+
+        /* Tooltip */
+        .dock-btn::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 65px;
+            background: var(--brand-dark);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition-speed);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .dock-btn:hover::before { opacity: 1; }
+
+        /* Floating Tool Modal Windows */
+        .tool-window {
+            position: fixed;
+            background: var(--bg-panel);
+            border-radius: 8px;
+            box-shadow: var(--shadow-deep);
+            display: none;
+            flex-direction: column;
+            z-index: 2500;
+            overflow: hidden;
+            border: 2px solid var(--brand-primary);
+            min-width: 300px;
+            min-height: 200px;
+        }
+
+        .window-header {
+            background: var(--brand-primary);
+            color: white;
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: move;
+            user-select: none;
+        }
+
+        .window-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .win-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            transition: var(--transition-speed);
+        }
+
+        .win-close { background: var(--danger); }
+        .win-close:hover { background: #b71c1c; }
+
+        .window-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: #fff;
+        }
+
+        .window-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .resize-grip {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 16px;
+            height: 16px;
+            cursor: se-resize;
+            background: linear-gradient(135deg, transparent 50%, var(--brand-secondary) 50%);
+        }
+
+        /* Dynamic Window Positioning & Sizing */
+        #window-pomodoro { width: 340px; height: 260px; top: 120px; right: 90px; }
+        #window-desmos-scientific { width: 460px; height: 520px; top: 100px; left: 380px; }
+        #window-geogebra { width: 550px; height: 550px; top: 120px; left: 420px; }
+        #window-notes { width: 380px; height: 420px; bottom: 40px; right: 90px; }
+
+        /* Pomodoro Custom UI */
+        .pomo-wrapper {
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            background: #f8fafc;
+        }
+
+        .pomo-timer-display {
+            font-size: 52px;
+            font-weight: 900;
+            color: var(--brand-primary);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+
+        .pomo-input-group {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .pomo-input-group input {
+            width: 60px;
+            padding: 4px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .pomo-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .pomo-btn {
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition-speed);
+        }
+
+        .pomo-start { background: var(--success); color: white; }
+        .pomo-start:hover { background: #1b5e20; }
+        .pomo-pause { background: var(--brand-accent); color: white; }
+        .pomo-pause:hover { background: #e65100; }
+        .pomo-reset { background: var(--danger); color: white; }
+        .pomo-reset:hover { background: #b71c1c; }
+
+        /* Notes Custom UI */
+        .notes-textarea {
+            width: 100%;
+            height: 100%;
+            padding: 15px;
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #334155;
+            background: #fffbeb; /* Warm notepad tint */
         }
 
     </style>
 </head>
 <body class="no-select">
 
-    <!-- Hidden Audio Asset for the Alal Focus Timer -->
-    <audio id="alal-audio" src="https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg" preload="auto"></audio>
-
     <!-- ==========================================================================
-         HEADER NAVIGATION
+         TOP HEADER NAVIGATION
          ========================================================================== -->
-    <header id="top-nav">
-        <div class="header-brand">
-            <div class="empowerment-icons">
-                <!-- Academic Cap SVG -->
-                <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
-                <!-- Book/Knowledge SVG -->
-                <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-.1zM21 18.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
-            </div>
-            <div class="brand-text">
-                <h1>IITian Academy</h1>
-                <p>IBDP EXCLUSIVE PREPARATION SPACE</p>
+    <header>
+        <div class="brand-container">
+            <div class="brand-logo">U</div>
+            <div class="brand-title">
+                <h1>UEFI IB DP MATHEMATICS</h1>
+                <span>Interactive Learning Engine</span>
             </div>
         </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="#dashboard">Dashboard</a></li>
-                <li><a href="#papers-section">Past Papers</a></li>
-                <li><a href="#desmos-anchor">Desmos Scientific</a></li>
-                <li><a href="#geogebra-anchor">GeoGebra Graphing</a></li>
-                <li><a href="#reflection-anchor">Reflection Point</a></li>
-            </ul>
+
+        <nav class="nav-menu">
+            <div class="nav-item active" onclick="filterData('ALL', 'ALL')">DASHBOARD</div>
+
+            <!-- IB AA HL Dropdown -->
+            <div class="nav-item">
+                IB AA HL
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 5 5-5z"/></svg>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item" onclick="filterData('AA HL', 'Topical')">Topical Questions <span class="badge">Topical</span></li>
+                    <li class="dropdown-item" onclick="filterData('AA HL', 'Past Papers')">Yearly Past Papers <span class="badge">Yearly</span></li>
+                    <li class="dropdown-item" onclick="filterData('AA HL', 'Specimen')">Specimen Papers <span class="badge">Official</span></li>
+                </ul>
+            </div>
+
+            <!-- IB AA SL Dropdown -->
+            <div class="nav-item">
+                IB AA SL
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 5 5-5z"/></svg>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item" onclick="filterData('AA SL', 'Topical')">Topical Questions <span class="badge">Topical</span></li>
+                    <li class="dropdown-item" onclick="filterData('AA SL', 'Past Papers')">Yearly Past Papers <span class="badge">Yearly</span></li>
+                </ul>
+            </div>
+
+            <!-- IB AI HL Dropdown -->
+            <div class="nav-item">
+                IB AI HL
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 5 5-5z"/></svg>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item" onclick="filterData('AI HL', 'Topical')">Topical Questions <span class="badge">Topical</span></li>
+                    <li class="dropdown-item" onclick="filterData('AI HL', 'Past Papers')">Yearly Past Papers <span class="badge">Yearly</span></li>
+                </ul>
+            </div>
+
+            <!-- IB AI SL Dropdown -->
+            <div class="nav-item">
+                IB AI SL
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 5 5-5z"/></svg>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item" onclick="filterData('AI SL', 'Topical')">Topical Questions <span class="badge">Topical</span></li>
+                    <li class="dropdown-item" onclick="filterData('AI SL', 'Past Papers')">Yearly Past Papers <span class="badge">Yearly</span></li>
+                </ul>
+            </div>
         </nav>
+
+        <div class="user-status">
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                <span>SECURE MODE</span>
+            </div>
+        </div>
     </header>
 
     <!-- ==========================================================================
-         DASHBOARD & ALAL FOCUS TIMER
+         HERO BANNER & LIVE SEARCH
          ========================================================================== -->
-    <div class="dashboard-container" id="dashboard">
-        <div class="timer-wrapper">
-            <div class="timer-info">
-                <h2>Alal Focus Timer</h2>
-                <p>Set your sprint, manage your speed tracking, and conquer the papers.</p>
-            </div>
-            
-            <div class="timer-display-box">
-                <div class="time-readout" id="timer-display">45:00</div>
-            </div>
-            
-            <div class="timer-controls">
-                <div class="timer-settings">
-                    <input type="number" id="input-minutes" min="1" max="180" value="45" title="Minutes">
-                    <input type="number" id="input-seconds" min="0" max="59" value="0" title="Seconds">
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-primary" id="btn-start">Start Focus</button>
-                    <button class="btn btn-secondary" id="btn-pause">Pause</button>
-                    <button class="btn btn-danger" id="btn-reset">Reset</button>
-                </div>
-            </div>
+    <section class="hero-banner">
+        <div class="hero-text">
+            <h2>Exam Style Questions & High-Yield Resources</h2>
+            <p>Access curated IB Mathematics resources with real-time graphers, calculators, and timed exam preparation tools.</p>
         </div>
-    </div>
 
-    <!-- ==========================================================================
-         MAIN CONTENT: PAST PAPERS WORKSPACE
-         ========================================================================== -->
-    <main class="papers-container" id="papers-section">
-        
-        <!-- PAPER MODULE 1: BT PP1 -->
-        <article class="paper-module">
-            <div class="paper-header">
-                <h2>Paper Analysis: BT PP1 .pdf</h2>
-                <span class="badge">Mathematics</span>
-            </div>
-            <div class="pdf-wrapper">
-                <!-- Using embed with strict parameters to disable toolbars where possible -->
-                <embed src="archives/BT PP1 .pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" type="application/pdf">
-                <div class="pdf-overlay-blocker"></div>
-            </div>
-            
-            <!-- Ogunna Reveal for BT PP1 -->
-            <button class="ogunna-toggle" onclick="toggleOgunna('ms-bt-pp1', this)">
-                ▼ Ogunna Reveal: Check Markscheme ▼
-            </button>
-            <div class="markscheme-container" id="ms-bt-pp1">
-                <div class="ms-header">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    <h3>Official Markscheme Breakdown - BT PP1</h3>
-                </div>
-                <div class="ms-content">
-                    <p><strong>Question 1:</strong> Finding the derivative of the composite function.</p>
-                    <div class="ms-step">
-                        <span class="ms-marks">[M1]</span>
-                        Attempting to use the chain rule. <br> Let \( u = 3x^2 + 2 \)
-                    </div>
-                    <div class="ms-step">
-                        <span class="ms-marks">[A1]</span>
-                        Correct derivative of the inner function: \( \frac{du}{dx} = 6x \)
-                    </div>
-                    <div class="ms-step">
-                        <span class="ms-marks">[A1]</span>
-                        Final Answer: \( f'(x) = 6x \cos(3x^2 + 2) \)
-                    </div>
-                    <p><em>Examiner's Note: Many students forgot to multiply by the derivative of the inner function. Ensure you apply the chain rule systematically.</em></p>
-                    <!-- Image Placeholder for actual markscheme snippets if needed -->
-                    <p style="margin-top: 15px; color: var(--text-muted); font-size: 14px;">
-                        <em>To add asset images here: <code>&lt;img src="archives/ms_bt_q1.png" alt="Markscheme Q1"&gt;</code></em>
-                    </p>
-                </div>
-            </div>
-        </article>
-
-        <!-- PAPER MODULE 2: Bivariate Stats -->
-        <article class="paper-module">
-            <div class="paper-header">
-                <h2>Paper Analysis: Bivariate Stats.pdf</h2>
-                <span class="badge">Statistics</span>
-            </div>
-            <div class="pdf-wrapper">
-                <embed src="archives/Bivariate Stats.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" type="application/pdf">
-            </div>
-            
-            <!-- Ogunna Reveal for Bivariate Stats -->
-            <button class="ogunna-toggle" onclick="toggleOgunna('ms-bivariate', this)">
-                ▼ Ogunna Reveal: Check Markscheme ▼
-            </button>
-            <div class="markscheme-container" id="ms-bivariate">
-                <div class="ms-header">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    <h3>Official Markscheme Breakdown - Bivariate Stats</h3>
-                </div>
-                <div class="ms-content">
-                    <p><strong>Question 3:</strong> Pearson's product-moment correlation coefficient.</p>
-                    <div class="ms-step">
-                        <span class="ms-marks">[M1]</span>
-                        Valid approach to finding \( r \), e.g., inputting data into GDC.
-                    </div>
-                    <div class="ms-step">
-                        <span class="ms-marks">[A2]</span>
-                        \( r = 0.894 \) (accept \( 0.89 \) to 3 s.f.)
-                    </div>
-                    <div class="ms-step">
-                        <span class="ms-marks">[R1]</span>
-                        Interpretation: Strong positive linear correlation.
-                    </div>
-                    <p><em>Use the Desmos or GeoGebra tools below to verify the scatter plot and line of best fit if you made a calculation error.</em></p>
-                </div>
-            </div>
-        </article>
-
-        <!-- PAPER MODULE 3: EXOLOGS PP1 AA HL -->
-        <article class="paper-module">
-            <div class="paper-header">
-                <h2>Paper Analysis: EXOLOGS PP1 AA HL.pdf</h2>
-                <span class="badge">AA HL - Algebra</span>
-            </div>
-            <div class="pdf-wrapper">
-                <embed src="archives/EXOLOGS PP1 AA HL.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" type="application/pdf">
-            </div>
-            
-            <!-- Ogunna Reveal for EXOLOGS -->
-            <button class="ogunna-toggle" onclick="toggleOgunna('ms-exologs', this)">
-                ▼ Ogunna Reveal: Check Markscheme ▼
-            </button>
-            <div class="markscheme-container" id="ms-exologs">
-                <div class="ms-header">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    <h3>Official Markscheme Breakdown - EXOLOGS PP1 AA HL</h3>
-                </div>
-                <div class="ms-content">
-                    <p><strong>Question 5:</strong> Solving logarithmic equations.</p>
-                    <div class="ms-step">
-                        <span class="ms-marks">[M1]</span>
-                        Use of change of base rule or power rule: \( \log_2(x^2) = 2\log_2(x) \)
-                    </div>
-                    <div class="ms-step">
-                        <span class="ms-marks">[M1]</span>
-                        Setting up the quadratic equation in terms of \( \log_2(x) \). Let \( y = \log_2(x) \). <br>
-                        \( y^2 - 3y + 2 = 0 \)
-                    </div>
-                    <div class="ms-step">
-                        <span class="ms-marks">[A1]</span>
-                        Factorizing: \( (y - 1)(y - 2) = 0 \implies y = 1 \text{ or } y = 2 \)
-                    </div>
-                    <div class="ms-step">
-                        <span class="ms-marks">[A1]</span>
-                        Solving for x: \( x = 2^1 = 2 \) or \( x = 2^2 = 4 \)
-                    </div>
-                </div>
-            </div>
-        </article>
-
-    </main>
-
-    <!-- ==========================================================================
-         COMPUTATIONAL SPACE (RESIZABLE CALCULATORS)
-         ========================================================================== -->
-    <section class="computational-space">
-        <h2 class="section-title">Computational Workspace</h2>
-        <p class="section-subtitle">Drag the bottom right corner of the frames to squeeze or expand your workspace.</p>
-        
-        <div class="tools-grid">
-            
-            <!-- Desmos Scientific Anchor & Container -->
-            <div id="desmos-anchor" class="resizable-container">
-                <div class="tool-header">
-                    Desmos Scientific Calculator <span>[Resizable Area]</span>
-                </div>
-                <iframe src="https://www.desmos.com/scientific" title="Desmos Scientific Calculator" allowfullscreen></iframe>
-            </div>
-
-            <!-- GeoGebra Classic Anchor & Container -->
-            <div id="geogebra-anchor" class="resizable-container">
-                <div class="tool-header">
-                    GeoGebra Classic Graphing <span>[Resizable Area]</span>
-                </div>
-                <iframe src="https://www.geogebra.org/classic" title="GeoGebra Classic" allowfullscreen></iframe>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-         REFLECTION POINT & QUICK NOTES
-         ========================================================================== -->
-    <section class="reflection-point" id="reflection-anchor">
-        <div class="reflection-wrapper">
-            <h2 class="section-title" style="text-align: left;">Reflection Point</h2>
-            <p class="section-subtitle" style="text-align: left; margin-bottom: 20px;">
-                Consolidate your learning. Document challenging questions, conceptual gaps, and strategic adjustments. 
-                <em>(Your notes automatically save to your browser's local storage as you type).</em>
-            </p>
-            
-            <div class="reflection-controls">
-                <div class="status-indicator" id="save-status">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                    Saved Locally
-                </div>
-            </div>
-
-            <div class="editor-container">
-                <textarea id="reflection-editor" placeholder="Example: 
-Date: 2026-07-20
-Paper: EXOLOGS PP1 AA HL
-Challenge: I struggled with question 5 converting log bases. 
-Action: Need to review log laws specifically the change of base formula and practice quadratic forms of logs..."></textarea>
-            </div>
-
-            <div class="action-bar">
-                <button class="btn-clear" id="btn-clear-notes" title="Clear all notes">Clear Notes</button>
-                <button class="btn-download" id="btn-download-notes" title="Download notes as a text file">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Download Reflections
+        <div class="search-box-wrapper">
+            <div class="search-box">
+                <input type="text" id="mainSearchInput" placeholder="Search topics (e.g. Calculus, Vectors, 2023 PP1)..." onkeyup="executeSearch()">
+                <button onclick="executeSearch()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    Search
                 </button>
             </div>
         </div>
     </section>
 
     <!-- ==========================================================================
-         JAVASCRIPT / APPLICATION LOGIC
+         MAIN WORKSPACE: SIDEBAR + PDF VIEWER
+         ========================================================================== -->
+    <main class="workspace">
+        
+        <!-- Sidebar Navigation Pane -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3 id="sidebar-category-label">Available Content</h3>
+                <span class="item-counter" id="item-count-badge">0 items</span>
+            </div>
+            <div class="sidebar-content" id="sidebar-item-list">
+                <!-- Dynamically populated via JavaScript -->
+            </div>
+        </aside>
+
+        <!-- Right Viewer Pane -->
+        <section class="content-viewer">
+            <div class="pdf-frame-wrapper">
+                <embed id="active-pdf-viewer" src="" type="application/pdf">
+                <!-- Overlay to block direct right-click actions on PDF edges -->
+                <div class="security-shield-overlay"></div>
+            </div>
+
+            <!-- Ogunna Reveal (Markscheme Section) -->
+            <div class="ogunna-container">
+                <div class="ogunna-trigger-btn" onclick="toggleOgunnaMarkscheme()">
+                    <span>▼ OGUNNA REVEAL: STEP-BY-STEP MARKSCHEME & SOLUTIONS</span>
+                    <span style="font-size: 11px; opacity:0.8;">Click to Expand/Collapse</span>
+                </div>
+                <div class="markscheme-panel" id="markscheme-content-area">
+                    <p style="color: var(--text-muted); italic;">Select a topic or paper from the sidebar to display the corresponding markscheme.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================================================
+         FLOATING TOOLS DOCK
+         ========================================================================== -->
+    <div class="tools-dock">
+        <div class="dock-btn" data-tooltip="Pomodoro Focus Timer" onclick="toggleToolWindow('window-pomodoro')">
+            <svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.962 8.962 0 0012 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+        </div>
+        <div class="dock-btn" data-tooltip="Desmos Scientific Calculator" onclick="toggleToolWindow('window-desmos-scientific')">
+            <span style="font-weight:900; font-size:18px;">D</span>
+        </div>
+        <div class="dock-btn" data-tooltip="GeoGebra Graphing Calculator" onclick="toggleToolWindow('window-geogebra')">
+            <span style="font-weight:900; font-size:18px;">G</span>
+        </div>
+        <div class="dock-btn" data-tooltip="Rough Notes & Scratchpad" onclick="toggleToolWindow('window-notes')">
+            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         FLOATING MODAL WINDOWS (INTERACTIVE / DRAGGABLE / CLOSABLE)
+         ========================================================================== -->
+
+    <!-- Pomodoro Timer Window -->
+    <div class="tool-window" id="window-pomodoro">
+        <div class="window-header" onmousedown="initDragWindow(event, 'window-pomodoro')">
+            <div class="window-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                <span>Pomodoro Exam Timer</span>
+            </div>
+            <div class="window-controls">
+                <button class="win-btn win-close" onclick="toggleToolWindow('window-pomodoro')">✕</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <div class="pomo-wrapper">
+                <div class="pomo-input-group">
+                    <label>Duration (mins):</label>
+                    <input type="number" id="pomoDurationInput" value="25" min="1" max="120">
+                </div>
+                <div class="pomo-timer-display" id="pomoClockDisplay">25:00</div>
+                <div class="pomo-actions">
+                    <button class="pomo-btn pomo-start" onclick="startPomodoro()">Start</button>
+                    <button class="pomo-btn pomo-pause" onclick="pausePomodoro()">Pause</button>
+                    <button class="pomo-btn pomo-reset" onclick="resetPomodoro()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desmos Scientific Calculator Window -->
+    <div class="tool-window" id="window-desmos-scientific">
+        <div class="window-header" onmousedown="initDragWindow(event, 'window-desmos-scientific')">
+            <div class="window-title">
+                <span>Desmos Scientific Calculator</span>
+            </div>
+            <div class="window-controls">
+                <button class="win-btn win-close" onclick="toggleToolWindow('window-desmos-scientific')">✕</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <iframe src="https://www.desmos.com/scientific"></iframe>
+            <div class="resize-grip"></div>
+        </div>
+    </div>
+
+    <!-- GeoGebra Graphing Calculator Window -->
+    <div class="tool-window" id="window-geogebra">
+        <div class="window-header" onmousedown="initDragWindow(event, 'window-geogebra')">
+            <div class="window-title">
+                <span>GeoGebra Suite</span>
+            </div>
+            <div class="window-controls">
+                <button class="win-btn win-close" onclick="toggleToolWindow('window-geogebra')">✕</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <iframe src="https://www.geogebra.org/calculator"></iframe>
+            <div class="resize-grip"></div>
+        </div>
+    </div>
+
+    <!-- Rough Notes / Scratchpad Window -->
+    <div class="tool-window" id="window-notes">
+        <div class="window-header" onmousedown="initDragWindow(event, 'window-notes')">
+            <div class="window-title">
+                <span>Working Notes & Formulas</span>
+            </div>
+            <div class="window-controls">
+                <button class="win-btn win-close" onclick="toggleToolWindow('window-notes')">✕</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <textarea class="notes-textarea" id="studentNotes" placeholder="Jot down rough steps, formulas, or reminders here... (Auto-saved)"></textarea>
+            <div class="resize-grip"></div>
+        </div>
+    </div>
+
+    <!-- Alarm Audio Component -->
+    <audio id="timerAudioAlarm" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
+
+    <!-- ==========================================================================
+         JAVASCRIPT ENGINE & COMPREHENSIVE RESOURCE DATABASE
          ========================================================================== -->
     <script>
-        /**
-         * IITian Academy IBDP Secure Study Space Script
-         * Version: 2.1.0 Enterprise
-         * Features: Security blocking, LocalStorage autosave, Advanced Timer, Smooth Scroll
-         */
+        /* ==========================================================================
+           🟢🟢🟢 HIGHLIGHTED RESOURCE DATABASE (ADD / EDIT YOUR PAPERS HERE) 🟢🟢🟢
+           ========================================================================== */
+        const UEFI_DATABASE = [
+            
+            /* ----------------------------------------------------------------------
+               1. IB AA HL (Analysis & Approaches Higher Level)
+               ---------------------------------------------------------------------- */
+            {
+                id: "AAHL-001",
+                title: "BT PP1 AA HL",
+                category: "AA HL",
+                type: "Past Papers",
+                pdfPath: "archives/BT PP1 .pdf",
+                markscheme: `
+                    <h4>Markscheme: BT PP1 AA HL</h4>
+                    <div class="markscheme-step">
+                        <strong>Question 1 (Calculus):</strong><br>
+                        Differentiate $f(x) = x^3 e^{2x}$ with respect to $x$.<br>
+                        <em>Solution:</em> Apply product rule $\\frac{d}{dx}(uv) = u'v + uv'$.<br>
+                        Let $u = x^3 \\implies u' = 3x^2$ <span class="mark-badge">M1</span><br>
+                        Let $v = e^{2x} \\implies v' = 2e^{2x}$ <span class="mark-badge">A1</span><br>
+                        $f'(x) = 3x^2 e^{2x} + 2x^3 e^{2x} = x^2 e^{2x}(3 + 2x)$ <span class="mark-badge">A1</span>
+                    </div>
+                `
+            },
+            {
+                id: "AAHL-002",
+                title: "EXOLOGS PP1 AA HL",
+                category: "AA HL",
+                type: "Past Papers",
+                pdfPath: "archives/EXOLOGS PP1 AA HL.pdf",
+                markscheme: `
+                    <h4>Markscheme: EXOLOGS PP1 AA HL</h4>
+                    <div class="markscheme-step">
+                        <strong>Question 1 (Logarithms):</strong><br>
+                        Solve for $x$: $\\log_2(x) + \\log_2(x-2) = 3$.<br>
+                        <em>Solution:</em> Combine logs: $\\log_2(x(x-2)) = 3$ <span class="mark-badge">M1</span><br>
+                        Convert to exponential form: $x(x-2) = 2^3 = 8$ <span class="mark-badge">A1</span><br>
+                        $x^2 - 2x - 8 = 0 \\implies (x-4)(x+2) = 0$<br>
+                        Since $x > 2$, $x = 4$ <span class="mark-badge">A1</span>
+                    </div>
+                `
+            },
+            {
+                id: "AAHL-003",
+                title: "Complex Numbers & De Moivre",
+                category: "AA HL",
+                type: "Topical",
+                pdfPath: "archives/Complex Numbers.pdf",
+                markscheme: `
+                    <h4>Markscheme: Complex Numbers Topical</h4>
+                    <div class="markscheme-step">
+                        <strong>Part A:</strong> Express $z = 1 + i\\sqrt{3}$ in polar form.<br>
+                        $|z| = \\sqrt{1^2 + (\\sqrt{3})^2} = 2$ <span class="mark-badge">A1</span><br>
+                        $\\arg(z) = \\arctan(\\sqrt{3}) = \\frac{\\pi}{3}$ <span class="mark-badge">A1</span><br>
+                        $z = 2\\text{cis}\\left(\\frac{\\pi}{3}\\right)$ <span class="mark-badge">A1</span>
+                    </div>
+                `
+            },
+            {
+                id: "AAHL-004",
+                title: "Proof by Mathematical Induction",
+                category: "AA HL",
+                type: "Topical",
+                pdfPath: "archives/Proof by Induction.pdf",
+                markscheme: `
+                    <h4>Markscheme: Induction Topical</h4>
+                    <div class="markscheme-step">
+                        <strong>Step 1 (Base Case):</strong> Show true for $n=1$. <span class="mark-badge">R1</span><br>
+                        <strong>Step 2 (Assumption):</strong> Assume true for $n=k$. <span class="mark-badge">M1</span><br>
+                        <strong>Step 3 (Inductive Step):</strong> Prove for $n=k+1$. <span class="mark-badge">M1 A1</span>
+                    </div>
+                `
+            },
+
+            /* ----------------------------------------------------------------------
+               2. IB AA SL (Analysis & Approaches Standard Level)
+               ---------------------------------------------------------------------- */
+            {
+                id: "AASL-001",
+                title: "Functions & Transformations",
+                category: "AA SL",
+                type: "Topical",
+                pdfPath: "archives/Functions SL.pdf",
+                markscheme: `
+                    <h4>Markscheme: Functions Topical</h4>
+                    <div class="markscheme-step">
+                        <strong>Q1:</strong> Find the inverse of $f(x) = \\frac{2x+1}{x-3}$.<br>
+                        Swap $x$ and $y$: $x = \\frac{2y+1}{y-3}$ <span class="mark-badge">M1</span><br>
+                        $x(y-3) = 2y+1 \\implies xy - 2y = 3x + 1$<br>
+                        $y(x-2) = 3x+1 \\implies f^{-1}(x) = \\frac{3x+1}{x-2}$ <span class="mark-badge">A1</span>
+                    </div>
+                `
+            },
+            {
+                id: "AASL-002",
+                title: "Trigonometric Equations & Identities",
+                category: "AA SL",
+                type: "Topical",
+                pdfPath: "archives/Trig SL.pdf",
+                markscheme: `
+                    <h4>Markscheme: Trigonometry SL</h4>
+                    <div class="markscheme-step">
+                        Solve $2\\sin^2(x) = 1$ for $0 \\le x \\le \\pi$.<br>
+                        $\\sin^2(x) = \\frac{1}{2} \\implies \\sin(x) = \\pm\\frac{1}{\\sqrt{2}}$ <span class="mark-badge">M1</span><br>
+                        $x = \\frac{\\pi}{4}, \\frac{3\\pi}{4}$ <span class="mark-badge">A1 A1</span>
+                    </div>
+                `
+            },
+            {
+                id: "AASL-003",
+                title: "AA SL May 2023 Paper 1",
+                category: "AA SL",
+                type: "Past Papers",
+                pdfPath: "archives/AASL_2023_P1.pdf",
+                markscheme: `
+                    <h4>Markscheme: 2023 Paper 1 SL</h4>
+                    <div class="markscheme-step">
+                        Full solutions available. Check step 4 for binomial coefficients. <span class="mark-badge">A2</span>
+                    </div>
+                `
+            },
+
+            /* ----------------------------------------------------------------------
+               3. IB AI HL (Applications & Interpretation Higher Level)
+               ---------------------------------------------------------------------- */
+            {
+                id: "AIHL-001",
+                title: "Matrices & Transformation Geometry",
+                category: "AI HL",
+                type: "Topical",
+                pdfPath: "archives/Matrices AI HL.pdf",
+                markscheme: `
+                    <h4>Markscheme: Matrices AI HL</h4>
+                    <div class="markscheme-step">
+                        Find eigenvalue $\\lambda$ for matrix $\\mathbf{A} = \\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}$.<br>
+                        $\\det(\\mathbf{A} - \\lambda\\mathbf{I}) = 0 \\implies (2-\\lambda)^2 - 1 = 0$ <span class="mark-badge">M1</span><br>
+                        $\\lambda_1 = 3, \\lambda_2 = 1$ <span class="mark-badge">A1</span>
+                    </div>
+                `
+            },
+            {
+                id: "AIHL-002",
+                title: "Coupled Differential Equations",
+                category: "AI HL",
+                type: "Topical",
+                pdfPath: "archives/DiffEq AI HL.pdf",
+                markscheme: `
+                    <h4>Markscheme: Differential Equations</h4>
+                    <div class="markscheme-step">
+                        Phase portrait analysis and equilibrium state identification. <span class="mark-badge">M1 A1</span>
+                    </div>
+                `
+            },
+
+            /* ----------------------------------------------------------------------
+               4. IB AI SL (Applications & Interpretation Standard Level)
+               ---------------------------------------------------------------------- */
+            {
+                id: "AISL-001",
+                title: "Bivariate Statistics & Regression",
+                category: "AI SL",
+                type: "Topical",
+                pdfPath: "archives/Bivariate Stats.pdf",
+                markscheme: `
+                    <h4>Markscheme: Bivariate Statistics</h4>
+                    <div class="markscheme-step">
+                        <strong>Q1 (a):</strong> Calculate Pearson's correlation coefficient $r$.<br>
+                        $r = 0.894$ <span class="mark-badge">A1</span><br>
+                        <strong>Q1 (b):</strong> Equation of regression line $y$ on $x$: $y = 1.42x + 3.10$ <span class="mark-badge">A2</span>
+                    </div>
+                `
+            },
+            {
+                id: "AISL-002",
+                title: "Voronoi Diagrams & Nearest Neighbor",
+                category: "AI SL",
+                type: "Topical",
+                pdfPath: "archives/Voronoi SL.pdf",
+                markscheme: `
+                    <h4>Markscheme: Voronoi Diagrams</h4>
+                    <div class="markscheme-step">
+                        Find perpendicular bisector equation for sites $A(1,2)$ and $B(5,4)$.<br>
+                        Midpoint = $(3,3)$ <span class="mark-badge">A1</span>, Gradient $AB = \\frac{1}{2} \\implies m_{\\perp} = -2$ <span class="mark-badge">M1</span><br>
+                        $y - 3 = -2(x - 3) \\implies y = -2x + 9$ <span class="mark-badge">A1</span>
+                    </div>
+                `
+            }
+
+            /* 🟢 COPY & PASTE BELOW TO ADD MORE PAPERS:
+            ,{
+                id: "UNIQUE-ID",
+                title: "Paper Name",
+                category: "AA HL", // "AA HL", "AA SL", "AI HL", or "AI SL"
+                type: "Topical",   // "Topical" or "Past Papers"
+                pdfPath: "archives/YOUR_FILE_NAME.pdf",
+                markscheme: `<h4>Markscheme Title</h4><p>Steps...</p>`
+            }
+            */
+        ];
 
         /* ==========================================================================
-           1. SECURITY: ANTI-PRINT, ANTI-SAVE, ANTI-CONTEXT
+           CORE LOGIC & UI RENDERER
            ========================================================================== */
-        class SecurityManager {
-            constructor() {
-                this.initSecurity();
+        let currentFilteredData = [...UEFI_DATABASE];
+        const sidebarList = document.getElementById('sidebar-item-list');
+        const pdfViewer = document.getElementById('active-pdf-viewer');
+        const markschemeArea = document.getElementById('markscheme-content-area');
+        const countBadge = document.getElementById('item-count-badge');
+        const categoryLabel = document.getElementById('sidebar-category-label');
+
+        // Initial Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSidebarItems(UEFI_DATABASE);
+            if (UEFI_DATABASE.length > 0) {
+                activatePaperItem(UEFI_DATABASE[0]);
+            }
+        });
+
+        function renderSidebarItems(items) {
+            sidebarList.innerHTML = "";
+            countBadge.innerText = `${items.length} items`;
+
+            if (items.length === 0) {
+                sidebarList.innerHTML = `<div style="padding: 20px; color: var(--text-muted); font-size: 13px;">No documents match your filter.</div>`;
+                return;
             }
 
-            initSecurity() {
-                // Block specific keystrokes (Ctrl+P, Cmd+P, Ctrl+S, Cmd+S)
-                document.addEventListener("keydown", (e) => {
-                    if ((e.ctrlKey || e.metaKey) && (e.key === "p" || e.key === "P")) {
-                        e.preventDefault();
-                        this.triggerSecurityAlert("Printing is strictly disabled to protect secure content.");
-                    }
-                    if ((e.ctrlKey || e.metaKey) && (e.key === "s" || e.key === "S")) {
-                        e.preventDefault();
-                        this.triggerSecurityAlert("Direct saving is disabled. Use 'Download Reflections' for your notes.");
-                    }
-                });
+            items.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'paper-card';
+                card.id = `card-${item.id}`;
+                card.onclick = () => activatePaperItem(item);
 
-                // Disable right-click context menu
-                document.addEventListener("contextmenu", (e) => {
-                    e.preventDefault();
-                    // Subtle console warning instead of obtrusive alert
-                    console.warn("Context menu disabled for security reasons.");
-                });
-            }
+                const tagClass = item.type === 'Topical' ? 'tag-topical' : 'tag-yearly';
 
-            triggerSecurityAlert(msg) {
-                alert(`SECURITY ALERT:\n${msg}`);
-            }
-        }
-
-        /* ==========================================================================
-           2. ALAL FOCUS TIMER LOGIC
-           ========================================================================== */
-        class AlalTimer {
-            constructor() {
-                this.display = document.getElementById('timer-display');
-                this.inputMin = document.getElementById('input-minutes');
-                this.inputSec = document.getElementById('input-seconds');
-                this.btnStart = document.getElementById('btn-start');
-                this.btnPause = document.getElementById('btn-pause');
-                this.btnReset = document.getElementById('btn-reset');
-                this.audioAlarm = document.getElementById('alal-audio');
-                
-                this.interval = null;
-                this.totalSeconds = 0;
-                this.isRunning = false;
-
-                this.bindEvents();
-                this.updateDisplayFromInputs();
-            }
-
-            bindEvents() {
-                this.btnStart.addEventListener('click', () => this.start());
-                this.btnPause.addEventListener('click', () => this.pause());
-                this.btnReset.addEventListener('click', () => this.reset());
-                
-                // Allow inputs to update display when not running
-                this.inputMin.addEventListener('input', () => { if(!this.isRunning) this.updateDisplayFromInputs(); });
-                this.inputSec.addEventListener('input', () => { if(!this.isRunning) this.updateDisplayFromInputs(); });
-            }
-
-            updateDisplayFromInputs() {
-                let m = parseInt(this.inputMin.value) || 0;
-                let s = parseInt(this.inputSec.value) || 0;
-                // Handle overflow
-                if(s > 59) {
-                    m += Math.floor(s/60);
-                    s = s % 60;
-                }
-                this.totalSeconds = (m * 60) + s;
-                this.renderTime();
-            }
-
-            renderTime() {
-                const m = Math.floor(this.totalSeconds / 60);
-                const s = this.totalSeconds % 60;
-                this.display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-            }
-
-            start() {
-                if (this.isRunning) return;
-                
-                // If starting from 0, grab from inputs
-                if (this.totalSeconds <= 0) {
-                    this.updateDisplayFromInputs();
-                }
-                
-                if (this.totalSeconds > 0) {
-                    this.isRunning = true;
-                    this.display.classList.remove('alarm-active');
-                    this.btnStart.textContent = "Focusing...";
-                    
-                    this.interval = setInterval(() => {
-                        this.totalSeconds--;
-                        this.renderTime();
-                        
-                        if (this.totalSeconds <= 0) {
-                            this.complete();
-                        }
-                    }, 1000);
-                }
-            }
-
-            pause() {
-                if (!this.isRunning) return;
-                clearInterval(this.interval);
-                this.isRunning = false;
-                this.btnStart.textContent = "Resume Focus";
-            }
-
-            reset() {
-                clearInterval(this.interval);
-                this.isRunning = false;
-                this.updateDisplayFromInputs();
-                this.btnStart.textContent = "Start Focus";
-                this.display.classList.remove('alarm-active');
-                
-                // Stop audio
-                this.audioAlarm.pause();
-                this.audioAlarm.currentTime = 0;
-            }
-
-            complete() {
-                clearInterval(this.interval);
-                this.isRunning = false;
-                this.totalSeconds = 0;
-                this.renderTime();
-                this.btnStart.textContent = "Start Focus";
-                
-                // Visual Alarm
-                this.display.classList.add('alarm-active');
-                
-                // Audio Alarm (Cock Crow)
-                this.audioAlarm.play().catch(e => {
-                    console.log("Audio blocked. Ensure user interaction has occurred.");
-                    alert("ALAL FOCUS! Time is up!");
-                });
-            }
-        }
-
-        /* ==========================================================================
-           3. REFLECTION NOTES MANAGER (LOCAL STORAGE & DOWNLOAD)
-           ========================================================================== */
-        class NotesManager {
-            constructor() {
-                this.editor = document.getElementById('reflection-editor');
-                this.btnDownload = document.getElementById('btn-download-notes');
-                this.btnClear = document.getElementById('btn-clear-notes');
-                this.statusIndicator = document.getElementById('save-status');
-                
-                this.storageKey = 'IITian_IBDP_Reflections';
-                this.saveTimeout = null;
-
-                this.init();
-            }
-
-            init() {
-                // Load existing notes
-                const savedNotes = localStorage.getItem(this.storageKey);
-                if (savedNotes) {
-                    this.editor.value = savedNotes;
-                }
-
-                // Bind events
-                this.editor.addEventListener('input', () => this.handleInput());
-                this.btnDownload.addEventListener('click', () => this.downloadNotes());
-                this.btnClear.addEventListener('click', () => this.clearNotes());
-            }
-
-            handleInput() {
-                // Debounce save logic
-                clearTimeout(this.saveTimeout);
-                this.statusIndicator.classList.remove('visible');
-                
-                this.saveTimeout = setTimeout(() => {
-                    localStorage.setItem(this.storageKey, this.editor.value);
-                    this.showSaveStatus();
-                }, 1000); // Save 1 second after typing stops
-            }
-
-            showSaveStatus() {
-                this.statusIndicator.classList.add('visible');
-                setTimeout(() => {
-                    this.statusIndicator.classList.remove('visible');
-                }, 3000);
-            }
-
-            downloadNotes() {
-                const text = this.editor.value;
-                if (!text.trim()) {
-                    alert("Your reflection space is empty. Write some notes before downloading.");
-                    return;
-                }
-
-                const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-                const url = URL.createObjectURL(blob);
-                
-                const a = document.createElement("a");
-                const dateStr = new Date().toISOString().split('T')[0];
-                
-                a.href = url;
-                a.download = `IBDP_Reflections_${dateStr}.txt`;
-                
-                document.body.appendChild(a);
-                a.click();
-                
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            }
-
-            clearNotes() {
-                if (confirm("Are you sure you want to clear all your notes? This cannot be undone.")) {
-                    this.editor.value = "";
-                    localStorage.removeItem(this.storageKey);
-                }
-            }
-        }
-
-        /* ==========================================================================
-           4. GLOBAL UTILITIES (TOGGLES & SMOOTH SCROLL)
-           ========================================================================== */
-        
-        // Ogunna Reveal Logic (Global Function for inline HTML calls)
-        window.toggleOgunna = function(elementId, btnElement) {
-            const el = document.getElementById(elementId);
-            if (el.style.display === "block") {
-                el.style.display = "none";
-                btnElement.innerHTML = "▼ Ogunna Reveal: Check Markscheme ▼";
-                btnElement.style.backgroundColor = "var(--secondary-color)";
-                btnElement.style.color = "var(--primary-dark)";
-            } else {
-                el.style.display = "block";
-                btnElement.innerHTML = "▲ Hide Markscheme ▲";
-                btnElement.style.backgroundColor = "var(--primary-dark)";
-                btnElement.style.color = "white";
-                
-                // Smooth scroll to view
-                setTimeout(() => {
-                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 100);
-            }
-        };
-
-        // Smooth Scroll Offset for fixed header
-        function initSmoothScroll() {
-            document.querySelectorAll('.main-nav a').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetEl = document.getElementById(targetId);
-                    
-                    if (targetEl) {
-                        const headerOffset = 85; // Height of header + border
-                        const elementPosition = targetEl.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: "smooth"
-                        });
-                    }
-                });
+                card.innerHTML = `
+                    <div class="paper-info">
+                        <span class="title">${item.title}</span>
+                        <div class="meta">
+                            <span>${item.category}</span>
+                            <span>•</span>
+                            <span class="paper-tag ${tagClass}">${item.type}</span>
+                        </div>
+                    </div>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                `;
+                sidebarList.appendChild(card);
             });
         }
 
+        function activatePaperItem(item) {
+            // Update Active Card Styling
+            document.querySelectorAll('.paper-card').forEach(c => c.classList.remove('active'));
+            const activeCard = document.getElementById(`card-${item.id}`);
+            if (activeCard) activeCard.classList.add('active');
+
+            // Load PDF with security URL flags disabling standard toolbar
+            pdfViewer.src = `${item.pdfPath}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`;
+
+            // Load Markscheme
+            markschemeArea.innerHTML = item.markscheme;
+
+            // Trigger MathJax re-render for formulas inside markscheme
+            if (window.MathJax) {
+                MathJax.typesetPromise([markschemeArea]);
+            }
+        }
+
+        function filterData(category, type) {
+            categoryLabel.innerText = category === 'ALL' ? 'All Content' : `${category} (${type})`;
+            
+            if (category === 'ALL' && type === 'ALL') {
+                currentFilteredData = [...UEFI_DATABASE];
+            } else {
+                currentFilteredData = UEFI_DATABASE.filter(item => {
+                    const matchCategory = item.category === category;
+                    const matchType = type === 'ALL' || item.type === type;
+                    return matchCategory && matchType;
+                });
+            }
+
+            renderSidebarItems(currentFilteredData);
+            if (currentFilteredData.length > 0) {
+                activatePaperItem(currentFilteredData[0]);
+            }
+        }
+
+        function executeSearch() {
+            const query = document.getElementById('mainSearchInput').value.toLowerCase().trim();
+            if (!query) {
+                renderSidebarItems(currentFilteredData);
+                return;
+            }
+
+            const searchResults = UEFI_DATABASE.filter(item => 
+                item.title.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query) ||
+                item.type.toLowerCase().includes(query)
+            );
+
+            categoryLabel.innerText = `Search: "${query}"`;
+            renderSidebarItems(searchResults);
+            if (searchResults.length > 0) {
+                activatePaperItem(searchResults[0]);
+            }
+        }
+
         /* ==========================================================================
-           5. INITIALIZATION
+           OGUNNA MARKSCHEME REVEAL TOGGLE
            ========================================================================== */
-        document.addEventListener('DOMContentLoaded', () => {
-            new SecurityManager();
-            new AlalTimer();
-            new NotesManager();
-            initSmoothScroll();
-            console.log("IITian Academy IBDP Space Initialized Successfully.");
+        let ogunnaExpanded = false;
+        function toggleOgunnaMarkscheme() {
+            ogunnaExpanded = !ogunnaExpanded;
+            markschemeArea.style.display = ogunnaExpanded ? 'block' : 'none';
+        }
+
+        /* ==========================================================================
+           SECURITY CONTROL LAYER (ANTI-SAVE & ANTI-PRINT)
+           ========================================================================== */
+        document.addEventListener('keydown', (e) => {
+            // Intercept Ctrl+P / Cmd+P
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P')) {
+                e.preventDefault();
+                alert("SECURITY POLICY: Printing is disabled on UEFI IB DP MATHEMATICS.");
+            }
+            // Intercept Ctrl+S / Cmd+S
+            if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+                e.preventDefault();
+                alert("SECURITY POLICY: Saving local document copies is restricted.");
+            }
+        });
+
+        // Context Menu Blocking
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        /* ==========================================================================
+           WINDOW MANAGER (DRAGGABLE, CLOSABLE MODALS)
+           ========================================================================== */
+        let highestZIndex = 2500;
+
+        function toggleToolWindow(windowId) {
+            const win = document.getElementById(windowId);
+            if (!win) return;
+
+            if (win.style.display === 'flex') {
+                win.style.display = 'none';
+            } else {
+                win.style.display = 'flex';
+                bringToFront(win);
+            }
+        }
+
+        function bringToFront(win) {
+            highestZIndex++;
+            win.style.zIndex = highestZIndex;
+        }
+
+        let isDraggingWindow = false;
+        let activeWin = null;
+        let startX = 0, startY = 0, initialLeft = 0, initialTop = 0;
+
+        function initDragWindow(e, windowId) {
+            activeWin = document.getElementById(windowId);
+            bringToFront(activeWin);
+            isDraggingWindow = true;
+
+            startX = e.clientX;
+            startY = e.clientY;
+
+            const rect = activeWin.getBoundingClientRect();
+            initialLeft = rect.left;
+            initialTop = rect.top;
+
+            document.addEventListener('mousemove', doDragWindow);
+            document.addEventListener('mouseup', stopDragWindow);
+        }
+
+        function doDragWindow(e) {
+            if (!isDraggingWindow || !activeWin) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            activeWin.style.left = `${initialLeft + dx}px`;
+            activeWin.style.top = `${initialTop + dy}px`;
+            activeWin.style.right = 'auto'; // Reset CSS fixed positions
+            activeWin.style.bottom = 'auto';
+        }
+
+        function stopDragWindow() {
+            isDraggingWindow = false;
+            activeWin = null;
+            document.removeEventListener('mousemove', doDragWindow);
+            document.removeEventListener('mouseup', stopDragWindow);
+        }
+
+        /* ==========================================================================
+           POMODORO ENGINE
+           ========================================================================== */
+        let pomoTimer = null;
+        let pomoTimeLeft = 25 * 60;
+        let pomoIsRunning = false;
+
+        const clockDisplay = document.getElementById('pomoClockDisplay');
+        const durationInput = document.getElementById('pomoDurationInput');
+        const alarmSound = document.getElementById('timerAudioAlarm');
+
+        function updateClockDisplay() {
+            const mins = Math.floor(pomoTimeLeft / 60);
+            const secs = pomoTimeLeft % 60;
+            clockDisplay.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function startPomodoro() {
+            if (pomoIsRunning) return;
+
+            if (pomoTimeLeft <= 0) {
+                pomoTimeLeft = (parseInt(durationInput.value) || 25) * 60;
+            }
+
+            pomoIsRunning = true;
+            pomoTimer = setInterval(() => {
+                pomoTimeLeft--;
+                updateClockDisplay();
+
+                if (pomoTimeLeft <= 0) {
+                    clearInterval(pomoTimer);
+                    pomoIsRunning = false;
+                    alarmSound.play().catch(() => console.log('Audio autoplay blocked'));
+                    alert("POMODORO SESSION COMPLETE! Take a break.");
+                }
+            }, 1000);
+        }
+
+        function pausePomodoro() {
+            clearInterval(pomoTimer);
+            pomoIsRunning = false;
+        }
+
+        function resetPomodoro() {
+            clearInterval(pomoTimer);
+            pomoIsRunning = false;
+            pomoTimeLeft = (parseInt(durationInput.value) || 25) * 60;
+            updateClockDisplay();
+        }
+
+        /* ==========================================================================
+           STUDENT NOTES PERSISTENCE
+           ========================================================================== */
+        const notesWidget = document.getElementById('studentNotes');
+        if (localStorage.getItem('UEFI_STUDENT_NOTES')) {
+            notesWidget.value = localStorage.getItem('UEFI_STUDENT_NOTES');
+        }
+
+        notesWidget.addEventListener('input', () => {
+            localStorage.setItem('UEFI_STUDENT_NOTES', notesWidget.value);
         });
 
     </script>
