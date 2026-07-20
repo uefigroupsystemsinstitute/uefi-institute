@@ -3,17 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IB DP Revision Papers - AssessPrep Portal</title>
+  <title>UEFI Global Academic Powerhouse - Advanced Revision Engine</title>
   <style>
+    /* ==========================================================================
+       1. EXTENSIVE BRAND COLOR MATRIX & CORE STYLING
+       ========================================================================== */
     :root {
+      --iitian-navy-dark: #060d1a;
+      --iitian-navy-deep: #0a192f;
+      --iitian-navy-medium: #172a45;
+      --iitian-blue-accent: #30b0ff;
       --safaricom-green: #00a340;
-      --safaricom-dark-green: #007a30;
+      --safaricom-green-hover: #008533;
       --safaricom-red: #e60000;
-      --iitian-navy: #0f172a;
-      --iitian-blue: #1e3a8a;
-      --bg-light: #f8fafc;
-      --text-dark: #1e293b;
-      --border-color: #cbd5e1;
+      --safaricom-red-hover: #b80000;
+      --glass-bg: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --slate-light: #f1f5f9;
+      --slate-text: #334155;
+      --border-muted: #cbd5e1;
     }
 
     * {
@@ -22,242 +30,420 @@
       padding: 0;
       font-family: Arial, Helvetica, sans-serif;
       font-weight: bold;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     body {
-      background-color: var(--bg-light);
-      color: var(--text-dark);
+      background-color: var(--iitian-navy-dark);
+      color: #ffffff;
       height: 100vh;
+      width: 100vw;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
     }
 
-    /* Top Navigation / Pomodoro Bar */
+    /* ==========================================================================
+       2. TOP-LEFT CONCENTRATED NAVIGATION LAYER
+       ========================================================================== */
     header {
-      background-color: var(--iitian-navy);
-      color: white;
-      height: 60px;
+      background: linear-gradient(135deg, var(--iitian-navy-deep) 0%, var(--iitian-navy-medium) 100%);
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
-      border-bottom: 4px solid var(--safaricom-green);
-      width: 100%;
+      padding: 0 16px;
+      border-bottom: 3px solid var(--safaricom-green);
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
 
-    .logo-area {
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-      color: white;
-    }
-
-    .logo-area span {
-      color: var(--safaricom-green);
-    }
-
-    .timer-container {
+    .top-left-branding {
       display: flex;
       align-items: center;
-      gap: 15px;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 8px 16px;
+      gap: 12px;
+    }
+
+    .uefi-logo-box {
+      background: linear-gradient(90deg, #ffffff 0%, #e2e8f0 100%);
+      color: var(--iitian-navy-dark);
+      padding: 5px 10px;
       border-radius: 4px;
+      font-size: 0.95rem;
+      letter-spacing: -0.5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .app-title-badge {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-left: 2px solid var(--glass-border);
+      padding-left: 12px;
+    }
+
+    .top-right-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .pomodoro-display-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px 12px;
+      border-radius: 6px;
       border: 1px solid var(--safaricom-green);
     }
 
-    #timer-display {
-      font-size: 1.4rem;
-      color: #38bdf8;
-      font-family: monospace;
+    .pomodoro-label {
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      letter-spacing: 0.5px;
     }
 
+    #timer-clock {
+      font-size: 1.35rem;
+      color: #ffffff;
+      font-family: 'Courier New', Courier, monospace;
+      text-shadow: 0 0 6px var(--safaricom-green);
+    }
+
+    /* ==========================================================================
+       3. INTERACTIVE COMPONENT BUTTON ARCHITECTURE
+       ========================================================================== */
     .btn {
       cursor: pointer;
-      padding: 8px 16px;
+      padding: 8px 14px;
       border: none;
       border-radius: 4px;
       text-transform: uppercase;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .btn-green {
+    .btn-safaricom-green {
       background-color: var(--safaricom-green);
       color: white;
     }
-    .btn-green:hover { background-color: var(--safaricom-dark-green); }
+    .btn-safaricom-green:hover {
+      background-color: var(--safaricom-green-hover);
+      transform: translateY(-1px);
+    }
 
-    .btn-red {
+    .btn-safaricom-red {
       background-color: var(--safaricom-red);
       color: white;
     }
-    .btn-red:hover { background-color: #b30000; }
-
-    /* Main Workspace Grid - Full Width Left to Right */
-    .workspace {
-      display: grid;
-      grid-template-columns: 300px 1fr 400px;
-      height: calc(100vh - 60px);
-      width: 100vw;
+    .btn-safaricom-red:hover {
+      background-color: var(--safaricom-red-hover);
+      transform: translateY(-1px);
     }
 
-    /* Left Sidebar: Topic & Year Selection */
-    .sidebar-left {
-      background: white;
-      border-right: 2px solid var(--border-color);
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      border: 1px solid var(--glass-border);
+    }
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    /* ==========================================================================
+       4. EXTENSIVE WORKSPACE PRODUCTION GRID (LEFT TO RIGHT FILL)
+       ========================================================================== */
+    .workspace-matrix {
+      display: grid;
+      grid-template-columns: 310px 1fr 450px; /* Initial configuration sizing */
+      height: calc(100vh - 52px);
+      width: 100vw;
+      position: relative;
+      background-color: var(--iitian-navy-dark);
+    }
+
+    /* ==========================================================================
+       5. SIDEBAR LEFT: FILTER ARRAYS & BOOKMARK ARCHIVE
+       ========================================================================== */
+    .pane-left-sidebar {
+      background: linear-gradient(180deg, var(--iitian-navy-deep) 0%, #0d1e36 100%);
+      border-right: 2px solid rgba(255, 255, 255, 0.08);
       padding: 20px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 22px;
     }
 
-    .sidebar-left h2 {
-      font-size: 1rem;
-      color: var(--iitian-navy);
+    .pane-left-sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .pane-left-sidebar::-webkit-scrollbar-thumb {
+      background: var(--glass-border);
+      border-radius: 3px;
+    }
+
+    .section-title-wrapper {
       border-bottom: 2px solid var(--safaricom-green);
-      padding-bottom: 5px;
+      padding-bottom: 6px;
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-wrapper-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-descriptor {
+      font-size: 0.75rem;
+      color: #94a3b8;
       text-transform: uppercase;
     }
 
-    .filter-group {
+    .custom-select-element, .custom-text-input {
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 10px;
+      color: white;
+      font-size: 0.88rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .custom-select-element:focus, .custom-text-input:focus {
+      border-color: var(--iitian-blue-accent);
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .custom-select-element option {
+      background-color: var(--iitian-navy-deep);
+      color: white;
+    }
+
+    /* Core Listing Inventory UI Elements */
+    .inventory-scroll-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .examination-item-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .examination-item-card:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--iitian-blue-accent);
+      transform: scale(1.01);
+    }
+
+    .examination-item-card.active-selection {
+      border-color: var(--safaricom-green);
+      background: rgba(0, 163, 64, 0.08);
+      box-shadow: inset 0 0 8px rgba(0, 163, 64, 0.2);
+    }
+
+    .examination-item-card h4 {
+      font-size: 0.88rem;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .examination-item-card p {
+      font-size: 0.7rem;
+      color: #64748b;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    /* CONSULT LATER / DIFFICULT QUESTIONS CONTAINER */
+    .consult-later-pool-box {
+      background: rgba(230, 0, 0, 0.04);
+      border: 2px dashed rgba(230, 0, 0, 0.25);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 100px;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    label {
-      font-size: 0.85rem;
+    .consult-empty-state {
+      font-size: 0.78rem;
       color: #64748b;
+      text-align: center;
+      margin: auto 0;
+      font-style: italic;
     }
 
-    select, input[type="text"] {
-      padding: 10px;
-      border: 2px solid var(--border-color);
-      border-radius: 4px;
-      font-size: 0.9rem;
-      outline: none;
-    }
-
-    select:focus, input[type="text"]:focus {
-      border-color: var(--safaricom-green);
-    }
-
-    .question-list {
+    /* ==========================================================================
+       6. CENTER PANEL: DOCUMENT MATRIX & CONTROLS (ASSESSPREP STYLE)
+       ========================================================================== */
+    .pane-center-viewport {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .paper-card {
-      padding: 12px;
-      border: 2px solid var(--border-color);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: border-color 0.2s;
-      background: #f8fafc;
-    }
-
-    .paper-card:hover, .paper-card.active {
-      border-color: var(--safaricom-green);
-      background: #f0fdf4;
-    }
-
-    .paper-card h3 {
-      font-size: 0.9rem;
-      color: var(--iitian-navy);
-    }
-
-    .paper-card p {
-      font-size: 0.75rem;
-      color: #64748b;
-      margin-top: 4px;
-    }
-
-    /* Center Panel: PDF Viewer & Ogunna Reveal */
-    .center-panel {
-      display: flex;
-      flex-direction: column;
-      background: #525659;
+      background-color: #2e3136;
       position: relative;
     }
 
-    .toolbar {
-      background: var(--iitian-navy);
+    .assessment-utility-bar {
+      background: linear-gradient(90deg, #12223a 0%, #091324 100%);
       padding: 10px 20px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #334155;
+      justify-content: space-between;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
     }
 
-    .toolbar-title {
+    .active-document-title {
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 50%;
+    }
+
+    .center-utility-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Flag Status Modifiers */
+    .btn-flag-action {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .btn-flag-action.is-flagged {
+      background: linear-gradient(135deg, var(--safaricom-red) 0%, #990000 100%);
       color: white;
-      font-size: 1rem;
+      border-color: white;
+      box-shadow: 0 0 10px rgba(230, 0, 0, 0.4);
     }
 
-    /* OGUNNA REVEAL BUTTON */
-    .ogunna-btn {
-      background: linear-gradient(135deg, var(--safaricom-red), #990000);
+    /* OGUNNA REVEAL INTERACTIVE MECHANISM */
+    .btn-ogunna-reveal {
+      background: linear-gradient(135deg, var(--safaricom-red) 0%, #a30000 100%);
       color: white;
-      padding: 10px 20px;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      border: 2px solid white;
-      box-shadow: 0 0 10px rgba(230, 0, 0, 0.5);
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(230, 0, 0, 0.3);
     }
 
-    .ogunna-btn:hover {
-      background: linear-gradient(135deg, #ff1a1a, var(--safaricom-red));
+    .btn-ogunna-reveal:hover {
+      background: linear-gradient(135deg, #ff3b3b 0%, var(--safaricom-red) 100%);
       transform: scale(1.02);
     }
 
-    .pdf-viewport {
+    .pdf-render-frame {
       flex: 1;
       width: 100%;
       height: 100%;
       border: none;
+      background-color: #525659;
     }
 
-    /* Right Sidebar: Calculators */
-    .sidebar-right {
-      background: white;
-      border-left: 2px solid var(--border-color);
+    /* ==========================================================================
+       7. MOUSE DRAGGABLE MESH LAYER (DYNAMIC DIVISION PANEL)
+       ========================================================================== */
+    .resize-divider-bar {
+      width: 8px;
+      background-color: var(--iitian-navy-deep);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      border-right: 1px solid rgba(0, 0, 0, 0.5);
+      cursor: col-resize;
+      position: relative;
+      transition: background-color 0.2s;
+      z-index: 50;
+    }
+
+    .resize-divider-bar:hover, .resize-divider-bar.is-dragging {
+      background-color: var(--iitian-blue-accent);
+    }
+
+    .resize-divider-bar::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 2px;
+      transform: translateY(-50%);
+      width: 2px;
+      height: 30px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 1px;
+    }
+
+    /* ==========================================================================
+       8. SIDEBAR RIGHT: COMPUTATIONAL FRAMEWORKS (MAXIMIZED MATRIX)
+       ========================================================================== */
+    .pane-right-sidebar {
+      background-color: var(--iitian-navy-deep);
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       flex-direction: column;
       height: 100%;
+      overflow: hidden;
     }
 
-    .calc-tabs {
+    .calculator-tab-strip {
       display: flex;
-      background: var(--iitian-navy);
+      background-color: var(--iitian-navy-dark);
+      border-bottom: 2px solid var(--safaricom-green);
     }
 
-    .tab-btn {
+    .calc-tab-trigger {
       flex: 1;
       padding: 12px;
       background: transparent;
-      color: #94a3b8;
+      color: #64748b;
       border: none;
       cursor: pointer;
-      border-bottom: 3px solid transparent;
       font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease;
+      border-bottom: 3px solid transparent;
     }
 
-    .tab-btn.active {
+    .calc-tab-trigger.active-tab {
       color: white;
+      background-color: rgba(255, 255, 255, 0.04);
       border-bottom-color: var(--safaricom-green);
-      background: #1e293b;
     }
 
-    .calc-frame-container {
+    .calculator-sandbox-viewport {
       flex: 1;
       position: relative;
+      background-color: #ffffff;
     }
 
-    .calc-frame {
+    .calculator-embedded-iframe {
       position: absolute;
       top: 0;
       left: 0;
@@ -267,341 +453,509 @@
       display: none;
     }
 
-    .calc-frame.active {
+    .calculator-embedded-iframe.active-iframe {
       display: block;
     }
 
-    /* Pomodoro Modal */
-    .modal-overlay {
+    /* ==========================================================================
+       9. DIALOGUE INTERSTITIAL SCREENS & ANIMATION LAYER
+       ========================================================================== */
+    .interstitial-modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(6, 13, 26, 0.9);
+      backdrop-filter: blur(6px);
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 1000;
+      z-index: 2000;
     }
 
-    .modal-box {
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-      width: 400px;
-      text-align: center;
+    .modal-structural-box {
+      background: linear-gradient(180deg, var(--iitian-navy-deep) 0%, #0c1a2e 100%);
+      border: 2px solid var(--glass-border);
       border-top: 6px solid var(--safaricom-green);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      padding: 36px;
+      border-radius: 12px;
+      width: 520px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
     }
 
-    .modal-box h2 {
-      font-size: 1.4rem;
-      color: var(--iitian-navy);
-      margin-bottom: 10px;
+    .modal-structural-box h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
     }
 
-    .modal-box p {
-      color: #64748b;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
+    .modal-structural-box p {
+      color: #94a3b8;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 24px;
     }
 
-    .timer-options {
+    .grid-configuration-timer-selectors {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 20px;
     }
 
-    .timer-opt-btn {
-      padding: 15px;
-      border: 2px solid var(--border-color);
-      background: white;
-      border-radius: 6px;
+    .selector-timer-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      padding: 14px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 1rem;
-      color: var(--iitian-navy);
+      transition: all 0.2s ease;
+      text-align: left;
     }
 
-    .timer-opt-btn:hover {
+    .selector-timer-card:hover {
       border-color: var(--safaricom-green);
-      background: #f0fdf4;
+      background: rgba(0, 163, 64, 0.04);
+    }
+
+    .selector-timer-card.trial-highlight {
+      border-color: var(--iitian-blue-accent);
+      background: rgba(48, 176, 255, 0.04);
+    }
+    .selector-timer-card.trial-highlight:hover {
+      background: rgba(48, 176, 255, 0.1);
+    }
+
+    .selector-timer-card span {
+      display: block;
+      font-size: 1rem;
+      color: white;
+    }
+
+    .selector-timer-card small {
+      display: block;
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-top: 4px;
     }
   </style>
 </head>
 <body>
 
-  <div class="modal-overlay" id="pomodoro-modal">
-    <div class="modal-box">
-      <h2>SELECT REVISION SESSION</h2>
-      <p>Choose your Pomodoro interval to begin the timed test.</p>
-      <div class="timer-options">
-        <button class="timer-opt-btn" onclick="startSession(25)">25 Minutes<br><small>Short Sprint</small></button>
-        <button class="timer-opt-btn" onclick="startSession(50)">50 Minutes<br><small>Standard Paper</small></button>
-        <button class="timer-opt-btn" onclick="startSession(75)">75 Minutes<br><small>Paper 1 / 2</small></button>
-        <button class="timer-opt-btn" onclick="startSession(120)">120 Minutes<br><small>Full Mock</small></button>
+  <div class="interstitial-modal-overlay" id="session-init-modal">
+    <div class="modal-structural-box">
+      <h2>UEFI ASSESSMENT POWERHOUSE</h2>
+      <p>Select your timed execution parameters below. Choose the 2 Minutes Trial to evaluate audio signals and tools before starting a full mock exam.</p>
+      
+      <div class="grid-configuration-timer-selectors">
+        <div class="selector-timer-card trial-highlight" onclick="executeSystemInitialization(2)">
+          <span>⚡ 2 Minutes Trial</span>
+          <small>System sandbox check & quick test</small>
+        </div>
+        <div class="selector-timer-card" onclick="executeSystemInitialization(25)">
+          <span>⏱️ 25 Minutes</span>
+          <small>Sprint interval mode</small>
+        </div>
+        <div class="selector-timer-card" onclick="executeSystemInitialization(50)">
+          <span>⏱️ 50 Minutes</span>
+          <small>Standard revision window</small>
+        </div>
+        <div class="selector-timer-card" onclick="executeSystemInitialization(90)">
+          <span>⏱️ 90 Minutes</span>
+          <small>Extended mock criteria</small>
+        </div>
       </div>
-      <button class="btn btn-red" style="width: 100%;" onclick="startSession(50)">Default (50 Min) & Start</button>
+      
+      <button class="btn btn-safaricom-green" style="width: 100%; padding: 12px; font-size: 0.9rem;" onclick="executeSystemInitialization(50)">
+        Initialize Default Workspace Matrix
+      </button>
     </div>
   </div>
 
   <header>
-    <div class="logo-area">IB DP <span>REVISION PORTAL</span> | ASSESSPREP MODE</div>
-    <div class="timer-container">
-      <span>POMODORO:</span>
-      <div id="timer-display">00:00</div>
-      <button class="btn btn-red" id="pause-btn" onclick="toggleTimer()">PAUSE</button>
-      <button class="btn btn-green" onclick="resetTimer()">RESET</button>
+    <div class="top-left-branding">
+      <div class="uefi-logo-box">UEFI Study Pool</div>
+      <div class="app-title-badge">IB DP NUMBERS & ALGEBRA POWERHOUSE</div>
+    </div>
+    
+    <div class="top-right-controls">
+      <div class="pomodoro-display-wrapper">
+        <span class="pomodoro-label">SESSION CLOCK</span>
+        <div id="timer-clock">00:00</div>
+      </div>
+      <button class="btn btn-secondary" id="timer-toggle-action" onclick="toggleTimerState()">Pause Execution</button>
+      <button class="btn btn-safaricom-red" onclick="reinitializeWorkspaceEngine()">Reset Engine</button>
     </div>
   </header>
 
-  <div class="workspace">
+  <div class="workspace-matrix" id="core-workspace-layout">
     
-    <aside class="sidebar-left">
-      <h2>1. Filter Topic</h2>
-      <div class="filter-group">
-        <label for="topic-select">Numbers & Algebra Sub-topics:</label>
-        <select id="topic-select" onchange="filterPapers()">
-          <option value="all">All Numbers & Algebra</option>
+    <aside class="pane-left-sidebar">
+      
+      <div class="section-title-wrapper">
+        <div class="section-title">🔍 Context Filtering</div>
+      </div>
+
+      <div class="filter-wrapper-card">
+        <label class="input-descriptor" for="filter-topic-node">Sub-topic Matrix</label>
+        <select class="custom-select-element" id="filter-topic-node" onchange="processInventoryFiltering()">
+          <option value="all">All Sub-topics (Numbers & Algebra)</option>
           <option value="exponents">Exponents & Logarithms</option>
           <option value="sequences">Sequences & Series (AP/GP)</option>
           <option value="binomial">Binomial Theorem</option>
           <option value="complex">Complex Numbers (HL)</option>
-          <option value="proofs">Mathematical Proofs</option>
         </select>
       </div>
 
-      <div class="filter-group">
-        <label for="year-select">Select Past Paper Year:</label>
-        <select id="year-select" onchange="filterPapers()">
-          <option value="all">All Years (2018 - 2025)</option>
-          <option value="2024">2024 May/Nov</option>
-          <option value="2023">2023 May/Nov</option>
-          <option value="2022">2022 May/Nov</option>
-          <option value="2021">2021 May/Nov</option>
+      <div class="filter-wrapper-card">
+        <label class="input-descriptor" for="filter-year-node">Examination Window</label>
+        <select class="custom-select-element" id="filter-year-node" onchange="processInventoryFiltering()">
+          <option value="all">All Matrix Years</option>
+          <option value="2026">2026 Cohort Release</option>
+          <option value="2025">2025 Production Run</option>
+          <option value="2024">2024 Past Papers</option>
+          <option value="2023">2023 Past Papers</option>
         </select>
       </div>
 
-      <div class="filter-group">
-        <label for="search-input">Keyword Search:</label>
-        <input type="text" id="search-input" placeholder="e.g. geometric series..." onkeyup="filterPapers()">
+      <div class="filter-wrapper-card">
+        <label class="input-descriptor" for="search-input-node">Keyword Extraction</label>
+        <input type="text" class="custom-text-input" id="search-input-node" placeholder="Type key phrases..." onkeyup="processInventoryFiltering()">
       </div>
 
-      <h2>2. Select Paper</h2>
-      <div class="question-list" id="paper-list">
+      <div class="section-title-wrapper">
+        <div class="section-title">📋 Document Inventory</div>
+      </div>
+      <div class="inventory-scroll-container" id="inventory-render-target">
         </div>
+
+      <div class="section-title-wrapper">
+        <div class="section-title" style="color: var(--safaricom-red);">⭐ Consult Later Pool</div>
+      </div>
+      <div class="consult-later-pool-box" id="flagged-repository-target">
+        <div class="consult-empty-state">No items flagged for consultation yet. Click flag icon to save.</div>
+      </div>
+
     </aside>
 
-    <main class="center-panel">
-      <div class="toolbar">
-        <div class="toolbar-title" id="current-paper-title">Select a paper from the left to begin</div>
-        <button class="btn ogunna-btn" id="ogunna-btn" onclick="toggleMarkScheme()">
-          ⚡ OGUNNA REVEAL: MARK SCHEME
-        </button>
+    <main class="pane-center-viewport">
+      <div class="assessment-utility-bar">
+        <div class="active-document-title" id="active-document-title-label">Initialize an archive item...</div>
+        
+        <div class="center-utility-actions">
+          <button class="btn btn-flag-action" id="flag-toggle-trigger" onclick="toggleActiveItemFlagState()">
+            ⭐ Flag As Difficult
+          </button>
+          
+          <button class="btn btn-ogunna-reveal" id="ogunna-reveal-trigger" onclick="toggleCriteriaRevealState()">
+            ⚡ OGUNNA REVEAL: MARK SCHEME
+          </button>
+        </div>
       </div>
 
-      <iframe class="pdf-viewport" id="pdf-frame" src=""></iframe>
+      <iframe class="pdf-render-frame" id="pdf-core-viewport" src=""></iframe>
     </main>
 
-    <aside class="sidebar-right">
-      <div class="calc-tabs">
-        <button class="tab-btn active" onclick="switchCalc('desmos', this)">Desmos Scientific</button>
-        <button class="tab-btn" onclick="switchCalc('geogebra', this)">GeoGebra Graphing</button>
+    <div class="resize-divider-bar" id="pane-resize-handle"></div>
+
+    <aside class="pane-right-sidebar">
+      <div class="calculator-tab-strip">
+        <button class="calc-tab-trigger active-tab" onclick="switchComputationalEngine('desmos-scientific', this)">Desmos Scientific</button>
+        <button class="calc-tab-trigger" onclick="switchComputationalEngine('geogebra-graphing', this)">GeoGebra Graphing</button>
       </div>
-      <div class="calc-frame-container">
-        <iframe class="calc-frame active" id="desmos" src="https://www.desmos.com/scientific"></iframe>
-        <iframe class="calc-frame" id="geogebra" src="https://www.geogebra.org/classic/graphing"></iframe>
+      
+      <div class="calculator-sandbox-viewport">
+        <iframe class="calculator-embedded-iframe active-iframe" id="desmos-scientific" src="https://www.desmos.com/scientific"></iframe>
+        <iframe class="calculator-embedded-iframe" id="geogebra-graphing" src="https://www.geogebra.org/classic/graphing"></iframe>
       </div>
     </aside>
 
   </div>
 
-  <audio id="rooster-sound" src="https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg" preload="auto"></audio>
+  <audio id="rooster-alarm-stream" src="https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg" preload="auto"></audio>
 
   <script>
     /* ==========================================================================
-       1. DATABASE ARCHIVE (INSERT YOUR GITHUB RAW PDF LINKS HERE)
+       ARCHIVE SYSTEM INVENTORY MATRIX (RELATIVE ARCHIVE MAPPING)
        ========================================================================== */
-    const database = [
+    const systemArchiveDatabase = [
       {
-        id: 1,
-        title: "Algebra: Arithmetic & Geometric Series",
-        year: "2024",
-        topic: "sequences",
-        // REPLACE WITH YOUR GITHUB RAW QUESTION PDF LINK:
-        questionPdf: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf",
-        // REPLACE WITH YOUR GITHUB RAW MARK SCHEME PDF LINK:
-        markschemePdf: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
-      },
-      {
-        id: 2,
-        title: "Logarithms & Exponential Equations",
-        year: "2023",
+        id: "uefi-01",
+        title: "Exponents & Logarithms Validation Run",
+        year: "2026",
         topic: "exponents",
-        questionPdf: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf",
-        markschemePdf: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
+        questionPdf: "./archives/EXOLOGS PP1 AA HL.pdf",
+        markschemePdf: "./archives/EXOLOGS PP1 AA HL MS.pdf"
       },
       {
-        id: 3,
-        title: "Binomial Expansion & Pascal's Triangle",
+        id: "uefi-02",
+        title: "Arithmetic & Geometric Matrix Evaluation",
+        year: "2025",
+        topic: "sequences",
+        questionPdf: "./archives/SEQUENCES PP2 AA.pdf",
+        markschemePdf: "./archives/SEQUENCES PP2 AA MS.pdf"
+      },
+      {
+        id: "uefi-03",
+        title: "HL Complex Numbers Advanced Test Matrix",
+        year: "2024",
+        topic: "complex",
+        questionPdf: "./archives/COMPLEX NUMBERS HL.pdf",
+        markschemePdf: "./archives/COMPLEX NUMBERS HL MS.pdf"
+      },
+      {
+        id: "uefi-04",
+        title: "Binomial Expansion Theorem Parameters",
         year: "2023",
         topic: "binomial",
-        questionPdf: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf",
-        markschemePdf: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
-      },
-      {
-        id: 4,
-        title: "HL: Complex Numbers & De Moivre's Theorem",
-        year: "2022",
-        topic: "complex",
-        questionPdf: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf",
-        markschemePdf: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
-      },
-      {
-        id: 5,
-        title: "Mathematical Induction & Proof by Contradiction",
-        year: "2021",
-        topic: "proofs",
-        questionPdf: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf",
-        markschemePdf: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
+        questionPdf: "./archives/BINOMIAL THEOREM AA.pdf",
+        markschemePdf: "./archives/BINOMIAL THEOREM AA MS.pdf"
       }
     ];
 
-    let currentPaper = null;
-    let showingMarkScheme = false;
+    // Core Runtime Application State Tracking Pools
+    let activeExaminationItem = null;
+    let criteriaRevealActive = false;
+    let applicationTimerInterval = null;
+    let runningSecondsRemaining = 0;
+    let executionIsPaused = false;
+    
+    // Consult Later Tracked Primary Key Hash Set
+    const flaggedConsultationIds = new Set();
 
     /* ==========================================================================
-       2. POMODORO TIMER & ROOSTER AUDIO
+       MOUSE DRAG INTERACTIVE PANEL RESIZE SYSTEM
        ========================================================================== */
-    let timerInterval = null;
-    let totalSeconds = 0;
-    let isPaused = false;
+    const layoutWrapper = document.getElementById('core-workspace-layout');
+    const resizeHandle = document.getElementById('pane-resize-handle');
 
-    function startSession(minutes) {
-      document.getElementById("pomodoro-modal").style.display = "none";
-      totalSeconds = minutes * 60;
-      updateTimerDisplay();
+    resizeHandle.addEventListener('mousedown', function(initialEvent) {
+      initialEvent.preventDefault();
+      resizeHandle.classList.add('is-dragging');
       
-      if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        if (!isPaused && totalSeconds > 0) {
-          totalSeconds--;
-          updateTimerDisplay();
-          if (totalSeconds === 0) {
-            clearInterval(timerInterval);
-            triggerRoosterCrow();
+      document.addEventListener('mousemove', processPanelResizeCalculation);
+      document.addEventListener('mouseup', terminatePanelResizeTracking);
+    });
+
+    function processPanelResizeCalculation(moveEvent) {
+      const globalViewportWidth = window.innerWidth;
+      // Calculate layout coordinates left-to-right relative path calculations
+      const rightSidebarDynamicWidth = globalViewportWidth - moveEvent.clientX;
+      
+      // Structural boundary enforcement matrices
+      if (rightSidebarDynamicWidth > 280 && rightSidebarDynamicWidth < (globalViewportWidth - 450)) {
+        layoutWrapper.style.gridTemplateColumns = `310px 1fr ${rightSidebarDynamicWidth}px`;
+      }
+    }
+
+    function terminatePanelResizeTracking() {
+      resizeHandle.classList.remove('is-dragging');
+      document.removeEventListener('mousemove', processPanelResizeCalculation);
+      document.removeEventListener('mouseup', terminatePanelResizeTracking);
+    }
+
+    /* ==========================================================================
+       POMODORO SCHEDULER ENGINE & ALARM TRIGGER LOGIC
+       ========================================================================== */
+    function executeSystemInitialization(selectedMinutes) {
+      document.getElementById("session-init-modal").style.display = "none";
+      runningSecondsRemaining = selectedMinutes * 60;
+      updateVisualClockDisplay();
+      
+      if (applicationTimerInterval) clearInterval(applicationTimerInterval);
+      
+      applicationTimerInterval = setInterval(() => {
+        if (!executionIsPaused && runningSecondsRemaining > 0) {
+          runningSecondsRemaining--;
+          updateVisualClockDisplay();
+          
+          if (runningSecondsRemaining === 0) {
+            clearInterval(applicationTimerInterval);
+            dispatchSystemAlarmRoutine();
           }
         }
       }, 1000);
 
-      // Load initial paper
-      renderPaperList(database);
-      if(database.length > 0) selectPaper(database[0].id);
+      renderInventoryCollectionFeed(systemArchiveDatabase);
+      if(systemArchiveDatabase.length > 0) processArchiveItemSelection(systemArchiveDatabase[0].id);
     }
 
-    function updateTimerDisplay() {
-      const mins = Math.floor(totalSeconds / 60);
-      const secs = totalSeconds % 60;
-      document.getElementById("timer-display").innerText = 
-        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    function updateVisualClockDisplay() {
+      const minutesSegment = Math.floor(runningSecondsRemaining / 60);
+      const secondsSegment = runningSecondsRemaining % 60;
+      document.getElementById("timer-clock").innerText = 
+        `${String(minutesSegment).padStart(2, '0')}:${String(secondsSegment).padStart(2, '0')}`;
     }
 
-    function toggleTimer() {
-      isPaused = !isPaused;
-      document.getElementById("pause-btn").innerText = isPaused ? "RESUME" : "PAUSE";
-      document.getElementById("pause-btn").style.backgroundColor = isPaused ? "#00a340" : "#e60000";
+    function toggleTimerState() {
+      executionIsPaused = !executionIsPaused;
+      const toggleButton = document.getElementById("timer-toggle-action");
+      toggleButton.innerText = executionIsPaused ? "Resume Session" : "Pause Execution";
+      toggleButton.style.backgroundColor = executionIsPaused ? "var(--safaricom-green)" : "rgba(255,255,255,0.1)";
     }
 
-    function resetTimer() {
-      isPaused = true;
-      document.getElementById("pomodoro-modal").style.display = "flex";
+    function reinitializeWorkspaceEngine() {
+      executionIsPaused = true;
+      document.getElementById("session-init-modal").style.display = "flex";
     }
 
-    function triggerRoosterCrow() {
-      const audio = document.getElementById("rooster-sound");
-      audio.play();
-      alert("⏰ POMODORO TIME IS UP! Put your pens down and click OGUNNA REVEAL to mark your paper.");
+    function dispatchSystemAlarmRoutine() {
+      const audioObject = document.getElementById("rooster-alarm-stream");
+      audioObject.play().catch(err => console.log("Audio resource interaction deferred: ", err));
+      
+      alert("⏰ EVALUATION WINDOW CLOSURE: Session complete. Activate the Ogunna Reveal routine to cross-reference criteria matrices.");
     }
 
     /* ==========================================================================
-       3. PAPER FILTERING & OGUNNA REVEAL LOGIC
+       INVENTORY ENGINE AND TOPICAL FILTER OPERATIONS
        ========================================================================== */
-    function renderPaperList(list) {
-      const container = document.getElementById("paper-list");
-      container.innerHTML = "";
+    function renderInventoryCollectionFeed(dataset) {
+      const listContainer = document.getElementById("inventory-render-target");
+      listContainer.innerHTML = "";
       
-      list.forEach(paper => {
-        const card = document.createElement("div");
-        card.className = `paper-card ${currentPaper && currentPaper.id === paper.id ? 'active' : ''}`;
-        card.onclick = () => selectPaper(paper.id);
-        card.innerHTML = `
-          <h3>${paper.title}</h3>
-          <p>IB DP Math | Year: ${paper.year} | Topic: ${paper.topic.toUpperCase()}</p>
+      if(dataset.length === 0) {
+        listContainer.innerHTML = `<div class="consult-empty-state">No matches found within criteria.</div>`;
+        return;
+      }
+
+      dataset.forEach(item => {
+        const structuralCard = document.createElement("div");
+        const isActive = activeExaminationItem && activeExaminationItem.id === item.id;
+        structuralCard.className = `examination-item-card ${isActive ? 'active-selection' : ''}`;
+        structuralCard.onclick = () => processArchiveItemSelection(item.id);
+        
+        structuralCard.innerHTML = `
+          <h4>${item.title}</h4>
+          <p>Window: ${item.year} | Cluster: ${item.topic.toUpperCase()}</p>
         `;
-        container.appendChild(card);
+        listContainer.appendChild(structuralCard);
       });
     }
 
-    function filterPapers() {
-      const topic = document.getElementById("topic-select").value;
-      const year = document.getElementById("year-select").value;
-      const search = document.getElementById("search-input").value.toLowerCase();
+    function processInventoryFiltering() {
+      const targetTopicNode = document.getElementById("filter-topic-node").value;
+      const targetYearNode = document.getElementById("filter-year-node").value;
+      const searchKeyPhrase = document.getElementById("search-input-node").value.toLowerCase();
 
-      const filtered = database.filter(item => {
-        const matchTopic = (topic === "all" || item.topic === topic);
-        const matchYear = (year === "all" || item.year === year);
-        const matchSearch = item.title.toLowerCase().includes(search);
-        return matchTopic && matchYear && matchSearch;
+      const calculatedSubsets = systemArchiveDatabase.filter(item => {
+        const contextTopicMatch = (targetTopicNode === "all" || item.topic === targetTopicNode);
+        const contextYearMatch = (targetYearNode === "all" || item.year === targetYearNode);
+        const contextualStringMatch = item.title.toLowerCase().includes(searchKeyPhrase);
+        return contextTopicMatch && contextYearMatch && contextualStringMatch;
       });
 
-      renderPaperList(filtered);
+      renderInventoryCollectionFeed(calculatedSubsets);
     }
 
-    function selectPaper(id) {
-      currentPaper = database.find(p => p.id === id);
-      showingMarkScheme = false;
+    function processArchiveItemSelection(targetPrimaryKeyId) {
+      activeExaminationItem = systemArchiveDatabase.find(doc => doc.id === targetPrimaryKeyId);
+      criteriaRevealActive = false;
       
-      document.getElementById("current-paper-title").innerText = `[QUESTION PAPER] ${currentPaper.title}`;
-      document.getElementById("pdf-frame").src = currentPaper.questionPdf;
+      document.getElementById("active-document-title-label").innerText = `[EXAM CORPUS] ${activeExaminationItem.title}`;
+      document.getElementById("pdf-core-viewport").src = activeExaminationItem.questionPdf;
       
-      const btn = document.getElementById("ogunna-btn");
-      btn.innerHTML = "⚡ OGUNNA REVEAL: MARK SCHEME";
-      btn.style.background = "linear-gradient(135deg, var(--safaricom-red), #990000)";
+      const revealTriggerElement = document.getElementById("ogunna-reveal-trigger");
+      revealTriggerElement.innerHTML = "⚡ OGUNNA REVEAL: MARK SCHEME";
+      revealTriggerElement.style.background = "linear-gradient(135deg, var(--safaricom-red) 0%, #a30000 100%)";
       
-      filterPapers(); // Re-render to highlight active card
+      synchronizeInterfaceFlagIndicatorState();
+      processInventoryFiltering(); // Keeps current list selections structurally unified
     }
 
-    function toggleMarkScheme() {
-      if (!currentPaper) return;
-      showingMarkScheme = !showingMarkScheme;
+    /* ==========================================================================
+       OGUNNA CRITERIA INTEGRATED REVEAL LOGIC
+       ========================================================================== */
+    function toggleCriteriaRevealState() {
+      if (!activeExaminationItem) return;
+      criteriaRevealActive = !criteriaRevealActive;
       
-      const frame = document.getElementById("pdf-frame");
-      const btn = document.getElementById("ogunna-btn");
-      const title = document.getElementById("current-paper-title");
+      const viewportElement = document.getElementById("pdf-core-viewport");
+      const buttonTriggerNode = document.getElementById("ogunna-reveal-trigger");
+      const dynamicLabelNode = document.getElementById("active-document-title-label");
 
-      if (showingMarkScheme) {
-        frame.src = currentPaper.markschemePdf;
-        btn.innerHTML = "◀ BACK TO QUESTION PAPER";
-        btn.style.background = "linear-gradient(135deg, var(--safaricom-green), var(--safaricom-dark-green))";
-        title.innerText = `[MARK SCHEME REVEALED] ${currentPaper.title}`;
+      if (criteriaRevealActive) {
+        viewportElement.src = activeExaminationItem.markschemePdf;
+        buttonTriggerNode.innerHTML = "◀ RETURN TO TEST CORE";
+        buttonTriggerNode.style.background = "linear-gradient(135deg, var(--safaricom-green) 0%, var(--safaricom-green-hover) 100%)";
+        dynamicLabelNode.innerText = `[CRITERIA ARCHIVE VAL] ${activeExaminationItem.title}`;
       } else {
-        frame.src = currentPaper.questionPdf;
-        btn.innerHTML = "⚡ OGUNNA REVEAL: MARK SCHEME";
-        btn.style.background = "linear-gradient(135deg, var(--safaricom-red), #990000)";
-        title.innerText = `[QUESTION PAPER] ${currentPaper.title}`;
+        viewportElement.src = activeExaminationItem.questionPdf;
+        buttonTriggerNode.innerHTML = "⚡ OGUNNA REVEAL: MARK SCHEME";
+        buttonTriggerNode.style.background = "linear-gradient(135deg, var(--safaricom-red) 0%, #a30000 100%)";
+        dynamicLabelNode.innerText = `[EXAM CORPUS] ${activeExaminationItem.title}`;
       }
     }
 
     /* ==========================================================================
-       4. CALCULATOR TAB SWITCHING
+       DYNAMIC CONSULTATION & DIFFICULT BOOKMARK LOGIC MATRIX
        ========================================================================== */
-    function switchCalc(calcId, btnElement) {
-      document.querySelectorAll(".calc-frame").forEach(el => el.classList.remove("active"));
-      document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
+    function toggleActiveItemFlagState() {
+      if (!activeExaminationItem) return;
       
-      document.getElementById(calcId).classList.add("active");
-      btnElement.classList.add("active");
+      const targetId = activeExaminationItem.id;
+      if (flaggedConsultationIds.has(targetId)) {
+        flaggedConsultationIds.delete(targetId);
+      } else {
+        flaggedConsultationIds.add(targetId);
+      }
+      
+      synchronizeInterfaceFlagIndicatorState();
+      rebuildFlaggedConsultationDisplayPool();
+    }
+
+    function synchronizeInterfaceFlagIndicatorState() {
+      const flagButton = document.getElementById("flag-toggle-trigger");
+      if (activeExaminationItem && flaggedConsultationIds.has(activeExaminationItem.id)) {
+        flagButton.classList.add('is-flagged');
+        flagButton.innerText = "⭐ Item Flagged for Review";
+      } else {
+        flagButton.classList.remove('is-flagged');
+        flagButton.innerText = "⭐ Flag As Difficult";
+      }
+    }
+
+    function rebuildFlaggedConsultationDisplayPool() {
+      const storageBoxContainer = document.getElementById("flagged-repository-target");
+      storageBoxContainer.innerHTML = "";
+      
+      if (flaggedConsultationIds.size === 0) {
+        storageBoxContainer.innerHTML = `<div class="consult-empty-state">No items flagged for consultation yet. Click flag icon to save.</div>`;
+        return;
+      }
+
+      systemArchiveDatabase.forEach(item => {
+        if (flaggedConsultationIds.has(item.id)) {
+          const customFlaggedRowElement = document.createElement("div");
+          customFlaggedRowElement.className = "examination-item-card";
+          customFlaggedRowElement.style.borderColor = "rgba(230, 0, 0, 0.4)";
+          customFlaggedRowElement.style.background = "rgba(230, 0, 0, 0.02)";
+          customFlaggedRowElement.onclick = () => processArchiveItemSelection(item.id);
+          
+          customFlaggedRowElement.innerHTML = `
+            <h4 style="font-size: 0.82rem; color: #fecaca;">⚠️ ${item.title}</h4>
+            <p style="color: #fda4af;">Review Core: ${item.topic.toUpperCase()}</p>
+          `;
+          storageBoxContainer.appendChild(customFlaggedRowElement);
+        }
+      });
+    }
+
+    /* ==========================================================================
+       COMPUTATIONAL ENGINE SANDBOX TOGGLE MECHANICS
+       ========================================================================== */
+    function switchComputationalEngine(selectedSandboxId, matchingTabControlNode) {
+      document.querySelectorAll(".calculator-embedded-iframe").forEach(frameNode => {
+        frameNode.classList.remove("active-iframe");
+      });
+      document.querySelectorAll(".calc-tab-trigger").forEach(tabControlNode => {
+        tabControlNode.classList.remove("active-tab");
+      });
+      
+      document.getElementById(selectedSandboxId).classList.add("active-iframe");
+      matchingTabControlNode.classList.add("active-tab");
     }
   </script>
 </body>
