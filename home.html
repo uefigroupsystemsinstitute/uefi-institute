@@ -3,246 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Global // Republic of Kenya</title>
     
-    <title>UEFI Group Systems Institute | Global Excellence</title>
-    <meta name="title" content="UEFI Group Systems Institute | Global Excellence">
-    <meta name="description" content="Bridging the gap between rural potential and global capital. Engineering world-class computational solutions from Narok, Kenya to the world.">
-    <meta name="keywords" content="UEFI, UEFI Systems Institute, UEFI SI, Narok Tech, Kenyan AI, STEM Africa, Computational Excellence">
-    <meta name="author" content="UEFI Institute">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://uefigroupsystemsinstitute.github.io/uefi-institute/">
-    <meta property="og:title" content="UEFI Group Systems Institute">
-    <meta property="og:description" content="Engineering Global Transformation through First-Principles. Join the apex of computation.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght=400;700&display=swap" rel="stylesheet">
+    <!-- Premium Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     
+    <!-- Core Structural Stylesheet -->
     <style>
+        /* ==========================================================================
+           ROOT VARIABLES // SAFARICOM & KENYA FLAG COLOR SCIENCE
+           ========================================================================== */
         :root {
-            /* Kenyan Flag Exact Hex Architecture */
-            --kenya-black: #000000;
-            --kenya-red: #BB0000;
-            --kenya-green: #54E346; 
-            --white: #ffffff;
+            --obsidian-black: #0B0C10;
+            --obsidian-dark: #1F2833;
+            --kenya-red: #E11C2B;
+            --kenya-red-glow: rgba(225, 28, 43, 0.4);
+            --safaricom-green: #43B02A;
+            --safaricom-green-glow: rgba(67, 176, 42, 0.4);
+            --crisp-white: #FFFFFF;
+            --slate-gray: #C5C6C7;
+            --glass-bg: rgba(31, 40, 51, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.1);
             
-            /* Structural Colors */
-            --bg-obsidian: #0A0A0A; 
-            --off-white: #F9F9F9;
-            --text-dark: #111111;
-            --muted-gray: #64748b;
+            --font-primary: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            --transition-speed: 0.4s;
         }
 
+        /* ==========================================================================
+           RESET & GLOBAL ENGINEERING
+           ========================================================================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--off-white);
-            color: var(--text-dark);
+            font-family: var(--font-primary);
+            background-color: var(--obsidian-black);
+            color: var(--crisp-white);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
+        /* Access Lock Protocol - Disables scrolling when auth overlay is active */
         body.auth-locked {
-            overflow: hidden !important;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        ::selection {
+            background-color: var(--safaricom-green);
+            color: var(--obsidian-black);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            color: var(--slate-gray);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            color: var(--crisp-white);
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        a:hover {
+            color: var(--safaricom-green);
         }
 
         /* ==========================================================================
-           🟢 SAFARICOM-INSPIRED DYNAMIC HEADER & NAVIGATION (ARIAL FONT) 🟢
+           AUTHENTICATION OVERLAY (GLASSMORPHISM SECURITY GATEWAY)
            ========================================================================== */
-        header {
-            background-color: var(--white);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 4px solid transparent;
-            border-image: linear-gradient(to right, var(--kenya-black) 25%, var(--kenya-red) 25%, var(--kenya-red) 50%, var(--kenya-green) 50%, var(--kenya-green) 100%) 1;
-            width: 100%;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 3%;
-            height: 75px;
-            max-width: 1700px;
-            margin: 0 auto;
-            gap: 20px;
-        }
-
-        /* --- 1. FAR TOP LEFT: CIRCULAR LOGO --- */
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            flex-shrink: 0;
-        }
-
-        .logo img {
-            height: 48px;
-            width: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--kenya-green);
-            box-shadow: 0 2px 8px rgba(84, 227, 70, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover img {
-            transform: scale(1.05);
-        }
-
-        .logo span {
-            color: var(--kenya-black);
-            font-size: 1.15rem;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            font-family: Arial, sans-serif;
-            text-transform: uppercase;
-        }
-        
-        .logo span span { 
-            color: var(--kenya-green); 
-            font-weight: 900;
-        }
-
-        /* --- 2. MIDDLE / LEFT-TO-RIGHT NAV LINKS --- */
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-            margin-left: 2rem;
-            margin-right: auto;
-        }
-
-        .nav-links a {
-            color: var(--kenya-black);
-            text-decoration: none;
-            font-family: Arial, sans-serif;
-            font-weight: 700;
-            font-size: 0.82rem;
-            transition: all 0.25s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 8px 4px;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background-color: var(--kenya-green);
-            transition: width 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .nav-links a:hover::after, 
-        .nav-links a.active-tab::after { 
-            width: 100%; 
-        }
-
-        .nav-links a:hover, 
-        .nav-links a.active-tab { 
-            color: var(--kenya-green); 
-        }
-
-        /* --- 3. FAR TOP RIGHT CORNER: USER ACCOUNT PROFILE BADGE --- */
-        .account-badge-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--white);
-            padding: 5px 14px 5px 6px;
-            border-radius: 50px;
-            border: 2px solid #e2e8f0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-            margin-left: auto;
-        }
-
-        .account-badge-container:hover {
-            border-color: var(--kenya-green);
-            box-shadow: 0 4px 12px rgba(84, 227, 70, 0.25);
-            transform: translateY(-1px);
-        }
-
-        .account-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--kenya-green);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .account-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 1px;
-        }
-
-        .account-name {
-            font-family: Arial, sans-serif;
-            font-size: 0.78rem;
-            font-weight: 800;
-            color: var(--kenya-black);
-            max-width: 110px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1.1;
-        }
-
-        .account-logout-btn {
-            font-family: Arial, sans-serif;
-            font-size: 0.65rem;
-            color: var(--kenya-red);
-            text-transform: uppercase;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            text-align: left;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            padding: 0;
-            transition: color 0.2s ease;
-        }
-
-        .account-logout-btn:hover {
-            color: var(--kenya-black);
-            text-decoration: underline;
-        }
-
-        /* --- MANDATORY AUTH OVERLAY GATEKEEPER --- */
         .auth-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(10, 10, 10, 0.96);
-            backdrop-filter: blur(8px);
-            z-index: 99999;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(11, 12, 16, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 9999;
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
 
         .auth-overlay.hidden {
@@ -251,379 +109,1023 @@
             pointer-events: none;
         }
 
-        .auth-card {
-            background: var(--white);
+        .auth-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 4rem;
+            border-radius: 24px;
             width: 100%;
-            max-width: 440px;
-            padding: 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-            border-top: 6px solid var(--kenya-green);
+            max-width: 500px;
             text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
+                        0 0 40px var(--safaricom-green-glow);
+            animation: panelEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .auth-header h2 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.6rem;
+        @keyframes panelEntrance {
+            0% { opacity: 0; transform: translateY(50px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .auth-logo {
+            font-family: var(--font-mono);
+            font-size: 2.5rem;
             font-weight: 900;
-            color: var(--kenya-black);
-            letter-spacing: -0.5px;
+            letter-spacing: -2px;
             margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--safaricom-green), var(--crisp-white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .auth-header p {
-            font-size: 0.85rem;
-            color: var(--muted-gray);
-            margin-bottom: 2rem;
+        .auth-subtitle {
+            font-family: var(--font-mono);
+            color: var(--kenya-red);
+            font-size: 0.9rem;
+            margin-bottom: 3rem;
+            letter-spacing: 2px;
         }
 
         .auth-form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            text-align: left;
+            gap: 1.5rem;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+        .input-group {
+            position: relative;
         }
 
-        .form-group label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-dark);
-        }
-
-        .form-group input {
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 4px;
-            font-size: 0.9rem;
+        .input-group input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            padding: 1.2rem;
+            border-radius: 12px;
+            color: var(--crisp-white);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            transition: all 0.3s ease;
             outline: none;
-            transition: border-color 0.2s;
         }
 
-        .form-group input:focus {
-            border-color: var(--kenya-black);
+        .input-group input:focus {
+            border-color: var(--safaricom-green);
+            box-shadow: 0 0 15px var(--safaricom-green-glow);
         }
 
-        .auth-submit-btn {
-            background: var(--bg-obsidian);
-            color: var(--white);
+        .btn-primary {
+            background: var(--safaricom-green);
+            color: var(--obsidian-black);
             border: none;
-            padding: 14px;
-            border-radius: 4px;
-            font-weight: 700;
-            font-family: 'JetBrains Mono', monospace;
-            cursor: pointer;
+            padding: 1.2rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            margin-top: 5px;
-            transition: background 0.2s;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px -10px var(--safaricom-green);
         }
 
-        .auth-submit-btn:hover {
-            background: var(--kenya-red);
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -10px var(--safaricom-green);
+            background: var(--crisp-white);
         }
 
         .auth-divider {
             display: flex;
             align-items: center;
             text-align: center;
-            margin: 20px 0;
-            color: var(--muted-gray);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            font-family: 'JetBrains Mono', monospace;
+            margin: 2rem 0;
+            color: var(--slate-gray);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
         }
 
         .auth-divider::before, .auth-divider::after {
             content: '';
             flex: 1;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--glass-border);
         }
 
-        .auth-divider:not(:empty)::before { margin-right: .5em; }
-        .auth-divider:not(:empty)::after { margin-left: .5em; }
+        .auth-divider::before { margin-right: .5em; }
+        .auth-divider::after { margin-left: .5em; }
 
-        .google-auth-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--white);
-            border: 2px solid #e2e8f0;
-            padding: 12px;
-            border-radius: 4px;
+        .btn-google {
+            background: var(--crisp-white);
+            color: var(--obsidian-black);
+            border: none;
+            padding: 1.2rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--text-dark);
-            transition: all 0.2s;
-        }
-
-        .google-auth-btn:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-        }
-
-        .google-auth-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        /* --- HERO --- */
-        .hero {
-            position: relative;
-            height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--bg-obsidian);
-            overflow: hidden;
-            color: var(--white);
-            text-align: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            width: 100%;
         }
 
-        .hero::before {
-            content: "";
+        .btn-google:hover {
+            background: #f1f1f1;
+            transform: translateY(-2px);
+        }
+
+        .btn-google img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ==========================================================================
+           MAIN NAVIGATION NAVIGATION
+           ========================================================================== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(11, 12, 16, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-text h1 {
+            font-family: var(--font-mono);
+            font-size: 1.8rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, var(--safaricom-green), var(--crisp-white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-text span {
+            font-size: 0.7rem;
+            color: var(--kenya-red);
+            font-family: var(--font-mono);
+            letter-spacing: 3px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        nav a {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(10, 10, 10, 0.5), rgba(10, 10, 10, 0.7)), 
-                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--safaricom-green);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Google Account Badge top right */
+        .account-badge {
+            display: none; /* Toggled by JS */
+            align-items: center;
+            gap: 15px;
+            background: var(--obsidian-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .account-badge:hover {
+            border-color: var(--safaricom-green);
+            box-shadow: 0 0 15px var(--safaricom-green-glow);
+        }
+
+        .account-badge img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--safaricom-green);
+            object-fit: cover;
+        }
+
+        .account-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .account-name {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--crisp-white);
+        }
+
+        .account-role {
+            font-size: 0.7rem;
+            color: var(--safaricom-green);
+            font-family: var(--font-mono);
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--kenya-red);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-left: 10px;
+            font-weight: 800;
+        }
+
+        .logout-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* ==========================================================================
+           HERO SLIDER ENGINE
+           ========================================================================== */
+        .hero-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 10s linear;
+            transform: scale(1.05);
             z-index: 1;
         }
 
-        .hero-content { position: relative; z-index: 2; max-width: 1000px; padding: 0 20px; }
-
-        .hero-tag {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--kenya-green);
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            display: block;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 2;
         }
 
-        .hero h1 {
-            font-size: clamp(2.2rem, 6vw, 4.2rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+        .slide-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4) contrast(1.2);
         }
 
-        .hero h1 span { color: var(--kenya-green); font-style: italic; }
-        
-        .hero p {
-            font-size: 1.1rem;
-            max-width: 700px;
+        /* Custom image placements for High-Def display */
+        .slide:nth-child(1) .slide-bg { background-image: url('https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1920&q=80'); } /* Tech Women */
+        .slide:nth-child(2) .slide-bg { background-image: url('https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=1920&q=80'); } /* Cyber / Matrix */
+        .slide:nth-child(3) .slide-bg { background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80'); } /* Students */
+
+        .hero-overlay-content {
+            position: relative;
+            z-index: 10;
+            padding: 0 10%;
+            max-width: 1400px;
             margin: 0 auto;
-            color: #cbd5e1;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            width: 100%;
         }
 
-        /* --- MOBILE ADAPTATION --- */
-        @media (max-width: 1024px) {
-            .nav-links { display: none; }
+        .sys-status {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(67, 176, 42, 0.1);
+            border: 1px solid var(--safaricom-green);
+            color: var(--safaricom-green);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(67, 176, 42, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(67, 176, 42, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 176, 42, 0); }
+        }
+
+        .hero-title {
+            font-size: 5.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            font-weight: 900;
+            background: linear-gradient(to right, #ffffff, #c5c6c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--slate-gray);
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--crisp-white);
+            border: 2px solid var(--kenya-red);
+            padding: 1.2rem 2.5rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            text-transform: uppercase;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--kenya-red);
+            box-shadow: 0 10px 20px -10px var(--kenya-red);
+        }
+
+        /* Slider Controls */
+        .slider-controls {
+            position: absolute;
+            bottom: 50px;
+            right: 10%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--crisp-white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: var(--safaricom-green);
+            color: var(--obsidian-black);
+            border-color: var(--safaricom-green);
+        }
+
+        .slider-dots {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--safaricom-green);
+            box-shadow: 0 0 10px var(--safaricom-green-glow);
+            transform: scale(1.3);
+        }
+
+        /* ==========================================================================
+           GLOBAL SECTIONS & STRUCTURAL PADDING
+           ========================================================================== */
+        section {
+            padding: 8rem 10%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 5rem;
+            max-width: 800px;
+        }
+
+        .section-header .tag {
+            font-family: var(--font-mono);
+            color: var(--kenya-red);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-header h2 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--crisp-white);
+        }
+
+        /* ==========================================================================
+           CURRICULUM ARCHITECTURE (CBE & IB)
+           ========================================================================== */
+        .curriculum-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .curriculum-card {
+            background: var(--obsidian-dark);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .curriculum-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--safaricom-green);
+            box-shadow: 0 20px 40px -15px var(--safaricom-green-glow);
+        }
+
+        .curriculum-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+
+        .curriculum-card.cbe::before { background: var(--safaricom-green); }
+        .curriculum-card.ib::before { background: var(--kenya-red); }
+
+        .curriculum-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .curriculum-card ul {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .curriculum-card ul li {
+            margin-bottom: 1rem;
+            padding-left: 30px;
+            position: relative;
+            font-family: var(--font-mono);
+            color: var(--crisp-white);
+        }
+
+        .curriculum-card ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--safaricom-green);
+            font-size: 1.2rem;
+        }
+
+        /* ==========================================================================
+           CORE INITIATIVES (ANTHONINA, ALAL, CYBER)
+           ========================================================================== */
+        .initiatives-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .initiative-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .initiative-box:hover {
+            background: var(--obsidian-dark);
+            border-color: var(--glass-border);
+        }
+
+        .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .icon-wrapper img {
+            width: 30px;
+            height: 30px;
+            filter: invert(1);
+        }
+
+        .initiative-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--crisp-white);
+        }
+
+        .initiative-box.women h3 { color: #FF69B4; } /* Specific subtle accent for Anthonina */
+        .initiative-box.men h3 { color: #4DA8DA; } /* Specific subtle accent for Alal */
+        .initiative-box.cyber h3 { color: var(--safaricom-green); }
+
+        .initiative-box p {
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .initiative-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-bottom: 1px solid transparent;
+        }
+
+        .initiative-box.cyber .initiative-link { color: var(--safaricom-green); }
+        .initiative-box.cyber .initiative-link:hover { border-bottom-color: var(--safaricom-green); }
+
+        /* ==========================================================================
+           REGIONAL FOCUS (NAROK & STATS) - FROM USER CONTEXT
+           ========================================================================== */
+        .regional-focus { background-color: var(--obsidian-dark); }
+        
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .focus-card {
+            background: var(--obsidian-black);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 350px;
+        }
+
+        .focus-card h3 {
+            font-size: 4rem;
+            line-height: 1;
+            margin-bottom: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .focus-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--crisp-white);
+        }
+
+        .data-source-link {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--slate-gray);
+            text-decoration: none;
+            border-bottom: 1px solid var(--slate-gray);
+            align-self: flex-start;
+            padding-bottom: 2px;
+            margin-top: 2rem;
+        }
+
+        .data-source-link:hover {
+            color: var(--crisp-white);
+            border-bottom-color: var(--crisp-white);
+        }
+
+        /* ==========================================================================
+           STRATEGY SECTION - FROM USER CONTEXT
+           ========================================================================== */
+        .strategy {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .strategy-text h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .strategy-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+            filter: grayscale(20%) contrast(1.1);
+        }
+
+        /* ==========================================================================
+           PILLARS SECTION (QUANT FORGE, LABS) - FROM USER CONTEXT
+           ========================================================================== */
+        .pillars-section { background-color: var(--obsidian-dark); }
+        
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--obsidian-black);
+            padding: 3rem;
+            border-radius: 16px;
+            border-top: 4px solid var(--obsidian-black);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-top-color: var(--kenya-red);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-link {
+            display: inline-block;
+            margin-top: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--kenya-red);
+        }
+
+        /* ==========================================================================
+           PARTNERS SECTION - FROM USER CONTEXT
+           ========================================================================== */
+        .partners-section {
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .partners-section h2 {
+            font-size: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .partners-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 4rem;
+        }
+
+        .partner-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0.6;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .partner-card:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .partner-card img {
+            height: 60px;
+            width: auto;
+            filter: grayscale(100%) brightness(200%);
+        }
+
+        .partner-card span {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           FOOTER ARCHITECTURE - FROM USER CONTEXT
+           ========================================================================== */
+        footer {
+            background-color: #050505;
+            padding: 6rem 10% 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--crisp-white);
+        }
+
+        .footer-col ul { list-style: none; }
+        
+        .footer-col ul li { margin-bottom: 0.8rem; }
+
+        .footer-col ul li a {
+            color: var(--slate-gray);
+            font-size: 0.95rem;
+        }
+
+        .footer-col ul li a:hover { color: var(--safaricom-green); }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--slate-gray);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        /* ==========================================================================
+           RESPONSIVE DESIGN PROTOCOLS
+           ========================================================================== */
+        @media (max-width: 1200px) {
+            .hero-title { font-size: 4rem; }
+            .grid-cards, .pillars, .initiatives-grid { grid-template-columns: repeat(2, 1fr); }
+            .curriculum-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 900px) {
+            nav ul { display: none; } /* Mobile menu needed in production */
+            .strategy { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            header { padding: 1rem 2rem; }
+            section { padding: 5rem 5%; }
+        }
+
+        @media (max-width: 600px) {
+            .hero-title { font-size: 3rem; }
+            .grid-cards, .pillars, .initiatives-grid, .footer-grid { grid-template-columns: 1fr; }
+            .auth-panel { padding: 2rem; }
         }
     </style>
 </head>
 <body class="auth-locked">
 
-    <div id="authOverlay" class="auth-overlay">
-        <div class="auth-card">
-            <div class="auth-header">
-                <h2>AUTHENTICATION NODES</h2>
-                <p>UEFI computational space access control protocol</p>
-            </div>
+    <!-- ==========================================================================
+         SYSTEM ACCESS PROTOCOL // AUTHENTICATION GATEWAY
+         ========================================================================== -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-panel">
+            <div class="auth-logo">UEFI.GLOBAL</div>
+            <div class="auth-subtitle">REPUBLIC OF KENYA // SECURE PORTAL</div>
             
-            <form id="emailLoginForm" class="auth-form" onsubmit="handleEmailAuth(event)">
-                <div class="form-group">
-                    <label for="clientEmail">Secure Email Address</label>
-                    <input type="email" id="clientEmail" placeholder="client@domain.com" required>
+            <form class="auth-form" id="emailLoginForm" onsubmit="handleEmailAuth(event)">
+                <div class="input-group">
+                    <input type="email" id="clientEmail" placeholder="ENTER SCHOLAR ID OR EMAIL" required>
                 </div>
-                <div class="form-group">
-                    <label for="clientPassword">Access Key</label>
-                    <input type="password" id="clientPassword" placeholder="••••••••" required>
+                <div class="input-group">
+                    <input type="password" id="clientSecret" placeholder="ACCESS KEY / PASSWORD" required>
                 </div>
-                <button type="submit" class="auth-submit-btn">Initialize Session</button>
+                <button type="submit" class="btn-primary">Initialize Uplink</button>
             </form>
 
-            <div class="auth-divider">OR CONTINUE WITH</div>
+            <div class="auth-divider">OR AUTHENTICATE VIA</div>
 
-            <button class="google-auth-btn" onclick="handleGoogleAuth()">
-                <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            <button class="btn-google" onclick="handleGoogleAuth()">
+                <!-- Inline SVG for Google Logo -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px">
+                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                    <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+                    <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+                    <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
                 </svg>
-                Sign in with Google Account
+                Sign in with Workspace
             </button>
         </div>
     </div>
 
-    <!-- 🟢 REDESIGNED SAFARICOM-STYLE HEADER 🟢 -->
+    <!-- ==========================================================================
+         GLOBAL NAVIGATION HEADER
+         ========================================================================== -->
     <header>
-        <nav>
-            <!-- 1. FAR TOP LEFT: CIRCULAR LOGO -->
-            <a href="home.html" class="logo">
-               <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=100'">
-               <span>U.E.F.I. <span>INSTITUTE</span></span>
-            </a>
-
-            <!-- 2. MIDDLE / LEFT-TO-RIGHT LINKS -->
-            <ul class="nav-links">
-                <li><a href="home.html" class="active-tab">Home</a></li>
-                <li><a href="abouts.html">About</a></li>
-                <li><a href="tech-lab.html">Tech Lab</a></li>
-                <li><a href="uefi-connect.html">UEFI Connect</a></li>
-                <li><a href="uefi-zoom.html">UEFI Zoom</a></li>
-                <li><a href="uefi-core-os.html">UEFI STUDY</a></li>
-                <li><a href="opportunities-hub.html">Opportunities</a></li>
-            </ul>
-
-            <!-- 3. FAR TOP RIGHT CORNER: COMPACT CIRCULAR ACCOUNT PROFILE -->
-            <div id="accountProfileBadge" class="account-badge-container" style="display: none;">
-                <img id="userAvatar" src="" alt="Avatar" class="account-avatar">
-                <div class="account-info">
-                    <span id="userName" class="account-name">Access Granted</span>
-                    <button class="account-logout-btn" onclick="terminateSession()">Terminate</button>
-                </div>
+        <div class="brand">
+            <div class="brand-text">
+                <h1>UEFI.GLOBAL</h1>
+                <span>NBO // SYSTEM NODE</span>
             </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#curriculum">Curriculum</a></li>
+                <li><a href="#initiatives">Initiatives</a></li>
+                <li><a href="#regional">Narok Protocol</a></li>
+                <li><a href="#strategy">Strategy</a></li>
+            </ul>
         </nav>
+        
+        <!-- DYNAMIC GOOGLE ACCOUNT BADGE -->
+        <div class="account-badge" id="accountProfileBadge">
+            <img src="" alt="User Avatar" id="userAvatar">
+            <div class="account-info">
+                <span class="account-name" id="userName">SCHOLAR</span>
+                <span class="account-role">Verified Access</span>
+            </div>
+            <button class="logout-btn" onclick="terminateSession()">[ EXIT ]</button>
+        </div>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <span class="hero-tag">ENGINEERING FIRST-PRINCIPLES</span>
-            <h1>Bridging Rural Potential with <span>Global Capital</span></h1>
-            <p>Empowering scholars with apex computational frameworks, international STEM standards, and frontier intelligence solutions.</p>
-        </div>
-    </section>
-    
-    <section class="hero">
-        <div class="hero-content">
-            <h1>UEFI Global - The Apex of <span>tech Computation</span> & Structural Empowerment.</h1>
-            <p>Directing world-class technological infrastructure into rural Kenya. Weaponizing raw intelligence to bridge the global capital gap from Narok to the world.</p>
-            <div style="margin-top: 2rem;">
-                <a href="courses.html" class="btn-nav" style="padding: 15px 35px; font-size: 0.8rem;">Explore Academic Paths</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="showcase-slider-container">
-        <div class="slider-wrapper">
-            <button class="slider-btn prev-btn">&#10094;</button>
-            <button class="slider-btn next-btn">&#10095;</button>
-
+    <!-- ==========================================================================
+         HERO TERMINAL & SLIDER ENGINE
+         ========================================================================== -->
+    <div class="hero-container">
+        <div class="slider">
             <div class="slide active">
-                <img src="assets/D1.png" alt="D1 ">
+                <div class="slide-bg"></div>
             </div>
             <div class="slide">
-                <img src="assets/D18.png" alt="D18">
+                <div class="slide-bg"></div>
             </div>
             <div class="slide">
-                <img src="assets/Fact 1.png" alt="Fact 1 photo">
+                <div class="slide-bg"></div>
             </div>
-            <div class="slide">
-                <img src="assets/D17.png" alt="D17">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 4.png" alt="Fact 4">
-            </div>
-            <div class="slide">
-                <img src="assets/D2.png" alt="D2">
-            </div>
-            <div class="slide">
-                <img src="assets/D16.png" alt="D16">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 2.png" alt="Fact 2 photo">
-            </div>
-            <div class="slide">
-                <img src="assets/D15.png" alt="D15">
-            </div>
-            <div class="slide">
-                <img src="assets/D1.png" alt="D1">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 4.png" alt="Fact 4">
-            </div>
-            <div class="slide">
-                <img src="assets/D14.png" alt="D14">
-            </div>
-            <div class="slide">
-                <img src="assets/D10.png" alt="D10">
-            </div>
-            <div class="slide">
-                <img src="assets/D5.png" alt="D5">
-            </div>
-            <div class="slide">
-                <img src="assets/D16.png" alt="D16">
-            </div>
-            <div class="slide">
-                <img src="assets/D13.png" alt="D13">
-            </div>
-            <div class="slide">
-                <img src="assets/Fact 3.png" alt="Fact 3">
-            </div>
-            <div class="slide">
-                <img src="assets/D3.png" alt="D3">
-            </div>
-            <div class="slide">
-                <img src="assets/D4.png" alt="D4">
-            </div>
-            <div class="slide">
-                <img src="assets/D6.png" alt="D6">
-            </div>
-            <div class="slide">
-                <img src="assets/D7.png" alt="D7">
-            </div>
-            <div class="slide">
-                <img src="assets/D8.png" alt="D8">
-            </div>
-            <div class="slide">
-                <img src="assets/D9.png" alt="D9">
-            </div>
-            <div class="slide">
-                <img src="assets/D11.png" alt="D11">
-            </div>
-            <div class="slide">
-                <img src="assets/D12.png" alt="D12">
-            </div>
+        </div>
 
+        <div class="hero-overlay-content">
+            <div class="sys-status">SYSTEM ONLINE // NODE: THIKA, KIAMBU</div>
+            <h2 class="hero-title">Architecting<br>The African<br>Intellect.</h2>
+            <p class="hero-subtitle">We are not a school. We are a high-performance computational forge deploying elite technological frameworks to intercept, empower, and scale Kenya's most brilliant under-resourced minds.</p>
+            <div class="hero-cta">
+                <button class="btn-primary" onclick="document.getElementById('curriculum').scrollIntoView();">Initialize Protocols</button>
+                <button class="btn-secondary">View The Matrix</button>
+            </div>
+        </div>
+
+        <div class="slider-controls">
+            <div class="control-btn prev-btn">←</div>
             <div class="slider-dots">
                 <div class="dot active"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+            </div>
+            <div class="control-btn next-btn">→</div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         CURRICULUM ARCHITECTURE (CBE & IB INTEGRATION)
+         ========================================================================== -->
+    <section id="curriculum">
+        <div class="section-header">
+            <span class="tag">Academic Frameworks</span>
+            <h2>World-Class Curriculum Nodes</h2>
+            <p>Our syllabus infrastructure is built on two unyielding pillars. We merge the hyper-practical local framework with globally recognized rigorous analytical standards, ensuring our scholars dominate both locally and internationally.</p>
+        </div>
+
+        <div class="curriculum-grid">
+            <!-- CBE CARD -->
+            <div class="curriculum-card cbe">
+                <h3>Competency Based Education (CBE)</h3>
+                <p>Aligning with the Republic of Kenya's visionary educational shift, our CBE modules dismantle rote memorization. We deploy hands-on, project-based engineering metrics.</p>
+                <ul>
+                    <li><strong>Practical Application:</strong> Real-world problem solving from Day 1.</li>
+                    <li><strong>Value-Based Coding:</strong> Software ethics and community-centric architecture.</li>
+                    <li><strong>Continuous Assessment:</strong> Algorithmic tracking of cognitive growth, eliminating single-point failure exams.</li>
+                    <li><strong>Resource Optimization:</strong> Hardware teardowns and software lifecycle management.</li>
+                </ul>
+            </div>
+
+            <!-- IB CARD -->
+            <div class="curriculum-card ib">
+                <h3>International Baccalaureate (IB)</h3>
+                <p>The global gold standard. We integrate the IB structural mentality into our tech labs, generating critical thinkers capable of competing in Silicon Valley, London, and Tokyo.</p>
+                <ul>
+                    <li><strong>Theory of Knowledge (TOK):</strong> Epistemology applied to Artificial Intelligence and machine bias.</li>
+                    <li><strong>Extended Matrix (EE):</strong> 4,000-word deep-dive technical research papers on computational physics.</li>
+                    <li><strong>CAS Protocols:</strong> Creativity, Activity, Service deployed via community tech-hubs.</li>
+                    <li><strong>Global Connectivity:</strong> Seamless transition to Ivy League and Russell Group institutions.</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <div class="stats-bar">
-        <div class="stat-item"><h2>500+</h2><p>Active Scholars</p></div>
-        <div class="stat-item"><h2>30K<span>+</span></h2><p>Dropouts Targeted</p></div>
-        <div class="stat-item"><h2>250 KES/WEEK </h2><p>Cost to Underprivileged Students</p></div>
-        <div class="stat-item"><h2>$20k+</h2><p>Alpha Research Output</p></div>
-    </div>
+    <!-- ==========================================================================
+         CORE INITIATIVES (ANTHONINA, ALAL, CYBER)
+         ========================================================================== -->
+    <section id="initiatives" style="background-color: var(--obsidian-dark);">
+        <div class="section-header">
+            <span class="tag">Human Development Nodes</span>
+            <h2>Holistic Scholar Empowerment</h2>
+            <p>Technology without psychological structural integrity collapses. We engineer the mind, the body, and the digital shield surrounding our scholars.</p>
+        </div>
 
-    <section class="regional-focus">
+        <div class="initiatives-grid">
+            <!-- ANTHONINA CARE -->
+            <div class="initiative-box women">
+                <div class="icon-wrapper">
+                    <!-- SVG Icon for Women Empowerment -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <h3>Anthonina Care</h3>
+                <p>Exclusive pipelines engineered for the holistic transformation of women in tech. We provide health guidance, maternal transition support, imposter-syndrome destruction modules, and unyielding leadership training.</p>
+                <a href="#" class="initiative-link" style="color: #FF69B4;">ENTER SANCTUARY →</a>
+            </div>
+
+            <!-- THE ALAL CARE -->
+            <div class="initiative-box men">
+                <div class="icon-wrapper">
+                    <!-- SVG Icon for Men/Growth -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                </div>
+                <h3>The Alal Care</h3>
+                <p>A forged brotherhood framework for young men. Focused on emotional intelligence, financial literacy, mental fortitude in high-pressure algorithmic environments, and breaking toxic cycles of rural expectation.</p>
+                <a href="#" class="initiative-link" style="color: #4DA8DA;">ENTER THE FORGE →</a>
+            </div>
+
+            <!-- CYBER SECURITY -->
+            <div class="initiative-box cyber">
+                <div class="icon-wrapper">
+                    <!-- SVG Icon for Cyber Security -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h3>Digital Wellbeing</h3>
+                <p>Military-grade Cyber Security training. Our youth are taught offensive and defensive threat modeling, digital footprint encryption, ethical hacking, and psychological defense against online radicalization.</p>
+                <a href="#" class="initiative-link">INITIALIZE DEFENSE →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         USER PROVIDED CONTENT BEGINS HERE (INTEGRATED & ENHANCED)
+         ========================================================================== -->
+
+    <section id="regional" class="regional-focus">
         <div class="section-header">
             <span class="tag">Empirical Societal Grounding</span>
             <h2>Why Narok County? Why Now?</h2>
@@ -631,6 +1133,7 @@
         </div>
         
         <div class="grid-cards">
+            <!-- KNBS DATA -->
             <div class="focus-card red-alert">
                 <div>
                     <h3 style="color: var(--kenya-red);">28%</h3>
@@ -642,6 +1145,7 @@
                 </a>
             </div>
             
+            <!-- NACONEK DATA -->
             <div class="focus-card red-alert">
                 <div>
                     <h3 style="color: var(--kenya-red);">30,000+</h3>
@@ -653,71 +1157,79 @@
                 </a>
             </div>
             
+            <!-- INFRASTRUCTURE DATA -->
             <div class="focus-card green-pass">
                 <div>
-                    <h3 style="color: var(--kenya-green);">Mesh net</h3>
+                    <h3 style="color: var(--safaricom-green);">Mesh net</h3>
                     <h4>Offline-First Infrastructure</h4>
-                    <p>To completely beat data cost limitations, our learning modules run on zero-cost local networks deployed inside rural hardware hubs. Zero internet obligations for our scholars.</p>
+                    <p>To completely beat data cost limitations, our learning modules run on zero-cost local networks deployed inside rural hardware hubs. Zero internet obligations for our scholars. High-fidelity learning, decoupled from cellular grid costs.</p>
                 </div>
-                <span class="data-source-link" style="color: var(--kenya-green); border-bottom-color: var(--kenya-green); cursor: default;">
+                <span class="data-source-link" style="color: var(--safaricom-green); border-bottom-color: var(--safaricom-green); cursor: default;">
                     INTERNAL ARCHITECTURE  DEPLOYED 
                 </span>
             </div>
         </div>
     </section>
 
-    <section class="strategy">
+    <section id="strategy" class="strategy">
         <div class="strategy-text">
+            <span class="tag" style="color: var(--safaricom-green); font-family: var(--font-mono); display: block; margin-bottom: 1rem; letter-spacing: 2px;">ECONOMIC ENGINE</span>
             <h2>The "Cross-Subsidization" Strategy: Buy One, Empower One.</h2>
-            <p>Every commercial enrollment from international students triggers an immediate physical hardware allocation and mentorship package for a high-potential scholar in rural Kenya.</p>
-            <p>We are creating a self-sustaining intellectual army. Your personal advancement funds a national transformation.</p>
-            <a href="support-us.html" style="color: var(--kenya-green); font-weight: 900; font-family: 'JetBrains Mono'; text-decoration: none; border-bottom: 2px solid var(--kenya-red); font-size: 0.8rem; letter-spacing: 1px;">VIEW SYSTEM ARCHITECTURE →</a>
+            <p>Every commercial enrollment from international students triggers an immediate physical hardware allocation and mentorship package for a high-potential scholar in rural Kenya. The algorithm of compassion.</p>
+            <p>We are creating a self-sustaining intellectual army. Your personal advancement funds a national transformation. By learning with us, you are actively coding a better future for a mind in Narok.</p>
+            <a href="support-us.html" style="display: inline-block; margin-top: 2rem; color: var(--safaricom-green); font-weight: 900; font-family: 'JetBrains Mono'; text-decoration: none; border-bottom: 2px solid var(--kenya-red); font-size: 0.9rem; letter-spacing: 1px; padding-bottom: 5px;">VIEW SYSTEM ARCHITECTURE →</a>
         </div>
         <div class="strategy-image">
-            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Tech Lab Students">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80" alt="Tech Lab Students in deep computation">
         </div>
     </section>
 
     <section class="pillars-section">
+        <div class="section-header" style="text-align: center; margin: 0 auto 4rem auto;">
+            <span class="tag">Sub-Systems</span>
+            <h2>Core Computational Pillars</h2>
+        </div>
         <div class="pillars">
             <div class="card">
-                <h3>UEFI QUANT FORGE</h3>
-                <p>Deep-tier algorithmic engineering. Financial simulations, complex variable mathematics, and high-performance physics systems built for global competitions.</p>
+                <h3 style="color: var(--safaricom-green); font-family: var(--font-mono);">UEFI QUANT FORGE</h3>
+                <p>Deep-tier algorithmic engineering. Financial simulations, complex variable mathematics, and high-performance physics systems built for global data science competitions.</p>
                 <a href="tech-lab.html" class="card-link">INITIALIZE TERMINAL →</a>
             </div>
             <div class="card">
-                <h3>ANTHONINAH LABS</h3>
-                <p>Strategic structural pipelines, health guidance modules, and digital access protection mechanisms for women entering the computational workspace.</p>
-                <a href="anthoninas-initiative.html" class="card-link">VIEW INITIATIVE →</a>
+                <h3 style="color: #FF69B4; font-family: var(--font-mono);">ANTHONINAH LABS</h3>
+                <p>Strategic structural pipelines, health guidance modules, and digital access protection mechanisms specifically architected for women entering the computational workspace.</p>
+                <a href="anthoninas-initiative.html" class="card-link" style="color: #FF69B4;">VIEW INITIATIVE →</a>
             </div>
             <div class="card">
-                <h3>WILSON LEAD CORE</h3>
-                <p>Advanced engineering tracks for at-risk young men. High-income digital opportunities and international university-grade scholarship paths.</p>
-                <a href="wilsons-initiative.html" class="card-link">VIEW INITIATIVE →</a>
+                <h3 style="color: #4DA8DA; font-family: var(--font-mono);">WILSON LEAD CORE</h3>
+                <p>Advanced engineering tracks for at-risk young men. High-income digital opportunities, emotional intelligence protocols, and international university-grade scholarship paths.</p>
+                <a href="wilsons-initiative.html" class="card-link" style="color: #4DA8DA;">VIEW INITIATIVE →</a>
             </div>
         </div>
     </section>
 
     <section class="partners-section">
+        <span class="tag" style="color: var(--kenya-red); font-family: var(--font-mono); letter-spacing: 2px;">NETWORK</span>
         <h2>Institutional Alliances & System Nodes</h2>
         <div class="partners-grid">
             <a href="https://youtube.com/@quantforgeacademy?si=K0QnqU7dEJr1Ru1-" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/quantforge-logo.png" alt="QuantForge Academy Logo" onerror="this.style.opacity='0.5'">
+                <!-- Fallback to text if img missing, using highly styled block -->
+                <div style="width: 80px; height: 80px; background: var(--glass-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: bold; border: 1px solid var(--glass-border);">QF</div>
                 <span>QuantForge Academy</span>
             </a>
 
             <a href="https://ecultureskenya.github.io/eCultures-Kenya-/home.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/ecultures-logo.png" alt="eCultures Kenya Logo" onerror="this.style.opacity='0.5'">
+                <div style="width: 80px; height: 80px; background: var(--glass-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: bold; border: 1px solid var(--glass-border);">eC</div>
                 <span>eCultures Kenya</span>
             </a>
 
             <a href="https://aid-for-aiming-africa-fbx6511.public.builtwithrocket.new/" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/aaa-logo.png" alt="Aid For Aiming Africa Logo" onerror="this.style.opacity='0.5'">
+                <div style="width: 80px; height: 80px; background: var(--glass-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: bold; border: 1px solid var(--glass-border);">AAA</div>
                 <span>Aid For Aiming Africa</span>
             </a>
 
             <a href="https://jengamaliyouthflow.github.io/JengaMali-Youth-Flow-/home.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <img src="assets/jengamali-logo.png" alt="JengaMali Youth Flow Logo" onerror="this.style.opacity='0.5'">
+                <div style="width: 80px; height: 80px; background: var(--glass-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: bold; border: 1px solid var(--glass-border);">JMYF</div>
                 <span>JengaMali Youth Flow</span>
             </a>
         </div>
@@ -726,38 +1238,45 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4 style="color: white;">U.E.F.I. // REPUBLIC OF KENYA</h4>
-                <p style="color:#64748b; font-size: 0.8rem;">Building the architects of tomorrow from Narok to the global stage.</p>
+                <h4 style="color: white; font-family: var(--font-mono); font-size: 1.2rem; letter-spacing: -1px;">U.E.F.I. // REPUBLIC OF KENYA</h4>
+                <p style="color:#64748b; font-size: 0.9rem; line-height: 1.8;">Building the ultimate architects of tomorrow from Narok County to the global technological stage. Data-driven, emotionally grounded, computationally elite.</p>
             </div>
             <div class="footer-col">
-                <h4>System Links</h4>
+                <h4 style="font-family: var(--font-mono); color: var(--safaricom-green);">System Links</h4>
                 <ul>
-                    <li><a href="tech-lab.html">The Labs</a></li>
-                    <li><a href="enroll.html">Enrollment</a></li>
+                    <li><a href="tech-lab.html">The Computational Labs</a></li>
+                    <li><a href="enroll.html">Enrollment Protocols</a></li>
                     <li><a href="support-us.html">Support Core</a></li>
+                    <li><a href="#curriculum">CBE & IB Matrix</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Nodes</h4>
+                <h4 style="font-family: var(--font-mono); color: var(--kenya-red);">System Nodes</h4>
                 <ul>
-                    <li><a href="tutor.html">AI Professor</a></li>
-                    <li><a href="opportunities-hub.html">Opportunities</a></li>
+                    <li><a href="tutor.html">AI Professor Gateway</a></li>
+                    <li><a href="opportunities-hub.html">Global Opportunities</a></li>
+                    <li><a href="#initiatives">Wellness Nodes</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Contact</h4>
+                <h4 style="font-family: var(--font-mono); color: var(--crisp-white);">Communications</h4>
                 <ul>
                     <li><a href="contactus.html">Initialize Contact</a></li>
+                    <li><a href="#">Privacy Protocol</a></li>
+                    <li><a href="#">Security Audit</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 UEFI Institute.</p>
+            <p>&copy; 2026 UEFI Institute Global. Safaricom Green / Obsidian Black Matrix. All structural rights reserved.</p>
         </div>
     </footer>
 
+    <!-- ==========================================================================
+         JAVASCRIPT ENGINE // SLIDER & AUTH STATE MANAGER
+         ========================================================================== -->
     <script>
-        /* --- ORIGINAL SLIDER ENGINE LOGIC --- */
+        /* --- HIGH-PERFORMANCE SLIDER ENGINE LOGIC --- */
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
         const prevBtn = document.querySelector('.prev-btn');
@@ -770,17 +1289,23 @@
             else if (index < 0) currentIndex = slides.length - 1;
             else currentIndex = index;
 
-            slides.forEach(slide => slide.classList.remove('active'));
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                slide.style.transform = 'scale(1.05)'; // Reset zoom effect
+            });
             dots.forEach(dot => dot.classList.remove('active'));
 
-            if(slides[currentIndex]) slides[currentIndex].classList.add('active');
+            if(slides[currentIndex]) {
+                slides[currentIndex].classList.add('active');
+                slides[currentIndex].style.transform = 'scale(1)'; // Apply zoom effect
+            }
             if(dots[currentIndex]) dots[currentIndex].classList.add('active');
         }
 
         function nextSlide() { showSlide(currentIndex + 1); }
         function prevSlide() { showSlide(currentIndex - 1); }
 
-        function startAutoSlide() { slideInterval = setInterval(nextSlide, 3500); }
+        function startAutoSlide() { slideInterval = setInterval(nextSlide, 6000); } // Slower for premium feel
         function stopAutoSlide() { clearInterval(slideInterval); }
 
         nextBtn.addEventListener('click', () => { nextSlide(); stopAutoSlide(); startAutoSlide(); });
@@ -790,14 +1315,10 @@
             dot.addEventListener('click', () => { showSlide(index); stopAutoSlide(); startAutoSlide(); });
         });
 
-        if(dots.length !== slides.length && dots.length > 0) {
-            console.warn("UI Warning: Match your indicators dots count to your slide array elements length.");
-        }
-
         startAutoSlide();
 
 
-        /* --- NEW AUTHENTICATION CONTROLLER SYSTEM --- */
+        /* --- AUTHENTICATION CONTROLLER SYSTEM --- */
         const authOverlay = document.getElementById('authOverlay');
         const accountBadge = document.getElementById('accountProfileBadge');
         const userAvatar = document.getElementById('userAvatar');
@@ -814,10 +1335,14 @@
         });
 
         function applyAccessGranted(userData) {
-            authOverlay.classList.add('hidden');
-            document.body.classList.remove('auth-locked');
+            // Fade out overlay
+            authOverlay.style.opacity = '0';
+            setTimeout(() => {
+                authOverlay.classList.add('hidden');
+                document.body.classList.remove('auth-locked');
+            }, 600); // Wait for CSS transition
             
-            // Populate account data frame elements
+            // Populate account data frame elements in Top Right
             userAvatar.src = userData.photo;
             userName.textContent = userData.name;
             accountBadge.style.display = 'flex';
@@ -825,8 +1350,12 @@
 
         function applyAccessLock() {
             authOverlay.classList.remove('hidden');
-            document.body.classList.add('auth-locked');
-            accountBadge.style.display = 'none';
+            // Slight delay to ensure display block registers before opacity
+            setTimeout(() => {
+                authOverlay.style.opacity = '1';
+                document.body.classList.add('auth-locked');
+                accountBadge.style.display = 'none';
+            }, 10);
         }
 
         // Processing Email Login Forms
@@ -834,43 +1363,72 @@
             event.preventDefault();
             const emailInput = document.getElementById('clientEmail').value;
             
-            // Creates structural session template from email prefix string
-            const derivedName = emailInput.split('@')[0].toUpperCase();
-            const mockUserData = {
-                name: derivedName,
-                email: emailInput,
-                photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" // Fallback UI Avatar placeholder URL
-            };
+            // Provide a visual loading state to the button
+            const btn = event.target.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'VERIFYING...';
+            btn.style.background = 'var(--crisp-white)';
+            
+            setTimeout(() => {
+                // Creates structural session template from email prefix string
+                const derivedName = emailInput.split('@')[0].toUpperCase();
+                const mockUserData = {
+                    name: derivedName,
+                    email: emailInput,
+                    photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop" // Professional Avatar
+                };
 
-            localStorage.setItem('uefi_active_session', JSON.stringify(mockUserData));
-            applyAccessGranted(mockUserData);
+                localStorage.setItem('uefi_active_session', JSON.stringify(mockUserData));
+                applyAccessGranted(mockUserData);
+                
+                // Reset button text
+                btn.innerText = originalText;
+                btn.style.background = '';
+            }, 1200); // Simulated API latency
         }
 
         // Processing Google Auth Action Signals
         function handleGoogleAuth() {
             // [Integration Node] Swap mock data structure out when connecting to Google APIs Identity services SDK
-            const mockGoogleUserData = {
-                name: "GUEST SCHOLAR",
-                email: "scholar.network@gmail.com",
-                photo: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100" // Modern placeholder profile picture 
-            };
+            const btn = document.querySelector('.btn-google');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = 'CONNECTING TO GOOGLE WORKSPACE...';
+            
+            setTimeout(() => {
+                const mockGoogleUserData = {
+                    name: "GUEST SCHOLAR",
+                    email: "scholar.network@gmail.com",
+                    photo: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop" // Premium tech profile picture 
+                };
 
-            localStorage.setItem('uefi_active_session', JSON.stringify(mockGoogleUserData));
-            applyAccessGranted(mockGoogleUserData);
+                localStorage.setItem('uefi_active_session', JSON.stringify(mockGoogleUserData));
+                applyAccessGranted(mockGoogleUserData);
+                
+                btn.innerHTML = originalHTML;
+            }, 1500); // Simulated OAuth redirect delay
         }
 
         // Logs out user from state engine
         function terminateSession() {
-            localStorage.removeItem('uefi_active_session');
-            applyAccessLock();
-            
-            // Reset input values safely
-            document.getElementById('emailLoginForm').reset();
+            if(confirm("Terminate Uplink Session?")) {
+                localStorage.removeItem('uefi_active_session');
+                applyAccessLock();
+                document.getElementById('emailLoginForm').reset();
+                window.scrollTo(0,0); // Return to top for re-entry
+            }
         }
+        
+        // Sticky Header Effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if(window.scrollY > 50) {
+                header.style.background = 'rgba(11, 12, 16, 0.98)';
+                header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.5)';
+            } else {
+                header.style.background = 'rgba(11, 12, 16, 0.85)';
+                header.style.boxShadow = 'none';
+            }
+        });
     </script>
 </body>
 </html>
-
-
-
-
