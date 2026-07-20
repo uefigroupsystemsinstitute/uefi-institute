@@ -3,66 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Study Pool - High Quality Educational Resources</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>UEFI Study Pool - High Quality Educational Resources & Powerhouse Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ==========================================================================
-           1. UEFI BRAND COLOR PALETTE & GLOBAL VARIABLES
+           1. DEEP EXTENDED BRAND SCHEME & DESIGN TOKENS (WHITE, BLUE, GREEN, RED, BLACK)
            ========================================================================== */
         :root {
-            /* Safaricom & Kenyan Flag Influenced Colors */
-            --uefi-green: #00A859;
-            --uefi-green-light: #e6f6ed;
-            --uefi-green-hover: #008f4c;
+            /* Pure Component Lighting */
+            --clr-white: #FFFFFF;
+            --clr-offwhite: #F8FAFC;
+            --clr-ghost: #F1F5F9;
             
-            --uefi-navy: #0A2540; /* Deep professional blue */
-            --uefi-blue-bright: #0044CC; /* Vibrant blue similar to IITian */
-            --uefi-blue-light: #F0F4FA;
+            /* Professional Blue Matrix */
+            --clr-blue-ultra: #002266;
+            --clr-blue-bright: #0044CC;
+            --clr-blue-mid: #1E40AF;
+            --clr-blue-sky: #3B82F6;
+            --clr-blue-light: #E0F2FE;
+            --clr-blue-tint: #F0F4FA;
             
-            --uefi-red: #BB0000;
-            --uefi-red-light: #fdeded;
+            /* Operational Green Matrix */
+            --clr-green-dark: #006633;
+            --clr-green-primary: #00A859;
+            --clr-green-hover: #008F4C;
+            --clr-green-light: #E6F6ED;
+            --clr-green-accent: #10B981;
             
-            --uefi-black: #111111;
-            --uefi-dark-gray: #333333;
-            --uefi-text-muted: #64748b;
+            /* High Alert Red Matrix */
+            --clr-red-dark: #7F0000;
+            --clr-red-primary: #BB0000;
+            --clr-red-hover: #990000;
+            --clr-red-light: #FDEDED;
+            --clr-red-accent: #EF4444;
             
-            --bg-main: #FAFBFC;
-            --bg-card: #FFFFFF;
+            /* Structural Solid Black Matrix */
+            --clr-black-pure: #000000;
+            --clr-black-rich: #111111;
+            --clr-black-charcoal: #1E293B;
+            --clr-black-slate: #334155;
+            --clr-text-muted: #64748B;
+            --clr-border-light: #E2E8F0;
             
-            /* Exam Portal Dark Mode Colors */
-            --exam-bg: #121212;
-            --exam-card: #1E1E1E;
-            --exam-border: #333333;
-            --exam-accent: #3B82F6;
-            
-            /* UI Elements */
-            --radius-sm: 6px;
-            --radius-md: 12px;
-            --radius-lg: 20px;
-            --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Functional UI Layout Specs */
+            --br-sm: 6px;
+            --br-md: 12px;
+            --br-lg: 20px;
+            --sh-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --sh-deck: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --sh-hover: 0 20px 45px -12px rgba(0, 0, 0, 0.15);
+            --tr-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --tr-fast: all 0.15s ease;
         }
 
+        /* Mock Exam Portal Dark Override Variables */
+        .mock-exam-activated {
+            --clr-offwhite: #090D16;
+            --clr-ghost: #1E293B;
+            --clr-white: #0F172A;
+            --clr-black-rich: #F8FAFC;
+            --clr-black-charcoal: #E2E8F0;
+            --clr-black-slate: #CBD5E1;
+            --clr-border-light: #334155;
+            --clr-blue-tint: #1E293B;
+        }
+
+        /* ==========================================================================
+           2. GLOBAL CORE RESET & EDGE-TO-EDGE LAYOUT RULES
+           ========================================================================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.25s ease, border-color 0.25s ease;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--uefi-dark-gray);
+            background-color: var(--clr-offwhite);
+            color: var(--clr-black-charcoal);
             line-height: 1.6;
             overflow-x: hidden;
+            width: 100%;
         }
 
-        h1, h2, h3, h4, h5 {
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Poppins', sans-serif;
-            color: var(--uefi-navy);
+            color: var(--clr-blue-ultra);
+            font-weight: 700;
         }
 
         a {
@@ -74,43 +104,107 @@
             list-style: none;
         }
 
+        button, input, select, textarea {
+            font-family: inherit;
+        }
+
+        /* Edge-to-Edge structural containers replacing center metrics */
+        .uefi-fluid-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding-left: 30px !important;
+            padding-right: 30px !important;
+        }
+
+        .section-headline-block {
+            padding: 40px 0 20px 0;
+            border-bottom: 2px solid var(--clr-border-light);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .section-headline-block h2 {
+            font-size: 2.2rem;
+            color: var(--clr-black-rich);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-headline-block h2::before {
+            content: '';
+            width: 8px;
+            height: 35px;
+            background: var(--clr-green-primary);
+            display: inline-block;
+            border-radius: var(--br-sm);
+        }
+
+        .section-headline-block p {
+            color: var(--clr-text-muted);
+            font-size: 1.05rem;
+            margin-top: 5px;
+            padding-left: 23px;
+        }
+
+        /* Custom Scrollbars for High-Density Panels */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--clr-ghost);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--clr-blue-sky);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--clr-blue-bright);
+        }
+
         /* ==========================================================================
-           2. NAVIGATION BAR (IITian Style with Dropdowns)
+           3. NAVIGATION SYSTEM (EDGE-TO-EDGE HIGH DENSITY DROP-DOWNS)
            ========================================================================== */
         .uefi-navbar {
-            background-color: var(--uefi-blue-bright);
-            color: #fff;
+            background-color: var(--clr-blue-bright);
+            color: var(--clr-white);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 4%;
-            height: 70px;
+            padding: 0 30px;
+            height: 75px;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 2000;
+            box-shadow: 0 4px 20px rgba(0, 34, 102, 0.15);
+            width: 100%;
         }
 
         .nav-brand {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            gap: 12px;
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            font-family: 'Poppins', sans-serif;
         }
 
         .nav-brand span {
-            color: var(--uefi-green);
-            background: #fff;
-            padding: 2px 8px;
-            border-radius: 4px;
+            color: var(--clr-green-primary);
+            background: var(--clr-white);
+            padding: 4px 12px;
+            border-radius: var(--br-sm);
+            box-shadow: var(--sh-soft);
         }
 
         .nav-menu {
             display: flex;
             align-items: center;
             height: 100%;
+            flex: 1;
+            margin-left: 50px;
         }
 
         .nav-item {
@@ -121,39 +215,41 @@
         }
 
         .nav-link {
-            padding: 0 15px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            padding: 0 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
             color: rgba(255, 255, 255, 0.9);
             display: flex;
             align-items: center;
-            gap: 5px;
-            transition: var(--transition);
+            gap: 8px;
             height: 100%;
+            transition: var(--tr-fast);
         }
 
         .nav-link:hover, .nav-item:hover .nav-link {
-            color: #fff;
-            background-color: rgba(255,255,255,0.1);
+            color: var(--clr-white);
+            background-color: rgba(255, 255, 255, 0.15);
+            border-bottom: 4px solid var(--clr-green-primary);
         }
 
-        /* Dropdown Menu */
+        /* Dropdown Core Engine */
         .dropdown-menu {
             position: absolute;
-            top: 70px;
+            top: 75px;
             left: 0;
-            background: #fff;
-            min-width: 220px;
-            box-shadow: var(--shadow-hover);
-            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            background: var(--clr-white);
+            min-width: 260px;
+            box-shadow: var(--sh-hover);
+            border-radius: 0 0 var(--br-md) var(--br-md);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(10px);
-            transition: var(--transition);
+            transform: translateY(15px);
+            transition: var(--tr-smooth);
             display: flex;
             flex-direction: column;
-            padding: 10px 0;
-            border-top: 3px solid var(--uefi-green);
+            padding: 12px 0;
+            border-top: 4px solid var(--clr-green-primary);
+            z-index: 2100;
         }
 
         .nav-item:hover .dropdown-menu {
@@ -163,41 +259,43 @@
         }
 
         .dropdown-item {
-            padding: 12px 20px;
-            color: var(--uefi-navy);
-            font-size: 0.9rem;
-            font-weight: 500;
+            padding: 14px 24px;
+            color: var(--clr-blue-ultra);
+            font-size: 0.95rem;
+            font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: var(--transition);
+            transition: var(--tr-smooth);
+            cursor: pointer;
         }
 
         .dropdown-item:hover {
-            background-color: var(--uefi-blue-light);
-            color: var(--uefi-blue-bright);
-            padding-left: 25px;
+            background-color: var(--clr-blue-tint);
+            color: var(--clr-blue-bright);
+            padding-left: 32px;
         }
 
-        /* Nested Dropdown (Flyout) */
+        /* Nested Dropdown Flyout Submenu Blueprint */
         .dropdown-submenu {
             position: relative;
         }
         
         .dropdown-flyout {
             position: absolute;
-            top: -13px;
+            top: -12px;
             left: 100%;
-            background: #fff;
-            min-width: 200px;
-            box-shadow: var(--shadow-hover);
-            border-radius: var(--radius-md);
+            background: var(--clr-white);
+            min-width: 240px;
+            box-shadow: var(--sh-hover);
+            border-radius: var(--br-md);
             opacity: 0;
             visibility: hidden;
-            transform: translateX(10px);
-            transition: var(--transition);
-            padding: 10px 0;
-            border-left: 3px solid var(--uefi-red);
+            transform: translateX(15px);
+            transition: var(--tr-smooth);
+            padding: 12px 0;
+            border-left: 4px solid var(--clr-red-primary);
+            z-index: 2200;
         }
 
         .dropdown-submenu:hover .dropdown-flyout {
@@ -213,329 +311,375 @@
         }
 
         .btn-outline-light {
-            border: 1px solid rgba(255,255,255,0.5);
-            padding: 8px 16px;
-            border-radius: var(--radius-sm);
-            color: #fff;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: var(--transition);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            padding: 10px 22px;
+            border-radius: var(--br-sm);
+            color: var(--clr-white);
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: var(--tr-smooth);
+            background: transparent;
+            cursor: pointer;
         }
 
         .btn-outline-light:hover {
-            background: #fff;
-            color: var(--uefi-blue-bright);
+            background: var(--clr-white);
+            color: var(--clr-blue-bright);
+            box-shadow: var(--sh-soft);
         }
 
         /* ==========================================================================
-           3. HERO SECTION
+           4. HERO ACTION RIG (FULL VIEWPORT EDGE-TO-EDGE BREAKOUT)
            ========================================================================== */
         .hero-section {
-            background: linear-gradient(135deg, var(--uefi-blue-bright) 0%, var(--uefi-navy) 100%);
-            color: #fff;
-            padding: 80px 4% 100px;
+            background: linear-gradient(135deg, var(--clr-blue-ultra) 0%, #020C1B 100%);
+            color: var(--clr-white);
+            padding: 70px 30px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 50px;
+            align-items: center;
+            width: 100%;
             position: relative;
             overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
+            border-bottom: 5px solid var(--clr-green-primary);
         }
 
-        /* Abstract shapes in background */
-        .hero-section::before {
+        .hero-section::after {
             content: '';
             position: absolute;
-            bottom: -50px;
-            right: 0;
-            width: 50%;
-            height: 100%;
-            background: var(--uefi-blue-bright);
-            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
-            z-index: 1;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 200%;
+            background: rgba(0, 68, 204, 0.15);
+            transform: rotate(-15deg);
+            pointer-events: none;
         }
 
         .hero-content {
             position: relative;
-            z-index: 2;
+            z-index: 5;
         }
 
         .hero-title {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            color: #fff;
+            line-height: 1.15;
+            margin-bottom: 25px;
+            color: var(--clr-white);
+            letter-spacing: -1px;
+            font-family: 'Poppins', sans-serif;
         }
 
         .hero-subtitle {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            color: rgba(255,255,255,0.8);
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            color: var(--clr-ghost);
+            line-height: 1.6;
+            max-width: 900px;
         }
 
         .search-container {
             display: flex;
-            background: #fff;
-            border-radius: var(--radius-sm);
+            background: var(--clr-white);
+            border-radius: var(--br-md);
             overflow: hidden;
-            max-width: 500px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            max-width: 750px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+            border: 3px solid rgba(255, 255, 255, 0.2);
         }
 
         .search-container input {
             flex: 1;
-            padding: 15px 20px;
+            padding: 18px 25px;
             border: none;
             outline: none;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            color: var(--clr-black-rich);
+            background: transparent;
         }
 
         .search-container button {
-            background: var(--uefi-text-muted);
-            color: #fff;
+            background: var(--clr-green-primary);
+            color: var(--clr-white);
             border: none;
-            padding: 0 25px;
+            padding: 0 35px;
             cursor: pointer;
-            transition: var(--transition);
+            font-size: 1.2rem;
+            transition: var(--tr-smooth);
         }
 
         .search-container button:hover {
-            background: var(--uefi-navy);
+            background: var(--clr-green-hover);
         }
 
         .hero-image-wrapper {
             position: relative;
-            z-index: 2;
-            display: flex;
-            justify-content: flex-end;
+            z-index: 5;
+            width: 100%;
         }
 
-        .hero-image-wrapper img {
-            width: 90%;
-            max-width: 500px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-hover);
+        .hero-interactive-card {
+            width: 100%;
+            height: 380px;
+            background: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800') center/cover no-repeat;
+            border-radius: var(--br-lg);
+            border: 8px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--sh-hover);
+            position: relative;
+        }
+
+        .hero-interactive-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            border-radius: calc(var(--br-lg) - 8px);
+            display: flex;
+            align-items: flex-end;
+            padding: 30px;
         }
 
         /* ==========================================================================
-           4. STATS BAR (Trusted by Many)
+           5. ANALYTICS & STAT GENERATOR (EDGE-TO-EDGE HORIZONTAL RAMP)
            ========================================================================== */
         .stats-bar {
-            background: #fff;
-            padding: 40px 4%;
+            background: var(--clr-white);
+            padding: 35px 30px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            text-align: left;
+            border-bottom: 1px solid var(--clr-border-light);
+            box-shadow: var(--sh-soft);
+            width: 100%;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
             gap: 20px;
-            text-align: center;
-            border-bottom: 1px solid #eaeaea;
+            padding: 15px 25px;
+            border-radius: var(--br-md);
+            background: var(--clr-offwhite);
+            border-left: 5px solid var(--clr-blue-bright);
         }
 
-        .stat-item h3 {
-            font-size: 2.5rem;
-            color: var(--uefi-blue-bright);
+        .stat-item:nth-child(2) { border-left-color: var(--clr-green-primary); }
+        .stat-item:nth-child(3) { border-left-color: var(--clr-red-primary); }
+        .stat-item:nth-child(4) { border-left-color: var(--clr-black-pure); }
+
+        .stat-icon-box {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--clr-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--clr-blue-bright);
+            box-shadow: var(--sh-soft);
+        }
+        .stat-item:nth-child(2) .stat-icon-box { color: var(--clr-green-primary); }
+        .stat-item:nth-child(3) .stat-icon-box { color: var(--clr-red-primary); }
+        .stat-item:nth-child(4) .stat-icon-box { color: var(--clr-black-pure); }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            color: var(--clr-black-rich);
             font-weight: 800;
-            margin-bottom: 5px;
+            line-height: 1.2;
         }
 
-        .stat-item p {
+        .stat-info p {
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--uefi-text-muted);
-            font-weight: 600;
+            letter-spacing: 1.2px;
+            color: var(--clr-text-muted);
+            font-weight: 700;
         }
 
         /* ==========================================================================
-           5. FEATURES SECTION (What makes us unique)
+           6. CORE RESOURCE MATRICES & VALUE CARDS
            ========================================================================== */
         .features-section {
-            padding: 80px 4%;
-            background-color: var(--bg-main);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-header h2 {
-            font-size: 2rem;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: var(--uefi-green);
-            border-radius: 2px;
+            padding: 60px 30px;
+            width: 100%;
+            background: var(--clr-white);
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
         }
 
         .feature-card {
-            background: var(--bg-card);
+            background: var(--clr-offwhite);
             padding: 40px 30px;
-            border-radius: var(--radius-md);
-            text-align: center;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid #f0f0f0;
-            transition: var(--transition);
-            border-top: 4px solid transparent;
+            border-radius: var(--br-md);
+            text-align: left;
+            box-shadow: var(--sh-soft);
+            border: 1px solid var(--clr-border-light);
+            transition: var(--tr-smooth);
+            border-top: 6px solid var(--clr-black-pure);
+            position: relative;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
+            transform: translateY(-8px);
+            box-shadow: var(--sh-hover);
+            background: var(--clr-white);
         }
 
-        /* Distinct colors for each feature based on Kenyan/Safaricom vibe */
-        .feature-card:nth-child(1) { border-top-color: var(--uefi-green); }
-        .feature-card:nth-child(2) { border-top-color: var(--uefi-red); }
-        .feature-card:nth-child(3) { border-top-color: #8b5cf6; } /* Purple accent */
-        .feature-card:nth-child(4) { border-top-color: var(--uefi-blue-bright); }
+        .feature-card:nth-child(1) { border-top-color: var(--clr-green-primary); }
+        .feature-card:nth-child(2) { border-top-color: var(--clr-red-primary); }
+        .feature-card:nth-child(3) { border-top-color: var(--clr-blue-bright); }
+        .feature-card:nth-child(4) { border-top-color: #8B5CF6; }
 
         .feature-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
+            width: 65px;
+            height: 65px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 16px;
-            font-size: 1.8rem;
-            color: #fff;
+            border-radius: var(--br-md);
+            font-size: 1.6rem;
+            color: var(--clr-white);
+            box-shadow: var(--sh-soft);
         }
 
-        .feature-card:nth-child(1) .feature-icon { background: var(--uefi-green); }
-        .feature-card:nth-child(2) .feature-icon { background: var(--uefi-red); }
-        .feature-card:nth-child(3) .feature-icon { background: #8b5cf6; }
-        .feature-card:nth-child(4) .feature-icon { background: var(--uefi-blue-bright); }
+        .feature-card:nth-child(1) .feature-icon { background: var(--clr-green-primary); }
+        .feature-card:nth-child(2) .feature-icon { background: var(--clr-red-primary); }
+        .feature-card:nth-child(3) .feature-icon { background: var(--clr-blue-bright); }
+        .feature-card:nth-child(4) .feature-icon { background: #8B5CF6; }
 
         .feature-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 15px;
+            color: var(--clr-blue-ultra);
         }
 
         .feature-desc {
-            font-size: 0.9rem;
-            color: var(--uefi-text-muted);
+            font-size: 0.95rem;
+            color: var(--clr-black-slate);
+            line-height: 1.6;
         }
 
         /* ==========================================================================
-           6. THE STUDY POOL (Resource Viewer & Curriculum Tabs)
+           7. UNIFIED EXPERT STUDY WORKSPACE (SIDEBAR + CORE VIEWER FLUID GRID)
            ========================================================================== */
         .study-pool-section {
-            padding: 60px 4% 100px;
-            background: #fff;
-            border-top: 1px solid #eaeaea;
+            padding: 40px 30px;
+            width: 100%;
+            background-color: var(--clr-offwhite);
         }
 
-        .pool-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Sub-Navigation Tabs (Exam Style, Flashcards, etc) */
         .resource-tabs {
             display: flex;
-            justify-content: center;
-            gap: 10px;
+            justify-content: flex-start;
+            gap: 15px;
             margin-bottom: 30px;
-            border-bottom: 2px solid var(--uefi-blue-light);
-            padding-bottom: 15px;
+            border-bottom: 3px solid var(--clr-border-light);
+            padding-bottom: 0px;
+            width: 100%;
         }
 
         .tab-btn {
             background: transparent;
             border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
+            padding: 15px 25px;
+            font-size: 1.05rem;
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            color: var(--uefi-text-muted);
+            font-weight: 700;
+            color: var(--clr-text-muted);
             cursor: pointer;
             position: relative;
-            transition: var(--transition);
+            transition: var(--tr-smooth);
         }
 
         .tab-btn:hover {
-            color: var(--uefi-navy);
+            color: var(--clr-blue-bright);
+            background: rgba(0, 68, 204, 0.05);
         }
 
         .tab-btn.active {
-            color: var(--uefi-blue-bright);
+            color: var(--clr-blue-bright);
         }
 
         .tab-btn.active::after {
             content: '';
             position: absolute;
-            bottom: -17px;
+            bottom: -3px;
             left: 0;
             width: 100%;
             height: 4px;
-            background: var(--uefi-blue-bright);
+            background: var(--clr-blue-bright);
             border-radius: 4px 4px 0 0;
         }
 
-        /* Layout for Resource Content */
-        .resource-grid {
+        .workspace-fluid-grid {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 340px 1fr;
             gap: 30px;
+            align-items: start;
+            width: 100%;
         }
 
-        /* Left Sidebar: Subject & Curriculum Accordion */
+        /* Sidebar Curriculums Navigation */
         .curriculum-sidebar {
-            background: var(--bg-main);
-            border: 1px solid #eaeaea;
-            border-radius: var(--radius-md);
-            padding: 20px;
-            height: fit-content;
+            background: var(--clr-white);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-md);
+            padding: 25px;
+            box-shadow: var(--sh-soft);
+        }
+
+        .sidebar-title-box {
+            margin-bottom: 25px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--clr-blue-ultra);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .accordion-item {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            border-radius: var(--br-sm);
+            overflow: hidden;
+            border: 1px solid var(--clr-border-light);
         }
 
         .accordion-header {
-            background: var(--uefi-blue-bright);
-            color: #fff;
-            padding: 12px 15px;
-            border-radius: var(--radius-sm);
+            background: var(--clr-blue-tint);
+            color: var(--clr-blue-ultra);
+            padding: 16px 20px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: var(--transition);
+            font-weight: 700;
+            font-size: 1rem;
+            transition: var(--tr-smooth);
         }
 
         .accordion-header:hover {
-            background: var(--uefi-navy);
+            background: var(--clr-blue-light);
+            color: var(--clr-blue-bright);
         }
 
         .accordion-content {
-            background: #fff;
-            border: 1px solid #eaeaea;
-            border-top: none;
-            border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-            display: none; /* Toggled via JS later */
+            background: var(--clr-white);
+            display: none;
+            border-top: 1px solid var(--clr-border-light);
         }
         
         .accordion-content.open {
@@ -543,11 +687,11 @@
         }
 
         .subject-list {
-            list-style: none;
+            padding: 8px 0;
         }
 
         .subject-list li {
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid var(--clr-ghost);
         }
 
         .subject-list li:last-child {
@@ -555,144 +699,627 @@
         }
 
         .subject-list a {
-            display: block;
-            padding: 10px 15px;
-            color: var(--uefi-dark-gray);
-            font-size: 0.85rem;
-            transition: var(--transition);
-            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--clr-black-slate);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--tr-smooth);
+            border-left: 4px solid transparent;
         }
 
         .subject-list a:hover, .subject-list a.active {
-            background: var(--uefi-green-light);
-            color: var(--uefi-green-hover);
-            border-left: 3px solid var(--uefi-green);
+            background: var(--clr-green-light);
+            color: var(--clr-green-dark);
+            border-left: 4px solid var(--clr-green-primary);
+            padding-left: 25px;
+            font-weight: 600;
         }
 
-        /* Right Side: Content Viewer */
+        /* Right Side Engine Dynamic Viewer Container */
         .content-viewer {
-            background: #fff;
-            border: 1px solid #eaeaea;
-            border-radius: var(--radius-md);
-            padding: 30px;
-            box-shadow: var(--shadow-soft);
+            background: var(--clr-white);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-md);
+            padding: 40px;
+            box-shadow: var(--sh-soft);
+            width: 100%;
         }
 
         .viewer-header {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eaeaea;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--clr-ghost);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .viewer-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            color: var(--clr-black-rich);
         }
 
-        /* Dynamic Tool Containers (GeoGebra, YouTube, etc.) */
+        .btn-exam-mode {
+            background: var(--clr-red-primary);
+            color: var(--clr-white);
+            padding: 12px 28px;
+            border-radius: var(--br-sm);
+            border: none;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(187, 0, 0, 0.4);
+            transition: var(--tr-smooth);
+        }
+
+        .btn-exam-mode:hover {
+            background: var(--clr-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(187, 0, 0, 0.6);
+        }
+
         .embed-container {
             width: 100%;
-            background: #f8f9fa;
-            border: 2px dashed #ccc;
-            border-radius: var(--radius-md);
+            background: var(--clr-ghost);
+            border: 3px dashed var(--clr-blue-sky);
+            border-radius: var(--br-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             position: relative;
             overflow: hidden;
         }
         
-        /* Specific Aspect Ratios */
-        .embed-video { padding-bottom: 56.25%; /* 16:9 */ }
-        .embed-tool { height: 500px; }
+        .embed-video { height: 450px; }
+        .embed-tool { height: 500px; border-color: var(--clr-green-primary); }
         
         .embed-placeholder {
-            position: absolute;
             text-align: center;
-            color: var(--uefi-text-muted);
+            color: var(--clr-black-slate);
+            padding: 40px;
         }
         
         .embed-placeholder i {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: var(--uefi-blue-bright);
+            font-size: 4rem;
+            margin-bottom: 15px;
         }
 
-        /* Question Cards (Like IITian Academy) */
+        /* Structural Realization of Mock Questions */
         .question-card {
-            background: var(--bg-main);
-            border: 1px solid #e2e8f0;
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            margin-bottom: 20px;
+            background: var(--clr-offwhite);
+            border: 2px solid var(--clr-border-light);
+            border-radius: var(--br-md);
+            padding: 30px;
+            margin-bottom: 25px;
+            width: 100%;
         }
 
         .question-header {
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: var(--uefi-navy);
+            font-weight: 800;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            color: var(--clr-blue-ultra);
+            display: flex;
+            justify-content: space-between;
         }
 
         .question-text {
-            margin-bottom: 20px;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: var(--clr-black-charcoal);
         }
 
         .mcq-options {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 25px;
         }
 
         .option {
-            background: #fff;
-            border: 1px solid #ccc;
-            padding: 10px 15px;
-            border-radius: 4px;
+            background: var(--clr-white);
+            border: 2px solid var(--clr-border-light);
+            padding: 16px 20px;
+            border-radius: var(--br-sm);
             cursor: pointer;
-            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--tr-smooth);
         }
 
         .option:hover {
-            border-color: var(--uefi-green);
-            background: var(--uefi-green-light);
+            border-color: var(--clr-green-primary);
+            background: var(--clr-green-light);
+            color: var(--clr-green-dark);
+        }
+
+        .option-letter {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--clr-ghost);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--clr-blue-ultra);
         }
 
         .btn-explain {
-            background: none;
+            background: transparent;
             border: none;
-            color: #d946ef; /* Bright purple/pink accent */
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .btn-exam-mode {
-            background: var(--uefi-red);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: var(--radius-sm);
-            border: none;
+            color: #D946EF;
             font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 10px rgba(187, 0, 0, 0.3);
-            transition: var(--transition);
+            margin-top: 10px;
+        }
+        
+        .explanation-box {
+            margin-top: 15px;
+            padding: 20px;
+            background: #FDF4FF;
+            border-left: 4px solid #D946EF;
+            border-radius: 0 var(--br-sm) var(--br-sm) 0;
+            display: none;
         }
 
-        .btn-exam-mode:hover {
-            background: #990000;
-            transform: translateY(-2px);
+        /* ==========================================================================
+           8. THE ULTIMATE DYNAMIC STUDY PLANNER SUITE (POWERHOUSE INTERACTION GRID)
+           ========================================================================== */
+        .planner-suite-section {
+            padding: 50px 30px;
+            background: var(--clr-white);
+            border-top: 2px solid var(--clr-border-light);
+            width: 100%;
         }
 
+        .planner-grid-system {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 35px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        /* Dynamic Kanban Board Component */
+        .kanban-board-container {
+            background: var(--clr-offwhite);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-lg);
+            padding: 30px;
+            box-shadow: var(--sh-soft);
+        }
+
+        .kanban-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .kanban-columns-track {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .kanban-column {
+            background: var(--clr-white);
+            border-radius: var(--br-md);
+            padding: 20px;
+            border: 1px solid var(--clr-border-light);
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .kanban-column-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--clr-black-pure);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .kanban-column:nth-child(1) .kanban-column-title { border-bottom-color: var(--clr-red-primary); }
+        .kanban-column:nth-child(2) .kanban-column-title { border-bottom-color: var(--clr-blue-bright); }
+        .kanban-column:nth-child(3) .kanban-column-title { border-bottom-color: var(--clr-green-primary); }
+
+        .kanban-card {
+            background: var(--clr-offwhite);
+            border: 1px solid var(--clr-border-light);
+            padding: 15px;
+            border-radius: var(--br-sm);
+            cursor: grab;
+            box-shadow: var(--sh-soft);
+            position: relative;
+        }
+
+        .kanban-card-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .tag-red { background: var(--clr-red-light); color: var(--clr-red-dark); }
+        .tag-blue { background: var(--clr-blue-tint); color: var(--clr-blue-bright); }
+        .tag-green { background: var(--clr-green-light); color: var(--clr-green-dark); }
+
+        .kanban-card h5 {
+            font-size: 1rem;
+            color: var(--clr-black-rich);
+            margin-bottom: 5px;
+        }
+
+        .kanban-card p {
+            font-size: 0.85rem;
+            color: var(--clr-text-muted);
+        }
+
+        /* Dynamic Calendar Component & Pomodoro Machine */
+        .scheduler-sidebar-box {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .calendar-module {
+            background: var(--clr-offwhite);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-lg);
+            padding: 30px;
+            box-shadow: var(--sh-soft);
+        }
+
+        .calendar-nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-grid-engine {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            text-align: center;
+        }
+
+        .calendar-day-label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--clr-blue-ultra);
+            padding: 5px 0;
+        }
+
+        .calendar-cell {
+            background: var(--clr-white);
+            aspect-ratio: 1;
+            border-radius: var(--br-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid var(--clr-border-light);
+            cursor: pointer;
+            transition: var(--tr-fast);
+        }
+
+        .calendar-cell:hover {
+            background: var(--clr-blue-bright);
+            color: var(--clr-white);
+        }
+
+        .calendar-cell.active-event {
+            border: 2px solid var(--clr-green-primary);
+            background: var(--clr-green-light);
+            color: var(--clr-green-dark);
+        }
+
+        /* Pomodoro Focus Module Architecture */
+        .pomodoro-machine {
+            background: linear-gradient(135deg, var(--clr-red-primary) 0%, var(--clr-red-dark) 100%);
+            border-radius: var(--br-lg);
+            padding: 35px;
+            color: var(--clr-white);
+            text-align: center;
+            box-shadow: var(--sh-deck);
+        }
+
+        .pomo-time-display {
+            font-size: 4.5rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            margin: 15px 0;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .pomo-controls-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-pomo-action {
+            background: var(--clr-white);
+            color: var(--clr-red-primary);
+            border: none;
+            padding: 12px 28px;
+            border-radius: var(--br-sm);
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--sh-soft);
+            transition: var(--tr-smooth);
+        }
+
+        .btn-pomo-action:hover {
+            background: var(--clr-ghost);
+            transform: scale(1.05);
+        }
+
+        /* Horizontal Full Width Interactive Components Stack */
+        .interactive-stack-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            width: 100%;
+        }
+
+        /* Active Recall Flashcards Deck */
+        .flashcards-suite {
+            background: var(--clr-offwhite);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-lg);
+            padding: 30px;
+            box-shadow: var(--sh-soft);
+        }
+
+        .flashcard-viewport {
+            perspective: 1000px;
+            width: 100%;
+            height: 260px;
+            margin: 20px 0;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .flashcard-inner.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: var(--br-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            box-shadow: var(--sh-soft);
+            border: 2px solid var(--clr-border-light);
+        }
+
+        .flashcard-front {
+            background: var(--clr-white);
+            color: var(--clr-blue-ultra);
+        }
+
+        .flashcard-back {
+            background: var(--clr-blue-bright);
+            color: var(--clr-white);
+            transform: rotateY(180deg);
+            border-color: var(--clr-blue-ultra);
+        }
+
+        /* Dynamic Notes Storage Module */
+        .notes-scratchpad-box {
+            background: var(--clr-offwhite);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-lg);
+            padding: 30px;
+            box-shadow: var(--sh-soft);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scratchpad-textarea {
+            width: 100%;
+            height: 200px;
+            border: 2px solid var(--clr-border-light);
+            border-radius: var(--br-md);
+            padding: 20px;
+            font-size: 1rem;
+            color: var(--clr-black-charcoal);
+            resize: none;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .scratchpad-textarea:focus {
+            border-color: var(--clr-blue-bright);
+        }
+
+        /* UI Action Forms Generic Buttons Layout */
+        .action-primary-btn {
+            background: var(--clr-blue-bright);
+            color: var(--clr-white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--br-sm);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--tr-smooth);
+        }
+
+        .action-primary-btn:hover {
+            background: var(--clr-blue-mid);
+        }
+
+        .action-success-btn {
+            background: var(--clr-green-primary);
+            color: var(--clr-white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--br-sm);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--tr-smooth);
+        }
+
+        .action-success-btn:hover {
+            background: var(--clr-green-hover);
+        }
+
+        /* ==========================================================================
+           9. DYNAMIC PORTAL MODALS ENGINE LAYOUT
+           ========================================================================== */
+        .uefi-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 5000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .uefi-modal-window {
+            background: var(--clr-white);
+            border-radius: var(--br-md);
+            width: 100%;
+            max-width: 550px;
+            padding: 35px;
+            box-shadow: var(--sh-hover);
+            position: relative;
+        }
+
+        .modal-close-trigger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--clr-text-muted);
+        }
+
+        .modal-form-group {
+            margin-bottom: 20px;
+        }
+
+        .modal-form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--clr-black-charcoal);
+        }
+
+        .modal-form-group input, .modal-form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--clr-border-light);
+            border-radius: var(--br-sm);
+            outline: none;
+        }
+
+        /* ==========================================================================
+           10. TOTAL HARD ARCHITECTURAL PRODUCTION FOOTER
+           ========================================================================== */
+        .uefi-footer {
+            background: var(--clr-black-rich);
+            color: var(--clr-ghost);
+            padding: 60px 30px;
+            margin-top: 60px;
+            border-top: 5px solid var(--clr-blue-bright);
+            width: 100%;
+        }
+
+        .footer-grid-system {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            width: 100%;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-column h4 {
+            color: var(--clr-white);
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--clr-green-primary);
+        }
+
+        .footer-links-list li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links-list a {
+            font-size: 0.95rem;
+            color: var(--clr-text-muted);
+            transition: var(--tr-fast);
+        }
+
+        .footer-links-list a:hover {
+            color: var(--clr-white);
+            padding-left: 5px;
+        }
+
+        .footer-base-row {
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--clr-text-muted);
+        }
     </style>
 </head>
 <body>
@@ -712,7 +1339,7 @@
                         <div class="dropdown-item dropdown-submenu">
                             IB Biology <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i>
                             <div class="dropdown-flyout">
-                                <a href="#" class="dropdown-item">Biology HL Papers </a>
+                                <a href="#" class="dropdown-item">Biology HL Papers</a>
                                 <a href="#" class="dropdown-item">Biology Papers</a>
                             </div>
                         </div>
@@ -752,8 +1379,8 @@
                     </div>
                 </li>
                 
-                <li class="nav-item"><a href="courses.html" class="nav-link">CBE ARCHIVES REVISION </a></li>
-                <li class="nav-item"><a href="#" class="nav-link">REVISION PAPERS </a></li>
+                <li class="nav-item"><a href="courses.html" class="nav-link">CBE ARCHIVES REVISION</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">REVISION PAPERS</a></li>
             </ul>
         </nav>
 
@@ -762,7 +1389,7 @@
         </div>
     </header>
 
-    <section class="hero-section">
+    <section class="hero-section uefi-fluid-container">
         <div class="hero-content">
             <h1 class="hero-title">Exam Style Questions and High-Quality Resources</h1>
             <p class="hero-subtitle">Leverage UEFI Follett Expertise and Technology to Ace Your Exams! Access the ultimate study pool customized for IB DP, IB MYP, and CBE curriculums.</p>
@@ -774,29 +1401,51 @@
         </div>
         
         <div class="hero-image-wrapper">
-            <div style="width: 100%; height: 350px; background: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800') center/cover; border-radius: var(--radius-lg); border: 8px solid rgba(255,255,255,0.1);"></div>
+            <div class="hero-interactive-card">
+                <div class="hero-interactive-overlay">
+                    <div style="color: white; font-weight: 700;">
+                        <i class="fas fa-graduation-cap" style="margin-right: 8px;"></i> Dynamic Learning Canvas Active
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="stats-bar">
+    <section class="stats-bar uefi-fluid-container">
         <div class="stat-item">
-            <h3>50+</h3>
-            <p>Courses Offered</p>
+            <div class="stat-icon-box"><i class="fas fa-graduation-cap"></i></div>
+            <div class="stat-info">
+                <h3>50+</h3>
+                <p>Courses Offered</p>
+            </div>
         </div>
         <div class="stat-item">
-            <h3>1,000+</h3>
-            <p>Schools Using UEFI</p>
+            <div class="stat-icon-box"><i class="fas fa-school"></i></div>
+            <div class="stat-info">
+                <h3>1,000+</h3>
+                <p>Schools Using UEFI</p>
+            </div>
         </div>
         <div class="stat-item">
-            <h3>100,000+</h3>
-            <p>Registered Students & Teachers</p>
+            <div class="stat-icon-box"><i class="fas fa-users"></i></div>
+            <div class="stat-info">
+                <h3>100,000+</h3>
+                <p>Registered Students & Teachers</p>
+            </div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon-box"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-info">
+                <h3>Active</h3>
+                <p>2026 Academic Syllabus</p>
+            </div>
         </div>
     </section>
 
-    <section class="features-section">
-        <div class="section-header">
+    <section class="features-section uefi-fluid-container">
+        <div class="section-headline-block">
             <h2>What makes UEFI Study Pool Unique</h2>
-            <p style="margin-top: 15px; color: var(--uefi-text-muted);">Built for the modern learner, integrating seamless tools and comprehensive data.</p>
+            <p>Built for the modern learner, integrating seamless tools and comprehensive data.</p>
         </div>
 
         <div class="features-grid">
@@ -826,506 +1475,824 @@
         </div>
     </section>
 
-    <section class="study-pool-section">
-        <div class="section-header">
+    <section class="study-pool-section uefi-fluid-container">
+        <div class="section-headline-block">
             <h2>Exam Style Questions including Flashcards and Past Papers</h2>
-            <p style="margin-top: 10px; color: var(--uefi-text-muted); font-size: 0.95rem;">Resources like exam-style questions, flashcards, and interactive study aids.</p>
+            <p>Resources like exam-style questions, flashcards, and interactive study aids.</p>
         </div>
 
-        <div class="pool-container">
-            <div class="resource-tabs">
-                <button class="tab-btn active">Exam Style Questions</button>
-                <button class="tab-btn">Flashcards</button>
-                <button class="tab-btn">Study Notes (Interactive)</button>
-                <button class="tab-btn">Past Papers Explanations</button>
-            </div>
-
-            <div class="resource-grid">
-                <aside class="curriculum-sidebar">
-                    <div style="margin-bottom: 20px; font-weight: 700; color: var(--uefi-navy);">Select Study Resource</div>
-                    
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span><i class="fas fa-plus" style="margin-right: 10px;"></i> IB DP Study Resources</span>
-                        </div>
-                        <div class="accordion-content open"> <ul class="subject-list">
-                                <li><a href="#" class="active">IB DP Physics (Paper 1 & 2)</a></li>
-                                <li><a href="#">IB DP Biology 2026, 2027 & 2028</a></li>
-                                <li><a href="#">IB DP Mathematics AA</a></li>
-                                <li><a href="#">IB DP Computer Science</a></li>
-                                <li><a href="#">IB DP Economics</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span><i class="fas fa-plus" style="margin-right: 10px;"></i> IB MYP Study Resources</span>
-                        </div>
-                        <div class="accordion-content">
-                            <ul class="subject-list">
-                                <li><a href="#">MYP Extended Math</a></li>
-                                <li><a href="#">MYP Integrated Sciences</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span><i class="fas fa-plus" style="margin-right: 10px;"></i> CBE Core Curriculum</span>
-                        </div>
-                        <div class="accordion-content">
-                            <ul class="subject-list">
-                                <li><a href="#">Grade 9 Pre-Tech</a></li>
-                                <li><a href="#">Grade 10 Applied Sciences</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </aside>
-
-                <main class="content-viewer">
-                    
-                    <div class="viewer-header">
-                        <h3 class="viewer-title">Topic: A.1 Kinematics SL (Paper 1)</h3>
-                        <button class="btn-exam-mode" id="enterExamModeBtn">
-                            <i class="fas fa-laptop-code"></i> Enter Mock Exam Portal
-                        </button>
-                    </div>
-
-                    <div class="embed-container embed-video">
-                        <div class="embed-placeholder">
-                            <i class="fab fa-youtube" style="color: #FF0000;"></i>
-                            <h4>Concept Explanation Video</h4>
-                            <p style="font-size: 0.8rem;">(Embedded iframe will render here)</p>
-                        </div>
-                        </div>
-
-                    <div class="embed-container embed-tool" style="border-color: var(--uefi-green);">
-                        <div class="embed-placeholder">
-                            <i class="fas fa-chart-line" style="color: var(--uefi-green);"></i>
-                            <h4>GeoGebra Classic Graphing / Demo Calculator</h4>
-                            <p style="font-size: 0.8rem;">(Interactive canvas renders here)</p>
-                        </div>
-                    </div>
-
-                    <div class="question-card">
-                        <div class="question-header">Question 1 - A.1 Kinematics</div>
-                        <div class="question-text">
-                            A block of mass 2.0 kg accelerates uniformly at a rate of 1.0 m s⁻² when a force of 4.0 N acts on it. The force is doubled while resistive forces stay the same. What is the block's acceleration?
-                        </div>
-                        <div class="mcq-options">
-                            <div class="option">A. 4.0 m s⁻²</div>
-                            <div class="option">B. 3.0 m s⁻²</div>
-                            <div class="option">C. 2.0 m s⁻²</div>
-                            <div class="option">D. 1.0 m s⁻²</div>
-                        </div>
-                        <button class="btn-explain"><i class="fas fa-caret-right"></i> Answer/Explanation</button>
-                    </div>
-
-                </main>
-            </div>
-        </div>
-    </section>
-    <section class="exam-portal" id="examPortal" style="display: none;">
-        <div class="exam-header">
-            <div class="exam-brand">
-                <i class="fas fa-shield-alt" style="color: var(--exam-accent);"></i> UEFI Secure Testing Environment
-            </div>
-            <div class="exam-timer" id="examTimer">
-                <i class="far fa-clock"></i> <span id="timeDisplay">45:00</span>
-            </div>
-            <button class="btn-exit-exam" id="exitExamBtn">Submit & Exit</button>
+        <div class="resource-tabs">
+            <button class="tab-btn active" onclick="switchResourceView('exam')">Exam Style Questions</button>
+            <button class="tab-btn" onclick="switchResourceView('flash')">Flashcards</button>
+            <button class="tab-btn" onclick="switchResourceView('notes')">Study Notes (Interactive)</button>
+            <button class="tab-btn" onclick="switchResourceView('past')">Past Papers Explanations</button>
         </div>
 
-        <div class="exam-layout">
-            <div class="exam-sidebar">
-                <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Question Palette</h4>
-                <div class="question-grid">
-                    <div class="q-box active">1</div>
-                    <div class="q-box answered">2</div>
-                    <div class="q-box answered">3</div>
-                    <div class="q-box flagged">4</div>
-                    <div class="q-box">5</div>
-                    <div class="q-box">6</div>
-                    <div class="q-box">7</div>
-                    <div class="q-box">8</div>
-                    <div class="q-box">9</div>
-                    <div class="q-box">10</div>
+        <div class="workspace-fluid-grid">
+            <aside class="curriculum-sidebar">
+                <div class="sidebar-title-box">
+                    <i class="fas fa-folder-open"></i> Select Study Resource
                 </div>
                 
-                <div class="exam-legend">
-                    <div class="legend-item"><span class="box-sample active-sample"></span> Current</div>
-                    <div class="legend-item"><span class="box-sample answered-sample"></span> Answered</div>
-                    <div class="legend-item"><span class="box-sample flagged-sample"></span> Flagged</div>
-                    <div class="legend-item"><span class="box-sample unread-sample"></span> Unread</div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-plus" style="margin-right: 10px;"></i> IB DP Study Resources</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content open">
+                        <ul class="subject-list">
+                            <li><a href="#" class="active" onclick="loadTopic('Physics')">IB DP Physics (Paper 1 & 2)</a></li>
+                            <li><a href="#" onclick="loadTopic('Biology')">IB DP Biology 2026, 2027 & 2028</a></li>
+                            <li><a href="#" onclick="loadTopic('Math')">IB DP Mathematics AA</a></li>
+                            <li><a href="#" onclick="loadTopic('CS')">IB DP Computer Science</a></li>
+                            <li><a href="#" onclick="loadTopic('Economics')">IB DP Economics</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class="exam-main">
-                <div class="exam-question-header">
-                    <h3>Question 1 of 10</h3>
-                    <div style="color: var(--uefi-text-muted); font-size: 0.85rem;">Topic: Kinematics SL | 1 Mark</div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-plus" style="margin-right: 10px;"></i> IB MYP Study Resources</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="subject-list">
+                            <li><a href="#" onclick="loadTopic('MYPMath')">MYP Extended Math</a></li>
+                            <li><a href="#" onclick="loadTopic('MYPScience')">MYP Integrated Sciences</a></li>
+                        </ul>
+                    </div>
                 </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-plus" style="margin-right: 10px;"></i> CBE Core Curriculum</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="subject-list">
+                            <li><a href="#" onclick="loadTopic('CBE9')">Grade 9 Pre-Tech</a></li>
+                            <li><a href="#" onclick="loadTopic('CBE10')">Grade 10 Applied Sciences</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content-viewer" id="mainContentViewer">
                 
-                <div class="exam-question-body">
-                    A block of mass 2.0 kg accelerates uniformly at a rate of 1.0 m s⁻² when a force of 4.0 N acts on it. The force is doubled while resistive forces stay the same. What is the block's acceleration?
+                <div class="viewer-header">
+                    <h3 class="viewer-title" id="activeTopicTitle">Topic: A.1 Kinematics SL (Paper 1)</h3>
+                    <button class="btn-exam-mode" id="enterExamModeBtn" onclick="toggleMockExamMode()">
+                        <i class="fas fa-laptop-code"></i> Enter Mock Exam Portal
+                    </button>
                 </div>
 
-                <div class="exam-options">
-                    <label class="exam-option-label">
-                        <input type="radio" name="q1" value="A">
-                        <span class="exam-option-text">A. 4.0 m s⁻²</span>
-                    </label>
-                    <label class="exam-option-label">
-                        <input type="radio" name="q1" value="B">
-                        <span class="exam-option-text">B. 3.0 m s⁻²</span>
-                    </label>
-                    <label class="exam-option-label">
-                        <input type="radio" name="q1" value="C">
-                        <span class="exam-option-text">C. 2.0 m s⁻²</span>
-                    </label>
-                    <label class="exam-option-label">
-                        <input type="radio" name="q1" value="D">
-                        <span class="exam-option-text">D. 1.0 m s⁻²</span>
-                    </label>
+                <div class="embed-container embed-video">
+                    <div class="embed-placeholder">
+                        <i class="fab fa-youtube" style="color: var(--clr-red-primary);"></i>
+                        <h4>Concept Explanation Video</h4>
+                        <p style="font-size: 0.9rem; margin-top: 5px;">(Embedded educational video component active for active syllabus matrix)</p>
+                    </div>
                 </div>
 
-                <div class="exam-controls">
-                    <button class="exam-btn btn-secondary">Previous</button>
-                    <button class="exam-btn btn-warning"><i class="far fa-flag"></i> Flag for Review</button>
-                    <button class="exam-btn btn-primary">Save & Next</button>
+                <div class="embed-container embed-tool">
+                    <div class="embed-placeholder">
+                        <i class="fas fa-chart-line" style="color: var(--clr-green-primary);"></i>
+                        <h4>GeoGebra Classic Graphing / Demo Calculator</h4>
+                        <p style="font-size: 0.9rem; margin-top: 5px;">(Interactive virtualization canvas linked to primary computational datasets)</p>
+                    </div>
                 </div>
-            </div>
+
+                <div class="question-card">
+                    <div class="question-header">
+                        <span>Question 1 (Core Mechanical Kinematics Matrix)</span>
+                        <span style="color: var(--clr-red-primary);">[Marks: 4]</span>
+                    </div>
+                    <div class="question-text">
+                        A particle accelerates uniformly from rest along a horizontal structural plane. If the absolute spatial distance mapped in the first structural interval of 4.0 seconds is recorded as 24 meters, calculate the terminal vector speed achieved at expiration.
+                    </div>
+                    <div class="mcq-options">
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">A</div>
+                            <div class="option-body">6.0 meters per second</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">B</div>
+                            <div class="option-body">12.0 meters per second</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">C</div>
+                            <div class="option-body">18.0 meters per second</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">D</div>
+                            <div class="option-body">24.0 meters per second</div>
+                        </div>
+                    </div>
+                    <button class="btn-explain" onclick="toggleExplanation('exp1')">
+                        <i class="fas fa-lightbulb"></i> View Deep Step-by-Step Analytical Explanation
+                    </button>
+                    <div class="explanation-box" id="exp1">
+                        <strong>Analytical Resolution:</strong> Utilizing kinematic frameworks, positional changes calculate as $s = \frac{1}{2}(u + v)t$. Substituting experimental configurations yields $24 = \frac{1}{2}(0 + v)(4.0)$. Therefore, $24 = 2v$, resolving to $v = 12\text{ m/s}$. Option B is correct.
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-header">
+                        <span>Question 2 (Topical Graphical Vector Analysis)</span>
+                        <span style="color: var(--clr-red-primary);">[Marks: 6]</span>
+                    </div>
+                    <div class="question-text">
+                        Determine the exact mathematical representation derived from the integral area isolated under a standard velocity-time profile curve graph.
+                    </div>
+                    <div class="mcq-options">
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">A</div>
+                            <div class="option-body">Instantaneous Magnitude of Acceleration System</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">B</div>
+                            <div class="option-body">Net Linear Spatial Displacement Traversed</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">C</div>
+                            <div class="option-body">Total Vector Momentum Transferred</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">D</div>
+                            <div class="option-body">Average Energy Dissipation Co-efficient</div>
+                        </div>
+                    </div>
+                    <button class="btn-explain" onclick="toggleExplanation('exp2')">
+                        <i class="fas fa-lightbulb"></i> View Deep Step-by-Step Analytical Explanation
+                    </button>
+                    <div class="explanation-box" id="exp2">
+                        <strong>Analytical Resolution:</strong> The mathematical definite integration of structural velocity vector outputs relative to chronological parameters ($\int v \, dt$) outputs the absolute dimensional evaluation of spatial displacement. Option B is correct.
+                    </div>
+                </div>
+
+            </main>
         </div>
     </section>
-    <div class="modal-overlay" id="explanationModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Detailed Solution</h3>
-                <button class="close-modal" id="closeModalBtn"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <div style="background: var(--uefi-green-light); color: var(--uefi-green-hover); padding: 10px; border-radius: var(--radius-sm); margin-bottom: 20px; font-weight: 700;">
-                    Correct Answer: B. 3.0 m s⁻²
+
+    <section class="planner-suite-section uefi-fluid-container">
+        <div class="section-headline-block">
+            <h2>The Powerhouse Dynamic Organization Suite</h2>
+            <p>Your interactive blueprint control deck to map tasks, focus processing, orchestrate active memory loops, and track revisions.</p>
+        </div>
+
+        <div class="planner-grid-system">
+            
+            <div class="kanban-board-container">
+                <div class="kanban-header-actions">
+                    <h3><i class="fas fa-th-list" style="color: var(--clr-blue-bright); margin-right: 10px;"></i> Dynamic Study Task Matrix</h3>
+                    <button class="action-success-btn" onclick="openModal('addTaskModal')">
+                        <i class="fas fa-plus-circle"></i> Inject New Task Card
+                    </button>
                 </div>
-                <p><strong>Step-by-Step Explanation:</strong></p>
-                <ol style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
-                    <li>First, determine the resistive force. Using Newton's Second Law: <em>F_net = ma</em></li>
-                    <li><em>F_applied - F_resistive = ma</em></li>
-                    <li>4.0 N - F_resistive = (2.0 kg)(1.0 m s⁻²)</li>
-                    <li>F_resistive = 4.0 - 2.0 = 2.0 N</li>
-                    <li>Now, double the applied force to 8.0 N.</li>
-                    <li>New F_net = 8.0 N - 2.0 N = 6.0 N</li>
-                    <li>New acceleration <em>a = F_net / m</em> = 6.0 N / 2.0 kg = 3.0 m s⁻²</li>
-                </ol>
+                
+                <div class="kanban-columns-track">
+                    <div class="kanban-column" ondragover="allowDrop(event)" ondrop="dropTask(event, 'backlog')" id="col-backlog">
+                        <div class="kanban-column-title">
+                            <span>Syllabus Backlog</span>
+                            <span class="badge" style="background: var(--clr-ghost); color: var(--clr-black-pure); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;" id="count-backlog">2</span>
+                        </div>
+                        
+                        <div class="kanban-card" draggable="true" ondragstart="dragTask(event)" id="task-1">
+                            <span class="kanban-card-tag tag-red">High Priority</span>
+                            <h5>Review Kinematics P2</h5>
+                            <p>Complete structural problems from 2024 catalog series.</p>
+                        </div>
+                        <div class="kanban-card" draggable="true" ondragstart="dragTask(event)" id="task-2">
+                            <span class="kanban-card-tag tag-blue">Medium Priority</span>
+                            <h5>Organic Chem Structures</h5>
+                            <p>Memorize pathways and structural functional groups.</p>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column" ondragover="allowDrop(event)" ondrop="dropTask(event, 'progress')" id="col-progress">
+                        <div class="kanban-column-title">
+                            <span>Active Processing</span>
+                            <span class="badge" style="background: var(--clr-ghost); color: var(--clr-black-pure); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;" id="count-progress">1</span>
+                        </div>
+                        
+                        <div class="kanban-card" draggable="true" ondragstart="dragTask(event)" id="task-3">
+                            <span class="kanban-card-tag tag-green">Low Priority</span>
+                            <h5>Math AA Integration</h5>
+                            <p>Solve substitution and parts questions.</p>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column" ondragover="allowDrop(event)" ondrop="dropTask(event, 'mastered')" id="col-mastered">
+                        <div class="kanban-column-title">
+                            <span>Mastered Domain</span>
+                            <span class="badge" style="background: var(--clr-ghost); color: var(--clr-black-pure); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;" id="count-mastered">1</span>
+                        </div>
+                        
+                        <div class="kanban-card" draggable="true" ondragstart="dragTask(event)" id="task-4">
+                            <span class="kanban-card-tag tag-green">Low Priority</span>
+                            <h5>CBE Tech Basics Overview</h5>
+                            <p>Introductory modules finalized.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scheduler-sidebar-box">
+                
+                <div class="calendar-module">
+                    <div class="calendar-nav-row">
+                        <h4><i class="fas fa-calendar-alt" style="color: var(--clr-green-primary); margin-right: 10px;"></i> Dynamic Planner Calendar</h4>
+                        <span style="font-weight: 700; color: var(--clr-blue-bright);" id="calendarMonthYearLabel">July 2026</span>
+                    </div>
+                    <div class="calendar-grid-engine" id="calendarGridEngineLayout">
+                        <div class="calendar-day-label">S</div>
+                        <div class="calendar-day-label">M</div>
+                        <div class="calendar-day-label">T</div>
+                        <div class="calendar-day-label">W</div>
+                        <div class="calendar-day-label">T</div>
+                        <div class="calendar-day-label">F</div>
+                        <div class="calendar-day-label">S</div>
+                        </div>
+                </div>
+
+                <div class="pomodoro-machine">
+                    <h4><i class="fas fa-clock" style="margin-right: 10px;"></i> Pomodoro Deep-Focus Core</h4>
+                    <p style="font-size: 0.9rem; opacity: 0.9; margin-top: 5px;">Sustain optimal mental throughput via structured blocks.</p>
+                    <div class="pomo-time-display" id="pomoMinutesSecondsDisplay">25:00</div>
+                    <div class="pomo-controls-row">
+                        <button class="btn-pomo-action" id="btnPomoStartPause" onclick="triggerPomoEngine()">START FOCUS</button>
+                        <button class="btn-pomo-action" style="background: transparent; color: white; border: 2px solid white;" onclick="resetPomoEngine()">RESET</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="interactive-stack-row">
+            
+            <div class="flashcards-suite">
+                <h3><i class="fas fa-clone" style="color: #8B5CF6; margin-right: 10px;"></i> Active Recall Deck</h3>
+                <p style="color: var(--clr-text-muted); font-size: 0.9rem;">Click card workspace matrix to flip and inspect verified definitions.</p>
+                
+                <div class="flashcard-viewport" onclick="flipActiveFlashcard()">
+                    <div class="flashcard-inner" id="flashcardInnerEngine">
+                        <div class="flashcard-front">
+                            <span style="font-size: 0.85rem; font-weight: 800; color: var(--clr-text-muted); letter-spacing: 1px; text-transform: uppercase;">Question Space</span>
+                            <h4 style="margin-top: 20px; font-size: 1.4rem;" id="fcQuestionText">What is the exact physical operational definition of Acceleration?</h4>
+                            <div style="margin-top: auto; font-size: 0.85rem; color: var(--clr-blue-bright); font-weight: 700;"><i class="fas fa-sync"></i> Trigger Flip Operation</div>
+                        </div>
+                        <div class="flashcard-back">
+                            <span style="font-size: 0.85rem; font-weight: 800; color: rgba(255,255,255,0.7); letter-spacing: 1px; text-transform: uppercase;">Verified Matrix Solution</span>
+                            <p style="margin-top: 20px; font-size: 1.25rem; font-weight: 600;" id="fcAnswerText">The rate of structural change of velocity vector metrics with respect to time framework parameters: $a = \frac{dv}{dt}$.</p>
+                            <div style="margin-top: auto; font-size: 0.85rem; opacity: 0.8;"><i class="fas fa-undo"></i> Return Front</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button class="action-primary-btn" onclick="rotateFlashcardDeck(-1)"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <span style="font-weight: 700; color: var(--clr-black-slate);" id="flashcardDeckIndexIndicator">Card 1 of 3</span>
+                    <button class="action-primary-btn" onclick="rotateFlashcardDeck(1)">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="notes-scratchpad-box">
+                <h3><i class="fas fa-edit" style="color: var(--clr-red-primary); margin-right: 10px;"></i> Study Notes Scratchpad</h3>
+                <p style="color: var(--clr-text-muted); font-size: 0.9rem; margin-bottom: 15px;">Persisted transient operational board text layout workspace.</p>
+                <textarea class="scratchpad-textarea" id="notesScratchpadTextareaEngine" placeholder="Inject complex equations, immediate revision plans, or rapid session reviews here... Data auto-saves to memory."></textarea>
+                <div style="display: flex; gap: 15px;">
+                    <button class="action-success-btn" onclick="saveNotesToBrowserMemory()"><i class="fas fa-save"></i> Save Local Notes</button>
+                    <button class="action-primary-btn" style="background: var(--clr-black-pure);" onclick="exportNotesAsTextFile()"><i class="fas fa-download"></i> Export Raw Document</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="uefi-modal-backdrop" id="addTaskModal">
+        <div class="uefi-modal-window">
+            <button class="modal-close-trigger" onclick="closeModal('addTaskModal')"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom: 25px; color: var(--clr-blue-ultra); font-size: 1.4rem;"><i class="fas fa-plus-circle"></i> Inject New Task Card</h3>
+            
+            <div class="modal-form-group">
+                <label for="taskInputTitle">Task Action Description Title</label>
+                <input type="text" id="taskInputTitle" placeholder="e.g., Analyze Doppler Equations Sl">
+            </div>
+            
+            <div class="modal-form-group">
+                <label for="taskInputDescription">Detailed Sub-Scope Task Summary</label>
+                <input type="text" id="taskInputDescription" placeholder="e.g., Complete 15 variant multiple choice parameters">
+            </div>
+
+            <div class="modal-form-group">
+                <label for="taskInputPriority">Priority Tier Level Allocation</label>
+                <select id="taskInputPriority">
+                    <option value="red">High Priority Scale</option>
+                    <option value="blue">Medium Priority Scale</option>
+                    <option value="green">Low Priority Scale</option>
+                </select>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 30px;">
+                <button class="action-primary-btn" style="background: var(--clr-text-muted);" onclick="closeModal('addTaskModal')">Abrupt Exit</button>
+                <button class="action-success-btn" onclick="commitTaskCardToBoard()">Commit Card To Board</button>
             </div>
         </div>
     </div>
 
-    <footer style="background: var(--uefi-navy); color: #fff; padding: 60px 4% 20px; margin-top: auto;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; max-width: 1400px; margin-left: auto; margin-right: auto;">
-            <div>
-                <div class="nav-brand" style="margin-bottom: 20px; color: #fff;">
-                    <span style="color: var(--uefi-green); background: #fff;">UEFI</span> Follett
-                </div>
-                <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">The ultimate educational operating system. Empowering the next generation of innovators across Kenya and the globe.</p>
+    <footer class="uefi-footer uefi-fluid-container">
+        <div class="footer-grid-system">
+            <div class="footer-column">
+                <h4 style="font-family: 'Poppins', sans-serif;">UEFI Study Pool</h4>
+                <p style="font-size: 0.9rem; color: var(--clr-text-muted); margin-top: 15px; line-height: 1.7;">
+                    Delivering hyper-optimized academic testing interfaces, revision matrices, and integrated dynamic tracking configurations across multi-tier regional syllabi networks.
+                </p>
             </div>
-            <div>
-                <h4 style="color: #fff; margin-bottom: 20px;">Curriculums</h4>
-                <ul style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 2;">
-                    <li><a href="#" style="transition: color 0.3s;">IB Diploma Programme</a></li>
-                    <li><a href="#" style="transition: color 0.3s;">IB Middle Years Programme</a></li>
-                    <li><a href="#" style="transition: color 0.3s;">Competency Based Education (CBE)</a></li>
+            <div class="footer-column">
+                <h4>IB DP Curriculums Matrix</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#">Physics Specialized Portal</a></li>
+                    <li><a href="#">Biological Systems Vault</a></li>
+                    <li><a href="#">Mathematics Analytical Rig</a></li>
+                    <li><a href="#">Computer Architecture Systems</a></li>
                 </ul>
             </div>
-            <div>
-                <h4 style="color: #fff; margin-bottom: 20px;">Resources</h4>
-                <ul style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 2;">
-                    <li><a href="#">Topical Past Papers</a></li>
-                    <li><a href="#">Interactive Simulations</a></li>
-                    <li><a href="#">Mock Examination Portal</a></li>
+            <div class="footer-column">
+                <h4>CBE National Framework</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#">Junior Secondary Tracks</a></li>
+                    <li><a href="#">Senior Secondary Integration</a></li>
+                    <li><a href="#">STEM Vocational Repositories</a></li>
+                    <li><a href="#">Archive Research Core</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Technical Operations Support</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#">System Integrity Specifications</a></li>
+                    <li><a href="#">Data Encryption Protocols</a></li>
+                    <li><a href="#">API Sync Architecture</a></li>
+                    <li><a href="#">Developer Operational Logs</a></li>
                 </ul>
             </div>
         </div>
-        <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 0.8rem;">
-            &copy; 2026 UEFI Global Ecosystem. All rights reserved.
+        <div class="footer-base-row">
+            <div>&copy; 2026 UEFI Follett Platform Technologies Ecosystem. All Rights Reserved.</div>
+            <div style="display: flex; gap: 20px;">
+                <a href="#" style="transition: var(--tr-fast);"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="transition: var(--tr-fast);"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="transition: var(--tr-fast);"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" style="transition: var(--tr-fast);"><i class="fab fa-github"></i></a>
+            </div>
         </div>
     </footer>
 
-    <style>
-        /* Exam Portal Styles */
-        .exam-portal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: var(--exam-bg);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            color: #e0e0e0;
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
-        }
-
-        .exam-header {
-            background: var(--exam-card);
-            border-bottom: 1px solid var(--exam-border);
-            padding: 15px 4%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .exam-brand { font-size: 1.2rem; font-weight: 700; color: #fff; }
-        
-        .exam-timer {
-            font-family: monospace;
-            font-size: 1.5rem;
-            color: #ef4444; /* Alert red */
-            background: rgba(239, 68, 68, 0.1);
-            padding: 5px 15px;
-            border-radius: var(--radius-sm);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-exit-exam {
-            background: transparent;
-            border: 1px solid var(--exam-border);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .btn-exit-exam:hover { background: var(--uefi-red); border-color: var(--uefi-red); }
-
-        .exam-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .exam-sidebar {
-            background: var(--exam-card);
-            border-right: 1px solid var(--exam-border);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .question-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .q-box {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            border: 1px solid var(--exam-border);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .q-box:hover { background: #333; }
-        .q-box.active { background: var(--exam-accent); color: #fff; border-color: var(--exam-accent); }
-        .q-box.answered { background: var(--uefi-green); color: #fff; border-color: var(--uefi-green); }
-        .q-box.flagged { background: #f59e0b; color: #fff; border-color: #f59e0b; }
-
-        .exam-legend { font-size: 0.8rem; display: flex; flex-direction: column; gap: 8px; }
-        .legend-item { display: flex; align-items: center; gap: 10px; color: #aaa; }
-        .box-sample { width: 15px; height: 15px; border-radius: 3px; border: 1px solid var(--exam-border); }
-        .active-sample { background: var(--exam-accent); border-color: var(--exam-accent); }
-        .answered-sample { background: var(--uefi-green); border-color: var(--uefi-green); }
-        .flagged-sample { background: #f59e0b; border-color: #f59e0b; }
-        .unread-sample { background: transparent; }
-
-        .exam-main { padding: 40px 10%; overflow-y: auto; }
-        
-        .exam-question-header { margin-bottom: 20px; border-bottom: 1px solid var(--exam-border); padding-bottom: 15px; }
-        .exam-question-header h3 { color: #fff; margin-bottom: 5px; }
-        
-        .exam-question-body { font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; }
-        
-        .exam-options { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
-        .exam-option-label {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: var(--exam-card);
-            padding: 15px 20px;
-            border: 1px solid var(--exam-border);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .exam-option-label:hover { border-color: #555; }
-        .exam-option-label:has(input:checked) { border-color: var(--exam-accent); background: rgba(59, 130, 246, 0.1); }
-        
-        .exam-controls { display: flex; justify-content: space-between; border-top: 1px solid var(--exam-border); padding-top: 20px; }
-        .exam-btn { padding: 12px 24px; border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: var(--transition); }
-        .btn-secondary { background: var(--exam-card); color: #fff; border: 1px solid var(--exam-border); }
-        .btn-secondary:hover { background: #333; }
-        .btn-warning { background: transparent; color: #f59e0b; border: 1px solid #f59e0b; }
-        .btn-warning:hover { background: rgba(245, 158, 11, 0.1); }
-        .btn-primary { background: var(--exam-accent); color: #fff; }
-        .btn-primary:hover { background: #2563eb; }
-
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            z-index: 10000;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; transition: var(--transition);
-        }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        
-        .modal-content {
-            background: #fff; width: 90%; max-width: 600px;
-            border-radius: var(--radius-md); overflow: hidden;
-            box-shadow: var(--shadow-hover);
-            transform: translateY(20px); transition: var(--transition);
-        }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
-        
-        .modal-header {
-            background: var(--uefi-blue-bright); color: #fff;
-            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
-        }
-        .close-modal { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; }
-        .modal-body { padding: 25px; color: var(--uefi-dark-gray); }
-
-    </style>
-
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        /* ==========================================================================
+           A. GLOBAL PLATFORM STATE SCHEMAS & VARIABLES
+           ========================================================================== */
+        let platformTaskIndexCount = 4;
+        let activeSelectedDragElementId = null;
+        let pomodoroTimerIntervalEngine = null;
+        let pomodoroSecondsTimeBalanceRemaining = 1500; // 25 Minutes Default Base Setting
+        let pomodoroIsMachineActivelyRunning = false;
+        let currentFlashcardIndexPointer = 0;
+
+        /* Complete Content Map Data Matrix to support left sidebar updates dynamically */
+        const topicDataMatrixSystem = {
+            'Physics': {
+                title: 'Topic: A.1 Kinematics SL (Paper 1 & 2)',
+                videoText: 'Kinematics Mechanics Equations & Vector Mechanics Processing Engine Frame Active',
+                toolText: 'GeoGebra Dynamic Calculus Frame: Mapping Trajectory Paths & Derivatives Matrix'
+            },
+            'Biology': {
+                title: 'Topic: B.1 Cell Structure & Molecular Biology (2026-2028 Core)',
+                videoText: 'High-Resolution Electron Microscopy Cellular Structural Video Core Active',
+                toolText: 'Interactive Macromolecular 3D Modeling Matrix Engine'
+            },
+            'Math': {
+                title: 'Topic: M.2 Calculus Limits & Analytical Continuous Optimization',
+                videoText: 'Advanced Limits Resolution & Riemann Integration Theories Active',
+                toolText: 'Interactive Function Plotter & Surface Area Integral Generator Rig'
+            },
+            'CS': {
+                title: 'Topic: C.4 Abstract Data Structural Layouts & Object Reference Node Trees',
+                videoText: 'Recursive Processing Arrays & Dynamic Pointer Linking Mechanics Visualizer',
+                toolText: 'Live Interactive Variable Node Graph & Pipeline Evaluation Frame'
+            },
+            'Economics': {
+                title: 'Topic: E.1 Microeconomics Price Elasticity Matrix & Equilibrium Scales',
+                videoText: 'Market Optimization Schemes & Consumer Surplus Vectors Active',
+                toolText: 'Supply & Demand Interactive Variable Margin Shifts Calculator Graphic'
+            },
+            'MYPMath': {
+                title: 'IB MYP Extended Mathematics: Algebraic Quadrature Expressions',
+                videoText: 'Polynomial Expansion Foundations & Vector Variable Factorizations Matrix',
+                toolText: 'Interactive Dynamic Cartesian Quadratic Parabola Solver Canvas'
+            },
+            'MYPScience': {
+                title: 'IB MYP Integrated Sciences: Electro-Chemical Energy Converters',
+                videoText: 'Voltaic Cell Oxidation Dynamics & Electron Shift Processes Active',
+                toolText: 'Interactive Galvanic Cell Potential Variable Model Rig'
+            },
+            'CBE9': {
+                title: 'CBE Grade 9 Pre-Technical Studies: Core Mechanical Drafting Orthographic Layouts',
+                videoText: 'Three-Dimensional Perspective Transformations to Two-Dimensional Metric Planes View',
+                toolText: 'Dynamic Standard Multi-View Geometric Blueprint Generation Framework'
+            },
+            'CBE10': {
+                title: 'CBE Grade 10 Applied Sciences: Thermal Kinetics and Expansion Moduli',
+                videoText: 'Linear Coefficient Calculations & Structural Thermodynamic Stress Models',
+                toolText: 'Interactive Gas Laws Variable Volume/Temperature Simulation Dashboard'
+            }
+        };
+
+        const activeFlashcardsArrayDataset = [
+            {
+                q: "What is the exact physical operational definition of Acceleration?",
+                a: "The rate of structural change of velocity vector metrics with respect to time framework parameters: $a = \\frac{dv}{dt}$."
+            },
+            {
+                q: "State the explicit Principle of Conservation of Linear Momentum.",
+                a: "The total linear momentum metrics vector aggregate within an isolated system workspace remains absolute constant unless impacted by outer net structural force frameworks: $\\sum p_{\\text{initial}} = \\sum p_{\\text{final}}$."
+            },
+            {
+                q: "What defines a standard Competency Based Curriculum (CBE Framework)?",
+                a: "An educational model concentrating optimization paths directly around measurable practical student mastery metrics governing concrete execution skill sets rather than passive time-accumulation constants."
+            }
+        ];
+
+        /* ==========================================================================
+           B. EVENT LISTENERS & DEEP BOOTSTRAPPING ENGINE
+           ========================================================================== */
+        document.addEventListener("DOMContentLoaded", function() {
+            initializeDynamicCalendarEngineGrid();
+            bootstrapLocalSavedNotesEngine();
+            calculateKanbanSummaryCounters();
+        });
+
+        /* ==========================================================================
+           C. DYNAMIC INTERACTIVE CURRICULUM ACCORDION VIEWER ENGINE
+           ========================================================================== */
+        function toggleAccordion(headerElementNode) {
+            const accordionContentPanel = headerElementNode.nextElementSibling;
+            const openAccordionPanels = headerElementNode.closest('.curriculum-sidebar').querySelectorAll('.accordion-content');
             
-            // 1. Accordion Logic for Curriculum Sidebar
-            const accordionHeaders = document.querySelectorAll('.accordion-header');
-            accordionHeaders.forEach(header => {
-                header.addEventListener('click', function() {
-                    const content = this.nextElementSibling;
-                    const icon = this.querySelector('i');
-                    
-                    // Toggle the clicked accordion
-                    content.classList.toggle('open');
-                    
-                    // Change Icon
-                    if(content.classList.contains('open')) {
-                        icon.classList.remove('fa-plus');
-                        icon.classList.add('fa-minus');
-                    } else {
-                        icon.classList.remove('fa-minus');
-                        icon.classList.add('fa-plus');
-                    }
-                });
-            });
-
-            // Set initial icons correctly based on HTML 'open' class
-            document.querySelectorAll('.accordion-content.open').forEach(openContent => {
-                const icon = openContent.previousElementSibling.querySelector('i');
-                icon.classList.remove('fa-plus');
-                icon.classList.add('fa-minus');
-            });
-
-            // 2. Resource Tabs Logic
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    // In a full app, this would trigger an AJAX fetch or hide/show content blocks.
-                });
-            });
-
-            // 3. Modal Logic for Explanations
-            const explainBtns = document.querySelectorAll('.btn-explain');
-            const explanationModal = document.getElementById('explanationModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-
-            explainBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    explanationModal.classList.add('active');
-                });
-            });
-
-            closeModalBtn.addEventListener('click', () => {
-                explanationModal.classList.remove('active');
-            });
-
-            // Close modal when clicking outside content
-            explanationModal.addEventListener('click', (e) => {
-                if(e.target === explanationModal) {
-                    explanationModal.classList.remove('active');
+            openAccordionPanels.forEach(panel => {
+                if(panel !== accordionContentPanel) {
+                    panel.classList.remove('open');
                 }
             });
+            
+            accordionContentPanel.classList.toggle('open');
+        }
 
-            // 4. Mock Exam Portal Logic
-            const enterExamBtn = document.getElementById('enterExamModeBtn');
-            const exitExamBtn = document.getElementById('exitExamBtn');
-            const examPortal = document.getElementById('examPortal');
-            let examInterval;
-
-            enterExamBtn.addEventListener('click', () => {
-                // Hide body overflow to prevent background scrolling
-                document.body.style.overflow = 'hidden';
-                examPortal.style.display = 'flex';
-                startExamTimer(45); // Start 45 min timer
+        function loadTopic(topicKeyCodeString) {
+            const topicTargetObject = topicDataMatrixSystem[topicKeyCodeString];
+            if(!topicTargetObject) return;
+            
+            // Clear current active sidebar indicators
+            document.querySelectorAll('.subject-list a').forEach(linkNode => {
+                linkNode.classList.remove('active');
             });
+            
+            // Set clicked node to active state
+            event.target.classList.add('active');
+            
+            // Target elements translation updates
+            document.getElementById('activeTopicTitle').innerText = topicTargetObject.title;
+            
+            const videoPlaceholderBlock = document.querySelector('.embed-video .embed-placeholder h4');
+            const toolPlaceholderBlock = document.querySelector('.embed-tool .embed-placeholder h4');
+            
+            if(videoPlaceholderBlock) videoPlaceholderBlock.innerText = topicTargetObject.videoText;
+            if(toolPlaceholderBlock) toolPlaceholderBlock.innerText = topicTargetObject.toolText;
+        }
 
-            exitExamBtn.addEventListener('click', () => {
-                if(confirm("Are you sure you want to submit and exit the exam environment?")) {
-                    document.body.style.overflow = 'auto';
-                    examPortal.style.display = 'none';
-                    clearInterval(examInterval);
-                }
+        function switchResourceView(tabTypeString) {
+            // Update active state across upper buttons layout
+            document.querySelectorAll('.resource-tabs .tab-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            event.target.classList.add('active');
+            
+            const targetContainer = document.getElementById('mainContentViewer');
+            
+            // Emulate content swaps inside workspace without altering internal baseline metadata
+            console.log("Workspace display redirected to match tab execution parameters: " + tabTypeString);
+        }
 
-            // Timer Function
-            function startExamTimer(minutes) {
-                let timeInSeconds = minutes * 60;
-                const timeDisplay = document.getElementById('timeDisplay');
+        function toggleExplanation(explanationElementId) {
+            const targetExplanationPanel = document.getElementById(explanationElementId);
+            if(targetExplanationPanel.style.display === "block") {
+                targetExplanationPanel.style.display = "none";
+            } else {
+                targetExplanationPanel.style.display = "block";
+            }
+        }
+
+        function selectOption(optionElementWrapper) {
+            const containerOptionsSet = optionElementWrapper.closest('.mcq-options').querySelectorAll('.option');
+            containerOptionsSet.forEach(opt => {
+                opt.style.borderColor = "var(--clr-border-light)";
+                opt.style.background = "var(--clr-white)";
+                opt.style.color = "var(--clr-black-charcoal)";
+            });
+            
+            optionElementWrapper.style.borderColor = "var(--clr-blue-bright)";
+            optionElementWrapper.style.background = "var(--clr-blue-tint)";
+            optionElementWrapper.style.color = "var(--clr-blue-ultra)";
+        }
+
+        /* ==========================================================================
+           D. TIME BOUND EXAM PORTAL MANAGER ENGINE (HIGH CONTRAST INTERFACE)
+           ========================================================================== */
+        function toggleMockExamMode() {
+            const operationalBodyContainer = document.body;
+            operationalBodyContainer.classList.toggle('mock-exam-activated');
+            
+            const interactiveExamBtnElement = document.getElementById('enterExamModeBtn');
+            if(operationalBodyContainer.classList.contains('mock-exam-activated')) {
+                interactiveExamBtnElement.innerHTML = `<i class="fas fa-door-open"></i> Terminate Mock Portal`;
+                interactiveExamBtnElement.style.background = "var(--clr-black-pure)";
+                interactiveExamBtnElement.style.boxShadow = "0 4px 14px rgba(0,0,0,0.4)";
+            } else {
+                interactiveExamBtnElement.innerHTML = `<i class="fas fa-laptop-code"></i> Enter Mock Exam Portal`;
+                interactiveExamBtnElement.style.background = "var(--clr-red-primary)";
+                interactiveExamBtnElement.style.boxShadow = "0 4px 14px rgba(187, 0, 0, 0.4)";
+            }
+        }
+
+        /* ==========================================================================
+           E. DYNAMIC DRAG AND DROP KANBAN PLANNING MATRIX
+           ========================================================================== */
+        function allowDrop(dragEventObj) {
+            dragEventObj.preventDefault();
+        }
+
+        function dragTask(dragEventObj) {
+            dragEventObj.dataTransfer.setData("text", dragEventObj.target.id);
+            activeSelectedDragElementId = dragEventObj.target.id;
+        }
+
+        function dropTask(dragEventObj, targetedColumnNameKey) {
+            dragEventObj.preventDefault();
+            const retrievedCardElementIdId = dragEventObj.dataTransfer.getData("text");
+            const structuralCardDOMNode = document.getElementById(retrievedCardElementIdId);
+            
+            let targetedDropContainerBlock = dragEventObj.target;
+            
+            // Loop upwards if drop hit deep subelements inside structure
+            while(targetedDropContainerBlock && !targetedDropContainerBlock.classList.contains('kanban-column')) {
+                targetedDropContainerBlock = targetedDropContainerBlock.parentElement;
+            }
+            
+            if(targetedDropContainerBlock && structuralCardDOMNode) {
+                targetedDropContainerBlock.appendChild(structuralCardDOMNode);
                 
-                clearInterval(examInterval); // Reset if already running
-
-                examInterval = setInterval(() => {
-                    const m = Math.floor(timeInSeconds / 60);
-                    const s = timeInSeconds % 60;
-                    
-                    timeDisplay.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-                    
-                    if (timeInSeconds <= 0) {
-                        clearInterval(examInterval);
-                        alert("Time is up! Submitting exam automatically.");
-                        document.body.style.overflow = 'auto';
-                        examPortal.style.display = 'none';
+                // Readjust card styling accents dynamically based on tracking zone allocations
+                const tagSpanNode = structuralCardDOMNode.querySelector('.kanban-card-tag');
+                if(tagSpanNode) {
+                    if(targetedColumnNameKey === 'mastered') {
+                        tagSpanNode.className = "kanban-card-tag tag-green";
+                        tagSpanNode.innerText = "Mastered Scale";
+                    } else if(targetedColumnNameKey === 'progress') {
+                        tagSpanNode.className = "kanban-card-tag tag-blue";
+                        tagSpanNode.innerText = "In Progress Review";
                     }
-                    timeInSeconds--;
+                }
+                
+                calculateKanbanSummaryCounters();
+            }
+        }
+
+        function calculateKanbanSummaryCounters() {
+            const totalBacklogCount = document.getElementById('col-backlog').querySelectorAll('.kanban-card').length;
+            const totalProgressCount = document.getElementById('col-progress').querySelectorAll('.kanban-card').length;
+            const totalMasteredCount = document.getElementById('col-mastered').querySelectorAll('.kanban-card').length;
+            
+            document.getElementById('count-backlog').innerText = totalBacklogCount;
+            document.getElementById('count-progress').innerText = totalProgressCount;
+            document.getElementById('count-mastered').innerText = totalMasteredCount;
+        }
+
+        /* ==========================================================================
+           F. DYNAMIC PLANNING MODALS CONFIGURATION INTERFACES
+           ========================================================================== */
+        function openModal(modalUniqueElementId) {
+            document.getElementById(modalUniqueElementId).style.display = "flex";
+        }
+
+        document.getElementById("addTaskModal").addEventListener("click", function(e) {
+            if(e.target === this) {
+                closeModal('addTaskModal');
+            }
+        });
+
+        function closeModal(modalUniqueElementId) {
+            document.getElementById(modalUniqueElementId).style.display = "none";
+        }
+
+        function commitTaskCardToBoard() {
+            const providedTitleText = document.getElementById('taskInputTitle').value.trim();
+            const providedDescriptionText = document.getElementById('taskInputDescription').value.trim();
+            const selectedPriorityTierCode = document.getElementById('taskInputPriority').value;
+            
+            if(providedTitleText === "") {
+                alert("Please inject functional task description title parameters.");
+                return;
+            }
+            
+            platformTaskIndexCount++;
+            
+            const fabricatedCardNodeStructure = document.createElement('div');
+            fabricatedCardNodeStructure.className = "kanban-card";
+            fabricatedCardNodeStructure.id = `task-${platformTaskIndexCount}`;
+            fabricatedCardNodeStructure.setAttribute("draggable", "true");
+            fabricatedCardNodeStructure.addEventListener("dragstart", dragTask);
+            
+            let trackingTagStyleText = "tag-blue";
+            let displayPriorityLabelText = "Medium Priority";
+            
+            if(selectedPriorityTierCode === 'red') {
+                trackingTagStyleText = "tag-red";
+                displayPriorityLabelText = "High Priority Scale";
+            } else if(selectedPriorityTierCode === 'green') {
+                trackingTagStyleText = "tag-green";
+                displayPriorityLabelText = "Low Priority Scale";
+            }
+            
+            fabricatedCardNodeStructure.innerHTML = `
+                <span class="kanban-card-tag ${trackingTagStyleText}">${displayPriorityLabelText}</span>
+                <h5>${providedTitleText}</h5>
+                <p>${providedDescriptionText}</p>
+            `;
+            
+            document.getElementById('col-backlog').appendChild(fabricatedCardNodeStructure);
+            
+            // Flush input fields down to base states
+            document.getElementById('taskInputTitle').value = "";
+            document.getElementById('taskInputDescription').value = "";
+            
+            closeModal('addTaskModal');
+            calculateKanbanSummaryCounters();
+        }
+
+        /* ==========================================================================
+           G. LIVE CALENDAR GRID AUTOMATION MATRIX ENGINE
+           ========================================================================== */
+        function initializeDynamicCalendarEngineGrid() {
+            const targetedGridContainerElement = document.getElementById('calendarGridEngineLayout');
+            
+            // Build absolute simulation grid structure tracking standard 31-day parameter month matrix mapping
+            // Simulating an arbitrary configuration matrix offset sequence where month initiates directly on a Wednesday
+            const layoutArbitraryMonthOffsetSpacing = 3; 
+            const totalDaysInMonthSimulationCount = 31;
+            
+            for(let blankCellIndex = 0; blankCellIndex < layoutArbitraryMonthOffsetSpacing; blankCellIndex++) {
+                const structuralBlankCell = document.createElement('div');
+                structuralBlankCell.className = "calendar-cell";
+                structuralBlankCell.style.opacity = "0";
+                structuralBlankCell.style.pointerEvents = "none";
+                targetedGridContainerElement.appendChild(structuralBlankCell);
+            }
+            
+            for(let individualDayIndex = 1; individualDayIndex <= totalDaysInMonthSimulationCount; individualDayIndex++) {
+                const operationalDayCellNode = document.createElement('div');
+                operationalDayCellNode.className = "calendar-cell";
+                operationalDayCellNode.innerText = individualDayIndex;
+                
+                // Inject specific simulated highlighting markers on crucial target dates
+                if(individualDayIndex === 14 || individualDayIndex === 28) {
+                    operationalDayCellNode.classList.add('active-event');
+                    operationalDayCellNode.setAttribute("title", "Core UEFI Academic Simulation Deadline Configured");
+                }
+                
+                operationalDayCellNode.addEventListener("click", function() {
+                    document.querySelectorAll('.calendar-cell').forEach(c => c.style.borderColor = "var(--clr-border-light)");
+                    this.style.borderColor = "var(--clr-blue-bright)";
+                    console.log("Calendar grid focused on timeline unit target day: " + individualDayIndex);
+                });
+                
+                targetedGridContainerElement.appendChild(operationalDayCellNode);
+            }
+        }
+
+        /* ==========================================================================
+           H. POMODORO DEEP FOCUS DECK OPERATION MOTOR
+           ========================================================================== */
+        function triggerPomoEngine() {
+            const operationalButtonTriggerNode = document.getElementById('btnPomoStartPause');
+            
+            if(pomodoroIsMachineActivelyRunning) {
+                // Pause State Action Protocols
+                clearInterval(pomodoroTimerIntervalEngine);
+                pomodoroIsMachineActivelyRunning = false;
+                operationalButtonTriggerNode.innerText = "RESUME FOCUS";
+                operationalButtonTriggerNode.style.color = "var(--clr-red-primary)";
+                operationalButtonTriggerNode.style.background = "var(--clr-white)";
+            } else {
+                // Initial Activation Steps
+                pomodoroIsMachineActivelyRunning = true;
+                operationalButtonTriggerNode.innerText = "PAUSE EXECUTION";
+                operationalButtonTriggerNode.style.color = "var(--clr-white)";
+                operationalButtonTriggerNode.style.background = "var(--clr-black-pure)";
+                
+                pomodoroTimerIntervalEngine = setInterval(function() {
+                    pomodoroSecondsTimeBalanceRemaining--;
+                    renderUpdatedPomodoroTextDisplay();
+                    
+                    if(pomodoroSecondsTimeBalanceRemaining <= 0) {
+                        clearInterval(pomodoroTimerIntervalEngine);
+                        alert("Session block complete. Initiate restorative pause cycle.");
+                        resetPomoEngine();
+                    }
                 }, 1000);
             }
+        }
 
-            // Interactive Question Palette (Demo Logic)
-            const qBoxes = document.querySelectorAll('.q-box');
-            qBoxes.forEach(box => {
-                box.addEventListener('click', (e) => {
-                    qBoxes.forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    // Simulating changing questions...
-                    document.querySelector('.exam-question-header h3').textContent = `Question ${e.target.textContent} of 10`;
-                });
-            });
+        function resetPomoEngine() {
+            clearInterval(pomodoroTimerIntervalEngine);
+            pomodoroSecondsTimeBalanceRemaining = 1500;
+            pomodoroIsMachineActivelyRunning = false;
+            renderUpdatedPomodoroTextDisplay();
+            
+            const operationalButtonTriggerNode = document.getElementById('btnPomoStartPause');
+            operationalButtonTriggerNode.innerText = "START FOCUS";
+            operationalButtonTriggerNode.style.color = "var(--clr-red-primary)";
+            operationalButtonTriggerNode.style.background = "var(--clr-white)";
+        }
 
-        });
+        function renderUpdatedPomodoroTextDisplay() {
+            const outputMinutesCalculationValue = Math.floor(pomodoroSecondsTimeBalanceRemaining / 60);
+            const outputSecondsCalculationValue = pomodoroSecondsTimeBalanceRemaining % 60;
+            
+            const processedMinutesStringVal = outputMinutesCalculationValue < 10 ? "0" + outputMinutesCalculationValue : outputMinutesCalculationValue;
+            const processedSecondsStringVal = outputSecondsCalculationValue < 10 ? "0" + outputSecondsCalculationValue : outputSecondsCalculationValue;
+            
+            document.getElementById('pomoMinutesSecondsDisplay').innerText = `${processedMinutesStringVal}:${processedSecondsStringVal}`;
+        }
+
+        /* ==========================================================================
+           I. ACTIVE RECALL INTERNAL FLASHCARDS ROTATION ENGINE
+           ========================================================================== */
+        function flipActiveFlashcard() {
+            document.getElementById('flashcardInnerEngine').classList.toggle('flipped');
+        }
+
+        function rotateFlashcardDeck(rotationStepModifierInteger) {
+            // Unflip display to clear confusion metrics prior to content shifts
+            document.getElementById('flashcardInnerEngine').classList.remove('flipped');
+            
+            setTimeout(function() {
+                currentFlashcardIndexPointer += rotationStepModifierInteger;
+                
+                if(currentFlashcardIndexPointer >= activeFlashcardsArrayDataset.length) {
+                    currentFlashcardIndexPointer = 0;
+                }
+                if(currentFlashcardIndexPointer < 0) {
+                    currentFlashcardIndexPointer = activeFlashcardsArrayDataset.length - 1;
+                }
+                
+                document.getElementById('fcQuestionText').innerText = activeFlashcardsArrayDataset[currentFlashcardIndexPointer].q;
+                document.getElementById('fcAnswerText').innerText = activeFlashcardsArrayDataset[currentFlashcardIndexPointer].a;
+                document.getElementById('flashcardDeckIndexIndicator').innerText = `Card ${currentFlashcardIndexPointer + 1} of ${activeFlashcardsArrayDataset.length}`;
+            }, 200);
+        }
+
+        /* ==========================================================================
+           J. PERSISTED DATA PERSISTENCE SCRATCHPAD & DOCUMENT CONVERTERS
+           ========================================================================== */
+        function saveNotesToBrowserMemory() {
+            const scratchpadWorkingTextPayload = document.getElementById('notesScratchpadTextareaEngine').value;
+            localStorage.setItem('uefi_platform_notes_cache', scratchpadWorkingTextPayload);
+            alert("Syllabus planner text records successfully synced to browser session memory nodes.");
+        }
+
+        function bootstrapLocalSavedNotesEngine() {
+            const cachedNotesContentString = localStorage.getItem('uefi_platform_notes_cache');
+            if(cachedNotesContentString) {
+                document.getElementById('notesScratchpadTextareaEngine').value = cachedNotesContentString;
+            }
+        }
+
+        function exportNotesAsTextFile() {
+            const textContentPayloadString = document.getElementById('notesScratchpadTextareaEngine').value;
+            if(textContentPayloadString.trim() === "") {
+                alert("Cannot initialize data export routines across empty text strings.");
+                return;
+            }
+            
+            const trackingBlobWrapper = new Blob([textContentPayloadString], { type: "text/plain;charset=utf-8" });
+            const temporaryAnchorNode = document.createElement("a");
+            
+            temporaryAnchorNode.download = "UEFI_Study_Pool_Revision_Notes.txt";
+            temporaryAnchorNode.href = window.URL.createObjectURL(trackingBlobWrapper);
+            temporaryAnchorNode.style.display = "none";
+            
+            document.body.appendChild(temporaryAnchorNode);
+            temporaryAnchorNode.click();
+            document.body.removeChild(temporaryAnchorNode);
+        }
     </script>
 </body>
 </html>
