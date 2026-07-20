@@ -3,698 +3,1229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IBDP Ultimate Study Space | Powered by Alal Focus</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>IBDP Ultimate Study Space | IITian Academy</title>
+    
+    <!-- Include MathJax for advanced Markscheme Math Rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <style>
         /* ==========================================================================
-           PRINT PROTECTION & ANTI-DOWNLOAD MEASURES
+           1. CSS VARIABLES & THEMING
+           ========================================================================== */
+        :root {
+            /* Color Palette */
+            --primary-dark: #001a33;
+            --primary-color: #003366; /* IITian Academy Deep Blue */
+            --primary-light: #004c99;
+            --secondary-color: #ff9900; /* Empowering Orange */
+            --secondary-hover: #e68a00;
+            --accent-bg: #e6f2ff;
+            --text-dark: #222222;
+            --text-muted: #555555;
+            --bg-page: #f4f7f6;
+            --bg-card: #ffffff;
+            --border-color: #dddddd;
+            
+            /* Success & Alerts */
+            --success: #28a745;
+            --success-hover: #218838;
+            --danger: #dc3545;
+            --danger-hover: #c82333;
+            
+            /* Typography */
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'Courier New', Courier, monospace;
+            
+            /* Spacing */
+            --spacing-xs: 5px;
+            --spacing-sm: 10px;
+            --spacing-md: 20px;
+            --spacing-lg: 40px;
+            --spacing-xl: 80px;
+
+            /* Shadows & Radii */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 16px rgba(0,0,0,0.15);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        /* ==========================================================================
+           2. ANTI-PRINT & SECURITY MEASURES (STRICT)
            ========================================================================== */
         @media print {
             html, body {
                 display: none !important;
                 visibility: hidden !important;
-                background-color: white;
+                width: 0 !important;
+                height: 0 !important;
+                background-color: white !important;
             }
             body::before {
-                content: "Printing and downloading are strictly disabled for this secure study space.";
-                display: block;
-                font-size: 24px;
-                color: red;
+                content: "SECURITY ALERT: Printing, saving, and downloading are strictly disabled to protect the integrity of the IITian Academy IBDP secure study space.";
+                display: block !important;
+                visibility: visible !important;
+                font-family: var(--font-main);
+                font-size: 28px;
+                color: var(--danger);
                 text-align: center;
                 margin-top: 20%;
+                padding: 40px;
+                border: 5px solid var(--danger);
+                background: #ffe6e6;
+            }
+            * {
+                display: none !important;
             }
         }
 
         .no-select {
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10 and IE 11 */
-            user-select: none; /* Standard syntax */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         /* ==========================================================================
-           BASE STYLING & IITIAN ACADEMY THEME
+           3. GLOBAL RESET & BASE STYLES
            ========================================================================== */
-        :root {
-            --primary-color: #003366; /* Deep Academy Blue */
-            --secondary-color: #ff9900; /* Empowering Orange */
-            --accent-color: #e6f2ff;
-            --text-main: #333333;
-            --bg-color: #f8f9fa;
-        }
-
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            font-family: var(--font-main);
             line-height: 1.6;
-            /* Extra scroll space requested */
-            padding-bottom: 200vh; 
+            /* Extra scroll space requested to prevent struggling at the bottom */
+            padding-bottom: 250vh; 
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.2;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            font-family: var(--font-main);
+            cursor: pointer;
+            outline: none;
+            border: none;
         }
 
         /* ==========================================================================
-           HEADER & NAVIGATION
+           4. HEADER & NAVIGATION (IITIAN ACADEMY STYLE)
            ========================================================================== */
         header {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
             color: white;
-            padding: 15px 30px;
+            padding: var(--spacing-md) var(--spacing-lg);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-lg);
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 9999;
+            border-bottom: 4px solid var(--secondary-color);
         }
 
         .header-brand {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: var(--spacing-md);
         }
 
-        .header-brand h1 {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .header-brand p {
-            font-size: 12px;
-            color: var(--secondary-color);
-            font-weight: bold;
-        }
-
-        /* Empowering Header Images (using inline SVG for self-containment) */
         .empowerment-icons {
             display: flex;
-            gap: 15px;
+            gap: var(--spacing-sm);
+            align-items: center;
         }
         
         .empowerment-icons svg {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             fill: var(--secondary-color);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
+        .empowerment-icons svg:hover {
+            transform: scale(1.1);
         }
 
-        nav a {
-            color: white;
-            text-decoration: none;
+        .brand-text h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .brand-text p {
+            font-size: 13px;
+            color: var(--accent-bg);
             font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: background 0.3s, color 0.3s;
-            border: 1px solid transparent;
+            letter-spacing: 1px;
+            margin: 0;
         }
 
-        nav a:hover {
+        nav.main-nav ul {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        nav.main-nav a {
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        nav.main-nav a:hover {
             background-color: var(--secondary-color);
-            color: var(--primary-color);
-            border-color: var(--secondary-color);
+            color: var(--primary-dark);
+            border-color: white;
+            box-shadow: var(--shadow-md);
         }
 
         /* ==========================================================================
-           ALAL FOCUS TIMER
+           5. ALAL FOCUS TIMER & DASHBOARD
            ========================================================================== */
-        .timer-container {
-            background-color: var(--accent-color);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--primary-color);
+        .dashboard-container {
+            background-color: var(--bg-card);
+            margin: var(--spacing-md) 0;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .timer-display {
-            font-size: 32px;
-            font-weight: bold;
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--primary-color);
-            background: white;
-            padding: 5px 20px;
-            border-radius: 5px;
-            border: 2px solid var(--primary-color);
-            min-width: 150px;
+        .timer-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-lg);
+            background: var(--accent-bg);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            border: 3px solid var(--primary-light);
+        }
+
+        .timer-info {
             text-align: center;
         }
 
-        .timer-controls button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin-left: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.2s;
+        .timer-info h2 {
+            color: var(--primary-dark);
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-xs);
         }
 
-        .timer-controls button:hover {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
+        .timer-info p {
+            color: var(--text-muted);
+            font-size: 14px;
         }
-        
-        .timer-inputs input {
-            padding: 8px;
+
+        .timer-display-box {
+            background: white;
+            padding: 20px 40px;
+            border-radius: var(--radius-md);
+            border: 4px solid var(--primary-color);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .time-readout {
+            font-size: 64px;
+            font-weight: 900;
+            font-family: var(--font-mono);
+            color: var(--primary-dark);
+            line-height: 1;
+            letter-spacing: 2px;
+        }
+
+        .timer-controls {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .timer-settings {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .timer-settings input {
+            padding: 10px;
             font-size: 16px;
-            width: 80px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            width: 90px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-family: var(--font-mono);
+            font-weight: bold;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--primary-dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: var(--danger-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Flash Animation for Timer Completion */
+        @keyframes flashAlarm {
+            0% { background-color: white; color: var(--primary-dark); }
+            50% { background-color: var(--danger); color: white; }
+            100% { background-color: white; color: var(--primary-dark); }
+        }
+
+        .alarm-active {
+            animation: flashAlarm 0.5s infinite;
         }
 
         /* ==========================================================================
-           PAST PAPERS SECTION (STRETCHED LEFT TO RIGHT)
+           6. PAST PAPERS WORKSPACE (FULL WIDTH)
            ========================================================================== */
-        .papers-section {
+        .papers-container {
             width: 100%;
-            padding: 0; /* Removing side padding to stretch left to right */
+            padding: 0; /* Stretches left to right */
         }
 
         .paper-module {
-            background: white;
-            margin-bottom: 40px;
-            border-top: 5px solid var(--primary-color);
-            border-bottom: 5px solid var(--primary-color);
+            background: var(--bg-card);
+            margin-bottom: var(--spacing-xl);
+            border-top: 8px solid var(--primary-color);
+            border-bottom: 8px solid var(--primary-color);
+            box-shadow: var(--shadow-md);
         }
 
-        .paper-title {
+        .paper-header {
             background: var(--primary-color);
             color: white;
-            padding: 15px 30px;
-            font-size: 20px;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .pdf-container {
-            width: 100%;
-            height: 90vh; /* Extremely tall for easy reading */
-            background: #525659;
+        .paper-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
 
-        .pdf-container iframe, .pdf-container embed {
+        .paper-header .badge {
+            background: var(--secondary-color);
+            color: var(--primary-dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .pdf-wrapper {
+            width: 100%;
+            height: 95vh; /* Very long for easy scrolling without struggling */
+            background: #323639; /* Standard PDF viewer background */
+            position: relative;
+        }
+
+        .pdf-wrapper embed, .pdf-wrapper iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        /* ==========================================================================
-           OGUNNA REVEAL (MARKSCHEME)
-           ========================================================================== */
-        .ogunna-btn {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: 900;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.3s;
-            display: block;
-            width: 100%;
-            text-align: center;
+        .pdf-overlay-blocker {
+            /* Invisible overlay to prevent right clicking on the PDF directly if needed */
+            position: absolute;
+            top: 0; right: 0; width: 50px; height: 100%;
+            background: transparent;
+            z-index: 10;
         }
 
-        .ogunna-btn:hover {
-            background-color: var(--primary-color);
+        /* ==========================================================================
+           7. OGUNNA REVEAL (MARKSCHEME LOGIC)
+           ========================================================================== */
+        .ogunna-toggle {
+            display: block;
+            width: 100%;
+            background-color: var(--secondary-color);
+            color: var(--primary-dark);
+            border: none;
+            border-top: 2px solid var(--primary-dark);
+            padding: 20px;
+            font-size: 20px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ogunna-toggle:hover {
+            background-color: var(--primary-dark);
             color: var(--secondary-color);
         }
 
-        .markscheme-content {
+        .markscheme-container {
             display: none; /* Hidden by default */
-            background: #eef7e6;
-            padding: 20px;
-            border: 2px dashed #4caf50;
-            margin-top: 5px;
+            background-color: #fcfdfc;
+            padding: 40px;
+            border-top: 4px dashed var(--success);
+            animation: slideDown 0.4s ease-out;
         }
 
-        .markscheme-content h3 {
-            color: #2e7d32;
-            margin-bottom: 10px;
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ms-header {
+            color: var(--success);
+            border-bottom: 2px solid var(--success);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ms-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .ms-step {
+            background: var(--accent-bg);
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 15px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .ms-marks {
+            float: right;
+            background: var(--primary-dark);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
         }
 
         /* ==========================================================================
-           RESIZABLE CALCULATORS (DESMOS & GEOGEBRA)
+           8. COMPUTATIONAL SPACE (DESMOS & GEOGEBRA RESIZABLE)
            ========================================================================== */
-        .tools-section {
-            padding: 40px 30px;
-            background: #e0e6ed;
-            margin-top: 50px;
-            border-top: 4px solid var(--primary-color);
+        .computational-space {
+            padding: var(--spacing-xl) var(--spacing-lg);
+            background: linear-gradient(to bottom, #e0e8f0, #ffffff);
+            border-top: 5px solid var(--primary-color);
+            margin-top: var(--spacing-xl);
         }
 
-        .section-heading {
+        .section-title {
             text-align: center;
-            color: var(--primary-color);
-            font-size: 32px;
-            margin-bottom: 30px;
+            font-size: 36px;
+            color: var(--primary-dark);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            margin-bottom: var(--spacing-sm);
         }
 
-        .calculators-grid {
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 18px;
+            margin-bottom: var(--spacing-lg);
+            font-style: italic;
+        }
+
+        .tools-grid {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: var(--spacing-lg);
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        /* Resizable Magic */
-        .resizable-wrapper {
+        .resizable-container {
             width: 100%;
             min-height: 400px;
-            height: 500px; /* Default height */
-            resize: vertical; /* Allows student to squeeze/expand up and down */
-            overflow: auto;
-            border: 4px solid var(--primary-color);
+            height: 600px; /* Default height */
             background: white;
+            border: 5px solid var(--primary-dark);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
             position: relative;
-            padding-top: 30px; /* Space for title bar */
+            padding-top: 40px; /* Space for the custom header */
+            resize: vertical; /* CORE REQUIREMENT: Allows vertical squeezing/expanding */
+            overflow: hidden; /* Contains the iframe */
         }
 
-        .resizable-title {
+        .tool-header {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            background: var(--primary-color);
+            height: 40px;
+            background: var(--primary-dark);
             color: white;
-            padding: 5px 15px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--spacing-md);
             font-weight: bold;
-            font-size: 14px;
+            font-size: 16px;
+            letter-spacing: 1px;
             z-index: 10;
-            pointer-events: none;
+            pointer-events: none; /* Let clicks pass through if necessary, though mostly for visual */
         }
 
-        .resizable-wrapper iframe {
+        .tool-header span {
+            color: var(--secondary-color);
+            margin-left: auto;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .resizable-container iframe {
             width: 100%;
             height: 100%;
             border: none;
-            display: block;
+            background: #ffffff;
+        }
+
+        /* Customizing the resize handle for better visibility */
+        .resizable-container::-webkit-resizer {
+            background-color: var(--secondary-color);
+            border-left: 2px solid var(--primary-dark);
+            border-top: 2px solid var(--primary-dark);
         }
 
         /* ==========================================================================
-           REFLECTION & QUICK NOTES SPACE
+           9. REFLECTION POINT & QUICK NOTES
            ========================================================================== */
-        .reflection-section {
-            padding: 60px 30px;
+        .reflection-point {
+            padding: var(--spacing-xl) var(--spacing-lg);
             background: white;
-            margin-top: 40px;
-            box-shadow: inset 0 5px 10px rgba(0,0,0,0.05);
+            margin-top: var(--spacing-lg);
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.05);
         }
 
-        .reflection-container {
+        .reflection-wrapper {
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        textarea#reflection-notes {
-            width: 100%;
-            height: 300px;
-            padding: 20px;
-            font-size: 18px;
-            border: 2px solid var(--primary-color);
-            border-radius: 8px;
-            resize: vertical;
-            background: #fafafa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin-bottom: 20px;
+        .reflection-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
         }
 
-        textarea#reflection-notes:focus {
+        .status-indicator {
+            font-size: 14px;
+            color: var(--success);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .status-indicator.visible {
+            opacity: 1;
+        }
+
+        .editor-container {
+            position: relative;
+        }
+
+        textarea#reflection-editor {
+            width: 100%;
+            height: 400px;
+            padding: var(--spacing-md);
+            font-size: 18px;
+            font-family: var(--font-main);
+            color: var(--text-dark);
+            background: #fdfdfd;
+            border: 3px solid var(--primary-light);
+            border-radius: var(--radius-md);
+            resize: vertical;
+            line-height: 1.6;
+            box-shadow: inner 0 2px 5px rgba(0,0,0,0.05);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        textarea#reflection-editor:focus {
             outline: none;
             border-color: var(--secondary-color);
-            box-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
+            box-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
+            background: white;
         }
 
-        .download-btn {
-            background-color: #28a745;
+        .action-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .btn-download {
+            background-color: var(--success);
             color: white;
-            border: none;
             padding: 15px 30px;
             font-size: 18px;
             font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.3s;
-            display: inline-flex;
+            border-radius: var(--radius-sm);
+            display: flex;
             align-items: center;
             gap: 10px;
+            transition: background 0.3s;
         }
 
-        .download-btn:hover {
-            background-color: #218838;
+        .btn-download:hover {
+            background-color: var(--success-hover);
+        }
+
+        .btn-clear {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 2px solid var(--border-color);
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+        }
+
+        .btn-clear:hover {
+            border-color: var(--danger);
+            color: var(--danger);
         }
 
     </style>
 </head>
 <body class="no-select">
 
+    <!-- Hidden Audio Asset for the Alal Focus Timer -->
+    <audio id="alal-audio" src="https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg" preload="auto"></audio>
+
     <!-- ==========================================================================
-         HEADER & IITIAN STYLE NAVIGATION
+         HEADER NAVIGATION
          ========================================================================== -->
-    <header>
+    <header id="top-nav">
         <div class="header-brand">
             <div class="empowerment-icons">
                 <!-- Academic Cap SVG -->
                 <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
-                <!-- Flame/Power SVG -->
-                <svg viewBox="0 0 24 24"><path d="M11.71 19.33c-.59 0-1.12-.22-1.55-.66-.43-.44-.66-.99-.66-1.58 0-.58.23-1.14.66-1.57.43-.44.96-.66 1.55-.66.58 0 1.11.22 1.54.66.44.43.66.99.66 1.57 0 .59-.22 1.14-.66 1.58-.43.44-.96.66-1.54.66zm.29-17.33l-1.5 1.5c-3.1 3.1-4.5 4.97-4.5 7.5 0 3.31 2.69 6 6 6s6-2.69 6-6c0-2.53-1.4-4.4-4.5-7.5l-1.5-1.5z"/></svg>
+                <!-- Book/Knowledge SVG -->
+                <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-.1zM21 18.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
             </div>
-            <div>
+            <div class="brand-text">
                 <h1>IITian Academy</h1>
                 <p>IBDP EXCLUSIVE PREPARATION SPACE</p>
             </div>
         </div>
-        <nav>
+        <nav class="main-nav">
             <ul>
-                <li><a href="#desmos-section">Desmos Scientific</a></li>
-                <li><a href="#geogebra-section">GeoGebra Graphing</a></li>
-                <li><a href="#reflection-section">Reflection Point</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#papers-section">Past Papers</a></li>
+                <li><a href="#desmos-anchor">Desmos Scientific</a></li>
+                <li><a href="#geogebra-anchor">GeoGebra Graphing</a></li>
+                <li><a href="#reflection-anchor">Reflection Point</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- ==========================================================================
-         ALAL FOCUS TIMER SECTION
+         DASHBOARD & ALAL FOCUS TIMER
          ========================================================================== -->
-    <div class="timer-container">
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <strong style="font-size: 20px; color: var(--primary-color);">ALAL FOCUS TIMER</strong>
-            <div class="timer-inputs">
-                <input type="number" id="minutes-input" placeholder="Min" min="0" value="45">
+    <div class="dashboard-container" id="dashboard">
+        <div class="timer-wrapper">
+            <div class="timer-info">
+                <h2>Alal Focus Timer</h2>
+                <p>Set your sprint, manage your speed tracking, and conquer the papers.</p>
             </div>
-        </div>
-        
-        <div class="timer-display" id="time-display">45:00</div>
-        
-        <div class="timer-controls">
-            <button onclick="startTimer()">START</button>
-            <button onclick="pauseTimer()">PAUSE</button>
-            <button onclick="resetTimer()">RESET</button>
+            
+            <div class="timer-display-box">
+                <div class="time-readout" id="timer-display">45:00</div>
+            </div>
+            
+            <div class="timer-controls">
+                <div class="timer-settings">
+                    <input type="number" id="input-minutes" min="1" max="180" value="45" title="Minutes">
+                    <input type="number" id="input-seconds" min="0" max="59" value="0" title="Seconds">
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-start">Start Focus</button>
+                    <button class="btn btn-secondary" id="btn-pause">Pause</button>
+                    <button class="btn btn-danger" id="btn-reset">Reset</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Hidden Audio for Cock Crow Sound (Using a reliable public domain sound URL) -->
-    <audio id="cock-crow-sound" src="https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg" preload="auto"></audio>
-
     <!-- ==========================================================================
-         MAIN CONTENT: STRETCHED PAST PAPERS
+         MAIN CONTENT: PAST PAPERS WORKSPACE
          ========================================================================== -->
-    <main class="papers-section">
+    <main class="papers-container" id="papers-section">
         
-        <!-- PAPER 1: BT PP1 -->
-        <div class="paper-module">
-            <div class="paper-title">
-                <span>IBDP Paper Analysis: <strong>BT PP1 .pdf</strong></span>
+        <!-- PAPER MODULE 1: BT PP1 -->
+        <article class="paper-module">
+            <div class="paper-header">
+                <h2>Paper Analysis: BT PP1 .pdf</h2>
+                <span class="badge">Mathematics</span>
             </div>
-            <div class="pdf-container">
-                <!-- Using embed/object with #toolbar=0 to restrict built-in PDF print/download UI -->
-                <embed src="archives/BT PP1 .pdf#toolbar=0&navpanes=0&scrollbar=1" type="application/pdf">
+            <div class="pdf-wrapper">
+                <!-- Using embed with strict parameters to disable toolbars where possible -->
+                <embed src="archives/BT PP1 .pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" type="application/pdf">
+                <div class="pdf-overlay-blocker"></div>
             </div>
-            <button class="ogunna-btn" onclick="toggleReveal('reveal-1')">▼ OGUNNA REVEAL: CHECK MARKSCHEME ▼</button>
-            <div class="markscheme-content" id="reveal-1">
-                <h3>Markscheme / Solutions for BT PP1</h3>
-                <p><em>Add your specific markscheme images or text here by referencing the assets, e.g., <code>&lt;img src="archives/markscheme1.png"&gt;</code></em></p>
-                <p>Ensure to cross-reference your working with the steps provided in the official breakdown.</p>
+            
+            <!-- Ogunna Reveal for BT PP1 -->
+            <button class="ogunna-toggle" onclick="toggleOgunna('ms-bt-pp1', this)">
+                ▼ Ogunna Reveal: Check Markscheme ▼
+            </button>
+            <div class="markscheme-container" id="ms-bt-pp1">
+                <div class="ms-header">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <h3>Official Markscheme Breakdown - BT PP1</h3>
+                </div>
+                <div class="ms-content">
+                    <p><strong>Question 1:</strong> Finding the derivative of the composite function.</p>
+                    <div class="ms-step">
+                        <span class="ms-marks">[M1]</span>
+                        Attempting to use the chain rule. <br> Let \( u = 3x^2 + 2 \)
+                    </div>
+                    <div class="ms-step">
+                        <span class="ms-marks">[A1]</span>
+                        Correct derivative of the inner function: \( \frac{du}{dx} = 6x \)
+                    </div>
+                    <div class="ms-step">
+                        <span class="ms-marks">[A1]</span>
+                        Final Answer: \( f'(x) = 6x \cos(3x^2 + 2) \)
+                    </div>
+                    <p><em>Examiner's Note: Many students forgot to multiply by the derivative of the inner function. Ensure you apply the chain rule systematically.</em></p>
+                    <!-- Image Placeholder for actual markscheme snippets if needed -->
+                    <p style="margin-top: 15px; color: var(--text-muted); font-size: 14px;">
+                        <em>To add asset images here: <code>&lt;img src="archives/ms_bt_q1.png" alt="Markscheme Q1"&gt;</code></em>
+                    </p>
+                </div>
             </div>
-        </div>
+        </article>
 
-        <!-- PAPER 2: Bivariate Stats -->
-        <div class="paper-module">
-            <div class="paper-title">
-                <span>IBDP Paper Analysis: <strong>Bivariate Stats.pdf</strong></span>
+        <!-- PAPER MODULE 2: Bivariate Stats -->
+        <article class="paper-module">
+            <div class="paper-header">
+                <h2>Paper Analysis: Bivariate Stats.pdf</h2>
+                <span class="badge">Statistics</span>
             </div>
-            <div class="pdf-container">
-                <embed src="archives/Bivariate Stats.pdf#toolbar=0&navpanes=0&scrollbar=1" type="application/pdf">
+            <div class="pdf-wrapper">
+                <embed src="archives/Bivariate Stats.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" type="application/pdf">
             </div>
-            <button class="ogunna-btn" onclick="toggleReveal('reveal-2')">▼ OGUNNA REVEAL: CHECK MARKSCHEME ▼</button>
-            <div class="markscheme-content" id="reveal-2">
-                <h3>Markscheme / Solutions for Bivariate Stats</h3>
-                <p><em>Workspace for Bivariate Stats solutions.</em></p>
+            
+            <!-- Ogunna Reveal for Bivariate Stats -->
+            <button class="ogunna-toggle" onclick="toggleOgunna('ms-bivariate', this)">
+                ▼ Ogunna Reveal: Check Markscheme ▼
+            </button>
+            <div class="markscheme-container" id="ms-bivariate">
+                <div class="ms-header">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <h3>Official Markscheme Breakdown - Bivariate Stats</h3>
+                </div>
+                <div class="ms-content">
+                    <p><strong>Question 3:</strong> Pearson's product-moment correlation coefficient.</p>
+                    <div class="ms-step">
+                        <span class="ms-marks">[M1]</span>
+                        Valid approach to finding \( r \), e.g., inputting data into GDC.
+                    </div>
+                    <div class="ms-step">
+                        <span class="ms-marks">[A2]</span>
+                        \( r = 0.894 \) (accept \( 0.89 \) to 3 s.f.)
+                    </div>
+                    <div class="ms-step">
+                        <span class="ms-marks">[R1]</span>
+                        Interpretation: Strong positive linear correlation.
+                    </div>
+                    <p><em>Use the Desmos or GeoGebra tools below to verify the scatter plot and line of best fit if you made a calculation error.</em></p>
+                </div>
             </div>
-        </div>
+        </article>
 
-        <!-- PAPER 3: EXOLOGS PP1 AA HL -->
-        <div class="paper-module">
-            <div class="paper-title">
-                <span>IBDP Paper Analysis: <strong>EXOLOGS PP1 AA HL.pdf</strong></span>
+        <!-- PAPER MODULE 3: EXOLOGS PP1 AA HL -->
+        <article class="paper-module">
+            <div class="paper-header">
+                <h2>Paper Analysis: EXOLOGS PP1 AA HL.pdf</h2>
+                <span class="badge">AA HL - Algebra</span>
             </div>
-            <div class="pdf-container">
-                <embed src="archives/EXOLOGS PP1 AA HL.pdf#toolbar=0&navpanes=0&scrollbar=1" type="application/pdf">
+            <div class="pdf-wrapper">
+                <embed src="archives/EXOLOGS PP1 AA HL.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" type="application/pdf">
             </div>
-            <button class="ogunna-btn" onclick="toggleReveal('reveal-3')">▼ OGUNNA REVEAL: CHECK MARKSCHEME ▼</button>
-            <div class="markscheme-content" id="reveal-3">
-                <h3>Markscheme / Solutions for EXOLOGS PP1 AA HL</h3>
-                <p><em>Workspace for EXOLOGS AA HL solutions. Check your logarithm laws carefully!</em></p>
+            
+            <!-- Ogunna Reveal for EXOLOGS -->
+            <button class="ogunna-toggle" onclick="toggleOgunna('ms-exologs', this)">
+                ▼ Ogunna Reveal: Check Markscheme ▼
+            </button>
+            <div class="markscheme-container" id="ms-exologs">
+                <div class="ms-header">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <h3>Official Markscheme Breakdown - EXOLOGS PP1 AA HL</h3>
+                </div>
+                <div class="ms-content">
+                    <p><strong>Question 5:</strong> Solving logarithmic equations.</p>
+                    <div class="ms-step">
+                        <span class="ms-marks">[M1]</span>
+                        Use of change of base rule or power rule: \( \log_2(x^2) = 2\log_2(x) \)
+                    </div>
+                    <div class="ms-step">
+                        <span class="ms-marks">[M1]</span>
+                        Setting up the quadratic equation in terms of \( \log_2(x) \). Let \( y = \log_2(x) \). <br>
+                        \( y^2 - 3y + 2 = 0 \)
+                    </div>
+                    <div class="ms-step">
+                        <span class="ms-marks">[A1]</span>
+                        Factorizing: \( (y - 1)(y - 2) = 0 \implies y = 1 \text{ or } y = 2 \)
+                    </div>
+                    <div class="ms-step">
+                        <span class="ms-marks">[A1]</span>
+                        Solving for x: \( x = 2^1 = 2 \) or \( x = 2^2 = 4 \)
+                    </div>
+                </div>
             </div>
-        </div>
+        </article>
 
     </main>
 
     <!-- ==========================================================================
-         RESIZABLE CALCULATORS (DESMOS & GEOGEBRA)
+         COMPUTATIONAL SPACE (RESIZABLE CALCULATORS)
          ========================================================================== -->
-    <section class="tools-section">
-        <h2 class="section-heading">Powerful Computational Space</h2>
-        <p style="text-align: center; margin-bottom: 20px;"><em>Drag the bottom right corner of the containers below to squeeze or expand the workspace as you solve papers above.</em></p>
+    <section class="computational-space">
+        <h2 class="section-title">Computational Workspace</h2>
+        <p class="section-subtitle">Drag the bottom right corner of the frames to squeeze or expand your workspace.</p>
         
-        <div class="calculators-grid">
+        <div class="tools-grid">
             
-            <!-- Desmos Container -->
-            <div class="resizable-wrapper" id="desmos-section">
-                <div class="resizable-title">Desmos Scientific Calculator (Resizable)</div>
-                <!-- Embedded Desmos Scientific -->
-                <iframe src="https://www.desmos.com/scientific" allowfullscreen></iframe>
+            <!-- Desmos Scientific Anchor & Container -->
+            <div id="desmos-anchor" class="resizable-container">
+                <div class="tool-header">
+                    Desmos Scientific Calculator <span>[Resizable Area]</span>
+                </div>
+                <iframe src="https://www.desmos.com/scientific" title="Desmos Scientific Calculator" allowfullscreen></iframe>
             </div>
 
-            <!-- GeoGebra Container -->
-            <div class="resizable-wrapper" id="geogebra-section">
-                <div class="resizable-title">GeoGebra Classic Graphing (Resizable)</div>
-                <!-- Embedded GeoGebra Classic -->
-                <iframe src="https://www.geogebra.org/classic" allowfullscreen></iframe>
+            <!-- GeoGebra Classic Anchor & Container -->
+            <div id="geogebra-anchor" class="resizable-container">
+                <div class="tool-header">
+                    GeoGebra Classic Graphing <span>[Resizable Area]</span>
+                </div>
+                <iframe src="https://www.geogebra.org/classic" title="GeoGebra Classic" allowfullscreen></iframe>
             </div>
 
         </div>
     </section>
 
     <!-- ==========================================================================
-         REFLECTION & NOTES POINT
+         REFLECTION POINT & QUICK NOTES
          ========================================================================== -->
-    <section class="reflection-section" id="reflection-section">
-        <div class="reflection-container">
-            <h2 class="section-heading">Reflection Point & Quick Notes</h2>
-            <p style="margin-bottom: 15px; font-weight: bold;">Document the questions you found challenging, conceptual gaps, and strategic reflections below:</p>
+    <section class="reflection-point" id="reflection-anchor">
+        <div class="reflection-wrapper">
+            <h2 class="section-title" style="text-align: left;">Reflection Point</h2>
+            <p class="section-subtitle" style="text-align: left; margin-bottom: 20px;">
+                Consolidate your learning. Document challenging questions, conceptual gaps, and strategic adjustments. 
+                <em>(Your notes automatically save to your browser's local storage as you type).</em>
+            </p>
             
-            <textarea id="reflection-notes" placeholder="Example: In BT PP1, question 4, I struggled with the chain rule application. I need to review..."></textarea>
-            
-            <button class="download-btn" onclick="downloadNotes()">
-                <!-- Download Icon -->
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                Download Reflections to Local Drive
-            </button>
+            <div class="reflection-controls">
+                <div class="status-indicator" id="save-status">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    Saved Locally
+                </div>
+            </div>
+
+            <div class="editor-container">
+                <textarea id="reflection-editor" placeholder="Example: 
+Date: 2026-07-20
+Paper: EXOLOGS PP1 AA HL
+Challenge: I struggled with question 5 converting log bases. 
+Action: Need to review log laws specifically the change of base formula and practice quadratic forms of logs..."></textarea>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn-clear" id="btn-clear-notes" title="Clear all notes">Clear Notes</button>
+                <button class="btn-download" id="btn-download-notes" title="Download notes as a text file">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download Reflections
+                </button>
+            </div>
         </div>
     </section>
 
     <!-- ==========================================================================
-         JAVASCRIPT LOGIC
+         JAVASCRIPT / APPLICATION LOGIC
          ========================================================================== -->
     <script>
-        /* --------------------------------------------------------------------------
-           1. ANTI-PRINT & ANTI-DOWNLOAD KEYSTROKE BLOCKER
-           -------------------------------------------------------------------------- */
-        document.addEventListener("keydown", function(event) {
-            // Block Ctrl+P (Windows/Linux) and Cmd+P (Mac)
-            if ((event.ctrlKey || event.metaKey) && (event.key === "p" || event.key === "P")) {
-                event.preventDefault();
-                alert("ACCESS DENIED: Printing is strictly disabled to protect the integrity of this study space.");
-                return false;
-            }
-            // Block Ctrl+S / Cmd+S
-            if ((event.ctrlKey || event.metaKey) && (event.key === "s" || event.key === "S")) {
-                event.preventDefault();
-                alert("ACCESS DENIED: Direct page saving is disabled. Please use the Reflection Point to download your notes.");
-                return false;
-            }
-        });
+        /**
+         * IITian Academy IBDP Secure Study Space Script
+         * Version: 2.1.0 Enterprise
+         * Features: Security blocking, LocalStorage autosave, Advanced Timer, Smooth Scroll
+         */
 
-        // Disable Context Menu (Right Click) to prevent simple "Save As" or "Print" via mouse
-        document.addEventListener("contextmenu", function(event) {
-            event.preventDefault();
-            alert("Context menu is disabled in the active focus zone.");
-        });
+        /* ==========================================================================
+           1. SECURITY: ANTI-PRINT, ANTI-SAVE, ANTI-CONTEXT
+           ========================================================================== */
+        class SecurityManager {
+            constructor() {
+                this.initSecurity();
+            }
 
-        /* --------------------------------------------------------------------------
+            initSecurity() {
+                // Block specific keystrokes (Ctrl+P, Cmd+P, Ctrl+S, Cmd+S)
+                document.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && (e.key === "p" || e.key === "P")) {
+                        e.preventDefault();
+                        this.triggerSecurityAlert("Printing is strictly disabled to protect secure content.");
+                    }
+                    if ((e.ctrlKey || e.metaKey) && (e.key === "s" || e.key === "S")) {
+                        e.preventDefault();
+                        this.triggerSecurityAlert("Direct saving is disabled. Use 'Download Reflections' for your notes.");
+                    }
+                });
+
+                // Disable right-click context menu
+                document.addEventListener("contextmenu", (e) => {
+                    e.preventDefault();
+                    // Subtle console warning instead of obtrusive alert
+                    console.warn("Context menu disabled for security reasons.");
+                });
+            }
+
+            triggerSecurityAlert(msg) {
+                alert(`SECURITY ALERT:\n${msg}`);
+            }
+        }
+
+        /* ==========================================================================
            2. ALAL FOCUS TIMER LOGIC
-           -------------------------------------------------------------------------- */
-        let timerInterval;
-        let totalSeconds = 0;
-        let isRunning = false;
-        
-        const display = document.getElementById('time-display');
-        const minutesInput = document.getElementById('minutes-input');
-        const audioAlarm = document.getElementById('cock-crow-sound');
-
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = seconds % 60;
-            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-        }
-
-        function updateDisplay() {
-            display.textContent = formatTime(totalSeconds);
-        }
-
-        function startTimer() {
-            if (isRunning) return;
-            
-            // If starting from 0, grab the input value
-            if (totalSeconds <= 0) {
-                let mins = parseInt(minutesInput.value);
-                if (isNaN(mins) || mins <= 0) mins = 45; // Default 45 mins
-                totalSeconds = mins * 60;
-            }
-            
-            updateDisplay();
-            isRunning = true;
-            
-            timerInterval = setInterval(() => {
-                totalSeconds--;
-                updateDisplay();
+           ========================================================================== */
+        class AlalTimer {
+            constructor() {
+                this.display = document.getElementById('timer-display');
+                this.inputMin = document.getElementById('input-minutes');
+                this.inputSec = document.getElementById('input-seconds');
+                this.btnStart = document.getElementById('btn-start');
+                this.btnPause = document.getElementById('btn-pause');
+                this.btnReset = document.getElementById('btn-reset');
+                this.audioAlarm = document.getElementById('alal-audio');
                 
-                if (totalSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    isRunning = false;
-                    totalSeconds = 0;
-                    updateDisplay();
-                    triggerAlalFocusAlarm();
+                this.interval = null;
+                this.totalSeconds = 0;
+                this.isRunning = false;
+
+                this.bindEvents();
+                this.updateDisplayFromInputs();
+            }
+
+            bindEvents() {
+                this.btnStart.addEventListener('click', () => this.start());
+                this.btnPause.addEventListener('click', () => this.pause());
+                this.btnReset.addEventListener('click', () => this.reset());
+                
+                // Allow inputs to update display when not running
+                this.inputMin.addEventListener('input', () => { if(!this.isRunning) this.updateDisplayFromInputs(); });
+                this.inputSec.addEventListener('input', () => { if(!this.isRunning) this.updateDisplayFromInputs(); });
+            }
+
+            updateDisplayFromInputs() {
+                let m = parseInt(this.inputMin.value) || 0;
+                let s = parseInt(this.inputSec.value) || 0;
+                // Handle overflow
+                if(s > 59) {
+                    m += Math.floor(s/60);
+                    s = s % 60;
                 }
-            }, 1000);
-        }
+                this.totalSeconds = (m * 60) + s;
+                this.renderTime();
+            }
 
-        function pauseTimer() {
-            clearInterval(timerInterval);
-            isRunning = false;
-        }
+            renderTime() {
+                const m = Math.floor(this.totalSeconds / 60);
+                const s = this.totalSeconds % 60;
+                this.display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            }
 
-        function resetTimer() {
-            clearInterval(timerInterval);
-            isRunning = false;
-            let mins = parseInt(minutesInput.value);
-            if (isNaN(mins) || mins <= 0) mins = 45;
-            totalSeconds = mins * 60;
-            updateDisplay();
-            
-            // Stop audio if it's currently playing
-            audioAlarm.pause();
-            audioAlarm.currentTime = 0;
-        }
-
-        function triggerAlalFocusAlarm() {
-            // Play the Cock Crow sound
-            audioAlarm.play().catch(e => {
-                console.log("Audio play blocked by browser. Please interact with the document first.");
-                alert("ALAL FOCUS! Time is up! (Audio was blocked by your browser settings).");
-            });
-            
-            // Flash the timer display for visual cue
-            let flashCount = 0;
-            let flashInterval = setInterval(() => {
-                display.style.backgroundColor = display.style.backgroundColor === 'red' ? 'white' : 'red';
-                display.style.color = display.style.color === 'white' ? 'var(--primary-color)' : 'white';
-                flashCount++;
-                if(flashCount > 10) {
-                    clearInterval(flashInterval);
-                    display.style.backgroundColor = 'white';
-                    display.style.color = 'var(--primary-color)';
+            start() {
+                if (this.isRunning) return;
+                
+                // If starting from 0, grab from inputs
+                if (this.totalSeconds <= 0) {
+                    this.updateDisplayFromInputs();
                 }
-            }, 300);
+                
+                if (this.totalSeconds > 0) {
+                    this.isRunning = true;
+                    this.display.classList.remove('alarm-active');
+                    this.btnStart.textContent = "Focusing...";
+                    
+                    this.interval = setInterval(() => {
+                        this.totalSeconds--;
+                        this.renderTime();
+                        
+                        if (this.totalSeconds <= 0) {
+                            this.complete();
+                        }
+                    }, 1000);
+                }
+            }
+
+            pause() {
+                if (!this.isRunning) return;
+                clearInterval(this.interval);
+                this.isRunning = false;
+                this.btnStart.textContent = "Resume Focus";
+            }
+
+            reset() {
+                clearInterval(this.interval);
+                this.isRunning = false;
+                this.updateDisplayFromInputs();
+                this.btnStart.textContent = "Start Focus";
+                this.display.classList.remove('alarm-active');
+                
+                // Stop audio
+                this.audioAlarm.pause();
+                this.audioAlarm.currentTime = 0;
+            }
+
+            complete() {
+                clearInterval(this.interval);
+                this.isRunning = false;
+                this.totalSeconds = 0;
+                this.renderTime();
+                this.btnStart.textContent = "Start Focus";
+                
+                // Visual Alarm
+                this.display.classList.add('alarm-active');
+                
+                // Audio Alarm (Cock Crow)
+                this.audioAlarm.play().catch(e => {
+                    console.log("Audio blocked. Ensure user interaction has occurred.");
+                    alert("ALAL FOCUS! Time is up!");
+                });
+            }
         }
 
-        /* --------------------------------------------------------------------------
-           3. OGUNNA REVEAL (MARKSCHEME TOGGLE)
-           -------------------------------------------------------------------------- */
-        function toggleReveal(elementId) {
+        /* ==========================================================================
+           3. REFLECTION NOTES MANAGER (LOCAL STORAGE & DOWNLOAD)
+           ========================================================================== */
+        class NotesManager {
+            constructor() {
+                this.editor = document.getElementById('reflection-editor');
+                this.btnDownload = document.getElementById('btn-download-notes');
+                this.btnClear = document.getElementById('btn-clear-notes');
+                this.statusIndicator = document.getElementById('save-status');
+                
+                this.storageKey = 'IITian_IBDP_Reflections';
+                this.saveTimeout = null;
+
+                this.init();
+            }
+
+            init() {
+                // Load existing notes
+                const savedNotes = localStorage.getItem(this.storageKey);
+                if (savedNotes) {
+                    this.editor.value = savedNotes;
+                }
+
+                // Bind events
+                this.editor.addEventListener('input', () => this.handleInput());
+                this.btnDownload.addEventListener('click', () => this.downloadNotes());
+                this.btnClear.addEventListener('click', () => this.clearNotes());
+            }
+
+            handleInput() {
+                // Debounce save logic
+                clearTimeout(this.saveTimeout);
+                this.statusIndicator.classList.remove('visible');
+                
+                this.saveTimeout = setTimeout(() => {
+                    localStorage.setItem(this.storageKey, this.editor.value);
+                    this.showSaveStatus();
+                }, 1000); // Save 1 second after typing stops
+            }
+
+            showSaveStatus() {
+                this.statusIndicator.classList.add('visible');
+                setTimeout(() => {
+                    this.statusIndicator.classList.remove('visible');
+                }, 3000);
+            }
+
+            downloadNotes() {
+                const text = this.editor.value;
+                if (!text.trim()) {
+                    alert("Your reflection space is empty. Write some notes before downloading.");
+                    return;
+                }
+
+                const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement("a");
+                const dateStr = new Date().toISOString().split('T')[0];
+                
+                a.href = url;
+                a.download = `IBDP_Reflections_${dateStr}.txt`;
+                
+                document.body.appendChild(a);
+                a.click();
+                
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            clearNotes() {
+                if (confirm("Are you sure you want to clear all your notes? This cannot be undone.")) {
+                    this.editor.value = "";
+                    localStorage.removeItem(this.storageKey);
+                }
+            }
+        }
+
+        /* ==========================================================================
+           4. GLOBAL UTILITIES (TOGGLES & SMOOTH SCROLL)
+           ========================================================================== */
+        
+        // Ogunna Reveal Logic (Global Function for inline HTML calls)
+        window.toggleOgunna = function(elementId, btnElement) {
             const el = document.getElementById(elementId);
             if (el.style.display === "block") {
                 el.style.display = "none";
+                btnElement.innerHTML = "▼ Ogunna Reveal: Check Markscheme ▼";
+                btnElement.style.backgroundColor = "var(--secondary-color)";
+                btnElement.style.color = "var(--primary-dark)";
             } else {
                 el.style.display = "block";
-                // Smooth scroll to the reveal section so the student immediately sees it
-                el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
-        }
-
-        /* --------------------------------------------------------------------------
-           4. REFLECTION NOTES DOWNLOADER
-           -------------------------------------------------------------------------- */
-        function downloadNotes() {
-            const textContent = document.getElementById('reflection-notes').value;
-            
-            if (textContent.trim() === "") {
-                alert("Your reflection space is empty. Write some notes before downloading!");
-                return;
-            }
-
-            // Create a blob with the text data
-            const blob = new Blob([textContent], { type: "text/plain" });
-            const url = URL.createObjectURL(blob);
-            
-            // Create a temporary anchor element to trigger download
-            const a = document.createElement("a");
-            
-            // Generate a timestamp for the filename
-            const date = new Date();
-            const dateString = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`;
-            
-            a.href = url;
-            a.download = `IBDP_Reflections_${dateString}.txt`;
-            
-            document.body.appendChild(a);
-            a.click();
-            
-            // Cleanup
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        /* --------------------------------------------------------------------------
-           5. SMOOTH SCROLLING FOR NAVIGATION LINKS
-           -------------------------------------------------------------------------- */
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetEl = document.getElementById(targetId);
+                btnElement.innerHTML = "▲ Hide Markscheme ▲";
+                btnElement.style.backgroundColor = "var(--primary-dark)";
+                btnElement.style.color = "white";
                 
-                if (targetEl) {
-                    // Offset for the fixed header
-                    const headerOffset = 80;
-                    const elementPosition = targetEl.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-  
-                    window.scrollTo({
-                         top: offsetPosition,
-                         behavior: "smooth"
-                    });
-                }
+                // Smooth scroll to view
+                setTimeout(() => {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        };
+
+        // Smooth Scroll Offset for fixed header
+        function initSmoothScroll() {
+            document.querySelectorAll('.main-nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetEl = document.getElementById(targetId);
+                    
+                    if (targetEl) {
+                        const headerOffset = 85; // Height of header + border
+                        const elementPosition = targetEl.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
+                        });
+                    }
+                });
             });
+        }
+
+        /* ==========================================================================
+           5. INITIALIZATION
+           ========================================================================== */
+        document.addEventListener('DOMContentLoaded', () => {
+            new SecurityManager();
+            new AlalTimer();
+            new NotesManager();
+            initSmoothScroll();
+            console.log("IITian Academy IBDP Space Initialized Successfully.");
         });
 
     </script>
