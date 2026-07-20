@@ -719,8 +719,7 @@
 
         /* Dynamic Window Positioning & Sizing */
         #window-pomodoro { width: 340px; height: 260px; top: 120px; right: 90px; }
-        #window-desmos-scientific { width: 460px; height: 520px; top: 100px; left: 380px; }
-        #window-geogebra { width: 550px; height: 550px; top: 120px; left: 420px; }
+        #window-ti84 { width: 500px; height: 680px; top: 70px; left: 380px; }
         #window-notes { width: 380px; height: 420px; bottom: 40px; right: 90px; }
 
         /* Pomodoro Custom UI */
@@ -933,12 +932,10 @@
         <div class="dock-btn" data-tooltip="Pomodoro Focus Timer" onclick="toggleToolWindow('window-pomodoro')">
             <svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.962 8.962 0 0012 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
         </div>
-        <div class="dock-btn" data-tooltip="Desmos Scientific Calculator" onclick="toggleToolWindow('window-desmos-scientific')">
-            <span style="font-weight:900; font-size:18px;">D</span>
+    <div class="dock-btn" data-tooltip="TI-84 Plus GDC Calculator" onclick="toggleToolWindow('window-ti84')">
+            <span style="font-weight:900; font-size:13px; color:var(--brand-accent);">TI-84</span>
         </div>
-        <div class="dock-btn" data-tooltip="GeoGebra Graphing Calculator" onclick="toggleToolWindow('window-geogebra')">
-            <span style="font-weight:900; font-size:18px;">G</span>
-        </div>
+
         <div class="dock-btn" data-tooltip="Rough Notes & Scratchpad" onclick="toggleToolWindow('window-notes')">
             <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </div>
@@ -975,37 +972,23 @@
         </div>
     </div>
 
-    <!-- Desmos Scientific Calculator Window -->
-    <div class="tool-window" id="window-desmos-scientific">
-        <div class="window-header" onmousedown="initDragWindow(event, 'window-desmos-scientific')">
+    <!-- TI-84 Plus GDC Calculator Window -->
+    <div class="tool-window" id="window-ti84">
+        <div class="window-header" onmousedown="initDragWindow(event, 'window-ti84')">
             <div class="window-title">
-                <span>Desmos Scientific Calculator</span>
+                <span style="color: var(--brand-accent); font-weight: 800;">TI-84 Plus</span>
+                <span>Graphing Display Calculator (GDC)</span>
             </div>
             <div class="window-controls">
-                <button class="win-btn win-close" onclick="toggleToolWindow('window-desmos-scientific')">✕</button>
+                <button class="win-btn win-close" onclick="toggleToolWindow('window-ti84')">✕</button>
             </div>
         </div>
         <div class="window-body">
-            <iframe src="https://www.desmos.com/scientific"></iframe>
+            <iframe src="https://ti84calc.com" title="TI-84 Plus GDC Emulator"></iframe>
             <div class="resize-grip"></div>
         </div>
     </div>
 
-    <!-- GeoGebra Graphing Calculator Window -->
-    <div class="tool-window" id="window-geogebra">
-        <div class="window-header" onmousedown="initDragWindow(event, 'window-geogebra')">
-            <div class="window-title">
-                <span>GeoGebra Suite</span>
-            </div>
-            <div class="window-controls">
-                <button class="win-btn win-close" onclick="toggleToolWindow('window-geogebra')">✕</button>
-            </div>
-        </div>
-        <div class="window-body">
-            <iframe src="https://www.geogebra.org/calculator"></iframe>
-            <div class="resize-grip"></div>
-        </div>
-    </div>
 
     <!-- Rough Notes / Scratchpad Window -->
     <div class="tool-window" id="window-notes">
@@ -1492,3 +1475,6 @@
     </script>
 </body>
 </html>
+
+
+
