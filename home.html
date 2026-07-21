@@ -3,1912 +3,2299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Global // Empowering Africa's Technological Future</title>
+    <title>UEFI Study Pool - High Quality Educational Resources & Powerhouse Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ==========================================================================
-           1. SYSTEM VARIABLES & DESIGN SYSTEM (SAFARICOM VIBRANCY)
+           1. DEEP EXTENDED BRAND SCHEME & DESIGN TOKENS (WHITE, BLUE, GREEN, RED, BLACK)
            ========================================================================== */
         :root {
-            --safaricom-green: #00A859;
-            --safaricom-green-light: #00E676;
-            --safaricom-green-dark: #007A3E;
-            --safaricom-green-glow: rgba(0, 168, 89, 0.35);
+            /* Pure Component Lighting */
+            --clr-white: #FFFFFF;
+            --clr-offwhite: #F8FAFC;
+            --clr-ghost: #F1F5F9;
             
-            --kenya-red: #E11C2B;
-            --kenya-red-dark: #A60C17;
-            --kenya-red-glow: rgba(225, 28, 43, 0.35);
+            /* Professional Blue Matrix */
+            --clr-blue-ultra: #002266;
+            --clr-blue-bright: #0044CC;
+            --clr-blue-mid: #1E40AF;
+            --clr-blue-sky: #3B82F6;
+            --clr-blue-light: #E0F2FE;
+            --clr-blue-tint: #F0F4FA;
             
-            --obsidian-black: #0B0E14;
-            --obsidian-surface: #121824;
-            --obsidian-card: #1A2332;
-            --obsidian-hover: #232E42;
+            /* Operational Green Matrix */
+            --clr-green-dark: #006633;
+            --clr-green-primary: #00A859;
+            --clr-green-hover: #008F4C;
+            --clr-green-light: #E6F6ED;
+            --clr-green-accent: #10B981;
             
-            --crisp-white: #FFFFFF;
-            --off-white: #F8FAFC;
-            --slate-gray: #94A3B8;
-            --slate-light: #E2E8F0;
+            /* High Alert Red Matrix */
+            --clr-red-dark: #7F0000;
+            --clr-red-primary: #BB0000;
+            --clr-red-hover: #990000;
+            --clr-red-light: #FDEDED;
+            --clr-red-accent: #EF4444;
             
-            --border-glass: rgba(255, 255, 255, 0.12);
-            --border-green: rgba(0, 168, 89, 0.4);
+            /* Structural Solid Black Matrix */
+            --clr-black-pure: #000000;
+            --clr-black-rich: #111111;
+            --clr-black-charcoal: #1E293B;
+            --clr-black-slate: #334155;
+            --clr-text-muted: #64748B;
+            --clr-border-light: #E2E8F0;
             
-            /* TYPOGRAPHY OVERRIDE: STRICT ARIAL STACK */
-            --font-main: Arial, "Helvetica Neue", Helvetica, sans-serif;
-            --font-mono: "Courier New", Courier, monospace;
-            
-            --radius-sm: 8px;
-            --radius-md: 16px;
-            --radius-lg: 24px;
-            --radius-full: 9999px;
-            
-            --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.3);
-            --shadow-vibrant: 0 20px 40px rgba(0, 168, 89, 0.25);
-            
-            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Functional UI Layout Specs */
+            --br-sm: 6px;
+            --br-md: 12px;
+            --br-lg: 20px;
+            --sh-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --sh-deck: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --sh-hover: 0 20px 45px -12px rgba(0, 0, 0, 0.15);
+            --tr-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --tr-fast: all 0.15s ease;
+        }
+
+        /* Mock Exam Portal Dark Override Variables */
+        .mock-exam-activated {
+            --clr-offwhite: #090D16;
+            --clr-ghost: #1E293B;
+            --clr-white: #0F172A;
+            --clr-black-rich: #F8FAFC;
+            --clr-black-charcoal: #E2E8F0;
+            --clr-black-slate: #CBD5E1;
+            --clr-border-light: #334155;
+            --clr-blue-tint: #1E293B;
         }
 
         /* ==========================================================================
-           2. GLOBAL RESETS & BASE STYLING
+           2. GLOBAL CORE RESET & EDGE-TO-EDGE LAYOUT RULES
            ========================================================================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            scroll-behavior: smooth;
+            transition: background-color 0.25s ease, border-color 0.25s ease;
         }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--obsidian-black);
-            color: var(--crisp-white);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--clr-offwhite);
+            color: var(--clr-black-charcoal);
             line-height: 1.6;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            width: 100%;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--obsidian-black);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--safaricom-green-dark);
-            border-radius: var(--radius-full);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--safaricom-green);
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--clr-blue-ultra);
+            font-weight: 700;
         }
 
         a {
             text-decoration: none;
             color: inherit;
-            transition: all var(--transition-fast);
         }
 
         ul {
             list-style: none;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
+        button, input, select, textarea {
+            font-family: inherit;
         }
 
-        /* Utilities */
-        .container {
+        /* Edge-to-Edge structural containers replacing center metrics */
+        .uefi-fluid-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding-left: 30px !important;
+            padding-right: 30px !important;
+        }
+
+        .section-headline-block {
+            padding: 40px 0 20px 0;
+            border-bottom: 2px solid var(--clr-border-light);
+            margin-bottom: 30px;
             width: 100%;
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 0 2rem;
         }
 
-        .badge-tag {
-            display: inline-flex;
+        .section-headline-block h2 {
+            font-size: 2.2rem;
+            color: var(--clr-black-rich);
+            display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 6px 16px;
-            border-radius: var(--radius-full);
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            background: rgba(0, 168, 89, 0.12);
-            border: 1px solid var(--safaricom-green);
-            color: var(--safaricom-green-light);
-            margin-bottom: 1rem;
+            gap: 15px;
         }
 
-        .badge-tag.red {
-            background: rgba(225, 28, 43, 0.12);
-            border-color: var(--kenya-red);
-            color: var(--kenya-red);
+        .section-headline-block h2::before {
+            content: '';
+            width: 8px;
+            height: 35px;
+            background: var(--clr-green-primary);
+            display: inline-block;
+            border-radius: var(--br-sm);
         }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 1rem 2.2rem;
-            border-radius: var(--radius-md);
-            font-family: var(--font-main);
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all var(--transition-smooth);
-            border: none;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .section-headline-block p {
+            color: var(--clr-text-muted);
+            font-size: 1.05rem;
+            margin-top: 5px;
+            padding-left: 23px;
         }
 
-        .btn-safaricom {
-            background: linear-gradient(135deg, var(--safaricom-green), var(--safaricom-green-dark));
-            color: var(--crisp-white);
-            box-shadow: 0 10px 25px var(--safaricom-green-glow);
+        /* Custom Scrollbars for High-Density Panels */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
-
-        .btn-safaricom:hover {
-            transform: translateY(-3px);
-            background: linear-gradient(135deg, var(--safaricom-green-light), var(--safaricom-green));
-            box-shadow: 0 15px 35px rgba(0, 230, 118, 0.4);
+        ::-webkit-scrollbar-track {
+            background: var(--clr-ghost);
         }
-
-        .btn-outline-red {
-            background: transparent;
-            border: 2px solid var(--kenya-red);
-            color: var(--crisp-white);
+        ::-webkit-scrollbar-thumb {
+            background: var(--clr-blue-sky);
+            border-radius: 4px;
         }
-
-        .btn-outline-red:hover {
-            background: var(--kenya-red);
-            box-shadow: 0 10px 25px var(--kenya-red-glow);
-            transform: translateY(-3px);
-        }
-
-        .btn-ghost {
-            background: var(--obsidian-card);
-            color: var(--crisp-white);
-            border: 1px solid var(--border-glass);
-        }
-
-        .btn-ghost:hover {
-            background: var(--obsidian-hover);
-            border-color: var(--safaricom-green);
-            color: var(--safaricom-green-light);
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--clr-blue-bright);
         }
 
         /* ==========================================================================
-           3. SAFARICOM-STYLE TOP EMERGENCY / SYSTEM ANNOUNCEMENT BAR
+           3. NAVIGATION SYSTEM (EDGE-TO-EDGE HIGH DENSITY DROP-DOWNS)
            ========================================================================== */
-        .top-announce-bar {
-            background: linear-gradient(90deg, var(--kenya-red-dark), var(--obsidian-black), var(--safaricom-green-dark));
-            color: var(--crisp-white);
-            padding: 8px 0;
-            font-size: 0.85rem;
-            border-bottom: 1px solid var(--border-glass);
-            position: relative;
-            z-index: 1001;
-        }
-
-        .announce-content {
+        .uefi-navbar {
+            background-color: var(--clr-blue-bright);
+            color: var(--clr-white);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            height: 75px;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            box-shadow: 0 4px 20px rgba(0, 34, 102, 0.15);
+            width: 100%;
         }
 
-        .announce-ticker {
+        .nav-brand {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-weight: 600;
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--safaricom-green-light);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--safaricom-green-light);
-            animation: livePulse 1.5s infinite;
+        .nav-brand span {
+            color: var(--clr-green-primary);
+            background: var(--clr-white);
+            padding: 4px 12px;
+            border-radius: var(--br-sm);
+            box-shadow: var(--sh-soft);
         }
 
-        @keyframes livePulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 230, 118, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
-        }
-
-        .top-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .top-links a {
-            color: var(--slate-gray);
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .top-links a:hover {
-            color: var(--safaricom-green-light);
-        }
-
-        /* ==========================================================================
-           4. MAIN NAVIGATION (EXPERT UI - SAFARICOM STYLE - NO GOOGLE BADGE)
-           ========================================================================== */
-        header.main-header {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            background: rgba(18, 24, 36, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 2px solid var(--safaricom-green);
-            z-index: 1000;
-            transition: all var(--transition-fast);
-        }
-
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 80px;
-        }
-
-        /* Brand Logo Area */
-        .brand-logo {
+        .nav-menu {
             display: flex;
             align-items: center;
-            gap: 14px;
+            height: 100%;
+            flex: 1;
+            margin-left: 50px;
         }
 
-        .logo-emblem {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--safaricom-green), var(--kenya-red));
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 1.4rem;
-            color: var(--crisp-white);
-            box-shadow: 0 0 20px var(--safaricom-green-glow);
-        }
-
-        .logo-text h1 {
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            line-height: 1;
-            color: var(--crisp-white);
-        }
-
-        .logo-text h1 span {
-            color: var(--safaricom-green);
-        }
-
-        .logo-text p {
-            font-size: 0.7rem;
-            color: var(--kenya-red);
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
-
-        /* Navigation Menu */
-        nav.nav-menu ul {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        nav.nav-menu a {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--crisp-white);
-            padding: 8px 0;
+        .nav-item {
             position: relative;
-        }
-
-        nav.nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: var(--safaricom-green);
-            border-radius: var(--radius-full);
-            transition: width var(--transition-fast);
-        }
-
-        nav.nav-menu a:hover::after,
-        nav.nav-menu a.active::after {
-            width: 100%;
-        }
-
-        nav.nav-menu a:hover {
-            color: var(--safaricom-green-light);
-        }
-
-        /* Nav Right Actions (Portal Access Button only - NO Google Account Image) */
-        .nav-actions {
+            height: 100%;
             display: flex;
             align-items: center;
-            gap: 16px;
         }
 
-        .quick-search-trigger {
-            background: var(--obsidian-card);
-            border: 1px solid var(--border-glass);
-            color: var(--slate-gray);
-            padding: 10px 16px;
-            border-radius: var(--radius-full);
-            font-size: 0.85rem;
+        .nav-link {
+            padding: 0 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
             display: flex;
             align-items: center;
             gap: 8px;
-            cursor: pointer;
-            transition: all var(--transition-fast);
+            height: 100%;
+            transition: var(--tr-fast);
         }
 
-        .quick-search-trigger:hover {
-            border-color: var(--safaricom-green);
-            color: var(--crisp-white);
+        .nav-link:hover, .nav-item:hover .nav-link {
+            color: var(--clr-white);
+            background-color: rgba(255, 255, 255, 0.15);
+            border-bottom: 4px solid var(--clr-green-primary);
+        }
+
+        /* Dropdown Core Engine */
+        .dropdown-menu {
+            position: absolute;
+            top: 75px;
+            left: 0;
+            background: var(--clr-white);
+            min-width: 260px;
+            box-shadow: var(--sh-hover);
+            border-radius: 0 0 var(--br-md) var(--br-md);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: var(--tr-smooth);
+            display: flex;
+            flex-direction: column;
+            padding: 12px 0;
+            border-top: 4px solid var(--clr-green-primary);
+            z-index: 2100;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 14px 24px;
+            color: var(--clr-blue-ultra);
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--tr-smooth);
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--clr-blue-tint);
+            color: var(--clr-blue-bright);
+            padding-left: 32px;
+        }
+
+        /* Nested Dropdown Flyout Submenu Blueprint */
+        .dropdown-submenu {
+            position: relative;
+        }
+        
+        .dropdown-flyout {
+            position: absolute;
+            top: -12px;
+            left: 100%;
+            background: var(--clr-white);
+            min-width: 240px;
+            box-shadow: var(--sh-hover);
+            border-radius: var(--br-md);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(15px);
+            transition: var(--tr-smooth);
+            padding: 12px 0;
+            border-left: 4px solid var(--clr-red-primary);
+            z-index: 2200;
+        }
+
+        .dropdown-submenu:hover .dropdown-flyout {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-outline-light {
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            padding: 10px 22px;
+            border-radius: var(--br-sm);
+            color: var(--clr-white);
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: var(--tr-smooth);
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .btn-outline-light:hover {
+            background: var(--clr-white);
+            color: var(--clr-blue-bright);
+            box-shadow: var(--sh-soft);
         }
 
         /* ==========================================================================
-           5. DYNAMIC SAFARICOM-STYLE HERO CAROUSEL / SLIDER
+           4. HERO ACTION RIG (FULL VIEWPORT EDGE-TO-EDGE BREAKOUT)
            ========================================================================== */
         .hero-section {
-            position: relative;
-            min-height: 88vh;
-            display: flex;
+            background: linear-gradient(135deg, var(--clr-blue-ultra) 0%, #020C1B 100%);
+            color: var(--clr-white);
+            padding: 70px 30px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 50px;
             align-items: center;
-            overflow: hidden;
-            background: var(--obsidian-black);
-        }
-
-        .hero-slider {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-in-out, transform 8s ease;
-            transform: scale(1.08);
-        }
-
-        .hero-slide.active {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1);
-        }
-
-        .slide-bg-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.35) contrast(1.15);
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                rgba(11, 14, 20, 0.95) 0%, 
-                rgba(11, 14, 20, 0.7) 50%, 
-                rgba(0, 168, 89, 0.2) 100%);
-        }
-
-        .hero-content-wrapper {
             position: relative;
-            z-index: 10;
-            max-width: 900px;
-            padding-top: 4rem;
-            padding-bottom: 4rem;
+            overflow: hidden;
+            border-bottom: 5px solid var(--clr-green-primary);
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 200%;
+            background: rgba(0, 68, 204, 0.15);
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
         }
 
         .hero-title {
-            font-size: 4.2rem;
-            font-weight: 900;
-            line-height: 1.08;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 25px;
+            color: var(--clr-white);
             letter-spacing: -1px;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .hero-title .highlight-green {
-            color: var(--safaricom-green-light);
-            text-shadow: 0 0 30px var(--safaricom-green-glow);
-        }
-
-        .hero-title .highlight-red {
-            color: var(--kenya-red);
-            text-shadow: 0 0 30px var(--kenya-red-glow);
-        }
-
-        .hero-description {
+        .hero-subtitle {
             font-size: 1.25rem;
-            color: var(--slate-light);
-            margin-bottom: 2.5rem;
-            max-width: 750px;
-            line-height: 1.7;
+            margin-bottom: 40px;
+            color: var(--clr-ghost);
+            line-height: 1.6;
+            max-width: 900px;
         }
 
-        .hero-buttons {
+        .search-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
+            background: var(--clr-white);
+            border-radius: var(--br-md);
+            overflow: hidden;
+            max-width: 750px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+            border: 3px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Slider Indicators & Controls */
-        .slider-navigation {
+        .search-container input {
+            flex: 1;
+            padding: 18px 25px;
+            border: none;
+            outline: none;
+            font-size: 1.1rem;
+            color: var(--clr-black-rich);
+            background: transparent;
+        }
+
+        .search-container button {
+            background: var(--clr-green-primary);
+            color: var(--clr-white);
+            border: none;
+            padding: 0 35px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--tr-smooth);
+        }
+
+        .search-container button:hover {
+            background: var(--clr-green-hover);
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+        }
+
+        .hero-interactive-card {
+            width: 100%;
+            height: 380px;
+            background: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800') center/cover no-repeat;
+            border-radius: var(--br-lg);
+            border: 8px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--sh-hover);
+            position: relative;
+        }
+
+        .hero-interactive-overlay {
             position: absolute;
-            bottom: 40px;
-            right: 5%;
-            z-index: 20;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            border-radius: calc(var(--br-lg) - 8px);
+            display: flex;
+            align-items: flex-end;
+            padding: 30px;
+        }
+
+        /* ==========================================================================
+           5. ANALYTICS & STAT GENERATOR (EDGE-TO-EDGE HORIZONTAL RAMP)
+           ========================================================================== */
+        .stats-bar {
+            background: var(--clr-white);
+            padding: 35px 30px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            text-align: left;
+            border-bottom: 1px solid var(--clr-border-light);
+            box-shadow: var(--sh-soft);
+            width: 100%;
+        }
+
+        .stat-item {
             display: flex;
             align-items: center;
             gap: 20px;
-            background: rgba(18, 24, 36, 0.8);
-            padding: 12px 24px;
-            border-radius: var(--radius-full);
-            border: 1px solid var(--border-glass);
-            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: var(--br-md);
+            background: var(--clr-offwhite);
+            border-left: 5px solid var(--clr-blue-bright);
         }
 
-        .nav-arrow {
-            background: transparent;
-            border: none;
-            color: var(--crisp-white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
+        .stat-item:nth-child(2) { border-left-color: var(--clr-green-primary); }
+        .stat-item:nth-child(3) { border-left-color: var(--clr-red-primary); }
+        .stat-item:nth-child(4) { border-left-color: var(--clr-black-pure); }
+
+        .stat-icon-box {
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
+            background: var(--clr-white);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all var(--transition-fast);
+            font-size: 1.4rem;
+            color: var(--clr-blue-bright);
+            box-shadow: var(--sh-soft);
+        }
+        .stat-item:nth-child(2) .stat-icon-box { color: var(--clr-green-primary); }
+        .stat-item:nth-child(3) .stat-icon-box { color: var(--clr-red-primary); }
+        .stat-item:nth-child(4) .stat-icon-box { color: var(--clr-black-pure); }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            color: var(--clr-black-rich);
+            font-weight: 800;
+            line-height: 1.2;
         }
 
-        .nav-arrow:hover {
-            background: var(--safaricom-green);
-            color: var(--crisp-white);
-        }
-
-        .dots-container {
-            display: flex;
-            gap: 10px;
-        }
-
-        .dot-item {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-
-        .dot-item.active {
-            background: var(--safaricom-green-light);
-            width: 36px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px var(--safaricom-green-light);
+        .stat-info p {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--clr-text-muted);
+            font-weight: 700;
         }
 
         /* ==========================================================================
-           6. SAFARICOM-STYLE METRIC HIGHLIGHTS STRIP
+           6. CORE RESOURCE MATRICES & VALUE CARDS
            ========================================================================== */
-        .metric-strip {
-            background: var(--obsidian-surface);
-            border-top: 1px solid var(--border-glass);
-            border-bottom: 2px solid var(--safaricom-green);
-            padding: 3rem 0;
-            position: relative;
-            z-index: 30;
+        .features-section {
+            padding: 60px 30px;
+            width: 100%;
+            background: var(--clr-white);
         }
 
-        .metrics-grid {
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .metric-card {
-            background: var(--obsidian-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md);
-            padding: 1.8rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all var(--transition-smooth);
-        }
-
-        .metric-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--safaricom-green);
-            box-shadow: 0 15px 30px rgba(0, 168, 89, 0.2);
-        }
-
-        .metric-number {
-            font-size: 3.2rem;
-            font-weight: 900;
-            color: var(--safaricom-green-light);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-            font-family: var(--font-main);
-        }
-
-        .metric-card.red-accent .metric-number {
-            color: var(--kenya-red);
-        }
-
-        .metric-label {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--crisp-white);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.3rem;
-        }
-
-        .metric-subtext {
-            font-size: 0.8rem;
-            color: var(--slate-gray);
-        }
-
-        /* ==========================================================================
-           7. INTRODUCTORY SECTION: WHAT IS UEFI GLOBAL?
-           ========================================================================== */
-        .intro-section {
-            padding: 8rem 0;
-            background: var(--obsidian-black);
-            position: relative;
-        }
-
-        .intro-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
-        }
-
-        .intro-text-block h2 {
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1.15;
-            margin-bottom: 1.8rem;
-            text-transform: uppercase;
-        }
-
-        .intro-text-block p {
-            font-size: 1.1rem;
-            color: var(--slate-light);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .feature-check-list {
-            margin-top: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-        }
-
-        .check-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--crisp-white);
-        }
-
-        .check-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: rgba(0, 168, 89, 0.2);
-            border: 1px solid var(--safaricom-green);
-            color: var(--safaricom-green-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-        }
-
-        .intro-visual-card {
-            position: relative;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            border: 2px solid var(--border-glass);
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .intro-visual-card img {
+            gap: 30px;
             width: 100%;
-            height: 520px;
-            object-fit: cover;
-            transition: transform 0.6s ease;
         }
 
-        .intro-visual-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .visual-overlay-badge {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            right: 30px;
-            background: rgba(18, 24, 36, 0.9);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--safaricom-green);
-            padding: 1.8rem;
-            border-radius: var(--radius-md);
-        }
-
-        .visual-overlay-badge h4 {
-            color: var(--safaricom-green-light);
-            font-size: 1.2rem;
-            margin-bottom: 0.4rem;
-        }
-
-        /* ==========================================================================
-           8. EMPIRICAL SOCIETAL GROUNDING // NAROK PROTOCOL
-           ========================================================================== */
-        .narok-section {
-            padding: 8rem 0;
-            background: var(--obsidian-surface);
-            border-top: 1px solid var(--border-glass);
-            border-bottom: 1px solid var(--border-glass);
-        }
-
-        .section-header-center {
-            text-align: center;
-            max-width: 850px;
-            margin: 0 auto 5rem auto;
-        }
-
-        .section-header-center h2 {
-            font-size: 3.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 1.2rem;
-        }
-
-        .section-header-center p {
-            font-size: 1.15rem;
-            color: var(--slate-gray);
-            line-height: 1.7;
-        }
-
-        .narok-cards-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-        }
-
-        .narok-card {
-            background: var(--obsidian-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            padding: 3rem 2.2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .feature-card {
+            background: var(--clr-offwhite);
+            padding: 40px 30px;
+            border-radius: var(--br-md);
+            text-align: left;
+            box-shadow: var(--sh-soft);
+            border: 1px solid var(--clr-border-light);
+            transition: var(--tr-smooth);
+            border-top: 6px solid var(--clr-black-pure);
             position: relative;
-            overflow: hidden;
-            transition: all var(--transition-smooth);
         }
 
-        .narok-card.red-alert-card {
-            border-top: 5px solid var(--kenya-red);
-        }
-
-        .narok-card.green-pass-card {
-            border-top: 5px solid var(--safaricom-green);
-        }
-
-        .narok-card:hover {
+        .feature-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: var(--sh-hover);
+            background: var(--clr-white);
         }
 
-        .stat-huge {
-            font-size: 4.5rem;
-            font-weight: 900;
-            line-height: 1;
-            margin-bottom: 1rem;
-            font-family: var(--font-main);
-        }
+        .feature-card:nth-child(1) { border-top-color: var(--clr-green-primary); }
+        .feature-card:nth-child(2) { border-top-color: var(--clr-red-primary); }
+        .feature-card:nth-child(3) { border-top-color: var(--clr-blue-bright); }
+        .feature-card:nth-child(4) { border-top-color: #8B5CF6; }
 
-        .narok-card h3 {
-            font-size: 1.35rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            color: var(--crisp-white);
-        }
-
-        .narok-card p {
-            font-size: 0.98rem;
-            color: var(--slate-gray);
-            line-height: 1.7;
-            margin-bottom: 2rem;
-        }
-
-        .source-anchor {
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: var(--safaricom-green-light);
-            text-transform: uppercase;
-            display: inline-flex;
+        .feature-icon {
+            width: 65px;
+            height: 65px;
+            margin-bottom: 25px;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            border-bottom: 1px solid var(--safaricom-green);
-            padding-bottom: 4px;
-            align-self: flex-start;
+            justify-content: center;
+            border-radius: var(--br-md);
+            font-size: 1.6rem;
+            color: var(--clr-white);
+            box-shadow: var(--sh-soft);
         }
 
-        .source-anchor.red-source {
-            color: var(--kenya-red);
-            border-color: var(--kenya-red);
+        .feature-card:nth-child(1) .feature-icon { background: var(--clr-green-primary); }
+        .feature-card:nth-child(2) .feature-icon { background: var(--clr-red-primary); }
+        .feature-card:nth-child(3) .feature-icon { background: var(--clr-blue-bright); }
+        .feature-card:nth-child(4) .feature-icon { background: #8B5CF6; }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--clr-blue-ultra);
+        }
+
+        .feature-desc {
+            font-size: 0.95rem;
+            color: var(--clr-black-slate);
+            line-height: 1.6;
         }
 
         /* ==========================================================================
-           9. DUAL CURRICULUM ARCHITECTURE (CBE & IB EXPLORER)
+           7. UNIFIED EXPERT STUDY WORKSPACE (SIDEBAR + CORE VIEWER FLUID GRID)
            ========================================================================== */
-        .curriculum-section {
-            padding: 8rem 0;
-            background: var(--obsidian-black);
+        .study-pool-section {
+            padding: 40px 30px;
+            width: 100%;
+            background-color: var(--clr-offwhite);
         }
 
-        .curriculum-tab-nav {
+        .resource-tabs {
             display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 4rem;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--clr-border-light);
+            padding-bottom: 0px;
+            width: 100%;
         }
 
         .tab-btn {
-            background: var(--obsidian-card);
-            border: 1px solid var(--border-glass);
-            color: var(--slate-gray);
-            padding: 1.2rem 2.8rem;
-            border-radius: var(--radius-full);
-            font-size: 1.1rem;
-            font-weight: 800;
+            background: transparent;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.05rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--clr-text-muted);
             cursor: pointer;
-            transition: all var(--transition-smooth);
-            text-transform: uppercase;
+            position: relative;
+            transition: var(--tr-smooth);
+        }
+
+        .tab-btn:hover {
+            color: var(--clr-blue-bright);
+            background: rgba(0, 68, 204, 0.05);
         }
 
         .tab-btn.active {
-            background: var(--safaricom-green);
-            color: var(--crisp-white);
-            border-color: var(--safaricom-green-light);
-            box-shadow: 0 10px 25px var(--safaricom-green-glow);
+            color: var(--clr-blue-bright);
         }
 
-        .curriculum-content-pane {
-            display: none;
-            background: var(--obsidian-surface);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            padding: 4rem;
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        .curriculum-content-pane.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .pane-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .pane-details h3 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            color: var(--safaricom-green-light);
-        }
-
-        .pane-details p {
-            font-size: 1.1rem;
-            color: var(--slate-light);
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-
-        .curriculum-feature-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .curr-box {
-            background: var(--obsidian-card);
-            border: 1px solid var(--border-glass);
-            padding: 1.5rem;
-            border-radius: var(--radius-md);
-        }
-
-        .curr-box h4 {
-            font-size: 1.1rem;
-            color: var(--crisp-white);
-            margin-bottom: 0.5rem;
-        }
-
-        .curr-box p {
-            font-size: 0.9rem;
-            color: var(--slate-gray);
-            margin-bottom: 0;
-            line-height: 1.5;
-        }
-
-        .pane-media img {
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
             width: 100%;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-glass);
+            height: 4px;
+            background: var(--clr-blue-bright);
+            border-radius: 4px 4px 0 0;
         }
 
-        /* ==========================================================================
-           10. INITIATIVES & CORE PILLARS GRID (ANTHONINA, ALAL, CYBER, QUANT)
-           ========================================================================== */
-        .initiatives-section {
-            padding: 8rem 0;
-            background: var(--obsidian-surface);
-            border-top: 1px solid var(--border-glass);
-        }
-
-        .pillars-grid {
+        .workspace-fluid-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .pillar-card {
-            background: var(--obsidian-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: all var(--transition-smooth);
-        }
-
-        .pillar-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--safaricom-green);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-        }
-
-        .pillar-img-wrap {
-            height: 220px;
+            grid-template-columns: 340px 1fr;
+            gap: 30px;
+            align-items: start;
             width: 100%;
-            position: relative;
-            overflow: hidden;
         }
 
-        .pillar-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
+        /* Sidebar Curriculums Navigation */
+        .curriculum-sidebar {
+            background: var(--clr-white);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-md);
+            padding: 25px;
+            box-shadow: var(--sh-soft);
         }
 
-        .pillar-card:hover .pillar-img-wrap img {
-            transform: scale(1.1);
-        }
-
-        .pillar-body {
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-between;
-        }
-
-        .pillar-body h3 {
-            font-size: 1.4rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-        }
-
-        .pillar-body p {
-            font-size: 0.95rem;
-            color: var(--slate-gray);
-            line-height: 1.6;
-            margin-bottom: 1.8rem;
-        }
-
-        .pillar-action-link {
-            font-size: 0.85rem;
+        .sidebar-title-box {
+            margin-bottom: 25px;
             font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--safaricom-green-light);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Specific Color Accents for Initiatives */
-        .pillar-card.anthonina h3 { color: #FF69B4; }
-        .pillar-card.anthonina .pillar-action-link { color: #FF69B4; }
-        
-        .pillar-card.alal h3 { color: #38BDF8; }
-        .pillar-card.alal .pillar-action-link { color: #38BDF8; }
-        
-        .pillar-card.cyber h3 { color: var(--safaricom-green-light); }
-        .pillar-card.quant h3 { color: #F59E0B; }
-        .pillar-card.quant .pillar-action-link { color: #F59E0B; }
-
-        /* ==========================================================================
-           11. INTERACTIVE CROSS-SUBSIDIZATION STRATEGY & IMPACT CALCULATOR
-           ========================================================================== */
-        .strategy-section {
-            padding: 8rem 0;
-            background: var(--obsidian-black);
-        }
-
-        .strategy-wrapper {
-            background: linear-gradient(135deg, var(--obsidian-surface), var(--obsidian-card));
-            border: 2px solid var(--safaricom-green);
-            border-radius: var(--radius-lg);
-            padding: 5rem 4rem;
-            box-shadow: 0 0 50px rgba(0, 168, 89, 0.15);
-        }
-
-        .strategy-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
-        }
-
-        .strategy-info h2 {
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1.15;
-            margin-bottom: 1.5rem;
-        }
-
-        .strategy-info p {
-            font-size: 1.1rem;
-            color: var(--slate-light);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        /* Interactive Calculator Component */
-        .calculator-box {
-            background: var(--obsidian-black);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md);
-            padding: 3rem 2.5rem;
-            text-align: center;
-        }
-
-        .calculator-box h3 {
-            font-size: 1.5rem;
-            color: var(--safaricom-green-light);
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-        }
-
-        .calc-slider-wrap {
-            margin: 2rem 0;
-        }
-
-        .calc-slider-wrap label {
-            display: block;
-            font-size: 0.95rem;
-            color: var(--slate-gray);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .range-input {
-            width: 100%;
-            height: 10px;
-            border-radius: var(--radius-full);
-            background: var(--obsidian-card);
-            outline: none;
-            accent-color: var(--safaricom-green);
-            cursor: pointer;
-        }
-
-        .calc-result-display {
-            background: var(--obsidian-surface);
-            border: 1px solid var(--safaricom-green);
-            border-radius: var(--radius-md);
-            padding: 1.8rem;
-            margin-top: 2rem;
-        }
-
-        .calc-number {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--safaricom-green-light);
-            line-height: 1;
-        }
-
-        .calc-desc {
-            font-size: 0.9rem;
-            color: var(--slate-gray);
-            margin-top: 0.5rem;
-        }
-
-        /* ==========================================================================
-           12. INSTITUTIONAL ALLIANCES & PARTNER NODES
-           ========================================================================== */
-        .partners-section {
-            padding: 6rem 0;
-            background: var(--obsidian-surface);
-            border-top: 1px solid var(--border-glass);
-            text-align: center;
-        }
-
-        .partners-section h2 {
-            font-size: 2rem;
-            font-weight: 900;
-            margin-bottom: 3.5rem;
-            text-transform: uppercase;
-        }
-
-        .partners-flex {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 4rem;
-        }
-
-        .partner-node {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            opacity: 0.75;
-            transition: all var(--transition-fast);
-        }
-
-        .partner-node:hover {
-            opacity: 1;
-            transform: translateY(-5px);
-        }
-
-        .partner-avatar-placeholder {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: var(--obsidian-card);
-            border: 2px solid var(--safaricom-green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
             font-size: 1.2rem;
-            color: var(--safaricom-green-light);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .partner-node span {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--crisp-white);
-        }
-
-        /* ==========================================================================
-           13. SAFARICOM-INSPIRED MEGA FOOTER (NO GOOGLE ACCOUNT ELEMENTS)
-           ========================================================================== */
-        footer.main-footer {
-            background: #06080C;
-            border-top: 3px solid var(--safaricom-green);
-            padding: 6rem 0 2rem 0;
-            position: relative;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
-            gap: 3.5rem;
-            margin-bottom: 5rem;
-        }
-
-        .footer-brand h3 {
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            color: var(--crisp-white);
-        }
-
-        .footer-brand h3 span {
-            color: var(--safaricom-green);
-        }
-
-        .footer-brand p {
-            color: var(--slate-gray);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 1.8rem;
-        }
-
-        .footer-col h4 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: var(--crisp-white);
+            color: var(--clr-blue-ultra);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 0.9rem;
-        }
-
-        .footer-col ul li a {
-            color: var(--slate-gray);
-            font-size: 0.92rem;
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--safaricom-green-light);
-            padding-left: 5px;
-        }
-
-        .newsletter-box h4 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .newsletter-box p {
-            font-size: 0.88rem;
-            color: var(--slate-gray);
-            margin-bottom: 1.2rem;
-        }
-
-        .newsletter-form {
             display: flex;
-            flex-direction: column;
+            align-items: center;
             gap: 10px;
         }
 
-        .newsletter-form input {
-            padding: 0.9rem 1.2rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-glass);
-            background: var(--obsidian-card);
-            color: var(--crisp-white);
-            font-family: var(--font-main);
-            outline: none;
+        .accordion-item {
+            margin-bottom: 15px;
+            border-radius: var(--br-sm);
+            overflow: hidden;
+            border: 1px solid var(--clr-border-light);
         }
 
-        .newsletter-form input:focus {
-            border-color: var(--safaricom-green);
-        }
-
-        .footer-bottom-bar {
-            border-top: 1px solid var(--border-glass);
-            padding-top: 2rem;
+        .accordion-header {
+            background: var(--clr-blue-tint);
+            color: var(--clr-blue-ultra);
+            padding: 16px 20px;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            color: var(--slate-gray);
+            font-weight: 700;
+            font-size: 1rem;
+            transition: var(--tr-smooth);
+        }
+
+        .accordion-header:hover {
+            background: var(--clr-blue-light);
+            color: var(--clr-blue-bright);
+        }
+
+        .accordion-content {
+            background: var(--clr-white);
+            display: none;
+            border-top: 1px solid var(--clr-border-light);
+        }
+        
+        .accordion-content.open {
+            display: block;
+        }
+
+        .subject-list {
+            padding: 8px 0;
+        }
+
+        .subject-list li {
+            border-bottom: 1px solid var(--clr-ghost);
+        }
+
+        .subject-list li:last-child {
+            border-bottom: none;
+        }
+
+        .subject-list a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--clr-black-slate);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--tr-smooth);
+            border-left: 4px solid transparent;
+        }
+
+        .subject-list a:hover, .subject-list a.active {
+            background: var(--clr-green-light);
+            color: var(--clr-green-dark);
+            border-left: 4px solid var(--clr-green-primary);
+            padding-left: 25px;
+            font-weight: 600;
+        }
+
+        /* Right Side Engine Dynamic Viewer Container */
+        .content-viewer {
+            background: var(--clr-white);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-md);
+            padding: 40px;
+            box-shadow: var(--sh-soft);
+            width: 100%;
+        }
+
+        .viewer-header {
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--clr-ghost);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .viewer-title {
+            font-size: 1.8rem;
+            color: var(--clr-black-rich);
+        }
+
+        .btn-exam-mode {
+            background: var(--clr-red-primary);
+            color: var(--clr-white);
+            padding: 12px 28px;
+            border-radius: var(--br-sm);
+            border: none;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(187, 0, 0, 0.4);
+            transition: var(--tr-smooth);
+        }
+
+        .btn-exam-mode:hover {
+            background: var(--clr-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(187, 0, 0, 0.6);
+        }
+
+        .embed-container {
+            width: 100%;
+            background: var(--clr-ghost);
+            border: 3px dashed var(--clr-blue-sky);
+            border-radius: var(--br-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .embed-video { height: 450px; }
+        .embed-tool { height: 500px; border-color: var(--clr-green-primary); }
+        
+        .embed-placeholder {
+            text-align: center;
+            color: var(--clr-black-slate);
+            padding: 40px;
+        }
+        
+        .embed-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        /* Structural Realization of Mock Questions */
+        .question-card {
+            background: var(--clr-offwhite);
+            border: 2px solid var(--clr-border-light);
+            border-radius: var(--br-md);
+            padding: 30px;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        .question-header {
+            font-weight: 800;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            color: var(--clr-blue-ultra);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: var(--clr-black-charcoal);
+        }
+
+        .mcq-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .option {
+            background: var(--clr-white);
+            border: 2px solid var(--clr-border-light);
+            padding: 16px 20px;
+            border-radius: var(--br-sm);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--tr-smooth);
+        }
+
+        .option:hover {
+            border-color: var(--clr-green-primary);
+            background: var(--clr-green-light);
+            color: var(--clr-green-dark);
+        }
+
+        .option-letter {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--clr-ghost);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--clr-blue-ultra);
+        }
+
+        .btn-explain {
+            background: transparent;
+            border: none;
+            color: #D946EF;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .explanation-box {
+            margin-top: 15px;
+            padding: 20px;
+            background: #FDF4FF;
+            border-left: 4px solid #D946EF;
+            border-radius: 0 var(--br-sm) var(--br-sm) 0;
+            display: none;
         }
 
         /* ==========================================================================
-           14. RESPONSIVE BREAKPOINTS (EXPERT UX MOBILE OPTIMIZATION)
+           8. THE ULTIMATE DYNAMIC STUDY PLANNER SUITE (POWERHOUSE INTERACTION GRID)
            ========================================================================== */
-        @media (max-width: 1200px) {
-            .hero-title { font-size: 3.5rem; }
-            .metrics-grid, .pillars-grid { grid-template-columns: repeat(2, 1fr); }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            .narok-cards-grid { grid-template-columns: 1fr; }
+        .planner-suite-section {
+            padding: 50px 30px;
+            background: var(--clr-white);
+            border-top: 2px solid var(--clr-border-light);
+            width: 100%;
         }
 
-        @media (max-width: 768px) {
-            header.main-header { padding: 0 1rem; }
-            nav.nav-menu { display: none; } /* Could add mobile drawer toggle */
-            .hero-title { font-size: 2.6rem; }
-            .intro-grid, .strategy-grid, .pane-grid { grid-template-columns: 1fr; gap: 3rem; }
-            .metrics-grid, .pillars-grid { grid-template-columns: 1fr; }
-            .curriculum-tab-nav { flex-direction: column; align-items: stretch; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .footer-bottom-bar { flex-direction: column; gap: 1rem; text-align: center; }
+        .planner-grid-system {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 35px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        /* Dynamic Kanban Board Component */
+        .kanban-board-container {
+            background: var(--clr-offwhite);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-lg);
+            padding: 30px;
+            box-shadow: var(--sh-soft);
+        }
+
+        .kanban-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .kanban-columns-track {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .kanban-column {
+            background: var(--clr-white);
+            border-radius: var(--br-md);
+            padding: 20px;
+            border: 1px solid var(--clr-border-light);
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .kanban-column-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--clr-black-pure);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .kanban-column:nth-child(1) .kanban-column-title { border-bottom-color: var(--clr-red-primary); }
+        .kanban-column:nth-child(2) .kanban-column-title { border-bottom-color: var(--clr-blue-bright); }
+        .kanban-column:nth-child(3) .kanban-column-title { border-bottom-color: var(--clr-green-primary); }
+
+        .kanban-card {
+            background: var(--clr-offwhite);
+            border: 1px solid var(--clr-border-light);
+            padding: 15px;
+            border-radius: var(--br-sm);
+            cursor: grab;
+            box-shadow: var(--sh-soft);
+            position: relative;
+        }
+
+        .kanban-card-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .tag-red { background: var(--clr-red-light); color: var(--clr-red-dark); }
+        .tag-blue { background: var(--clr-blue-tint); color: var(--clr-blue-bright); }
+        .tag-green { background: var(--clr-green-light); color: var(--clr-green-dark); }
+
+        .kanban-card h5 {
+            font-size: 1rem;
+            color: var(--clr-black-rich);
+            margin-bottom: 5px;
+        }
+
+        .kanban-card p {
+            font-size: 0.85rem;
+            color: var(--clr-text-muted);
+        }
+
+        /* Dynamic Calendar Component & Pomodoro Machine */
+        .scheduler-sidebar-box {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .calendar-module {
+            background: var(--clr-offwhite);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-lg);
+            padding: 30px;
+            box-shadow: var(--sh-soft);
+        }
+
+        .calendar-nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-grid-engine {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            text-align: center;
+        }
+
+        .calendar-day-label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--clr-blue-ultra);
+            padding: 5px 0;
+        }
+
+        .calendar-cell {
+            background: var(--clr-white);
+            aspect-ratio: 1;
+            border-radius: var(--br-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid var(--clr-border-light);
+            cursor: pointer;
+            transition: var(--tr-fast);
+        }
+
+        .calendar-cell:hover {
+            background: var(--clr-blue-bright);
+            color: var(--clr-white);
+        }
+
+        .calendar-cell.active-event {
+            border: 2px solid var(--clr-green-primary);
+            background: var(--clr-green-light);
+            color: var(--clr-green-dark);
+        }
+
+        /* Pomodoro Focus Module Architecture */
+        .pomodoro-machine {
+            background: linear-gradient(135deg, var(--clr-red-primary) 0%, var(--clr-red-dark) 100%);
+            border-radius: var(--br-lg);
+            padding: 35px;
+            color: var(--clr-white);
+            text-align: center;
+            box-shadow: var(--sh-deck);
+        }
+
+        .pomo-time-display {
+            font-size: 4.5rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            margin: 15px 0;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .pomo-controls-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-pomo-action {
+            background: var(--clr-white);
+            color: var(--clr-red-primary);
+            border: none;
+            padding: 12px 28px;
+            border-radius: var(--br-sm);
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--sh-soft);
+            transition: var(--tr-smooth);
+        }
+
+        .btn-pomo-action:hover {
+            background: var(--clr-ghost);
+            transform: scale(1.05);
+        }
+
+        /* Horizontal Full Width Interactive Components Stack */
+        .interactive-stack-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            width: 100%;
+        }
+
+        /* Active Recall Flashcards Deck */
+        .flashcards-suite {
+            background: var(--clr-offwhite);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-lg);
+            padding: 30px;
+            box-shadow: var(--sh-soft);
+        }
+
+        .flashcard-viewport {
+            perspective: 1000px;
+            width: 100%;
+            height: 260px;
+            margin: 20px 0;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .flashcard-inner.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: var(--br-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            box-shadow: var(--sh-soft);
+            border: 2px solid var(--clr-border-light);
+        }
+
+        .flashcard-front {
+            background: var(--clr-white);
+            color: var(--clr-blue-ultra);
+        }
+
+        .flashcard-back {
+            background: var(--clr-blue-bright);
+            color: var(--clr-white);
+            transform: rotateY(180deg);
+            border-color: var(--clr-blue-ultra);
+        }
+
+        /* Dynamic Notes Storage Module */
+        .notes-scratchpad-box {
+            background: var(--clr-offwhite);
+            border: 1px solid var(--clr-border-light);
+            border-radius: var(--br-lg);
+            padding: 30px;
+            box-shadow: var(--sh-soft);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scratchpad-textarea {
+            width: 100%;
+            height: 200px;
+            border: 2px solid var(--clr-border-light);
+            border-radius: var(--br-md);
+            padding: 20px;
+            font-size: 1rem;
+            color: var(--clr-black-charcoal);
+            resize: none;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .scratchpad-textarea:focus {
+            border-color: var(--clr-blue-bright);
+        }
+
+        /* UI Action Forms Generic Buttons Layout */
+        .action-primary-btn {
+            background: var(--clr-blue-bright);
+            color: var(--clr-white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--br-sm);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--tr-smooth);
+        }
+
+        .action-primary-btn:hover {
+            background: var(--clr-blue-mid);
+        }
+
+        .action-success-btn {
+            background: var(--clr-green-primary);
+            color: var(--clr-white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--br-sm);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--tr-smooth);
+        }
+
+        .action-success-btn:hover {
+            background: var(--clr-green-hover);
+        }
+
+        /* ==========================================================================
+           9. DYNAMIC PORTAL MODALS ENGINE LAYOUT
+           ========================================================================== */
+        .uefi-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 5000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .uefi-modal-window {
+            background: var(--clr-white);
+            border-radius: var(--br-md);
+            width: 100%;
+            max-width: 550px;
+            padding: 35px;
+            box-shadow: var(--sh-hover);
+            position: relative;
+        }
+
+        .modal-close-trigger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--clr-text-muted);
+        }
+
+        .modal-form-group {
+            margin-bottom: 20px;
+        }
+
+        .modal-form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--clr-black-charcoal);
+        }
+
+        .modal-form-group input, .modal-form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--clr-border-light);
+            border-radius: var(--br-sm);
+            outline: none;
+        }
+
+        /* ==========================================================================
+           10. TOTAL HARD ARCHITECTURAL PRODUCTION FOOTER
+           ========================================================================== */
+        .uefi-footer {
+            background: var(--clr-black-rich);
+            color: var(--clr-ghost);
+            padding: 60px 30px;
+            margin-top: 60px;
+            border-top: 5px solid var(--clr-blue-bright);
+            width: 100%;
+        }
+
+        .footer-grid-system {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            width: 100%;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-column h4 {
+            color: var(--clr-white);
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--clr-green-primary);
+        }
+
+        .footer-links-list li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links-list a {
+            font-size: 0.95rem;
+            color: var(--clr-text-muted);
+            transition: var(--tr-fast);
+        }
+
+        .footer-links-list a:hover {
+            color: var(--clr-white);
+            padding-left: 5px;
+        }
+
+        .footer-base-row {
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--clr-text-muted);
         }
     </style>
 </head>
 <body>
 
-    <!-- ==========================================================================
-         TOP ANNOUNCEMENT / EMERGENCY STRIP (SAFARICOM STYLE)
-         ========================================================================== -->
-    <div class="top-announce-bar">
-        <div class="container announce-content">
-            <div class="announce-ticker">
-                <div class="pulse-dot"></div>
-                <span>UEFI GLOBAL </span>
-            </div>
-            <div class="top-links">
-                <a href="#narok">Narok Protocols</a>
-                <a href="#curriculum">CBE & IB Syllabus</a>
-                <a href="#support">Support Core</a>
-            </div>
+    <header class="uefi-navbar">
+        <div class="nav-brand">
+            <span>UEFI</span> Study Pool
         </div>
-    </div>
-
-    <!-- ========================================================================
-     MAIN NAVIGATION HEADER (EXPERT UX - NO GOOGLE ACCOUNT BADGE)
-======================================================================== -->
-
-<header class="main-header">
-    <div class="container nav-wrapper">
-        <!-- Logo -->
-        <a href="home.html" class="brand-logo">
-            <img src="assets/main-logo.png" alt="UEFI Logo" class="logo-image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
-            <div class="logo-text">
-                <h1>UEFI<span>GLOBAL</span></h1>
-                <p>Republic of Kenya Node</p>
-            </div>
-        </a>
-
-        <!-- Navigation Links -->
+        
         <nav class="nav-menu">
-            <ul>
-                <li><a href="uefi-core-os.html"> UEFI STUDY HUB </a></li>
-                <li><a href="tech-lab.html">UEFI TECH HUB </a></li>
-                <li><a href="anthoninas-initiative.html">THE SHE TRANSFORM</a></li>
-                <li><a href="opportunities-hub.html">OPPORTUNITIES </a></li>
-                <li><a href="enroll.html" class="active">ENROL ! </a></li>
+            <ul style="display: flex; height: 100%;">
+                <li class="nav-item"><a href="home.html" class="nav-link">HOME</a></li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">IB DP <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item dropdown-submenu">
+                            IB Biology <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i>
+                            <div class="dropdown-flyout">
+                                <a href="#" class="dropdown-item">Biology HL Papers</a>
+                                <a href="#" class="dropdown-item">Biology Papers</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-item dropdown-submenu">
+                            IB Math <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i>
+                            <div class="dropdown-flyout">
+                                <a href="#" class="dropdown-item">Math AA HL</a>
+                                <a href="#" class="dropdown-item">Math AA SL</a>
+                                <a href="#" class="dropdown-item">Math AI HL</a>
+                                <a href="#" class="dropdown-item">Math AI SL</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">IB Physics</div>
+                        <div class="dropdown-item">IB Chemistry</div>
+                        <div class="dropdown-item">IB History</div>
+                        <div class="dropdown-item">IB Economics</div>
+                        <div class="dropdown-item">IB Computer Science</div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">IB MYP <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item">MYP Mathematics</div>
+                        <div class="dropdown-item">MYP Sciences</div>
+                        <div class="dropdown-item">MYP Individuals & Societies</div>
+                        <div class="dropdown-item">MYP Language & Literature</div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">CBE <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item">Junior Secondary</div>
+                        <div class="dropdown-item">Senior Secondary</div>
+                        <div class="dropdown-item">STEM Pathways</div>
+                    </div>
+                </li>
+                
+                <li class="nav-item"><a href="courses.html" class="nav-link">CBE ARCHIVES REVISION</a></li>
+                <li class="nav-item"><a href="ibmath.html" class="nav-link">IB PAPERS</a></li>
             </ul>
         </nav>
 
-        <!-- Nav Actions (Clear Action CTAs - Search & Enroll) -->
         <div class="nav-actions">
-            <button class="quick-search-trigger" onclick="alert('Search node active. Type to filter UEFI modules.')">
-                <span>🔍</span> Search Node...
-            </button>
-            <a href="enroll.html" class="btn btn-safaricom" style="padding: 0.7rem 1.5rem; font-size: 0.88rem;">Enroll Portal</a>
+            <a href="#" class="btn-outline-light">Log In / Register</a>
+        </div>
+    </header>
+
+    <section class="hero-section uefi-fluid-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Exam Style Questions and High-Quality Resources</h1>
+            <p class="hero-subtitle">Leverage UEFI Follett Expertise and Technology to Ace Your Exams! Access the ultimate study pool customized for IB DP, IB MYP, and CBE curriculums.</p>
+            
+            <div class="search-container">
+                <input type="text" placeholder="Search Courses, Lessons, or Past Papers...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        
+        <div class="hero-image-wrapper">
+            <div class="hero-interactive-card">
+                <div class="hero-interactive-overlay">
+                    <div style="color: white; font-weight: 700;">
+                        <i class="fas fa-graduation-cap" style="margin-right: 8px;"></i> Dynamic Learning Canvas Active
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-bar uefi-fluid-container">
+        <div class="stat-item">
+            <div class="stat-icon-box"><i class="fas fa-graduation-cap"></i></div>
+            <div class="stat-info">
+                <h3>50+</h3>
+                <p>Courses Offered</p>
+            </div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon-box"><i class="fas fa-school"></i></div>
+            <div class="stat-info">
+                <h3>1,000+</h3>
+                <p>Schools Using UEFI</p>
+            </div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon-box"><i class="fas fa-users"></i></div>
+            <div class="stat-info">
+                <h3>100,000+</h3>
+                <p>Registered Students & Teachers</p>
+            </div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon-box"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-info">
+                <h3>Active</h3>
+                <p>2026 Academic Syllabus</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section uefi-fluid-container">
+        <div class="section-headline-block">
+            <h2>What makes UEFI Study Pool Unique</h2>
+            <p>Built for the modern learner, integrating seamless tools and comprehensive data.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-file-signature"></i></div>
+                <h3 class="feature-title">Exam Style Questions</h3>
+                <p class="feature-desc">High-quality resources for every topic. Helps students practice questions for each topic, making you ready for actual and assessment exams.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                <h3 class="feature-title">Past Papers & Solutions</h3>
+                <p class="feature-desc">Past papers available with detailed step-by-step solutions. Yearly and topical arrangements to test your preparedness effectively.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                <h3 class="feature-title">Dynamic Revision Notes</h3>
+                <p class="feature-desc">Prepared by subject matter experts. Integrated with interactive embeds like GeoGebra to enhance memory and identify knowledge gaps.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-desktop"></i></div>
+                <h3 class="feature-title">Time Bound Exam Portal</h3>
+                <p class="feature-desc">Simulate exam conditions with our strict, dark-mode Mock Exam environment. Test speed, accuracy, and boost your confidence.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="study-pool-section uefi-fluid-container">
+        <div class="section-headline-block">
+            <h2>Exam Style Questions including Flashcards and Past Papers</h2>
+            <p>Resources like exam-style questions, flashcards, and interactive study aids.</p>
+        </div>
+
+        <div class="resource-tabs">
+            <button class="tab-btn active" onclick="switchResourceView('exam')">Exam Style Questions</button>
+            <button class="tab-btn" onclick="switchResourceView('flash')">Flashcards</button>
+            <button class="tab-btn" onclick="switchResourceView('notes')">Study Notes (Interactive)</button>
+            <button class="tab-btn" onclick="switchResourceView('past')">Past Papers Explanations</button>
+        </div>
+
+        <div class="workspace-fluid-grid">
+            <aside class="curriculum-sidebar">
+                <div class="sidebar-title-box">
+                    <i class="fas fa-folder-open"></i> Select Study Resource
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-plus" style="margin-right: 10px;"></i> IB DP Study Resources</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content open">
+                        <ul class="subject-list">
+                            <li><a href="#" class="active" onclick="loadTopic('Physics')">IB DP Physics (Paper 1 & 2)</a></li>
+                            <li><a href="#" onclick="loadTopic('Biology')">IB DP Biology 2026, 2027 & 2028</a></li>
+                            <li><a href="#" onclick="loadTopic('Math')">IB DP Mathematics AA</a></li>
+                            <li><a href="#" onclick="loadTopic('CS')">IB DP Computer Science</a></li>
+                            <li><a href="#" onclick="loadTopic('Economics')">IB DP Economics</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-plus" style="margin-right: 10px;"></i> IB MYP Study Resources</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="subject-list">
+                            <li><a href="#" onclick="loadTopic('MYPMath')">MYP Extended Math</a></li>
+                            <li><a href="#" onclick="loadTopic('MYPScience')">MYP Integrated Sciences</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-plus" style="margin-right: 10px;"></i> CBE Core Curriculum</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="subject-list">
+                            <li><a href="#" onclick="loadTopic('CBE9')">Grade 9 Pre-Tech</a></li>
+                            <li><a href="#" onclick="loadTopic('CBE10')">Grade 10 Applied Sciences</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content-viewer" id="mainContentViewer">
+                
+                <div class="viewer-header">
+                    <h3 class="viewer-title" id="activeTopicTitle">Topic: A.1 Kinematics SL (Paper 1)</h3>
+                    <button class="btn-exam-mode" id="enterExamModeBtn" onclick="toggleMockExamMode()">
+                        <i class="fas fa-laptop-code"></i> Enter Mock Exam Portal
+                    </button>
+                </div>
+
+                <div class="embed-container embed-video">
+                    <div class="embed-placeholder">
+                        <i class="fab fa-youtube" style="color: var(--clr-red-primary);"></i>
+                        <h4>Concept Explanation Video</h4>
+                        <p style="font-size: 0.9rem; margin-top: 5px;">(Embedded educational video component active for active syllabus matrix)</p>
+                    </div>
+                </div>
+
+                <div class="embed-container embed-tool">
+                    <div class="embed-placeholder">
+                        <i class="fas fa-chart-line" style="color: var(--clr-green-primary);"></i>
+                        <h4>GeoGebra Classic Graphing / Demo Calculator</h4>
+                        <p style="font-size: 0.9rem; margin-top: 5px;">(Interactive virtualization canvas linked to primary computational datasets)</p>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-header">
+                        <span>Question 1 (Core Mechanical Kinematics Matrix)</span>
+                        <span style="color: var(--clr-red-primary);">[Marks: 4]</span>
+                    </div>
+                    <div class="question-text">
+                        A particle accelerates uniformly from rest along a horizontal structural plane. If the absolute spatial distance mapped in the first structural interval of 4.0 seconds is recorded as 24 meters, calculate the terminal vector speed achieved at expiration.
+                    </div>
+                    <div class="mcq-options">
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">A</div>
+                            <div class="option-body">6.0 meters per second</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">B</div>
+                            <div class="option-body">12.0 meters per second</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">C</div>
+                            <div class="option-body">18.0 meters per second</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">D</div>
+                            <div class="option-body">24.0 meters per second</div>
+                        </div>
+                    </div>
+                    <button class="btn-explain" onclick="toggleExplanation('exp1')">
+                        <i class="fas fa-lightbulb"></i> View Deep Step-by-Step Analytical Explanation
+                    </button>
+                    <div class="explanation-box" id="exp1">
+                        <strong>Analytical Resolution:</strong> Utilizing kinematic frameworks, positional changes calculate as $s = \frac{1}{2}(u + v)t$. Substituting experimental configurations yields $24 = \frac{1}{2}(0 + v)(4.0)$. Therefore, $24 = 2v$, resolving to $v = 12\text{ m/s}$. Option B is correct.
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-header">
+                        <span>Question 2 (Topical Graphical Vector Analysis)</span>
+                        <span style="color: var(--clr-red-primary);">[Marks: 6]</span>
+                    </div>
+                    <div class="question-text">
+                        Determine the exact mathematical representation derived from the integral area isolated under a standard velocity-time profile curve graph.
+                    </div>
+                    <div class="mcq-options">
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">A</div>
+                            <div class="option-body">Instantaneous Magnitude of Acceleration System</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">B</div>
+                            <div class="option-body">Net Linear Spatial Displacement Traversed</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">C</div>
+                            <div class="option-body">Total Vector Momentum Transferred</div>
+                        </div>
+                        <div class="option" onclick="selectOption(this)">
+                            <div class="option-letter">D</div>
+                            <div class="option-body">Average Energy Dissipation Co-efficient</div>
+                        </div>
+                    </div>
+                    <button class="btn-explain" onclick="toggleExplanation('exp2')">
+                        <i class="fas fa-lightbulb"></i> View Deep Step-by-Step Analytical Explanation
+                    </button>
+                    <div class="explanation-box" id="exp2">
+                        <strong>Analytical Resolution:</strong> The mathematical definite integration of structural velocity vector outputs relative to chronological parameters ($\int v \, dt$) outputs the absolute dimensional evaluation of spatial displacement. Option B is correct.
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </section>
+
+    <section class="planner-suite-section uefi-fluid-container">
+        <div class="section-headline-block">
+            <h2>The Powerhouse Dynamic Organization Suite</h2>
+            <p>Your interactive blueprint control deck to map tasks, focus processing, orchestrate active memory loops, and track revisions.</p>
+        </div>
+
+        <div class="planner-grid-system">
+            
+            <div class="kanban-board-container">
+                <div class="kanban-header-actions">
+                    <h3><i class="fas fa-th-list" style="color: var(--clr-blue-bright); margin-right: 10px;"></i> Dynamic Study Task Matrix</h3>
+                    <button class="action-success-btn" onclick="openModal('addTaskModal')">
+                        <i class="fas fa-plus-circle"></i> Inject New Task Card
+                    </button>
+                </div>
+                
+                <div class="kanban-columns-track">
+                    <div class="kanban-column" ondragover="allowDrop(event)" ondrop="dropTask(event, 'backlog')" id="col-backlog">
+                        <div class="kanban-column-title">
+                            <span>Syllabus Backlog</span>
+                            <span class="badge" style="background: var(--clr-ghost); color: var(--clr-black-pure); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;" id="count-backlog">2</span>
+                        </div>
+                        
+                        <div class="kanban-card" draggable="true" ondragstart="dragTask(event)" id="task-1">
+                            <span class="kanban-card-tag tag-red">High Priority</span>
+                            <h5>Review Kinematics P2</h5>
+                            <p>Complete structural problems from 2024 catalog series.</p>
+                        </div>
+                        <div class="kanban-card" draggable="true" ondragstart="dragTask(event)" id="task-2">
+                            <span class="kanban-card-tag tag-blue">Medium Priority</span>
+                            <h5>Organic Chem Structures</h5>
+                            <p>Memorize pathways and structural functional groups.</p>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column" ondragover="allowDrop(event)" ondrop="dropTask(event, 'progress')" id="col-progress">
+                        <div class="kanban-column-title">
+                            <span>Active Processing</span>
+                            <span class="badge" style="background: var(--clr-ghost); color: var(--clr-black-pure); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;" id="count-progress">1</span>
+                        </div>
+                        
+                        <div class="kanban-card" draggable="true" ondragstart="dragTask(event)" id="task-3">
+                            <span class="kanban-card-tag tag-green">Low Priority</span>
+                            <h5>Math AA Integration</h5>
+                            <p>Solve substitution and parts questions.</p>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column" ondragover="allowDrop(event)" ondrop="dropTask(event, 'mastered')" id="col-mastered">
+                        <div class="kanban-column-title">
+                            <span>Mastered Domain</span>
+                            <span class="badge" style="background: var(--clr-ghost); color: var(--clr-black-pure); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;" id="count-mastered">1</span>
+                        </div>
+                        
+                        <div class="kanban-card" draggable="true" ondragstart="dragTask(event)" id="task-4">
+                            <span class="kanban-card-tag tag-green">Low Priority</span>
+                            <h5>CBE Tech Basics Overview</h5>
+                            <p>Introductory modules finalized.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scheduler-sidebar-box">
+                
+                <div class="calendar-module">
+                    <div class="calendar-nav-row">
+                        <h4><i class="fas fa-calendar-alt" style="color: var(--clr-green-primary); margin-right: 10px;"></i> Dynamic Planner Calendar</h4>
+                        <span style="font-weight: 700; color: var(--clr-blue-bright);" id="calendarMonthYearLabel">July 2026</span>
+                    </div>
+                    <div class="calendar-grid-engine" id="calendarGridEngineLayout">
+                        <div class="calendar-day-label">S</div>
+                        <div class="calendar-day-label">M</div>
+                        <div class="calendar-day-label">T</div>
+                        <div class="calendar-day-label">W</div>
+                        <div class="calendar-day-label">T</div>
+                        <div class="calendar-day-label">F</div>
+                        <div class="calendar-day-label">S</div>
+                        </div>
+                </div>
+
+                <div class="pomodoro-machine">
+                    <h4><i class="fas fa-clock" style="margin-right: 10px;"></i> Pomodoro Deep-Focus Core</h4>
+                    <p style="font-size: 0.9rem; opacity: 0.9; margin-top: 5px;">Sustain optimal mental throughput via structured blocks.</p>
+                    <div class="pomo-time-display" id="pomoMinutesSecondsDisplay">25:00</div>
+                    <div class="pomo-controls-row">
+                        <button class="btn-pomo-action" id="btnPomoStartPause" onclick="triggerPomoEngine()">START FOCUS</button>
+                        <button class="btn-pomo-action" style="background: transparent; color: white; border: 2px solid white;" onclick="resetPomoEngine()">RESET</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="interactive-stack-row">
+            
+            <div class="flashcards-suite">
+                <h3><i class="fas fa-clone" style="color: #8B5CF6; margin-right: 10px;"></i> Active Recall Deck</h3>
+                <p style="color: var(--clr-text-muted); font-size: 0.9rem;">Click card workspace matrix to flip and inspect verified definitions.</p>
+                
+                <div class="flashcard-viewport" onclick="flipActiveFlashcard()">
+                    <div class="flashcard-inner" id="flashcardInnerEngine">
+                        <div class="flashcard-front">
+                            <span style="font-size: 0.85rem; font-weight: 800; color: var(--clr-text-muted); letter-spacing: 1px; text-transform: uppercase;">Question Space</span>
+                            <h4 style="margin-top: 20px; font-size: 1.4rem;" id="fcQuestionText">What is the exact physical operational definition of Acceleration?</h4>
+                            <div style="margin-top: auto; font-size: 0.85rem; color: var(--clr-blue-bright); font-weight: 700;"><i class="fas fa-sync"></i> Trigger Flip Operation</div>
+                        </div>
+                        <div class="flashcard-back">
+                            <span style="font-size: 0.85rem; font-weight: 800; color: rgba(255,255,255,0.7); letter-spacing: 1px; text-transform: uppercase;">Verified Matrix Solution</span>
+                            <p style="margin-top: 20px; font-size: 1.25rem; font-weight: 600;" id="fcAnswerText">The rate of structural change of velocity vector metrics with respect to time framework parameters: $a = \frac{dv}{dt}$.</p>
+                            <div style="margin-top: auto; font-size: 0.85rem; opacity: 0.8;"><i class="fas fa-undo"></i> Return Front</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button class="action-primary-btn" onclick="rotateFlashcardDeck(-1)"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <span style="font-weight: 700; color: var(--clr-black-slate);" id="flashcardDeckIndexIndicator">Card 1 of 3</span>
+                    <button class="action-primary-btn" onclick="rotateFlashcardDeck(1)">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="notes-scratchpad-box">
+                <h3><i class="fas fa-edit" style="color: var(--clr-red-primary); margin-right: 10px;"></i> Study Notes Scratchpad</h3>
+                <p style="color: var(--clr-text-muted); font-size: 0.9rem; margin-bottom: 15px;">Persisted transient operational board text layout workspace.</p>
+                <textarea class="scratchpad-textarea" id="notesScratchpadTextareaEngine" placeholder="Inject complex equations, immediate revision plans, or rapid session reviews here... Data auto-saves to memory."></textarea>
+                <div style="display: flex; gap: 15px;">
+                    <button class="action-success-btn" onclick="saveNotesToBrowserMemory()"><i class="fas fa-save"></i> Save Local Notes</button>
+                    <button class="action-primary-btn" style="background: var(--clr-black-pure);" onclick="exportNotesAsTextFile()"><i class="fas fa-download"></i> Export Raw Document</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="uefi-modal-backdrop" id="addTaskModal">
+        <div class="uefi-modal-window">
+            <button class="modal-close-trigger" onclick="closeModal('addTaskModal')"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom: 25px; color: var(--clr-blue-ultra); font-size: 1.4rem;"><i class="fas fa-plus-circle"></i> Inject New Task Card</h3>
+            
+            <div class="modal-form-group">
+                <label for="taskInputTitle">Task Action Description Title</label>
+                <input type="text" id="taskInputTitle" placeholder="e.g., Analyze Doppler Equations Sl">
+            </div>
+            
+            <div class="modal-form-group">
+                <label for="taskInputDescription">Detailed Sub-Scope Task Summary</label>
+                <input type="text" id="taskInputDescription" placeholder="e.g., Complete 15 variant multiple choice parameters">
+            </div>
+
+            <div class="modal-form-group">
+                <label for="taskInputPriority">Priority Tier Level Allocation</label>
+                <select id="taskInputPriority">
+                    <option value="red">High Priority Scale</option>
+                    <option value="blue">Medium Priority Scale</option>
+                    <option value="green">Low Priority Scale</option>
+                </select>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 30px;">
+                <button class="action-primary-btn" style="background: var(--clr-text-muted);" onclick="closeModal('addTaskModal')">Abrupt Exit</button>
+                <button class="action-success-btn" onclick="commitTaskCardToBoard()">Commit Card To Board</button>
+            </div>
         </div>
     </div>
-</header>
 
-    <!-- ==========================================================================
-         DYNAMIC HERO SLIDER SECTION
-         ========================================================================== -->
-    <section class="hero-section">
-        <div class="hero-slider" id="heroSlider">
-            <!-- Slide 1 -->
-            <div class="hero-slide active">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80" alt="African Engineers Collaborating" class="slide-bg-img">
-                <div class="hero-overlay"></div>
-            </div>
-            <!-- Slide 2 -->
-            <div class="hero-slide">
-                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1920&q=80" alt="Cyber Security Lab" class="slide-bg-img">
-                <div class="hero-overlay"></div>
-            </div>
-            <!-- Slide 3 -->
-            <div class="hero-slide">
-                 <img src="assets/D10.png" alt="Cyber Security Lab" class="slide-bg-img">
-                 <div class="hero-overlay"></div>
-            </div>
-                        <!-- Slide 4 -->
-            <div class="hero-slide">
-                 <img src="assets/D10.png" alt="Cyber Security Lab" class="slide-bg-img">
-                 <div class="hero-overlay"></div>
-            </div>
-                        <!-- Slide 5 -->
-            <div class="hero-slide">
-                 <img src="assets/D14.png" alt="Cyber Security Lab" class="slide-bg-img">
-                 <div class="hero-overlay"></div>
-            </div>
-                        <!-- Slide 6 -->
-            <div class="hero-slide">
-                 <img src="assets/D1.png" alt="Cyber Security Lab" class="slide-bg-img">
-                 <div class="hero-overlay"></div>
-            </div>
-                        <!-- Slide 7 -->
-            <div class="hero-slide">
-                 <img src="assets/D11.png" alt="Cyber Security Lab" class="slide-bg-img">
-                 <div class="hero-overlay"></div>
-            </div>
-                        <!-- Slide 8 -->
-            <div class="hero-slide">
-                 <img src="assets/D15.png" alt="Cyber Security Lab" class="slide-bg-img">
-                 <div class="hero-overlay"></div>
-            </div>
-                        <!-- Slide 9 -->
-            <div class="hero-slide">
-                 <img src="assets/D2.png" alt="Cyber Security Lab" class="slide-bg-img">
-                 <div class="hero-overlay"></div>
-            </div>
-                        <!-- Slide 10 -->
-            <div class="hero-slide">
-                 <img src="assets/D5.png" alt="Cyber Security Lab" class="slide-bg-img">
-                 <div class="hero-overlay"></div>
-            </div>
-                        <!-- Slide 11 -->
-            <div class="hero-slide">
-                 <img src="assets/D7.png" alt="Cyber Security Lab" class="slide-bg-img">
-                 <div class="hero-overlay"></div>
-            </div>
-                        <!-- Slide 12 -->
-            <div class="hero-slide">
-                 <img src="assets/D8.png" alt="Cyber Security Lab" class="slide-bg-img">
-                 <div class="hero-overlay"></div>
-            </div>
-            <!-- Slide 13 -->
-            <div class="hero-slide">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1920&q=80" alt="African Tech Woman Engineer" class="slide-bg-img">
-                <div class="hero-overlay"></div>
-            </div>
-        </div>
-
-        <div class="container hero-content-wrapper">
-            <div class="badge-tag">
-                <span>●</span> Official UEFI Global Platform
-            </div>
-            <h1 class="hero-title">
-                Architecting <br>
-                Africa's <span class="highlight-green">Digital</span> <br>
-                <span class="highlight-red">Intellect.</span>
-            </h1>
-            <p class="hero-description">
-                UEFI Global is Kenya’s high-performance technological institute. We merge elite international computer science with localized social engineering to transform rural potential into global computation power.
-            </p>
-            <div class="hero-buttons">
-                <a href="uefi-core-os.html" class="btn btn-safaricom">Explore Syllabus</a>
-                <a href="financial-hub.html" class="btn btn-outline-red">Financial Education</a>
-                <a href="uefi-d.academy.html" class="btn btn-ghost">Digital Academy ↗</a>
-            </div>
-        </div>
-
-        <!-- Slider Navigation Controls -->
-        <div class="slider-navigation">
-            <button class="nav-arrow" id="prevSlide">‹</button>
-            <div class="dots-container" id="dotsContainer">
-                <div class="dot-item active" data-index="0"></div>
-                <div class="dot-item" data-index="1"></div>
-                <div class="dot-item" data-index="2"></div>
-            </div>
-            <button class="nav-arrow" id="nextSlide">›</button>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-         SAFARICOM-STYLE METRIC HIGHLIGHTS STRIP
-         ========================================================================== -->
-    <section class="metric-strip">
-        <div class="container metrics-grid">
-            <div class="metric-card">
-                <div class="metric-number" data-target="100">100%</div>
-                <div class="metric-label">Offline-First Net</div>
-                <div class="metric-subtext">Zero-cost rural mesh deployments</div>
-            </div>
-            <div class="metric-card red-accent">
-                <div class="metric-number" data-target="28">28%</div>
-                <div class="metric-label">Pregnancy Crisis Intercept</div>
-                <div class="metric-subtext">KNBS targeted vulnerability shield</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-number" data-target="30000">30k+</div>
-                <div class="metric-label">Out-of-School Cohorts</div>
-                <div class="metric-subtext">NACONEK nomadic intervention</div>
-            </div>
-            <div class="metric-card red-accent">
-                <div class="metric-number" data-target="100">1:1</div>
-                <div class="metric-label">Cross-Subsidization</div>
-                <div class="metric-subtext">Buy 1 student slot, empower 1 rural mind</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-         INTRODUCTORY OVERVIEW: WHAT IS UEFI GLOBAL?
-         ========================================================================== -->
-    <section id="about" class="intro-section">
-        <div class="container intro-grid">
-            <div class="intro-text-block">
-                <div class="badge-tag">Institutional Mission</div>
-                <h2>Not Just A School. <br><span style="color: var(--safaricom-green-light);">An Intellectual Forge.</span></h2>
-                <p>
-                    UEFI Global was built to solve a critical structural breakdown: the massive gap between raw rural talent in remote Kenyan counties like Narok and access to high-tier computational hardware.
+    <footer class="uefi-footer uefi-fluid-container">
+        <div class="footer-grid-system">
+            <div class="footer-column">
+                <h4 style="font-family: 'Poppins', sans-serif;">UEFI Study Pool</h4>
+                <p style="font-size: 0.9rem; color: var(--clr-text-muted); margin-top: 15px; line-height: 1.7;">
+                    Delivering hyper-optimized academic testing interfaces, revision matrices, and integrated dynamic tracking configurations across multi-tier regional syllabi networks.
                 </p>
-                <p>
-                    We operate physical hardware hubs powered by zero-cost mesh networks, bringing university-level quantitative software engineering, machine learning ethics, and psychological fortitude directly to youth who need it most.
-                </p>
-                <div class="feature-check-list">
-                    <div class="check-item"><div class="check-icon">✓</div> CBE Curriculum Aligned</div>
-                    <div class="check-item"><div class="check-icon">✓</div> IB Global Standard</div>
-                    <div class="check-item"><div class="check-icon">✓</div> Anthonina Care Pipeline</div>
-                    <div class="check-item"><div class="check-icon">✓</div> Cyber Security Safeguards</div>
-                </div>
             </div>
-
-            <div class="intro-visual-card">
-                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80" alt="Students in Hardware Lab">
-                <div class="visual-overlay-badge">
-                    <h4>Mesh-Net Hardware Deployed</h4>
-                    <p style="margin: 0; font-size: 0.88rem; color: var(--slate-gray);">Local servers operating inside Narok rural hubs without internet dependence.</p>
-                </div>
+            <div class="footer-column">
+                <h4>IB DP Curriculums Matrix</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#">Physics Specialized Portal</a></li>
+                    <li><a href="#">Biological Systems Vault</a></li>
+                    <li><a href="#">Mathematics Analytical Rig</a></li>
+                    <li><a href="#">Computer Architecture Systems</a></li>
+                </ul>
             </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-         EMPIRICAL SOCIETAL GROUNDING // NAROK COUNTY PROTOCOL
-         ========================================================================== -->
-    <section id="narok" class="narok-section">
-        <div class="container">
-            <div class="section-header-center">
-                <div class="badge-tag red">Empirical Societal Grounding</div>
-                <h2>Why Narok County? Why Now?</h2>
-                <p>Our technology hubs are engineered as a structural safety framework against vulnerable cultural exit vectors, replacing system displacement with remote intellectual opportunities.</p>
+            <div class="footer-column">
+                <h4>CBE National Framework</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#">Junior Secondary Tracks</a></li>
+                    <li><a href="#">Senior Secondary Integration</a></li>
+                    <li><a href="#">STEM Vocational Repositories</a></li>
+                    <li><a href="#">Archive Research Core</a></li>
+                </ul>
             </div>
-
-            <div class="narok-cards-grid">
-                <!-- KNBS STAT CARD -->
-                <div class="narok-card red-alert-card">
-                    <div>
-                        <div class="stat-huge" style="color: var(--kenya-red);">28%</div>
-                        <h3>Adolescent Pregnancy Crisis</h3>
-                        <p>According to data processed by the Kenya National Bureau of Statistics (KNBS), baseline drop-out vulnerabilities map heavily to system disruption risks. UEFI scales up physical tracking parameters to establish robust intervention pathways.</p>
-                    </div>
-                    <a href="https://www.knbs.or.ke" target="_blank" rel="noopener noreferrer" class="source-anchor red-source">
-                        SOURCE // KNBS.OR.KE ↗
-                    </a>
-                </div>
-
-                <!-- NACONEK STAT CARD -->
-                <div class="narok-card red-alert-card">
-                    <div>
-                        <div class="stat-huge" style="color: var(--kenya-red);">30,000+</div>
-                        <h3>Out-Of-School Cohorts</h3>
-                        <p>National tracking records managed via the National Council for Nomadic Education in Kenya (NACONEK) show severe drop-out numbers driven by structural economic shifts. We actively intercept these brilliant minds, routing them directly into high-tier computation metrics.</p>
-                    </div>
-                    <a href="http://www.naconek.ke" target="_blank" rel="noopener noreferrer" class="source-anchor red-source">
-                        SOURCE // NACONEK DATA ↗
-                    </a>
-                </div>
-
-                <!-- MESH NET CARD -->
-                <div class="narok-card green-pass-card">
-                    <div>
-                        <div class="stat-huge" style="color: var(--safaricom-green-light);">MESH</div>
-                        <h3>Offline-First Infrastructure</h3>
-                        <p>To completely beat data cost limitations, our learning modules run on zero-cost local networks deployed inside rural hardware hubs. Zero internet obligations for our scholars. Fully decoupled from cellular data costs.</p>
-                    </div>
-                    <span class="source-anchor" style="cursor: default;">
-                        INTERNAL ARCHITECTURE DEPLOYED
-                    </span>
-                </div>
+            <div class="footer-column">
+                <h4>Technical Operations Support</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#">System Integrity Specifications</a></li>
+                    <li><a href="#">Data Encryption Protocols</a></li>
+                    <li><a href="#">API Sync Architecture</a></li>
+                    <li><a href="#">Developer Operational Logs</a></li>
+                </ul>
             </div>
         </div>
-    </section>
-
-    <!-- ==========================================================================
-         DUAL CURRICULUM ARCHITECTURE (CBE & IB EXPLORER)
-         ========================================================================== -->
-    <section id="curriculum" class="curriculum-section">
-        <div class="container">
-            <div class="section-header-center">
-                <div class="badge-tag">Academic Framework</div>
-                <h2>World-Class Curriculum Engines</h2>
-                <p>We blend Kenya’s Competency Based Education (CBE) with International Baccalaureate (IB) rigor to form an unbeatable dual-engine syllabus.</p>
-            </div>
-
-            <!-- Tab Navigation Buttons -->
-            <div class="curriculum-tab-nav">
-                <button class="tab-btn active" onclick="switchTab('cbe-pane', this)">Competency-Based Education (CBE)</button>
-                <button class="tab-btn" onclick="switchTab('ib-pane', this)">International Baccalaureate (IB)</button>
-            </div>
-
-            <!-- CBE PANE -->
-            <div id="cbe-pane" class="curriculum-content-pane active">
-                <div class="pane-grid">
-                    <div class="pane-details">
-                        <h3>CBE Framework Integration</h3>
-                        <p>Aligned with Kenya’s modern education vision, our CBE track focuses on practical skill mastery, continuous algorithmic tracking, and project-based software engineering.</p>
-                        <div class="curriculum-feature-grid">
-                            <div class="curr-box">
-                                <h4>Hands-On Coding</h4>
-                                <p>Building functional apps and systems from week one.</p>
-                            </div>
-                            <div class="curr-box">
-                                <h4>Values-Based Tech</h4>
-                                <p>Ethics and civic responsibility embedded in code.</p>
-                            </div>
-                            <div class="curr-box">
-                                <h4>Continuous Metrics</h4>
-                                <p>Eliminating single-exam high-stress failure models.</p>
-                            </div>
-                            <div class="curr-box">
-                                <h4>Hardware Mastery</h4>
-                                <p>Disassembling, repairing, and optimizing computers.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pane-media">
-                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Students learning in group">
-                    </div>
-                </div>
-            </div>
-
-            <!-- IB PANE -->
-            <div id="ib-pane" class="curriculum-content-pane">
-                <div class="pane-grid">
-                    <div class="pane-details">
-                        <h3>IB Global Academic Standard</h3>
-                        <p>For scholars aiming at global university scholarships and international engineering positions, our IB module installs hyper-rigorous analytical thinking.</p>
-                        <div class="curriculum-feature-grid">
-                            <div class="curr-box">
-                                <h4>Theory of Knowledge</h4>
-                                <p>Epistemology and AI ethics in modern algorithms.</p>
-                            </div>
-                            <div class="curr-box">
-                                <h4>4000-Word Thesis</h4>
-                                <p>Deep computational research papers before university.</p>
-                            </div>
-                            <div class="curr-box">
-                                <h4>CAS Modules</h4>
-                                <p>Creativity, Activity, and direct Community Service.</p>
-                            </div>
-                            <div class="curr-box">
-                                <h4>Global Network</h4>
-                                <p>Seamless entry into top international tech pipelines.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pane-media">
-                        <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=800&q=80" alt="Global Scholar Working">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-         INITIATIVES & CORE PILLARS GRID
-         ========================================================================== -->
-    <section id="initiatives" class="initiatives-section">
-        <div class="container">
-            <div class="section-header-center">
-                <div class="badge-tag">Human Development Nodes</div>
-                <h2>Specialized Transformation Pillars</h2>
-                <p>We provide targeted, holistic support modules to nurture individual strengths and protect our young scholars online and offline.</p>
-            </div>
-
-            <div class="pillars-grid">
-                <!-- ANTHONINA CARE -->
-                <div class="pillar-card anthonina">
-                    <div class="pillar-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80" alt="Anthonina Care Women in Tech">
-                    </div>
-                    <div class="pillar-body">
-                        <h3>Anthonina Care</h3>
-                        <p>Dedicated holistic transformation for young women entering computational fields. Mental wellness, health guidance, leadership coaching, and maternal support.</p>
-                        <a href="anthoninas-initiative.html" class="pillar-action-link">EXPLORE SANCTUARY →</a>
-                    </div>
-                </div>
-
-                <!-- THE ALAL CARE -->
-                <div class="pillar-card alal">
-                    <div class="pillar-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Wilson Lead Core Male Scholar">
-                    </div>
-                    <div class="pillar-body">
-                        <h3>The Alal Care</h3>
-                        <p>Wilson Lead Core framework for young men at risk. Building psychological resilience, emotional intelligence, financial literacy, and elite software craftsmanship.</p>
-                        <a href="wilsons-initiative.html" class="pillar-action-link">EXPLORE BROTHERHOOD →</a>
-                    </div>
-                </div>
-
-                <!-- CYBER SECURITY -->
-                <div class="pillar-card cyber">
-                    <div class="pillar-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Cyber Security Shield">
-                    </div>
-                    <div class="pillar-body">
-                        <h3>Cyber Security</h3>
-                        <p>Digital wellbeing and defense modules. Teaching defensive threat modeling, encrypted privacy habits, ethical hacking, and online psychological protection.</p>
-                        <a href="uefi-safety.html" class="pillar-action-link">INITIALIZE DEFENSE →</a>
-                    </div>
-                </div>
-
-                <!-- QUANT FORGE -->
-                <div class="pillar-card quant">
-                    <div class="pillar-img-wrap">
-                        <img src="assets/MICROSOFT.png" alt="Microsoft - Quant Physics & Math">
-                    </div>
-                    <div class="pillar-body">
-                        <h3>Microsoft Utilities</h3>
-                        <p>Master Microsoft utilities, Python programming, AI prompt engineering, and ethical hacking essentials while building real-world digital skills for modern tech.</p>
-                        <a href="tech-lab.html" class="pillar-action-link">PROCEED TO SPACE →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-         INTERACTIVE CROSS-SUBSIDIZATION STRATEGY & IMPACT CALCULATOR
-         ========================================================================== -->
-    <section id="strategy" class="strategy-section">
-        <div class="container">
-            <div class="strategy-wrapper">
-                <div class="strategy-grid">
-                    <div class="strategy-info">
-                        <div class="badge-tag">The Social Engine</div>
-                        <h2>Cross-Subsidization Strategy: Buy One, Empower One.</h2>
-                        <p>
-                            Every commercial enrollment from international or corporate students triggers an immediate physical hardware allocation and mentorship package for a scholar in rural Kenya.
-                        </p>
-                        <p>
-                            Your educational journey directly funds a national digital transformation.
-                        </p>
-                        <a href="support-us.html" class="btn btn-safaricom">Support The Mission</a>
-                    </div>
-
-                    <!-- Calculator -->
-                    <div class="calculator-box">
-                        <h3>Live Impact Calculator</h3>
-                        <p style="font-size: 0.9rem; color: var(--slate-gray);">Adjust enrollments to see your direct effect in Narok County:</p>
-                        
-                        <div class="calc-slider-wrap">
-                            <label for="studentRange">Commercial Students Enrolled: <span id="studentVal" style="color: var(--safaricom-green-light); font-weight: 900; font-size: 1.2rem;">5</span></label>
-                            <input type="range" id="studentRange" min="1" max="50" value="5" class="range-input" oninput="updateCalculator(this.value)">
-                        </div>
-
-                        <div class="calc-result-display">
-                            <div class="calc-number" id="fundedScholars">5</div>
-                            <div class="calc-desc">Rural Scholars Fully Funded with Hardware & Offline Mesh Hub Access</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-         INSTITUTIONAL ALLIANCES & SYSTEM NODES
-         ========================================================================== -->
-    <section class="partners-section">
-        <div class="container">
-            <div class="badge-tag red">Institutional Network</div>
-            <h2>System Nodes & Ecosystem Alliances</h2>
-            
-            <div class="partners-flex">
-                <a href="https://youtube.com/@quantforgeacademy?si=K0QnqU7dEJr1Ru1-" target="_blank" rel="noopener noreferrer" class="partner-node">
-                    <div class="partner-avatar-placeholder">QF</div>
-                    <span>QuantForge Academy</span>
-                </a>
-
-                <a href="https://ecultureskenya.github.io/eCultures-Kenya-/home.html" target="_blank" rel="noopener noreferrer" class="partner-node">
-                    <div class="partner-avatar-placeholder">eC</div>
-                    <span>eCultures Kenya</span>
-                </a>
-
-                <a href="https://aid-for-aiming-africa-fbx6511.public.builtwithrocket.new/" target="_blank" rel="noopener noreferrer" class="partner-node">
-                    <div class="partner-avatar-placeholder">AAA</div>
-                    <span>Aid For Aiming Africa</span>
-                </a>
-
-                <a href="https://jengamaliyouthflow.github.io/JengaMali-Youth-Flow-/home.html" target="_blank" rel="noopener noreferrer" class="partner-node">
-                    <div class="partner-avatar-placeholder">JMYF</div>
-                    <span>JengaMali Youth Flow</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-         SAFARICOM-INSPIRED MEGA FOOTER (NO GOOGLE ACCOUNT DYNAMICS)
-         ========================================================================== -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <!-- Brand Info -->
-                <div class="footer-brand">
-                    <h3>UEFI<span>GLOBAL</span></h3>
-                    <p>
-                        Building Africa's next generation of software architects, data scientists, and ethical technology leaders from Narok County to the global stage.
-                    </p>
-                    <div class="badge-tag" style="margin-bottom: 0;">● Node: Kenya Core</div>
-                </div>
-
-                <!-- Navigation Columns -->
-                <div class="footer-col">
-                    <h4>Core System</h4>
-                    <ul>
-                        <li><a href="#about">Overview</a></li>
-                        <li><a href="#narok">Narok Protocol</a></li>
-                        <li><a href="#curriculum">CBE & IB Syllabus</a></li>
-                        <li><a href="tech-lab.html">Quant Forge Lab</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Care Initiatives</h4>
-                    <ul>
-                        <li><a href="anthoninas-initiative.html">Anthonina Care</a></li>
-                        <li><a href="wilsons-initiative.html">The Alal Care</a></li>
-                        <li><a href="#initiatives">Cyber Wellbeing</a></li>
-                        <li><a href="tutor.html">AI Professor Gateway</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Portals</h4>
-                    <ul>
-                        <li><a href="enroll.html">Scholar Enrollment</a></li>
-                        <li><a href="support-us.html">Support / Sponsor</a></li>
-                        <li><a href="contactus.html">Contact Hub</a></li>
-                        <li><a href="opportunities-hub.html">Opportunities</a></li>
-                    </ul>
-                </div>
-
-                <!-- Newsletter -->
-                <div class="newsletter-box">
-                    <h4>Stay Connected</h4>
-                    <p>Receive live dispatch updates on rural mesh deployments.</p>
-                    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed to UEFI Global Dispatch.');">
-                        <input type="email" placeholder="Enter your email" required>
-                        <button type="submit" class="btn btn-safaricom" style="padding: 0.8rem;">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="footer-bottom-bar">
-                <p>&copy; 2026 UEFI Global Institute. Republic of Kenya. All rights reserved.</p>
-                <p>Designed with Safaricom Vibrant Science & High-Performance UX Aesthetics.</p>
+        <div class="footer-base-row">
+            <div>&copy; 2026 UEFI Follett Platform Technologies Ecosystem. All Rights Reserved.</div>
+            <div style="display: flex; gap: 20px;">
+                <a href="#" style="transition: var(--tr-fast);"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="transition: var(--tr-fast);"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="transition: var(--tr-fast);"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" style="transition: var(--tr-fast);"><i class="fab fa-github"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- ==========================================================================
-         JAVASCRIPT CONTROLLER (SLIDER, TABS, COUNTERS & CALCULATOR)
-         ========================================================================== -->
     <script>
-        /* 1. HERO SLIDER ENGINE */
-        const slides = document.querySelectorAll('.hero-slide');
-        const dots = document.querySelectorAll('.dot-item');
-        const prevBtn = document.getElementById('prevSlide');
-        const nextBtn = document.getElementById('nextSlide');
-        let currentSlide = 0;
-        let slideTimer;
+        /* ==========================================================================
+           A. GLOBAL PLATFORM STATE SCHEMAS & VARIABLES
+           ========================================================================== */
+        let platformTaskIndexCount = 4;
+        let activeSelectedDragElementId = null;
+        let pomodoroTimerIntervalEngine = null;
+        let pomodoroSecondsTimeBalanceRemaining = 1500; // 25 Minutes Default Base Setting
+        let pomodoroIsMachineActivelyRunning = false;
+        let currentFlashcardIndexPointer = 0;
 
-        function goToSlide(index) {
-            slides[currentSlide].classList.remove('active');
-            dots[currentSlide].classList.remove('active');
-            
-            currentSlide = (index + slides.length) % slides.length;
-            
-            slides[currentSlide].classList.add('active');
-            dots[currentSlide].classList.add('active');
-        }
-
-        function nextSlide() {
-            goToSlide(currentSlide + 1);
-        }
-
-        function prevSlide() {
-            goToSlide(currentSlide - 1);
-        }
-
-        function startTimer() {
-            slideTimer = setInterval(nextSlide, 5000);
-        }
-
-        function resetTimer() {
-            clearInterval(slideTimer);
-            startTimer();
-        }
-
-        if(nextBtn && prevBtn) {
-            nextBtn.addEventListener('click', () => { nextSlide(); resetTimer(); });
-            prevBtn.addEventListener('click', () => { prevSlide(); resetTimer(); });
-        }
-
-        dots.forEach((dot, idx) => {
-            dot.addEventListener('click', () => { goToSlide(idx); resetTimer(); });
-        });
-
-        startTimer();
-
-        /* 2. TAB SWITCHER (CBE vs IB) */
-        function switchTab(paneId, btnElement) {
-            // Remove active from all tabs
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.curriculum-content-pane').forEach(pane => pane.classList.remove('active'));
-
-            // Activate chosen tab
-            btnElement.classList.add('active');
-            document.getElementById(paneId).classList.add('active');
-        }
-
-        /* 3. IMPACT CALCULATOR LOGIC */
-        function updateCalculator(val) {
-            document.getElementById('studentVal').innerText = val;
-            document.getElementById('fundedScholars').innerText = val; // 1:1 cross-subsidization
-        }
-
-        /* 4. ANIMATED STATISTICAL COUNTER OBSERVER */
-        const observerOptions = {
-            threshold: 0.5
+        /* Complete Content Map Data Matrix to support left sidebar updates dynamically */
+        const topicDataMatrixSystem = {
+            'Physics': {
+                title: 'Topic: A.1 Kinematics SL (Paper 1 & 2)',
+                videoText: 'Kinematics Mechanics Equations & Vector Mechanics Processing Engine Frame Active',
+                toolText: 'GeoGebra Dynamic Calculus Frame: Mapping Trajectory Paths & Derivatives Matrix'
+            },
+            'Biology': {
+                title: 'Topic: B.1 Cell Structure & Molecular Biology (2026-2028 Core)',
+                videoText: 'High-Resolution Electron Microscopy Cellular Structural Video Core Active',
+                toolText: 'Interactive Macromolecular 3D Modeling Matrix Engine'
+            },
+            'Math': {
+                title: 'Topic: M.2 Calculus Limits & Analytical Continuous Optimization',
+                videoText: 'Advanced Limits Resolution & Riemann Integration Theories Active',
+                toolText: 'Interactive Function Plotter & Surface Area Integral Generator Rig'
+            },
+            'CS': {
+                title: 'Topic: C.4 Abstract Data Structural Layouts & Object Reference Node Trees',
+                videoText: 'Recursive Processing Arrays & Dynamic Pointer Linking Mechanics Visualizer',
+                toolText: 'Live Interactive Variable Node Graph & Pipeline Evaluation Frame'
+            },
+            'Economics': {
+                title: 'Topic: E.1 Microeconomics Price Elasticity Matrix & Equilibrium Scales',
+                videoText: 'Market Optimization Schemes & Consumer Surplus Vectors Active',
+                toolText: 'Supply & Demand Interactive Variable Margin Shifts Calculator Graphic'
+            },
+            'MYPMath': {
+                title: 'IB MYP Extended Mathematics: Algebraic Quadrature Expressions',
+                videoText: 'Polynomial Expansion Foundations & Vector Variable Factorizations Matrix',
+                toolText: 'Interactive Dynamic Cartesian Quadratic Parabola Solver Canvas'
+            },
+            'MYPScience': {
+                title: 'IB MYP Integrated Sciences: Electro-Chemical Energy Converters',
+                videoText: 'Voltaic Cell Oxidation Dynamics & Electron Shift Processes Active',
+                toolText: 'Interactive Galvanic Cell Potential Variable Model Rig'
+            },
+            'CBE9': {
+                title: 'CBE Grade 9 Pre-Technical Studies: Core Mechanical Drafting Orthographic Layouts',
+                videoText: 'Three-Dimensional Perspective Transformations to Two-Dimensional Metric Planes View',
+                toolText: 'Dynamic Standard Multi-View Geometric Blueprint Generation Framework'
+            },
+            'CBE10': {
+                title: 'CBE Grade 10 Applied Sciences: Thermal Kinetics and Expansion Moduli',
+                videoText: 'Linear Coefficient Calculations & Structural Thermodynamic Stress Models',
+                toolText: 'Interactive Gas Laws Variable Volume/Temperature Simulation Dashboard'
+            }
         };
 
-        const counterObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const card = entry.target;
-                    const numElement = card.querySelector('.metric-number');
-                    if (numElement && !card.classList.contains('counted')) {
-                        card.classList.add('counted');
-                        const target = parseInt(numElement.getAttribute('data-target'));
-                        if (target && target > 100) {
-                            animateValue(numElement, 0, target, 2000, "k+");
-                        }
-                    }
-                }
-            });
-        }, observerOptions);
+        const activeFlashcardsArrayDataset = [
+            {
+                q: "What is the exact physical operational definition of Acceleration?",
+                a: "The rate of structural change of velocity vector metrics with respect to time framework parameters: $a = \\frac{dv}{dt}$."
+            },
+            {
+                q: "State the explicit Principle of Conservation of Linear Momentum.",
+                a: "The total linear momentum metrics vector aggregate within an isolated system workspace remains absolute constant unless impacted by outer net structural force frameworks: $\\sum p_{\\text{initial}} = \\sum p_{\\text{final}}$."
+            },
+            {
+                q: "What defines a standard Competency Based Curriculum (CBE Framework)?",
+                a: "An educational model concentrating optimization paths directly around measurable practical student mastery metrics governing concrete execution skill sets rather than passive time-accumulation constants."
+            }
+        ];
 
-        document.querySelectorAll('.metric-card').forEach(card => {
-            counterObserver.observe(card);
+        /* ==========================================================================
+           B. EVENT LISTENERS & DEEP BOOTSTRAPPING ENGINE
+           ========================================================================== */
+        document.addEventListener("DOMContentLoaded", function() {
+            initializeDynamicCalendarEngineGrid();
+            bootstrapLocalSavedNotesEngine();
+            calculateKanbanSummaryCounters();
         });
 
-        function animateValue(obj, start, end, duration, suffix = "") {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const currentVal = Math.floor(progress * (end - start) + start);
-                obj.innerHTML = (currentVal / 1000).toFixed(0) + suffix;
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
+        /* ==========================================================================
+           C. DYNAMIC INTERACTIVE CURRICULUM ACCORDION VIEWER ENGINE
+           ========================================================================== */
+        function toggleAccordion(headerElementNode) {
+            const accordionContentPanel = headerElementNode.nextElementSibling;
+            const openAccordionPanels = headerElementNode.closest('.curriculum-sidebar').querySelectorAll('.accordion-content');
+            
+            openAccordionPanels.forEach(panel => {
+                if(panel !== accordionContentPanel) {
+                    panel.classList.remove('open');
                 }
-            };
-            window.requestAnimationFrame(step);
+            });
+            
+            accordionContentPanel.classList.toggle('open');
+        }
+
+        function loadTopic(topicKeyCodeString) {
+            const topicTargetObject = topicDataMatrixSystem[topicKeyCodeString];
+            if(!topicTargetObject) return;
+            
+            // Clear current active sidebar indicators
+            document.querySelectorAll('.subject-list a').forEach(linkNode => {
+                linkNode.classList.remove('active');
+            });
+            
+            // Set clicked node to active state
+            event.target.classList.add('active');
+            
+            // Target elements translation updates
+            document.getElementById('activeTopicTitle').innerText = topicTargetObject.title;
+            
+            const videoPlaceholderBlock = document.querySelector('.embed-video .embed-placeholder h4');
+            const toolPlaceholderBlock = document.querySelector('.embed-tool .embed-placeholder h4');
+            
+            if(videoPlaceholderBlock) videoPlaceholderBlock.innerText = topicTargetObject.videoText;
+            if(toolPlaceholderBlock) toolPlaceholderBlock.innerText = topicTargetObject.toolText;
+        }
+
+        function switchResourceView(tabTypeString) {
+            // Update active state across upper buttons layout
+            document.querySelectorAll('.resource-tabs .tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const targetContainer = document.getElementById('mainContentViewer');
+            
+            // Emulate content swaps inside workspace without altering internal baseline metadata
+            console.log("Workspace display redirected to match tab execution parameters: " + tabTypeString);
+        }
+
+        function toggleExplanation(explanationElementId) {
+            const targetExplanationPanel = document.getElementById(explanationElementId);
+            if(targetExplanationPanel.style.display === "block") {
+                targetExplanationPanel.style.display = "none";
+            } else {
+                targetExplanationPanel.style.display = "block";
+            }
+        }
+
+        function selectOption(optionElementWrapper) {
+            const containerOptionsSet = optionElementWrapper.closest('.mcq-options').querySelectorAll('.option');
+            containerOptionsSet.forEach(opt => {
+                opt.style.borderColor = "var(--clr-border-light)";
+                opt.style.background = "var(--clr-white)";
+                opt.style.color = "var(--clr-black-charcoal)";
+            });
+            
+            optionElementWrapper.style.borderColor = "var(--clr-blue-bright)";
+            optionElementWrapper.style.background = "var(--clr-blue-tint)";
+            optionElementWrapper.style.color = "var(--clr-blue-ultra)";
+        }
+
+        /* ==========================================================================
+           D. TIME BOUND EXAM PORTAL MANAGER ENGINE (HIGH CONTRAST INTERFACE)
+           ========================================================================== */
+        function toggleMockExamMode() {
+            const operationalBodyContainer = document.body;
+            operationalBodyContainer.classList.toggle('mock-exam-activated');
+            
+            const interactiveExamBtnElement = document.getElementById('enterExamModeBtn');
+            if(operationalBodyContainer.classList.contains('mock-exam-activated')) {
+                interactiveExamBtnElement.innerHTML = `<i class="fas fa-door-open"></i> Terminate Mock Portal`;
+                interactiveExamBtnElement.style.background = "var(--clr-black-pure)";
+                interactiveExamBtnElement.style.boxShadow = "0 4px 14px rgba(0,0,0,0.4)";
+            } else {
+                interactiveExamBtnElement.innerHTML = `<i class="fas fa-laptop-code"></i> Enter Mock Exam Portal`;
+                interactiveExamBtnElement.style.background = "var(--clr-red-primary)";
+                interactiveExamBtnElement.style.boxShadow = "0 4px 14px rgba(187, 0, 0, 0.4)";
+            }
+        }
+
+        /* ==========================================================================
+           E. DYNAMIC DRAG AND DROP KANBAN PLANNING MATRIX
+           ========================================================================== */
+        function allowDrop(dragEventObj) {
+            dragEventObj.preventDefault();
+        }
+
+        function dragTask(dragEventObj) {
+            dragEventObj.dataTransfer.setData("text", dragEventObj.target.id);
+            activeSelectedDragElementId = dragEventObj.target.id;
+        }
+
+        function dropTask(dragEventObj, targetedColumnNameKey) {
+            dragEventObj.preventDefault();
+            const retrievedCardElementIdId = dragEventObj.dataTransfer.getData("text");
+            const structuralCardDOMNode = document.getElementById(retrievedCardElementIdId);
+            
+            let targetedDropContainerBlock = dragEventObj.target;
+            
+            // Loop upwards if drop hit deep subelements inside structure
+            while(targetedDropContainerBlock && !targetedDropContainerBlock.classList.contains('kanban-column')) {
+                targetedDropContainerBlock = targetedDropContainerBlock.parentElement;
+            }
+            
+            if(targetedDropContainerBlock && structuralCardDOMNode) {
+                targetedDropContainerBlock.appendChild(structuralCardDOMNode);
+                
+                // Readjust card styling accents dynamically based on tracking zone allocations
+                const tagSpanNode = structuralCardDOMNode.querySelector('.kanban-card-tag');
+                if(tagSpanNode) {
+                    if(targetedColumnNameKey === 'mastered') {
+                        tagSpanNode.className = "kanban-card-tag tag-green";
+                        tagSpanNode.innerText = "Mastered Scale";
+                    } else if(targetedColumnNameKey === 'progress') {
+                        tagSpanNode.className = "kanban-card-tag tag-blue";
+                        tagSpanNode.innerText = "In Progress Review";
+                    }
+                }
+                
+                calculateKanbanSummaryCounters();
+            }
+        }
+
+        function calculateKanbanSummaryCounters() {
+            const totalBacklogCount = document.getElementById('col-backlog').querySelectorAll('.kanban-card').length;
+            const totalProgressCount = document.getElementById('col-progress').querySelectorAll('.kanban-card').length;
+            const totalMasteredCount = document.getElementById('col-mastered').querySelectorAll('.kanban-card').length;
+            
+            document.getElementById('count-backlog').innerText = totalBacklogCount;
+            document.getElementById('count-progress').innerText = totalProgressCount;
+            document.getElementById('count-mastered').innerText = totalMasteredCount;
+        }
+
+        /* ==========================================================================
+           F. DYNAMIC PLANNING MODALS CONFIGURATION INTERFACES
+           ========================================================================== */
+        function openModal(modalUniqueElementId) {
+            document.getElementById(modalUniqueElementId).style.display = "flex";
+        }
+
+        document.getElementById("addTaskModal").addEventListener("click", function(e) {
+            if(e.target === this) {
+                closeModal('addTaskModal');
+            }
+        });
+
+        function closeModal(modalUniqueElementId) {
+            document.getElementById(modalUniqueElementId).style.display = "none";
+        }
+
+        function commitTaskCardToBoard() {
+            const providedTitleText = document.getElementById('taskInputTitle').value.trim();
+            const providedDescriptionText = document.getElementById('taskInputDescription').value.trim();
+            const selectedPriorityTierCode = document.getElementById('taskInputPriority').value;
+            
+            if(providedTitleText === "") {
+                alert("Please inject functional task description title parameters.");
+                return;
+            }
+            
+            platformTaskIndexCount++;
+            
+            const fabricatedCardNodeStructure = document.createElement('div');
+            fabricatedCardNodeStructure.className = "kanban-card";
+            fabricatedCardNodeStructure.id = `task-${platformTaskIndexCount}`;
+            fabricatedCardNodeStructure.setAttribute("draggable", "true");
+            fabricatedCardNodeStructure.addEventListener("dragstart", dragTask);
+            
+            let trackingTagStyleText = "tag-blue";
+            let displayPriorityLabelText = "Medium Priority";
+            
+            if(selectedPriorityTierCode === 'red') {
+                trackingTagStyleText = "tag-red";
+                displayPriorityLabelText = "High Priority Scale";
+            } else if(selectedPriorityTierCode === 'green') {
+                trackingTagStyleText = "tag-green";
+                displayPriorityLabelText = "Low Priority Scale";
+            }
+            
+            fabricatedCardNodeStructure.innerHTML = `
+                <span class="kanban-card-tag ${trackingTagStyleText}">${displayPriorityLabelText}</span>
+                <h5>${providedTitleText}</h5>
+                <p>${providedDescriptionText}</p>
+            `;
+            
+            document.getElementById('col-backlog').appendChild(fabricatedCardNodeStructure);
+            
+            // Flush input fields down to base states
+            document.getElementById('taskInputTitle').value = "";
+            document.getElementById('taskInputDescription').value = "";
+            
+            closeModal('addTaskModal');
+            calculateKanbanSummaryCounters();
+        }
+
+        /* ==========================================================================
+           G. LIVE CALENDAR GRID AUTOMATION MATRIX ENGINE
+           ========================================================================== */
+        function initializeDynamicCalendarEngineGrid() {
+            const targetedGridContainerElement = document.getElementById('calendarGridEngineLayout');
+            
+            // Build absolute simulation grid structure tracking standard 31-day parameter month matrix mapping
+            // Simulating an arbitrary configuration matrix offset sequence where month initiates directly on a Wednesday
+            const layoutArbitraryMonthOffsetSpacing = 3; 
+            const totalDaysInMonthSimulationCount = 31;
+            
+            for(let blankCellIndex = 0; blankCellIndex < layoutArbitraryMonthOffsetSpacing; blankCellIndex++) {
+                const structuralBlankCell = document.createElement('div');
+                structuralBlankCell.className = "calendar-cell";
+                structuralBlankCell.style.opacity = "0";
+                structuralBlankCell.style.pointerEvents = "none";
+                targetedGridContainerElement.appendChild(structuralBlankCell);
+            }
+            
+            for(let individualDayIndex = 1; individualDayIndex <= totalDaysInMonthSimulationCount; individualDayIndex++) {
+                const operationalDayCellNode = document.createElement('div');
+                operationalDayCellNode.className = "calendar-cell";
+                operationalDayCellNode.innerText = individualDayIndex;
+                
+                // Inject specific simulated highlighting markers on crucial target dates
+                if(individualDayIndex === 14 || individualDayIndex === 28) {
+                    operationalDayCellNode.classList.add('active-event');
+                    operationalDayCellNode.setAttribute("title", "Core UEFI Academic Simulation Deadline Configured");
+                }
+                
+                operationalDayCellNode.addEventListener("click", function() {
+                    document.querySelectorAll('.calendar-cell').forEach(c => c.style.borderColor = "var(--clr-border-light)");
+                    this.style.borderColor = "var(--clr-blue-bright)";
+                    console.log("Calendar grid focused on timeline unit target day: " + individualDayIndex);
+                });
+                
+                targetedGridContainerElement.appendChild(operationalDayCellNode);
+            }
+        }
+
+        /* ==========================================================================
+           H. POMODORO DEEP FOCUS DECK OPERATION MOTOR
+           ========================================================================== */
+        function triggerPomoEngine() {
+            const operationalButtonTriggerNode = document.getElementById('btnPomoStartPause');
+            
+            if(pomodoroIsMachineActivelyRunning) {
+                // Pause State Action Protocols
+                clearInterval(pomodoroTimerIntervalEngine);
+                pomodoroIsMachineActivelyRunning = false;
+                operationalButtonTriggerNode.innerText = "RESUME FOCUS";
+                operationalButtonTriggerNode.style.color = "var(--clr-red-primary)";
+                operationalButtonTriggerNode.style.background = "var(--clr-white)";
+            } else {
+                // Initial Activation Steps
+                pomodoroIsMachineActivelyRunning = true;
+                operationalButtonTriggerNode.innerText = "PAUSE EXECUTION";
+                operationalButtonTriggerNode.style.color = "var(--clr-white)";
+                operationalButtonTriggerNode.style.background = "var(--clr-black-pure)";
+                
+                pomodoroTimerIntervalEngine = setInterval(function() {
+                    pomodoroSecondsTimeBalanceRemaining--;
+                    renderUpdatedPomodoroTextDisplay();
+                    
+                    if(pomodoroSecondsTimeBalanceRemaining <= 0) {
+                        clearInterval(pomodoroTimerIntervalEngine);
+                        alert("Session block complete. Initiate restorative pause cycle.");
+                        resetPomoEngine();
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetPomoEngine() {
+            clearInterval(pomodoroTimerIntervalEngine);
+            pomodoroSecondsTimeBalanceRemaining = 1500;
+            pomodoroIsMachineActivelyRunning = false;
+            renderUpdatedPomodoroTextDisplay();
+            
+            const operationalButtonTriggerNode = document.getElementById('btnPomoStartPause');
+            operationalButtonTriggerNode.innerText = "START FOCUS";
+            operationalButtonTriggerNode.style.color = "var(--clr-red-primary)";
+            operationalButtonTriggerNode.style.background = "var(--clr-white)";
+        }
+
+        function renderUpdatedPomodoroTextDisplay() {
+            const outputMinutesCalculationValue = Math.floor(pomodoroSecondsTimeBalanceRemaining / 60);
+            const outputSecondsCalculationValue = pomodoroSecondsTimeBalanceRemaining % 60;
+            
+            const processedMinutesStringVal = outputMinutesCalculationValue < 10 ? "0" + outputMinutesCalculationValue : outputMinutesCalculationValue;
+            const processedSecondsStringVal = outputSecondsCalculationValue < 10 ? "0" + outputSecondsCalculationValue : outputSecondsCalculationValue;
+            
+            document.getElementById('pomoMinutesSecondsDisplay').innerText = `${processedMinutesStringVal}:${processedSecondsStringVal}`;
+        }
+
+        /* ==========================================================================
+           I. ACTIVE RECALL INTERNAL FLASHCARDS ROTATION ENGINE
+           ========================================================================== */
+        function flipActiveFlashcard() {
+            document.getElementById('flashcardInnerEngine').classList.toggle('flipped');
+        }
+
+        function rotateFlashcardDeck(rotationStepModifierInteger) {
+            // Unflip display to clear confusion metrics prior to content shifts
+            document.getElementById('flashcardInnerEngine').classList.remove('flipped');
+            
+            setTimeout(function() {
+                currentFlashcardIndexPointer += rotationStepModifierInteger;
+                
+                if(currentFlashcardIndexPointer >= activeFlashcardsArrayDataset.length) {
+                    currentFlashcardIndexPointer = 0;
+                }
+                if(currentFlashcardIndexPointer < 0) {
+                    currentFlashcardIndexPointer = activeFlashcardsArrayDataset.length - 1;
+                }
+                
+                document.getElementById('fcQuestionText').innerText = activeFlashcardsArrayDataset[currentFlashcardIndexPointer].q;
+                document.getElementById('fcAnswerText').innerText = activeFlashcardsArrayDataset[currentFlashcardIndexPointer].a;
+                document.getElementById('flashcardDeckIndexIndicator').innerText = `Card ${currentFlashcardIndexPointer + 1} of ${activeFlashcardsArrayDataset.length}`;
+            }, 200);
+        }
+
+        /* ==========================================================================
+           J. PERSISTED DATA PERSISTENCE SCRATCHPAD & DOCUMENT CONVERTERS
+           ========================================================================== */
+        function saveNotesToBrowserMemory() {
+            const scratchpadWorkingTextPayload = document.getElementById('notesScratchpadTextareaEngine').value;
+            localStorage.setItem('uefi_platform_notes_cache', scratchpadWorkingTextPayload);
+            alert("Syllabus planner text records successfully synced to browser session memory nodes.");
+        }
+
+        function bootstrapLocalSavedNotesEngine() {
+            const cachedNotesContentString = localStorage.getItem('uefi_platform_notes_cache');
+            if(cachedNotesContentString) {
+                document.getElementById('notesScratchpadTextareaEngine').value = cachedNotesContentString;
+            }
+        }
+
+        function exportNotesAsTextFile() {
+            const textContentPayloadString = document.getElementById('notesScratchpadTextareaEngine').value;
+            if(textContentPayloadString.trim() === "") {
+                alert("Cannot initialize data export routines across empty text strings.");
+                return;
+            }
+            
+            const trackingBlobWrapper = new Blob([textContentPayloadString], { type: "text/plain;charset=utf-8" });
+            const temporaryAnchorNode = document.createElement("a");
+            
+            temporaryAnchorNode.download = "UEFI_Study_Pool_Revision_Notes.txt";
+            temporaryAnchorNode.href = window.URL.createObjectURL(trackingBlobWrapper);
+            temporaryAnchorNode.style.display = "none";
+            
+            document.body.appendChild(temporaryAnchorNode);
+            temporaryAnchorNode.click();
+            document.body.removeChild(temporaryAnchorNode);
         }
     </script>
 </body>
 </html>
+
+
+
