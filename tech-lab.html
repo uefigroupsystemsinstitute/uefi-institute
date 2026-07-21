@@ -3,228 +3,666 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Tech Lab | Advanced Computational Research</title>
-    <link rel="stylesheet" href="style.css">
+    <title>UEFI Tech Lab | Silicon Savannah AI, Databases & Computational Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --terminal-dark: #142114;
-            --terminal-bg: #1B361B;
-            --accent-gold: #43B02A; /* Safaricom Green */
-            --data-teal: #E4002B;    /* Safaricom Maroon/Red */
+            /* Core Terminal & Dark Mode Palette */
+            --terminal-dark: #0A110A;
+            --terminal-bg: #122212;
+            --terminal-card: rgba(20, 33, 20, 0.85);
+            
+            /* Safaricom & Silicon Savannah Brand Colors */
+            --safaricom-green: #43B02A;
+            --safaricom-dark-green: #008542;
+            --safaricom-red: #E4002B;
+            --accent-gold: #43B02A; 
+            --data-teal: #00A88F;
+            
+            /* Kenyan Flag Official Palette */
+            --kenya-black: #000000;
+            --kenya-red: #BB0000;
+            --kenya-green: #006600;
+            --kenya-white: #FFFFFF;
+            --kenyan-flag-strip: linear-gradient(90deg, #000000 0%, #000000 25%, #BB0000 25%, #BB0000 50%, #006600 50%, #006600 75%, #FFFFFF 75%, #FFFFFF 100%);
+            
+            /* UI Elements */
             --error-red: #ff3333;
-            --border-light: rgba(255, 255, 255, 0.15);
-            --midnight-blue: #0E170E; 
-            /* Kenyan Flag Strip Gradient */
-            --kenyan-flag: linear-gradient(to right, #000000 0%, #000000 25%, #BB0000 25%, #BB0000 50%, #006600 50%, #006600 75%, #FFFFFF 75%, #FFFFFF 100%);
+            --border-light: rgba(67, 176, 42, 0.25);
+            --border-strong: rgba(67, 176, 42, 0.6);
+            --midnight-blue: #060B06;
+            --text-muted: rgba(255, 255, 255, 0.75);
+            --shadow-glow: 0 0 25px rgba(67, 176, 42, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
             background-color: var(--terminal-dark);
             background-image: 
-                linear-gradient(rgba(20, 33, 20, 0.95), rgba(20, 33, 20, 0.95)),
+                radial-gradient(circle at 50% 0%, rgba(67, 176, 42, 0.15) 0%, transparent 75%),
+                linear-gradient(rgba(10, 17, 10, 0.94), rgba(10, 17, 10, 0.94)),
                 url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
             margin: 0;
             font-family: 'Inter', sans-serif;
-            color: #fff;
+            color: var(--kenya-white);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Hero Section */
+        /* --- PROFESSIONAL HEADER & NAVIGATION --- */
+        header {
+            background: rgba(6, 11, 6, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: var(--kenya-white);
+            font-weight: 900;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%; /* STRICTLY CIRCULAR AS REQUESTED */
+            object-fit: cover;
+            border: 2px solid var(--safaricom-green);
+            box-shadow: 0 0 15px rgba(67, 176, 42, 0.5);
+            background: var(--kenya-black);
+            padding: 2px;
+        }
+
+        .logo-text-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-subtext {
+            font-size: 0.65rem;
+            color: var(--safaricom-green);
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .nav-links li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s all ease;
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+
+        .nav-links li a:hover, .nav-links li a.active {
+            color: var(--kenya-white);
+            background: rgba(67, 176, 42, 0.15);
+            border-bottom: 2px solid var(--safaricom-green);
+            text-shadow: 0 0 8px rgba(67, 176, 42, 0.6);
+        }
+
+        .btn-nav {
+            background: linear-gradient(135deg, var(--safaricom-green), var(--safaricom-dark-green));
+            color: var(--kenya-white) !important;
+            padding: 8px 20px !important;
+            border-radius: 4px;
+            font-weight: 800 !important;
+            border: 1px solid var(--safaricom-green);
+            box-shadow: 0 4px 15px rgba(67, 176, 42, 0.3);
+        }
+
+        .btn-nav:hover {
+            background: var(--safaricom-red) !important;
+            border-color: var(--safaricom-red) !important;
+            box-shadow: 0 4px 20px rgba(228, 0, 43, 0.5) !important;
+            transform: translateY(-2px);
+        }
+
+        /* --- HERO SECTION --- */
         .lab-hero {
-            background: radial-gradient(circle at center, rgba(67, 176, 42, 0.2) 0%, var(--terminal-dark) 100%),
-                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80');
+            background: radial-gradient(circle at center, rgba(67, 176, 42, 0.25) 0%, var(--terminal-dark) 100%),
+                        url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=80');
             background-size: cover;
             background-position: center;
-            padding: 140px 20px 80px;
+            padding: 160px 20px 100px;
             text-align: center;
             border-bottom: 1px solid var(--border-light);
             position: relative;
         }
 
-        /* Continuous Kenyan Flag line at the top of the Hero */
         .lab-hero::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
-            background: var(--kenyan-flag);
+            height: 6px;
+            background: var(--kenyan-flag-strip);
         }
 
         .badge {
-            border: 1px solid var(--accent-gold);
-            color: #fff;
-            padding: 5px 15px;
-            font-family: 'Courier New', monospace;
+            border: 1px solid var(--safaricom-green);
+            color: var(--kenya-white);
+            padding: 6px 18px;
+            font-family: 'JetBrains Mono', monospace;
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: inline-block;
-            font-size: 0.8rem;
-            background: var(--accent-gold);
+            font-size: 0.85rem;
+            background: rgba(67, 176, 42, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 50px;
+            box-shadow: 0 0 15px rgba(67, 176, 42, 0.4);
         }
 
         .lab-hero h1 { 
-            font-size: clamp(2.5rem, 6vw, 4rem); 
+            font-size: clamp(2.8rem, 6vw, 4.5rem); 
             font-weight: 900;
             text-transform: uppercase;
-            margin: 0 0 1rem;
+            margin: 0 0 1.5rem;
             line-height: 1.1;
-            color: #fff;
+            color: var(--kenya-white);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .lab-hero h1 span {
+            background: linear-gradient(to right, var(--safaricom-green), #80FF66, var(--kenya-white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .lab-hero p { 
-            color: rgba(255,255,255,0.8); 
-            font-family: 'Courier New', monospace;
-            max-width: 700px; 
-            margin: 0 auto;
+            color: var(--text-muted); 
+            font-family: 'JetBrains Mono', monospace;
+            max-width: 850px; 
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
         }
 
-        /* Stats Grid */
+        .savannah-tag {
+            display: inline-block;
+            background: var(--safaricom-red);
+            color: white;
+            font-weight: 800;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        /* --- STATS GRID --- */
         .lab-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1px;
             background: var(--border-light);
-            max-width: 1200px;
-            margin: -40px auto 0;
+            max-width: 1300px;
+            margin: -50px auto 0;
             border: 1px solid var(--border-light);
             position: relative;
             z-index: 10;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
         }
 
         .stat-card {
             background: var(--terminal-dark);
-            padding: 25px;
+            padding: 30px 20px;
             text-align: center;
-            border-top: 3px solid var(--accent-gold);
-        }
-
-        .stat-card h4 { color: #fff; font-size: 1.8rem; margin: 0; font-weight: 300; }
-        .stat-card p { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-gold); margin: 5px 0 0; font-weight: bold; }
-
-        /* Direct Access Bar */
-        .direct-access-bar {
-            background: rgba(67, 176, 42, 0.1);
-            border-bottom: 1px solid var(--border-light);
-            padding: 20px 0;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        .terminal-link {
-            font-family: 'Courier New', monospace;
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
+            border-top: 4px solid var(--safaricom-green);
             transition: 0.3s;
         }
 
-        .terminal-link span { color: var(--accent-gold); margin-right: 8px; }
-        .terminal-link:hover { color: var(--accent-gold); text-shadow: 0 0 8px var(--accent-gold); }
+        .stat-card:hover {
+            background: var(--terminal-bg);
+            transform: translateY(-3px);
+        }
 
-        /* Course Tracks */
+        .stat-card:nth-child(even) {
+            border-top-color: var(--safaricom-red);
+        }
+
+        .stat-card h4 { color: #fff; font-size: 2.2rem; margin: 0; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        .stat-card p { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--safaricom-green); margin: 8px 0 0; font-weight: bold; }
+        .stat-card:nth-child(even) p { color: #FF6680; }
+
+        /* --- DIRECT ACCESS BAR --- */
+        .direct-access-bar {
+            background: rgba(67, 176, 42, 0.08);
+            border-bottom: 1px solid var(--border-light);
+            padding: 25px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 35px;
+            margin-top: 30px;
+        }
+
+        .terminal-link {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--kenya-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            padding: 5px 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .terminal-link span { color: var(--safaricom-green); font-weight: bold; margin-right: 8px; }
+        .terminal-link:hover { 
+            color: var(--safaricom-green); 
+            border-color: var(--safaricom-green);
+            box-shadow: 0 0 15px rgba(67, 176, 42, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* --- SECTION HEADINGS --- */
+        .section-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 80px auto 50px;
+            padding: 0 20px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin: 0 0 15px;
+            color: var(--kenya-white);
+            letter-spacing: 1px;
+        }
+
+        .section-header h2 span {
+            color: var(--safaricom-green);
+        }
+
+        .section-header .divider {
+            height: 4px;
+            width: 100px;
+            background: var(--kenyan-flag-strip);
+            margin: 0 auto 20px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* --- COURSE TRACKS GRID --- */
         .lab-container {
-            max-width: 1200px;
-            margin: 60px auto;
+            max-width: 1400px;
+            margin: 40px auto;
             padding: 0 20px;
         }
 
         .course-tracks {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
             gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .track-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-light);
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .track-card:hover { border-color: var(--accent-gold); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(67, 176, 42, 0.2); }
-
-        .track-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            filter: grayscale(1) contrast(1.2);
-            opacity: 0.7;
-            transition: 0.3s;
-        }
-
-        .track-card:hover .track-image { filter: grayscale(0) contrast(1); opacity: 1; }
-
-        .track-content { padding: 30px; flex-grow: 1; }
-        .track-content h3 { font-size: 1.4rem; margin: 0 0 15px; text-transform: uppercase; color: #fff; }
-        .track-content p { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
-
-        .lesson-list { list-style: none; padding: 0; margin-top: 20px; }
-        .lesson-list li { margin-bottom: 10px; font-family: 'Courier New', monospace; font-size: 0.85rem; }
-        .lesson-list li a { color: var(--accent-gold); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; font-weight: bold; }
-        .lesson-list li a:hover { border-bottom: 1px solid var(--accent-gold); color: #fff; }
-
-        /* COMPILER SANDBOX SECTION */
-        .sandbox-container {
-            border: 1px solid var(--border-light);
-            background: var(--terminal-bg);
-            border-radius: 4px;
-            overflow: hidden;
             margin-bottom: 80px;
         }
 
-        .sandbox-header {
-            background: var(--terminal-dark);
+        .track-card {
+            background: var(--terminal-card);
+            border: 1px solid var(--border-light);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .track-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--safaricom-green);
+            transition: 0.3s;
+        }
+
+        .track-card:hover { 
+            border-color: var(--safaricom-green); 
+            transform: translateY(-8px); 
+            box-shadow: var(--shadow-glow);
+        }
+
+        .track-card:hover::before {
+            width: 8px;
+            background: var(--safaricom-red);
+        }
+
+        .track-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            filter: grayscale(0.8) contrast(1.2);
+            opacity: 0.85;
+            transition: 0.5s;
             border-bottom: 1px solid var(--border-light);
-            padding: 15px 20px;
+        }
+
+        .track-card:hover .track-image { 
+            filter: grayscale(0) contrast(1.05); 
+            opacity: 1; 
+            transform: scale(1.03);
+        }
+
+        .track-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
+        .track-tag { color: var(--safaricom-green); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; }
+        .track-content h3 { font-size: 1.5rem; margin: 10px 0 15px; text-transform: uppercase; color: #fff; font-weight: 800; }
+        .track-content p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; flex-grow: 1; }
+
+        .lesson-list { list-style: none; padding: 0; margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+        .lesson-list li { margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; }
+        .lesson-list li::before { content: '>'; color: var(--safaricom-red); font-weight: 900; }
+        .lesson-list li a { color: var(--kenya-white); text-decoration: none; transition: 0.3s; font-weight: 600; }
+        .lesson-list li a:hover { color: var(--safaricom-green); padding-left: 5px; }
+
+        .highlight-link {
+            color: #80FF66 !important;
+            border-bottom: 1px dashed var(--safaricom-green);
+        }
+
+        /* --- MICROSOFT UTILITIES & WORKSPACE ECOSYSTEM --- */
+        .ms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 35px;
+            margin-bottom: 90px;
+        }
+
+        .ms-card {
+            background: rgba(15, 25, 15, 0.9);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .ms-card:hover {
+            border-color: var(--safaricom-green);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .ms-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .ms-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ms-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: white;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .icon-word { background: #1B5EBE; }
+        .icon-excel { background: #107C41; }
+        .icon-powerpoint { background: #C43E1C; }
+        .icon-access { background: #A80000; }
+        .icon-outlook { background: #0078D4; }
+        .icon-publisher { background: #077568; }
+
+        .ms-title h3 { margin: 0; font-size: 1.4rem; color: #fff; }
+        .ms-title span { font-size: 0.75rem; color: var(--safaricom-green); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; }
+
+        .ms-btn-launch {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .ms-btn-launch:hover {
+            background: var(--safaricom-green);
+            border-color: var(--safaricom-green);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .ms-section {
+            margin-top: 20px;
+        }
+
+        .ms-section h4 {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ms-section h4::before {
+            content: '■';
+            font-size: 0.7rem;
+            color: var(--safaricom-red);
+        }
+
+        .ms-section p, .ms-section ul {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0 0 15px;
+        }
+
+        .ms-section ul { padding-left: 20px; }
+        .ms-section ul li { margin-bottom: 6px; }
+
+        .ai-copilot-box {
+            background: linear-gradient(135deg, rgba(67, 176, 42, 0.1), rgba(0, 0, 0, 0.4));
+            border-left: 3px solid var(--safaricom-green);
+            padding: 15px;
+            border-radius: 0 6px 6px 0;
+            margin-top: 15px;
+        }
+
+        .ai-copilot-box h5 {
+            margin: 0 0 8px;
+            color: #fff;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-copilot-box h5 span {
+            background: var(--safaricom-red);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.65rem;
+        }
+
+        .video-tutorial-container {
+            margin-top: 20px;
+            border-top: 1px dashed rgba(255,255,255,0.15);
+            padding-top: 15px;
+        }
+
+        .video-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0,0,0,0.6);
+            padding: 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .video-link:hover {
+            border-color: var(--safaricom-red);
+            background: rgba(228, 0, 43, 0.1);
+        }
+
+        .video-icon {
+            background: var(--safaricom-red);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        /* --- COMPILER SANDBOX SECTION --- */
+        .sandbox-container {
+            border: 1px solid var(--border-strong);
+            background: var(--terminal-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 60px 0 90px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .sandbox-header {
+            background: #050A05;
+            border-bottom: 1px solid var(--border-light);
+            padding: 15px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .sandbox-title {
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
             color: #fff;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sandbox-title::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--safaricom-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--safaricom-green);
         }
 
         .sandbox-controls {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .btn-run {
-            background: var(--accent-gold);
-            color: #fff;
+            background: var(--safaricom-green);
+            color: #000;
             border: none;
-            padding: 8px 20px;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
+            padding: 10px 25px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
             cursor: pointer;
             transition: 0.3s;
             text-transform: uppercase;
+            border-radius: 4px;
+            letter-spacing: 1px;
         }
 
-        .btn-run:hover { box-shadow: 0 0 15px var(--accent-gold); background: #fff; color: var(--terminal-dark); }
+        .btn-run:hover { 
+            box-shadow: 0 0 20px var(--safaricom-green); 
+            background: #fff; 
+            color: var(--terminal-dark); 
+            transform: scale(1.05);
+        }
 
         .sandbox-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            min-height: 300px;
+            min-height: 380px;
         }
 
         .editor-pane {
-            padding: 20px;
+            padding: 25px;
             border-right: 1px solid var(--border-light);
+            background: rgba(0,0,0,0.4);
         }
 
         .editor-textarea {
@@ -232,82 +670,100 @@
             height: 100%;
             background: transparent;
             border: none;
-            color: #e0e0e0;
-            font-family: 'Courier New', monospace;
+            color: #80FF66;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.95rem;
             resize: none;
             outline: none;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .output-pane {
-            padding: 20px;
-            background: #090f09;
+            padding: 25px;
+            background: #040804;
             color: #fff;
-            font-family: 'Courier New', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.9rem;
             overflow-y: auto;
+            border-left: 4px solid var(--safaricom-red);
         }
 
-        /* Footer Info Box */
+        /* --- FOOTER INFO BOX --- */
         .info-box {
-            border: 2px solid var(--accent-gold);
-            padding: 50px;
+            border: 2px solid var(--safaricom-green);
+            padding: 60px 40px;
             text-align: center;
-            background: rgba(67, 176, 42, 0.05);
-            backdrop-filter: blur(10px);
+            background: radial-gradient(circle at center, rgba(67, 176, 42, 0.15) 0%, rgba(10, 17, 10, 0.9) 100%);
+            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(67, 176, 42, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-box::top {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--kenyan-flag-strip);
         }
 
         .btn-primary {
-            background: var(--accent-gold);
+            background: linear-gradient(135deg, var(--safaricom-green), var(--safaricom-dark-green));
             color: #fff;
-            padding: 15px 40px;
+            padding: 18px 45px;
             text-decoration: none;
             font-weight: 900;
             display: inline-block;
-            margin-top: 25px;
+            margin-top: 30px;
             text-transform: uppercase;
             letter-spacing: 2px;
             transition: 0.3s;
+            border-radius: 6px;
+            border: 1px solid #80FF66;
+            box-shadow: 0 10px 25px rgba(67, 176, 42, 0.4);
         }
 
         .btn-primary:hover {
-            box-shadow: 0 0 20px rgba(67, 176, 42, 0.6);
+            box-shadow: 0 0 30px rgba(67, 176, 42, 0.8);
             background: #fff;
             color: var(--terminal-dark);
+            transform: translateY(-3px);
         }
 
-        /* TERMINAL OVERLAY STYLES */
+        /* --- TERMINAL OVERLAY STYLES --- */
         .terminal-overlay {
             position: fixed;
             bottom: 0;
-            right: 5%;
-            width: 450px;
-            background: rgba(20, 33, 20, 0.98);
-            border: 1px solid var(--border-light);
+            right: 3%;
+            width: 480px;
+            background: rgba(10, 17, 10, 0.98);
+            border: 1px solid var(--safaricom-green);
             border-bottom: none;
-            border-radius: 8px 8px 0 0;
-            font-family: 'Courier New', monospace;
+            border-radius: 10px 10px 0 0;
+            font-family: 'JetBrains Mono', monospace;
             z-index: 9999;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .terminal-header {
-            background: var(--accent-gold);
+            background: var(--safaricom-dark-green);
             color: #fff;
-            padding: 12px 15px;
+            padding: 14px 18px;
             font-weight: 900;
             font-size: 0.85rem;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             cursor: pointer;
-            border-radius: 6px 6px 0 0;
+            border-radius: 8px 8px 0 0;
             user-select: none;
             position: relative;
         }
 
-        /* Kenyan Flag Strip inside the Terminal window Header line */
         .terminal-header::after {
             content: '';
             position: absolute;
@@ -315,14 +771,15 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: var(--kenyan-flag);
+            background: var(--kenyan-flag-strip);
         }
 
         .terminal-body {
-            padding: 15px;
-            height: 280px;
+            padding: 18px;
+            height: 320px;
             display: flex;
             flex-direction: column;
+            background: #050905;
         }
 
         .terminal-output {
@@ -330,77 +787,89 @@
             overflow-y: auto;
             font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 10px;
-            line-height: 1.4;
+            margin-bottom: 12px;
+            line-height: 1.5;
         }
 
-        .terminal-output p { margin: 5px 0; word-wrap: break-word; }
+        .terminal-output p { margin: 6px 0; word-wrap: break-word; }
 
         .terminal-input-line {
             display: flex;
             gap: 10px;
             align-items: center;
-            color: var(--accent-gold);
+            color: var(--safaricom-green);
             font-size: 0.85rem;
             border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 10px;
+            padding-top: 12px;
         }
 
         #terminal-input {
             background: transparent;
             border: none;
             color: #fff;
-            font-family: 'Courier New', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
             flex-grow: 1;
             outline: none;
         }
 
-        .terminal-minimized { transform: translateY(280px); }
+        .terminal-minimized { transform: translateY(320px); }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 900px) {
+            .sandbox-grid { grid-template-columns: 1fr; }
+            .editor-pane { border-right: none; border-bottom: 1px solid var(--border-light); height: 260px; }
+            .ms-grid { grid-template-columns: 1fr; }
+        }
 
         @media (max-width: 768px) {
-            .lab-hero h1 { font-size: 2.5rem; }
+            .lab-hero { padding: 120px 15px 70px; }
+            .lab-hero h1 { font-size: 2.2rem; }
             .direct-access-bar { flex-direction: column; align-items: center; gap: 15px; }
-            .sandbox-grid { grid-template-columns: 1fr; }
-            .editor-pane { border-right: none; border-bottom: 1px solid var(--border-light); height: 200px; }
-            .terminal-overlay { width: 90%; right: 5%; }
+            .terminal-overlay { width: 92%; right: 4%; }
+            nav { flex-direction: column; text-align: center; }
+            .nav-links { justify-content: center; }
         }
     </style>
 </head>
 <body>
     <header>
         <nav>
-               <a href="home.html" class="logo">
-               <img src="assets/logo-uefi.png" alt="U.E.F.I. Logo">
-               <span>U.E.F.I. INSTITUTE</span>
+            <a href="home.html" class="logo">
+                <img src="assets/main-logo.png" alt="U.E.F.I. Main Logo" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80'">
+                <div class="logo-text-wrapper">
+                    <span>U.E.F.I. INSTITUTE</span>
+                    <span class="logo-subtext">SILICON SAVANNAH CAMPUS</span>
+                </div>
             </a>
             <ul class="nav-links">
                 <li><a href="home.html">Home</a></li>
-                <li><a href="abouts.html">About</a></li>
-                <li><a href="tech-lab.html">Tech Lab</a></li>
-                <li><a href="courses.html">Courses</a></li>
-                <li><a href="anthoninas-initiative.html">Girls</a></li>
-                <li><a href="wilsons-initiative.html">Men</a></li>
-                <li><a href="uefi-engage.html">UEFI Engage</a></li>
+                <li><a href="tech-lab.html" class="active">Tech Lab</a></li>
+                <li><a href="#ai-databases">Databases & AI</a></li>
+                <li><a href="#python-hub">Python Hub</a></li>
+                <li><a href="#ms-utilities">Microsoft Suite</a></li>
+                <li><a href="anthoninas-initiative.html">Girls Tech</a></li>
+                <li><a href="wilsons-initiative.html">Men Tech</a></li>
                 <li><a href="tutor.html">AI Professor</a></li>
-                <li><a href="opportunities-hub.html">Opportunities</a></li>
-                <li><a href="contactus.html">Contact</a></li>
-                <li><a href="enroll.html" class="btn-nav">Enroll</a></li>
+                <li><a href="enroll.html" class="btn-nav">Enroll Now</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section class="lab-hero">
-            <span class="badge">Sovereign Intelligence Lab</span>
-            <h1>The Quant & AI <br>Research Terminal</h1>
-            <p>Mastering the computational tools that govern global markets. Built for the African frontier.</p>
+            <span class="badge">Sovereign Intelligence Lab &bull; Silicon Savannah</span>
+            <h1>The Quant, AI &amp;<br><span>Database Terminal</span></h1>
+            <p>Transforming Kenyan students into world-class software engineers, AI researchers, and database architects. Bridging university-level theory with industrial automation.</p>
+            <div class="savannah-tag">Powered by Safaricom Network Architecture &amp; Microsoft Azure Hub</div>
         </section>
 
         <div class="lab-stats">
             <div class="stat-card"><h4>10ms</h4><p>Target Latency</p></div>
             <div class="stat-card"><h4>Py3.12</h4><p>Core Runtime</p></div>
             <div class="stat-card"><h4>H100</h4><p>Neural Compute</p></div>
+            <div class="stat-card"><h4>M365</h4><p>Enterprise Tools</p></div>
+            <div class="stat-card"><h4>SQL/NoSQL</h4><p>Big Data Hub</p></div>
             <div class="stat-card"><h4>24/7</h4><p>Global Uplink</p></div>
         </div>
 
@@ -408,20 +877,29 @@
             <a href="https://github.com" target="_blank" class="terminal-link"><span>[01]</span> GITHUB_REPOSITORY</a>
             <a href="https://leetcode.com" target="_blank" class="terminal-link"><span>[02]</span> LEETCODE_ALGORITHMS</a>
             <a href="https://scratch.mit.edu" target="_blank" class="terminal-link"><span>[03]</span> MIT_SCRATCH_LOGIC</a>
+            <a href="https://python.datalumina.com/data-types/strings" target="_blank" class="terminal-link" style="border-color: var(--safaricom-green);"><span>[04]</span> DATALUMINA_PYTHON_STRINGS</a>
+            <a href="https://www.microsoft.com/en-us/microsoft-365" target="_blank" class="terminal-link"><span>[05]</span> MICROSOFT_365_CLOUD</a>
         </div>
 
         <div class="lab-container">
             
+            <div class="section-header" id="ai-databases">
+                <h2>Elite <span>Computational Tracks</span></h2>
+                <div class="divider"></div>
+                <p>Designed for the Silicon Savannah elite. Master algorithmic logic, high-frequency quantitative finance, database engineering, and artificial intelligence prompting from foundational concepts to advanced university degree standards.</p>
+            </div>
+
             <div class="course-tracks">
                 <div class="track-card">
                     <img src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=800&q=80" alt="Code Blocks" class="track-image">
                     <div class="track-content">
-                        <span style="color: var(--accent-gold); font-family: 'Courier New', monospace; font-size: 0.7rem;">[ LVL_01 FOUNDATIONS ]</span>
+                        <span class="track-tag">[ LVL_01 FOUNDATIONS ]</span>
                         <h3>Computational Logic</h3>
-                        <p>Mental models for recursion and variables using block-based architecture.</p>
+                        <p>Mental models for recursion, Boolean algebra, memory allocation, and variables using block-based and syntax-free architecture.</p>
                         <ul class="lesson-list">
-                            <li><a href="https://scratch.mit.edu/projects/editor/">MIT Scratch: Logic Lab</a></li>
+                            <li><a href="https://scratch.mit.edu/projects/editor/" target="_blank">MIT Scratch: Logic Lab</a></li>
                             <li><a href="tutor.html">Intro to Algorithmic Thinking</a></li>
+                            <li><a href="https://www.cs.cmu.edu/~15110/" target="_blank">CMU: Principles of Computing</a></li>
                         </ul>
                     </div>
                 </div>
@@ -429,12 +907,13 @@
                 <div class="track-card">
                     <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=800&q=80" alt="Quant Analytics" class="track-image">
                     <div class="track-content">
-                        <span style="color: var(--accent-gold); font-family: 'Courier New', monospace; font-size: 0.7rem;">[ LVL_02 QUANT ]</span>
+                        <span class="track-tag">[ LVL_02 QUANT ]</span>
                         <h3>The "Quant" Specialist</h3>
-                        <p>High-frequency trading and financial engineering. Master the mathematics of wealth.</p>
+                        <p>High-frequency trading algorithms, stochastic calculus, and financial engineering. Master the mathematics of wealth generation.</p>
                         <ul class="lesson-list">
-                            <li><a href="https://ocw.mit.edu/">MIT: Linear Algebra</a></li>
+                            <li><a href="https://ocw.mit.edu/" target="_blank">MIT: Linear Algebra &amp; Calculus</a></li>
                             <li><a href="tutor.html">Algorithmic Trading Systems</a></li>
+                            <li><a href="https://www.quantconnect.com/" target="_blank">QuantConnect Backtesting Lab</a></li>
                         </ul>
                     </div>
                 </div>
@@ -442,20 +921,289 @@
                 <div class="track-card">
                     <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80" alt="AI Research" class="track-image">
                     <div class="track-content">
-                        <span style="color: var(--accent-gold); font-family: 'Courier New', monospace; font-size: 0.7rem;">[ LVL_03 NEURAL ]</span>
-                        <h3>AI & Machine Learning</h3>
-                        <p>Architecting LLMs and Neural Networks to solve industrial challenges.</p>
+                        <span class="track-tag">[ LVL_03 NEURAL ]</span>
+                        <h3>AI &amp; Machine Learning</h3>
+                        <p>Architecting Large Language Models (LLMs), deep neural networks, and computer vision models to solve African industrial challenges.</p>
                         <ul class="lesson-list">
-                            <li><a href="https://cs50.harvard.edu/ai/">Harvard: CS50 AI</a></li>
+                            <li><a href="https://cs50.harvard.edu/ai/" target="_blank">Harvard: CS50 AI Architecture</a></li>
                             <li><a href="tutor.html">Neural Networks from Scratch</a></li>
+                            <li><a href="https://www.deeplearning.ai/" target="_blank">DeepLearning.AI: Advanced MLOps</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="track-card" id="python-hub">
+                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" alt="Python Code" class="track-image">
+                    <div class="track-content">
+                        <span class="track-tag">[ LVL_04 PYTHON MASTERY ]</span>
+                        <h3>Python Engineering</h3>
+                        <p>From university-level syntax to enterprise data pipelines. Master object-oriented programming, asynchronous execution, and data structures.</p>
+                        <ul class="lesson-list">
+                            <li><a href="https://python.datalumina.com/data-types/strings" target="_blank" class="highlight-link">DataLumina: Python Strings &amp; Types &starf;</a></li>
+                            <li><a href="https://docs.python.org/3/tutorial/" target="_blank">Official Python 3.12 Documentation</a></li>
+                            <li><a href="https://pandas.pydata.org/docs/" target="_blank">Pandas &amp; NumPy Data Analysis</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="track-card">
+                    <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=800&q=80" alt="Database Servers" class="track-image">
+                    <div class="track-content">
+                        <span class="track-tag">[ LVL_05 DATABASES ]</span>
+                        <h3>Database Architecture</h3>
+                        <p>Relational SQL engines, NoSQL document stores, distributed vector databases for AI, and query optimization for high-concurrency banking systems.</p>
+                        <ul class="lesson-list">
+                            <li><a href="https://www.postgresql.org/docs/" target="_blank">PostgreSQL: Advanced Indexing &amp; PL/pgSQL</a></li>
+                            <li><a href="https://www.mongodb.com/docs/" target="_blank">MongoDB NoSQL Aggregation Pipelines</a></li>
+                            <li><a href="https://www.pinecone.io/learn/" target="_blank">Vector Databases for AI Embeddings</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="track-card">
+                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80" alt="AI Neural Network" class="track-image">
+                    <div class="track-content">
+                        <span class="track-tag">[ LVL_06 PROMPT ENG ]</span>
+                        <h3>AI Prompt Engineering</h3>
+                        <p>System prompting, Chain-of-Thought reasoning, Retrieval-Augmented Generation (RAG), and structuring deterministic JSON outputs from LLMs.</p>
+                        <ul class="lesson-list">
+                            <li><a href="https://www.promptingguide.ai/" target="_blank">OpenAI &amp; Gemini Prompt Engineering Guide</a></li>
+                            <li><a href="https://langchain.com/" target="_blank">LangChain: Building RAG Pipelines</a></li>
+                            <li><a href="tutor.html">Automating Kenyan Business with AI APIs</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
+            <div class="section-header" id="ms-utilities">
+                <h2>Microsoft <span>Utilities &amp; Workspace Hub</span></h2>
+                <div class="divider"></div>
+                <p>Complete university-level mastery of enterprise productivity tools. Learn how to combine traditional software mastery with cutting-edge artificial intelligence, VBA scripting, and cloud collaboration to dominate the modern workplace.</p>
+            </div>
+
+            <div class="ms-grid">
+                
+                <div class="ms-card">
+                    <div class="ms-header">
+                        <div class="ms-title-wrapper">
+                            <div class="ms-icon icon-word">W</div>
+                            <div class="ms-title">
+                                <h3>Microsoft Word</h3>
+                                <span>Advanced Document Engineering</span>
+                            </div>
+                        </div>
+                        <a href="https://www.microsoft.com/en-us/microsoft-365/word" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
+                    </div>
+                    <div class="ms-section">
+                        <h4>University &amp; Enterprise Capabilities</h4>
+                        <p>Master complex document typography, academic referencing (APA/MLA/IEEE), XML mapping, dynamic fields, form controls, and multi-author cloud collaboration for legal and academic publishing.</p>
+                        <ul>
+                            <li>Advanced Styles, Hierarchy &amp; Automated Table of Contents</li>
+                            <li>Mail Merge automation with SQL &amp; Excel data sources</li>
+                            <li>VBA Macro programming to automate repetitive drafting</li>
+                        </ul>
+                    </div>
+                    <div class="ai-copilot-box">
+                        <h5><span>AI COPILOT</span> Intelligent Drafting &amp; Summarization</h5>
+                        <p style="margin:0; font-size: 0.85rem;">Use Microsoft Copilot &amp; ChatGPT to generate formal business proposals, synthesize 100-page academic research reports into executive summaries, and rewrite technical documentation for diverse audiences instantly.</p>
+                    </div>
+                    <div class="video-tutorial-container">
+                        <a href="https://www.youtube.com/results?search_query=advanced+microsoft+word+university+tutorial+copilot" target="_blank" class="video-link">
+                            <div class="video-icon">&#9658;</div>
+                            <div>
+                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
+                                <span>Advanced Word Masterclass &amp; AI Integration (YouTube)</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ms-card">
+                    <div class="ms-header">
+                        <div class="ms-title-wrapper">
+                            <div class="ms-icon icon-excel">X</div>
+                            <div class="ms-title">
+                                <h3>Microsoft Excel</h3>
+                                <span>Financial Quant &amp; Data Modeling</span>
+                            </div>
+                        </div>
+                        <a href="https://www.microsoft.com/en-us/microsoft-365/excel" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
+                    </div>
+                    <div class="ms-section">
+                        <h4>University &amp; Enterprise Capabilities</h4>
+                        <p>Transform raw financial data into predictive models. Master Power Query, Power Pivot, DAX expressions, dynamic arrays, Monte Carlo simulations, and linear programming solver engines.</p>
+                        <ul>
+                            <li>Advanced Lookup architecture (XLOOKUP, INDEX/MATCH, Dynamic Arrays)</li>
+                            <li>Power Query ETL pipelines for cleaning millions of financial records</li>
+                            <li>VBA Scripting &amp; Python in Excel for algorithmic data manipulation</li>
+                        </ul>
+                    </div>
+                    <div class="ai-copilot-box">
+                        <h5><span>AI COPILOT</span> Automated Formula Generation &amp; EDA</h5>
+                        <p style="margin:0; font-size: 0.85rem;">Deploy AI to write complex nested DAX formulas, explain legacy spreadsheet errors, forecast revenue trends using machine learning trendlines, and generate instant pivot dashboards from natural language queries.</p>
+                    </div>
+                    <div class="video-tutorial-container">
+                        <a href="https://www.youtube.com/results?search_query=advanced+excel+university+level+data+analysis+python" target="_blank" class="video-link">
+                            <div class="video-icon">&#9658;</div>
+                            <div>
+                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
+                                <span>University Financial Modeling in Excel &amp; Python (YouTube)</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ms-card">
+                    <div class="ms-header">
+                        <div class="ms-title-wrapper">
+                            <div class="ms-icon icon-powerpoint">P</div>
+                            <div class="ms-title">
+                                <h3>Microsoft PowerPoint</h3>
+                                <span>Executive Visual Communication</span>
+                            </div>
+                        </div>
+                        <a href="https://www.microsoft.com/en-us/microsoft-365/powerpoint" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
+                    </div>
+                    <div class="ms-section">
+                        <h4>University &amp; Enterprise Capabilities</h4>
+                        <p>Design investor-ready pitch decks for Silicon Savannah startups. Learn Slide Master architecture, vector graphic manipulation, morph animations, embedded live data feeds, and interactive hyperlinked kiosk presentations.</p>
+                        <ul>
+                            <li>Corporate Brand Guidelines via custom Slide Master layouts</li>
+                            <li>Morph transitions &amp; 3D model rotation for engineering diagrams</li>
+                            <li>Dynamic Excel chart linking for real-time board meetings</li>
+                        </ul>
+                    </div>
+                    <div class="ai-copilot-box">
+                        <h5><span>AI COPILOT</span> Automated Deck Construction</h5>
+                        <p style="margin:0; font-size: 0.85rem;">Prompt AI to convert a Word document or brief text outline into a fully designed 15-slide presentation with speaker notes, custom icons, and structured visual hierarchy in seconds.</p>
+                    </div>
+                    <div class="video-tutorial-container">
+                        <a href="https://www.youtube.com/results?search_query=advanced+powerpoint+presentation+design+tutorial+copilot" target="_blank" class="video-link">
+                            <div class="video-icon">&#9658;</div>
+                            <div>
+                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
+                                <span>Executive Presentation Design &amp; AI Slide Gen (YouTube)</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ms-card">
+                    <div class="ms-header">
+                        <div class="ms-title-wrapper">
+                            <div class="ms-icon icon-access">A</div>
+                            <div class="ms-title">
+                                <h3>Microsoft Access</h3>
+                                <span>Relational Database Management</span>
+                            </div>
+                        </div>
+                        <a href="https://www.microsoft.com/en-us/microsoft-365/access" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
+                    </div>
+                    <div class="ms-section">
+                        <h4>University &amp; Enterprise Capabilities</h4>
+                        <p>Bridge desktop applications with enterprise relational databases. Master Entity-Relationship (ER) modeling, normalization (3NF), complex SQL queries, form UI design, and ODBC connectivity to SQL Server and Azure.</p>
+                        <ul>
+                            <li>Relational schema design, primary/foreign keys &amp; referential integrity</li>
+                            <li>Writing advanced SQL queries (INNER/OUTER JOINS, Group By, Subqueries)</li>
+                            <li>Building automated desktop ERP user interfaces with VBA macros</li>
+                        </ul>
+                    </div>
+                    <div class="ai-copilot-box">
+                        <h5><span>AI COPILOT</span> SQL Query Synthesis &amp; Schema Design</h5>
+                        <p style="margin:0; font-size: 0.85rem;">Use LLM prompts to design database schemas from business requirements, automatically generate complex SQL join syntax, and troubleshoot relational integrity conflicts without manual syntax debugging.</p>
+                    </div>
+                    <div class="video-tutorial-container">
+                        <a href="https://www.youtube.com/results?search_query=microsoft+access+advanced+database+design+sql+tutorial" target="_blank" class="video-link">
+                            <div class="video-icon">&#9658;</div>
+                            <div>
+                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
+                                <span>Relational Database Architecture in Access &amp; SQL (YouTube)</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ms-card">
+                    <div class="ms-header">
+                        <div class="ms-title-wrapper">
+                            <div class="ms-icon icon-outlook">O</div>
+                            <div class="ms-title">
+                                <h3>Microsoft Outlook</h3>
+                                <span>Enterprise Communication &amp; Exchange</span>
+                            </div>
+                        </div>
+                        <a href="https://www.microsoft.com/en-us/microsoft-365/outlook" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
+                    </div>
+                    <div class="ms-section">
+                        <h4>University &amp; Enterprise Capabilities</h4>
+                        <p>Master enterprise email server protocols (Exchange, IMAP, SMTP), automated inbox routing rules, cryptographic email signing (S/MIME), calendar sharing across global time zones, and task delegation.</p>
+                        <ul>
+                            <li>Automated workflow rules, Quick Steps &amp; conditional formatting</li>
+                            <li>Enterprise calendar management, meeting room booking &amp; delegate access</li>
+                            <li>VBA event handlers to automatically extract email attachment data to Excel</li>
+                        </ul>
+                    </div>
+                    <div class="ai-copilot-box">
+                        <h5><span>AI COPILOT</span> Smart Triage &amp; Email Synthesis</h5>
+                        <p style="margin:0; font-size: 0.85rem;">Leverage Copilot to summarize 50-message email threads, draft polite client negotiation responses, extract action items into Microsoft To-Do, and schedule meetings based on natural language commands.</p>
+                    </div>
+                    <div class="video-tutorial-container">
+                        <a href="https://www.youtube.com/results?search_query=advanced+microsoft+outlook+enterprise+email+management+tutorial" target="_blank" class="video-link">
+                            <div class="video-icon">&#9658;</div>
+                            <div>
+                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
+                                <span>Enterprise Outlook Mastery &amp; AI Email Automation (YouTube)</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ms-card">
+                    <div class="ms-header">
+                        <div class="ms-title-wrapper">
+                            <div class="ms-icon icon-publisher">P</div>
+                            <div class="ms-title">
+                                <h3>Microsoft Publisher</h3>
+                                <span>Commercial Desktop Publishing</span>
+                            </div>
+                        </div>
+                        <a href="https://www.microsoft.com/en-us/microsoft-365/publisher" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
+                    </div>
+                    <div class="ms-section">
+                        <h4>University &amp; Enterprise Capabilities</h4>
+                        <p>Create professional print-ready marketing materials for Kenyan enterprises. Master CMYK color profiling, typography kerning, grid layouts, master pages, high-resolution commercial print exporting, and digital catalogs.</p>
+                        <ul>
+                            <li>Precision grid alignment, typography kerning &amp; baseline grids</li>
+                            <li>High-resolution commercial print preparation (Spot colors, bleed &amp; crop marks)</li>
+                            <li>Dynamic catalog generation linked directly to Access database inventory</li>
+                        </ul>
+                    </div>
+                    <div class="ai-copilot-box">
+                        <h5><span>AI COPILOT</span> Ad Copy &amp; Layout Ideation</h5>
+                        <p style="margin:0; font-size: 0.85rem;">Utilize generative AI to craft compelling marketing copywriting for brochures, generate custom vector graphic concepts, and optimize typography layouts for visual impact across print and digital media.</p>
+                    </div>
+                    <div class="video-tutorial-container">
+                        <a href="https://www.youtube.com/results?search_query=microsoft+publisher+advanced+desktop+publishing+tutorial" target="_blank" class="video-link">
+                            <div class="video-icon">&#9658;</div>
+                            <div>
+                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
+                                <span>Commercial Desktop Publishing &amp; Print Design (YouTube)</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section-header">
+                <h2>Live Python <span>Compiler Sandbox</span></h2>
+                <div class="divider"></div>
+                <p>Test algorithmic trading logic, string manipulations, and data models directly in your browser. Powered by our high-speed virtualized Python 3.12 engine.</p>
+            </div>
+
             <div class="sandbox-container">
                 <div class="sandbox-header">
-                    <span class="sandbox-title">>> LIVE NODE: uefi_model_test.py</span>
+                    <span class="sandbox-title">&gt;&gt; LIVE NODE: uefi_model_test.py // SILICON_SAVANNAH_CLUSTER</span>
                     <div class="sandbox-controls">
                         <button class="btn-run" onclick="executeMockCode()">[ RUN SCRIPT ]</button>
                     </div>
@@ -463,60 +1211,66 @@
                 <div class="sandbox-grid">
                     <div class="editor-pane">
 <textarea class="editor-textarea" id="sandbox-editor" spellcheck="false">
-# UEFI Internal Sandbox Environment
+# UEFI Internal Sandbox Environment - Silicon Savannah Edition
 import numpy as np
 
 def calculate_alpha(volatility, returns):
     """
-    Computes theoretical alpha generation.
+    Computes theoretical alpha generation for Nairobi Securities Exchange (NSE).
     """
     signal = np.mean(returns) / volatility
     return signal * 100
 
+# Market variables for Kenyan tech sector analysis
 v_index = 0.045
 asset_returns = [0.02, 0.05, 0.01, 0.08]
 
 alpha = calculate_alpha(v_index, asset_returns)
-print(f"Executing Model...")
-print(f"Target Alpha: {alpha:.2f}%")
+print(f"Connecting to Safaricom Data Hub...")
+print(f"Executing Quantitative Model...")
+print(f"Target Alpha Generation: {alpha:.2f}%")
+print(f"Status: READY FOR DEPLOYMENT")
 </textarea>
                     </div>
                     <div class="output-pane" id="sandbox-output">
-                        > Standby. Ready for execution...
+                        &gt; Standby. Ready for execution...<br>
+                        &gt; Click [ RUN SCRIPT ] to initialize computation node.
                     </div>
                 </div>
             </div>
 
             <section class="lab-footer">
                 <div class="info-box">
-                    <h4 style="color: var(--accent-gold); font-size: 1.6rem; letter-spacing: 2px;">UEFI VERIFICATION PROTOCOL</h4>
-                    <p style="max-width: 800px; margin: 20px auto; line-height: 1.8; opacity: 0.8; font-family: 'Courier New', monospace;">
-                        [ STATUS: VALIDATED ] <br>
-                        UEFI provides a Verified Proof-of-Work Badge certifying your ability to translate abstract theory into high-performance code.
+                    <h4 style="color: var(--safaricom-green); font-size: 1.8rem; letter-spacing: 2px; margin: 0 0 15px; font-weight: 900;">UEFI SILICON SAVANNAH VERIFICATION PROTOCOL</h4>
+                    <p style="max-width: 850px; margin: 0 auto 25px; line-height: 1.8; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 1rem;">
+                        [ STATUS: VALIDATED &amp; ACCREDITED ] <br>
+                        UEFI provides a Verified Proof-of-Work Badge certifying your ability to translate abstract computational theory, database architecture, and AI prompt engineering into high-performance enterprise code.
                     </p>
-                    <a href="enroll.html" class="btn-primary">Request Lab Credentials</a>
+                    <a href="enroll.html" class="btn-primary">Request Lab Credentials &amp; Enroll</a>
                 </div>
             </section>
+
         </div>
     </main>
 
-    <footer style="padding: 50px; text-align: center; background: var(--midnight-blue); color: white; border-top: 5px solid transparent; border-image: var(--kenyan-flag) 1;">
-        <p>&copy; 2026 Universal Empowerment & Future-Tech Institute. All rights reserved.</p>
+    <footer style="padding: 60px 20px; text-align: center; background: var(--midnight-blue); color: var(--text-muted); border-top: 5px solid transparent; border-image: var(--kenyan-flag-strip) 1; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
+        <p style="margin: 0 0 10px; color: #fff; font-weight: bold;">&copy; 2026 Universal Empowerment &amp; Future-Tech Institute (U.E.F.I.). All rights reserved.</p>
+        <p style="margin: 0; color: var(--safaricom-green);">Building Kenya's Silicon Savannah Tech Elite &bull; Powered by Microsoft Workspace &amp; Python DataLumina Hub</p>
     </footer>
 
     <div class="terminal-overlay terminal-minimized" id="terminal-overlay">
         <div class="terminal-header" onclick="toggleTerminal()">
-            <span>>_ UEFI.OS // ROOT ACCESS</span>
+            <span>&gt;_ UEFI.OS // ROOT ACCESS &bull; NAIROBI NODE</span>
             <span id="terminal-toggle-icon">[ + ]</span>
         </div>
         <div class="terminal-body">
             <div class="terminal-output" id="terminal-output">
                 <p>Initializing UEFI Sovereign Environment...</p>
-                <p>Target Latency: <span style="color: var(--accent-gold);">10ms</span> | Compute: <span style="color: var(--accent-gold);">ONLINE</span></p>
-                <p>Type <span style="color: #fff; font-weight: bold;">help</span> for available modules.</p>
+                <p>Target Latency: <span style="color: var(--safaricom-green);">10ms (Safaricom Fiber)</span> | Compute: <span style="color: var(--safaricom-green);">ONLINE</span></p>
+                <p>Type <span style="color: #fff; font-weight: bold;">help</span> for available modules and Silicon Savannah commands.</p>
             </div>
             <div class="terminal-input-line">
-                <span>root@uefi:~$</span>
+                <span>root@uefi-nairobi:~$</span>
                 <input type="text" id="terminal-input" autocomplete="off">
             </div>
         </div>
@@ -540,27 +1294,42 @@ print(f"Target Alpha: {alpha:.2f}%")
         terminalInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 const command = terminalInput.value.toLowerCase().trim();
-                printToTerminal(`root@uefi:~$ <span style="color:#fff;">${command}</span>`);
+                printToTerminal(`root@uefi-nairobi:~$ <span style="color:#fff;">${command}</span>`);
                 
                 // Command Routing
                 switch(command) {
                     case 'help':
                         printToTerminal(`Available commands:<br>
-                        - <span style="color:var(--accent-gold)">boot quant</span>: Load trading modules<br>
-                        - <span style="color:var(--accent-gold)">boot neural</span>: Load AI models<br>
-                        - <span style="color:var(--accent-gold)">status</span>: Check node health<br>
-                        - <span style="color:var(--accent-gold)">clear</span>: Clear terminal`);
+                        - <span style="color:var(--safaricom-green)">boot quant</span>: Load trading &amp; financial engineering modules<br>
+                        - <span style="color:var(--safaricom-green)">boot neural</span>: Allocate H100 GPUs &amp; PyTorch tensors<br>
+                        - <span style="color:var(--safaricom-green)">boot python</span>: Connect to DataLumina Python strings hub<br>
+                        - <span style="color:var(--safaricom-green)">boot ms-suite</span>: Initialize Microsoft 365 Copilot APIs<br>
+                        - <span style="color:var(--safaricom-green)">silicon-savannah</span>: Display Kenyan tech network stats<br>
+                        - <span style="color:var(--safaricom-green)">status</span>: Check node health &amp; server uptime<br>
+                        - <span style="color:var(--safaricom-green)">clear</span>: Clear terminal console`);
                         break;
                     case 'boot quant':
-                        printToTerminal("Loading linear algebra vectors... <span style='color: var(--accent-gold);'>[SUCCESS]</span>");
-                        printToTerminal("Connecting to market data APIs... <span style='color: var(--accent-gold);'>[ESTABLISHED]</span>");
+                        printToTerminal("Loading linear algebra vectors... <span style='color: var(--safaricom-green);'>[SUCCESS]</span>");
+                        printToTerminal("Connecting to Nairobi Securities Exchange API... <span style='color: var(--safaricom-green);'>[ESTABLISHED]</span>");
                         break;
                     case 'boot neural':
-                        printToTerminal("Allocating H100 GPU resources... <span style='color: var(--accent-gold);'>[SUCCESS]</span>");
-                        printToTerminal("Initializing PyTorch tensors... <span style='color: var(--accent-gold);'>[READY]</span>");
+                        printToTerminal("Allocating H100 GPU resources on Azure cluster... <span style='color: var(--safaricom-green);'>[SUCCESS]</span>");
+                        printToTerminal("Initializing PyTorch LLM tensors... <span style='color: var(--safaricom-green);'>[READY]</span>");
+                        break;
+                    case 'boot python':
+                        printToTerminal("Importing standard library and strings module... <span style='color: var(--safaricom-green);'>[SUCCESS]</span>");
+                        printToTerminal("Uplink established with DataLumina: <a href='https://python.datalumina.com/data-types/strings' target='_blank' style='color:#80FF66;'>python.datalumina.com/data-types/strings</a>");
+                        break;
+                    case 'boot ms-suite':
+                        printToTerminal("Synchronizing with Microsoft 365 Cloud Enterprise... <span style='color: var(--safaricom-green);'>[SUCCESS]</span>");
+                        printToTerminal("Word, Excel, Access, PowerPoint, Outlook, Publisher Copilots <span style='color: var(--safaricom-green);'>[ACTIVE]</span>");
+                        break;
+                    case 'silicon-savannah':
+                        printToTerminal("Location: Thika / Nairobi Tech Corridor | Node: Safaricom 5G Fiber Hub");
+                        printToTerminal("Active Kenyan Engineering Students Online: <span style='color: var(--safaricom-green); font-weight:bold;'>14,280</span>");
                         break;
                     case 'status':
-                        printToTerminal("Uplink: STABLE | Latency: 9ms | Nodes: 4/4 ACTIVE");
+                        printToTerminal("Uplink: STABLE | Latency: 9ms | Nodes: 6/6 ACTIVE | Database: CONNECTED");
                         break;
                     case 'clear':
                         terminalOutput.innerHTML = '';
@@ -585,20 +1354,21 @@ print(f"Target Alpha: {alpha:.2f}%")
         // --- COMPILER SANDBOX LOGIC ---
         function executeMockCode() {
             const outputPane = document.getElementById('sandbox-output');
-            outputPane.innerHTML = "> Compiling...<br>";
+            outputPane.innerHTML = "&gt; Compiling via Silicon Savannah Python 3.12 Engine...<br>";
             
             setTimeout(() => {
-                outputPane.innerHTML += "> Executing Model...<br>";
-            }, 400);
+                outputPane.innerHTML += "&gt; Connecting to Safaricom Data Hub...<br>";
+            }, 300);
 
             setTimeout(() => {
-                outputPane.innerHTML += "> Target Alpha: <span style='color: var(--accent-gold);'>88.89%</span><br>";
-                outputPane.innerHTML += "> <span style='color: var(--accent-gold);'>Process completed with exit code 0</span>";
-            }, 900);
+                outputPane.innerHTML += "&gt; Executing Quantitative Alpha Model...<br>";
+            }, 700);
+
+            setTimeout(() => {
+                outputPane.innerHTML += "&gt; Target Alpha Generation: <span style='color: var(--safaricom-green); font-weight: bold;'>88.89%</span><br>";
+                outputPane.innerHTML += "&gt; <span style='color: var(--safaricom-green); font-weight: bold;'>Process completed with exit code 0 [SUCCESS]</span>";
+            }, 1200);
         }
     </script>
 </body>
 </html>
-
-
-
