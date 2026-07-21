@@ -3,1371 +3,1095 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Tech Lab | Silicon Savannah AI, Databases & Computational Research</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Silicon Savannah Elite | AI, Databases & Microsoft Technologies</title>
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* ==========================================================================
+           ROOT VARIABLES & THEME DEFINITIONS
+           ========================================================================== */
         :root {
-            /* Core Terminal & Dark Mode Palette */
-            --terminal-dark: #0A110A;
-            --terminal-bg: #122212;
-            --terminal-card: rgba(20, 33, 20, 0.85);
-            
-            /* Safaricom & Silicon Savannah Brand Colors */
+            /* Safaricom Brand Colors */
             --safaricom-green: #43B02A;
-            --safaricom-dark-green: #008542;
-            --safaricom-red: #E4002B;
-            --accent-gold: #43B02A; 
-            --data-teal: #00A88F;
+            --safaricom-green-glow: rgba(67, 176, 42, 0.4);
+            --safaricom-maroon: #E4002B;
             
-            /* Kenyan Flag Official Palette */
-            --kenya-black: #000000;
-            --kenya-red: #BB0000;
-            --kenya-green: #006600;
-            --kenya-white: #FFFFFF;
-            --kenyan-flag-strip: linear-gradient(90deg, #000000 0%, #000000 25%, #BB0000 25%, #BB0000 50%, #006600 50%, #006600 75%, #FFFFFF 75%, #FFFFFF 100%);
+            /* Kenyan Flag Gradient */
+            --kenyan-flag-gradient: linear-gradient(to right, 
+                #000000 0%, #000000 25%, 
+                #BB0000 25%, #BB0000 50%, 
+                #006600 50%, #006600 75%, 
+                #FFFFFF 75%, #FFFFFF 100%);
             
-            /* UI Elements */
-            --error-red: #ff3333;
-            --border-light: rgba(67, 176, 42, 0.25);
-            --border-strong: rgba(67, 176, 42, 0.6);
-            --midnight-blue: #060B06;
-            --text-muted: rgba(255, 255, 255, 0.75);
-            --shadow-glow: 0 0 25px rgba(67, 176, 42, 0.2);
+            /* UI Colors */
+            --bg-deep: #0a0e12;
+            --bg-surface: #131a22;
+            --bg-card: #1c2530;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            
+            /* Typography */
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            /* Layout */
+            --max-width: 1400px;
+            --radius-md: 12px;
+            --radius-lg: 24px;
         }
 
+        /* ==========================================================================
+           RESET & GLOBAL STYLES
+           ========================================================================== */
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background-color: var(--terminal-dark);
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(67, 176, 42, 0.15) 0%, transparent 75%),
-                linear-gradient(rgba(10, 17, 10, 0.94), rgba(10, 17, 10, 0.94)),
-                url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            color: var(--kenya-white);
-            overflow-x: hidden;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-sans);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* --- PROFESSIONAL HEADER & NAVIGATION --- */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--safaricom-green);
+            border-radius: 5px;
+        }
+
+        a {
+            color: var(--safaricom-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px var(--safaricom-green-glow);
+        }
+
+        /* ==========================================================================
+           HEADER & NAVIGATION
+           ========================================================================== */
         header {
-            background: rgba(6, 11, 6, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-light);
-            position: sticky;
+            position: fixed;
             top: 0;
+            width: 100%;
+            background: rgba(10, 14, 18, 0.95);
+            backdrop-filter: blur(10px);
             z-index: 1000;
-            padding: 10px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
-        nav {
-            max-width: 1400px;
+        /* The specific Kenyan Flag line under the header as requested */
+        header::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 4px;
+            background: var(--kenyan-flag-gradient);
+        }
+
+        .nav-container {
+            max-width: var(--max-width);
             margin: 0 auto;
-            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            padding: 15px 30px;
         }
 
-        .logo {
+        .logo-container {
             display: flex;
             align-items: center;
             gap: 15px;
-            text-decoration: none;
-            color: var(--kenya-white);
-            font-weight: 900;
-            font-size: 1.2rem;
-            letter-spacing: 1px;
         }
 
-        .logo img {
+        /* Circular Logo as requested */
+        .logo-img {
             width: 50px;
             height: 50px;
-            border-radius: 50%; /* STRICTLY CIRCULAR AS REQUESTED */
+            border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--safaricom-green);
-            box-shadow: 0 0 15px rgba(67, 176, 42, 0.5);
-            background: var(--kenya-black);
-            padding: 2px;
+            box-shadow: 0 0 15px var(--safaricom-green-glow);
         }
 
-        .logo-text-wrapper {
-            display: flex;
-            flex-direction: column;
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: #fff;
         }
-
-        .logo-subtext {
-            font-size: 0.65rem;
+        .logo-text span {
             color: var(--safaricom-green);
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 2px;
-            text-transform: uppercase;
         }
 
         .nav-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
             display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 18px;
+            gap: 25px;
+            list-style: none;
         }
 
-        .nav-links li a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
+        .nav-links a {
             font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-main);
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: 0.3s all ease;
-            padding: 6px 10px;
-            border-radius: 4px;
         }
 
-        .nav-links li a:hover, .nav-links li a.active {
-            color: var(--kenya-white);
-            background: rgba(67, 176, 42, 0.15);
-            border-bottom: 2px solid var(--safaricom-green);
-            text-shadow: 0 0 8px rgba(67, 176, 42, 0.6);
+        .nav-links a:hover {
+            color: var(--safaricom-green);
         }
 
-        .btn-nav {
-            background: linear-gradient(135deg, var(--safaricom-green), var(--safaricom-dark-green));
-            color: var(--kenya-white) !important;
-            padding: 8px 20px !important;
-            border-radius: 4px;
-            font-weight: 800 !important;
-            border: 1px solid var(--safaricom-green);
-            box-shadow: 0 4px 15px rgba(67, 176, 42, 0.3);
+        .btn-enroll {
+            background: var(--safaricom-green);
+            color: #000 !important;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+        }
+        .btn-enroll:hover {
+            background: #fff;
+            box-shadow: 0 0 20px var(--safaricom-green-glow);
         }
 
-        .btn-nav:hover {
-            background: var(--safaricom-red) !important;
-            border-color: var(--safaricom-red) !important;
-            box-shadow: 0 4px 20px rgba(228, 0, 43, 0.5) !important;
-            transform: translateY(-2px);
-        }
-
-        /* --- HERO SECTION --- */
-        .lab-hero {
-            background: radial-gradient(circle at center, rgba(67, 176, 42, 0.25) 0%, var(--terminal-dark) 100%),
-                        url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=80');
-            background-size: cover;
-            background-position: center;
-            padding: 160px 20px 100px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-light);
+        /* ==========================================================================
+           HERO SECTION
+           ========================================================================== */
+        .hero {
+            padding: 180px 20px 100px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
+            background: radial-gradient(circle at 50% 30%, rgba(67, 176, 42, 0.15) 0%, var(--bg-deep) 70%),
+                        url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=2000&q=80') center/cover;
+            background-blend-mode: overlay;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .lab-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: var(--kenyan-flag-strip);
+        .hero-content {
+            text-align: center;
+            max-width: 1000px;
+            z-index: 2;
         }
 
-        .badge {
-            border: 1px solid var(--safaricom-green);
-            color: var(--kenya-white);
-            padding: 6px 18px;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 25px;
+        .hero-badge {
             display: inline-block;
-            font-size: 0.85rem;
-            background: rgba(67, 176, 42, 0.2);
-            backdrop-filter: blur(5px);
+            padding: 8px 20px;
+            background: rgba(228, 0, 43, 0.2);
+            border: 1px solid var(--safaricom-maroon);
+            color: #fff;
             border-radius: 50px;
-            box-shadow: 0 0 15px rgba(67, 176, 42, 0.4);
-        }
-
-        .lab-hero h1 { 
-            font-size: clamp(2.8rem, 6vw, 4.5rem); 
-            font-weight: 900;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
             text-transform: uppercase;
-            margin: 0 0 1.5rem;
-            line-height: 1.1;
-            color: var(--kenya-white);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            letter-spacing: 2px;
         }
 
-        .lab-hero h1 span {
-            background: linear-gradient(to right, var(--safaricom-green), #80FF66, var(--kenya-white));
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fff 0%, var(--safaricom-green) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .lab-hero p { 
-            color: var(--text-muted); 
-            font-family: 'JetBrains Mono', monospace;
-            max-width: 850px; 
-            margin: 0 auto 30px;
-            font-size: 1.1rem;
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-family: var(--font-mono);
         }
 
-        .savannah-tag {
-            display: inline-block;
-            background: var(--safaricom-red);
-            color: white;
-            font-weight: 800;
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            border-radius: 3px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-top: 10px;
+        /* ==========================================================================
+           CLOUD & DEVELOPER BENEFITS SECTION
+           ========================================================================== */
+        .benefits-section {
+            padding: 80px 20px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        /* --- STATS GRID --- */
-        .lab-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1px;
-            background: var(--border-light);
-            max-width: 1300px;
-            margin: -50px auto 0;
-            border: 1px solid var(--border-light);
-            position: relative;
-            z-index: 10;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
-        }
-
-        .stat-card {
-            background: var(--terminal-dark);
-            padding: 30px 20px;
-            text-align: center;
-            border-top: 4px solid var(--safaricom-green);
-            transition: 0.3s;
-        }
-
-        .stat-card:hover {
-            background: var(--terminal-bg);
-            transform: translateY(-3px);
-        }
-
-        .stat-card:nth-child(even) {
-            border-top-color: var(--safaricom-red);
-        }
-
-        .stat-card h4 { color: #fff; font-size: 2.2rem; margin: 0; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
-        .stat-card p { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--safaricom-green); margin: 8px 0 0; font-weight: bold; }
-        .stat-card:nth-child(even) p { color: #FF6680; }
-
-        /* --- DIRECT ACCESS BAR --- */
-        .direct-access-bar {
-            background: rgba(67, 176, 42, 0.08);
-            border-bottom: 1px solid var(--border-light);
-            padding: 25px 0;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 35px;
-            margin-top: 30px;
-        }
-
-        .terminal-link {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--kenya-white);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            transition: 0.3s;
-            padding: 5px 15px;
-            border: 1px solid transparent;
-            border-radius: 4px;
-            background: rgba(0,0,0,0.4);
-        }
-
-        .terminal-link span { color: var(--safaricom-green); font-weight: bold; margin-right: 8px; }
-        .terminal-link:hover { 
-            color: var(--safaricom-green); 
-            border-color: var(--safaricom-green);
-            box-shadow: 0 0 15px rgba(67, 176, 42, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* --- SECTION HEADINGS --- */
         .section-header {
             text-align: center;
-            max-width: 900px;
-            margin: 80px auto 50px;
-            padding: 0 20px;
+            margin-bottom: 60px;
         }
 
         .section-header h2 {
             font-size: 2.5rem;
-            font-weight: 900;
+            color: #fff;
             text-transform: uppercase;
-            margin: 0 0 15px;
-            color: var(--kenya-white);
             letter-spacing: 1px;
-        }
-
-        .section-header h2 span {
-            color: var(--safaricom-green);
-        }
-
-        .section-header .divider {
-            height: 4px;
-            width: 100px;
-            background: var(--kenyan-flag-strip);
-            margin: 0 auto 20px;
         }
 
         .section-header p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
+            color: var(--safaricom-green);
+            font-family: var(--font-mono);
+            margin-top: 10px;
         }
 
-        /* --- COURSE TRACKS GRID --- */
-        .lab-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .course-tracks {
+        .benefits-grid {
+            max-width: var(--max-width);
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
-            margin-bottom: 80px;
         }
 
-        .track-card {
-            background: var(--terminal-card);
-            border: 1px solid var(--border-light);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            display: flex;
-            flex-direction: column;
-            border-radius: 8px;
-            overflow: hidden;
+        .benefit-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 40px;
+            transition: all 0.4s ease;
             position: relative;
+            overflow: hidden;
         }
 
-        .track-card::before {
+        .benefit-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 4px;
             background: var(--safaricom-green);
-            transition: 0.3s;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
         }
 
-        .track-card:hover { 
-            border-color: var(--safaricom-green); 
-            transform: translateY(-8px); 
-            box-shadow: var(--shadow-glow);
+        .benefit-card:hover::before {
+            transform: scaleX(1);
         }
 
-        .track-card:hover::before {
-            width: 8px;
-            background: var(--safaricom-red);
-        }
-
-        .track-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            filter: grayscale(0.8) contrast(1.2);
-            opacity: 0.85;
-            transition: 0.5s;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .track-card:hover .track-image { 
-            filter: grayscale(0) contrast(1.05); 
-            opacity: 1; 
-            transform: scale(1.03);
-        }
-
-        .track-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
-        .track-tag { color: var(--safaricom-green); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; }
-        .track-content h3 { font-size: 1.5rem; margin: 10px 0 15px; text-transform: uppercase; color: #fff; font-weight: 800; }
-        .track-content p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; flex-grow: 1; }
-
-        .lesson-list { list-style: none; padding: 0; margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
-        .lesson-list li { margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; }
-        .lesson-list li::before { content: '>'; color: var(--safaricom-red); font-weight: 900; }
-        .lesson-list li a { color: var(--kenya-white); text-decoration: none; transition: 0.3s; font-weight: 600; }
-        .lesson-list li a:hover { color: var(--safaricom-green); padding-left: 5px; }
-
-        .highlight-link {
-            color: #80FF66 !important;
-            border-bottom: 1px dashed var(--safaricom-green);
-        }
-
-        /* --- MICROSOFT UTILITIES & WORKSPACE ECOSYSTEM --- */
-        .ms-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 35px;
-            margin-bottom: 90px;
-        }
-
-        .ms-card {
-            background: rgba(15, 25, 15, 0.9);
-            border: 1px solid var(--border-light);
-            border-radius: 10px;
-            padding: 35px;
-            position: relative;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .ms-card:hover {
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             border-color: var(--safaricom-green);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
-        .ms-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 20px;
+        .benefit-icon {
+            font-size: 3rem;
+            color: var(--safaricom-maroon);
             margin-bottom: 20px;
         }
 
-        .ms-title-wrapper {
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .benefit-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .benefit-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* ==========================================================================
+           CURRICULUM MODULES (Video + Notes Integration)
+           ========================================================================== */
+        .curriculum-section {
+            padding: 100px 20px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .module-category {
+            margin-bottom: 80px;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 40px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
-
-        .ms-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 1.4rem;
-            color: white;
-            font-family: 'JetBrains Mono', monospace;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        .category-title i {
+            color: var(--safaricom-green);
         }
 
-        .icon-word { background: #1B5EBE; }
-        .icon-excel { background: #107C41; }
-        .icon-powerpoint { background: #C43E1C; }
-        .icon-access { background: #A80000; }
-        .icon-outlook { background: #0078D4; }
-        .icon-publisher { background: #077568; }
-
-        .ms-title h3 { margin: 0; font-size: 1.4rem; color: #fff; }
-        .ms-title span { font-size: 0.75rem; color: var(--safaricom-green); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; }
-
-        .ms-btn-launch {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-family: 'JetBrains Mono', monospace;
-            transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.2);
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
         }
 
-        .ms-btn-launch:hover {
-            background: var(--safaricom-green);
-            border-color: var(--safaricom-green);
-            color: #000;
-            font-weight: bold;
-        }
-
-        .ms-section {
-            margin-top: 20px;
-        }
-
-        .ms-section h4 {
-            color: var(--accent-gold);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            font-family: 'JetBrains Mono', monospace;
-            margin: 0 0 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .ms-section h4::before {
-            content: '■';
-            font-size: 0.7rem;
-            color: var(--safaricom-red);
-        }
-
-        .ms-section p, .ms-section ul {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin: 0 0 15px;
-        }
-
-        .ms-section ul { padding-left: 20px; }
-        .ms-section ul li { margin-bottom: 6px; }
-
-        .ai-copilot-box {
-            background: linear-gradient(135deg, rgba(67, 176, 42, 0.1), rgba(0, 0, 0, 0.4));
-            border-left: 3px solid var(--safaricom-green);
-            padding: 15px;
-            border-radius: 0 6px 6px 0;
-            margin-top: 15px;
-        }
-
-        .ai-copilot-box h5 {
-            margin: 0 0 8px;
-            color: #fff;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .ai-copilot-box h5 span {
-            background: var(--safaricom-red);
-            color: #fff;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 0.65rem;
-        }
-
-        .video-tutorial-container {
-            margin-top: 20px;
-            border-top: 1px dashed rgba(255,255,255,0.15);
-            padding-top: 15px;
-        }
-
-        .video-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(0,0,0,0.6);
-            padding: 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            color: #fff;
-            font-size: 0.85rem;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
-        }
-
-        .video-link:hover {
-            border-color: var(--safaricom-red);
-            background: rgba(228, 0, 43, 0.1);
-        }
-
-        .video-icon {
-            background: var(--safaricom-red);
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            flex-shrink: 0;
-        }
-
-        /* --- COMPILER SANDBOX SECTION --- */
-        .sandbox-container {
-            border: 1px solid var(--border-strong);
-            background: var(--terminal-bg);
-            border-radius: 8px;
+        /* Individual Interactive Lesson Layout */
+        .interactive-lesson {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            margin: 60px 0 90px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        .sandbox-header {
-            background: #050A05;
-            border-bottom: 1px solid var(--border-light);
-            padding: 15px 25px;
+        @media (max-width: 1100px) {
+            .interactive-lesson {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .lesson-video-pane {
+            padding: 30px;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(67, 176, 42, 0.2);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .lesson-info {
+            margin-top: 25px;
+        }
+
+        .lesson-info h4 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .lesson-info p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Notepad Area */
+        .lesson-notes-pane {
+            background: var(--bg-card);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notes-header {
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
         }
 
-        .sandbox-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
-            color: #fff;
-            letter-spacing: 1px;
+        .notes-header h5 {
+            font-family: var(--font-mono);
+            color: var(--safaricom-green);
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .sandbox-title::before {
-            content: '';
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background: var(--safaricom-green);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--safaricom-green);
+        .notes-area {
+            flex-grow: 1;
+            padding: 20px;
         }
 
-        .sandbox-controls {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn-run {
-            background: var(--safaricom-green);
-            color: #000;
-            border: none;
-            padding: 10px 25px;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            border-radius: 4px;
-            letter-spacing: 1px;
-        }
-
-        .btn-run:hover { 
-            box-shadow: 0 0 20px var(--safaricom-green); 
-            background: #fff; 
-            color: var(--terminal-dark); 
-            transform: scale(1.05);
-        }
-
-        .sandbox-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 380px;
-        }
-
-        .editor-pane {
-            padding: 25px;
-            border-right: 1px solid var(--border-light);
-            background: rgba(0,0,0,0.4);
-        }
-
-        .editor-textarea {
+        .notes-textarea {
             width: 100%;
             height: 100%;
+            min-height: 250px;
             background: transparent;
             border: none;
-            color: #80FF66;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
+            color: #fff;
+            font-family: var(--font-sans);
+            font-size: 1rem;
             resize: none;
             outline: none;
             line-height: 1.6;
         }
 
-        .output-pane {
-            padding: 25px;
-            background: #040804;
-            color: #fff;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            overflow-y: auto;
-            border-left: 4px solid var(--safaricom-red);
+        .notes-textarea::placeholder {
+            color: rgba(255,255,255,0.2);
         }
 
-        /* --- FOOTER INFO BOX --- */
-        .info-box {
-            border: 2px solid var(--safaricom-green);
-            padding: 60px 40px;
-            text-align: center;
-            background: radial-gradient(circle at center, rgba(67, 176, 42, 0.15) 0%, rgba(10, 17, 10, 0.9) 100%);
-            border-radius: 12px;
-            box-shadow: 0 0 40px rgba(67, 176, 42, 0.2);
-            position: relative;
-            overflow: hidden;
+        .notes-actions {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
         }
 
-        .info-box::top {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--kenyan-flag-strip);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--safaricom-green), var(--safaricom-dark-green));
-            color: #fff;
-            padding: 18px 45px;
-            text-decoration: none;
-            font-weight: 900;
-            display: inline-block;
-            margin-top: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: 0.3s;
-            border-radius: 6px;
-            border: 1px solid #80FF66;
-            box-shadow: 0 10px 25px rgba(67, 176, 42, 0.4);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 0 30px rgba(67, 176, 42, 0.8);
-            background: #fff;
-            color: var(--terminal-dark);
-            transform: translateY(-3px);
-        }
-
-        /* --- TERMINAL OVERLAY STYLES --- */
-        .terminal-overlay {
-            position: fixed;
-            bottom: 0;
-            right: 3%;
-            width: 480px;
-            background: rgba(10, 17, 10, 0.98);
+        .btn-action {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
             border: 1px solid var(--safaricom-green);
-            border-bottom: none;
-            border-radius: 10px 10px 0 0;
-            font-family: 'JetBrains Mono', monospace;
-            z-index: 9999;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            color: var(--safaricom-green);
+            font-family: var(--font-mono);
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.8rem;
         }
 
-        .terminal-header {
-            background: var(--safaricom-dark-green);
-            color: #fff;
-            padding: 14px 18px;
-            font-weight: 900;
-            font-size: 0.85rem;
+        .btn-action:hover {
+            background: var(--safaricom-green);
+            color: #000;
+        }
+
+        .btn-action.primary {
+            background: var(--safaricom-green);
+            color: #000;
+        }
+        .btn-action.primary:hover {
+            background: #fff;
+            border-color: #fff;
+        }
+
+        /* ==========================================================================
+           TERMINAL SANDBOX
+           ========================================================================== */
+        .sandbox-section {
+            padding: 80px 20px;
+            background: var(--bg-deep);
+        }
+
+        .terminal-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .terminal-header-bar {
+            background: #1a1a1a;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
-            border-radius: 8px 8px 0 0;
-            user-select: none;
-            position: relative;
+            border-bottom: 1px solid #333;
         }
 
-        .terminal-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--kenyan-flag-strip);
+        .window-controls span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .close { background: #ff5f56; }
+        .minimize { background: #ffbd2e; }
+        .maximize { background: #27c93f; }
+
+        .terminal-title {
+            color: #888;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
         }
 
         .terminal-body {
-            padding: 18px;
-            height: 320px;
-            display: flex;
-            flex-direction: column;
-            background: #050905;
-        }
-
-        .terminal-output {
-            flex-grow: 1;
+            background: #0d1117;
+            padding: 30px;
+            font-family: var(--font-mono);
+            color: #c9d1d9;
+            height: 400px;
             overflow-y: auto;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 12px;
-            line-height: 1.5;
         }
 
-        .terminal-output p { margin: 6px 0; word-wrap: break-word; }
-
-        .terminal-input-line {
+        .cmd-line {
             display: flex;
-            gap: 10px;
-            align-items: center;
-            color: var(--safaricom-green);
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 12px;
+            margin-bottom: 10px;
         }
-
-        #terminal-input {
+        .cmd-prompt { color: var(--safaricom-green); margin-right: 10px; }
+        .cmd-input {
             background: transparent;
             border: none;
             color: #fff;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
             flex-grow: 1;
             outline: none;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+        }
+        .cmd-output {
+            color: #8b949e;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
         }
 
-        .terminal-minimized { transform: translateY(320px); }
-
-        /* --- RESPONSIVE MEDIA QUERIES --- */
-        @media (max-width: 900px) {
-            .sandbox-grid { grid-template-columns: 1fr; }
-            .editor-pane { border-right: none; border-bottom: 1px solid var(--border-light); height: 260px; }
-            .ms-grid { grid-template-columns: 1fr; }
+        /* ==========================================================================
+           FOOTER
+           ========================================================================== */
+        footer {
+            background: #05080a;
+            padding: 60px 20px 30px;
+            text-align: center;
+            border-top: 5px solid transparent;
+            border-image: var(--kenyan-flag-gradient) 1;
         }
 
-        @media (max-width: 768px) {
-            .lab-hero { padding: 120px 15px 70px; }
-            .lab-hero h1 { font-size: 2.2rem; }
-            .direct-access-bar { flex-direction: column; align-items: center; gap: 15px; }
-            .terminal-overlay { width: 92%; right: 4%; }
-            nav { flex-direction: column; text-align: center; }
-            .nav-links { justify-content: center; }
+        .footer-grid {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: left;
+            margin-bottom: 40px;
         }
+
+        .footer-col h4 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--safaricom-green);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- HEADER & NAVIGATION -->
     <header>
-        <nav>
-            <a href="home.html" class="logo">
-                <img src="assets/main-logo.png" alt="U.E.F.I. Main Logo" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80'">
-                <div class="logo-text-wrapper">
-                    <span>U.E.F.I. INSTITUTE</span>
-                    <span class="logo-subtext">SILICON SAVANNAH CAMPUS</span>
-                </div>
+        <div class="nav-container">
+            <a href="#" class="logo-container">
+                <img src="assets/main-logo.png" alt="Main Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/50/43B02A/ffffff?text=UEFI'">
+                <div class="logo-text">UEFI <span>TECH LAB</span></div>
             </a>
             <ul class="nav-links">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="tech-lab.html" class="active">Tech Lab</a></li>
-                <li><a href="#ai-databases">Databases & AI</a></li>
-                <li><a href="#python-hub">Python Hub</a></li>
-                <li><a href="#ms-utilities">Microsoft Suite</a></li>
-                <li><a href="anthoninas-initiative.html">Girls Tech</a></li>
-                <li><a href="wilsons-initiative.html">Men Tech</a></li>
-                <li><a href="tutor.html">AI Professor</a></li>
-                <li><a href="enroll.html" class="btn-nav">Enroll Now</a></li>
+                <li><a href="#cloud-benefits">Cloud Access</a></li>
+                <li><a href="#python-ai">Python & AI</a></li>
+                <li><a href="#databases">Databases</a></li>
+                <li><a href="#ms-utilities">Microsoft Utilities</a></li>
+                <li><a href="#sandbox">Terminal</a></li>
+                <li><a href="#" class="btn-enroll">Access Portal</a></li>
             </ul>
-        </nav>
+        </div>
     </header>
 
-    <main>
-        <section class="lab-hero">
-            <span class="badge">Sovereign Intelligence Lab &bull; Silicon Savannah</span>
-            <h1>The Quant, AI &amp;<br><span>Database Terminal</span></h1>
-            <p>Transforming Kenyan students into world-class software engineers, AI researchers, and database architects. Bridging university-level theory with industrial automation.</p>
-            <div class="savannah-tag">Powered by Safaricom Network Architecture &amp; Microsoft Azure Hub</div>
-        </section>
-
-        <div class="lab-stats">
-            <div class="stat-card"><h4>10ms</h4><p>Target Latency</p></div>
-            <div class="stat-card"><h4>Py3.12</h4><p>Core Runtime</p></div>
-            <div class="stat-card"><h4>H100</h4><p>Neural Compute</p></div>
-            <div class="stat-card"><h4>M365</h4><p>Enterprise Tools</p></div>
-            <div class="stat-card"><h4>SQL/NoSQL</h4><p>Big Data Hub</p></div>
-            <div class="stat-card"><h4>24/7</h4><p>Global Uplink</p></div>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge"><i class="fas fa-satellite-dish"></i> Kenyan Silicon Savannah Node Online</div>
+            <h1>Databases & AI<br>Programming Education</h1>
+            <p>Empowering the next generation of African tech elite. Master Data Structures, Neural Networks, Python, and the complete Microsoft Ecosystem to build sovereign intelligence.</p>
+            <div style="margin-top: 40px; display: flex; gap: 20px; justify-content: center;">
+                <a href="#curriculum" class="btn-enroll" style="font-size: 1.1rem; padding: 15px 40px;">Begin Core Modules</a>
+                <a href="#cloud-benefits" class="btn-action" style="padding: 15px 40px; border-radius: 30px; font-size: 1.1rem;">View Student Benefits</a>
+            </div>
         </div>
+    </section>
 
-        <div class="direct-access-bar">
-            <a href="https://github.com" target="_blank" class="terminal-link"><span>[01]</span> GITHUB_REPOSITORY</a>
-            <a href="https://leetcode.com" target="_blank" class="terminal-link"><span>[02]</span> LEETCODE_ALGORITHMS</a>
-            <a href="https://scratch.mit.edu" target="_blank" class="terminal-link"><span>[03]</span> MIT_SCRATCH_LOGIC</a>
-            <a href="https://python.datalumina.com/data-types/strings" target="_blank" class="terminal-link" style="border-color: var(--safaricom-green);"><span>[04]</span> DATALUMINA_PYTHON_STRINGS</a>
-            <a href="https://www.microsoft.com/en-us/microsoft-365" target="_blank" class="terminal-link"><span>[05]</span> MICROSOFT_365_CLOUD</a>
+    <!-- CLOUD BENEFITS SECTION -->
+    <section id="cloud-benefits" class="benefits-section">
+        <div class="section-header">
+            <h2>Elite Developer Subscriptions</h2>
+            <p>Access Enterprise-Grade Tools to Build the Future</p>
         </div>
+        
+        <div class="benefits-grid">
+            <!-- Azure For Students -->
+            <div class="benefit-card">
+                <i class="fab fa-microsoft benefit-icon" style="color: #00a4ef;"></i>
+                <h3>Azure for Students</h3>
+                <p>Higher-education students can get $100 in Azure cloud credits for the first 12 months, alongside free access to select services like virtual machines, SQL databases, and app services.</p>
+                <a href="https://azure.microsoft.com/en-us/free/students/" target="_blank" class="benefit-link">Claim Azure Credits <i class="fas fa-arrow-right"></i></a>
+            </div>
 
-        <div class="lab-container">
+            <!-- Azure Dev Tools -->
+            <div class="benefit-card">
+                <i class="fas fa-server benefit-icon" style="color: var(--safaricom-green);"></i>
+                <h3>Azure Dev Tools for Teaching</h3>
+                <p>Access to professional-level developer and design software, such as Visual Studio, Windows Server, and SQL Server designed specifically for research and education.</p>
+                <a href="https://azureforeducation.microsoft.com/devtools" target="_blank" class="benefit-link">Access Dev Tools <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <!-- GitHub Pack -->
+            <div class="benefit-card">
+                <i class="fab fa-github benefit-icon" style="color: #fff;"></i>
+                <h3>GitHub Student Developer Pack</h3>
+                <p>By linking your student status, you gain access to free premium services, hosting, and developer tools crucial for modern version control and CI/CD workflows.</p>
+                <a href="https://education.github.com/pack" target="_blank" class="benefit-link">Get GitHub Pack <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CURRICULUM SECTION -->
+    <section id="curriculum" class="curriculum-section">
+        
+        <!-- MODULE: PYTHON & AI -->
+        <div id="python-ai" class="module-category">
+            <h2 class="category-title"><i class="fab fa-python"></i> Track 01: Python Programming & AI Engineering</h2>
             
-            <div class="section-header" id="ai-databases">
-                <h2>Elite <span>Computational Tracks</span></h2>
-                <div class="divider"></div>
-                <p>Designed for the Silicon Savannah elite. Master algorithmic logic, high-frequency quantitative finance, database engineering, and artificial intelligence prompting from foundational concepts to advanced university degree standards.</p>
-            </div>
-
-            <div class="course-tracks">
-                <div class="track-card">
-                    <img src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=800&q=80" alt="Code Blocks" class="track-image">
-                    <div class="track-content">
-                        <span class="track-tag">[ LVL_01 FOUNDATIONS ]</span>
-                        <h3>Computational Logic</h3>
-                        <p>Mental models for recursion, Boolean algebra, memory allocation, and variables using block-based and syntax-free architecture.</p>
-                        <ul class="lesson-list">
-                            <li><a href="https://scratch.mit.edu/projects/editor/" target="_blank">MIT Scratch: Logic Lab</a></li>
-                            <li><a href="tutor.html">Intro to Algorithmic Thinking</a></li>
-                            <li><a href="https://www.cs.cmu.edu/~15110/" target="_blank">CMU: Principles of Computing</a></li>
-                        </ul>
+            <div class="lesson-grid">
+                <!-- Lesson: Python Data Types -->
+                <div class="interactive-lesson">
+                    <div class="lesson-video-pane">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/k9TUPpGqYTo" allowfullscreen></iframe>
+                        </div>
+                        <div class="lesson-info">
+                            <h4>Python Core: Data Types & Strings</h4>
+                            <p>Mastering fundamental data structures. External Reference: <a href="https://python.datalumina.com/data-types/strings" target="_blank">Datalumina Strings Guide</a>. Understanding how Python handles text processing is the foundation for natural language AI prompting.</p>
+                        </div>
+                    </div>
+                    <div class="lesson-notes-pane">
+                        <div class="notes-header">
+                            <h5><i class="fas fa-pen-nib"></i> Lab Notes</h5>
+                            <span style="font-size: 0.8rem; color: #666;">Auto-saves locally</span>
+                        </div>
+                        <div class="notes-area">
+                            <textarea id="notes-python-1" class="notes-textarea" placeholder="Type your lecture notes here..."></textarea>
+                        </div>
+                        <div class="notes-actions">
+                            <button class="btn-action" onclick="saveNotes('notes-python-1')">Save to Browser</button>
+                            <button class="btn-action primary" onclick="downloadPDF('notes-python-1', 'Python_Strings_Notes')">Download PDF</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="track-card">
-                    <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=800&q=80" alt="Quant Analytics" class="track-image">
-                    <div class="track-content">
-                        <span class="track-tag">[ LVL_02 QUANT ]</span>
-                        <h3>The "Quant" Specialist</h3>
-                        <p>High-frequency trading algorithms, stochastic calculus, and financial engineering. Master the mathematics of wealth generation.</p>
-                        <ul class="lesson-list">
-                            <li><a href="https://ocw.mit.edu/" target="_blank">MIT: Linear Algebra &amp; Calculus</a></li>
-                            <li><a href="tutor.html">Algorithmic Trading Systems</a></li>
-                            <li><a href="https://www.quantconnect.com/" target="_blank">QuantConnect Backtesting Lab</a></li>
-                        </ul>
+                <!-- Lesson: AI Prompting -->
+                <div class="interactive-lesson">
+                    <div class="lesson-video-pane">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/jC4v5AS4ART" allowfullscreen></iframe>
+                        </div>
+                        <div class="lesson-info">
+                            <h4>Advanced AI Prompt Engineering</h4>
+                            <p>Learn to structure zero-shot, few-shot, and chain-of-thought prompts for LLMs like GPT-4 and Claude. Critical for computational research and automating programming tasks.</p>
+                        </div>
                     </div>
-                </div>
-
-                <div class="track-card">
-                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80" alt="AI Research" class="track-image">
-                    <div class="track-content">
-                        <span class="track-tag">[ LVL_03 NEURAL ]</span>
-                        <h3>AI &amp; Machine Learning</h3>
-                        <p>Architecting Large Language Models (LLMs), deep neural networks, and computer vision models to solve African industrial challenges.</p>
-                        <ul class="lesson-list">
-                            <li><a href="https://cs50.harvard.edu/ai/" target="_blank">Harvard: CS50 AI Architecture</a></li>
-                            <li><a href="tutor.html">Neural Networks from Scratch</a></li>
-                            <li><a href="https://www.deeplearning.ai/" target="_blank">DeepLearning.AI: Advanced MLOps</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="track-card" id="python-hub">
-                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" alt="Python Code" class="track-image">
-                    <div class="track-content">
-                        <span class="track-tag">[ LVL_04 PYTHON MASTERY ]</span>
-                        <h3>Python Engineering</h3>
-                        <p>From university-level syntax to enterprise data pipelines. Master object-oriented programming, asynchronous execution, and data structures.</p>
-                        <ul class="lesson-list">
-                            <li><a href="https://python.datalumina.com/data-types/strings" target="_blank" class="highlight-link">DataLumina: Python Strings &amp; Types &starf;</a></li>
-                            <li><a href="https://docs.python.org/3/tutorial/" target="_blank">Official Python 3.12 Documentation</a></li>
-                            <li><a href="https://pandas.pydata.org/docs/" target="_blank">Pandas &amp; NumPy Data Analysis</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="track-card">
-                    <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=800&q=80" alt="Database Servers" class="track-image">
-                    <div class="track-content">
-                        <span class="track-tag">[ LVL_05 DATABASES ]</span>
-                        <h3>Database Architecture</h3>
-                        <p>Relational SQL engines, NoSQL document stores, distributed vector databases for AI, and query optimization for high-concurrency banking systems.</p>
-                        <ul class="lesson-list">
-                            <li><a href="https://www.postgresql.org/docs/" target="_blank">PostgreSQL: Advanced Indexing &amp; PL/pgSQL</a></li>
-                            <li><a href="https://www.mongodb.com/docs/" target="_blank">MongoDB NoSQL Aggregation Pipelines</a></li>
-                            <li><a href="https://www.pinecone.io/learn/" target="_blank">Vector Databases for AI Embeddings</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="track-card">
-                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80" alt="AI Neural Network" class="track-image">
-                    <div class="track-content">
-                        <span class="track-tag">[ LVL_06 PROMPT ENG ]</span>
-                        <h3>AI Prompt Engineering</h3>
-                        <p>System prompting, Chain-of-Thought reasoning, Retrieval-Augmented Generation (RAG), and structuring deterministic JSON outputs from LLMs.</p>
-                        <ul class="lesson-list">
-                            <li><a href="https://www.promptingguide.ai/" target="_blank">OpenAI &amp; Gemini Prompt Engineering Guide</a></li>
-                            <li><a href="https://langchain.com/" target="_blank">LangChain: Building RAG Pipelines</a></li>
-                            <li><a href="tutor.html">Automating Kenyan Business with AI APIs</a></li>
-                        </ul>
+                    <div class="lesson-notes-pane">
+                        <div class="notes-header">
+                            <h5><i class="fas fa-pen-nib"></i> Lab Notes</h5>
+                        </div>
+                        <div class="notes-area">
+                            <textarea id="notes-python-2" class="notes-textarea" placeholder="Capture prompt frameworks here..."></textarea>
+                        </div>
+                        <div class="notes-actions">
+                            <button class="btn-action" onclick="saveNotes('notes-python-2')">Save to Browser</button>
+                            <button class="btn-action primary" onclick="downloadPDF('notes-python-2', 'AI_Prompting_Notes')">Download PDF</button>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="section-header" id="ms-utilities">
-                <h2>Microsoft <span>Utilities &amp; Workspace Hub</span></h2>
-                <div class="divider"></div>
-                <p>Complete university-level mastery of enterprise productivity tools. Learn how to combine traditional software mastery with cutting-edge artificial intelligence, VBA scripting, and cloud collaboration to dominate the modern workplace.</p>
-            </div>
-
-            <div class="ms-grid">
-                
-                <div class="ms-card">
-                    <div class="ms-header">
-                        <div class="ms-title-wrapper">
-                            <div class="ms-icon icon-word">W</div>
-                            <div class="ms-title">
-                                <h3>Microsoft Word</h3>
-                                <span>Advanced Document Engineering</span>
-                            </div>
-                        </div>
-                        <a href="https://www.microsoft.com/en-us/microsoft-365/word" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
-                    </div>
-                    <div class="ms-section">
-                        <h4>University &amp; Enterprise Capabilities</h4>
-                        <p>Master complex document typography, academic referencing (APA/MLA/IEEE), XML mapping, dynamic fields, form controls, and multi-author cloud collaboration for legal and academic publishing.</p>
-                        <ul>
-                            <li>Advanced Styles, Hierarchy &amp; Automated Table of Contents</li>
-                            <li>Mail Merge automation with SQL &amp; Excel data sources</li>
-                            <li>VBA Macro programming to automate repetitive drafting</li>
-                        </ul>
-                    </div>
-                    <div class="ai-copilot-box">
-                        <h5><span>AI COPILOT</span> Intelligent Drafting &amp; Summarization</h5>
-                        <p style="margin:0; font-size: 0.85rem;">Use Microsoft Copilot &amp; ChatGPT to generate formal business proposals, synthesize 100-page academic research reports into executive summaries, and rewrite technical documentation for diverse audiences instantly.</p>
-                    </div>
-                    <div class="video-tutorial-container">
-                        <a href="https://www.youtube.com/results?search_query=advanced+microsoft+word+university+tutorial+copilot" target="_blank" class="video-link">
-                            <div class="video-icon">&#9658;</div>
-                            <div>
-                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
-                                <span>Advanced Word Masterclass &amp; AI Integration (YouTube)</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="ms-card">
-                    <div class="ms-header">
-                        <div class="ms-title-wrapper">
-                            <div class="ms-icon icon-excel">X</div>
-                            <div class="ms-title">
-                                <h3>Microsoft Excel</h3>
-                                <span>Financial Quant &amp; Data Modeling</span>
-                            </div>
-                        </div>
-                        <a href="https://www.microsoft.com/en-us/microsoft-365/excel" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
-                    </div>
-                    <div class="ms-section">
-                        <h4>University &amp; Enterprise Capabilities</h4>
-                        <p>Transform raw financial data into predictive models. Master Power Query, Power Pivot, DAX expressions, dynamic arrays, Monte Carlo simulations, and linear programming solver engines.</p>
-                        <ul>
-                            <li>Advanced Lookup architecture (XLOOKUP, INDEX/MATCH, Dynamic Arrays)</li>
-                            <li>Power Query ETL pipelines for cleaning millions of financial records</li>
-                            <li>VBA Scripting &amp; Python in Excel for algorithmic data manipulation</li>
-                        </ul>
-                    </div>
-                    <div class="ai-copilot-box">
-                        <h5><span>AI COPILOT</span> Automated Formula Generation &amp; EDA</h5>
-                        <p style="margin:0; font-size: 0.85rem;">Deploy AI to write complex nested DAX formulas, explain legacy spreadsheet errors, forecast revenue trends using machine learning trendlines, and generate instant pivot dashboards from natural language queries.</p>
-                    </div>
-                    <div class="video-tutorial-container">
-                        <a href="https://www.youtube.com/results?search_query=advanced+excel+university+level+data+analysis+python" target="_blank" class="video-link">
-                            <div class="video-icon">&#9658;</div>
-                            <div>
-                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
-                                <span>University Financial Modeling in Excel &amp; Python (YouTube)</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="ms-card">
-                    <div class="ms-header">
-                        <div class="ms-title-wrapper">
-                            <div class="ms-icon icon-powerpoint">P</div>
-                            <div class="ms-title">
-                                <h3>Microsoft PowerPoint</h3>
-                                <span>Executive Visual Communication</span>
-                            </div>
-                        </div>
-                        <a href="https://www.microsoft.com/en-us/microsoft-365/powerpoint" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
-                    </div>
-                    <div class="ms-section">
-                        <h4>University &amp; Enterprise Capabilities</h4>
-                        <p>Design investor-ready pitch decks for Silicon Savannah startups. Learn Slide Master architecture, vector graphic manipulation, morph animations, embedded live data feeds, and interactive hyperlinked kiosk presentations.</p>
-                        <ul>
-                            <li>Corporate Brand Guidelines via custom Slide Master layouts</li>
-                            <li>Morph transitions &amp; 3D model rotation for engineering diagrams</li>
-                            <li>Dynamic Excel chart linking for real-time board meetings</li>
-                        </ul>
-                    </div>
-                    <div class="ai-copilot-box">
-                        <h5><span>AI COPILOT</span> Automated Deck Construction</h5>
-                        <p style="margin:0; font-size: 0.85rem;">Prompt AI to convert a Word document or brief text outline into a fully designed 15-slide presentation with speaker notes, custom icons, and structured visual hierarchy in seconds.</p>
-                    </div>
-                    <div class="video-tutorial-container">
-                        <a href="https://www.youtube.com/results?search_query=advanced+powerpoint+presentation+design+tutorial+copilot" target="_blank" class="video-link">
-                            <div class="video-icon">&#9658;</div>
-                            <div>
-                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
-                                <span>Executive Presentation Design &amp; AI Slide Gen (YouTube)</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="ms-card">
-                    <div class="ms-header">
-                        <div class="ms-title-wrapper">
-                            <div class="ms-icon icon-access">A</div>
-                            <div class="ms-title">
-                                <h3>Microsoft Access</h3>
-                                <span>Relational Database Management</span>
-                            </div>
-                        </div>
-                        <a href="https://www.microsoft.com/en-us/microsoft-365/access" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
-                    </div>
-                    <div class="ms-section">
-                        <h4>University &amp; Enterprise Capabilities</h4>
-                        <p>Bridge desktop applications with enterprise relational databases. Master Entity-Relationship (ER) modeling, normalization (3NF), complex SQL queries, form UI design, and ODBC connectivity to SQL Server and Azure.</p>
-                        <ul>
-                            <li>Relational schema design, primary/foreign keys &amp; referential integrity</li>
-                            <li>Writing advanced SQL queries (INNER/OUTER JOINS, Group By, Subqueries)</li>
-                            <li>Building automated desktop ERP user interfaces with VBA macros</li>
-                        </ul>
-                    </div>
-                    <div class="ai-copilot-box">
-                        <h5><span>AI COPILOT</span> SQL Query Synthesis &amp; Schema Design</h5>
-                        <p style="margin:0; font-size: 0.85rem;">Use LLM prompts to design database schemas from business requirements, automatically generate complex SQL join syntax, and troubleshoot relational integrity conflicts without manual syntax debugging.</p>
-                    </div>
-                    <div class="video-tutorial-container">
-                        <a href="https://www.youtube.com/results?search_query=microsoft+access+advanced+database+design+sql+tutorial" target="_blank" class="video-link">
-                            <div class="video-icon">&#9658;</div>
-                            <div>
-                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
-                                <span>Relational Database Architecture in Access &amp; SQL (YouTube)</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="ms-card">
-                    <div class="ms-header">
-                        <div class="ms-title-wrapper">
-                            <div class="ms-icon icon-outlook">O</div>
-                            <div class="ms-title">
-                                <h3>Microsoft Outlook</h3>
-                                <span>Enterprise Communication &amp; Exchange</span>
-                            </div>
-                        </div>
-                        <a href="https://www.microsoft.com/en-us/microsoft-365/outlook" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
-                    </div>
-                    <div class="ms-section">
-                        <h4>University &amp; Enterprise Capabilities</h4>
-                        <p>Master enterprise email server protocols (Exchange, IMAP, SMTP), automated inbox routing rules, cryptographic email signing (S/MIME), calendar sharing across global time zones, and task delegation.</p>
-                        <ul>
-                            <li>Automated workflow rules, Quick Steps &amp; conditional formatting</li>
-                            <li>Enterprise calendar management, meeting room booking &amp; delegate access</li>
-                            <li>VBA event handlers to automatically extract email attachment data to Excel</li>
-                        </ul>
-                    </div>
-                    <div class="ai-copilot-box">
-                        <h5><span>AI COPILOT</span> Smart Triage &amp; Email Synthesis</h5>
-                        <p style="margin:0; font-size: 0.85rem;">Leverage Copilot to summarize 50-message email threads, draft polite client negotiation responses, extract action items into Microsoft To-Do, and schedule meetings based on natural language commands.</p>
-                    </div>
-                    <div class="video-tutorial-container">
-                        <a href="https://www.youtube.com/results?search_query=advanced+microsoft+outlook+enterprise+email+management+tutorial" target="_blank" class="video-link">
-                            <div class="video-icon">&#9658;</div>
-                            <div>
-                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
-                                <span>Enterprise Outlook Mastery &amp; AI Email Automation (YouTube)</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="ms-card">
-                    <div class="ms-header">
-                        <div class="ms-title-wrapper">
-                            <div class="ms-icon icon-publisher">P</div>
-                            <div class="ms-title">
-                                <h3>Microsoft Publisher</h3>
-                                <span>Commercial Desktop Publishing</span>
-                            </div>
-                        </div>
-                        <a href="https://www.microsoft.com/en-us/microsoft-365/publisher" target="_blank" class="ms-btn-launch">Launch App &nearr;</a>
-                    </div>
-                    <div class="ms-section">
-                        <h4>University &amp; Enterprise Capabilities</h4>
-                        <p>Create professional print-ready marketing materials for Kenyan enterprises. Master CMYK color profiling, typography kerning, grid layouts, master pages, high-resolution commercial print exporting, and digital catalogs.</p>
-                        <ul>
-                            <li>Precision grid alignment, typography kerning &amp; baseline grids</li>
-                            <li>High-resolution commercial print preparation (Spot colors, bleed &amp; crop marks)</li>
-                            <li>Dynamic catalog generation linked directly to Access database inventory</li>
-                        </ul>
-                    </div>
-                    <div class="ai-copilot-box">
-                        <h5><span>AI COPILOT</span> Ad Copy &amp; Layout Ideation</h5>
-                        <p style="margin:0; font-size: 0.85rem;">Utilize generative AI to craft compelling marketing copywriting for brochures, generate custom vector graphic concepts, and optimize typography layouts for visual impact across print and digital media.</p>
-                    </div>
-                    <div class="video-tutorial-container">
-                        <a href="https://www.youtube.com/results?search_query=microsoft+publisher+advanced+desktop+publishing+tutorial" target="_blank" class="video-link">
-                            <div class="video-icon">&#9658;</div>
-                            <div>
-                                <strong style="display:block; color:var(--safaricom-green);">Watch Video Tutorial</strong>
-                                <span>Commercial Desktop Publishing &amp; Print Design (YouTube)</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="section-header">
-                <h2>Live Python <span>Compiler Sandbox</span></h2>
-                <div class="divider"></div>
-                <p>Test algorithmic trading logic, string manipulations, and data models directly in your browser. Powered by our high-speed virtualized Python 3.12 engine.</p>
-            </div>
-
-            <div class="sandbox-container">
-                <div class="sandbox-header">
-                    <span class="sandbox-title">&gt;&gt; LIVE NODE: uefi_model_test.py // SILICON_SAVANNAH_CLUSTER</span>
-                    <div class="sandbox-controls">
-                        <button class="btn-run" onclick="executeMockCode()">[ RUN SCRIPT ]</button>
-                    </div>
-                </div>
-                <div class="sandbox-grid">
-                    <div class="editor-pane">
-<textarea class="editor-textarea" id="sandbox-editor" spellcheck="false">
-# UEFI Internal Sandbox Environment - Silicon Savannah Edition
-import numpy as np
-
-def calculate_alpha(volatility, returns):
-    """
-    Computes theoretical alpha generation for Nairobi Securities Exchange (NSE).
-    """
-    signal = np.mean(returns) / volatility
-    return signal * 100
-
-# Market variables for Kenyan tech sector analysis
-v_index = 0.045
-asset_returns = [0.02, 0.05, 0.01, 0.08]
-
-alpha = calculate_alpha(v_index, asset_returns)
-print(f"Connecting to Safaricom Data Hub...")
-print(f"Executing Quantitative Model...")
-print(f"Target Alpha Generation: {alpha:.2f}%")
-print(f"Status: READY FOR DEPLOYMENT")
-</textarea>
-                    </div>
-                    <div class="output-pane" id="sandbox-output">
-                        &gt; Standby. Ready for execution...<br>
-                        &gt; Click [ RUN SCRIPT ] to initialize computation node.
-                    </div>
-                </div>
-            </div>
-
-            <section class="lab-footer">
-                <div class="info-box">
-                    <h4 style="color: var(--safaricom-green); font-size: 1.8rem; letter-spacing: 2px; margin: 0 0 15px; font-weight: 900;">UEFI SILICON SAVANNAH VERIFICATION PROTOCOL</h4>
-                    <p style="max-width: 850px; margin: 0 auto 25px; line-height: 1.8; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 1rem;">
-                        [ STATUS: VALIDATED &amp; ACCREDITED ] <br>
-                        UEFI provides a Verified Proof-of-Work Badge certifying your ability to translate abstract computational theory, database architecture, and AI prompt engineering into high-performance enterprise code.
-                    </p>
-                    <a href="enroll.html" class="btn-primary">Request Lab Credentials &amp; Enroll</a>
-                </div>
-            </section>
-
         </div>
-    </main>
 
-    <footer style="padding: 60px 20px; text-align: center; background: var(--midnight-blue); color: var(--text-muted); border-top: 5px solid transparent; border-image: var(--kenyan-flag-strip) 1; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
-        <p style="margin: 0 0 10px; color: #fff; font-weight: bold;">&copy; 2026 Universal Empowerment &amp; Future-Tech Institute (U.E.F.I.). All rights reserved.</p>
-        <p style="margin: 0; color: var(--safaricom-green);">Building Kenya's Silicon Savannah Tech Elite &bull; Powered by Microsoft Workspace &amp; Python DataLumina Hub</p>
+        <!-- MODULE: MICROSOFT UTILITIES -->
+        <div id="ms-utilities" class="module-category">
+            <h2 class="category-title"><i class="fab fa-windows"></i> Track 02: Core Microsoft 365 Utilities</h2>
+            <p style="margin-bottom: 30px; font-family: var(--font-mono); color: var(--text-muted);">
+                Office Desktop & Web Apps: Eligible students get free access to Word, Excel, PowerPoint, OneNote, and Outlook to install on up to 5 PCs/Macs and 5 mobile devices. <a href="https://www.microsoft.com/en-us/education/products/office" target="_blank">Verify Eligibility Here</a>.
+            </p>
+
+            <div class="lesson-grid">
+                
+                <!-- Lesson: MS Word -->
+                <div class="interactive-lesson">
+                    <div class="lesson-video-pane">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/fUjH9J5F-qI" allowfullscreen></iframe>
+                        </div>
+                        <div class="lesson-info">
+                            <h4>Microsoft Word: Academic Formatting</h4>
+                            <p>Advanced document styling, automated table of contents, citation management, and Copilot AI integration for generating reports.</p>
+                            <a href="https://www.microsoft.com/en-us/microsoft-365/word" target="_blank" class="benefit-link" style="margin-top: 10px;"><i class="fas fa-external-link-alt"></i> Access Web App</a>
+                        </div>
+                    </div>
+                    <div class="lesson-notes-pane">
+                        <div class="notes-header"><h5><i class="fas fa-file-word"></i> Word Notes</h5></div>
+                        <div class="notes-area"><textarea id="notes-word" class="notes-textarea" placeholder="Document structures..."></textarea></div>
+                        <div class="notes-actions">
+                            <button class="btn-action" onclick="saveNotes('notes-word')">Save</button>
+                            <button class="btn-action primary" onclick="downloadPDF('notes-word', 'MS_Word_Notes')">Download PDF</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson: MS Excel -->
+                <div class="interactive-lesson">
+                    <div class="lesson-video-pane">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/Vl0H-qTclOg" allowfullscreen></iframe>
+                        </div>
+                        <div class="lesson-info">
+                            <h4>Microsoft Excel: Data Analytics</h4>
+                            <p>Pivot tables, VLOOKUP, macros, and connecting Excel to external SQL Databases for real-time visualization.</p>
+                            <a href="https://www.microsoft.com/en-us/microsoft-365/excel" target="_blank" class="benefit-link" style="margin-top: 10px;"><i class="fas fa-external-link-alt"></i> Access Web App</a>
+                        </div>
+                    </div>
+                    <div class="lesson-notes-pane">
+                        <div class="notes-header"><h5><i class="fas fa-file-excel"></i> Excel Notes</h5></div>
+                        <div class="notes-area"><textarea id="notes-excel" class="notes-textarea" placeholder="Formulas and Macros..."></textarea></div>
+                        <div class="notes-actions">
+                            <button class="btn-action" onclick="saveNotes('notes-excel')">Save</button>
+                            <button class="btn-action primary" onclick="downloadPDF('notes-excel', 'MS_Excel_Notes')">Download PDF</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson: MS PowerPoint & Copilot -->
+                <div class="interactive-lesson">
+                    <div class="lesson-video-pane">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/u7zGEHjFjS0" allowfullscreen></iframe>
+                        </div>
+                        <div class="lesson-info">
+                            <h4>Microsoft PowerPoint & Copilot AI</h4>
+                            <p>Designing pitch decks, slide master manipulation, and using <b>Microsoft Copilot</b> (Built-in AI assistance in desktop and web apps) for brainstorming and breaking down concepts.</p>
+                            <a href="https://www.microsoft.com/en-us/microsoft-365/powerpoint" target="_blank" class="benefit-link" style="margin-top: 10px;"><i class="fas fa-external-link-alt"></i> Access Web App</a>
+                        </div>
+                    </div>
+                    <div class="lesson-notes-pane">
+                        <div class="notes-header"><h5><i class="fas fa-file-powerpoint"></i> PPT & Copilot Notes</h5></div>
+                        <div class="notes-area"><textarea id="notes-ppt" class="notes-textarea" placeholder="Presentation tips..."></textarea></div>
+                        <div class="notes-actions">
+                            <button class="btn-action" onclick="saveNotes('notes-ppt')">Save</button>
+                            <button class="btn-action primary" onclick="downloadPDF('notes-ppt', 'MS_PPT_Notes')">Download PDF</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson: MS Access & DBs -->
+                <div class="interactive-lesson" id="databases">
+                    <div class="lesson-video-pane">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/tM6Lz9L1V98" allowfullscreen></iframe>
+                        </div>
+                        <div class="lesson-info">
+                            <h4>Microsoft Access & Database Architecture</h4>
+                            <p>Relational database design, primary keys, querying with SQL, and building GUI forms for data entry.</p>
+                        </div>
+                    </div>
+                    <div class="lesson-notes-pane">
+                        <div class="notes-header"><h5><i class="fas fa-database"></i> Access Notes</h5></div>
+                        <div class="notes-area"><textarea id="notes-access" class="notes-textarea" placeholder="SQL Queries and Schema..."></textarea></div>
+                        <div class="notes-actions">
+                            <button class="btn-action" onclick="saveNotes('notes-access')">Save</button>
+                            <button class="btn-action primary" onclick="downloadPDF('notes-access', 'MS_Access_Notes')">Download PDF</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson: Outlook, Teams & Collaboration -->
+                <div class="interactive-lesson">
+                    <div class="lesson-video-pane">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/1v0E2tK2zZ8" allowfullscreen></iframe>
+                        </div>
+                        <div class="lesson-info">
+                            <h4>Communication: Outlook, Teams & OneDrive</h4>
+                            <ul style="color: var(--text-muted); margin-left: 20px; font-size: 0.95rem;">
+                                <li><b>OneDrive:</b> Secure cloud storage (typically 1 TB) to sync, back up, and share group assignments.</li>
+                                <li><b>Microsoft Teams:</b> Essential for hosting study groups, attending virtual lectures, and collaborating on projects.</li>
+                                <li><b>OneNote:</b> A robust digital notebook useful for organizing lectures, digitizing handwritten notes, and clipping research articles.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lesson-notes-pane">
+                        <div class="notes-header"><h5><i class="fas fa-envelope"></i> Collaboration Notes</h5></div>
+                        <div class="notes-area"><textarea id="notes-collab" class="notes-textarea" placeholder="Workflow optimization..."></textarea></div>
+                        <div class="notes-actions">
+                            <button class="btn-action" onclick="saveNotes('notes-collab')">Save</button>
+                            <button class="btn-action primary" onclick="downloadPDF('notes-collab', 'MS_Collab_Notes')">Download PDF</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- TERMINAL SANDBOX SECTION -->
+    <section id="sandbox" class="sandbox-section">
+        <div class="section-header">
+            <h2>Command Line Interface</h2>
+            <p>Access the Sovereign Node Terminal</p>
+        </div>
+
+        <div class="terminal-container">
+            <div class="terminal-header-bar">
+                <div class="window-controls">
+                    <span class="close"></span>
+                    <span class="minimize"></span>
+                    <span class="maximize"></span>
+                </div>
+                <div class="terminal-title">bash -- uefi_admin@silicon-savannah</div>
+                <div></div>
+            </div>
+            <div class="terminal-body" id="term-body" onclick="document.getElementById('term-input').focus()">
+                <div class="cmd-output" id="term-output">
+UEFI Secure Research Terminal [Version 2.0.26]
+(c) 2026 African Tech Protocol. All rights reserved.
+
+Connecting to Azure Cloud Database... [SUCCESS]
+GitHub Packages synchronized... [SUCCESS]
+Copilot API endpoint ready... [SUCCESS]
+
+Type 'help' to see available academic modules.
+</div>
+                <div class="cmd-line">
+                    <span class="cmd-prompt">root@uefi:~$</span>
+                    <input type="text" id="term-input" class="cmd-input" autocomplete="off" spellcheck="false">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4><img src="assets/main-logo.png" style="width:24px; vertical-align:middle; border-radius:50%; margin-right:10px;" onerror="this.style.display='none'">UEFI Institute</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Building the premier Silicon Savannah developer force through comprehensive Microsoft and AI programming education.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#python-ai">Python & AI Program</a></li>
+                    <li><a href="#ms-utilities">Microsoft 365 Mastery</a></li>
+                    <li><a href="#cloud-benefits">Developer Student Packs</a></li>
+                    <li><a href="https://python.datalumina.com/data-types/strings" target="_blank">Datalumina Python Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Cloud Partners</h4>
+                <ul>
+                    <li><a href="https://azure.microsoft.com" target="_blank">Microsoft Azure</a></li>
+                    <li><a href="https://github.com" target="_blank">GitHub Enterprise</a></li>
+                    <li><a href="https://openai.com" target="_blank">OpenAI Research</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Universal Empowerment & Future-Tech Institute. Crafted for the Kenyan Tech Elite. All rights reserved.
+        </div>
     </footer>
 
-    <div class="terminal-overlay terminal-minimized" id="terminal-overlay">
-        <div class="terminal-header" onclick="toggleTerminal()">
-            <span>&gt;_ UEFI.OS // ROOT ACCESS &bull; NAIROBI NODE</span>
-            <span id="terminal-toggle-icon">[ + ]</span>
-        </div>
-        <div class="terminal-body">
-            <div class="terminal-output" id="terminal-output">
-                <p>Initializing UEFI Sovereign Environment...</p>
-                <p>Target Latency: <span style="color: var(--safaricom-green);">10ms (Safaricom Fiber)</span> | Compute: <span style="color: var(--safaricom-green);">ONLINE</span></p>
-                <p>Type <span style="color: #fff; font-weight: bold;">help</span> for available modules and Silicon Savannah commands.</p>
-            </div>
-            <div class="terminal-input-line">
-                <span>root@uefi-nairobi:~$</span>
-                <input type="text" id="terminal-input" autocomplete="off">
-            </div>
-        </div>
-    </div>
-
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- TERMINAL LOGIC ---
-        const terminalInput = document.getElementById('terminal-input');
-        const terminalOutput = document.getElementById('terminal-output');
-        const terminalOverlay = document.getElementById('terminal-overlay');
-        const toggleIcon = document.getElementById('terminal-toggle-icon');
+        /* --------------------------------------------------------------------------
+           NOTE TAKING & PDF GENERATION LOGIC
+           -------------------------------------------------------------------------- */
+        
+        // On page load, populate textareas with saved data
+        document.addEventListener("DOMContentLoaded", () => {
+            const textareas = document.querySelectorAll('.notes-textarea');
+            textareas.forEach(ta => {
+                const savedVal = localStorage.getItem(ta.id);
+                if(savedVal) {
+                    ta.value = savedVal;
+                }
+            });
+        });
 
-        function toggleTerminal() {
-            terminalOverlay.classList.toggle('terminal-minimized');
-            toggleIcon.innerText = terminalOverlay.classList.contains('terminal-minimized') ? '[ + ]' : '[ - ]';
-            if (!terminalOverlay.classList.contains('terminal-minimized')) {
-                terminalInput.focus();
-            }
+        // Function to save notes to local storage
+        function saveNotes(textareaId) {
+            const text = document.getElementById(textareaId).value;
+            localStorage.setItem(textareaId, text);
+            
+            // Visual feedback
+            const btn = document.querySelector(`button[onclick="saveNotes('${textareaId}')"]`);
+            const originalText = btn.innerText;
+            btn.innerText = "Saved! ✓";
+            btn.style.backgroundColor = "var(--safaricom-green)";
+            btn.style.color = "#000";
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.backgroundColor = "transparent";
+                btn.style.color = "var(--safaricom-green)";
+            }, 2000);
         }
 
-        terminalInput.addEventListener('keypress', function (e) {
+        // Function to generate a clean white PDF page for notes
+        // Opens a new print window formatted beautifully, bypassing dark theme
+        function downloadPDF(textareaId, fileNameTitle) {
+            const content = document.getElementById(textareaId).value;
+            if(!content.trim()) {
+                alert("Notes are empty. Write something before downloading!");
+                return;
+            }
+
+            // Create a clean HTML document for printing
+            const printWindow = window.open('', '_blank', 'width=800,height=900');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>${fileNameTitle}</title>
+                    <style>
+                        body {
+                            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                            color: #000;
+                            background: #fff;
+                            padding: 40px;
+                            line-height: 1.6;
+                        }
+                        .header {
+                            border-bottom: 2px solid #E4002B;
+                            padding-bottom: 20px;
+                            margin-bottom: 30px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                        }
+                        .logo-text {
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #43B02A;
+                        }
+                        .title {
+                            font-size: 20px;
+                            font-weight: bold;
+                        }
+                        .content {
+                            white-space: pre-wrap;
+                            font-size: 14px;
+                        }
+                        .footer {
+                            margin-top: 50px;
+                            font-size: 10px;
+                            color: #777;
+                            border-top: 1px solid #ccc;
+                            padding-top: 10px;
+                            text-align: center;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div class="logo-text">UEFI TECH LAB</div>
+                        <div class="title">${fileNameTitle.replace(/_/g, ' ')}</div>
+                    </div>
+                    <div class="content">${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                    <div class="footer">
+                        Generated by UEFI Educational Portal | Silicon Savannah Elite
+                    </div>
+                    <script>
+                        // Auto trigger print prompt
+                        window.onload = function() {
+                            window.print();
+                            // Optional: window.close() after print, but leaving it open allows saving as PDF manually if auto-close bugs out
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+
+        /* --------------------------------------------------------------------------
+           TERMINAL CLI LOGIC
+           -------------------------------------------------------------------------- */
+        const termInput = document.getElementById('term-input');
+        const termOutput = document.getElementById('term-output');
+        const termBody = document.getElementById('term-body');
+
+        termInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                const command = terminalInput.value.toLowerCase().trim();
-                printToTerminal(`root@uefi-nairobi:~$ <span style="color:#fff;">${command}</span>`);
+                const val = termInput.value.trim();
+                const cmdOutput = document.createElement('div');
                 
-                // Command Routing
-                switch(command) {
-                    case 'help':
-                        printToTerminal(`Available commands:<br>
-                        - <span style="color:var(--safaricom-green)">boot quant</span>: Load trading &amp; financial engineering modules<br>
-                        - <span style="color:var(--safaricom-green)">boot neural</span>: Allocate H100 GPUs &amp; PyTorch tensors<br>
-                        - <span style="color:var(--safaricom-green)">boot python</span>: Connect to DataLumina Python strings hub<br>
-                        - <span style="color:var(--safaricom-green)">boot ms-suite</span>: Initialize Microsoft 365 Copilot APIs<br>
-                        - <span style="color:var(--safaricom-green)">silicon-savannah</span>: Display Kenyan tech network stats<br>
-                        - <span style="color:var(--safaricom-green)">status</span>: Check node health &amp; server uptime<br>
-                        - <span style="color:var(--safaricom-green)">clear</span>: Clear terminal console`);
-                        break;
-                    case 'boot quant':
-                        printToTerminal("Loading linear algebra vectors... <span style='color: var(--safaricom-green);'>[SUCCESS]</span>");
-                        printToTerminal("Connecting to Nairobi Securities Exchange API... <span style='color: var(--safaricom-green);'>[ESTABLISHED]</span>");
-                        break;
-                    case 'boot neural':
-                        printToTerminal("Allocating H100 GPU resources on Azure cluster... <span style='color: var(--safaricom-green);'>[SUCCESS]</span>");
-                        printToTerminal("Initializing PyTorch LLM tensors... <span style='color: var(--safaricom-green);'>[READY]</span>");
-                        break;
-                    case 'boot python':
-                        printToTerminal("Importing standard library and strings module... <span style='color: var(--safaricom-green);'>[SUCCESS]</span>");
-                        printToTerminal("Uplink established with DataLumina: <a href='https://python.datalumina.com/data-types/strings' target='_blank' style='color:#80FF66;'>python.datalumina.com/data-types/strings</a>");
-                        break;
-                    case 'boot ms-suite':
-                        printToTerminal("Synchronizing with Microsoft 365 Cloud Enterprise... <span style='color: var(--safaricom-green);'>[SUCCESS]</span>");
-                        printToTerminal("Word, Excel, Access, PowerPoint, Outlook, Publisher Copilots <span style='color: var(--safaricom-green);'>[ACTIVE]</span>");
-                        break;
-                    case 'silicon-savannah':
-                        printToTerminal("Location: Thika / Nairobi Tech Corridor | Node: Safaricom 5G Fiber Hub");
-                        printToTerminal("Active Kenyan Engineering Students Online: <span style='color: var(--safaricom-green); font-weight:bold;'>14,280</span>");
-                        break;
-                    case 'status':
-                        printToTerminal("Uplink: STABLE | Latency: 9ms | Nodes: 6/6 ACTIVE | Database: CONNECTED");
-                        break;
-                    case 'clear':
-                        terminalOutput.innerHTML = '';
-                        break;
-                    case '':
-                        break;
-                    default:
-                        printToTerminal(`Command not recognized: <span style="color:var(--error-red)">${command}</span>. Type 'help' for options.`);
-                }
+                // Echo command
+                cmdOutput.innerHTML = `<span style="color:var(--safaricom-green)">root@uefi:~$</span> ${val}\n`;
                 
-                terminalInput.value = '';
-                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                // Command Processing
+                const response = processCommand(val.toLowerCase());
+                cmdOutput.innerHTML += `<span style="color:#8b949e">${response}</span>\n\n`;
+                
+                termOutput.appendChild(cmdOutput);
+                termInput.value = '';
+                termBody.scrollTop = termBody.scrollHeight;
             }
         });
 
-        function printToTerminal(text) {
-            const p = document.createElement('p');
-            p.innerHTML = text;
-            terminalOutput.appendChild(p);
-        }
-
-        // --- COMPILER SANDBOX LOGIC ---
-        function executeMockCode() {
-            const outputPane = document.getElementById('sandbox-output');
-            outputPane.innerHTML = "&gt; Compiling via Silicon Savannah Python 3.12 Engine...<br>";
+        function processCommand(cmd) {
+            if(!cmd) return "";
             
-            setTimeout(() => {
-                outputPane.innerHTML += "&gt; Connecting to Safaricom Data Hub...<br>";
-            }, 300);
+            const commands = {
+                "help": "Available Commands:\n  - python   : Initialize Python 3.12 environment\n  - azure    : Ping Azure Cloud Servers\n  - ms-apps  : List installed Microsoft utilities\n  - clear    : Clear terminal screen",
+                "python": "Loading Python 3.12.0...\nNumPy, Pandas, TensorFlow loaded.\nReady for Data Analysis and AI Prompting.",
+                "azure": "Pinging central Azure node (East US)...\nReply from 52.168.10.1: bytes=32 time=12ms TTL=118\nCloud link stable.",
+                "ms-apps": "[INSTALLED]: Word, Excel, PowerPoint, Access, Outlook, Publisher, Teams, OneNote.\n[STATUS]: Licensed via Azure Dev Tools for Teaching.",
+                "clear": "CLEAR_TRIGGER"
+            };
 
-            setTimeout(() => {
-                outputPane.innerHTML += "&gt; Executing Quantitative Alpha Model...<br>";
-            }, 700);
+            if (cmd === "clear") {
+                termOutput.innerHTML = "";
+                return "";
+            }
 
-            setTimeout(() => {
-                outputPane.innerHTML += "&gt; Target Alpha Generation: <span style='color: var(--safaricom-green); font-weight: bold;'>88.89%</span><br>";
-                outputPane.innerHTML += "&gt; <span style='color: var(--safaricom-green); font-weight: bold;'>Process completed with exit code 0 [SUCCESS]</span>";
-            }, 1200);
+            return commands[cmd] || `bash: ${cmd}: command not found. Type 'help'.`;
         }
     </script>
 </body>
