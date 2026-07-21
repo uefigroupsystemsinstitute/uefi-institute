@@ -2,1485 +2,1862 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="UEFI Institute - Building the architects of tomorrow from Narok to the global stage.">
-    <title>UEFI Institute | System Architecture & Enrollment</title>
-
-    <!-- Google Fonts: JetBrains Mono for Code/Tech feel, Inter for extreme readability -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Global // Empowering Africa's Technological Future</title>
+    
     <style>
         /* ==========================================================================
-           UEFI INSTITUTE // GLOBAL DESIGN SYSTEM & VARIABLES
+           1. SYSTEM VARIABLES & DESIGN SYSTEM (SAFARICOM VIBRANCY)
            ========================================================================== */
         :root {
-            /* IITIAN ACADEMY DEEP BLUE PALETTE */
-            --iit-blue-base: #002147;
-            --iit-blue-dark: #001530;
-            --iit-blue-darker: #000c1f;
-            --iit-blue-light: #0a3d7a;
-            --iit-blue-glow: rgba(0, 33, 71, 0.6);
+            --safaricom-green: #00A859;
+            --safaricom-green-light: #00E676;
+            --safaricom-green-dark: #007A3E;
+            --safaricom-green-glow: rgba(0, 168, 89, 0.35);
             
-            /* SAFARICOM BRAND COLORS */
-            --safaricom-green: #43B02A;
-            --safaricom-green-glow: rgba(67, 176, 42, 0.4);
-            --safaricom-green-dark: #2c7a1a;
+            --kenya-red: #E11C2B;
+            --kenya-red-dark: #A60C17;
+            --kenya-red-glow: rgba(225, 28, 43, 0.35);
             
-            --safaricom-red: #ED1C24;
-            --safaricom-red-glow: rgba(237, 28, 36, 0.4);
-            --safaricom-red-dark: #b31016;
-
-            /* NEUTRALS & TEXT */
-            --white: #FFFFFF;
-            --gray-100: #F3F4F6;
-            --gray-300: #D1D5DB;
-            --gray-400: #9CA3AF;
-            --gray-500: #6B7280;
-            --gray-800: #1F2937;
+            --obsidian-black: #0B0E14;
+            --obsidian-surface: #121824;
+            --obsidian-card: #1A2332;
+            --obsidian-hover: #232E42;
             
-            /* GLASSMORPHISM & UI VARIABLES */
-            --glass-bg: rgba(0, 21, 48, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-highlight: rgba(255, 255, 255, 0.03);
+            --crisp-white: #FFFFFF;
+            --off-white: #F8FAFC;
+            --slate-gray: #94A3B8;
+            --slate-light: #E2E8F0;
             
-            /* TYPOGRAPHY */
-            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-
-            /* SPACING SYSTEM */
-            --space-xs: 0.5rem;
-            --space-sm: 1rem;
-            --space-md: 2rem;
-            --space-lg: 4rem;
-            --space-xl: 8rem;
-
-            /* ANIMATION TIMINGS */
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --border-green: rgba(0, 168, 89, 0.4);
+            
+            /* TYPOGRAPHY OVERRIDE: STRICT ARIAL STACK */
+            --font-main: Arial, "Helvetica Neue", Helvetica, sans-serif;
+            --font-mono: "Courier New", Courier, monospace;
+            
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            
+            --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --shadow-vibrant: 0 20px 40px rgba(0, 168, 89, 0.25);
+            
             --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* ==========================================================================
-           RESET & GLOBAL STYLES
+           2. GLOBAL RESETS & BASE STYLING
            ========================================================================== */
-        *, *::before, *::after {
-            box-sizing: border-box;
+        * {
             margin: 0;
             padding: 0;
-        }
-
-        html {
+            box-sizing: border-box;
             scroll-behavior: smooth;
-            font-size: 16px;
         }
 
         body {
-            font-family: var(--font-sans);
-            background-color: var(--iit-blue-darker);
-            color: var(--gray-300);
+            font-family: var(--font-main);
+            background-color: var(--obsidian-black);
+            color: var(--crisp-white);
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            position: relative;
         }
 
-        body.auth-locked {
-            overflow: hidden;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--obsidian-black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--safaricom-green-dark);
+            border-radius: var(--radius-full);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--safaricom-green);
         }
 
-        ::selection {
-            background-color: var(--safaricom-green);
-            color: var(--white);
-        }
-
-        /* ==========================================================================
-           BACKGROUND MESH CANVAS
-           ========================================================================== */
-        #network-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            opacity: 0.4;
-            pointer-events: none;
-        }
-
-        .ambient-glow {
-            position: fixed;
-            width: 100vw;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            z-index: -2;
-            background: radial-gradient(circle at 15% 50%, rgba(67, 176, 42, 0.05), transparent 40%),
-                        radial-gradient(circle at 85% 30%, rgba(237, 28, 36, 0.05), transparent 40%),
-                        radial-gradient(circle at 50% 80%, rgba(0, 33, 71, 0.8), transparent 60%);
-        }
-
-        /* ==========================================================================
-           AUTHENTICATION OVERLAY (GLASSMORPHIC)
-           ========================================================================== */
-        #authOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 12, 31, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 1;
-            visibility: visible;
-            transition: opacity var(--transition-smooth), visibility var(--transition-smooth);
-        }
-
-        #authOverlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .auth-container {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: var(--space-lg);
-            border-radius: 24px;
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
-                        inset 0 1px 0 rgba(255,255,255,0.1);
-            text-align: center;
-            transform: translateY(0);
-            transition: transform var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .auth-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--safaricom-red), var(--safaricom-green));
-        }
-
-        .auth-brand-lockup {
-            margin-bottom: var(--space-md);
-        }
-
-        .auth-brand-lockup h2 {
-            font-family: var(--font-mono);
-            color: var(--white);
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
-        }
-
-        .auth-brand-lockup p {
-            color: var(--gray-400);
-            font-size: 0.9rem;
-        }
-
-        .auth-input-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .auth-input-group label {
-            display: block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--gray-400);
-            margin-bottom: 0.5rem;
-            font-family: var(--font-mono);
-        }
-
-        .auth-input {
-            width: 100%;
-            background: rgba(0,0,0,0.2);
-            border: 1px solid var(--glass-border);
-            padding: 1rem 1.25rem;
-            border-radius: 8px;
-            color: var(--white);
-            font-family: var(--font-sans);
-            font-size: 1rem;
+        a {
+            text-decoration: none;
+            color: inherit;
             transition: all var(--transition-fast);
         }
 
-        .auth-input:focus {
-            outline: none;
-            border-color: var(--safaricom-green);
-            box-shadow: 0 0 0 3px var(--safaricom-green-glow);
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Utilities */
+        .container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .badge-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: rgba(0, 168, 89, 0.12);
+            border: 1px solid var(--safaricom-green);
+            color: var(--safaricom-green-light);
+            margin-bottom: 1rem;
+        }
+
+        .badge-tag.red {
+            background: rgba(225, 28, 43, 0.12);
+            border-color: var(--kenya-red);
+            color: var(--kenya-red);
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            border: none;
             gap: 10px;
-        }
-
-        .btn-green {
-            background-color: var(--safaricom-green);
-            color: var(--white);
-            box-shadow: 0 4px 14px 0 var(--safaricom-green-glow);
-        }
-
-        .btn-green:hover {
-            background-color: var(--safaricom-green-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-google {
-            background-color: var(--white);
-            color: var(--gray-800);
-            margin-top: 1rem;
-        }
-
-        .btn-google:hover {
-            background-color: var(--gray-100);
-            transform: translateY(-2px);
-        }
-        
-        .auth-divider {
-            margin: 2rem 0;
-            position: relative;
-            text-align: center;
-        }
-        
-        .auth-divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: var(--glass-border);
-        }
-        
-        .auth-divider span {
-            background: var(--iit-blue-dark);
-            padding: 0 1rem;
-            position: relative;
-            color: var(--gray-500);
-            font-size: 0.8rem;
-            font-family: var(--font-mono);
-        }
-
-        /* ==========================================================================
-           MAIN NAVIGATION
-           ========================================================================== */
-        .system-nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background: linear-gradient(to bottom, rgba(0,12,31,0.9) 0%, transparent 100%);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .nav-brand {
-            font-family: var(--font-mono);
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--white);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-brand span {
-            color: var(--safaricom-green);
-        }
-
-        .account-profile-badge {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-
-        .account-profile-badge:hover {
-            background: var(--glass-highlight);
-            border-color: var(--safaricom-red);
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid var(--safaricom-green);
-            object-fit: cover;
-        }
-
-        .user-name {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--white);
-            font-weight: 700;
-        }
-
-        .logout-trigger {
-            font-size: 0.7rem;
-            color: var(--safaricom-red);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-left: 10px;
-        }
-
-        /* ==========================================================================
-           SLIDER HERO ENGINE (Contextual wrapper for your JS logic)
-           ========================================================================== */
-        .hero-slider-engine {
-            position: relative;
-            height: 80vh;
-            min-height: 600px;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-        }
-
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity var(--transition-slow);
-            display: flex;
-            align-items: center;
-            padding: 0 10%;
-            z-index: 1;
-        }
-
-        .slide.active {
-            opacity: 1;
-            z-index: 2;
-        }
-
-        .slide-content {
-            max-width: 800px;
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-        }
-
-        .slide.active .slide-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .slide-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--safaricom-green);
-            color: var(--safaricom-green);
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .slide-title {
-            font-size: clamp(3rem, 5vw, 5rem);
-            line-height: 1.1;
-            color: var(--white);
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
-
-        .slide-desc {
-            font-size: 1.25rem;
-            color: var(--gray-300);
-            max-width: 600px;
-            margin-bottom: 2rem;
-        }
-
-        /* Slider Controls */
-        .slider-controls {
-            position: absolute;
-            bottom: 5%;
-            right: 10%;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            z-index: 10;
-        }
-
-        .nav-btn {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--white);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-
-        .nav-btn:hover {
-            background: var(--iit-blue-light);
-            border-color: var(--safaricom-green);
-        }
-
-        .slider-indicators {
-            display: flex;
-            gap: 10px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--glass-border);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-
-        .dot.active {
-            background: var(--safaricom-green);
-            box-shadow: 0 0 10px var(--safaricom-green-glow);
-            transform: scale(1.2);
-        }
-
-        /* ==========================================================================
-           FOCUS CARDS & METRICS SECTION (Your exact code, heavily upgraded)
-           ========================================================================== */
-        .system-metrics-section {
-            padding: var(--space-xl) 5%;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: var(--space-lg);
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: var(--white);
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            color: var(--safaricom-green);
-            font-family: var(--font-mono);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .grid-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Base Card Styling */
-        .focus-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 400px;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
-        }
-
-        .focus-card:hover {
-            transform: translateY(-10px);
-            z-index: 2;
-        }
-
-        /* Ambient glows inside cards */
-        .focus-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity var(--transition-smooth);
-            pointer-events: none;
-        }
-
-        .focus-card:hover::before {
-            opacity: 1;
-        }
-
-        /* Alert Styling overrides */
-        .focus-card.red-alert {
-            border-top: 4px solid var(--safaricom-red);
-        }
-        
-        .focus-card.red-alert:hover {
-            box-shadow: 0 20px 40px -10px var(--safaricom-red-glow);
-            border-color: rgba(237, 28, 36, 0.3);
-        }
-
-        .focus-card.green-pass {
-            border-top: 4px solid var(--safaricom-green);
-        }
-
-        .focus-card.green-pass:hover {
-            box-shadow: 0 20px 40px -10px var(--safaricom-green-glow);
-            border-color: rgba(67, 176, 42, 0.3);
-        }
-
-        .focus-card h3 {
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 1rem;
-            font-family: var(--font-mono);
-            letter-spacing: -2px;
-        }
-
-        .focus-card h4 {
-            color: var(--white);
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .focus-card p {
-            color: var(--gray-400);
+            padding: 1rem 2.2rem;
+            border-radius: var(--radius-md);
+            font-family: var(--font-main);
             font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 2rem;
-        }
-
-        .data-source-link {
-            display: inline-flex;
-            align-items: center;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
             font-weight: 700;
-            text-decoration: none;
-            letter-spacing: 1px;
-            padding-bottom: 0.25rem;
-            border-bottom: 1px solid;
-            transition: all var(--transition-fast);
-            width: fit-content;
-        }
-
-        .red-alert .data-source-link {
-            color: var(--safaricom-red);
-            border-bottom-color: rgba(237, 28, 36, 0.3);
-        }
-
-        .red-alert .data-source-link:hover {
-            border-bottom-color: var(--safaricom-red);
-            padding-bottom: 0.5rem;
-        }
-
-        .green-pass .data-source-link {
-            color: var(--safaricom-green);
-            border-bottom-color: rgba(67, 176, 42, 0.3);
-        }
-
-        /* ==========================================================================
-           STRATEGY SECTION 
-           ========================================================================== */
-        .strategy {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            max-width: 1400px;
-            margin: var(--space-xl) auto;
-            background: var(--iit-blue-base);
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        }
-
-        .strategy-text {
-            padding: var(--space-lg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-        }
-
-        .strategy-text::before {
-            content: 'STRATEGY';
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            font-family: var(--font-mono);
-            font-size: 4rem;
-            color: rgba(255,255,255,0.03);
-            font-weight: 800;
-            pointer-events: none;
-        }
-
-        .strategy-text h2 {
-            font-size: 2.5rem;
-            color: var(--white);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .strategy-text p {
-            color: var(--gray-300);
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .strategy-text a {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: 1rem 2rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            border: 1px solid var(--glass-border);
-            border-left: 4px solid var(--safaricom-red);
-            transition: all var(--transition-fast);
-        }
-
-        .strategy-text a:hover {
-            background: rgba(255,255,255,0.1);
-            padding-left: 2.5rem;
-        }
-
-        .strategy-image {
-            position: relative;
-            height: 100%;
-            min-height: 500px;
-        }
-
-        .strategy-image img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(40%) contrast(1.2);
-            transition: filter var(--transition-slow);
-        }
-
-        .strategy-image:hover img {
-            filter: grayscale(0%) contrast(1);
-        }
-
-        .strategy-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, var(--iit-blue-base) 0%, transparent 50%);
-        }
-
-        /* ==========================================================================
-           PILLARS SECTION
-           ========================================================================== */
-        .pillars-section {
-            padding: var(--space-xl) 5%;
-            background: linear-gradient(to bottom, transparent, var(--iit-blue-dark), transparent);
-            position: relative;
-        }
-
-        .pillars-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 100px;
-            background: linear-gradient(to bottom, transparent, var(--safaricom-green));
-        }
-
-        .pillars {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .pillars .card {
-            background: rgba(0, 33, 71, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 3rem 2rem;
-            border-radius: 12px;
+            cursor: pointer;
             transition: all var(--transition-smooth);
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-safaricom {
+            background: linear-gradient(135deg, var(--safaricom-green), var(--safaricom-green-dark));
+            color: var(--crisp-white);
+            box-shadow: 0 10px 25px var(--safaricom-green-glow);
+        }
+
+        .btn-safaricom:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, var(--safaricom-green-light), var(--safaricom-green));
+            box-shadow: 0 15px 35px rgba(0, 230, 118, 0.4);
+        }
+
+        .btn-outline-red {
+            background: transparent;
+            border: 2px solid var(--kenya-red);
+            color: var(--crisp-white);
+        }
+
+        .btn-outline-red:hover {
+            background: var(--kenya-red);
+            box-shadow: 0 10px 25px var(--kenya-red-glow);
+            transform: translateY(-3px);
+        }
+
+        .btn-ghost {
+            background: var(--obsidian-card);
+            color: var(--crisp-white);
+            border: 1px solid var(--border-glass);
+        }
+
+        .btn-ghost:hover {
+            background: var(--obsidian-hover);
+            border-color: var(--safaricom-green);
+            color: var(--safaricom-green-light);
+        }
+
+        /* ==========================================================================
+           3. SAFARICOM-STYLE TOP EMERGENCY / SYSTEM ANNOUNCEMENT BAR
+           ========================================================================== */
+        .top-announce-bar {
+            background: linear-gradient(90deg, var(--kenya-red-dark), var(--obsidian-black), var(--safaricom-green-dark));
+            color: var(--crisp-white);
+            padding: 8px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--border-glass);
+            position: relative;
+            z-index: 1001;
+        }
+
+        .announce-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .announce-ticker {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--safaricom-green-light);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--safaricom-green-light);
+            animation: livePulse 1.5s infinite;
+        }
+
+        @keyframes livePulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 230, 118, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+        }
+
+        .top-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .top-links a {
+            color: var(--slate-gray);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .top-links a:hover {
+            color: var(--safaricom-green-light);
+        }
+
+        /* ==========================================================================
+           4. MAIN NAVIGATION (EXPERT UI - SAFARICOM STYLE - NO GOOGLE BADGE)
+           ========================================================================== */
+        header.main-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(18, 24, 36, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--safaricom-green);
+            z-index: 1000;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        /* Brand Logo Area */
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-emblem {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--safaricom-green), var(--kenya-red));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: var(--crisp-white);
+            box-shadow: 0 0 20px var(--safaricom-green-glow);
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            line-height: 1;
+            color: var(--crisp-white);
+        }
+
+        .logo-text h1 span {
+            color: var(--safaricom-green);
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: var(--kenya-red);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* Navigation Menu */
+        nav.nav-menu ul {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav.nav-menu a {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--crisp-white);
+            padding: 8px 0;
             position: relative;
         }
 
-        .pillars .card::before {
+        nav.nav-menu a::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 0%;
+            width: 0;
             height: 3px;
             background: var(--safaricom-green);
-            transition: width var(--transition-smooth);
+            border-radius: var(--radius-full);
+            transition: width var(--transition-fast);
         }
 
-        .pillars .card:hover {
-            background: var(--iit-blue-base);
-            transform: translateY(-5px);
-        }
-
-        .pillars .card:hover::before {
+        nav.nav-menu a:hover::after,
+        nav.nav-menu a.active::after {
             width: 100%;
         }
 
-        .pillars h3 {
-            font-family: var(--font-mono);
-            color: var(--white);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
+        nav.nav-menu a:hover {
+            color: var(--safaricom-green-light);
         }
 
-        .pillars p {
-            color: var(--gray-400);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .card-link {
-            color: var(--safaricom-green);
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-decoration: none;
-            letter-spacing: 1px;
-            display: inline-flex;
+        /* Nav Right Actions (Portal Access Button only - NO Google Account Image) */
+        .nav-actions {
+            display: flex;
             align-items: center;
+            gap: 16px;
         }
-        
-        .card-link:hover {
-            color: var(--white);
+
+        .quick-search-trigger {
+            background: var(--obsidian-card);
+            border: 1px solid var(--border-glass);
+            color: var(--slate-gray);
+            padding: 10px 16px;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .quick-search-trigger:hover {
+            border-color: var(--safaricom-green);
+            color: var(--crisp-white);
         }
 
         /* ==========================================================================
-           PARTNERS SECTION
+           5. DYNAMIC SAFARICOM-STYLE HERO CAROUSEL / SLIDER
            ========================================================================== */
-        .partners-section {
-            padding: var(--space-lg) 5%;
-            text-align: center;
-        }
-
-        .partners-section h2 {
-            font-family: var(--font-mono);
-            color: var(--gray-500);
-            font-size: 1rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 3rem;
-        }
-
-        .partners-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .partner-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 1.5rem 2rem;
-            border-radius: 12px;
+        .hero-section {
+            position: relative;
+            min-height: 88vh;
             display: flex;
             align-items: center;
-            gap: 15px;
-            text-decoration: none;
-            transition: all var(--transition-fast);
-            min-width: 250px;
-            filter: grayscale(100%) opacity(0.7);
+            overflow: hidden;
+            background: var(--obsidian-black);
         }
 
-        .partner-card:hover {
-            filter: grayscale(0%) opacity(1);
-            background: var(--iit-blue-light);
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in-out, transform 8s ease;
+            transform: scale(1.08);
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .slide-bg-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.35) contrast(1.15);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(11, 14, 20, 0.95) 0%, 
+                rgba(11, 14, 20, 0.7) 50%, 
+                rgba(0, 168, 89, 0.2) 100%);
+        }
+
+        .hero-content-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .hero-title {
+            font-size: 4.2rem;
+            font-weight: 900;
+            line-height: 1.08;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .hero-title .highlight-green {
+            color: var(--safaricom-green-light);
+            text-shadow: 0 0 30px var(--safaricom-green-glow);
+        }
+
+        .hero-title .highlight-red {
+            color: var(--kenya-red);
+            text-shadow: 0 0 30px var(--kenya-red-glow);
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--slate-light);
+            margin-bottom: 2.5rem;
+            max-width: 750px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        /* Slider Indicators & Controls */
+        .slider-navigation {
+            position: absolute;
+            bottom: 40px;
+            right: 5%;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(18, 24, 36, 0.8);
+            padding: 12px 24px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-arrow {
+            background: transparent;
+            border: none;
+            color: var(--crisp-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-arrow:hover {
+            background: var(--safaricom-green);
+            color: var(--crisp-white);
+        }
+
+        .dots-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot-item {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .dot-item.active {
+            background: var(--safaricom-green-light);
+            width: 36px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--safaricom-green-light);
+        }
+
+        /* ==========================================================================
+           6. SAFARICOM-STYLE METRIC HIGHLIGHTS STRIP
+           ========================================================================== */
+        .metric-strip {
+            background: var(--obsidian-surface);
+            border-top: 1px solid var(--border-glass);
+            border-bottom: 2px solid var(--safaricom-green);
+            padding: 3rem 0;
+            position: relative;
+            z-index: 30;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .metric-card {
+            background: var(--obsidian-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 1.8rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-smooth);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
             border-color: var(--safaricom-green);
+            box-shadow: 0 15px 30px rgba(0, 168, 89, 0.2);
+        }
+
+        .metric-number {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: var(--safaricom-green-light);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-main);
+        }
+
+        .metric-card.red-accent .metric-number {
+            color: var(--kenya-red);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--crisp-white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .metric-subtext {
+            font-size: 0.8rem;
+            color: var(--slate-gray);
+        }
+
+        /* ==========================================================================
+           7. INTRODUCTORY SECTION: WHAT IS UEFI GLOBAL?
+           ========================================================================== */
+        .intro-section {
+            padding: 8rem 0;
+            background: var(--obsidian-black);
+            position: relative;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .intro-text-block h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 1.8rem;
+            text-transform: uppercase;
+        }
+
+        .intro-text-block p {
+            font-size: 1.1rem;
+            color: var(--slate-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .feature-check-list {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--crisp-white);
+        }
+
+        .check-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(0, 168, 89, 0.2);
+            border: 1px solid var(--safaricom-green);
+            color: var(--safaricom-green-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
+
+        .intro-visual-card {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 2px solid var(--border-glass);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .intro-visual-card img {
+            width: 100%;
+            height: 520px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .intro-visual-card:hover img {
             transform: scale(1.05);
         }
 
-        .partner-card img {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            border-radius: 8px;
+        .visual-overlay-badge {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            background: rgba(18, 24, 36, 0.9);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--safaricom-green);
+            padding: 1.8rem;
+            border-radius: var(--radius-md);
         }
 
-        .partner-card span {
-            color: var(--white);
-            font-weight: 600;
-            font-size: 1rem;
+        .visual-overlay-badge h4 {
+            color: var(--safaricom-green-light);
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
         }
 
         /* ==========================================================================
-           FOOTER (Massively Expanded Architecture)
+           8. EMPIRICAL SOCIETAL GROUNDING // NAROK PROTOCOL
            ========================================================================== */
-        footer {
-            background: var(--iit-blue-darker);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding: var(--space-xl) 5% 2rem;
+        .narok-section {
+            padding: 8rem 0;
+            background: var(--obsidian-surface);
+            border-top: 1px solid var(--border-glass);
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .section-header-center {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto 5rem auto;
+        }
+
+        .section-header-center h2 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-header-center p {
+            font-size: 1.15rem;
+            color: var(--slate-gray);
+            line-height: 1.7;
+        }
+
+        .narok-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .narok-card {
+            background: var(--obsidian-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-smooth);
+        }
+
+        .narok-card.red-alert-card {
+            border-top: 5px solid var(--kenya-red);
+        }
+
+        .narok-card.green-pass-card {
+            border-top: 5px solid var(--safaricom-green);
+        }
+
+        .narok-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .stat-huge {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 1rem;
+            font-family: var(--font-main);
+        }
+
+        .narok-card h3 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--crisp-white);
+        }
+
+        .narok-card p {
+            font-size: 0.98rem;
+            color: var(--slate-gray);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .source-anchor {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--safaricom-green-light);
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px solid var(--safaricom-green);
+            padding-bottom: 4px;
+            align-self: flex-start;
+        }
+
+        .source-anchor.red-source {
+            color: var(--kenya-red);
+            border-color: var(--kenya-red);
+        }
+
+        /* ==========================================================================
+           9. DUAL CURRICULUM ARCHITECTURE (CBE & IB EXPLORER)
+           ========================================================================== */
+        .curriculum-section {
+            padding: 8rem 0;
+            background: var(--obsidian-black);
+        }
+
+        .curriculum-tab-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .tab-btn {
+            background: var(--obsidian-card);
+            border: 1px solid var(--border-glass);
+            color: var(--slate-gray);
+            padding: 1.2rem 2.8rem;
+            border-radius: var(--radius-full);
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            text-transform: uppercase;
+        }
+
+        .tab-btn.active {
+            background: var(--safaricom-green);
+            color: var(--crisp-white);
+            border-color: var(--safaricom-green-light);
+            box-shadow: 0 10px 25px var(--safaricom-green-glow);
+        }
+
+        .curriculum-content-pane {
+            display: none;
+            background: var(--obsidian-surface);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 4rem;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .curriculum-content-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pane-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .pane-details h3 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            color: var(--safaricom-green-light);
+        }
+
+        .pane-details p {
+            font-size: 1.1rem;
+            color: var(--slate-light);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .curriculum-feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .curr-box {
+            background: var(--obsidian-card);
+            border: 1px solid var(--border-glass);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+        }
+
+        .curr-box h4 {
+            font-size: 1.1rem;
+            color: var(--crisp-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .curr-box p {
+            font-size: 0.9rem;
+            color: var(--slate-gray);
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        .pane-media img {
+            width: 100%;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-glass);
+        }
+
+        /* ==========================================================================
+           10. INITIATIVES & CORE PILLARS GRID (ANTHONINA, ALAL, CYBER, QUANT)
+           ========================================================================== */
+        .initiatives-section {
+            padding: 8rem 0;
+            background: var(--obsidian-surface);
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .pillar-card {
+            background: var(--obsidian-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all var(--transition-smooth);
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--safaricom-green);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .pillar-img-wrap {
+            height: 220px;
+            width: 100%;
             position: relative;
             overflow: hidden;
         }
 
-        .footer-glow {
-            position: absolute;
-            bottom: -50%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80vw;
-            height: 500px;
-            background: radial-gradient(ellipse at bottom, rgba(0, 33, 71, 0.8), transparent 70%);
-            z-index: 0;
-            pointer-events: none;
+        .pillar-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .pillar-card:hover .pillar-img-wrap img {
+            transform: scale(1.1);
+        }
+
+        .pillar-body {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .pillar-body h3 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .pillar-body p {
+            font-size: 0.95rem;
+            color: var(--slate-gray);
+            line-height: 1.6;
+            margin-bottom: 1.8rem;
+        }
+
+        .pillar-action-link {
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--safaricom-green-light);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Specific Color Accents for Initiatives */
+        .pillar-card.anthonina h3 { color: #FF69B4; }
+        .pillar-card.anthonina .pillar-action-link { color: #FF69B4; }
+        
+        .pillar-card.alal h3 { color: #38BDF8; }
+        .pillar-card.alal .pillar-action-link { color: #38BDF8; }
+        
+        .pillar-card.cyber h3 { color: var(--safaricom-green-light); }
+        .pillar-card.quant h3 { color: #F59E0B; }
+        .pillar-card.quant .pillar-action-link { color: #F59E0B; }
+
+        /* ==========================================================================
+           11. INTERACTIVE CROSS-SUBSIDIZATION STRATEGY & IMPACT CALCULATOR
+           ========================================================================== */
+        .strategy-section {
+            padding: 8rem 0;
+            background: var(--obsidian-black);
+        }
+
+        .strategy-wrapper {
+            background: linear-gradient(135deg, var(--obsidian-surface), var(--obsidian-card));
+            border: 2px solid var(--safaricom-green);
+            border-radius: var(--radius-lg);
+            padding: 5rem 4rem;
+            box-shadow: 0 0 50px rgba(0, 168, 89, 0.15);
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .strategy-info h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+
+        .strategy-info p {
+            font-size: 1.1rem;
+            color: var(--slate-light);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        /* Interactive Calculator Component */
+        .calculator-box {
+            background: var(--obsidian-black);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 3rem 2.5rem;
+            text-align: center;
+        }
+
+        .calculator-box h3 {
+            font-size: 1.5rem;
+            color: var(--safaricom-green-light);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .calc-slider-wrap {
+            margin: 2rem 0;
+        }
+
+        .calc-slider-wrap label {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--slate-gray);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .range-input {
+            width: 100%;
+            height: 10px;
+            border-radius: var(--radius-full);
+            background: var(--obsidian-card);
+            outline: none;
+            accent-color: var(--safaricom-green);
+            cursor: pointer;
+        }
+
+        .calc-result-display {
+            background: var(--obsidian-surface);
+            border: 1px solid var(--safaricom-green);
+            border-radius: var(--radius-md);
+            padding: 1.8rem;
+            margin-top: 2rem;
+        }
+
+        .calc-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--safaricom-green-light);
+            line-height: 1;
+        }
+
+        .calc-desc {
+            font-size: 0.9rem;
+            color: var(--slate-gray);
+            margin-top: 0.5rem;
+        }
+
+        /* ==========================================================================
+           12. INSTITUTIONAL ALLIANCES & PARTNER NODES
+           ========================================================================== */
+        .partners-section {
+            padding: 6rem 0;
+            background: var(--obsidian-surface);
+            border-top: 1px solid var(--border-glass);
+            text-align: center;
+        }
+
+        .partners-section h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 3.5rem;
+            text-transform: uppercase;
+        }
+
+        .partners-flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4rem;
+        }
+
+        .partner-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0.75;
+            transition: all var(--transition-fast);
+        }
+
+        .partner-node:hover {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+
+        .partner-avatar-placeholder {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--obsidian-card);
+            border: 2px solid var(--safaricom-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: var(--safaricom-green-light);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .partner-node span {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--crisp-white);
+        }
+
+        /* ==========================================================================
+           13. SAFARICOM-INSPIRED MEGA FOOTER (NO GOOGLE ACCOUNT ELEMENTS)
+           ========================================================================== */
+        footer.main-footer {
+            background: #06080C;
+            border-top: 3px solid var(--safaricom-green);
+            padding: 6rem 0 2rem 0;
+            position: relative;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 4rem;
-            max-width: 1400px;
-            margin: 0 auto 4rem;
-            position: relative;
-            z-index: 1;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            gap: 3.5rem;
+            margin-bottom: 5rem;
         }
 
-        .footer-col h4 {
-            color: var(--white);
-            font-family: var(--font-mono);
-            font-size: 1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-col p {
-            color: var(--gray-400);
-            line-height: 1.8;
-            max-width: 300px;
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
+        .footer-brand h3 {
+            font-size: 1.8rem;
+            font-weight: 900;
             margin-bottom: 1rem;
+            color: var(--crisp-white);
         }
 
-        .footer-col ul li a {
-            color: var(--gray-400);
-            text-decoration: none;
-            transition: color var(--transition-fast);
-            font-size: 0.95rem;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .footer-col ul li a::before {
-            content: '>';
-            color: var(--safaricom-red);
-            font-family: var(--font-mono);
-            margin-right: 8px;
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all var(--transition-fast);
-        }
-
-        .footer-col ul li a:hover {
+        .footer-brand h3 span {
             color: var(--safaricom-green);
         }
 
-        .footer-col ul li a:hover::before {
-            opacity: 1;
-            transform: translateX(0);
+        .footer-brand p {
+            color: var(--slate-gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.8rem;
         }
 
-        .footer-bottom {
-            max-width: 1400px;
-            margin: 0 auto;
+        .footer-col h4 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--crisp-white);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.9rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--slate-gray);
+            font-size: 0.92rem;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--safaricom-green-light);
+            padding-left: 5px;
+        }
+
+        .newsletter-box h4 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-box p {
+            font-size: 0.88rem;
+            color: var(--slate-gray);
+            margin-bottom: 1.2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            padding: 0.9rem 1.2rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-glass);
+            background: var(--obsidian-card);
+            color: var(--crisp-white);
+            font-family: var(--font-main);
+            outline: none;
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--safaricom-green);
+        }
+
+        .footer-bottom-bar {
+            border-top: 1px solid var(--border-glass);
             padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-bottom p {
-            color: var(--gray-500);
             font-size: 0.85rem;
+            color: var(--slate-gray);
         }
 
-        /* Responsive Breakpoints */
-        @media (max-width: 1024px) {
-            .strategy { grid-template-columns: 1fr; }
-            .strategy-image { min-height: 300px; }
+        /* ==========================================================================
+           14. RESPONSIVE BREAKPOINTS (EXPERT UX MOBILE OPTIMIZATION)
+           ========================================================================== */
+        @media (max-width: 1200px) {
+            .hero-title { font-size: 3.5rem; }
+            .metrics-grid, .pillars-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: 1fr 1fr; }
+            .narok-cards-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
-            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .slide-title { font-size: 2.5rem; }
-            .grid-cards { grid-template-columns: 1fr; }
+            header.main-header { padding: 0 1rem; }
+            nav.nav-menu { display: none; } /* Could add mobile drawer toggle */
+            .hero-title { font-size: 2.6rem; }
+            .intro-grid, .strategy-grid, .pane-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .metrics-grid, .pillars-grid { grid-template-columns: 1fr; }
+            .curriculum-tab-nav { flex-direction: column; align-items: stretch; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom-bar { flex-direction: column; gap: 1rem; text-align: center; }
         }
     </style>
 </head>
 <body>
 
     <!-- ==========================================================================
-         BACKGROUND MESH ENGINE (Visualizing Offline-First Infrastructure)
+         TOP ANNOUNCEMENT / EMERGENCY STRIP (SAFARICOM STYLE)
          ========================================================================== -->
-    <div class="ambient-glow"></div>
-    <canvas id="network-canvas"></canvas>
-
-    <!-- ==========================================================================
-         AUTHENTICATION OVERLAY (GLASSMORPHIC)
-         ========================================================================== -->
-    <div id="authOverlay" class="hidden">
-        <div class="auth-container">
-            <div class="auth-brand-lockup">
-                <h2>SYSTEM ACCESS</h2>
-                <p>UEFI Institute // Secure Terminal Initialization</p>
+    <div class="top-announce-bar">
+        <div class="container announce-content">
+            <div class="announce-ticker">
+                <div class="pulse-dot"></div>
+                <span>UEFI GLOBAL NODE LIVE // NAROK & KIAMBU HUB EXPANSIONS ACTIVE</span>
             </div>
-            
-            <form id="emailLoginForm" onsubmit="handleEmailAuth(event)">
-                <div class="auth-input-group">
-                    <label for="clientEmail">Operator Email Address</label>
-                    <input type="email" id="clientEmail" class="auth-input" required placeholder="scholar@uefi.ac.ke">
-                </div>
-                
-                <button type="submit" class="btn btn-green">
-                    <span>Initialize Session</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
-            </form>
-
-            <div class="auth-divider">
-                <span>OR BIOMETRIC OVERRIDE</span>
+            <div class="top-links">
+                <a href="#narok">Narok Protocols</a>
+                <a href="#curriculum">CBE & IB Syllabus</a>
+                <a href="#support">Support Core</a>
             </div>
-
-            <button onclick="handleGoogleAuth()" class="btn btn-google">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                </svg>
-                <span>Authenticate via Google</span>
-            </button>
         </div>
     </div>
 
     <!-- ==========================================================================
-         SYSTEM NAVIGATION HEADER
+         MAIN NAVIGATION HEADER (EXPERT UX - NO GOOGLE ACCOUNT BADGE)
          ========================================================================== -->
-    <header class="system-nav">
-        <a href="#" class="nav-brand">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--safaricom-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-            UEFI <span>INSTITUTE</span>
-        </a>
+    <header class="main-header">
+        <div class="container nav-wrapper">
+            <!-- Logo -->
+            <a href="home.html" class="brand-logo">
+                <div class="logo-emblem">U</div>
+                <div class="logo-text">
+                    <h1>UEFI<span>GLOBAL</span></h1>
+                    <p>Republic of Kenya Node</p>
+                </div>
+            </a>
 
-        <!-- Dynamic Profile Badge injected by JS -->
-        <div id="accountProfileBadge" class="account-profile-badge" style="display: none;">
-            <img id="userAvatar" src="" alt="Avatar" class="user-avatar">
-            <div style="display: flex; flex-direction: column;">
-                <span id="userName" class="user-name"></span>
-                <span class="logout-trigger" onclick="terminateSession()">Terminate Session</span>
+            <!-- Navigation Links -->
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#about" class="active">Overview</a></li>
+                    <li><a href="#narok">Narok Grounding</a></li>
+                    <li><a href="#curriculum">Curriculum</a></li>
+                    <li><a href="#initiatives">Care Initiatives</a></li>
+                    <li><a href="#strategy">Strategy</a></li>
+                </ul>
+            </nav>
+
+            <!-- Nav Actions (Clear Action CTAs - Search & Enroll) -->
+            <div class="nav-actions">
+                <button class="quick-search-trigger" onclick="alert('Search node active. Type to filter UEFI modules.')">
+                    <span>🔍</span> Search Node...
+                </button>
+                <a href="enroll.html" class="btn btn-safaricom" style="padding: 0.7rem 1.5rem; font-size: 0.88rem;">Enroll Portal</a>
             </div>
         </div>
     </header>
 
-    <main>
-        <!-- ==========================================================================
-             HERO SLIDER ENGINE (Targeted by your JS script)
-             ========================================================================== -->
-        <section class="hero-slider-engine">
-            <div class="slide active">
-                <div class="slide-content">
-                    <span class="slide-badge">Global Node Active</span>
-                    <h1 class="slide-title">Engineering The Next African Century.</h1>
-                    <p class="slide-desc">A convergence of deep-tier algorithmic education and rural deployment infrastructure. We are not just building software; we are building structural power.</p>
-                </div>
+    <!-- ==========================================================================
+         DYNAMIC HERO SLIDER SECTION
+         ========================================================================== -->
+    <section class="hero-section">
+        <div class="hero-slider" id="heroSlider">
+            <!-- Slide 1 -->
+            <div class="hero-slide active">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80" alt="African Engineers Collaborating" class="slide-bg-img">
+                <div class="hero-overlay"></div>
             </div>
-            <div class="slide">
-                <div class="slide-content">
-                    <span class="slide-badge">Zero-Cost Network</span>
-                    <h1 class="slide-title">Mesh-Net Infrastructure.</h1>
-                    <p class="slide-desc">Bypassing commercial data limitations entirely. Delivering world-class Quant Forge computation directly to offline hardware hubs across Kenya.</p>
+            <!-- Slide 2 -->
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1920&q=80" alt="Cyber Security Lab" class="slide-bg-img">
+                <div class="hero-overlay"></div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1920&q=80" alt="African Tech Woman Engineer" class="slide-bg-img">
+                <div class="hero-overlay"></div>
+            </div>
+        </div>
+
+        <div class="container hero-content-wrapper">
+            <div class="badge-tag">
+                <span>●</span> Official UEFI Global Platform
+            </div>
+            <h1 class="hero-title">
+                Architecting <br>
+                Africa's <span class="highlight-green">Digital</span> <br>
+                <span class="highlight-red">Intellect.</span>
+            </h1>
+            <p class="hero-description">
+                UEFI Global is Kenya’s high-performance technological institute. We merge elite international computer science with localized social engineering to transform rural potential into global computation power.
+            </p>
+            <div class="hero-buttons">
+                <a href="#curriculum" class="btn btn-safaricom">Explore Syllabus</a>
+                <a href="#strategy" class="btn btn-outline-red">Impact Strategy</a>
+                <a href="tutor.html" class="btn btn-ghost">AI Professor Node ↗</a>
+            </div>
+        </div>
+
+        <!-- Slider Navigation Controls -->
+        <div class="slider-navigation">
+            <button class="nav-arrow" id="prevSlide">‹</button>
+            <div class="dots-container" id="dotsContainer">
+                <div class="dot-item active" data-index="0"></div>
+                <div class="dot-item" data-index="1"></div>
+                <div class="dot-item" data-index="2"></div>
+            </div>
+            <button class="nav-arrow" id="nextSlide">›</button>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         SAFARICOM-STYLE METRIC HIGHLIGHTS STRIP
+         ========================================================================== -->
+    <section class="metric-strip">
+        <div class="container metrics-grid">
+            <div class="metric-card">
+                <div class="metric-number" data-target="100">100%</div>
+                <div class="metric-label">Offline-First Net</div>
+                <div class="metric-subtext">Zero-cost rural mesh deployments</div>
+            </div>
+            <div class="metric-card red-accent">
+                <div class="metric-number" data-target="28">28%</div>
+                <div class="metric-label">Pregnancy Crisis Intercept</div>
+                <div class="metric-subtext">KNBS targeted vulnerability shield</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-number" data-target="30000">30k+</div>
+                <div class="metric-label">Out-of-School Cohorts</div>
+                <div class="metric-subtext">NACONEK nomadic intervention</div>
+            </div>
+            <div class="metric-card red-accent">
+                <div class="metric-number" data-target="100">1:1</div>
+                <div class="metric-label">Cross-Subsidization</div>
+                <div class="metric-subtext">Buy 1 student slot, empower 1 rural mind</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         INTRODUCTORY OVERVIEW: WHAT IS UEFI GLOBAL?
+         ========================================================================== -->
+    <section id="about" class="intro-section">
+        <div class="container intro-grid">
+            <div class="intro-text-block">
+                <div class="badge-tag">Institutional Mission</div>
+                <h2>Not Just A School. <br><span style="color: var(--safaricom-green-light);">An Intellectual Forge.</span></h2>
+                <p>
+                    UEFI Global was built to solve a critical structural breakdown: the massive gap between raw rural talent in remote Kenyan counties like Narok and access to high-tier computational hardware.
+                </p>
+                <p>
+                    We operate physical hardware hubs powered by zero-cost mesh networks, bringing university-level quantitative software engineering, machine learning ethics, and psychological fortitude directly to youth who need it most.
+                </p>
+                <div class="feature-check-list">
+                    <div class="check-item"><div class="check-icon">✓</div> CBE Curriculum Aligned</div>
+                    <div class="check-item"><div class="check-icon">✓</div> IB Global Standard</div>
+                    <div class="check-item"><div class="check-icon">✓</div> Anthonina Care Pipeline</div>
+                    <div class="check-item"><div class="check-icon">✓</div> Cyber Security Safeguards</div>
                 </div>
             </div>
 
-            <!-- Slider Controls -->
-            <div class="slider-controls">
-                <div class="slider-indicators">
-                    <div class="dot active"></div>
-                    <div class="dot"></div>
+            <div class="intro-visual-card">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80" alt="Students in Hardware Lab">
+                <div class="visual-overlay-badge">
+                    <h4>Mesh-Net Hardware Deployed</h4>
+                    <p style="margin: 0; font-size: 0.88rem; color: var(--slate-gray);">Local servers operating inside Narok rural hubs without internet dependence.</p>
                 </div>
-                <button class="nav-btn prev-btn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
-                <button class="nav-btn next-btn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- ==========================================================================
-             YOUR PROVIDED CODE: FOCUS CARDS (HEAVILY EXPANDED & STYLED)
-             ========================================================================== -->
-        <section class="system-metrics-section">
-            <div class="section-header">
-                <p>System Diagnostics</p>
-                <h2>CRITICAL VULNERABILITY INTERCEPTS</h2>
+    <!-- ==========================================================================
+         EMPIRICAL SOCIETAL GROUNDING // NAROK COUNTY PROTOCOL
+         ========================================================================== -->
+    <section id="narok" class="narok-section">
+        <div class="container">
+            <div class="section-header-center">
+                <div class="badge-tag red">Empirical Societal Grounding</div>
+                <h2>Why Narok County? Why Now?</h2>
+                <p>Our technology hubs are engineered as a structural safety framework against vulnerable cultural exit vectors, replacing system displacement with remote intellectual opportunities.</p>
             </div>
 
-            <div class="grid-cards">
-                
-                <!-- CARD 1: Adolescent Pregnancy Crisis -->
-                <div class="focus-card red-alert">
+            <div class="narok-cards-grid">
+                <!-- KNBS STAT CARD -->
+                <div class="narok-card red-alert-card">
                     <div>
-                        <h3 style="color: var(--safaricom-red);">28%</h3>
-                        <h4>Adolescent Pregnancy Crisis</h4>
+                        <div class="stat-huge" style="color: var(--kenya-red);">28%</div>
+                        <h3>Adolescent Pregnancy Crisis</h3>
                         <p>According to data processed by the Kenya National Bureau of Statistics (KNBS), baseline drop-out vulnerabilities map heavily to system disruption risks. UEFI scales up physical tracking parameters to establish robust intervention pathways.</p>
                     </div>
-                    <a href="https://www.knbs.or.ke" target="_blank" rel="noopener noreferrer" class="data-source-link">
+                    <a href="https://www.knbs.or.ke" target="_blank" rel="noopener noreferrer" class="source-anchor red-source">
                         SOURCE // KNBS.OR.KE ↗
                     </a>
                 </div>
-                
-                <!-- CARD 2: Out-Of-School Cohorts -->
-                <div class="focus-card red-alert">
+
+                <!-- NACONEK STAT CARD -->
+                <div class="narok-card red-alert-card">
                     <div>
-                        <h3 style="color: var(--safaricom-red);">30,000+</h3>
-                        <h4>Out-Of-School Cohorts</h4>
+                        <div class="stat-huge" style="color: var(--kenya-red);">30,000+</div>
+                        <h3>Out-Of-School Cohorts</h3>
                         <p>National tracking records managed via the National Council for Nomadic Education in Kenya (NACONEK) show severe drop-out numbers driven by structural economic shifts. We actively intercept these brilliant minds, routing them directly into high-tier computation metrics.</p>
                     </div>
-                    <a href="http://www.naconek.ke" target="_blank" rel="noopener noreferrer" class="data-source-link">
+                    <a href="http://www.naconek.ke" target="_blank" rel="noopener noreferrer" class="source-anchor red-source">
                         SOURCE // NACONEK DATA ↗
                     </a>
                 </div>
-                
-                <!-- CARD 3: Mesh Net Infrastructure -->
-                <div class="focus-card green-pass">
+
+                <!-- MESH NET CARD -->
+                <div class="narok-card green-pass-card">
                     <div>
-                        <h3 style="color: var(--safaricom-green);">Mesh net</h3>
-                        <h4>Offline-First Infrastructure</h4>
-                        <p>To completely beat data cost limitations, our learning modules run on zero-cost local networks deployed inside rural hardware hubs. Zero internet obligations for our scholars.</p>
+                        <div class="stat-huge" style="color: var(--safaricom-green-light);">MESH</div>
+                        <h3>Offline-First Infrastructure</h3>
+                        <p>To completely beat data cost limitations, our learning modules run on zero-cost local networks deployed inside rural hardware hubs. Zero internet obligations for our scholars. Fully decoupled from cellular data costs.</p>
                     </div>
-                    <span class="data-source-link" style="color: var(--safaricom-green); border-bottom-color: rgba(67, 176, 42, 0.3); cursor: default;">
-                        INTERNAL ARCHITECTURE DEPLOYED 
+                    <span class="source-anchor" style="cursor: default;">
+                        INTERNAL ARCHITECTURE DEPLOYED
                     </span>
                 </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- ==========================================================================
+         DUAL CURRICULUM ARCHITECTURE (CBE & IB EXPLORER)
+         ========================================================================== -->
+    <section id="curriculum" class="curriculum-section">
+        <div class="container">
+            <div class="section-header-center">
+                <div class="badge-tag">Academic Framework</div>
+                <h2>World-Class Curriculum Engines</h2>
+                <p>We blend Kenya’s Competency Based Education (CBE) with International Baccalaureate (IB) rigor to form an unbeatable dual-engine syllabus.</p>
             </div>
-        </section>
 
-        <!-- ==========================================================================
-             YOUR PROVIDED CODE: STRATEGY SECTION
-             ========================================================================== -->
-        <section class="strategy">
-            <div class="strategy-text">
-                <h2>The "Cross-Subsidization" Strategy: Buy One, Empower One.</h2>
-                <p>Every commercial enrollment from international students triggers an immediate physical hardware allocation and mentorship package for a high-potential scholar in rural Kenya.</p>
-                <p>We are creating a self-sustaining intellectual army. Your personal advancement funds a national transformation.</p>
-                <a href="support-us.html" style="color: var(--safaricom-green); font-weight: 900; font-family: 'JetBrains Mono'; text-decoration: none; border-bottom: 2px solid var(--safaricom-red); font-size: 0.8rem; letter-spacing: 1px; display: inline-block; width: fit-content; padding: 0.5rem 0;">VIEW SYSTEM ARCHITECTURE →</a>
+            <!-- Tab Navigation Buttons -->
+            <div class="curriculum-tab-nav">
+                <button class="tab-btn active" onclick="switchTab('cbe-pane', this)">Competency-Based Education (CBE)</button>
+                <button class="tab-btn" onclick="switchTab('ib-pane', this)">International Baccalaureate (IB)</button>
             </div>
-            <div class="strategy-image">
-                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80" alt="Tech Lab Students in deep technical focus">
-            </div>
-        </section>
 
-        <!-- ==========================================================================
-             YOUR PROVIDED CODE: PILLARS SECTION
-             ========================================================================== -->
-        <section class="pillars-section">
-            <div class="section-header" style="margin-bottom: 3rem;">
-                <p>Operational Verticals</p>
-                <h2>CORE EXECUTION PILLARS</h2>
-            </div>
-            <div class="pillars">
-                
-                <div class="card">
-                    <h3>UEFI QUANT FORGE</h3>
-                    <p>Deep-tier algorithmic engineering. Financial simulations, complex variable mathematics, and high-performance physics systems built for global competitions.</p>
-                    <a href="tech-lab.html" class="card-link">INITIALIZE TERMINAL →</a>
+            <!-- CBE PANE -->
+            <div id="cbe-pane" class="curriculum-content-pane active">
+                <div class="pane-grid">
+                    <div class="pane-details">
+                        <h3>CBE Framework Integration</h3>
+                        <p>Aligned with Kenya’s modern education vision, our CBE track focuses on practical skill mastery, continuous algorithmic tracking, and project-based software engineering.</p>
+                        <div class="curriculum-feature-grid">
+                            <div class="curr-box">
+                                <h4>Hands-On Coding</h4>
+                                <p>Building functional apps and systems from week one.</p>
+                            </div>
+                            <div class="curr-box">
+                                <h4>Values-Based Tech</h4>
+                                <p>Ethics and civic responsibility embedded in code.</p>
+                            </div>
+                            <div class="curr-box">
+                                <h4>Continuous Metrics</h4>
+                                <p>Eliminating single-exam high-stress failure models.</p>
+                            </div>
+                            <div class="curr-box">
+                                <h4>Hardware Mastery</h4>
+                                <p>Disassembling, repairing, and optimizing computers.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pane-media">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Students learning in group">
+                    </div>
                 </div>
-                
-                <div class="card">
-                    <h3>ANTHONINAH LABS</h3>
-                    <p>Strategic structural pipelines, health guidance modules, and digital access protection mechanisms for women entering the computational workspace.</p>
-                    <a href="anthoninas-initiative.html" class="card-link">VIEW INITIATIVE →</a>
-                </div>
-                
-                <div class="card">
-                    <h3>WILSON LEAD CORE</h3>
-                    <p>Advanced engineering tracks for at-risk young men. High-income digital opportunities and international university-grade scholarship paths.</p>
-                    <a href="wilsons-initiative.html" class="card-link">VIEW INITIATIVE →</a>
-                </div>
-
             </div>
-        </section>
 
-        <!-- ==========================================================================
-             YOUR PROVIDED CODE: PARTNERS SECTION
-             ========================================================================== -->
-        <section class="partners-section">
-            <h2>Institutional Alliances & System Nodes</h2>
-            <div class="partners-grid">
-                
-                <a href="https://youtube.com/@quantforgeacademy?si=K0QnqU7dEJr1Ru1-" target="_blank" rel="noopener noreferrer" class="partner-card">
-                    <img src="https://ui-avatars.com/api/?name=QF&background=002147&color=43B02A&bold=true" alt="QuantForge Academy Logo">
+            <!-- IB PANE -->
+            <div id="ib-pane" class="curriculum-content-pane">
+                <div class="pane-grid">
+                    <div class="pane-details">
+                        <h3>IB Global Academic Standard</h3>
+                        <p>For scholars aiming at global university scholarships and international engineering positions, our IB module installs hyper-rigorous analytical thinking.</p>
+                        <div class="curriculum-feature-grid">
+                            <div class="curr-box">
+                                <h4>Theory of Knowledge</h4>
+                                <p>Epistemology and AI ethics in modern algorithms.</p>
+                            </div>
+                            <div class="curr-box">
+                                <h4>4000-Word Thesis</h4>
+                                <p>Deep computational research papers before university.</p>
+                            </div>
+                            <div class="curr-box">
+                                <h4>CAS Modules</h4>
+                                <p>Creativity, Activity, and direct Community Service.</p>
+                            </div>
+                            <div class="curr-box">
+                                <h4>Global Network</h4>
+                                <p>Seamless entry into top international tech pipelines.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pane-media">
+                        <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=800&q=80" alt="Global Scholar Working">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         INITIATIVES & CORE PILLARS GRID
+         ========================================================================== -->
+    <section id="initiatives" class="initiatives-section">
+        <div class="container">
+            <div class="section-header-center">
+                <div class="badge-tag">Human Development Nodes</div>
+                <h2>Specialized Transformation Pillars</h2>
+                <p>We provide targeted, holistic support modules to nurture individual strengths and protect our young scholars online and offline.</p>
+            </div>
+
+            <div class="pillars-grid">
+                <!-- ANTHONINA CARE -->
+                <div class="pillar-card anthonina">
+                    <div class="pillar-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80" alt="Anthonina Care Women in Tech">
+                    </div>
+                    <div class="pillar-body">
+                        <h3>Anthonina Care</h3>
+                        <p>Dedicated holistic transformation for young women entering computational fields. Mental wellness, health guidance, leadership coaching, and maternal support.</p>
+                        <a href="anthoninas-initiative.html" class="pillar-action-link">EXPLORE SANCTUARY →</a>
+                    </div>
+                </div>
+
+                <!-- THE ALAL CARE -->
+                <div class="pillar-card alal">
+                    <div class="pillar-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Wilson Lead Core Male Scholar">
+                    </div>
+                    <div class="pillar-body">
+                        <h3>The Alal Care</h3>
+                        <p>Wilson Lead Core framework for young men at risk. Building psychological resilience, emotional intelligence, financial literacy, and elite software craftsmanship.</p>
+                        <a href="wilsons-initiative.html" class="pillar-action-link">EXPLORE BROTHERHOOD →</a>
+                    </div>
+                </div>
+
+                <!-- CYBER SECURITY -->
+                <div class="pillar-card cyber">
+                    <div class="pillar-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Cyber Security Shield">
+                    </div>
+                    <div class="pillar-body">
+                        <h3>Cyber Security</h3>
+                        <p>Digital wellbeing and defense modules. Teaching defensive threat modeling, encrypted privacy habits, ethical hacking, and online psychological protection.</p>
+                        <a href="#" class="pillar-action-link">INITIALIZE DEFENSE →</a>
+                    </div>
+                </div>
+
+                <!-- QUANT FORGE -->
+                <div class="pillar-card quant">
+                    <div class="pillar-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Quant Physics & Math">
+                    </div>
+                    <div class="pillar-body">
+                        <h3>UEFI Quant Forge</h3>
+                        <p>High-level mathematical modeling, financial quantitative simulations, and deep algorithmic development engineered for world-class technical competitions.</p>
+                        <a href="tech-lab.html" class="pillar-action-link">OPEN TERMINAL →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         INTERACTIVE CROSS-SUBSIDIZATION STRATEGY & IMPACT CALCULATOR
+         ========================================================================== -->
+    <section id="strategy" class="strategy-section">
+        <div class="container">
+            <div class="strategy-wrapper">
+                <div class="strategy-grid">
+                    <div class="strategy-info">
+                        <div class="badge-tag">The Social Engine</div>
+                        <h2>Cross-Subsidization Strategy: Buy One, Empower One.</h2>
+                        <p>
+                            Every commercial enrollment from international or corporate students triggers an immediate physical hardware allocation and mentorship package for a scholar in rural Kenya.
+                        </p>
+                        <p>
+                            Your educational journey directly funds a national digital transformation.
+                        </p>
+                        <a href="support-us.html" class="btn btn-safaricom">Support The Mission</a>
+                    </div>
+
+                    <!-- Calculator -->
+                    <div class="calculator-box">
+                        <h3>Live Impact Calculator</h3>
+                        <p style="font-size: 0.9rem; color: var(--slate-gray);">Adjust enrollments to see your direct effect in Narok County:</p>
+                        
+                        <div class="calc-slider-wrap">
+                            <label for="studentRange">Commercial Students Enrolled: <span id="studentVal" style="color: var(--safaricom-green-light); font-weight: 900; font-size: 1.2rem;">5</span></label>
+                            <input type="range" id="studentRange" min="1" max="50" value="5" class="range-input" oninput="updateCalculator(this.value)">
+                        </div>
+
+                        <div class="calc-result-display">
+                            <div class="calc-number" id="fundedScholars">5</div>
+                            <div class="calc-desc">Rural Scholars Fully Funded with Hardware & Offline Mesh Hub Access</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         INSTITUTIONAL ALLIANCES & SYSTEM NODES
+         ========================================================================== -->
+    <section class="partners-section">
+        <div class="container">
+            <div class="badge-tag red">Institutional Network</div>
+            <h2>System Nodes & Ecosystem Alliances</h2>
+            
+            <div class="partners-flex">
+                <a href="https://youtube.com/@quantforgeacademy?si=K0QnqU7dEJr1Ru1-" target="_blank" rel="noopener noreferrer" class="partner-node">
+                    <div class="partner-avatar-placeholder">QF</div>
                     <span>QuantForge Academy</span>
                 </a>
 
-                <a href="https://ecultureskenya.github.io/eCultures-Kenya-/home.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                    <img src="https://ui-avatars.com/api/?name=EK&background=002147&color=fff&bold=true" alt="eCultures Kenya Logo">
+                <a href="https://ecultureskenya.github.io/eCultures-Kenya-/home.html" target="_blank" rel="noopener noreferrer" class="partner-node">
+                    <div class="partner-avatar-placeholder">eC</div>
                     <span>eCultures Kenya</span>
                 </a>
 
-                <a href="https://aid-for-aiming-africa-fbx6511.public.builtwithrocket.new/" target="_blank" rel="noopener noreferrer" class="partner-card">
-                    <img src="https://ui-avatars.com/api/?name=AA&background=002147&color=ED1C24&bold=true" alt="Aid For Aiming Africa Logo">
+                <a href="https://aid-for-aiming-africa-fbx6511.public.builtwithrocket.new/" target="_blank" rel="noopener noreferrer" class="partner-node">
+                    <div class="partner-avatar-placeholder">AAA</div>
                     <span>Aid For Aiming Africa</span>
                 </a>
 
-                <a href="https://jengamaliyouthflow.github.io/JengaMali-Youth-Flow-/home.html" target="_blank" rel="noopener noreferrer" class="partner-card">
-                    <img src="https://ui-avatars.com/api/?name=JM&background=002147&color=43B02A&bold=true" alt="JengaMali Youth Flow Logo">
+                <a href="https://jengamaliyouthflow.github.io/JengaMali-Youth-Flow-/home.html" target="_blank" rel="noopener noreferrer" class="partner-node">
+                    <div class="partner-avatar-placeholder">JMYF</div>
                     <span>JengaMali Youth Flow</span>
                 </a>
-
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ==========================================================================
-         YOUR PROVIDED CODE: FOOTER
-         ========================================================================== -->
-    <footer>
-        <div class="footer-glow"></div>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4 style="color: white; font-weight: 800; font-size: 1.2rem;">U.E.F.I. // REPUBLIC OF KENYA</h4>
-                <p style="color:#9CA3AF; font-size: 0.85rem; margin-top: 1rem;">Building the architects of tomorrow from Narok to the global stage. Deploying offline mesh networks to secure a computational future.</p>
-            </div>
-            <div class="footer-col">
-                <h4>System Links</h4>
-                <ul>
-                    <li><a href="tech-lab.html">The Labs</a></li>
-                    <li><a href="enroll.html">Enrollment</a></li>
-                    <li><a href="support-us.html">Support Core</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Nodes</h4>
-                <ul>
-                    <li><a href="tutor.html">AI Professor</a></li>
-                    <li><a href="opportunities-hub.html">Opportunities</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <ul>
-                    <li><a href="contactus.html">Initialize Contact</a></li>
-                </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 UEFI Institute. Structural code deployed securely.</p>
+    </section>
+
+    <!-- ==========================================================================
+         SAFARICOM-INSPIRED MEGA FOOTER (NO GOOGLE ACCOUNT DYNAMICS)
+         ========================================================================== -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Info -->
+                <div class="footer-brand">
+                    <h3>UEFI<span>GLOBAL</span></h3>
+                    <p>
+                        Building Africa's next generation of software architects, data scientists, and ethical technology leaders from Narok County to the global stage.
+                    </p>
+                    <div class="badge-tag" style="margin-bottom: 0;">● Node: Kenya Core</div>
+                </div>
+
+                <!-- Navigation Columns -->
+                <div class="footer-col">
+                    <h4>Core System</h4>
+                    <ul>
+                        <li><a href="#about">Overview</a></li>
+                        <li><a href="#narok">Narok Protocol</a></li>
+                        <li><a href="#curriculum">CBE & IB Syllabus</a></li>
+                        <li><a href="tech-lab.html">Quant Forge Lab</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Care Initiatives</h4>
+                    <ul>
+                        <li><a href="anthoninas-initiative.html">Anthonina Care</a></li>
+                        <li><a href="wilsons-initiative.html">The Alal Care</a></li>
+                        <li><a href="#initiatives">Cyber Wellbeing</a></li>
+                        <li><a href="tutor.html">AI Professor Gateway</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Portals</h4>
+                    <ul>
+                        <li><a href="enroll.html">Scholar Enrollment</a></li>
+                        <li><a href="support-us.html">Support / Sponsor</a></li>
+                        <li><a href="contactus.html">Contact Hub</a></li>
+                        <li><a href="opportunities-hub.html">Opportunities</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="newsletter-box">
+                    <h4>Stay Connected</h4>
+                    <p>Receive live dispatch updates on rural mesh deployments.</p>
+                    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed to UEFI Global Dispatch.');">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-safaricom" style="padding: 0.8rem;">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-bottom-bar">
+                <p>&copy; 2026 UEFI Global Institute. Republic of Kenya. All rights reserved.</p>
+                <p>Designed with Safaricom Vibrant Science & High-Performance UX Aesthetics.</p>
+            </div>
         </div>
     </footer>
 
     <!-- ==========================================================================
-         SYSTEM SCRIPTS & LOGIC
+         JAVASCRIPT CONTROLLER (SLIDER, TABS, COUNTERS & CALCULATOR)
          ========================================================================== -->
     <script>
-        /* 
-         * ------------------------------------------------------------------
-         * MODULE 1: ORIGINAL SLIDER ENGINE LOGIC (Retained exactly)
-         * ------------------------------------------------------------------
-         */
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('.dot');
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
-        let currentIndex = 0;
-        let slideInterval;
+        /* 1. HERO SLIDER ENGINE */
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.dot-item');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        let currentSlide = 0;
+        let slideTimer;
 
-        function showSlide(index) {
-            if (index >= slides.length) currentIndex = 0;
-            else if (index < 0) currentIndex = slides.length - 1;
-            else currentIndex = index;
-
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-
-            if(slides[currentIndex]) slides[currentIndex].classList.add('active');
-            if(dots[currentIndex]) dots[currentIndex].classList.add('active');
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = (index + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
         }
 
-        function nextSlide() { showSlide(currentIndex + 1); }
-        function prevSlide() { showSlide(currentIndex - 1); }
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
 
-        function startAutoSlide() { slideInterval = setInterval(nextSlide, 5000); } // Adjusted for reading
-        function stopAutoSlide() { clearInterval(slideInterval); }
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+
+        function startTimer() {
+            slideTimer = setInterval(nextSlide, 5000);
+        }
+
+        function resetTimer() {
+            clearInterval(slideTimer);
+            startTimer();
+        }
 
         if(nextBtn && prevBtn) {
-            nextBtn.addEventListener('click', () => { nextSlide(); stopAutoSlide(); startAutoSlide(); });
-            prevBtn.addEventListener('click', () => { prevSlide(); stopAutoSlide(); startAutoSlide(); });
+            nextBtn.addEventListener('click', () => { nextSlide(); resetTimer(); });
+            prevBtn.addEventListener('click', () => { prevSlide(); resetTimer(); });
         }
 
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => { showSlide(index); stopAutoSlide(); startAutoSlide(); });
+        dots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => { goToSlide(idx); resetTimer(); });
         });
 
-        if(dots.length !== slides.length && dots.length > 0) {
-            console.warn("UI Warning: Match your indicators dots count to your slide array elements length.");
+        startTimer();
+
+        /* 2. TAB SWITCHER (CBE vs IB) */
+        function switchTab(paneId, btnElement) {
+            // Remove active from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.curriculum-content-pane').forEach(pane => pane.classList.remove('active'));
+
+            // Activate chosen tab
+            btnElement.classList.add('active');
+            document.getElementById(paneId).classList.add('active');
         }
 
-        startAutoSlide();
-
-
-        /* 
-         * ------------------------------------------------------------------
-         * MODULE 2: NEW AUTHENTICATION CONTROLLER SYSTEM (Retained exactly)
-         * ------------------------------------------------------------------
-         */
-        const authOverlay = document.getElementById('authOverlay');
-        const accountBadge = document.getElementById('accountProfileBadge');
-        const userAvatar = document.getElementById('userAvatar');
-        const userName = document.getElementById('userName');
-
-        // Check verification tokens on DOM ready
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedUser = localStorage.getItem('uefi_active_session');
-            if (savedUser) {
-                applyAccessGranted(JSON.parse(savedUser));
-            } else {
-                applyAccessLock();
-            }
-        });
-
-        function applyAccessGranted(userData) {
-            if(authOverlay) authOverlay.classList.add('hidden');
-            document.body.classList.remove('auth-locked');
-            
-            // Populate account data frame elements
-            if(userAvatar) userAvatar.src = userData.photo;
-            if(userName) userName.textContent = userData.name;
-            if(accountBadge) accountBadge.style.display = 'flex';
+        /* 3. IMPACT CALCULATOR LOGIC */
+        function updateCalculator(val) {
+            document.getElementById('studentVal').innerText = val;
+            document.getElementById('fundedScholars').innerText = val; // 1:1 cross-subsidization
         }
 
-        function applyAccessLock() {
-            if(authOverlay) authOverlay.classList.remove('hidden');
-            document.body.classList.add('auth-locked');
-            if(accountBadge) accountBadge.style.display = 'none';
-        }
+        /* 4. ANIMATED STATISTICAL COUNTER OBSERVER */
+        const observerOptions = {
+            threshold: 0.5
+        };
 
-        // Processing Email Login Forms
-        function handleEmailAuth(event) {
-            event.preventDefault();
-            const emailInput = document.getElementById('clientEmail').value;
-            
-            // Creates structural session template from email prefix string
-            const derivedName = emailInput.split('@')[0].toUpperCase();
-            const mockUserData = {
-                name: derivedName,
-                email: emailInput,
-                photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&fit=crop&q=80" // Fallback UI Avatar placeholder URL
-            };
-
-            localStorage.setItem('uefi_active_session', JSON.stringify(mockUserData));
-            applyAccessGranted(mockUserData);
-        }
-
-        // Processing Google Auth Action Signals
-        function handleGoogleAuth() {
-            // [Integration Node] Swap mock data structure out when connecting to Google APIs Identity services SDK
-            const mockGoogleUserData = {
-                name: "GUEST SCHOLAR",
-                email: "scholar.network@gmail.com",
-                photo: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&fit=crop&q=80" // Modern placeholder profile picture 
-            };
-
-            localStorage.setItem('uefi_active_session', JSON.stringify(mockGoogleUserData));
-            applyAccessGranted(mockGoogleUserData);
-        }
-
-        // Logs out user from state engine
-        function terminateSession() {
-            localStorage.removeItem('uefi_active_session');
-            applyAccessLock();
-            
-            // Reset input values safely
-            const form = document.getElementById('emailLoginForm');
-            if(form) form.reset();
-        }
-
-        /* 
-         * ------------------------------------------------------------------
-         * MODULE 3: BRAND NEW MESH NETWORK PARTICLE ENGINE
-         * This code dynamically draws a "Mesh Network" in the background 
-         * to reflect the exact "Offline-First Infrastructure" you described.
-         * ------------------------------------------------------------------
-         */
-        class ParticleNetwork {
-            constructor(canvasId) {
-                this.canvas = document.getElementById(canvasId);
-                this.ctx = this.canvas.getContext('2d');
-                this.particles = [];
-                this.numberOfParticles = window.innerWidth < 768 ? 40 : 100;
-                
-                // Color palette mapping to IIT/Safaricom
-                this.colors = [
-                    'rgba(67, 176, 42, 0.6)',   // Safaricom Green
-                    'rgba(237, 28, 36, 0.6)',   // Safaricom Red
-                    'rgba(10, 61, 122, 0.6)'    // IIT Blue Light
-                ];
-
-                this.init();
-                this.animate();
-
-                window.addEventListener('resize', () => {
-                    this.init();
-                });
-            }
-
-            init() {
-                this.canvas.width = window.innerWidth;
-                this.canvas.height = window.innerHeight;
-                this.particles = [];
-                for (let i = 0; i < this.numberOfParticles; i++) {
-                    this.particles.push(new Particle(this.canvas, this.colors));
-                }
-            }
-
-            animate() {
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                
-                // Update and draw particles
-                for (let i = 0; i < this.particles.length; i++) {
-                    this.particles[i].update();
-                    this.particles[i].draw(this.ctx);
-                    
-                    // Draw Mesh Lines connecting close nodes
-                    for (let j = i; j < this.particles.length; j++) {
-                        const dx = this.particles[i].x - this.particles[j].x;
-                        const dy = this.particles[i].y - this.particles[j].y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-
-                        if (distance < 120) {
-                            this.ctx.beginPath();
-                            // Safaricom Green network line rendering
-                            this.ctx.strokeStyle = `rgba(67, 176, 42, ${0.2 - distance/600})`; 
-                            this.ctx.lineWidth = 1;
-                            this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
-                            this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
-                            this.ctx.stroke();
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = entry.target;
+                    const numElement = card.querySelector('.metric-number');
+                    if (numElement && !card.classList.contains('counted')) {
+                        card.classList.add('counted');
+                        const target = parseInt(numElement.getAttribute('data-target'));
+                        if (target && target > 100) {
+                            animateValue(numElement, 0, target, 2000, "k+");
                         }
                     }
                 }
-                requestAnimationFrame(this.animate.bind(this));
-            }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.metric-card').forEach(card => {
+            counterObserver.observe(card);
+        });
+
+        function animateValue(obj, start, end, duration, suffix = "") {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const currentVal = Math.floor(progress * (end - start) + start);
+                obj.innerHTML = (currentVal / 1000).toFixed(0) + suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
         }
-
-        class Particle {
-            constructor(canvas, colors) {
-                this.canvas = canvas;
-                this.x = Math.random() * this.canvas.width;
-                this.y = Math.random() * this.canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = (Math.random() * 1) - 0.5;
-                this.speedY = (Math.random() * 1) - 0.5;
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                // Bounce off edges
-                if (this.x > this.canvas.width || this.x < 0) this.speedX = -this.speedX;
-                if (this.y > this.canvas.height || this.y < 0) this.speedY = -this.speedY;
-            }
-
-            draw(ctx) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
-        }
-
-        // Initialize the background engine if canvas exists
-        if(document.getElementById('network-canvas')) {
-            new ParticleNetwork('network-canvas');
-        }
-
     </script>
 </body>
 </html>
