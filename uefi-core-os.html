@@ -1994,15 +1994,13 @@ main {
     <div class="container">
       <nav class="navbar">
         <div class="logo-container">
-          <!-- Circular Logo Header Slot targeting assets/main-logo.html -->
-          <div class="logo-frame" title="UEFI SOMA Official Crest">
-            <iframe src="assets/main-logo.png" title="UEFI Logo" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';"></iframe>
-            <img src="assets/main-logo.png" alt="UEFI Logo Fallback" id="logo-fallback">
-          </div>
-          <div class="brand-title">
-            UEFI <span class="soma">SOMA Global</span>
-          </div>
-        </div>
+    <div class="logo-frame" title="UEFI SOMA Official Crest">
+        <img src="assets/main-logo.png" alt="UEFI Logo" class="logo-img">
+    </div>
+    <div class="brand-title">
+        UEFI <span class="soma">SOMA Global</span>
+    </div>
+</div>
 
         <!-- Mobile Toggle Button -->
         <button class="mobile-menu-btn" onclick="document.getElementById('navMenu').classList.toggle('active')">
