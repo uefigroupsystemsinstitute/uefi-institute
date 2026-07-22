@@ -1970,6 +1970,22 @@ main {
     color: #0a2640;
     margin-bottom: 5px;
 }
+.logo-frame {
+    width: 50px;           /* Adjust diameter to fit your header */
+    height: 50px;
+    border-radius: 50%;    /* Makes the container circular */
+    overflow: hidden;      /* Clips image to the circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     /* Ensures logo fills the circle smoothly */
+    display: block;
+}
   </style>
 </head>
 <body>
