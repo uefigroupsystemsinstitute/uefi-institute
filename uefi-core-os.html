@@ -1,914 +1,1558 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="UEFI SOMA - The ultimate global learning hub for IB and CBE curriculums powered by ALAL AI.">
-    <title>UEFI SOMA | Premier IB & CBE Educational Engine</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
-    <style>
-        /* ==========================================================================
-           1. MASTER DESIGN SYSTEM & VARIABLES
-           ========================================================================== */
-        :root {
-            /* IB Curriculum Theme (Global, Elite, Academic) */
-            --ib-primary: #0033A0;
-            --ib-secondary: #4A90E2;
-            --ib-accent: #FFC000;
-            --ib-bg-light: #F4F7FB;
-            
-            /* CBE Curriculum Theme (Kenyan Flag & Safaricom Identity) */
-            --cbe-safaricom: #00A859;
-            --kenya-black: #1A1A1A;
-            --kenya-red: #BB0000;
-            --kenya-green: #006600;
-            
-            /* ALAL AI Theme (Clean, Tech-forward, Neutral) */
-            --ai-dark: #2C3E50;
-            --ai-light: #ECF0F1;
-            --ai-glow: rgba(74, 144, 226, 0.3);
-
-            /* Typography */
-            --font-sans: 'Inter', system-ui, sans-serif;
-            --font-serif: 'Playfair Display', serif;
-            
-            /* Utilities */
-            --text-main: #333333;
-            --text-muted: #666666;
-            --white: #FFFFFF;
-            --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
-            --shadow-md: 0 10px 15px rgba(0,0,0,0.1);
-            --shadow-hover: 0 20px 25px rgba(0,0,0,0.15);
-            --radius-md: 8px;
-            --radius-lg: 16px;
-            --transition-fast: 0.2s ease;
-            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* ==========================================================================
-           2. RESET & BASE STYLES
-           ========================================================================== */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-sans);
-            color: var(--text-main);
-            background-color: var(--white);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-        button { cursor: pointer; border: none; font-family: inherit; }
-
-        .container {
-            width: 100%;
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 0 5%;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-header h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 15px;
-        }
-
-        .section-header p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* ==========================================================================
-           3. NAVIGATION BAR (Sticky, Glassmorphism)
-           ========================================================================== */
-        .navbar-wrapper {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 51, 160, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 9999;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            transition: var(--transition-smooth);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 90px;
-        }
-
-        .brand-cluster {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo-frame {
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            background: var(--white);
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(255,255,255,0.2);
-        }
-
-        /* Main Logo Iframe Injection */
-        .logo-frame iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            pointer-events: none;
-        }
-
-        .brand-text h1 {
-            color: var(--white);
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-        }
-
-        .brand-text span {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--ib-secondary);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 35px;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: rgba(255,255,255,0.8);
-            font-weight: 600;
-            font-size: 1.1rem;
-            position: relative;
-            transition: var(--transition-fast);
-        }
-
-        .nav-link:hover { color: var(--white); }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--ib-accent);
-            transition: var(--transition-smooth);
-        }
-
-        .nav-link:hover::after { width: 100%; }
-
-        .btn-ai-nav {
-            background: var(--white);
-            color: var(--ib-primary);
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: var(--transition-smooth);
-        }
-
-        .btn-ai-nav:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255,255,255,0.3);
-        }
-
-        /* ==========================================================================
-           4. HERO SECTION (Dynamic Gradient & Call to Action)
-           ========================================================================== */
-        .hero-section {
-            padding-top: 180px;
-            padding-bottom: 100px;
-            background: linear-gradient(145deg, var(--ib-primary) 0%, var(--ib-secondary) 100%);
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        /* Abstract Background Elements */
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            left: -10%;
-            width: 50%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            transform: rotate(-45deg);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: var(--white);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-            backdrop-filter: blur(5px);
-        }
-
-        .hero-title {
-            color: var(--white);
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 25px;
-        }
-
-        .hero-subtitle {
-            color: rgba(255,255,255,0.9);
-            font-size: 1.4rem;
-            margin-bottom: 50px;
-        }
-
-        .hero-actions {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .btn-hero {
-            padding: 18px 40px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            border-radius: var(--radius-md);
-            transition: var(--transition-smooth);
-        }
-
-        .btn-ib {
-            background: var(--white);
-            color: var(--ib-primary);
-        }
-
-        .btn-ib:hover {
-            background: var(--ib-bg-light);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .btn-cbe {
-            background: transparent;
-            color: var(--white);
-            border: 2px solid var(--white);
-        }
-
-        .btn-cbe:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-3px);
-        }
-
-        /* ==========================================================================
-           5. DATA & STATISTICS BANNER
-           ========================================================================== */
-        .stats-banner {
-            background: var(--kenya-black);
-            padding: 40px 0;
-            position: relative;
-            z-index: 20;
-            margin-top: -30px;
-            border-top: 5px solid var(--ib-accent);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            text-align: center;
-            gap: 30px;
-        }
-
-        .stat-item h4 {
-            color: var(--white);
-            font-size: 2.5rem;
-            font-weight: 800;
-        }
-
-        .stat-item p {
-            color: var(--cbe-safaricom);
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
-
-        /* ==========================================================================
-           6. IB CURRICULUM WING (Global Blue Theme)
-           ========================================================================== */
-        .ib-wing {
-            padding: 120px 0;
-            background-color: var(--ib-bg-light);
-        }
-
-        .ib-wing .section-header h2 { color: var(--ib-primary); }
-
-        .curriculum-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
-
-        .course-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
-            border-top: 6px solid var(--ib-primary);
-        }
-
-        .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--ib-bg-light);
-            color: var(--ib-primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 25px;
-        }
-
-        .course-card h3 {
-            font-size: 1.6rem;
-            color: var(--kenya-black);
-            margin-bottom: 15px;
-        }
-
-        .course-card p {
-            color: var(--text-muted);
-            margin-bottom: 25px;
-        }
-
-        .feature-list {
-            margin-bottom: 30px;
-        }
-
-        .feature-list li {
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 12px;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        .feature-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--ib-secondary);
-            font-weight: 800;
-        }
-
-        .btn-card {
-            display: block;
-            width: 100%;
-            text-align: center;
-            padding: 15px;
-            background: var(--ib-primary);
-            color: var(--white);
-            font-weight: 700;
-            border-radius: var(--radius-md);
-            transition: var(--transition-fast);
-        }
-
-        .btn-card:hover { background: var(--ib-secondary); }
-
-        /* ==========================================================================
-           7. CBE CURRICULUM WING (Kenya / Safaricom Theme)
-           ========================================================================== */
-        .cbe-wing {
-            padding: 120px 0;
-            background: var(--white);
-            border-top: 10px solid;
-            /* Authentic Kenyan Flag gradient separator */
-            border-image: linear-gradient(to right, var(--kenya-black) 25%, var(--kenya-red) 25%, var(--kenya-red) 50%, var(--kenya-green) 50%, var(--kenya-green) 75%, var(--white) 75%) 1;
-        }
-
-        .cbe-wing .section-header h2 { color: var(--kenya-green); }
-
-        /* Override card styles for CBE */
-        .cbe-card { border-top-color: var(--cbe-safaricom); }
-        .cbe-card .card-icon { background: rgba(0, 168, 89, 0.1); color: var(--cbe-safaricom); }
-        .cbe-card .feature-list li::before { color: var(--cbe-safaricom); }
-        .cbe-card .btn-card { background: var(--cbe-safaricom); }
-        .cbe-card .btn-card:hover { background: var(--kenya-green); }
-
-        /* ==========================================================================
-           8. ALAL AI INTERACTIVE TERMINAL
-           ========================================================================== */
-        .ai-engine {
-            padding: 120px 0;
-            background: var(--ai-dark);
-            color: var(--white);
-        }
-
-        .ai-engine .section-header h2 { color: var(--white); }
-        .ai-engine .section-header p { color: var(--ai-light); }
-
-        .terminal-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #1E293B;
-            border-radius: var(--radius-lg);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .terminal-header {
-            background: #0F172A;
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .terminal-dots {
-            display: flex;
-            gap: 8px;
-        }
-
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .dot-red { background: #FF5F56; }
-        .dot-yellow { background: #FFBD2E; }
-        .dot-green { background: #27C93F; }
-
-        .terminal-title {
-            margin-left: 20px;
-            font-family: monospace;
-            color: var(--ai-light);
-            font-size: 0.9rem;
-        }
-
-        .chat-window {
-            height: 400px;
-            padding: 30px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            scroll-behavior: smooth;
-        }
-
-        .message {
-            max-width: 80%;
-            padding: 15px 20px;
-            border-radius: 12px;
-            font-size: 1rem;
-            line-height: 1.5;
-            animation: fadeIn 0.3s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .msg-ai {
-            background: rgba(255,255,255,0.05);
-            color: var(--white);
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .msg-user {
-            background: var(--ib-primary);
-            color: var(--white);
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-
-        .terminal-input-area {
-            padding: 20px;
-            background: #0F172A;
-            display: flex;
-            gap: 15px;
-        }
-
-        .terminal-input {
-            flex: 1;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: var(--radius-md);
-            padding: 15px 20px;
-            color: var(--white);
-            font-size: 1rem;
-            font-family: inherit;
-            outline: none;
-            transition: var(--transition-fast);
-        }
-
-        .terminal-input:focus {
-            border-color: var(--ib-secondary);
-            box-shadow: 0 0 10px var(--ai-glow);
-        }
-
-        .btn-send {
-            background: var(--white);
-            color: var(--kenya-black);
-            padding: 0 30px;
-            border-radius: var(--radius-md);
-            font-weight: 800;
-            transition: var(--transition-fast);
-        }
-
-        .btn-send:hover { background: var(--ib-secondary); color: var(--white); }
-
-        /* ==========================================================================
-           9. ROBUST FOOTER
-           ========================================================================== */
-        footer {
-            background: #0A0A0A;
-            color: rgba(255,255,255,0.7);
-            padding: 80px 0 30px 0;
-            border-top: 1px solid #222;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 50px;
-            margin-bottom: 60px;
-        }
-
-        .footer-brand h2 {
-            color: var(--white);
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .footer-col h4 {
-            color: var(--white);
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .footer-col ul li { margin-bottom: 12px; }
-        .footer-col ul li a { transition: var(--transition-fast); }
-        .footer-col ul li a:hover { color: var(--ib-secondary); padding-left: 5px; }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #222;
-            font-size: 0.9rem;
-        }
-
-        /* RESPONSIVE DESIGN */
-        @media (max-width: 1024px) {
-            .hero-title { font-size: 3.5rem; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .nav-menu { display: none; /* Add JS toggle for mobile */ }
-            .hero-title { font-size: 2.8rem; }
-            .hero-actions { flex-direction: column; }
-            .footer-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UEFI SOMA | Global IB & CBE Academic Excellence Portal</title>
+  <!-- FontAwesome for Academic Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* ==========================================================================
+       1. GLOBAL VARIABLES & ACCESSIBILITY SETUP (High Contrast Arial Base)
+       ========================================================================== */
+    :root {
+      /* IB Curriculum Theme Colors */
+      --ib-blue: #00539C;
+      --ib-dark-blue: #002D54;
+      --ib-light-blue: #E8F1F5;
+      --ib-accent: #1D70B8;
+      
+      /* CBE Curriculum & Safaricom/Kenyan Theme Colors */
+      --cbe-green: #00A859;
+      --cbe-dark-green: #006633;
+      --cbe-light-green: #E8F8F0;
+      --kenya-red: #C8102E;
+      --kenya-black: #000000;
+      
+      /* Neutral Palette for Maximum Readability */
+      --bg-light: #F4F6F9;
+      --card-bg: #FFFFFF;
+      --text-dark: #1A1A1A;
+      --text-muted: #4A5568;
+      --border-color: #CBD5E0;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+      --radius: 8px;
+    }
+
+    /* Standard Arial Font setup across entire document */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Accessibility Focus States for Short-Sighted and Screen Readers */
+    a:focus, button:focus, input:focus, select:focus {
+      outline: 3px solid #FFD700 !important;
+      outline-offset: 2px;
+    }
+
+    /* ==========================================================================
+       2. TOP ANNOUNCEMENT BANNER
+       ========================================================================== */
+    .top-bar {
+      background: linear-gradient(90deg, var(--kenya-black) 0%, var(--kenya-red) 50%, var(--cbe-green) 100%);
+      color: #FFFFFF;
+      padding: 8px 20px;
+      font-size: 0.875rem;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-flag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* ==========================================================================
+       3. HEADER & NAVIGATION BAR WITH IITIAN ACADEMY DROPDOWNS
+       ========================================================================== */
+    header {
+      background-color: var(--ib-dark-blue);
+      color: #FFFFFF;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
+    }
+
+    .navbar {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* Circular Frame targeting assets/main-logo.html */
+    .logo-frame {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border: 2px solid #FFFFFF;
+      overflow: hidden;
+      background-color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .logo-frame iframe, .logo-frame img {
+      width: 100%;
+      height: 100%;
+      border: none;
+      object-fit: cover;
+    }
+
+    .brand-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #FFFFFF;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-title span {
+      color: var(--cbe-green);
+    }
+
+    /* Navigation Menu */
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 5px;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      color: #FFFFFF;
+      padding: 10px 16px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 4px;
+      transition: background 0.2s ease;
+    }
+
+    .nav-link:hover, .nav-item.active .nav-link {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Dropdown Menus (IITian Academy Style) */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 240px;
+      background-color: #FFFFFF;
+      color: var(--text-dark);
+      box-shadow: var(--shadow-lg);
+      border-radius: 0 0 var(--radius) var(--radius);
+      border-top: 3px solid var(--ib-blue);
+      display: none;
+      list-style: none;
+      padding: 8px 0;
+      z-index: 1001;
+    }
+
+    .nav-item:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu.cbe-dropdown {
+      border-top-color: var(--cbe-green);
+    }
+
+    .dropdown-item a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      font-weight: 600;
+      border-bottom: 1px solid #F0F0F0;
+    }
+
+    .dropdown-item a:hover {
+      background-color: var(--ib-light-blue);
+      color: var(--ib-blue);
+    }
+
+    .dropdown-menu.cbe-dropdown .dropdown-item a:hover {
+      background-color: var(--cbe-light-green);
+      color: var(--cbe-dark-green);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-alal {
+      background-color: var(--cbe-green);
+      color: #FFFFFF;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,168,89,0.4);
+    }
+
+    .btn-alal:hover {
+      background-color: var(--cbe-dark-green);
+    }
+
+    /* ==========================================================================
+       4. HERO SECTION (DYNAMIC DUAL-CURRICULUM IMPACT)
+       ========================================================================== */
+    .hero {
+      background: linear-gradient(135deg, var(--ib-dark-blue) 0%, var(--ib-blue) 60%, #0d4263 100%);
+      color: #FFFFFF;
+      padding: 60px 20px;
+      position: relative;
+    }
+
+    .hero-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: 2.8rem;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero-text h1 span.ib-highlight {
+      color: #72BF44;
+    }
+
+    .hero-text h1 span.cbe-highlight {
+      color: #00FF87;
+    }
+
+    .hero-text p {
+      font-size: 1.15rem;
+      margin-bottom: 30px;
+      color: #E2E8F0;
+    }
+
+    .curriculum-badges {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .c-badge {
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .c-badge.ib {
+      background-color: #FFFFFF;
+      color: var(--ib-blue);
+    }
+
+    .c-badge.cbe {
+      background-color: var(--cbe-green);
+      color: #FFFFFF;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-ib {
+      background-color: #FFFFFF;
+      color: var(--ib-blue);
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary-ib:hover {
+      background-color: var(--ib-light-blue);
+    }
+
+    .btn-primary-cbe {
+      background-color: var(--cbe-green);
+      color: #FFFFFF;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary-cbe:hover {
+      background-color: var(--cbe-dark-green);
+    }
+
+    /* Hero Card Display */
+    .hero-card {
+      background: #FFFFFF;
+      color: var(--text-dark);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      border-top: 5px solid var(--cbe-green);
+    }
+
+    .hero-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--ib-dark-blue);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    /* ==========================================================================
+       5. PHILOSOPHY & SIGNIFICANCE SECTION (UEFI GLOBAL IN EDUCATION)
+       ========================================================================== */
+    .section-padding {
+      padding: 70px 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      color: var(--ib-dark-blue);
+      margin-bottom: 12px;
+    }
+
+    .section-title p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .significance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .sig-card {
+      background-color: #FFFFFF;
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border-left: 4px solid var(--ib-blue);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .sig-card.cbe-accent {
+      border-left-color: var(--cbe-green);
+    }
+
+    .sig-card:hover {
+      transform: translateY(-50px);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .sig-icon {
+      font-size: 2.2rem;
+      color: var(--ib-blue);
+      margin-bottom: 18px;
+    }
+
+    .sig-card.cbe-accent .sig-icon {
+      color: var(--cbe-green);
+    }
+
+    .sig-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: var(--text-dark);
+    }
+
+    .sig-card p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    /* ==========================================================================
+       6. "WHAT MAKES UEFI SOMA UNIQUE" (IITian Academy Inspired 4-Grid)
+       ========================================================================== */
+    .unique-section {
+      background-color: var(--ib-blue);
+      color: #FFFFFF;
+      padding: 60px 20px;
+    }
+
+    .unique-section .section-title h2 {
+      color: #FFFFFF;
+    }
+
+    .unique-section .section-title p {
+      color: #E2E8F0;
+    }
+
+    .unique-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .unique-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .unique-card {
+      background-color: #FFFFFF;
+      color: var(--text-dark);
+      padding: 30px;
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      border: 2px solid transparent;
+    }
+
+    .unique-card:hover {
+      border-color: var(--cbe-green);
+    }
+
+    .unique-icon-wrapper {
+      width: 70px;
+      height: 70px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #FFFFFF;
+    }
+
+    .icon-green { background-color: var(--cbe-green); }
+    .icon-red { background-color: var(--kenya-red); }
+    .icon-purple { background-color: #6B46C1; }
+    .icon-blue { background-color: var(--ib-blue); }
+
+    .unique-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: var(--ib-dark-blue);
+    }
+
+    .unique-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       7. INTERACTIVE RESOURCE HUB (TABBED QUESTION BANK & EXAM SIMULATOR)
+       ========================================================================== */
+    .resource-hub {
+      background-color: #FFFFFF;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      padding: 30px;
+      margin-top: 40px;
+      border: 1px solid var(--border-color);
+    }
+
+    .hub-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border-color);
+      gap: 10px;
+      margin-bottom: 25px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 12px 24px;
+      font-weight: bold;
+      font-size: 1rem;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      color: var(--ib-blue);
+      border-bottom-color: var(--ib-blue);
+    }
+
+    .tab-btn.cbe-tab.active {
+      color: var(--cbe-green);
+      border-bottom-color: var(--cbe-green);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Question Box Simulation */
+    .question-card {
+      background-color: var(--bg-light);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: var(--ib-dark-blue);
+    }
+
+    .question-options {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-item {
+      background: #FFFFFF;
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+
+    .option-item:hover {
+      border-color: var(--ib-blue);
+      background-color: var(--ib-light-blue);
+    }
+
+    .answer-toggle {
+      background: none;
+      border: none;
+      color: #805AD5;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      font-size: 0.95rem;
+    }
+
+    .explanation-box {
+      display: none;
+      margin-top: 15px;
+      background-color: #FAF5FF;
+      border-left: 4px solid #805AD5;
+      padding: 15px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+
+    /* ==========================================================================
+       8. CURRICULUM SUBJECT DIRECTORY (IB DP & CBE KENYA)
+       ========================================================================== */
+    .curriculum-grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 992px) {
+      .curriculum-grid-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .curriculum-box {
+      background: #FFFFFF;
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+    }
+
+    .curriculum-box.ib-box {
+      border-top: 5px solid var(--ib-blue);
+    }
+
+    .curriculum-box.cbe-box {
+      border-top: 5px solid var(--cbe-green);
+    }
+
+    .curriculum-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .curriculum-header h3 {
+      font-size: 1.5rem;
+      color: var(--ib-dark-blue);
+    }
+
+    .curriculum-box.cbe-box .curriculum-header h3 {
+      color: var(--cbe-dark-green);
+    }
+
+    .subject-button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .subject-btn {
+      background-color: var(--bg-light);
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      transition: all 0.2s ease;
+    }
+
+    .ib-box .subject-btn:hover {
+      background-color: var(--ib-blue);
+      color: #FFFFFF;
+      border-color: var(--ib-blue);
+    }
+
+    .cbe-box .subject-btn:hover {
+      background-color: var(--cbe-green);
+      color: #FFFFFF;
+      border-color: var(--cbe-green);
+    }
+
+    /* ==========================================================================
+       9. TESTIMONIALS & TRUSTED STATS (IITian Academy Style)
+       ========================================================================== */
+    .stats-section {
+      background-color: #FFFFFF;
+      padding: 50px 20px;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--ib-blue);
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .testimonial-card {
+      background-color: var(--bg-light);
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .testimonial-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin: 0 auto 15px auto;
+      object-fit: cover;
+      border: 3px solid var(--cbe-green);
+    }
+
+    .testimonial-quote {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--text-dark);
+      margin-bottom: 15px;
+    }
+
+    .testimonial-author {
+      font-weight: bold;
+      color: var(--ib-dark-blue);
+    }
+
+    /* ==========================================================================
+       10. ALAL AI FLOATING WIDGET & CHAT MODAL
+       ========================================================================== */
+    .alal-fab {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background-color: var(--cbe-green);
+      color: #FFFFFF;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: var(--shadow-lg);
+      cursor: pointer;
+      z-index: 2000;
+      border: 2px solid #FFFFFF;
+    }
+
+    .alal-fab:hover {
+      transform: scale(1.05);
+      background-color: var(--cbe-dark-green);
+    }
+
+    /* AI Chat Modal */
+    .chat-modal {
+      display: none;
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      width: 380px;
+      height: 520px;
+      background-color: #FFFFFF;
+      border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+      z-index: 2001;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .chat-modal.active {
+      display: flex;
+    }
+
+    .chat-header {
+      background-color: var(--ib-dark-blue);
+      color: #FFFFFF;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--cbe-green);
+    }
+
+    .chat-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .chat-close {
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background-color: #F8FAFC;
+    }
+
+    .msg {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .msg.bot {
+      background-color: #FFFFFF;
+      color: var(--text-dark);
+      align-self: flex-start;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .msg.user {
+      background-color: var(--ib-blue);
+      color: #FFFFFF;
+      align-self: flex-end;
+    }
+
+    .chat-footer {
+      padding: 12px;
+      background-color: #FFFFFF;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .chat-send {
+      background-color: var(--cbe-green);
+      color: #FFFFFF;
+      border: none;
+      padding: 0 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* ==========================================================================
+       11. FOOTER (IITian Academy & UEFI Global Hybrid)
+       ========================================================================== */
+    footer {
+      background-color: var(--ib-dark-blue);
+      color: #FFFFFF;
+      padding: 60px 20px 20px 20px;
+      border-top: 4px solid var(--cbe-green);
+    }
+
+    .footer-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-col h4 {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      color: #FFFFFF;
+      position: relative;
+      padding-bottom: 8px;
+    }
+
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background-color: var(--cbe-green);
+    }
+
+    .footer-col p {
+      color: #CBD5E0;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: #CBD5E0;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #A0AEC0;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .flag-badge-kenya {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #000000;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--cbe-green);
+    }
+  </style>
 </head>
 <body>
 
-    <header class="navbar-wrapper">
-        <div class="container navbar">
-            <div class="brand-cluster">
-                <div class="logo-frame">
-                    <iframe src="assets/main-logo.html" title="UEFI Logo" scrolling="no"></iframe>
-                </div>
-                <div class="brand-text">
-                    <h1>UEFI SOMA</h1>
-                    <span>Global EdTech Engine</span>
-                </div>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#ib-wing" class="nav-link">IB DP & MYP</a></li>
-                <li><a href="#cbe-wing" class="nav-link">CBE Grade 1-10</a></li>
-                <li><a href="#" class="nav-link">Mock Exams</a></li>
-                <li><a href="#ai-engine" class="btn-ai-nav">Ask ALAL AI</a></li>
-            </ul>
-        </div>
-    </header>
+  <!-- TOP ANNOUNCEMENT BANNER -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span class="badge-flag">
+        <i class="fa-solid font-awesome"></i> 🎓 National Educational Impact Initiative
+      </span>
+      <span>UEFI SOMA: Empowering IB & Competency-Based Education (CBE) Excellence</span>
+    </div>
+    <div class="top-bar-right">
+      <span class="badge-flag">
+        <i class="fa-solid fa-flag"></i> Kenya CBE Aligned
+      </span>
+    </div>
+  </div>
 
-    <section class="hero-section">
-        <div class="container hero-content">
-            <span class="hero-badge">v2.0 Architecture Live</span>
-            <h1 class="hero-title">Bridging Global Rigor with Local Excellence.</h1>
-            <p class="hero-subtitle">The centralized intelligence hub for the International Baccalaureate (IB) and Kenya's Competency-Based Curriculum (CBE). Powered by ALAL AI.</p>
-            <div class="hero-actions">
-                <button class="btn-hero btn-ib" onclick="document.getElementById('ib-wing').scrollIntoView();">Access IB Archives</button>
-                <button class="btn-hero btn-cbe" onclick="document.getElementById('cbe-wing').scrollIntoView();">Explore CBE Hub</button>
-            </div>
+  <!-- HEADER / NAVBAR -->
+  <header>
+    <nav class="navbar">
+      <div class="logo-container">
+        <!-- Circular Logo Header Slot targeting assets/main-logo.html -->
+        <div class="logo-frame" title="UEFI SOMA Official Crest">
+          <iframe src="assets/main-logo.html" title="UEFI Logo" onerror="this.style.display='none'"></iframe>
+          <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=100&q=80" alt="UEFI Logo Fallback" id="logo-fallback">
         </div>
-    </section>
-
-    <section class="stats-banner">
-        <div class="container stats-grid">
-            <div class="stat-item">
-                <h4 id="count-docs">10,000+</h4>
-                <p>Past Papers</p>
-            </div>
-            <div class="stat-item">
-                <h4 id="count-users">50,000+</h4>
-                <p>Active Learners</p>
-            </div>
-            <div class="stat-item">
-                <h4 id="count-schools">500+</h4>
-                <p>Partner Schools</p>
-            </div>
-            <div class="stat-item">
-                <h4 id="count-ai">24/7</h4>
-                <p>AI Tutoring</p>
-            </div>
+        <div class="brand-title">
+          UEFI <span>SOMA</span>
         </div>
-    </section>
+      </div>
 
-    <section id="ib-wing" class="ib-wing">
-        <div class="container">
-            <div class="section-header">
-                <h2>IB Diploma & MYP Excellence</h2>
-                <p>Structured identically to elite platforms like IITian Academy. Gain access to rigorous, syllabus-aligned question banks, examiner reports, and mock tests.</p>
+      <!-- DROPDOWN NAVIGATION MENUS (IITian Academy Inspired) -->
+      <ul class="nav-links">
+        <li class="nav-item">
+          <a href="#home" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+        </li>
+        
+        <!-- IB Dropdown -->
+        <li class="nav-item">
+          <a href="#ib-portal" class="nav-link"><i class="fa-solid fa-globe"></i> IB Curriculum <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-item"><a href="#ib-biology">IB Biology DP/MYP <i class="fa-solid fa-angle-right"></i></a></li>
+            <li class="dropdown-item"><a href="#ib-math">IB Math (AA & AI) <i class="fa-solid fa-angle-right"></i></a></li>
+            <li class="dropdown-item"><a href="#ib-physics">IB Physics SL/HL <i class="fa-solid fa-angle-right"></i></a></li>
+            <li class="dropdown-item"><a href="#ib-chemistry">IB Chemistry <i class="fa-solid fa-angle-right"></i></a></li>
+            <li class="dropdown-item"><a href="#ib-economics">IB Economics <i class="fa-solid fa-angle-right"></i></a></li>
+            <li class="dropdown-item"><a href="#ib-cs">IB Computer Science <i class="fa-solid fa-angle-right"></i></a></li>
+          </ul>
+        </li>
+
+        <!-- CBE Dropdown -->
+        <li class="nav-item">
+          <a href="#cbe-portal" class="nav-link"><i class="fa-solid fa-book-bookmark"></i> CBE Curriculum <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a>
+          <ul class="dropdown-menu cbe-dropdown">
+            <li class="dropdown-item"><a href="#cbe-jss">Junior Secondary (Grade 7-9) <i class="fa-solid fa-angle-right"></i></a></li>
+            <li class="dropdown-item"><a href="#cbe-sss">Senior Secondary (Grade 10-12) <i class="fa-solid fa-angle-right"></i></a></li>
+            <li class="dropdown-item"><a href="#cbe-stem">STEM Pathways <i class="fa-solid fa-angle-right"></i></a></li>
+            <li class="dropdown-item"><a href="#cbe-arts">Arts & Sports Science <i class="fa-solid fa-angle-right"></i></a></li>
+            <li class="dropdown-item"><a href="#cbe-social">Social Sciences <i class="fa-solid fa-angle-right"></i></a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="#question-bank" class="nav-link"><i class="fa-solid fa-database"></i> QuestionBank</a>
+        </li>
+        <li class="nav-item">
+          <a href="#past-papers" class="nav-link"><i class="fa-solid fa-file-pdf"></i> Past Papers</a>
+        </li>
+      </ul>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <button class="btn-alal" onclick="toggleChat()">
+          <i class="fa-solid fa-robot"></i> Ask ALAL AI
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-container">
+      <div class="hero-text">
+        <div class="curriculum-badges">
+          <span class="c-badge ib">International Baccalaureate (IB)</span>
+          <span class="c-badge cbe">Competency Based Education (CBE)</span>
+        </div>
+        <h1>Elevating Global Minds Through <span class="ib-highlight">IB Rigor</span> & <span class="cbe-highlight">CBE Mastery</span></h1>
+        <p>
+          UEFI SOMA is the ultimate academic engine connecting international standards with local competency-based excellence. Access top-tier exam-style questions, step-by-step revision notes, and past paper mark schemes.
+        </p>
+        <div class="hero-buttons">
+          <a href="#ib-portal" class="btn-primary-ib"><i class="fa-solid fa-graduation-cap"></i> Explore IB DP/MYP</a>
+          <a href="#cbe-portal" class="btn-primary-cbe"><i class="fa-solid fa-award"></i> Explore Kenya CBE</a>
+        </div>
+      </div>
+
+      <!-- Dynamic Hero Feature Card -->
+      <div class="hero-card">
+        <h3><i class="fa-solid fa-lightbulb" style="color:var(--cbe-green);"></i> Next-Gen Academic Hub</h3>
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" alt="Students Studying" class="hero-card-img">
+        <p style="font-size:0.9rem; color:var(--text-muted);">
+          <strong>UEFI SOMA Interactive Portal:</strong> Combining topic-wise revision, real-time exam simulations, and ALAL AI guided problem-solving.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS & TRUSTED BY SECTION (IITian Academy Inspired) -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div>
+          <div class="stat-number">50+</div>
+          <div class="stat-label">SUBJECT COURSES COVERED</div>
+        </div>
+        <div>
+          <div class="stat-number">1,000+</div>
+          <div class="stat-label">PARTNER SCHOOLS & INSTITUTES</div>
+        </div>
+        <div>
+          <div class="stat-number">100,000+</div>
+          <div class="stat-label">ACTIVE STUDENTS & TEACHERS</div>
+        </div>
+      </div>
+
+      <!-- Testimonial Box -->
+      <div class="testimonial-card">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Teacher Reviewer" class="testimonial-avatar">
+        <p class="testimonial-quote">
+          "As an educator teaching both IB DP Mathematics and facilitating Kenya's Senior Secondary CBE STEM tracks, UEFI SOMA provides the cleanest, most precise notes and exam-style questions I have ever seen."
+        </p>
+        <div class="testimonial-author">Dr. Maryam J. — Lead STEM Curriculum Facilitator</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 1: PHILOSOPHY & SIGNIFICANCE OF UEFI GLOBAL IN EDUCATION -->
+  <section class="section-padding" style="background-color: #FFFFFF;">
+    <div class="container">
+      <div class="section-title">
+        <h2>The Strategic Importance of UEFI Global in Education</h2>
+        <p>Bridging Educational Frameworks for the 21st Century Workforce</p>
+      </div>
+
+      <div class="significance-grid">
+        <div class="sig-card">
+          <div class="sig-icon"><i class="fa-solid fa-universal-access"></i></div>
+          <h3>Curriculum Equity & Access</h3>
+          <p>
+            UEFI Global democratizes high-level education by providing equitable access to world-class IB DP/MYP resources and structured Kenyan CBE pathways, ensuring no learner is left behind regardless of socio-economic standing.
+          </p>
+        </div>
+
+        <div class="sig-card cbe-accent">
+          <div class="sig-icon"><i class="fa-solid fa-brain"></i></div>
+          <h3>Competency-Driven Mastery</h3>
+          <p>
+            Shifting the paradigm from rote memorization to skill acquisition. UEFI Global aligns learning materials directly with real-world technical skills, digital literacy, and computational thinking required in modern industries.
+          </p>
+        </div>
+
+        <div class="sig-card">
+          <div class="sig-icon"><i class="fa-solid fa-microchip"></i></div>
+          <h3>ALAL AI Integrated Learning</h3>
+          <p>
+            Integrating cutting-edge artificial intelligence to offer personalized academic support, immediate feedback on complex problems, and instant guidance across science, technology, and humanities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: "WHAT MAKES UEFI SOMA UNIQUE" (4-Grid Section) -->
+  <section class="unique-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>What Makes UEFI SOMA Unique</h2>
+        <p>Engineered with precision for IB and CBE students and educators worldwide</p>
+      </div>
+
+      <div class="unique-grid">
+        <!-- Item 1 -->
+        <div class="unique-card">
+          <div class="unique-icon-wrapper icon-green">
+            <i class="fa-solid fa-file-pen"></i>
+          </div>
+          <h3>Exam Style Questions</h3>
+          <p>
+            UEFI SOMA features high-quality, topic-wise Exam Style Questions for each sub-topic in IB and CBE. Helps students practice questions systematically to build confidence for mock and final assessments.
+          </p>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="unique-card">
+          <div class="unique-icon-wrapper icon-red">
+            <i class="fa-solid fa-paste"></i>
+          </div>
+          <h3>Past Papers with Solutions</h3>
+          <p>
+            Past papers with step-by-step mark schemes and video explanations. Questions are structured to reflect current IB assessment criteria and KNEC CBE evaluation guidelines.
+          </p>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="unique-card">
+          <div class="unique-icon-wrapper icon-purple">
+            <i class="fa-solid fa-book-open-reader"></i>
+          </div>
+          <h3>Comprehensive Revision Notes</h3>
+          <p>
+            Curated by experienced alumni, IB examiners, and senior CBE facilitators. Clear, concise summaries designed to bridge knowledge gaps rapidly during revision periods.
+          </p>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="unique-card">
+          <div class="unique-icon-wrapper icon-blue">
+            <i class="fa-solid fa-stopwatch"></i>
+          </div>
+          <h3>Time-Bound Practice Simulator</h3>
+          <p>
+            Simulate real examination conditions with timed online tests. Gauge speed, accuracy, and endurance while receiving automated performance analytics.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: INTERACTIVE RESOURCE HUB & QUESTIONBANK PREVIEW -->
+  <section class="section-padding" id="question-bank">
+    <div class="container">
+      <div class="section-title">
+        <h2>Exam-Style Questions & Resource Explorer</h2>
+        <p>Select a topic to test your knowledge or review detailed answer schemes</p>
+      </div>
+
+      <div class="resource-hub">
+        <!-- Tabs -->
+        <div class="hub-tabs">
+          <button class="tab-btn active" onclick="switchTab(event, 'tab-ib-physics')">IB Physics (Kinematics)</button>
+          <button class="tab-btn cbe-tab" onclick="switchTab(event, 'tab-cbe-stem')">CBE STEM (Grade 10 Integrated Science)</button>
+          <button class="tab-btn" onclick="switchTab(event, 'tab-flashcards')">Interactive Flashcards</button>
+        </div>
+
+        <!-- Tab 1: IB Physics -->
+        <div id="tab-ib-physics" class="tab-content active">
+          <div class="question-card">
+            <div class="question-header">
+              <span>Questions — A.1 Kinematics SL/HL (Paper 1)</span>
+              <span class="c-badge ib">IB DP</span>
             </div>
+            <p><strong>Question 1:</strong> A block of mass $2.0\text{ kg}$ accelerates uniformly at a rate of $1.0\text{ m/s}^2$ when a force of $4.0\text{ N}$ acts on it. The force is doubled while resistive forces stay the same. What is the block's new acceleration?</p>
             
-            <div class="curriculum-grid" id="ib-grid-container">
-                </div>
+            <div class="question-options">
+              <label class="option-item"><input type="radio" name="q1"> A. $4.0\text{ m/s}^2$</label>
+              <label class="option-item"><input type="radio" name="q1"> B. $3.0\text{ m/s}^2$</label>
+              <label class="option-item"><input type="radio" name="q1"> C. $2.0\text{ m/s}^2$</label>
+              <label class="option-item"><input type="radio" name="q1"> D. $1.0\text{ m/s}^2$</label>
+            </div>
+
+            <button class="answer-toggle" onclick="toggleExplanation('exp1')">
+              <i class="fa-solid fa-caret-right"></i> View Step-by-Step Answer & Mark Scheme
+            </button>
+
+            <div id="exp1" class="explanation-box">
+              <p><strong>Correct Answer: B ($3.0\text{ m/s}^2$)</strong></p>
+              <p><em>Explanation:</em> Initial net force $F_{\text{net}} = m \cdot a = 2.0 \times 1.0 = 2.0\text{ N}$. Since Applied Force $= 4.0\text{ N}$, Resistive Force $f_r = 4.0 - 2.0 = 2.0\text{ N}$. When applied force doubles to $8.0\text{ N}$, $F_{\text{net, new}} = 8.0 - 2.0 = 6.0\text{ N}$. Thus $a_{\text{new}} = \frac{6.0}{2.0} = 3.0\text{ m/s}^2$.</p>
+            </div>
+          </div>
         </div>
-    </section>
 
-    <section id="cbe-wing" class="cbe-wing">
-        <div class="container">
-            <div class="section-header">
-                <h2>Kenya CBE / CBC Central</h2>
-                <p>Aligned strictly with KICD guidelines. Comprehensive resources for Junior and Senior school, including editable schemes of work and formative assessments.</p>
+        <!-- Tab 2: CBE STEM -->
+        <div id="tab-cbe-stem" class="tab-content">
+          <div class="question-card">
+            <div class="question-header">
+              <span>Strand 2: Digital Technology & Electricity</span>
+              <span class="c-badge cbe">CBE Senior Sec</span>
             </div>
-            
-            <div class="curriculum-grid" id="cbe-grid-container">
-                </div>
+            <p><strong>Question:</strong> In a Junior Secondary Science project in Kiambu County, students constructed a solar-powered circuit using a 12V battery. Explain how Ohm's Law applies when resistor load increases.</p>
+
+            <button class="answer-toggle" onclick="toggleExplanation('exp2')">
+              <i class="fa-solid fa-caret-right"></i> View Competency Marking Criteria
+            </button>
+
+            <div id="exp2" class="explanation-box">
+              <p><strong>Competency Evaluation Criteria:</strong></p>
+              <ul>
+                <li>1. Correct state of formula: $I = \frac{V}{R}$.</li>
+                <li>2. Explanation that voltage remains constant while current drops inversely as resistance increases.</li>
+                <li>3. Practical application to community energy conservation.</li>
+              </ul>
+            </div>
+          </div>
         </div>
-    </section>
 
-    <section id="ai-engine" class="ai-engine">
-        <div class="container">
-            <div class="section-header">
-                <h2>ALAL AI Intelligence</h2>
-                <p>Do not just read notes. Understand them. ALAL AI is your personalized, 24/7 tutor trained on the entire UEFI SOMA database.</p>
-            </div>
-
-            <div class="terminal-container">
-                <div class="terminal-header">
-                    <div class="terminal-dots">
-                        <div class="dot dot-red"></div>
-                        <div class="dot dot-yellow"></div>
-                        <div class="dot dot-green"></div>
-                    </div>
-                    <div class="terminal-title">alal-ai-terminal ~ bash</div>
-                </div>
-                
-                <div class="chat-window" id="ai-chat-window">
-                    <div class="message msg-ai">
-                        System initialized. Accessing UEFI SOMA Databanks... Done.<br><br>
-                        Hello! I am ALAL AI. I specialize in breaking down complex IB Physics concepts, solving DP Math equations, or generating KICD-aligned lesson plans for CBC Grade 10. How can I assist your learning today?
-                    </div>
-                </div>
-
-                <div class="terminal-input-area">
-                    <input type="text" id="ai-user-input" class="terminal-input" placeholder="Type your query (e.g., 'Solve kinematics equation' or 'CBC Grade 8 Science notes')..." onkeydown="if(event.key === 'Enter') handleAIQuery()">
-                    <button class="btn-send" onclick="handleAIQuery()">Process</button>
-                </div>
-            </div>
+        <!-- Tab 3: Flashcards -->
+        <div id="tab-flashcards" class="tab-content">
+          <div class="question-card" style="text-align:center; padding: 40px;">
+            <i class="fa-solid fa-layer-group" style="font-size:3rem; color:var(--ib-blue); margin-bottom:15px;"></i>
+            <h3>Interactive Flashcard Decks Active</h3>
+            <p style="color:var(--text-muted); margin-bottom:20px;">Master terms for IB Chemistry Option Topics and CBE Environmental Science.</p>
+            <button class="btn-primary-ib" style="border:none; cursor:pointer;"><i class="fa-solid fa-play"></i> Launch Flashcard Simulator</button>
+          </div>
         </div>
-    </section>
 
-    <footer>
-        <div class="container footer-grid">
-            <div class="footer-brand">
-                <h2>UEFI SOMA</h2>
-                <p>Empowering the next generation of global leaders and local innovators through accessible, high-tier educational infrastructure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: CURRICULUM SUBJECT DIRECTORY -->
+  <section class="section-padding" style="background-color:var(--bg-light);" id="cbe-portal">
+    <div class="container">
+      <div class="section-title">
+        <h2>Supported Curriculum Subjects</h2>
+        <p>Explore full course notes, past papers, and topic-wise questions for IB and CBE frameworks</p>
+      </div>
+
+      <div class="curriculum-grid-container">
+        
+        <!-- IB Subjects Card -->
+        <div class="curriculum-box ib-box" id="ib-portal">
+          <div class="curriculum-header">
+            <i class="fa-solid fa-globe" style="font-size:2rem; color:var(--ib-blue);"></i>
+            <div>
+              <h3>International Baccalaureate (IB)</h3>
+              <span style="font-size:0.85rem; color:var(--text-muted);">Diploma Programme (DP) & MYP</span>
             </div>
-            <div class="footer-col">
-                <h4>IB Platform</h4>
-                <ul>
-                    <li><a href="#">DP Questionbank</a></li>
-                    <li><a href="#">MYP Resources</a></li>
-                    <li><a href="#">Extended Essay Guide</a></li>
-                    <li><a href="#">TOK Hub</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>CBE Platform</h4>
-                <ul>
-                    <li><a href="#">Grade 10 Senior Hub</a></li>
-                    <li><a href="#">Junior School Archives</a></li>
-                    <li><a href="#">Teacher Lesson Plans</a></li>
-                    <li><a href="#">KNEC Past Papers</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Legal & Support</h4>
-                <ul>
-                    <li><a href="#">Contact Support</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">UEFI Global Corporate</a></li>
-                </ul>
-            </div>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:20px;">
+            Full syllabus support with higher level (HL) and standard level (SL) resources.
+          </p>
+          <div class="subject-button-grid">
+            <div class="subject-btn">DP Biology SL/HL</div>
+            <div class="subject-btn">DP Math Analysis</div>
+            <div class="subject-btn">DP Physics SL/HL</div>
+            <div class="subject-btn">DP Chemistry</div>
+            <div class="subject-btn">DP Computer Science</div>
+            <div class="subject-btn">DP Economics</div>
+            <div class="subject-btn">DP Environmental</div>
+            <div class="subject-btn">MYP Sciences</div>
+          </div>
         </div>
-        <div class="container footer-bottom">
-            <p>&copy; 2026 UEFI Global. All rights reserved. Platform architecture designed for maximum educational impact.</p>
+
+        <!-- CBE Subjects Card -->
+        <div class="curriculum-box cbe-box">
+          <div class="curriculum-header">
+            <span class="flag-badge-kenya"><i class="fa-solid fa-flag" style="color:var(--cbe-green);"></i> KENYA</span>
+            <div>
+              <h3>Competency Based Education (CBE)</h3>
+              <span style="font-size:0.85rem; color:var(--text-muted);">Junior & Senior Secondary (CBC)</span>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:20px;">
+            Aligned with KICD standards, focusing on practical learning and pathway specialization.
+          </p>
+          <div class="subject-button-grid">
+            <div class="subject-btn">JSS Integrated Science</div>
+            <div class="subject-btn">JSS Pre-Technical</div>
+            <div class="subject-btn">Senior STEM Pathway</div>
+            <div class="subject-btn">Computer Studies</div>
+            <div class="subject-btn">Agriculture & Nutrition</div>
+            <div class="subject-btn">Social Studies</div>
+            <div class="subject-btn">Kiswahili & Foreign</div>
+            <div class="subject-btn">Creative Arts</div>
+          </div>
         </div>
-    </footer>
 
-    <script>
-        /**
-         * UEFI SOMA DATA ENGINE
-         * This structured JSON object simulates a backend database.
-         * Real-world apps fetch this via API. We embed it for instant rendering.
-         */
-        const database = {
-            ibCourses: [
-                {
-                    title: "DP Mathematics AA & AI",
-                    icon: "∑",
-                    desc: "Rigorous syllabus coverage for Analysis & Approaches and Applications & Interpretations.",
-                    features: ["Topic-wise Questionbank", "Step-by-step Markschemes", "Formula Booklet Annotations"],
-                    btnText: "Open Math Hub"
-                },
-                {
-                    title: "DP Experimental Sciences",
-                    icon: "⚗️",
-                    desc: "Master Biology, Chemistry, and Physics with simulated labs and past paper breakdowns.",
-                    features: ["Paper 1 MCQ Simulators", "Paper 2 Long Answers", "Internal Assessment (IA) Guides"],
-                    btnText: "Open Science Hub"
-                },
-                {
-                    title: "MYP Digital Assessments",
-                    icon: "💻",
-                    desc: "Prepare for eAssessments with technology-driven mock environments.",
-                    features: ["Interdisciplinary Units", "On-screen mock exams", "Criteria-based rubrics"],
-                    btnText: "Open MYP Hub"
-                }
-            ],
-            cbeCourses: [
-                {
-                    title: "Senior School (Grade 10-12)",
-                    icon: "🎓",
-                    desc: "Pathways aligned to STEM, Social Sciences, and Arts & Sports Science tracks.",
-                    features: ["Strand-specific Notes", "Summative Assessment Mocks", "Career Pathway Guides"],
-                    btnText: "Access Grade 10+"
-                },
-                {
-                    title: "Junior School (Grade 7-9)",
-                    icon: "📚",
-                    desc: "Core subject mastery including Pre-Technical studies and integrated sciences.",
-                    features: ["Formative Assessment Rubrics", "Project-based learning tasks", "Termly Schemes of Work"],
-                    btnText: "Access Junior Hub"
-                },
-                {
-                    title: "Educator Resource Portal",
-                    icon: "👨‍🏫",
-                    desc: "For Kenyan Teachers: Save hours of planning with verified KICD-aligned materials.",
-                    features: ["Editable Word Lesson Plans", "CBC Assessment Trackers", "Downloadable Report Cards"],
-                    btnText: "Teacher Login"
-                }
-            ]
-        };
+      </div>
+    </div>
+  </section>
 
-        /**
-         * RENDER PIPELINE
-         * Functions to inject HTML dynamically based on the JSON data.
-         */
-        function renderCards(dataArray, containerId, isCBE = false) {
-            const container = document.getElementById(containerId);
-            let htmlString = "";
+  <!-- ALAL AI FLOATING ASSISTANT AND CHAT MODAL -->
+  <div class="alal-fab" onclick="toggleChat()" title="Open ALAL AI Assistant">
+    <i class="fa-solid fa-robot"></i>
+  </div>
 
-            dataArray.forEach(course => {
-                const cardClass = isCBE ? "course-card cbe-card" : "course-card";
-                
-                // Build the list items
-                let listHtml = "<ul class='feature-list'>";
-                course.features.forEach(feature => {
-                    listHtml += `<li>${feature}</li>`;
-                });
-                listHtml += "</ul>";
+  <div class="chat-modal" id="chatModal">
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <i class="fa-solid fa-microchip" style="color:var(--cbe-green);"></i>
+        <span>ALAL AI — Academic Assistant</span>
+      </div>
+      <button class="chat-close" onclick="toggleChat()">&times;</button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="msg bot">
+        Hello! I am <strong>ALAL AI</strong>, your educational assistant for UEFI SOMA. Ask me anything about IB DP/MYP subjects, Kenyan CBE curricula, or past paper solutions!
+      </div>
+    </div>
+    <div class="chat-footer">
+      <input type="text" class="chat-input" id="chatInput" placeholder="Ask about IB Math, CBE STEM..." onkeypress="handleKeyPress(event)">
+      <button class="chat-send" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
 
-                // Construct Card HTML
-                htmlString += `
-                    <div class="${cardClass}">
-                        <div class="card-icon">${course.icon}</div>
-                        <h3>${course.title}</h3>
-                        <p>${course.desc}</p>
-                        ${listHtml}
-                        <button class="btn-card">${course.btnText}</button>
-                    </div>
-                `;
-            });
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+          <div class="logo-frame" style="width:40px; height:40px;">
+            <iframe src="assets/main-logo.html" title="Footer Logo" style="width:100%; height:100%; border:none;"></iframe>
+          </div>
+          <span style="font-size:1.3rem; font-weight:bold; color:#FFF;">UEFI SOMA</span>
+        </div>
+        <p>
+          UEFI Global's official educational technology platform providing academic excellence resources for IB and CBE students globally.
+        </p>
+        <p><i class="fa-solid fa-location-dot" style="color:var(--cbe-green);"></i> Silicon Savannah Hub, Kenya</p>
+      </div>
 
-            container.innerHTML = htmlString;
+      <div class="footer-col">
+        <h4>IB Resources</h4>
+        <ul class="footer-links">
+          <li><a href="#ib-biology">IB Biology Notes</a></li>
+          <li><a href="#ib-math">IB Math Questionbank</a></li>
+          <li><a href="#ib-physics">IB Physics Solved Papers</a></li>
+          <li><a href="#ib-chemistry">MYP Science Guides</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>CBE Resources</h4>
+        <ul class="footer-links">
+          <li><a href="#cbe-jss">Junior Secondary Strand Notes</a></li>
+          <li><a href="#cbe-sss">Senior Secondary STEM Tracks</a></li>
+          <li><a href="#cbe-stem">KNEC Assessment Format</a></li>
+          <li><a href="#cbe-arts">Competency Learning Area Guides</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Accreditation & AI Support</h4>
+        <p>Powered by <strong>ALAL AI Assistant</strong> for automated academic query handling.</p>
+        <div style="margin-top:15px;">
+          <button class="btn-alal" onclick="toggleChat()" style="width:100%; justify-content:center;">
+            <i class="fa-solid fa-robot"></i> Launch ALAL AI
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>&copy; 2026 UEFI Global. All Rights Reserved. Designed for IB & CBE Academic Excellence.</div>
+      <div style="display:flex; gap:15px; align-items:center;">
+        <span class="flag-badge-kenya"><i class="fa-solid fa-flag" style="color:var(--cbe-green);"></i> Kenyan Flag Certified</span>
+        <span>Standard Arial High-Contrast Mode</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+  <script>
+    // Tab Switching Functionality
+    function switchTab(evt, tabId) {
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => content.classList.remove('active'));
+
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      evt.currentTarget.classList.add('active');
+    }
+
+    // Toggle Answer Explanations
+    function toggleExplanation(expId) {
+      const expBox = document.getElementById(expId);
+      if (expBox.style.display === "block") {
+        expBox.style.display = "none";
+      } else {
+        expBox.style.display = "block";
+      }
+    }
+
+    // ALAL AI Chat Modal Toggle
+    function toggleChat() {
+      const modal = document.getElementById('chatModal');
+      if (modal.classList.contains('active')) {
+        modal.classList.remove('active');
+      } else {
+        modal.classList.add('active');
+      }
+    }
+
+    // Simple AI Chat Logic Engine
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBody = document.getElementById('chatBody');
+
+      // Add user message
+      const userMsg = document.createElement('div');
+      userMsg.className = 'msg user';
+      userMsg.innerText = text;
+      chatBody.appendChild(userMsg);
+
+      input.value = '';
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      // Simulate Bot Response
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'msg bot';
+
+        const query = text.toLowerCase();
+        if (query.includes('ib') || query.includes('baccalaureate')) {
+          botMsg.innerHTML = "<strong>ALAL AI:</strong> We offer comprehensive IB DP & MYP topic notes, exam-style questions, and flashcards across Physics, Math AA/AI, Biology, and Economics!";
+        } else if (query.includes('cbe') || query.includes('cbc') || query.includes('kenya')) {
+          botMsg.innerHTML = "<strong>ALAL AI:</strong> UEFI SOMA is fully aligned with KICD standards for Kenyan CBE Junior & Senior Secondary strands, featuring STEM, Arts, and Social Science pathways!";
+        } else if (query.includes('past paper') || query.includes('question')) {
+          botMsg.innerHTML = "<strong>ALAL AI:</strong> You can access our interactive QuestionBank from the top navigation bar. Select your curriculum (IB or CBE) to view step-by-step mark schemes!";
+        } else {
+          botMsg.innerHTML = "<strong>ALAL AI:</strong> UEFI SOMA is dedicated to serving both IB and CBE curricula. How can I guide your studies today?";
         }
 
-        // Initialize Render
-        document.addEventListener("DOMContentLoaded", () => {
-            renderCards(database.ibCourses, "ib-grid-container", false);
-            renderCards(database.cbeCourses, "cbe-grid-container", true);
-        });
+        chatBody.appendChild(botMsg);
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }, 600);
+    }
 
-        /**
-         * ALAL AI CHAT ENGINE
-         * Handles user inputs and simulates AI responses with typing delays.
-         */
-        const chatWindow = document.getElementById("ai-chat-window");
-        const chatInput = document.getElementById("ai-user-input");
-
-        function appendMessage(text, sender) {
-            const msgDiv = document.createElement("div");
-            msgDiv.className = `message ${sender === 'user' ? 'msg-user' : 'msg-ai'}`;
-            msgDiv.innerHTML = text; // Using innerHTML to allow basic formatting
-            chatWindow.appendChild(msgDiv);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-        }
-
-        function handleAIQuery() {
-            const query = chatInput.value.trim();
-            if (!query) return;
-
-            // 1. Show User Message
-            appendMessage(query, "user");
-            chatInput.value = "";
-            chatInput.disabled = true;
-
-            // 2. Simulate AI Processing Delay
-            setTimeout(() => {
-                // Determine context based on keywords to show intelligent routing
-                let response = "";
-                const lowerQuery = query.toLowerCase();
-
-                if (lowerQuery.includes("ib") || lowerQuery.includes("dp") || lowerQuery.includes("myp")) {
-                    response = "<strong>ALAL AI (IB Module):</strong> Query recognized. Cross-referencing IB syllabus guidelines... I can help you break down that topic with exam-style constraints. Shall we look at a specific past paper example?";
-                } else if (lowerQuery.includes("cbc") || lowerQuery.includes("cbe") || lowerQuery.includes("grade")) {
-                    response = "<strong>ALAL AI (CBE Module):</strong> Checking KICD curriculum strands... I have located the relevant lesson objectives. Would you like the summarized student notes or the teacher's scheme of work for this?";
-                } else {
-                    response = "<strong>ALAL AI:</strong> Processing query across the UEFI Global database... I have found resources spanning both theoretical principles and practical applications. Could you specify if you need this for IB prep or CBE assessment?";
-                }
-
-                appendMessage(response, "ai");
-                chatInput.disabled = false;
-                chatInput.focus();
-            }, 1200);
-        }
-    </script>
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    }
+  </script>
 </body>
 </html>
