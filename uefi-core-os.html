@@ -1902,6 +1902,74 @@
       border-radius: var(--radius-sm);
       border: 1px solid rgba(255,255,255,0.2);
     }
+    /* --- 1. GLOBAL & HEADER OVERRIDES (0.5cm spacing & No-Wrap Fix) --- */
+body {
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+header {
+    width: 100% !important;
+    padding: 15px 0.5cm !important; /* Forces the 0.5cm left/right edge spacing */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Forces the navigation items like "CBE Curriculum" to stay on one line */
+.nav-links li, 
+.nav-links a {
+    white-space: nowrap !important; 
+}
+
+main {
+    padding: 40px 0.5cm !important; /* Matches the 0.5cm spacing for the body content */
+}
+
+/* --- 2. INFINITE IMAGE SLIDER STYLES --- */
+.slider-container {
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+    padding: 20px 0;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.slider-track {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: max-content; /* Critical for the JavaScript loop to calculate width */
+}
+
+.slide-card {
+    width: 300px;
+    background: #f4f7f6;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.slide-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.slide-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.slide-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0a2640;
+    margin-bottom: 5px;
+}
   </style>
 </head>
 <body>
@@ -1994,6 +2062,12 @@
       </nav>
     </div>
   </header>
+  <!-- DYNAMIC INFINITE SLIDER SECTION -->
+<div class="slider-container" id="sliderContainer">
+    <div class="slider-track" id="sliderTrack">
+        <!-- The Javascript below will automatically inject the images here -->
+    </div>
+</div>
 
   <!-- MAIN CONTENT WRAPPER -->
   <main>
@@ -2893,5 +2967,65 @@
       });
     });
   </script>
+  <!-- INFINITE A-B-C-D-A LOOP SCRIPT -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const track = document.getElementById('sliderTrack');
+        
+        // 1. Your dynamic data (Subjects, Question Banks, Videos)
+        // You can add as many as you want here
+        const slideData = [
+            { title: "Mathematics AA", desc: "Question Bank & Videos", img: "https://picsum.photos/seed/math/300/180" },
+            { title: "Biology HL", desc: "Past Papers (2018-2023)", img: "https://picsum.photos/seed/bio/300/180" },
+            { title: "Physics SL", desc: "Quantum Mechanics Series", img: "https://picsum.photos/seed/phy/300/180" },
+            { title: "Chemistry HL", desc: "Organic Reactions", img: "https://picsum.photos/seed/chem/300/180" },
+            { title: "Business Studies", desc: "CBE Evaluation Metrics", img: "https://picsum.photos/seed/bus/300/180" },
+            { title: "Computer Science", desc: "Programming Fundamentals", img: "https://picsum.photos/seed/cs/300/180" }
+        ];
+
+        // 2. Function to build a slide
+        function createSlideElement(data) {
+            const slide = document.createElement('div');
+            slide.className = 'slide-card';
+            slide.innerHTML = `
+                <img src="${data.img}" alt="${data.title}" class="slide-image">
+                <div class="slide-content">
+                    <div class="slide-title">${data.title}</div>
+                    <div style="font-size: 13px; color: #666;">${data.desc}</div>
+                </div>
+            `;
+            return slide;
+        }
+
+        // 3. Inject original slides
+        slideData.forEach(data => track.appendChild(createSlideElement(data)));
+
+        // 4. Inject a CLONED set of slides to create the seamless A-B-C-D-A loop
+        slideData.forEach(data => track.appendChild(createSlideElement(data)));
+
+        // 5. Animation logic
+        let position = 0;
+        const speed = 1.5; // Change this number to make it slide faster or slower
+        
+        // Calculate the width of one full set (300px card width + 20px gap)
+        const singleSetWidth = slideData.length * 320; 
+
+        function animateSlider() {
+            position -= speed;
+            
+            // Once the first set has scrolled out of view, instantly reset position to 0
+            // Because the images are cloned, the user's eye will not notice the jump
+            if (Math.abs(position) >= singleSetWidth) {
+                position = 0;
+            }
+            
+            track.style.transform = `translateX(${position}px)`;
+            requestAnimationFrame(animateSlider);
+        }
+
+        // Start the infinite loop
+        animateSlider();
+    });
+</script>
 </body>
 </html>
