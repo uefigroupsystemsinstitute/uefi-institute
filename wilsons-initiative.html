@@ -3,271 +3,543 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE WILSON CORPS | PREMIUM MASCULINE WEB</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@300;400;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>WILSON VANGUARD | The Apex Masculine Protocol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
+    
     <style>
+        /* === VANGUARD CORE VARIABLES === */
         :root {
-            --obsidian: #050505;
-            --gold-leaf: #d4af37;
-            --slate-pro: #1a1a1a;
-            --ivory: #f4f4f4;
-            --premium-gradient: linear-gradient(135deg, #d4af37 0%, #f9d976 50%, #aa8418 100%);
+            --void: #030303;
+            --carbon: #0f0f0f;
+            --steel: #2a2a2a;
+            --crimson: #d31027;
+            --blood: #8b0000;
+            --titanium: #e0e0e0;
+            --text-dim: #7a7a7a;
+            --neon-red: rgba(211, 16, 39, 0.6);
+            --transition-fast: 0.2s ease-out;
+            --transition-epic: 0.6s cubic-bezier(0.25, 1, 0.1, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
-        
+        /* === RESET & FOUNDATION === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: crosshair;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background-color: var(--obsidian);
-            color: var(--ivory);
-            font-family: 'Montserrat', sans-serif;
-            line-height: 1.7;
+            background-color: var(--void);
+            color: var(--titanium);
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* NAVIGATION ARCHITECTURE */
-        nav {
-            height: 90px;
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at 50% 50%, rgba(211, 16, 39, 0.03) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* === CUSTOM SCROLLBAR === */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--void); }
+        ::-webkit-scrollbar-thumb { background: var(--steel); border-radius: 0px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--crimson); }
+
+        /* === TYPOGRAPHY === */
+        h1, h2, h3, .brand {
+            font-family: 'Bebas Neue', cursive;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        
+        .cyber-text {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* === NAVIGATION ARCHITECTURE === */
+        .vanguard-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4vw;
+            background: rgba(3, 3, 3, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--steel);
+            z-index: 9999;
+        }
+
+        .brand {
+            font-size: 2.2rem;
+            color: var(--titanium);
+            text-decoration: none;
+            letter-spacing: 2px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 5%;
-            background: rgba(5, 5, 5, 0.98);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            position: fixed;
-            top: 0; width: 100%; z-index: 2000;
+            gap: 10px;
         }
 
-        .logo {
-            font-family: 'Cinzel', serif;
-            color: var(--gold-leaf);
-            font-size: 1.4rem;
-            letter-spacing: 5px;
-            text-decoration: none;
+        .brand span {
+            color: var(--crimson);
         }
 
-        .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a {
+        .nav-matrix {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-matrix a {
+            color: var(--text-dim);
             text-decoration: none;
-            color: var(--ivory);
-            font-size: 0.65rem;
-            font-weight: 800;
-            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
             letter-spacing: 2px;
-            opacity: 0.7;
-            transition: 0.3s;
+            transition: var(--transition-fast);
+            position: relative;
         }
-        .nav-links a:hover { opacity: 1; color: var(--gold-leaf); }
 
-        /* THE MONOLITH HERO */
-        .hero {
+        .nav-matrix a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0;
+            width: 0%; height: 2px;
+            background: var(--crimson);
+            transition: var(--transition-fast);
+        }
+
+        .nav-matrix a:hover {
+            color: var(--titanium);
+            text-shadow: 0 0 8px var(--neon-red);
+        }
+
+        .nav-matrix a:hover::after {
+            width: 100%;
+        }
+
+        /* === HERO SECTOR: THE AWAKENING === */
+        .hero-sector {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
-                        url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop');
+            border-bottom: 2px solid var(--crimson);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(3,3,3,0.3) 0%, rgba(3,3,3,1) 100%),
+                        url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2069&auto=format&fit=crop'); /* Gritty Gym/Iron background */
             background-size: cover;
             background-position: center;
-            border-bottom: 1px solid var(--slate-pro);
+            z-index: -1;
+            filter: grayscale(80%) contrast(120%);
         }
 
-        .hero h1 {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2.5rem, 7vw, 5.5rem);
-            background: var(--premium-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+        .status-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--crimson);
+            border: 1px solid var(--crimson);
+            padding: 8px 16px;
+            margin-bottom: 2rem;
+            letter-spacing: 4px;
+            background: rgba(211, 16, 39, 0.05);
+            animation: pulse 2s infinite;
         }
 
-        /* INTERACTIVE VAULT CARDS */
-        section { padding: 100px 10%; }
-        .section-tag { font-family: 'JetBrains Mono'; color: var(--gold-leaf); font-size: 0.8rem; letter-spacing: 4px; display: block; margin-bottom: 10px; }
-        .section-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 50px; text-transform: uppercase; }
-
-        .vault-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+        .hero-sector h1 {
+            font-size: clamp(4rem, 10vw, 9rem);
+            color: var(--titanium);
+            text-shadow: 4px 4px 0px var(--blood);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
         }
 
-        .vault-item {
+        .hero-sub {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            font-weight: 300;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary {
+            background: transparent;
+            color: var(--titanium);
+            border: 2px solid var(--crimson);
+            padding: 15px 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
             text-decoration: none;
+            transition: var(--transition-epic);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: var(--crimson);
+            transition: var(--transition-epic);
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before { left: 0; }
+        .btn-primary:hover { color: var(--void); box-shadow: 0 0 20px var(--neon-red); }
+
+        /* === MODULE ARCHITECTURE (SECTIONS) === */
+        .module {
+            padding: 120px 5vw;
+            position: relative;
+        }
+
+        .module-header {
+            margin-bottom: 60px;
+            border-left: 5px solid var(--crimson);
+            padding-left: 20px;
+        }
+
+        .module-id {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--crimson);
+            font-size: 0.9rem;
+            letter-spacing: 5px;
             display: block;
-            background: #111; /* Skeleton Loader Color */
-            border: 1px solid var(--slate-pro);
-            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .module-title {
+            font-size: 3.5rem;
+            color: var(--titanium);
+        }
+
+        /* === GRID VAULT === */
+        .arsenal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .data-card {
+            background: var(--carbon);
+            border: 1px solid var(--steel);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-epic);
             position: relative;
         }
 
-        .image-container {
+        .data-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: var(--crimson);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition-epic);
+            z-index: 10;
+        }
+
+        .data-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--crimson);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+        }
+
+        .data-card:hover::before { transform: scaleX(1); }
+
+        .visual-feed {
             width: 100%;
-            height: 220px;
-            overflow: hidden;
+            height: 250px;
             position: relative;
-            background: #151515;
+            overflow: hidden;
+            background: #000;
         }
 
-        .image-container img {
+        .visual-feed img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(100%) brightness(0.5);
-            transition: 0.7s;
-            display: block;
+            filter: grayscale(100%) contrast(110%);
+            opacity: 0.6;
+            transition: var(--transition-epic);
         }
 
-        .play-overlay {
+        .data-card:hover .visual-feed img {
+            filter: grayscale(0%) contrast(120%);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .play-core {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px; height: 60px;
-            border: 1px solid var(--gold-leaf);
+            width: 70px; height: 70px;
+            background: rgba(211, 16, 39, 0.2);
+            border: 2px solid var(--crimson);
             border-radius: 50%;
             display: flex;
-            align-items: center;
             justify-content: center;
-            opacity: 0.8;
-            transition: 0.4s;
-            background: rgba(0,0,0,0.4);
+            align-items: center;
+            backdrop-filter: blur(4px);
+            transition: var(--transition-epic);
+            z-index: 2;
         }
 
-        .play-overlay::after {
+        .play-core::after {
             content: '';
-            border-left: 15px solid var(--gold-leaf);
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-            margin-left: 5px;
+            border-left: 18px solid var(--titanium);
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 6px;
         }
 
-        .vault-item:hover { border-color: var(--gold-leaf); transform: translateY(-8px); }
-        .vault-item:hover img { filter: grayscale(20%) brightness(0.7); transform: scale(1.05); }
-        .vault-item:hover .play-overlay { opacity: 1; transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+        .data-card:hover .play-core {
+            background: var(--crimson);
+            transform: translate(-50%, -50%) scale(1.15);
+            box-shadow: 0 0 25px var(--neon-red);
+        }
 
-        .content-box { padding: 25px; border-top: 1px solid var(--slate-pro); background: #0a0a0a; }
-        .content-box h3 { font-family: 'Cinzel', serif; color: var(--gold-leaf); font-size: 1rem; margin-bottom: 10px; }
-        .content-box p { color: #888; font-size: 0.8rem; font-weight: 300; }
+        .intel-box {
+            padding: 30px;
+        }
 
-        .focus-feature {
-            width: 100%;
-            height: 500px;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1493932484895-752d1471eab5?q=80&w=2069&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            filter: grayscale(1);
-            border: 1px solid var(--gold-leaf);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .intel-box h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            color: var(--titanium);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .intel-box p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* === ISOLATION / DEEP WORK CHAMBER === */
+        .isolation-chamber {
+            background: var(--carbon);
+            border: 1px solid var(--steel);
+            padding: 80px 5vw;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .isolation-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop') center/cover;
+            opacity: 0.1;
+            filter: grayscale(100%);
+            z-index: 0;
+            transition: var(--transition-epic);
+        }
+
+        .isolation-chamber:hover .isolation-bg {
+            opacity: 0.3;
+            filter: grayscale(0%);
+        }
+
+        .chamber-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .pulse-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 20px 50px;
+            background: var(--crimson);
+            color: var(--titanium);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            text-transform: uppercase;
             text-decoration: none;
-            transition: 0.5s;
+            letter-spacing: 4px;
+            border-radius: 2px;
+            box-shadow: 0 0 15px var(--neon-red);
+            transition: var(--transition-fast);
         }
-        .focus-feature:hover { filter: grayscale(0); }
 
-        footer { text-align: center; padding: 100px 0; background: #020202; border-top: 1px solid var(--slate-pro); }
+        .pulse-btn:hover {
+            background: var(--titanium);
+            color: var(--blood);
+            box-shadow: 0 0 30px var(--titanium);
+            transform: scale(1.05);
+        }
+
+        /* === FOOTER COMMAND CENTER === */
+        footer {
+            background: #000;
+            padding: 80px 5vw;
+            text-align: center;
+            border-top: 2px solid var(--steel);
+            position: relative;
+        }
+
+        .footer-logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: var(--steel);
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo span {
+            color: var(--text-dim);
+        }
+
+        .sys-msg {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: var(--crimson);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(211, 16, 39, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(211, 16, 39, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(211, 16, 39, 0); }
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .nav-matrix { display: none; } /* Add a hamburger menu in JS for prod */
+            .hero-sector h1 { font-size: 3.5rem; }
+            .module-title { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#" class="logo">WILSON.CORPS</a>
-        <ul class="nav-links">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="growth.html">UEFI Men Growth </a></li>
-            <li><a href="financial-hub.html">UEFI Financial Hub </a></li>
-            <li><a href="#capital">Capital</a></li>
-            <li><a href="#focus">Protocol</a></li>
-            <li><a href="#baze">The Baze</a></li>
+    <nav class="vanguard-nav">
+        <a href="#" class="brand">WILSON<span>VANGUARD</span></a>
+        <ul class="nav-matrix">
+            <li><a href="#initiate">01. Initiate</a></li>
+            <li><a href="#capital">02. Wealth Architecture</a></li>
+            <li><a href="#focus">03. Iron Protocol</a></li>
+            <li><a href="#syndicate">04. The Syndicate</a></li>
         </ul>
     </nav>
 
-    <section class="hero">
-        <span class="section-tag">UEFI PREMIUM INTERFACE</span>
-        <h1>SOVEREIGNTY</h1>
-        <p style="max-width: 600px; color: #aaa;">Architectural precision in thought, finance, and focus. Built for the African elite.</p>
-    </section>
+    <header class="hero-sector" id="initiate">
+        <div class="hero-bg"></div>
+        <div class="status-badge">SYSTEM SECURE // TOP 1% PROTOCOL</div>
+        <h1>ERADICATE WEAKNESS</h1>
+        <p class="hero-sub">Boys wait for permission. Men forge their own empires. The Wilson Vanguard is the definitive architectural blueprint for dominance in finance, physique, and absolute sovereignty.</p>
+        <a href="#capital" class="btn-primary">Initialize Transformation</a>
+    </header>
 
-    <section id="capital">
-        <span class="section-tag">/ CAPITAL.ARCHITECTURE</span>
-        <h2 class="section-title">The Financial Vault</h2>
-        <div class="vault-grid">
-            
-            <a href="https://www.youtube.com/watch?v=TUGOPWEWeMg" target="_blank" class="vault-item">
-                <div class="image-container">
-                    <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=2070&auto=format&fit=crop" alt="Architecture Concept">
-                    <div class="play-overlay"></div>
+    <section class="module" id="capital">
+        <div class="module-header">
+            <span class="module-id">// SEC-01 : WEALTH.GENERATION</span>
+            <h2 class="module-title">The Financial Arsenal</h2>
+        </div>
+        
+        <div class="arsenal-grid">
+            <a href="https://www.youtube.com/watch?v=TUGOPWEWeMg" target="_blank" class="data-card">
+                <div class="visual-feed">
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2071&auto=format&fit=crop" alt="Corporate Dominance">
+                    <div class="play-core"></div>
                 </div>
-                <div class="content-box">
+                <div class="intel-box">
                     <h3>Henry Musangi: Career Design</h3>
-                    <p>Strategic high-value career architectural legacy.</p>
+                    <p>Strategic deployment of high-value skills. Corporate ascension and architectural legacy building.</p>
                 </div>
             </a>
 
-            <a href="https://www.youtube.com/watch?v=i1ZDaLALITU" target="_blank" class="vault-item">
-                <div class="image-container">
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" alt="Real Estate">
-                    <div class="play-overlay"></div>
+            <a href="https://www.youtube.com/watch?v=i1ZDaLALITU" target="_blank" class="data-card">
+                <div class="visual-feed">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" alt="Real Estate Empire">
+                    <div class="play-core"></div>
                 </div>
-                <div class="content-box">
+                <div class="intel-box">
                     <h3>Leonard Mcharo: 11,000 Units</h3>
-                    <p>Mathematical precision in mass-scale real estate development.</p>
+                    <p>Brutal mathematical precision in mass-scale real estate development. Build the empire brick by brick.</p>
                 </div>
             </a>
-
         </div>
     </section>
 
-    <section id="focus">
-        <span class="section-tag">/ FOCUS.PROTOCOL</span>
-        <h2 class="section-title">Deep Work Chamber</h2>
-        <a href="https://youtu.be/Y-JQ-RCyPpQ?si=YBLfeBqXIMLEDtqi" target="_blank" class="focus-feature">
-            <div class="play-overlay" style="opacity: 1; transform: scale(1.5); background: rgba(0,0,0,0.8); position: relative; top: 0; left: 0;"></div>
-            <p style="margin-top: 40px; font-family: 'JetBrains Mono'; color: var(--gold-leaf); background: rgba(0,0,0,0.8); padding: 10px 20px; border: 1px solid var(--gold-leaf);">ACTIVATE: 4-HOUR DEEP FOCUS FREQUENCY</p>
-        </a>
+    <section class="isolation-chamber" id="focus">
+        <div class="isolation-bg"></div>
+        <div class="chamber-content">
+            <span class="module-id">// SEC-02 : MENTAL.FORTITUDE</span>
+            <h2 class="module-title" style="margin-bottom: 20px;">Deep Work Isolation</h2>
+            <p style="color: var(--text-dim); max-width: 600px; margin: 0 auto;">Distraction is the enemy of the masculine drive. Enter the hyper-focus state. No noise. No excuses. Only execution.</p>
+            <br>
+            <a href="https://youtu.be/Y-JQ-RCyPpQ?si=YBLfeBqXIMLEDtqi" target="_blank" class="pulse-btn">ENGAGE 4-HOUR FREQUENCY</a>
+        </div>
     </section>
 
-    <section id="baze" style="background: #020202;">
-        <span class="section-tag">/ SOCIAL.LOGISTICS</span>
-        <h2 class="section-title">The Brotherhood</h2>
-        <div class="vault-grid">
-            
-            <a href="https://www.youtube.com/watch?v=NEOCow9d1Kg" target="_blank" class="vault-item">
-                <div class="image-container">
-                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop" alt="Social High End">
-                    <div class="play-overlay"></div>
+    <section class="module" id="syndicate">
+        <div class="module-header">
+            <span class="module-id">// SEC-03 : BROTHERHOOD.DYNAMICS</span>
+            <h2 class="module-title">The Syndicate</h2>
+        </div>
+        
+        <div class="arsenal-grid">
+            <a href="https://www.youtube.com/watch?v=NEOCow9d1Kg" target="_blank" class="data-card">
+                <div class="visual-feed">
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop" alt="High End Network">
+                    <div class="play-core"></div>
                 </div>
-                <div class="content-box">
+                <div class="intel-box">
                     <h3>3 Men Army: The 97s</h3>
-                    <p>Modern masculine hierarchy and social dynamics.</p>
+                    <p>Establishing the inner circle. Modern masculine hierarchy, unbreakable loyalty, and elite social dynamics.</p>
                 </div>
             </a>
 
-            <a href="https://www.youtube.com/watch?v=Cdmgis-toZM" target="_blank" class="vault-item">
-                <div class="image-container">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop" alt="Leadership Professional">
-                    <div class="play-overlay"></div>
+            <a href="https://www.youtube.com/watch?v=Cdmgis-toZM" target="_blank" class="data-card">
+                <div class="visual-feed">
+                    <img src="https://images.unsplash.com/photo-1612413158316-d8050e50f3b0?q=80&w=2070&auto=format&fit=crop" alt="Leadership">
+                    <div class="play-core"></div>
                 </div>
-                <div class="content-box">
+                <div class="intel-box">
                     <h3>The Professional Man</h3>
-                    <p>Decorum and leadership in high-stakes environments.</p>
+                    <p>Ruthless decorum, stoic presence, and absolute leadership in high-stakes, volatile environments.</p>
                 </div>
             </a>
-
         </div>
     </section>
 
     <footer>
-        <div class="logo" style="opacity: 0.2;">WILSON.CORPS</div>
-        <p style="font-size: 0.5rem; letter-spacing: 10px; margin-top: 20px; color: #444;">SYSTEM DESIGNED FOR THE TOP 1%</p>
+        <div class="footer-logo">WILSON<span>VANGUARD</span></div>
+        <p class="sys-msg">PROTOCOL ONLINE. SEPARATING THE 1% FROM THE HERD.</p>
     </footer>
 
 </body>
 </html>
-
-
-
