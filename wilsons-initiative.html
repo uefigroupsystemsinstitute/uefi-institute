@@ -3,852 +3,575 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE LOGOS PROTOCOL | Order, Stoicism, Enterprise</title>
+    <title>ELEVATE YOUR GAME | The Apex Protocol</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&family=Oswald:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         /* ==========================================================================
-           1. CORE VARIABLES & STOIC/CLASSIC COLOR PALETTE
+           1. ENTERPRISE DESIGN SYSTEM & VARIABLES
            ========================================================================== */
         :root {
-            /* Architecture Colors */
-            --obsidian: #0A0A0B;
-            --onyx: #121214;
-            --slate: #1C1C1F;
-            --granite: #2A2A2E;
+            /* Masculine Palette: Navy, Charcoal, Deep Green, Gold */
+            --bg-primary: #0A0F16;
+            --bg-secondary: #131A26;
+            --bg-tertiary: #1E293B;
             
-            /* Accents */
-            --gold-leaf: #C5A059;
-            --gold-dim: #8B7344;
-            --crimson-blood: #7A1919;
-            --marble-white: #EAE6DF;
-            --parchment: #D4CFC4;
+            --accent-gold: #D4AF37;
+            --accent-gold-hover: #F3C94B;
+            --accent-green: #1B4332;
+            --accent-green-light: #2D6A4F;
+            --accent-blue: #0F3B6C;
+            --danger-red: #7F1D1D;
             
-            /* Typography */
-            --text-primary: #EAE6DF;
-            --text-secondary: #9CA3AF;
-            --text-dark: #121214;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --text-dark: #0F172A;
             
-            /* UI Elements */
-            --border-faint: rgba(197, 160, 89, 0.15);
-            --border-solid: rgba(197, 160, 89, 0.4);
-            --shadow-deep: 0 15px 35px -5px rgba(0, 0, 0, 0.9);
-            --shadow-glow: 0 0 25px rgba(197, 160, 89, 0.15);
+            --border-color: rgba(212, 175, 55, 0.2);
+            --border-solid: #334155;
             
-            /* Animation & Layout */
-            --transition-standard: 0.3s ease;
-            --transition-slow: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            --radius-sharp: 2px;
-            --radius-soft: 6px;
+            --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.15);
+            --shadow-depth: 0 10px 30px rgba(0, 0, 0, 0.8);
+            
+            --font-display: 'Oswald', sans-serif;
+            --font-body: 'Montserrat', sans-serif;
+            --font-mono: 'Roboto Mono', monospace;
+            
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* ==========================================================================
-           2. RESET & BASE TYPOGRAPHY
+           2. RESET & BASE
            ========================================================================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; font-size: 16px; }
+        
         body {
-            background-color: var(--obsidian);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-family: var(--font-body);
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Background Texture - Subtle Noise/Grain */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: -1;
-        }
-
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Cinzel', serif;
+            font-family: var(--font-display);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             font-weight: 700;
-            line-height: 1.2;
-            color: var(--marble-white);
         }
 
-        p { font-family: 'Lora', serif; font-size: 1.05rem; }
-        
         a { text-decoration: none; color: inherit; }
-        button { cursor: pointer; border: none; outline: none; background: none; font-family: inherit; }
-        
-        .gold-text { color: var(--gold-leaf); }
-        .crimson-text { color: var(--crimson-blood); }
+        button { cursor: pointer; border: none; font-family: inherit; }
+        img { max-width: 100%; height: auto; display: block; }
 
         /* ==========================================================================
            3. NAVIGATION ARCHITECTURE
            ========================================================================== */
-        .navbar {
-            position: fixed;
-            top: 0; width: 100%;
-            height: 80px;
-            background: rgba(10, 10, 11, 0.85);
+        .site-header {
+            position: fixed; top: 0; width: 100%; height: 80px;
+            background: rgba(10, 15, 22, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-faint);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 4%;
-            z-index: 1000;
-            transition: var(--transition-standard);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 9999;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%;
         }
 
-        .brand-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--gold-leaf);
+        .brand {
+            font-family: var(--font-display); font-size: 2rem;
+            color: var(--text-main); letter-spacing: 2px;
         }
+        .brand span { color: var(--accent-gold); }
 
-        .brand-logo svg {
-            width: 28px; height: 28px;
-            fill: var(--gold-leaf);
+        .nav-menu { display: flex; gap: 2rem; list-style: none; }
+        .nav-menu a {
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1.5px;
+            color: var(--text-muted); text-transform: uppercase;
+            transition: var(--transition-fast);
         }
+        .nav-menu a:hover { color: var(--accent-gold); }
 
-        .nav-links { display: flex; gap: 2.5rem; }
-
-        .nav-links li a {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-secondary);
-            transition: var(--transition-standard);
-            position: relative;
+        .btn-join {
+            background: var(--accent-gold); color: var(--bg-primary);
+            padding: 10px 24px; font-weight: 700; text-transform: uppercase;
+            border-radius: 2px; transition: var(--transition-smooth);
         }
-
-        .nav-links li a:hover { color: var(--marble-white); }
-        .nav-links li a::after {
-            content: ''; position: absolute;
-            bottom: -6px; left: 0;
-            width: 0; height: 1px;
-            background: var(--gold-leaf);
-            transition: var(--transition-standard);
-        }
-        .nav-links li a:hover::after { width: 100%; }
+        .btn-join:hover { background: var(--text-main); box-shadow: var(--shadow-glow); }
 
         /* ==========================================================================
-           4. HERO: CONFRONTING CHAOS
+           4. HERO SECTION (Mapped to image_592934.jpg concept)
            ========================================================================== */
         .hero {
+            padding-top: 120px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center;
-            padding: 120px 5% 60px;
-            position: relative;
+            background: linear-gradient(to bottom, rgba(10,15,22,0.4), var(--bg-primary)), url('image_592934.jpg') center/cover;
             border-bottom: 1px solid var(--border-solid);
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(10,10,11,0.2) 0%, rgba(10,10,11,1) 90%),
-                        url('https://images.unsplash.com/photo-1605493721389-980140785161?q=80&w=2070&auto=format&fit=crop'); /* Classic Statue/Architecture */
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-            filter: grayscale(80%) contrast(120%);
-        }
-
-        .hero-badge {
-            font-family: 'Inter', sans-serif;
-            color: var(--gold-leaf);
-            font-size: 0.75rem;
-            letter-spacing: 4px;
-            margin-bottom: 30px;
-            padding: 8px 16px;
-            border: 1px solid var(--border-faint);
-            text-transform: uppercase;
-            backdrop-filter: blur(5px);
-        }
-
-        .hero h1 {
-            font-size: clamp(3.5rem, 8vw, 6.5rem);
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 20px rgba(0,0,0,0.8);
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--parchment);
-            max-width: 700px;
-            margin-bottom: 50px;
-            font-style: italic;
-        }
-
-        .btn-primary {
-            padding: 16px 40px;
-            font-family: 'Cinzel', serif;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            background: transparent;
-            color: var(--gold-leaf);
-            border: 1px solid var(--gold-leaf);
-            position: relative;
-            overflow: hidden;
-            transition: var(--transition-slow);
-            z-index: 1;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: var(--gold-leaf);
-            transition: var(--transition-slow);
-            z-index: -1;
-        }
-
-        .btn-primary:hover::before { left: 0; }
-        .btn-primary:hover { color: var(--obsidian); box-shadow: var(--shadow-glow); }
-
-        /* ==========================================================================
-           5. SECTION ARCHITECTURE & HEADERS
-           ========================================================================== */
-        .section-container {
-            padding: 100px 5%;
-            background: var(--onyx);
             position: relative;
         }
-        
-        .section-container.alt-bg { background: var(--obsidian); border-top: 1px solid var(--border-faint); border-bottom: 1px solid var(--border-faint); }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 70px;
+        .hero h1 { font-size: clamp(3.5rem, 8vw, 7rem); line-height: 1; margin-bottom: 10px; }
+        .hero h1 span { color: var(--accent-gold); border-bottom: 4px solid var(--accent-gold); }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); letter-spacing: 4px; margin-bottom: 40px; text-transform: uppercase; font-weight: 500; }
+
+        .hero-actions { display: flex; gap: 20px; }
+        .btn-primary, .btn-secondary {
+            padding: 15px 40px; font-family: var(--font-display); font-size: 1.2rem;
+            text-transform: uppercase; letter-spacing: 1px; border-radius: 2px;
+            transition: var(--transition-smooth);
         }
-
-        .header-rune {
-            font-size: 2rem;
-            color: var(--gold-leaf);
-            margin-bottom: 10px;
-            opacity: 0.7;
-        }
-
-        .section-header h2 { font-size: 2.8rem; margin-bottom: 15px; }
-        .section-header p { color: var(--text-secondary); max-width: 650px; margin: 0 auto; font-family: 'Lora'; font-style: italic; }
+        .btn-primary { background: var(--accent-gold); color: var(--bg-primary); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: var(--shadow-glow); }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
 
         /* ==========================================================================
-           6. THE LOGOS DASHBOARD: RESPONSIBILITY & ORDER
+           5. THE FOUR PILLARS SECTION
            ========================================================================== */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            max-width: 1400px;
-            margin: 0 auto;
+        .section-wrapper { padding: 100px 5%; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 3rem; color: var(--text-main); display: inline-block; position: relative; }
+        .section-header h2::before, .section-header h2::after {
+            content: ''; position: absolute; top: 50%; width: 50px; height: 2px; background: var(--accent-gold);
+        }
+        .section-header h2::before { left: -70px; }
+        .section-header h2::after { right: -70px; }
+
+        .pillars-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
         }
 
-        /* Order vs Chaos Tracker (To-Do / Habit System) */
-        .order-panel {
-            background: var(--slate);
-            border: 1px solid var(--border-faint);
-            padding: 40px;
-            border-radius: var(--radius-sharp);
-            box-shadow: var(--shadow-deep);
-        }
-
-        .panel-title {
-            font-family: 'Cinzel'; font-size: 1.5rem; color: var(--gold-leaf);
-            border-bottom: 1px solid var(--border-faint); padding-bottom: 15px; margin-bottom: 25px;
-        }
-
-        .input-group { display: flex; margin-bottom: 25px; }
-        .input-group input {
-            flex-grow: 1; padding: 12px 15px;
-            background: var(--granite); border: 1px solid var(--border-faint);
-            color: var(--marble-white); font-family: 'Inter'; outline: none;
-        }
-        .input-group input:focus { border-color: var(--gold-leaf); }
-        .input-group button {
-            background: var(--gold-leaf); color: var(--obsidian);
-            padding: 0 20px; font-weight: bold; text-transform: uppercase; font-family: 'Inter'; letter-spacing: 1px;
-            transition: var(--transition-standard);
-        }
-        .input-group button:hover { background: var(--marble-white); }
-
-        .task-list { list-style: none; max-height: 400px; overflow-y: auto; padding-right: 10px; }
-        /* Custom Scrollbar */
-        .task-list::-webkit-scrollbar { width: 4px; }
-        .task-list::-webkit-scrollbar-track { background: var(--onyx); }
-        .task-list::-webkit-scrollbar-thumb { background: var(--gold-dim); }
-
-        .task-item {
-            background: var(--granite); padding: 15px; margin-bottom: 10px;
-            border-left: 3px solid var(--crimson-blood);
-            display: flex; justify-content: space-between; align-items: center;
-            transition: var(--transition-standard);
-        }
-        .task-item.completed { border-left-color: var(--gold-leaf); opacity: 0.6; }
-        .task-item.completed span { text-decoration: line-through; color: var(--text-secondary); }
-        .task-text { font-family: 'Lora'; font-size: 1rem; flex-grow: 1; margin-left: 15px; cursor: pointer; }
-        
-        .task-checkbox {
-            width: 20px; height: 20px; border: 1px solid var(--gold-leaf);
-            display: flex; justify-content: center; align-items: center; cursor: pointer;
-        }
-        .task-item.completed .task-checkbox::after {
-            content: '✓'; color: var(--gold-leaf); font-size: 0.8rem; font-weight: bold;
-        }
-        .task-delete { color: var(--text-secondary); cursor: pointer; font-size: 1.2rem; }
-        .task-delete:hover { color: var(--crimson-blood); }
-
-        /* The Stoic Library (Quotes & Wisdom) */
-        .wisdom-panel {
-            display: flex; flex-direction: column; gap: 30px;
-        }
-
-        .quote-display {
-            background: linear-gradient(145deg, var(--slate) 0%, var(--onyx) 100%);
+        .pillar-card {
+            background: var(--bg-secondary);
             border: 1px solid var(--border-solid);
-            padding: 50px;
-            position: relative;
-            min-height: 300px;
-            display: flex; flex-direction: column; justify-content: center;
-            box-shadow: var(--shadow-deep);
+            transition: var(--transition-smooth);
+            overflow: hidden;
+            display: flex; flex-direction: column;
         }
-        .quote-display::before {
-            content: '"'; position: absolute; top: 20px; left: 30px;
-            font-family: 'Cinzel'; font-size: 6rem; color: rgba(197, 160, 89, 0.1); line-height: 1;
-        }
-
-        #active-quote {
-            font-family: 'Lora'; font-size: 1.8rem; font-style: italic; color: var(--marble-white);
-            margin-bottom: 20px; line-height: 1.4; position: relative; z-index: 2;
-        }
-        #active-author {
-            font-family: 'Cinzel'; font-size: 1rem; color: var(--gold-leaf); text-align: right;
-            letter-spacing: 2px;
-        }
-
-        .quote-controls {
-            display: flex; justify-content: flex-end; gap: 15px; margin-top: 20px;
-        }
-        .btn-icon {
-            width: 40px; height: 40px; border: 1px solid var(--border-faint);
-            display: flex; justify-content: center; align-items: center; color: var(--text-secondary);
-            transition: var(--transition-standard); border-radius: 50%;
-        }
-        .btn-icon:hover { border-color: var(--gold-leaf); color: var(--gold-leaf); }
+        .pillar-card:hover { border-color: var(--accent-gold); transform: translateY(-5px); box-shadow: var(--shadow-depth); }
+        
+        .pillar-img { width: 100%; height: 250px; object-fit: cover; border-bottom: 2px solid var(--accent-gold); }
+        
+        .pillar-content { padding: 25px; text-align: center; flex-grow: 1; }
+        .pillar-content h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .pillar-content p { font-size: 0.9rem; color: var(--text-muted); }
 
         /* ==========================================================================
-           7. THE ENTERPRISE FORGE: COMPOUNDING EFFORT (Calculators)
+           6. CONTENT STRATEGY & WORKFLOW SECTION
            ========================================================================== */
-        .forge-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 50px;
-            max-width: 1400px; margin: 0 auto;
+        .strategy-container {
+            background: var(--bg-tertiary); padding: 60px; border-radius: 4px;
+            border-left: 4px solid var(--accent-gold); margin-bottom: 40px;
         }
 
-        .tool-card {
-            background: var(--obsidian);
-            border: 1px solid var(--border-faint);
-            padding: 40px; position: relative;
-            transition: var(--transition-slow);
-        }
-        .tool-card:hover { border-color: var(--gold-dim); transform: translateY(-5px); }
-
-        .tool-card h3 { color: var(--gold-leaf); font-size: 1.4rem; margin-bottom: 10px; }
-        .tool-card p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 30px; }
-
-        .calc-group { margin-bottom: 20px; }
-        .calc-group label {
-            display: block; font-family: 'Inter'; font-size: 0.75rem; text-transform: uppercase;
-            letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 8px;
-        }
-        .calc-group input {
-            width: 100%; padding: 12px; background: var(--granite); border: 1px solid var(--border-faint);
-            color: var(--marble-white); font-family: 'Inter'; font-size: 1rem; outline: none;
-        }
-        .calc-group input:focus { border-bottom: 2px solid var(--gold-leaf); }
-
-        .result-container {
-            margin-top: 30px; padding: 25px; background: var(--slate); border-left: 3px solid var(--gold-leaf);
-            text-align: center;
-        }
-        .result-val { font-family: 'Cinzel'; font-size: 2.5rem; color: var(--marble-white); }
-        .result-lbl { font-family: 'Inter'; font-size: 0.8rem; color: var(--gold-leaf); text-transform: uppercase; letter-spacing: 2px; }
+        .workflow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: var(--font-mono); font-size: 0.85rem; }
+        .data-table th, .data-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-solid); }
+        .data-table th { color: var(--accent-gold); text-transform: uppercase; }
+        .data-table tr:hover { background: rgba(255,255,255,0.02); }
 
         /* ==========================================================================
-           8. THE ARCHETYPES (Principles & Virtues)
+           7. MEDIA VAULT (YouTube & TikTok)
            ========================================================================== */
-        .virtue-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1400px; margin: 0 auto;
+        .media-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start; }
+        .video-wrapper {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+            border: 2px solid var(--border-solid); border-radius: 4px; background: #000;
         }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        .virtue-card {
-            background: var(--slate);
-            border: 1px solid transparent;
-            padding: 40px 30px;
-            text-align: center;
-            transition: var(--transition-slow);
+        .tiktok-container {
+            background: var(--bg-secondary); border: 1px solid var(--border-solid);
+            padding: 20px; border-radius: 4px; display: flex; justify-content: center;
         }
-        .virtue-card:hover {
-            border-color: var(--border-solid);
-            background: linear-gradient(to bottom, var(--granite), var(--slate));
-        }
-
-        .v-icon {
-            font-size: 2.5rem; margin-bottom: 20px; color: var(--gold-leaf);
-        }
-        .virtue-card h4 { font-size: 1.3rem; margin-bottom: 15px; }
-        .virtue-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
 
         /* ==========================================================================
-           9. FOOTER COMMAND CENTER
+           8. INTERACTIVE TOOLS (Pomodoro & Macro Calculator)
+           ========================================================================== */
+        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        
+        .tool-panel {
+            background: var(--bg-secondary); padding: 40px; border: 1px solid var(--border-solid);
+            text-align: center; position: relative;
+        }
+
+        .timer-display {
+            font-family: var(--font-mono); font-size: 5rem; font-weight: 700; color: var(--text-main);
+            margin: 20px 0; text-shadow: 0 0 20px rgba(211, 39, 39, 0.4);
+        }
+        
+        .form-group { text-align: left; margin-bottom: 20px; }
+        .form-group label { display: block; font-family: var(--font-display); color: var(--text-muted); margin-bottom: 5px; letter-spacing: 1px; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 12px; background: var(--bg-tertiary); border: 1px solid var(--border-solid);
+            color: var(--text-main); font-family: var(--font-body);
+        }
+        .form-group input:focus { outline: none; border-color: var(--accent-gold); }
+
+        .result-box {
+            margin-top: 20px; padding: 20px; background: var(--accent-green);
+            border-radius: 2px; font-weight: 700; font-size: 1.2rem; display: none;
+        }
+
+        /* ==========================================================================
+           9. FOOTER
            ========================================================================== */
         footer {
-            background: #000;
-            padding: 80px 5% 30px;
-            border-top: 1px solid var(--border-solid);
+            background: #05080C; padding: 80px 5% 40px; border-top: 1px solid var(--border-solid);
         }
-        .footer-content {
-            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 60px; max-width: 1400px; margin: 0 auto; margin-bottom: 60px;
-        }
-        .footer-brand p { color: var(--text-secondary); margin-top: 20px; font-size: 0.9rem; }
-        
-        .footer-links h5 { color: var(--gold-leaf); margin-bottom: 20px; font-size: 1.1rem; }
-        .footer-links ul { list-style: none; }
-        .footer-links li { margin-bottom: 12px; }
-        .footer-links a { font-family: 'Inter'; font-size: 0.85rem; color: var(--text-secondary); transition: var(--transition-standard); text-transform: uppercase; letter-spacing: 1px; }
-        .footer-links a:hover { color: var(--marble-white); padding-left: 5px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: var(--accent-gold); margin-bottom: 20px; font-size: 1.2rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul a { color: var(--text-muted); font-size: 0.9rem; transition: 0.2s; }
+        .footer-col ul a:hover { color: var(--text-main); padding-left: 5px; }
 
-        .copyright {
-            text-align: center; padding-top: 30px; border-top: 1px solid var(--granite);
-            font-family: 'Inter'; font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
+        @media (max-width: 992px) {
+            .media-grid, .tools-grid, .workflow-grid { grid-template-columns: 1fr; }
+            .nav-menu { display: none; }
             .hero h1 { font-size: 4rem; }
-            .footer-content { grid-template-columns: 1fr; text-align: center; }
-            .footer-links a:hover { padding-left: 0; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar" id="navbar">
-        <a href="#" class="brand-logo">
-            <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 3.5l7 14h-14L12 5.5z"/></svg>
-            THE LOGOS
-        </a>
-        <ul class="nav-links">
-            <li><a href="#order">Establish Order</a></li>
-            <li><a href="#wisdom">Stoic Mind</a></li>
-            <li><a href="#enterprise">The Forge</a></li>
-            <li><a href="#virtues">Core Principles</a></li>
+    <nav class="site-header">
+        <a href="#" class="brand">APEX<span>PROTOCOL</span></a>
+        <ul class="nav-menu">
+            <li><a href="#pillars">The 4 Pillars</a></li>
+            <li><a href="#strategy">Strategy & Workflow</a></li>
+            <li><a href="#vault">Media Vault</a></li>
+            <li><a href="#tools">Mastery Tools</a></li>
         </ul>
+        <button class="btn-join">Join Brotherhood</button>
     </nav>
 
     <header class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-badge">Responsibility is the meaning of life</div>
-        <h1>Confront the Chaos</h1>
-        <p>"You must determine where you are going, so that you can bargain for yourself, so that you don't end up a resentful, vengeful, bitter beast."</p>
-        <button class="btn-primary" onclick="document.getElementById('order').scrollIntoView();">Clean Your Room First</button>
+        <h1>ELEVATE <span>YOUR GAME</span></h1>
+        <p>Transform your life. Master your potential.</p>
+        <div class="hero-actions">
+            <button class="btn-primary" onclick="document.getElementById('pillars').scrollIntoView();">Get Started</button>
+            <button class="btn-secondary" onclick="document.getElementById('vault').scrollIntoView();">Watch Intro</button>
+        </div>
     </header>
 
-    <section class="section-container" id="order">
+    <section id="pillars" class="section-wrapper">
         <div class="section-header">
-            <div class="header-rune">♅</div>
-            <h2>Architecture of Being</h2>
-            <p>Order is the explored territory. Chaos is the unknown. Map your territory by establishing local order before you attempt to restructure the world.</p>
+            <h2>THE FOUR PILLARS OF SUCCESS</h2>
         </div>
-
-        <div class="dashboard-grid">
-            <div class="order-panel">
-                <h3 class="panel-title">Micro-Order (Local Domain)</h3>
-                <div class="input-group">
-                    <input type="text" id="taskInput" placeholder="Define a responsibility... (e.g., Organize workspace)">
-                    <button onclick="addTask()">Enact</button>
+        <div class="pillars-grid">
+            
+            <div class="pillar-card">
+                <img src="image_592934.jpg" alt="Financial Freedom" class="pillar-img" style="object-position: top left;">
+                <div class="pillar-content">
+                    <h3>Financial Freedom</h3>
+                    <p>Build Wealth & Achieve Success. Master investing, trading, entrepreneurship, and exponential career growth.</p>
                 </div>
-                <ul class="task-list" id="taskList">
-                    </ul>
             </div>
 
-            <div class="wisdom-panel" id="wisdom">
-                <div class="quote-display">
-                    <div id="active-quote">"He who has a why to live for can bear almost any how."</div>
-                    <div id="active-author">- Friedrich Nietzsche</div>
+            <div class="pillar-card">
+                <img src="image_58b0d4.png" alt="Peak Physicality" class="pillar-img">
+                <div class="pillar-content">
+                    <h3>Peak Physicality</h3>
+                    <p>Get Strong & Fit. Actionable workout programs tailored for strength, endurance, and elite aesthetics.</p>
                 </div>
-                <div class="quote-controls">
-                    <button class="btn-icon" onclick="prevQuote()" title="Previous Insight">&#8592;</button>
-                    <button class="btn-icon" onclick="randomQuote()" title="Chaos (Random)">&#8635;</button>
-                    <button class="btn-icon" onclick="nextQuote()" title="Next Insight">&#8594;</button>
+            </div>
+
+            <div class="pillar-card">
+                <img src="image_585ed8.png" alt="Mental Toughness" class="pillar-img">
+                <div class="pillar-content">
+                    <h3>Mental Toughness</h3>
+                    <p>Sharpen Your Mindset. Cultivate discipline, focus, emotional intelligence, and relentless resilience.</p>
                 </div>
+            </div>
+
+            <div class="pillar-card">
+                <img src="image_585e41.png" alt="Social Mastery" class="pillar-img">
+                <div class="pillar-content">
+                    <h3>Social Mastery</h3>
+                    <p>Excel in Communication. Elite lessons on leadership, networking, boundaries, and high-value relationships.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="strategy" class="section-wrapper" style="background: var(--bg-secondary);">
+        <div class="section-header">
+            <h2>STRATEGIC BLUEPRINT</h2>
+        </div>
+        
+        <div class="workflow-grid">
+            <div class="strategy-container">
+                <h3 style="color: var(--accent-gold); margin-bottom: 20px; font-size: 1.8rem;"><i class="fas fa-chess-knight"></i> Content Strategy Blueprint</h3>
+                <p style="margin-bottom: 15px; color: var(--text-muted);">Designed to build authority, engagement, and long-term loyalty across the four growth pillars.</p>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div class="order-panel" style="padding: 25px;">
-                        <h4 style="font-size: 1.1rem; color: var(--gold-leaf); margin-bottom: 10px;">Rule 01</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Stand up straight with your shoulders back. Accept the terrible responsibility of life with eyes wide open.</p>
-                    </div>
-                    <div class="order-panel" style="padding: 25px;">
-                        <h4 style="font-size: 1.1rem; color: var(--gold-leaf); margin-bottom: 10px;">Amor Fati</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Do not seek for things to happen the way you want them to; rather, wish that what happens happen the way it happens.</p>
-                    </div>
+                <h4 style="margin-top: 20px; border-bottom: 1px solid var(--border-solid); padding-bottom: 5px;">💼 Financial Transformation</h4>
+                <ul style="list-style: square; margin-left: 20px; color: var(--text-muted); font-size: 0.95rem;">
+                    <li>Money Mastery Series: Investing, trading, business building.</li>
+                    <li>Career Acceleration Guides: Promotions, negotiation, leadership.</li>
+                </ul>
+
+                <h4 style="margin-top: 20px; border-bottom: 1px solid var(--border-solid); padding-bottom: 5px;">🏋️ Physical Transformation</h4>
+                <ul style="list-style: square; margin-left: 20px; color: var(--text-muted); font-size: 0.95rem;">
+                    <li>Workout Programs: Strength, endurance, physique plans.</li>
+                    <li>Nutrition Blueprints: Meal plans, supplement reviews.</li>
+                </ul>
+
+                <h4 style="margin-top: 20px; border-bottom: 1px solid var(--border-solid); padding-bottom: 5px;">🧠 Mental Transformation</h4>
+                <ul style="list-style: square; margin-left: 20px; color: var(--text-muted); font-size: 0.95rem;">
+                    <li>Mindset Mastery: Discipline, focus, emotional control.</li>
+                    <li>Resilience Training: Stress management exercises.</li>
+                </ul>
+            </div>
+
+            <div class="strategy-container">
+                <h3 style="color: var(--accent-gold); margin-bottom: 20px; font-size: 1.8rem;"><i class="fas fa-cogs"></i> Production Workflow</h3>
+                <p style="margin-bottom: 15px; color: var(--text-muted);">A structured system to keep output consistent, high-quality, and aligned with the mission.</p>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Day</th><th>Task</th><th>Output Target</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Monday</td><td>Research & Outline</td><td>Draft article or video script</td></tr>
+                        <tr><td>Tuesday</td><td>Create Visuals</td><td>Design thumbnails, infographics</td></tr>
+                        <tr><td>Wednesday</td><td>Record & Edit</td><td>Produce video or podcast</td></tr>
+                        <tr><td>Thursday</td><td>Publish & Promote</td><td>Upload content + social posts</td></tr>
+                        <tr><td>Friday</td><td>Engage Community</td><td>Host live Q&A or challenge</td></tr>
+                        <tr><td>Sunday</td><td>Review Analytics</td><td>Adjust next week’s plan</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px;">
+            <img src="image_585eb8.png" alt="Mental Resilience Strategies" style="border: 1px solid var(--border-solid); border-radius: 4px;">
+            <img src="image_58b095.jpg" alt="Nutrition Guide" style="border: 1px solid var(--border-solid); border-radius: 4px;">
+            <img src="image_585ef9.jpg" alt="10 Minute Workout" style="border: 1px solid var(--border-solid); border-radius: 4px;">
+        </div>
+    </section>
+
+    <section id="vault" class="section-wrapper">
+        <div class="section-header">
+            <h2>THE MEDIA VAULT</h2>
+        </div>
+        
+        <div class="media-grid">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <h3 style="color: var(--accent-gold);"><i class="fab fa-youtube"></i> Masterclass Lecture</h3>
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/j2aZW8F-v8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+                <p style="color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem;">Status: Online // Topic: High-Value Masculine Transformation</p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <h3 style="color: var(--accent-gold);"><i class="fab fa-tiktok"></i> Daily Motivation Feed</h3>
+                <div class="tiktok-container">
+                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@tonystephenssr/video/7618610698070805773" data-video-id="7618610698070805773" style="max-width: 605px;min-width: 325px; margin: 0;">
+                        <section>
+                            <a target="_blank" title="@tonystephenssr" href="https://www.tiktok.com/@tonystephenssr?refer=embed">@tonystephenssr</a>
+                        </section>
+                    </blockquote>
+                    <script async src="https://www.tiktok.com/embed.js"></script>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section-container alt-bg" id="enterprise">
+    <section id="tools" class="section-wrapper" style="background: var(--bg-secondary);">
         <div class="section-header">
-            <div class="header-rune">⚒</div>
-            <h2>The Entrepreneur's Forge</h2>
-            <p>Value creation is the ultimate manifestation of competence. Calculate the trajectory of your disciplined sacrifices over time.</p>
+            <h2>MASTERY TOOLS</h2>
         </div>
 
-        <div class="forge-grid">
-            <div class="tool-card">
-                <h3>The Asymmetry Engine</h3>
-                <p>Calculate the compounding effect of consistent capital allocation and disciplined investing over a prolonged timeframe.</p>
+        <div class="tools-grid">
+            
+            <div class="tool-panel">
+                <img src="image_585e62.png" alt="Pomodoro Science" style="width: 100%; margin-bottom: 20px; border: 1px solid var(--border-solid);">
+                <h3 style="color: var(--accent-gold); margin-bottom: 10px;">Deep Work Protocol</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Mitigate distractions. Boost Dopamine. Engage Focus Mode.</p>
                 
-                <div class="calc-group">
-                    <label>Initial Capital Base ($)</label>
-                    <input type="number" id="inv-initial" value="5000">
-                </div>
-                <div class="calc-group">
-                    <label>Monthly Sacrificial Allocation ($)</label>
-                    <input type="number" id="inv-monthly" value="500">
-                </div>
-                <div class="calc-group">
-                    <label>Expected Annual Return (%)</label>
-                    <input type="number" id="inv-rate" value="8">
-                </div>
-                <div class="calc-group">
-                    <label>Time Horizon (Years)</label>
-                    <input type="number" id="inv-years" value="10">
-                </div>
+                <div class="timer-display" id="time-display">25:00</div>
                 
-                <button class="btn-primary" style="width: 100%; margin-top: 15px;" onclick="calculateCompound()">Project Future Order</button>
-                
-                <div class="result-container">
-                    <div class="result-val" id="inv-result">$0</div>
-                    <div class="result-lbl">Projected Asset Value</div>
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <button class="btn-primary" id="start-btn" onclick="startPomodoro()">Engage</button>
+                    <button class="btn-secondary" id="reset-btn" onclick="resetPomodoro()">Reset</button>
                 </div>
             </div>
 
-            <div class="tool-card">
-                <h3>The Competence Metric</h3>
-                <p>Monetize your skill acquisition. Determine the future hourly value of your specialized knowledge based on deep work hours.</p>
-                
-                <div class="calc-group">
-                    <label>Current Hourly Value ($)</label>
-                    <input type="number" id="skill-current" value="25">
-                </div>
-                <div class="calc-group">
-                    <label>Deep Work Hours per Week</label>
-                    <input type="number" id="skill-hours" value="10">
-                </div>
-                <div class="calc-group">
-                    <label>Skill Value Growth Rate (% per 100 hrs)</label>
-                    <input type="number" id="skill-growth" value="5">
-                </div>
-                <div class="calc-group">
-                    <label>Timeline (Months)</label>
-                    <input type="number" id="skill-months" value="12">
+            <div class="tool-panel">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                    <h3 style="color: var(--accent-gold);">Physical Forging Engine</h3>
+                    <i class="fas fa-dumbbell" style="font-size: 2rem; color: var(--text-muted);"></i>
                 </div>
                 
-                <button class="btn-primary" style="width: 100%; margin-top: 15px;" onclick="calculateSkill()">Project Competence Value</button>
+                <div class="form-group">
+                    <label>Weight (lbs)</label>
+                    <input type="number" id="calc-weight" placeholder="e.g. 185">
+                </div>
+                <div class="form-group">
+                    <label>Goal</label>
+                    <select id="calc-goal">
+                        <option value="cut">Fat Loss (Cut)</option>
+                        <option value="maintain">Maintenance</option>
+                        <option value="bulk">Muscle Gain (Bulk)</option>
+                    </select>
+                </div>
                 
-                <div class="result-container">
-                    <div class="result-val" id="skill-result">$0</div>
-                    <div class="result-lbl">Future Hourly Valuation</div>
+                <button class="btn-primary" style="width: 100%; margin-top: 10px;" onclick="calculateMacros()">Calculate Protocol</button>
+                
+                <div class="result-box" id="macro-result">
+                    </div>
+                
+                <div style="margin-top: 20px; border-top: 1px solid var(--border-solid); padding-top: 20px; text-align: left;">
+                    <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Coaching vs Disciplining</h4>
+                    <img src="image_585e83.png" alt="Coaching vs Disciplining" style="border-radius: 4px; width: 100%;">
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section class="section-container" id="virtues">
-        <div class="section-header">
-            <div class="header-rune">♜</div>
-            <h2>Pillars of Character</h2>
-            <p>The foundation of the individual. Adopt these to fortify the mind against tragedy and malevolence.</p>
-        </div>
-
-        <div class="virtue-grid">
-            <div class="virtue-card">
-                <div class="v-icon">👁</div>
-                <h4>Tell the Truth</h4>
-                <p>Or, at least, don't lie. Falsehood corrupts the structure of reality. Speech is the mechanism by which we bring order out of chaos.</p>
-            </div>
-            <div class="virtue-card">
-                <div class="v-icon">⚖</div>
-                <h4>Dichotomy of Control</h4>
-                <p>Focus your energy entirely on what is within your absolute control: your thoughts, your actions, and your responses. Abandon the rest.</p>
-            </div>
-            <div class="virtue-card">
-                <div class="v-icon">⚔</div>
-                <h4>Slay the Dragon</h4>
-                <p>Do not hide the things you are afraid of in the fog. Make the implicit explicit. Confront the anomaly willingly and extract the gold.</p>
-            </div>
-            <div class="virtue-card">
-                <div class="v-icon">⌛</div>
-                <h4>Memento Mori</h4>
-                <p>Remember that you must die. Let this fact not cause despair, but supreme urgency. Act precisely and do not waste the present moment.</p>
-            </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <div class="brand-logo">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 3.5l7 14h-14L12 5.5z"/></svg>
-                    THE LOGOS
-                </div>
-                <p>Forge your character. Build your enterprise. Speak the truth. The world requires your absolute best.</p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h2 style="font-family: var(--font-display); color: var(--text-main); font-size: 1.8rem; margin-bottom: 10px;">APEX<span style="color: var(--accent-gold);">PROTOCOL</span></h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">The ultimate architecture for masculine development. Transforming lives through financial, physical, mental, and social discipline.</p>
             </div>
-            <div class="footer-links">
-                <h5>Core Philosophies</h5>
+            <div class="footer-col">
+                <h4>Core Pillars</h4>
                 <ul>
-                    <li><a href="#">The 12 Rules</a></li>
-                    <li><a href="#">Meditations of Aurelius</a></li>
-                    <li><a href="#">Letters of Seneca</a></li>
-                    <li><a href="#">Enchiridion of Epictetus</a></li>
+                    <li><a href="#">Financial Freedom</a></li>
+                    <li><a href="#">Peak Physicality</a></li>
+                    <li><a href="#">Mental Toughness</a></li>
+                    <li><a href="#">Social Mastery</a></li>
                 </ul>
             </div>
-            <div class="footer-links">
-                <h5>Operational Protocols</h5>
+            <div class="footer-col">
+                <h4>Community</h4>
                 <ul>
-                    <li><a href="#">Deep Work Blueprints</a></li>
-                    <li><a href="#">Asset Allocation</a></li>
-                    <li><a href="#">Risk Asymmetry</a></li>
-                    <li><a href="#">Meaning & Responsibility</a></li>
+                    <li><a href="#">The Brotherhood Forum</a></li>
+                    <li><a href="#">Live Mentorship</a></li>
+                    <li><a href="#">Success Stories</a></li>
+                    <li><a href="#">Daily Challenges</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal & Support</h4>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact Support</a></li>
                 </ul>
             </div>
         </div>
-        <div class="copyright">
-            &copy; 2026 THE LOGOS PROTOCOL. BUILT FOR THOSE WHO BEAR THE LOAD.
+        <div style="text-align: center; border-top: 1px solid var(--border-solid); padding-top: 20px; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8rem;">
+            &copy; 2026 THE APEX PROTOCOL. ENGINEERED FOR EXCELLENCE. ALL RIGHTS RESERVED.
         </div>
     </footer>
 
     <script>
-        /* --- Navbar Scroll Effect --- */
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if(window.scrollY > 50) {
-                nav.style.background = 'rgba(10, 10, 11, 0.98)';
-                nav.style.boxShadow = '0 5px 20px rgba(0,0,0,0.5)';
+        /* ==========================================
+           POMODORO TIMER LOGIC
+           ========================================== */
+        let timer;
+        let timeLeft = 25 * 60; // 25 minutes
+        let isRunning = false;
+
+        function updateDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById('time-display').innerText = 
+                (minutes < 10 ? "0" : "") + minutes + ":" + 
+                (seconds < 10 ? "0" : "") + seconds;
+        }
+
+        function startPomodoro() {
+            if (isRunning) return;
+            isRunning = true;
+            document.getElementById('start-btn').innerText = "Working...";
+            document.getElementById('start-btn').style.background = "var(--danger-red)";
+            
+            timer = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timer);
+                    isRunning = false;
+                    alert("Focus session complete. Take a 5 minute break.");
+                    resetPomodoro();
+                }
+            }, 1000);
+        }
+
+        function resetPomodoro() {
+            clearInterval(timer);
+            isRunning = false;
+            timeLeft = 25 * 60;
+            updateDisplay();
+            document.getElementById('start-btn').innerText = "Engage";
+            document.getElementById('start-btn').style.background = "var(--accent-gold)";
+        }
+
+        /* ==========================================
+           MACRO CALCULATOR LOGIC
+           ========================================== */
+        function calculateMacros() {
+            const weight = parseFloat(document.getElementById('calc-weight').value);
+            const goal = document.getElementById('calc-goal').value;
+            const resBox = document.getElementById('macro-result');
+
+            if (isNaN(weight) || weight <= 0) {
+                resBox.style.display = "block";
+                resBox.style.background = "var(--danger-red)";
+                resBox.innerHTML = "Error: Input valid body weight.";
+                return;
+            }
+
+            // Simple Bodybuilding Baseline Formula
+            let calories = 0;
+            let protein = weight * 1.1; // 1.1g per lb
+            let fats = weight * 0.4;    // 0.4g per lb
+            let carbs = 0;
+
+            if (goal === 'cut') {
+                calories = weight * 11;
+            } else if (goal === 'maintain') {
+                calories = weight * 14;
             } else {
-                nav.style.background = 'rgba(10, 10, 11, 0.85)';
-                nav.style.boxShadow = 'none';
+                calories = weight * 17;
             }
-        });
 
-        /* --- Responsibility Tracker Logic (Clean Your Room) --- */
-        const initialTasks = [
-            { id: 1, text: "Clean your room (Establish local order)", completed: false },
-            { id: 2, text: "Define daily micro-goals", completed: true },
-            { id: 3, text: "Read 10 pages of a difficult book", completed: false },
-            { id: 4, text: "Engage in 60 mins of Deep Work", completed: false }
-        ];
+            // Remaining calories to carbs (Protein = 4cal, Fat = 9cal, Carbs = 4cal)
+            let proteinCals = protein * 4;
+            let fatCals = fats * 9;
+            carbs = (calories - (proteinCals + fatCals)) / 4;
 
-        let tasks = [...initialTasks];
-
-        function renderTasks() {
-            const list = document.getElementById('taskList');
-            list.innerHTML = '';
-            
-            tasks.forEach(task => {
-                const li = document.createElement('li');
-                li.className = `task-item ${task.completed ? 'completed' : ''}`;
-                
-                li.innerHTML = `
-                    <div class="task-checkbox" onclick="toggleTask(${task.id})"></div>
-                    <span class="task-text" onclick="toggleTask(${task.id})">${task.text}</span>
-                    <span class="task-delete" onclick="deleteTask(${task.id})">&times;</span>
-                `;
-                list.appendChild(li);
-            });
+            resBox.style.display = "block";
+            resBox.style.background = "var(--accent-green)";
+            resBox.innerHTML = `
+                <div style="font-family: var(--font-mono); font-size: 0.9rem;">
+                    <div>TARGET: <span style="color:var(--bg-primary);">${Math.round(calories)} KCAL</span></div>
+                    <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.2); margin: 10px 0;">
+                    <div>PROTEIN: ${Math.round(protein)}g</div>
+                    <div>CARBS: ${Math.round(carbs)}g</div>
+                    <div>FATS: ${Math.round(fats)}g</div>
+                </div>
+            `;
         }
-
-        function addTask() {
-            const input = document.getElementById('taskInput');
-            const text = input.value.trim();
-            if(text === '') return;
-            
-            tasks.push({
-                id: Date.now(),
-                text: text,
-                completed: false
-            });
-            
-            input.value = '';
-            renderTasks();
-        }
-
-        function toggleTask(id) {
-            tasks = tasks.map(t => {
-                if(t.id === id) t.completed = !t.completed;
-                return t;
-            });
-            renderTasks();
-        }
-
-        function deleteTask(id) {
-            tasks = tasks.filter(t => t.id !== id);
-            renderTasks();
-        }
-
-        // Initialize Tasks
-        document.getElementById('taskInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') addTask();
-        });
-        renderTasks();
-
-
-        /* --- The Stoic & Peterson Library (Wisdom Engine) --- */
-        const wisdomData = [
-            { quote: "He who has a why to live for can bear almost any how.", author: "Friedrich Nietzsche" },
-            { quote: "To suffer terribly and to know yourself as the cause: that is Hell.", author: "Jordan B. Peterson" },
-            { quote: "You have power over your mind - not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius" },
-            { quote: "Compare yourself to who you were yesterday, not to who someone else is today.", author: "Jordan B. Peterson" },
-            { quote: "We suffer more often in imagination than in reality.", author: "Seneca" },
-            { quote: "Don't explain your philosophy. Embody it.", author: "Epictetus" },
-            { quote: "If you don't say what you think then you kill your unborn self.", author: "Jordan B. Peterson" },
-            { quote: "Waste no more time arguing what a good man should be. Be one.", author: "Marcus Aurelius" },
-            { quote: "The purpose of life is finding the largest burden that you can bear and bearing it.", author: "Jordan B. Peterson" },
-            { quote: "No man is free who is not master of himself.", author: "Epictetus" }
-        ];
-
-        let quoteIndex = 0;
-
-        function updateQuoteDisplay() {
-            const quoteEl = document.getElementById('active-quote');
-            const authorEl = document.getElementById('active-author');
-            
-            // Fade out
-            quoteEl.style.opacity = 0;
-            authorEl.style.opacity = 0;
-            
-            setTimeout(() => {
-                quoteEl.innerText = `"${wisdomData[quoteIndex].quote}"`;
-                authorEl.innerText = `- ${wisdomData[quoteIndex].author}`;
-                // Fade in
-                quoteEl.style.opacity = 1;
-                authorEl.style.opacity = 1;
-                quoteEl.style.transition = 'opacity 0.5s ease';
-                authorEl.style.transition = 'opacity 0.5s ease';
-            }, 300);
-        }
-
-        function nextQuote() {
-            quoteIndex = (quoteIndex + 1) % wisdomData.length;
-            updateQuoteDisplay();
-        }
-
-        function prevQuote() {
-            quoteIndex = (quoteIndex - 1 + wisdomData.length) % wisdomData.length;
-            updateQuoteDisplay();
-        }
-
-        function randomQuote() {
-            let newIndex = quoteIndex;
-            while(newIndex === quoteIndex) {
-                newIndex = Math.floor(Math.random() * wisdomData.length);
-            }
-            quoteIndex = newIndex;
-            updateQuoteDisplay();
-        }
-
-
-        /* --- The Enterprise Forge Calculators --- */
-        
-        // Compound Interest Calculator
-        function calculateCompound() {
-            const P = parseFloat(document.getElementById('inv-initial').value) || 0;
-            const PMT = parseFloat(document.getElementById('inv-monthly').value) || 0;
-            const r = (parseFloat(document.getElementById('inv-rate').value) || 0) / 100 / 12;
-            const t = (parseFloat(document.getElementById('inv-years').value) || 0) * 12;
-            
-            let futureValue = 0;
-            if (r === 0) {
-                futureValue = P + (PMT * t);
-            } else {
-                futureValue = P * Math.pow(1 + r, t) + PMT * ((Math.pow(1 + r, t) - 1) / r);
-            }
-            
-            const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(futureValue);
-            
-            animateResult('inv-result', formatted);
-        }
-
-        // Skill Value Calculator
-        function calculateSkill() {
-            const currentVal = parseFloat(document.getElementById('skill-current').value) || 0;
-            const hoursPerWeek = parseFloat(document.getElementById('skill-hours').value) || 0;
-            const growthRate = (parseFloat(document.getElementById('skill-growth').value) || 0) / 100;
-            const months = parseFloat(document.getElementById('skill-months').value) || 0;
-            
-            // Total deep work hours over timeline
-            const totalHours = hoursPerWeek * 4.33 * months;
-            
-            // Growth compounds every 100 hours of deep work
-            const growthCycles = totalHours / 100;
-            
-            const futureVal = currentVal * Math.pow(1 + growthRate, growthCycles);
-            
-            const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(futureVal) + " / hr";
-            
-            animateResult('skill-result', formatted);
-        }
-
-        // Reusable Animation for Results
-        function animateResult(elementId, value) {
-            const el = document.getElementById(elementId);
-            el.parentElement.style.transform = 'scale(1.05)';
-            el.parentElement.style.boxShadow = '0 0 25px rgba(197, 160, 89, 0.3)';
-            el.parentElement.style.transition = 'all 0.3s ease';
-            
-            setTimeout(() => {
-                el.innerText = value;
-                el.parentElement.style.transform = 'scale(1)';
-                el.parentElement.style.boxShadow = 'none';
-            }, 200);
-        }
-
-        // Init calculations on load
-        window.onload = () => {
-            calculateCompound();
-            calculateSkill();
-        };
-
     </script>
 </body>
 </html>
