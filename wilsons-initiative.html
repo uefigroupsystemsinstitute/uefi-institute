@@ -3,51 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WILSON VANGUARD | The Apex Transformation Protocol</title>
+    <title>THE LOGOS PROTOCOL | Order, Stoicism, Enterprise</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Roboto+Mono:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
     
     <style>
         /* ==========================================================================
-           1. CORE VARIABLES & ACCESSIBLE COLOR PALETTE (Navy, Charcoal, Deep Green)
+           1. CORE VARIABLES & STOIC/CLASSIC COLOR PALETTE
            ========================================================================== */
         :root {
-            /* Primary Colors */
-            --charcoal-base: #12151C;
-            --charcoal-light: #1E232E;
-            --charcoal-lighter: #2A303F;
+            /* Architecture Colors */
+            --obsidian: #0A0A0B;
+            --onyx: #121214;
+            --slate: #1C1C1F;
+            --granite: #2A2A2E;
             
-            --navy-deep: #0A1931;
-            --navy-accent: #15305B;
-            --navy-highlight: #1E4482;
+            /* Accents */
+            --gold-leaf: #C5A059;
+            --gold-dim: #8B7344;
+            --crimson-blood: #7A1919;
+            --marble-white: #EAE6DF;
+            --parchment: #D4CFC4;
             
-            --green-tactical: #1B4332;
-            --green-success: #2D6A4F;
-            --green-neon: #40916C;
-            
-            --gold-elite: #D4AF37;
-            --gold-dim: #AA8C2C;
-            
-            /* Text & Visibility (High Contrast) */
-            --text-main: #E2E8F0;
-            --text-muted: #94A3B8;
-            --text-dark: #0F172A;
-            --white: #FFFFFF;
+            /* Typography */
+            --text-primary: #EAE6DF;
+            --text-secondary: #9CA3AF;
+            --text-dark: #121214;
             
             /* UI Elements */
-            --border-subtle: rgba(226, 232, 240, 0.1);
-            --border-active: rgba(226, 232, 240, 0.3);
-            --shadow-core: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
-            --shadow-glow: 0 0 20px rgba(45, 106, 79, 0.4);
+            --border-faint: rgba(197, 160, 89, 0.15);
+            --border-solid: rgba(197, 160, 89, 0.4);
+            --shadow-deep: 0 15px 35px -5px rgba(0, 0, 0, 0.9);
+            --shadow-glow: 0 0 25px rgba(197, 160, 89, 0.15);
             
-            /* Layout & Transitions */
-            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 16px;
+            /* Animation & Layout */
+            --transition-standard: 0.3s ease;
+            --transition-slow: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            --radius-sharp: 2px;
+            --radius-soft: 6px;
         }
 
         /* ==========================================================================
@@ -65,28 +60,40 @@
         }
 
         body {
-            background-color: var(--charcoal-base);
-            color: var(--text-main);
-            font-family: 'Montserrat', sans-serif;
+            background-color: var(--obsidian);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.2;
-            color: var(--white);
+        /* Background Texture - Subtle Noise/Grain */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
         }
 
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--marble-white);
+        }
+
+        p { font-family: 'Lora', serif; font-size: 1.05rem; }
+        
         a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
         button { cursor: pointer; border: none; outline: none; background: none; font-family: inherit; }
         
-        .accent-text { color: var(--gold-elite); }
-        .green-text { color: var(--green-neon); }
+        .gold-text { color: var(--gold-leaf); }
+        .crimson-text { color: var(--crimson-blood); }
 
         /* ==========================================================================
            3. NAVIGATION ARCHITECTURE
@@ -94,902 +101,754 @@
         .navbar {
             position: fixed;
             top: 0; width: 100%;
-            height: 90px;
-            background: rgba(18, 21, 28, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-subtle);
+            height: 80px;
+            background: rgba(10, 10, 11, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-faint);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 5%;
+            padding: 0 4%;
             z-index: 1000;
+            transition: var(--transition-standard);
         }
 
         .brand-logo {
-            font-size: 2rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
             font-weight: 900;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            color: var(--gold-leaf);
         }
 
         .brand-logo svg {
-            width: 35px; height: 35px;
-            fill: var(--gold-elite);
+            width: 28px; height: 28px;
+            fill: var(--gold-leaf);
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
+        .nav-links { display: flex; gap: 2.5rem; }
 
         .nav-links li a {
-            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            transition: var(--transition-smooth);
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            transition: var(--transition-standard);
             position: relative;
         }
 
-        .nav-links li a:hover, .nav-links li a.active {
-            color: var(--white);
-        }
-
+        .nav-links li a:hover { color: var(--marble-white); }
         .nav-links li a::after {
             content: ''; position: absolute;
-            bottom: -5px; left: 0;
-            width: 0; height: 2px;
-            background: var(--gold-elite);
-            transition: var(--transition-smooth);
+            bottom: -6px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold-leaf);
+            transition: var(--transition-standard);
         }
-
-        .nav-links li a:hover::after, .nav-links li a.active::after { width: 100%; }
-
-        .auth-buttons button {
-            padding: 10px 24px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: var(--radius-sm);
-            transition: var(--transition-smooth);
-        }
-
-        .btn-login { color: var(--white); margin-right: 15px; }
-        .btn-login:hover { color: var(--gold-elite); }
-        
-        .btn-action {
-            background: var(--green-success);
-            color: var(--white);
-            border: 1px solid var(--green-neon);
-            box-shadow: 0 4px 15px rgba(45, 106, 79, 0.3);
-        }
-        .btn-action:hover {
-            background: var(--green-neon);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-glow);
-        }
+        .nav-links li a:hover::after { width: 100%; }
 
         /* ==========================================================================
-           4. HERO & ONBOARDING ENTRY
+           4. HERO: CONFRONTING CHAOS
            ========================================================================== */
         .hero {
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            text-align: center;
             padding: 120px 5% 60px;
-            background: linear-gradient(135deg, var(--charcoal-base) 0%, var(--navy-deep) 100%);
             position: relative;
-            overflow: hidden;
+            border-bottom: 1px solid var(--border-solid);
         }
 
-        .hero::before {
-            content: '';
+        .hero-bg {
             position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            background: url('https://images.unsplash.com/photo-1526506118129-417242d54407?q=80&w=2070&auto=format&fit=crop') center/cover;
-            opacity: 0.08;
-            mix-blend-mode: overlay;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(10,10,11,0.2) 0%, rgba(10,10,11,1) 90%),
+                        url('https://images.unsplash.com/photo-1605493721389-980140785161?q=80&w=2070&auto=format&fit=crop'); /* Classic Statue/Architecture */
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            filter: grayscale(80%) contrast(120%);
         }
 
-        .hero-content {
-            max-width: 800px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-tag {
-            font-family: 'Roboto Mono', monospace;
-            color: var(--gold-elite);
-            font-size: 0.9rem;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-            display: inline-block;
-            background: rgba(212, 175, 55, 0.1);
-            padding: 5px 15px;
-            border-left: 2px solid var(--gold-elite);
+        .hero-badge {
+            font-family: 'Inter', sans-serif;
+            color: var(--gold-leaf);
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            margin-bottom: 30px;
+            padding: 8px 16px;
+            border: 1px solid var(--border-faint);
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 6vw, 5.5rem);
-            margin-bottom: 24px;
+            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.8);
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            max-width: 600px;
+            font-size: 1.25rem;
+            color: var(--parchment);
+            max-width: 700px;
+            margin-bottom: 50px;
+            font-style: italic;
         }
 
-        .cta-group {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn-massive {
-            padding: 18px 40px;
-            font-size: 1.1rem;
-            font-weight: 800;
-            text-transform: uppercase;
+        .btn-primary {
+            padding: 16px 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 700;
             letter-spacing: 2px;
-            background: var(--gold-elite);
-            color: var(--charcoal-base);
-            border-radius: var(--radius-sm);
-            transition: var(--transition-bounce);
+            background: transparent;
+            color: var(--gold-leaf);
+            border: 1px solid var(--gold-leaf);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-slow);
+            z-index: 1;
         }
 
-        .btn-massive:hover {
-            background: var(--white);
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: var(--gold-leaf);
+            transition: var(--transition-slow);
+            z-index: -1;
         }
+
+        .btn-primary:hover::before { left: 0; }
+        .btn-primary:hover { color: var(--obsidian); box-shadow: var(--shadow-glow); }
 
         /* ==========================================================================
-           5. DASHBOARD & GAMIFICATION (USER JOURNEY FOCUS)
+           5. SECTION ARCHITECTURE & HEADERS
            ========================================================================== */
+        .section-container {
+            padding: 100px 5%;
+            background: var(--onyx);
+            position: relative;
+        }
+        
+        .section-container.alt-bg { background: var(--obsidian); border-top: 1px solid var(--border-faint); border-bottom: 1px solid var(--border-faint); }
+
         .section-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 70px;
         }
 
-        .section-header h2 {
-            font-size: 3rem;
-            margin-bottom: 15px;
+        .header-rune {
+            font-size: 2rem;
+            color: var(--gold-leaf);
+            margin-bottom: 10px;
+            opacity: 0.7;
         }
 
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 600px;
+        .section-header h2 { font-size: 2.8rem; margin-bottom: 15px; }
+        .section-header p { color: var(--text-secondary); max-width: 650px; margin: 0 auto; font-family: 'Lora'; font-style: italic; }
+
+        /* ==========================================================================
+           6. THE LOGOS DASHBOARD: RESPONSIBILITY & ORDER
+           ========================================================================== */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .dashboard-container {
-            padding: 100px 5%;
-            background: var(--charcoal-light);
-            border-top: 1px solid var(--border-subtle);
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 40px;
-        }
-
-        /* Profile Sidebar */
-        .profile-card {
-            background: var(--charcoal-lighter);
-            border-radius: var(--radius-md);
-            padding: 30px;
-            text-align: center;
-            border: 1px solid var(--border-subtle);
-            box-shadow: var(--shadow-core);
-        }
-
-        .avatar {
-            width: 120px; height: 120px;
-            border-radius: 50%;
-            border: 4px solid var(--green-success);
-            margin: 0 auto 20px;
-            overflow: hidden;
-            background: var(--navy-deep);
-        }
-
-        .avatar img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .rank-badge {
-            background: var(--navy-deep);
-            color: var(--gold-elite);
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.8rem;
-            padding: 5px 15px;
-            border: 1px solid var(--gold-elite);
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        /* Progress Pillars */
-        .pillar-stats {
-            margin-top: 30px;
-            text-align: left;
-        }
-
-        .stat-bar { margin-bottom: 20px; }
-        
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .progress-track {
-            width: 100%;
-            height: 8px;
-            background: var(--charcoal-base);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 1s ease-in-out;
-        }
-
-        .fill-finance { background: #3B82F6; width: 65%; } /* Blue */
-        .fill-fitness { background: #EF4444; width: 40%; } /* Red */
-        .fill-mental { background: #10B981; width: 80%; }  /* Green */
-        .fill-social { background: #F59E0B; width: 55%; }  /* Orange */
-
-        /* Main Dashboard Content - The 4 Pillars */
-        .pillar-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .pillar-card {
-            background: var(--charcoal-lighter);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            transition: var(--transition-smooth);
-        }
-
-        .pillar-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--border-active);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-        }
-
-        .pillar-img {
-            width: 100%; height: 200px;
-            background: var(--navy-deep);
-            position: relative;
-        }
-
-        .pillar-img img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0.7;
-            transition: var(--transition-smooth);
-        }
-
-        .pillar-card:hover .pillar-img img { opacity: 1; transform: scale(1.05); }
-
-        .pillar-icon {
-            position: absolute;
-            bottom: -20px; right: 20px;
-            width: 50px; height: 50px;
-            background: var(--green-success);
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            border: 4px solid var(--charcoal-lighter);
-            color: var(--white);
-        }
-
-        .pillar-content { padding: 30px; }
-        .pillar-content h3 { font-size: 1.5rem; margin-bottom: 10px; }
-        .pillar-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
-        
-        .feature-list li {
-            font-size: 0.85rem;
-            color: var(--text-main);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .feature-list li::before {
-            content: '✓';
-            color: var(--green-neon);
-            font-weight: bold;
-        }
-
-        .btn-outline {
-            display: block; width: 100%;
-            text-align: center;
-            padding: 12px; margin-top: 25px;
-            border: 1px solid var(--text-muted);
-            color: var(--text-main);
-            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
-            border-radius: var(--radius-sm);
-            transition: var(--transition-smooth);
-        }
-
-        .btn-outline:hover {
-            background: var(--white);
-            color: var(--charcoal-base);
-        }
-
-        /* ==========================================================================
-           6. INTERACTIVE TOOLS: FINANCIAL CALCULATOR & FITNESS TRACKER
-           ========================================================================== */
-        .tools-section {
-            padding: 100px 5%;
-            background: var(--navy-deep);
-        }
-
-        .tool-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            background: var(--charcoal-base);
+        /* Order vs Chaos Tracker (To-Do / Habit System) */
+        .order-panel {
+            background: var(--slate);
+            border: 1px solid var(--border-faint);
             padding: 40px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sharp);
+            box-shadow: var(--shadow-deep);
         }
 
-        .input-group { margin-bottom: 20px; }
-        .input-group label {
-            display: block; font-family: 'Roboto Mono', monospace;
-            font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;
-        }
-        .input-group input, .input-group select {
-            width: 100%; padding: 15px;
-            background: var(--charcoal-lighter);
-            border: 1px solid var(--border-subtle);
-            color: var(--white); font-family: inherit; font-size: 1rem;
-            border-radius: var(--radius-sm);
-        }
-        .input-group input:focus { border-color: var(--gold-elite); outline: none; }
-
-        .result-box {
-            background: var(--green-tactical);
-            padding: 30px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--green-success);
-            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        .panel-title {
+            font-family: 'Cinzel'; font-size: 1.5rem; color: var(--gold-leaf);
+            border-bottom: 1px solid var(--border-faint); padding-bottom: 15px; margin-bottom: 25px;
         }
 
-        .result-box h4 { color: var(--green-neon); margin-bottom: 10px; }
-        .result-value { font-size: 3.5rem; font-weight: 900; color: var(--white); }
-        .result-desc { color: var(--text-main); font-size: 0.9rem; margin-top: 10px; }
-
-        /* ==========================================================================
-           7. BROTHERHOOD COMMUNITY & ACCOUNTABILITY
-           ========================================================================== */
-        .community-section {
-            padding: 100px 5%;
-            background: var(--charcoal-base);
+        .input-group { display: flex; margin-bottom: 25px; }
+        .input-group input {
+            flex-grow: 1; padding: 12px 15px;
+            background: var(--granite); border: 1px solid var(--border-faint);
+            color: var(--marble-white); font-family: 'Inter'; outline: none;
         }
-
-        .forum-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
+        .input-group input:focus { border-color: var(--gold-leaf); }
+        .input-group button {
+            background: var(--gold-leaf); color: var(--obsidian);
+            padding: 0 20px; font-weight: bold; text-transform: uppercase; font-family: 'Inter'; letter-spacing: 1px;
+            transition: var(--transition-standard);
         }
+        .input-group button:hover { background: var(--marble-white); }
 
-        .thread-list {
-            background: var(--charcoal-lighter);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-subtle);
-        }
+        .task-list { list-style: none; max-height: 400px; overflow-y: auto; padding-right: 10px; }
+        /* Custom Scrollbar */
+        .task-list::-webkit-scrollbar { width: 4px; }
+        .task-list::-webkit-scrollbar-track { background: var(--onyx); }
+        .task-list::-webkit-scrollbar-thumb { background: var(--gold-dim); }
 
-        .thread-item {
-            padding: 20px 30px;
-            border-bottom: 1px solid var(--border-subtle);
+        .task-item {
+            background: var(--granite); padding: 15px; margin-bottom: 10px;
+            border-left: 3px solid var(--crimson-blood);
             display: flex; justify-content: space-between; align-items: center;
-            transition: var(--transition-smooth);
+            transition: var(--transition-standard);
         }
-        .thread-item:hover { background: rgba(255,255,255,0.02); cursor: pointer; }
-        .thread-item:last-child { border-bottom: none; }
-
-        .thread-info h4 { font-size: 1.1rem; text-transform: none; margin-bottom: 5px; font-family: 'Montserrat'; font-weight: 700;}
-        .thread-meta { font-size: 0.8rem; color: var(--text-muted); font-family: 'Roboto Mono'; }
+        .task-item.completed { border-left-color: var(--gold-leaf); opacity: 0.6; }
+        .task-item.completed span { text-decoration: line-through; color: var(--text-secondary); }
+        .task-text { font-family: 'Lora'; font-size: 1rem; flex-grow: 1; margin-left: 15px; cursor: pointer; }
         
-        .thread-stats { display: flex; gap: 20px; font-size: 0.9rem; font-weight: 600; color: var(--gold-elite); }
+        .task-checkbox {
+            width: 20px; height: 20px; border: 1px solid var(--gold-leaf);
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+        }
+        .task-item.completed .task-checkbox::after {
+            content: '✓'; color: var(--gold-leaf); font-size: 0.8rem; font-weight: bold;
+        }
+        .task-delete { color: var(--text-secondary); cursor: pointer; font-size: 1.2rem; }
+        .task-delete:hover { color: var(--crimson-blood); }
 
-        .leaderboard {
-            background: var(--charcoal-lighter);
-            border-radius: var(--radius-md);
-            padding: 30px; border: 1px solid var(--border-subtle);
+        /* The Stoic Library (Quotes & Wisdom) */
+        .wisdom-panel {
+            display: flex; flex-direction: column; gap: 30px;
         }
 
-        .leader-item {
-            display: flex; align-items: center; gap: 15px; margin-bottom: 20px;
+        .quote-display {
+            background: linear-gradient(145deg, var(--slate) 0%, var(--onyx) 100%);
+            border: 1px solid var(--border-solid);
+            padding: 50px;
+            position: relative;
+            min-height: 300px;
+            display: flex; flex-direction: column; justify-content: center;
+            box-shadow: var(--shadow-deep);
         }
-        .leader-rank { font-family: 'Oswald'; font-size: 1.5rem; color: var(--text-muted); width: 25px;}
-        .leader-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--gold-elite); overflow: hidden;}
-        .leader-avatar img { width: 100%; height: 100%; object-fit: cover;}
-        .leader-name { font-weight: 700; flex-grow: 1; }
-        .leader-score { font-family: 'Roboto Mono'; color: var(--green-neon); font-weight: 700;}
+        .quote-display::before {
+            content: '"'; position: absolute; top: 20px; left: 30px;
+            font-family: 'Cinzel'; font-size: 6rem; color: rgba(197, 160, 89, 0.1); line-height: 1;
+        }
 
+        #active-quote {
+            font-family: 'Lora'; font-size: 1.8rem; font-style: italic; color: var(--marble-white);
+            margin-bottom: 20px; line-height: 1.4; position: relative; z-index: 2;
+        }
+        #active-author {
+            font-family: 'Cinzel'; font-size: 1rem; color: var(--gold-leaf); text-align: right;
+            letter-spacing: 2px;
+        }
+
+        .quote-controls {
+            display: flex; justify-content: flex-end; gap: 15px; margin-top: 20px;
+        }
+        .btn-icon {
+            width: 40px; height: 40px; border: 1px solid var(--border-faint);
+            display: flex; justify-content: center; align-items: center; color: var(--text-secondary);
+            transition: var(--transition-standard); border-radius: 50%;
+        }
+        .btn-icon:hover { border-color: var(--gold-leaf); color: var(--gold-leaf); }
 
         /* ==========================================================================
-           8. ONBOARDING MODAL (QUIZ SYSTEM)
+           7. THE ENTERPRISE FORGE: COMPOUNDING EFFORT (Calculators)
            ========================================================================== */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 25, 49, 0.9); backdrop-filter: blur(5px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; opacity: 0; pointer-events: none; transition: var(--transition-smooth);
+        .forge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 50px;
+            max-width: 1400px; margin: 0 auto;
         }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
-        .quiz-container {
-            background: var(--charcoal-base);
-            width: 100%; max-width: 700px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--gold-elite);
-            padding: 50px; position: relative;
-            transform: translateY(20px); transition: var(--transition-smooth);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        .tool-card {
+            background: var(--obsidian);
+            border: 1px solid var(--border-faint);
+            padding: 40px; position: relative;
+            transition: var(--transition-slow);
         }
-        .modal-overlay.active .quiz-container { transform: translateY(0); }
+        .tool-card:hover { border-color: var(--gold-dim); transform: translateY(-5px); }
 
-        .close-modal {
-            position: absolute; top: 20px; right: 20px;
-            font-size: 2rem; color: var(--text-muted); background: none; border: none; cursor: pointer;
+        .tool-card h3 { color: var(--gold-leaf); font-size: 1.4rem; margin-bottom: 10px; }
+        .tool-card p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 30px; }
+
+        .calc-group { margin-bottom: 20px; }
+        .calc-group label {
+            display: block; font-family: 'Inter'; font-size: 0.75rem; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 8px;
         }
-        .close-modal:hover { color: var(--white); }
-
-        .quiz-progress { display: flex; gap: 5px; margin-bottom: 30px; }
-        .q-step { height: 4px; flex-grow: 1; background: var(--charcoal-lighter); border-radius: 2px;}
-        .q-step.active { background: var(--gold-elite); }
-
-        .quiz-question h3 { font-size: 2rem; margin-bottom: 10px; }
-        .quiz-question p { color: var(--text-muted); margin-bottom: 30px; }
-
-        .quiz-options { display: flex; flex-direction: column; gap: 15px; }
-        .option-btn {
-            padding: 18px 25px; text-align: left;
-            background: var(--charcoal-lighter); border: 1px solid var(--border-subtle);
-            color: var(--white); font-weight: 600; font-size: 1rem;
-            border-radius: var(--radius-sm); transition: var(--transition-smooth);
-            display: flex; align-items: center; justify-content: space-between;
+        .calc-group input {
+            width: 100%; padding: 12px; background: var(--granite); border: 1px solid var(--border-faint);
+            color: var(--marble-white); font-family: 'Inter'; font-size: 1rem; outline: none;
         }
-        .option-btn:hover { background: var(--navy-accent); border-color: var(--navy-highlight); padding-left: 35px; }
-        
+        .calc-group input:focus { border-bottom: 2px solid var(--gold-leaf); }
+
+        .result-container {
+            margin-top: 30px; padding: 25px; background: var(--slate); border-left: 3px solid var(--gold-leaf);
+            text-align: center;
+        }
+        .result-val { font-family: 'Cinzel'; font-size: 2.5rem; color: var(--marble-white); }
+        .result-lbl { font-family: 'Inter'; font-size: 0.8rem; color: var(--gold-leaf); text-transform: uppercase; letter-spacing: 2px; }
+
+        /* ==========================================================================
+           8. THE ARCHETYPES (Principles & Virtues)
+           ========================================================================== */
+        .virtue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px; margin: 0 auto;
+        }
+
+        .virtue-card {
+            background: var(--slate);
+            border: 1px solid transparent;
+            padding: 40px 30px;
+            text-align: center;
+            transition: var(--transition-slow);
+        }
+        .virtue-card:hover {
+            border-color: var(--border-solid);
+            background: linear-gradient(to bottom, var(--granite), var(--slate));
+        }
+
+        .v-icon {
+            font-size: 2.5rem; margin-bottom: 20px; color: var(--gold-leaf);
+        }
+        .virtue-card h4 { font-size: 1.3rem; margin-bottom: 15px; }
+        .virtue-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
+
         /* ==========================================================================
            9. FOOTER COMMAND CENTER
            ========================================================================== */
         footer {
             background: #000;
-            padding: 80px 5% 40px;
-            border-top: 1px solid var(--border-subtle);
+            padding: 80px 5% 30px;
+            border-top: 1px solid var(--border-solid);
         }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px;}
-        .footer-col h4 { margin-bottom: 25px; color: var(--gold-elite); font-size: 1.2rem;}
+        .footer-content {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 60px; max-width: 1400px; margin: 0 auto; margin-bottom: 60px;
+        }
+        .footer-brand p { color: var(--text-secondary); margin-top: 20px; font-size: 0.9rem; }
+        
+        .footer-links h5 { color: var(--gold-leaf); margin-bottom: 20px; font-size: 1.1rem; }
+        .footer-links ul { list-style: none; }
         .footer-links li { margin-bottom: 12px; }
-        .footer-links a { color: var(--text-muted); font-size: 0.9rem; transition: var(--transition-smooth); }
-        .footer-links a:hover { color: var(--white); padding-left: 5px;}
-        .copyright { text-align: center; padding-top: 30px; border-top: 1px solid var(--charcoal-lighter); color: var(--text-muted); font-size: 0.8rem; font-family: 'Roboto Mono';}
+        .footer-links a { font-family: 'Inter'; font-size: 0.85rem; color: var(--text-secondary); transition: var(--transition-standard); text-transform: uppercase; letter-spacing: 1px; }
+        .footer-links a:hover { color: var(--marble-white); padding-left: 5px; }
 
-        /* Responsive */
-        @media (max-width: 992px) {
-            .dashboard-grid, .tool-container, .forum-grid, .footer-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; } /* Add JS hamburger for production */
+        .copyright {
+            text-align: center; padding-top: 30px; border-top: 1px solid var(--granite);
+            font-family: 'Inter'; font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 4rem; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+            .footer-links a:hover { padding-left: 0; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <a href="#" class="brand-logo">
-            <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13.5h-13L12 6.5z"/></svg>
-            WILSON VANGUARD
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 3.5l7 14h-14L12 5.5z"/></svg>
+            THE LOGOS
         </a>
         <ul class="nav-links">
-            <li><a href="#hub" class="active">Dashboard</a></li>
-            <li><a href="#pillars">The 4 Pillars</a></li>
-            <li><a href="#tools">Mastery Tools</a></li>
-            <li><a href="#brotherhood">Brotherhood</a></li>
+            <li><a href="#order">Establish Order</a></li>
+            <li><a href="#wisdom">Stoic Mind</a></li>
+            <li><a href="#enterprise">The Forge</a></li>
+            <li><a href="#virtues">Core Principles</a></li>
         </ul>
-        <div class="auth-buttons">
-            <button class="btn-login">Member Log In</button>
-            <button class="btn-action" onclick="openQuiz()">Initiate Protocol</button>
-        </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <span class="hero-tag">SYSTEM ONLINE // VER. 4.0 APEX</span>
-            <h1>TRANSFORM POTENTIAL INTO <span class="accent-text">ABSOLUTE POWER</span></h1>
-            <p>The definitive architecture for the modern man. Eliminate weakness, forge discipline, and dominate across finance, fitness, mindset, and social dynamics. Your empire starts here.</p>
-            <div class="cta-group">
-                <button class="btn-massive" onclick="openQuiz()">Begin Transformation Quiz</button>
-                <a href="#hub" style="display:flex; align-items:center; color: var(--white); font-weight:700; font-family:'Roboto Mono'; text-decoration:underline;">EXPLORE DASHBOARD</a>
-            </div>
-        </div>
-    </section>
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-badge">Responsibility is the meaning of life</div>
+        <h1>Confront the Chaos</h1>
+        <p>"You must determine where you are going, so that you can bargain for yourself, so that you don't end up a resentful, vengeful, bitter beast."</p>
+        <button class="btn-primary" onclick="document.getElementById('order').scrollIntoView();">Clean Your Room First</button>
+    </header>
 
-    <section id="hub" class="dashboard-container">
+    <section class="section-container" id="order">
         <div class="section-header">
-            <h2>Command Center</h2>
-            <p>Your individualized progression matrix. Track your growth from raw recruit to Apex Vanguard across the core disciplines.</p>
+            <div class="header-rune">♅</div>
+            <h2>Architecture of Being</h2>
+            <p>Order is the explored territory. Chaos is the unknown. Map your territory by establishing local order before you attempt to restructure the world.</p>
         </div>
 
         <div class="dashboard-grid">
-            <aside class="profile-card">
-                <div class="avatar">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1974&auto=format&fit=crop" alt="User Avatar">
+            <div class="order-panel">
+                <h3 class="panel-title">Micro-Order (Local Domain)</h3>
+                <div class="input-group">
+                    <input type="text" id="taskInput" placeholder="Define a responsibility... (e.g., Organize workspace)">
+                    <button onclick="addTask()">Enact</button>
                 </div>
-                <h3>ALEX MERCER</h3>
-                <div class="rank-badge">RANK: IRON INITIATE</div>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Day 14 of 90 Protocol</p>
+                <ul class="task-list" id="taskList">
+                    </ul>
+            </div>
+
+            <div class="wisdom-panel" id="wisdom">
+                <div class="quote-display">
+                    <div id="active-quote">"He who has a why to live for can bear almost any how."</div>
+                    <div id="active-author">- Friedrich Nietzsche</div>
+                </div>
+                <div class="quote-controls">
+                    <button class="btn-icon" onclick="prevQuote()" title="Previous Insight">&#8592;</button>
+                    <button class="btn-icon" onclick="randomQuote()" title="Chaos (Random)">&#8635;</button>
+                    <button class="btn-icon" onclick="nextQuote()" title="Next Insight">&#8594;</button>
+                </div>
                 
-                <hr style="border:0; border-top: 1px solid var(--border-subtle); margin: 20px 0;">
-                
-                <div class="pillar-stats">
-                    <div class="stat-bar">
-                        <div class="stat-header"><span>Financial Mastery</span> <span>65%</span></div>
-                        <div class="progress-track"><div class="progress-fill fill-finance"></div></div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="order-panel" style="padding: 25px;">
+                        <h4 style="font-size: 1.1rem; color: var(--gold-leaf); margin-bottom: 10px;">Rule 01</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Stand up straight with your shoulders back. Accept the terrible responsibility of life with eyes wide open.</p>
                     </div>
-                    <div class="stat-bar">
-                        <div class="stat-header"><span>Physical Forging</span> <span>40%</span></div>
-                        <div class="progress-track"><div class="progress-fill fill-fitness"></div></div>
-                    </div>
-                    <div class="stat-bar">
-                        <div class="stat-header"><span>Mental Resilience</span> <span>80%</span></div>
-                        <div class="progress-track"><div class="progress-fill fill-mental"></div></div>
-                    </div>
-                    <div class="stat-bar">
-                        <div class="stat-header"><span>Social Dynamics</span> <span>55%</span></div>
-                        <div class="progress-track"><div class="progress-fill fill-social"></div></div>
+                    <div class="order-panel" style="padding: 25px;">
+                        <h4 style="font-size: 1.1rem; color: var(--gold-leaf); margin-bottom: 10px;">Amor Fati</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Do not seek for things to happen the way you want them to; rather, wish that what happens happen the way it happens.</p>
                     </div>
                 </div>
-            </aside>
-
-            <div id="pillars" class="pillar-grid">
-                
-                <div class="pillar-card">
-                    <div class="pillar-img">
-                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop" alt="Finance">
-                        <div class="pillar-icon">F</div>
-                    </div>
-                    <div class="pillar-content">
-                        <h3>Financial Architecture</h3>
-                        <p>Wealth is engineered, not stumbled upon. Build cash-flowing assets and unbreakable career capital.</p>
-                        <ul class="feature-list">
-                            <li>Investment Portfolio Blueprint</li>
-                            <li>High-Income Skill Acquisition</li>
-                            <li>Tax & Corporate Structuring</li>
-                        </ul>
-                        <button class="btn-outline">Access Vault</button>
-                    </div>
-                </div>
-
-                <div class="pillar-card">
-                    <div class="pillar-img">
-                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop" alt="Fitness">
-                        <div class="pillar-icon">P</div>
-                    </div>
-                    <div class="pillar-content">
-                        <h3>Physical Forging</h3>
-                        <p>A weak vessel corrupts a strong mind. Build functional strength, endurance, and apex aesthetics.</p>
-                        <ul class="feature-list">
-                            <li>Hypertrophy & Strength Protocols</li>
-                            <li>Macro & Micronutrient Systems</li>
-                            <li>Testosterone Optimization</li>
-                        </ul>
-                        <button class="btn-outline">View Program</button>
-                    </div>
-                </div>
-
-                <div class="pillar-card">
-                    <div class="pillar-img">
-                        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop" alt="Mindset">
-                        <div class="pillar-icon">M</div>
-                    </div>
-                    <div class="pillar-content">
-                        <h3>Cognitive Resilience</h3>
-                        <p>Master your internal narrative. Focus, discipline, and emotional regulation in high-stress environments.</p>
-                        <ul class="feature-list">
-                            <li>Deep Work & Flow State Triggers</li>
-                            <li>Stoic Philosophy Integration</li>
-                            <li>Dopamine Detox Protocols</li>
-                        </ul>
-                        <button class="btn-outline">Enter Chamber</button>
-                    </div>
-                </div>
-
-                <div class="pillar-card">
-                    <div class="pillar-img">
-                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop" alt="Social">
-                        <div class="pillar-icon">S</div>
-                    </div>
-                    <div class="pillar-content">
-                        <h3>Social Dominance</h3>
-                        <p>Influence is power. Master human psychology, negotiation, networking, and high-value dating dynamics.</p>
-                        <ul class="feature-list">
-                            <li>Charisma & Frame Control</li>
-                            <li>High-Stakes Negotiation</li>
-                            <li>Building an Elite Network</li>
-                        </ul>
-                        <button class="btn-outline">Study Dynamics</button>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <section id="tools" class="tools-section">
+    <section class="section-container alt-bg" id="enterprise">
         <div class="section-header">
-            <h2>Calculators & Tools</h2>
-            <p>Data drives decisions. Utilize our proprietary algorithms to calculate your path to physiological and financial dominance.</p>
+            <div class="header-rune">⚒</div>
+            <h2>The Entrepreneur's Forge</h2>
+            <p>Value creation is the ultimate manifestation of competence. Calculate the trajectory of your disciplined sacrifices over time.</p>
         </div>
 
-        <div class="tool-container">
+        <div class="forge-grid">
             <div class="tool-card">
-                <h3 style="margin-bottom: 25px; color: var(--gold-elite);">Compound Wealth Engine</h3>
-                <div class="input-group">
-                    <label>Initial Capital ($)</label>
-                    <input type="number" id="calc-initial" value="10000">
+                <h3>The Asymmetry Engine</h3>
+                <p>Calculate the compounding effect of consistent capital allocation and disciplined investing over a prolonged timeframe.</p>
+                
+                <div class="calc-group">
+                    <label>Initial Capital Base ($)</label>
+                    <input type="number" id="inv-initial" value="5000">
                 </div>
-                <div class="input-group">
-                    <label>Monthly Contribution ($)</label>
-                    <input type="number" id="calc-monthly" value="1000">
+                <div class="calc-group">
+                    <label>Monthly Sacrificial Allocation ($)</label>
+                    <input type="number" id="inv-monthly" value="500">
                 </div>
-                <div class="input-group">
-                    <label>Annual Return Rate (%)</label>
-                    <input type="number" id="calc-rate" value="10">
+                <div class="calc-group">
+                    <label>Expected Annual Return (%)</label>
+                    <input type="number" id="inv-rate" value="8">
                 </div>
-                <div class="input-group">
-                    <label>Years to Hold</label>
-                    <input type="number" id="calc-years" value="10">
+                <div class="calc-group">
+                    <label>Time Horizon (Years)</label>
+                    <input type="number" id="inv-years" value="10">
                 </div>
-                <button class="btn-outline" style="background: var(--navy-highlight); border:none; color:white;" onclick="calculateWealth()">Run Algorithm</button>
+                
+                <button class="btn-primary" style="width: 100%; margin-top: 15px;" onclick="calculateCompound()">Project Future Order</button>
+                
+                <div class="result-container">
+                    <div class="result-val" id="inv-result">$0</div>
+                    <div class="result-lbl">Projected Asset Value</div>
+                </div>
             </div>
-            
-            <div class="result-box" id="wealth-result">
-                <h4>PROJECTED EMPIRE</h4>
-                <div class="result-value" id="res-val">$245,684</div>
-                <div class="result-desc">Capital generated through disciplined architecture.</div>
+
+            <div class="tool-card">
+                <h3>The Competence Metric</h3>
+                <p>Monetize your skill acquisition. Determine the future hourly value of your specialized knowledge based on deep work hours.</p>
+                
+                <div class="calc-group">
+                    <label>Current Hourly Value ($)</label>
+                    <input type="number" id="skill-current" value="25">
+                </div>
+                <div class="calc-group">
+                    <label>Deep Work Hours per Week</label>
+                    <input type="number" id="skill-hours" value="10">
+                </div>
+                <div class="calc-group">
+                    <label>Skill Value Growth Rate (% per 100 hrs)</label>
+                    <input type="number" id="skill-growth" value="5">
+                </div>
+                <div class="calc-group">
+                    <label>Timeline (Months)</label>
+                    <input type="number" id="skill-months" value="12">
+                </div>
+                
+                <button class="btn-primary" style="width: 100%; margin-top: 15px;" onclick="calculateSkill()">Project Competence Value</button>
+                
+                <div class="result-container">
+                    <div class="result-val" id="skill-result">$0</div>
+                    <div class="result-lbl">Future Hourly Valuation</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="brotherhood" class="community-section">
+    <section class="section-container" id="virtues">
         <div class="section-header">
-            <h2>The Syndicate</h2>
-            <p>Iron sharpens iron. Connect with the 1%, hold each other accountable, and rise together in the global hierarchy.</p>
+            <div class="header-rune">♜</div>
+            <h2>Pillars of Character</h2>
+            <p>The foundation of the individual. Adopt these to fortify the mind against tragedy and malevolence.</p>
         </div>
 
-        <div class="forum-grid">
-            <div class="thread-list">
-                <div class="thread-item">
-                    <div class="thread-info">
-                        <div class="thread-meta">POSTED 2H AGO BY @STRATEGIST</div>
-                        <h4>Q4 Commercial Real Estate Acquisitions</h4>
-                    </div>
-                    <div class="thread-stats"><span>142 REPLIES</span> <span>3.2K VIEWS</span></div>
-                </div>
-                <div class="thread-item">
-                    <div class="thread-info">
-                        <div class="thread-meta">POSTED 5H AGO BY @IRON_FORGED</div>
-                        <h4>Breaking the 400lb Deadlift Plateau - Routine Adjustments</h4>
-                    </div>
-                    <div class="thread-stats"><span>89 REPLIES</span> <span>1.8K VIEWS</span></div>
-                </div>
-                <div class="thread-item">
-                    <div class="thread-info">
-                        <div class="thread-meta">POSTED 1 DAY AGO BY @STOIC_MIND</div>
-                        <h4>Navigating Corporate Politics without Compromising Integrity</h4>
-                    </div>
-                    <div class="thread-stats"><span>215 REPLIES</span> <span>5.5K VIEWS</span></div>
-                </div>
-                <div class="thread-item" style="justify-content: center; padding: 15px;">
-                    <a href="#" style="color: var(--gold-elite); font-weight: 700; font-family: 'Roboto Mono';">ENTER FULL FORUM -></a>
-                </div>
+        <div class="virtue-grid">
+            <div class="virtue-card">
+                <div class="v-icon">👁</div>
+                <h4>Tell the Truth</h4>
+                <p>Or, at least, don't lie. Falsehood corrupts the structure of reality. Speech is the mechanism by which we bring order out of chaos.</p>
             </div>
-
-            <div class="leaderboard">
-                <h3 style="margin-bottom: 25px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">Weekly Top Operators</h3>
-                <div class="leader-item">
-                    <div class="leader-rank">1</div>
-                    <div class="leader-avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop" alt=""></div>
-                    <div class="leader-name">Marcus T.</div>
-                    <div class="leader-score">9,420 XP</div>
-                </div>
-                <div class="leader-item">
-                    <div class="leader-rank">2</div>
-                    <div class="leader-avatar"><img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?q=80&w=1974&auto=format&fit=crop" alt=""></div>
-                    <div class="leader-name">Elijah Vance</div>
-                    <div class="leader-score">8,850 XP</div>
-                </div>
-                <div class="leader-item">
-                    <div class="leader-rank">3</div>
-                    <div class="leader-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" alt=""></div>
-                    <div class="leader-name">Julian K.</div>
-                    <div class="leader-score">8,100 XP</div>
-                </div>
+            <div class="virtue-card">
+                <div class="v-icon">⚖</div>
+                <h4>Dichotomy of Control</h4>
+                <p>Focus your energy entirely on what is within your absolute control: your thoughts, your actions, and your responses. Abandon the rest.</p>
+            </div>
+            <div class="virtue-card">
+                <div class="v-icon">⚔</div>
+                <h4>Slay the Dragon</h4>
+                <p>Do not hide the things you are afraid of in the fog. Make the implicit explicit. Confront the anomaly willingly and extract the gold.</p>
+            </div>
+            <div class="virtue-card">
+                <div class="v-icon">⌛</div>
+                <h4>Memento Mori</h4>
+                <p>Remember that you must die. Let this fact not cause despair, but supreme urgency. Act precisely and do not waste the present moment.</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <div class="brand-logo" style="margin-bottom: 20px;">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13.5h-13L12 6.5z"/></svg>
-                    VANGUARD
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 3.5l7 14h-14L12 5.5z"/></svg>
+                    THE LOGOS
                 </div>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">The systematic architecture for the top 1% of men. Eradicate weakness. Build your empire.</p>
+                <p>Forge your character. Build your enterprise. Speak the truth. The world requires your absolute best.</p>
             </div>
-            <div class="footer-col">
-                <h4>THE PROTOCOL</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Financial Architecture</a></li>
-                    <li><a href="#">Physical Forging</a></li>
-                    <li><a href="#">Cognitive Resilience</a></li>
-                    <li><a href="#">Social Dominance</a></li>
+            <div class="footer-links">
+                <h5>Core Philosophies</h5>
+                <ul>
+                    <li><a href="#">The 12 Rules</a></li>
+                    <li><a href="#">Meditations of Aurelius</a></li>
+                    <li><a href="#">Letters of Seneca</a></li>
+                    <li><a href="#">Enchiridion of Epictetus</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
-                <h4>PLATFORM</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Dashboard Login</a></li>
-                    <li><a href="#">Brotherhood Forum</a></li>
-                    <li><a href="#">Calculators</a></li>
-                    <li><a href="#">Live Events</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>LEGAL</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Disclaimer</a></li>
+            <div class="footer-links">
+                <h5>Operational Protocols</h5>
+                <ul>
+                    <li><a href="#">Deep Work Blueprints</a></li>
+                    <li><a href="#">Asset Allocation</a></li>
+                    <li><a href="#">Risk Asymmetry</a></li>
+                    <li><a href="#">Meaning & Responsibility</a></li>
                 </ul>
             </div>
         </div>
         <div class="copyright">
-            &copy; 2026 WILSON VANGUARD PROTOCOL. ALL RIGHTS RESERVED. FORGED IN DISCIPLINE.
+            &copy; 2026 THE LOGOS PROTOCOL. BUILT FOR THOSE WHO BEAR THE LOAD.
         </div>
     </footer>
 
-    <div class="modal-overlay" id="quizModal">
-        <div class="quiz-container">
-            <button class="close-modal" onclick="closeQuiz()">&times;</button>
-            <div class="quiz-progress" id="quizProgress">
-                <div class="q-step active"></div>
-                <div class="q-step"></div>
-                <div class="q-step"></div>
-                <div class="q-step"></div>
-            </div>
-            <div id="quizContent">
-                </div>
-        </div>
-    </div>
-
     <script>
-        // Wealth Calculator Logic
-        function calculateWealth() {
-            const P = parseFloat(document.getElementById('calc-initial').value);
-            const PMT = parseFloat(document.getElementById('calc-monthly').value);
-            const r = parseFloat(document.getElementById('calc-rate').value) / 100 / 12;
-            const t = parseFloat(document.getElementById('calc-years').value) * 12;
-            
-            if(isNaN(P) || isNaN(PMT) || isNaN(r) || isNaN(t)) return;
-
-            // Future Value of a Series formula
-            const futureValue = P * Math.pow(1 + r, t) + PMT * ((Math.pow(1 + r, t) - 1) / r);
-            
-            // Format number
-            const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(futureValue);
-            
-            // Animate Box
-            const resBox = document.getElementById('wealth-result');
-            resBox.style.transform = 'scale(1.05)';
-            resBox.style.boxShadow = '0 0 30px rgba(45, 106, 79, 0.8)';
-            setTimeout(() => {
-                resBox.style.transform = 'scale(1)';
-                resBox.style.boxShadow = 'none';
-            }, 300);
-
-            document.getElementById('res-val').innerText = formatted;
-        }
-
-        // Quiz System State Machine
-        const quizData = [
-            {
-                q: "What is your primary deficiency right now?",
-                options: ["Financial Capital (Low Income/Debt)", "Physical Form (Weak/Overweight)", "Mental Clarity (Brain Fog/Anxiety)", "Social Influence (Poor Network/Isolation)"]
-            },
-            {
-                q: "How many hours of Deep Work can you sustain?",
-                options: ["Under 1 Hour (Distracted easily)", "1-2 Hours", "3-4 Hours", "4+ Hours (Total Flow State)"]
-            },
-            {
-                q: "What is your physical training frequency?",
-                options: ["Sedentary (No formal training)", "1-2 times a week", "3-4 times a week (Structured)", "5+ times a week (Athlete level)"]
-            },
-            {
-                q: "Are you ready to commit to the 90-Day Apex Protocol?",
-                options: ["Yes. No excuses.", "I need more information", "I'm not ready for this level of discipline"]
+        /* --- Navbar Scroll Effect --- */
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if(window.scrollY > 50) {
+                nav.style.background = 'rgba(10, 10, 11, 0.98)';
+                nav.style.boxShadow = '0 5px 20px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 11, 0.85)';
+                nav.style.boxShadow = 'none';
             }
+        });
+
+        /* --- Responsibility Tracker Logic (Clean Your Room) --- */
+        const initialTasks = [
+            { id: 1, text: "Clean your room (Establish local order)", completed: false },
+            { id: 2, text: "Define daily micro-goals", completed: true },
+            { id: 3, text: "Read 10 pages of a difficult book", completed: false },
+            { id: 4, text: "Engage in 60 mins of Deep Work", completed: false }
         ];
 
-        let currentStep = 0;
+        let tasks = [...initialTasks];
 
-        function openQuiz() {
-            document.getElementById('quizModal').classList.add('active');
-            renderQuiz();
-        }
-
-        function closeQuiz() {
-            document.getElementById('quizModal').classList.remove('active');
-            setTimeout(() => { currentStep = 0; }, 300);
-        }
-
-        function renderQuiz() {
-            const content = document.getElementById('quizContent');
-            const progress = document.getElementById('quizProgress');
+        function renderTasks() {
+            const list = document.getElementById('taskList');
+            list.innerHTML = '';
             
-            // Update Progress Bar
-            progress.innerHTML = '';
-            for(let i=0; i<quizData.length; i++) {
-                progress.innerHTML += `<div class="q-step ${i <= currentStep ? 'active' : ''}"></div>`;
-            }
-
-            // End of Quiz
-            if(currentStep >= quizData.length) {
-                content.innerHTML = `
-                    <div style="text-align:center;">
-                        <svg viewBox="0 0 24 24" style="width:80px; fill:var(--green-neon); margin-bottom:20px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                        <h3 style="font-size:2.5rem; margin-bottom:15px; color:var(--gold-elite);">ARCHETYPE IDENTIFIED</h3>
-                        <p style="font-size:1.1rem; color:var(--text-muted); margin-bottom:30px;">Your custom blueprint has been generated. Your transformation begins now.</p>
-                        <button class="btn-massive" onclick="closeQuiz()" style="width:100%;">ACCESS YOUR DASHBOARD</button>
-                    </div>
+            tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.className = `task-item ${task.completed ? 'completed' : ''}`;
+                
+                li.innerHTML = `
+                    <div class="task-checkbox" onclick="toggleTask(${task.id})"></div>
+                    <span class="task-text" onclick="toggleTask(${task.id})">${task.text}</span>
+                    <span class="task-delete" onclick="deleteTask(${task.id})">&times;</span>
                 `;
-                return;
-            }
+                list.appendChild(li);
+            });
+        }
 
-            // Render Current Question
-            const stepData = quizData[currentStep];
-            let html = `
-                <div class="quiz-question">
-                    <p style="font-family:'Roboto Mono'; color:var(--gold-elite);">PHASE 0${currentStep + 1} // CALIBRATION</p>
-                    <h3>${stepData.q}</h3>
-                </div>
-                <div class="quiz-options">
-            `;
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const text = input.value.trim();
+            if(text === '') return;
             
-            stepData.options.forEach(opt => {
-                html += `<button class="option-btn" onclick="nextStep()">${opt} <span>&#8594;</span></button>`;
+            tasks.push({
+                id: Date.now(),
+                text: text,
+                completed: false
             });
             
-            html += `</div>`;
-            content.innerHTML = html;
+            input.value = '';
+            renderTasks();
         }
 
-        function nextStep() {
-            currentStep++;
-            renderQuiz();
+        function toggleTask(id) {
+            tasks = tasks.map(t => {
+                if(t.id === id) t.completed = !t.completed;
+                return t;
+            });
+            renderTasks();
         }
+
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            renderTasks();
+        }
+
+        // Initialize Tasks
+        document.getElementById('taskInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addTask();
+        });
+        renderTasks();
+
+
+        /* --- The Stoic & Peterson Library (Wisdom Engine) --- */
+        const wisdomData = [
+            { quote: "He who has a why to live for can bear almost any how.", author: "Friedrich Nietzsche" },
+            { quote: "To suffer terribly and to know yourself as the cause: that is Hell.", author: "Jordan B. Peterson" },
+            { quote: "You have power over your mind - not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius" },
+            { quote: "Compare yourself to who you were yesterday, not to who someone else is today.", author: "Jordan B. Peterson" },
+            { quote: "We suffer more often in imagination than in reality.", author: "Seneca" },
+            { quote: "Don't explain your philosophy. Embody it.", author: "Epictetus" },
+            { quote: "If you don't say what you think then you kill your unborn self.", author: "Jordan B. Peterson" },
+            { quote: "Waste no more time arguing what a good man should be. Be one.", author: "Marcus Aurelius" },
+            { quote: "The purpose of life is finding the largest burden that you can bear and bearing it.", author: "Jordan B. Peterson" },
+            { quote: "No man is free who is not master of himself.", author: "Epictetus" }
+        ];
+
+        let quoteIndex = 0;
+
+        function updateQuoteDisplay() {
+            const quoteEl = document.getElementById('active-quote');
+            const authorEl = document.getElementById('active-author');
+            
+            // Fade out
+            quoteEl.style.opacity = 0;
+            authorEl.style.opacity = 0;
+            
+            setTimeout(() => {
+                quoteEl.innerText = `"${wisdomData[quoteIndex].quote}"`;
+                authorEl.innerText = `- ${wisdomData[quoteIndex].author}`;
+                // Fade in
+                quoteEl.style.opacity = 1;
+                authorEl.style.opacity = 1;
+                quoteEl.style.transition = 'opacity 0.5s ease';
+                authorEl.style.transition = 'opacity 0.5s ease';
+            }, 300);
+        }
+
+        function nextQuote() {
+            quoteIndex = (quoteIndex + 1) % wisdomData.length;
+            updateQuoteDisplay();
+        }
+
+        function prevQuote() {
+            quoteIndex = (quoteIndex - 1 + wisdomData.length) % wisdomData.length;
+            updateQuoteDisplay();
+        }
+
+        function randomQuote() {
+            let newIndex = quoteIndex;
+            while(newIndex === quoteIndex) {
+                newIndex = Math.floor(Math.random() * wisdomData.length);
+            }
+            quoteIndex = newIndex;
+            updateQuoteDisplay();
+        }
+
+
+        /* --- The Enterprise Forge Calculators --- */
+        
+        // Compound Interest Calculator
+        function calculateCompound() {
+            const P = parseFloat(document.getElementById('inv-initial').value) || 0;
+            const PMT = parseFloat(document.getElementById('inv-monthly').value) || 0;
+            const r = (parseFloat(document.getElementById('inv-rate').value) || 0) / 100 / 12;
+            const t = (parseFloat(document.getElementById('inv-years').value) || 0) * 12;
+            
+            let futureValue = 0;
+            if (r === 0) {
+                futureValue = P + (PMT * t);
+            } else {
+                futureValue = P * Math.pow(1 + r, t) + PMT * ((Math.pow(1 + r, t) - 1) / r);
+            }
+            
+            const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(futureValue);
+            
+            animateResult('inv-result', formatted);
+        }
+
+        // Skill Value Calculator
+        function calculateSkill() {
+            const currentVal = parseFloat(document.getElementById('skill-current').value) || 0;
+            const hoursPerWeek = parseFloat(document.getElementById('skill-hours').value) || 0;
+            const growthRate = (parseFloat(document.getElementById('skill-growth').value) || 0) / 100;
+            const months = parseFloat(document.getElementById('skill-months').value) || 0;
+            
+            // Total deep work hours over timeline
+            const totalHours = hoursPerWeek * 4.33 * months;
+            
+            // Growth compounds every 100 hours of deep work
+            const growthCycles = totalHours / 100;
+            
+            const futureVal = currentVal * Math.pow(1 + growthRate, growthCycles);
+            
+            const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(futureVal) + " / hr";
+            
+            animateResult('skill-result', formatted);
+        }
+
+        // Reusable Animation for Results
+        function animateResult(elementId, value) {
+            const el = document.getElementById(elementId);
+            el.parentElement.style.transform = 'scale(1.05)';
+            el.parentElement.style.boxShadow = '0 0 25px rgba(197, 160, 89, 0.3)';
+            el.parentElement.style.transition = 'all 0.3s ease';
+            
+            setTimeout(() => {
+                el.innerText = value;
+                el.parentElement.style.transform = 'scale(1)';
+                el.parentElement.style.boxShadow = 'none';
+            }, 200);
+        }
+
+        // Init calculations on load
+        window.onload = () => {
+            calculateCompound();
+            calculateSkill();
+        };
+
     </script>
 </body>
 </html>
