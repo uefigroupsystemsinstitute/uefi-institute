@@ -3,543 +3,993 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WILSON VANGUARD | The Apex Masculine Protocol</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
+    <title>WILSON VANGUARD | The Apex Transformation Protocol</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Roboto+Mono:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* === VANGUARD CORE VARIABLES === */
+        /* ==========================================================================
+           1. CORE VARIABLES & ACCESSIBLE COLOR PALETTE (Navy, Charcoal, Deep Green)
+           ========================================================================== */
         :root {
-            --void: #030303;
-            --carbon: #0f0f0f;
-            --steel: #2a2a2a;
-            --crimson: #d31027;
-            --blood: #8b0000;
-            --titanium: #e0e0e0;
-            --text-dim: #7a7a7a;
-            --neon-red: rgba(211, 16, 39, 0.6);
-            --transition-fast: 0.2s ease-out;
-            --transition-epic: 0.6s cubic-bezier(0.25, 1, 0.1, 1);
+            /* Primary Colors */
+            --charcoal-base: #12151C;
+            --charcoal-light: #1E232E;
+            --charcoal-lighter: #2A303F;
+            
+            --navy-deep: #0A1931;
+            --navy-accent: #15305B;
+            --navy-highlight: #1E4482;
+            
+            --green-tactical: #1B4332;
+            --green-success: #2D6A4F;
+            --green-neon: #40916C;
+            
+            --gold-elite: #D4AF37;
+            --gold-dim: #AA8C2C;
+            
+            /* Text & Visibility (High Contrast) */
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --text-dark: #0F172A;
+            --white: #FFFFFF;
+            
+            /* UI Elements */
+            --border-subtle: rgba(226, 232, 240, 0.1);
+            --border-active: rgba(226, 232, 240, 0.3);
+            --shadow-core: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+            --shadow-glow: 0 0 20px rgba(45, 106, 79, 0.4);
+            
+            /* Layout & Transitions */
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 16px;
         }
 
-        /* === RESET & FOUNDATION === */
+        /* ==========================================================================
+           2. RESET & BASE TYPOGRAPHY
+           ========================================================================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: crosshair;
         }
 
         html {
             scroll-behavior: smooth;
+            font-size: 16px;
         }
 
         body {
-            background-color: var(--void);
-            color: var(--titanium);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
+            background-color: var(--charcoal-base);
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle at 50% 50%, rgba(211, 16, 39, 0.03) 0%, transparent 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* === CUSTOM SCROLLBAR === */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--void); }
-        ::-webkit-scrollbar-thumb { background: var(--steel); border-radius: 0px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--crimson); }
-
-        /* === TYPOGRAPHY === */
-        h1, h2, h3, .brand {
-            font-family: 'Bebas Neue', cursive;
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
-            line-height: 1;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            color: var(--white);
         }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button { cursor: pointer; border: none; outline: none; background: none; font-family: inherit; }
         
-        .cyber-text {
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
+        .accent-text { color: var(--gold-elite); }
+        .green-text { color: var(--green-neon); }
 
-        /* === NAVIGATION ARCHITECTURE === */
-        .vanguard-nav {
+        /* ==========================================================================
+           3. NAVIGATION ARCHITECTURE
+           ========================================================================== */
+        .navbar {
             position: fixed;
-            top: 0; left: 0; width: 100%;
-            height: 80px;
+            top: 0; width: 100%;
+            height: 90px;
+            background: rgba(18, 21, 28, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 4vw;
-            background: rgba(3, 3, 3, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--steel);
-            z-index: 9999;
+            padding: 0 5%;
+            z-index: 1000;
         }
 
-        .brand {
-            font-size: 2.2rem;
-            color: var(--titanium);
-            text-decoration: none;
+        .brand-logo {
+            font-size: 2rem;
+            font-weight: 900;
             letter-spacing: 2px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .brand span {
-            color: var(--crimson);
+        .brand-logo svg {
+            width: 35px; height: 35px;
+            fill: var(--gold-elite);
         }
 
-        .nav-matrix {
+        .nav-links {
             display: flex;
-            gap: 2.5rem;
-            list-style: none;
+            gap: 2rem;
         }
 
-        .nav-matrix a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            transition: var(--transition-fast);
-            position: relative;
-        }
-
-        .nav-matrix a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px; left: 0;
-            width: 0%; height: 2px;
-            background: var(--crimson);
-            transition: var(--transition-fast);
-        }
-
-        .nav-matrix a:hover {
-            color: var(--titanium);
-            text-shadow: 0 0 8px var(--neon-red);
-        }
-
-        .nav-matrix a:hover::after {
-            width: 100%;
-        }
-
-        /* === HERO SECTOR: THE AWAKENING === */
-        .hero-sector {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            text-align: center;
-            border-bottom: 2px solid var(--crimson);
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(3,3,3,0.3) 0%, rgba(3,3,3,1) 100%),
-                        url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2069&auto=format&fit=crop'); /* Gritty Gym/Iron background */
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-            filter: grayscale(80%) contrast(120%);
-        }
-
-        .status-badge {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
-            color: var(--crimson);
-            border: 1px solid var(--crimson);
-            padding: 8px 16px;
-            margin-bottom: 2rem;
-            letter-spacing: 4px;
-            background: rgba(211, 16, 39, 0.05);
-            animation: pulse 2s infinite;
-        }
-
-        .hero-sector h1 {
-            font-size: clamp(4rem, 10vw, 9rem);
-            color: var(--titanium);
-            text-shadow: 4px 4px 0px var(--blood);
-            margin-bottom: 1rem;
-            letter-spacing: 2px;
-        }
-
-        .hero-sub {
-            font-size: 1.2rem;
-            color: var(--text-dim);
-            max-width: 700px;
-            font-weight: 300;
-            margin-bottom: 3rem;
-        }
-
-        .btn-primary {
-            background: transparent;
-            color: var(--titanium);
-            border: 2px solid var(--crimson);
-            padding: 15px 40px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
+        .nav-links li a {
+            font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            text-decoration: none;
-            transition: var(--transition-epic);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: var(--crimson);
-            transition: var(--transition-epic);
-            z-index: -1;
-        }
-
-        .btn-primary:hover::before { left: 0; }
-        .btn-primary:hover { color: var(--void); box-shadow: 0 0 20px var(--neon-red); }
-
-        /* === MODULE ARCHITECTURE (SECTIONS) === */
-        .module {
-            padding: 120px 5vw;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
             position: relative;
         }
 
-        .module-header {
-            margin-bottom: 60px;
-            border-left: 5px solid var(--crimson);
-            padding-left: 20px;
+        .nav-links li a:hover, .nav-links li a.active {
+            color: var(--white);
         }
 
-        .module-id {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--crimson);
-            font-size: 0.9rem;
-            letter-spacing: 5px;
-            display: block;
-            margin-bottom: 10px;
+        .nav-links li a::after {
+            content: ''; position: absolute;
+            bottom: -5px; left: 0;
+            width: 0; height: 2px;
+            background: var(--gold-elite);
+            transition: var(--transition-smooth);
         }
 
-        .module-title {
-            font-size: 3.5rem;
-            color: var(--titanium);
+        .nav-links li a:hover::after, .nav-links li a.active::after { width: 100%; }
+
+        .auth-buttons button {
+            padding: 10px 24px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition-smooth);
         }
 
-        /* === GRID VAULT === */
-        .arsenal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
+        .btn-login { color: var(--white); margin-right: 15px; }
+        .btn-login:hover { color: var(--gold-elite); }
+        
+        .btn-action {
+            background: var(--green-success);
+            color: var(--white);
+            border: 1px solid var(--green-neon);
+            box-shadow: 0 4px 15px rgba(45, 106, 79, 0.3);
+        }
+        .btn-action:hover {
+            background: var(--green-neon);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
         }
 
-        .data-card {
-            background: var(--carbon);
-            border: 1px solid var(--steel);
-            text-decoration: none;
+        /* ==========================================================================
+           4. HERO & ONBOARDING ENTRY
+           ========================================================================== */
+        .hero {
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            transition: var(--transition-epic);
-            position: relative;
-        }
-
-        .data-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 3px;
-            background: var(--crimson);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: var(--transition-epic);
-            z-index: 10;
-        }
-
-        .data-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--crimson);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
-        }
-
-        .data-card:hover::before { transform: scaleX(1); }
-
-        .visual-feed {
-            width: 100%;
-            height: 250px;
-            position: relative;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .visual-feed img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%) contrast(110%);
-            opacity: 0.6;
-            transition: var(--transition-epic);
-        }
-
-        .data-card:hover .visual-feed img {
-            filter: grayscale(0%) contrast(120%);
-            opacity: 1;
-            transform: scale(1.05);
-        }
-
-        .play-core {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70px; height: 70px;
-            background: rgba(211, 16, 39, 0.2);
-            border: 2px solid var(--crimson);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
             align-items: center;
-            backdrop-filter: blur(4px);
-            transition: var(--transition-epic);
+            padding: 120px 5% 60px;
+            background: linear-gradient(135deg, var(--charcoal-base) 0%, var(--navy-deep) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: url('https://images.unsplash.com/photo-1526506118129-417242d54407?q=80&w=2070&auto=format&fit=crop') center/cover;
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
             z-index: 2;
         }
 
-        .play-core::after {
-            content: '';
-            border-left: 18px solid var(--titanium);
-            border-top: 12px solid transparent;
-            border-bottom: 12px solid transparent;
-            margin-left: 6px;
+        .hero-tag {
+            font-family: 'Roboto Mono', monospace;
+            color: var(--gold-elite);
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 5px 15px;
+            border-left: 2px solid var(--gold-elite);
         }
 
-        .data-card:hover .play-core {
-            background: var(--crimson);
-            transform: translate(-50%, -50%) scale(1.15);
-            box-shadow: 0 0 25px var(--neon-red);
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            margin-bottom: 24px;
         }
 
-        .intel-box {
-            padding: 30px;
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 600px;
         }
 
-        .intel-box h3 {
-            font-family: 'Bebas Neue', cursive;
-            font-size: 1.8rem;
-            color: var(--titanium);
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        .intel-box p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
+        .btn-massive {
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: var(--gold-elite);
+            color: var(--charcoal-base);
+            border-radius: var(--radius-sm);
+            transition: var(--transition-bounce);
         }
 
-        /* === ISOLATION / DEEP WORK CHAMBER === */
-        .isolation-chamber {
-            background: var(--carbon);
-            border: 1px solid var(--steel);
-            padding: 80px 5vw;
+        .btn-massive:hover {
+            background: var(--white);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* ==========================================================================
+           5. DASHBOARD & GAMIFICATION (USER JOURNEY FOCUS)
+           ========================================================================== */
+        .section-header {
             text-align: center;
-            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .dashboard-container {
+            padding: 100px 5%;
+            background: var(--charcoal-light);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 40px;
+        }
+
+        /* Profile Sidebar */
+        .profile-card {
+            background: var(--charcoal-lighter);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-core);
+        }
+
+        .avatar {
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--green-success);
+            margin: 0 auto 20px;
+            overflow: hidden;
+            background: var(--navy-deep);
+        }
+
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .rank-badge {
+            background: var(--navy-deep);
+            color: var(--gold-elite);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8rem;
+            padding: 5px 15px;
+            border: 1px solid var(--gold-elite);
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        /* Progress Pillars */
+        .pillar-stats {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .stat-bar { margin-bottom: 20px; }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: var(--charcoal-base);
+            border-radius: 4px;
             overflow: hidden;
         }
-        
-        .isolation-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop') center/cover;
-            opacity: 0.1;
-            filter: grayscale(100%);
-            z-index: 0;
-            transition: var(--transition-epic);
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
         }
 
-        .isolation-chamber:hover .isolation-bg {
-            opacity: 0.3;
-            filter: grayscale(0%);
+        .fill-finance { background: #3B82F6; width: 65%; } /* Blue */
+        .fill-fitness { background: #EF4444; width: 40%; } /* Red */
+        .fill-mental { background: #10B981; width: 80%; }  /* Green */
+        .fill-social { background: #F59E0B; width: 55%; }  /* Orange */
+
+        /* Main Dashboard Content - The 4 Pillars */
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
         }
 
-        .chamber-content {
+        .pillar-card {
+            background: var(--charcoal-lighter);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-active);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .pillar-img {
+            width: 100%; height: 200px;
+            background: var(--navy-deep);
             position: relative;
-            z-index: 1;
         }
 
-        .pulse-btn {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 20px 50px;
-            background: var(--crimson);
-            color: var(--titanium);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            text-decoration: none;
-            letter-spacing: 4px;
-            border-radius: 2px;
-            box-shadow: 0 0 15px var(--neon-red);
-            transition: var(--transition-fast);
+        .pillar-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            transition: var(--transition-smooth);
         }
 
-        .pulse-btn:hover {
-            background: var(--titanium);
-            color: var(--blood);
-            box-shadow: 0 0 30px var(--titanium);
-            transform: scale(1.05);
+        .pillar-card:hover .pillar-img img { opacity: 1; transform: scale(1.05); }
+
+        .pillar-icon {
+            position: absolute;
+            bottom: -20px; right: 20px;
+            width: 50px; height: 50px;
+            background: var(--green-success);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            border: 4px solid var(--charcoal-lighter);
+            color: var(--white);
         }
 
-        /* === FOOTER COMMAND CENTER === */
+        .pillar-content { padding: 30px; }
+        .pillar-content h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .pillar-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+        
+        .feature-list li {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: var(--green-neon);
+            font-weight: bold;
+        }
+
+        .btn-outline {
+            display: block; width: 100%;
+            text-align: center;
+            padding: 12px; margin-top: 25px;
+            border: 1px solid var(--text-muted);
+            color: var(--text-main);
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition-smooth);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--charcoal-base);
+        }
+
+        /* ==========================================================================
+           6. INTERACTIVE TOOLS: FINANCIAL CALCULATOR & FITNESS TRACKER
+           ========================================================================== */
+        .tools-section {
+            padding: 100px 5%;
+            background: var(--navy-deep);
+        }
+
+        .tool-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: var(--charcoal-base);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .input-group { margin-bottom: 20px; }
+        .input-group label {
+            display: block; font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;
+        }
+        .input-group input, .input-group select {
+            width: 100%; padding: 15px;
+            background: var(--charcoal-lighter);
+            border: 1px solid var(--border-subtle);
+            color: var(--white); font-family: inherit; font-size: 1rem;
+            border-radius: var(--radius-sm);
+        }
+        .input-group input:focus { border-color: var(--gold-elite); outline: none; }
+
+        .result-box {
+            background: var(--green-tactical);
+            padding: 30px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--green-success);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+
+        .result-box h4 { color: var(--green-neon); margin-bottom: 10px; }
+        .result-value { font-size: 3.5rem; font-weight: 900; color: var(--white); }
+        .result-desc { color: var(--text-main); font-size: 0.9rem; margin-top: 10px; }
+
+        /* ==========================================================================
+           7. BROTHERHOOD COMMUNITY & ACCOUNTABILITY
+           ========================================================================== */
+        .community-section {
+            padding: 100px 5%;
+            background: var(--charcoal-base);
+        }
+
+        .forum-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .thread-list {
+            background: var(--charcoal-lighter);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .thread-item {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex; justify-content: space-between; align-items: center;
+            transition: var(--transition-smooth);
+        }
+        .thread-item:hover { background: rgba(255,255,255,0.02); cursor: pointer; }
+        .thread-item:last-child { border-bottom: none; }
+
+        .thread-info h4 { font-size: 1.1rem; text-transform: none; margin-bottom: 5px; font-family: 'Montserrat'; font-weight: 700;}
+        .thread-meta { font-size: 0.8rem; color: var(--text-muted); font-family: 'Roboto Mono'; }
+        
+        .thread-stats { display: flex; gap: 20px; font-size: 0.9rem; font-weight: 600; color: var(--gold-elite); }
+
+        .leaderboard {
+            background: var(--charcoal-lighter);
+            border-radius: var(--radius-md);
+            padding: 30px; border: 1px solid var(--border-subtle);
+        }
+
+        .leader-item {
+            display: flex; align-items: center; gap: 15px; margin-bottom: 20px;
+        }
+        .leader-rank { font-family: 'Oswald'; font-size: 1.5rem; color: var(--text-muted); width: 25px;}
+        .leader-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--gold-elite); overflow: hidden;}
+        .leader-avatar img { width: 100%; height: 100%; object-fit: cover;}
+        .leader-name { font-weight: 700; flex-grow: 1; }
+        .leader-score { font-family: 'Roboto Mono'; color: var(--green-neon); font-weight: 700;}
+
+
+        /* ==========================================================================
+           8. ONBOARDING MODAL (QUIZ SYSTEM)
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 25, 49, 0.9); backdrop-filter: blur(5px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; opacity: 0; pointer-events: none; transition: var(--transition-smooth);
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .quiz-container {
+            background: var(--charcoal-base);
+            width: 100%; max-width: 700px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gold-elite);
+            padding: 50px; position: relative;
+            transform: translateY(20px); transition: var(--transition-smooth);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+        .modal-overlay.active .quiz-container { transform: translateY(0); }
+
+        .close-modal {
+            position: absolute; top: 20px; right: 20px;
+            font-size: 2rem; color: var(--text-muted); background: none; border: none; cursor: pointer;
+        }
+        .close-modal:hover { color: var(--white); }
+
+        .quiz-progress { display: flex; gap: 5px; margin-bottom: 30px; }
+        .q-step { height: 4px; flex-grow: 1; background: var(--charcoal-lighter); border-radius: 2px;}
+        .q-step.active { background: var(--gold-elite); }
+
+        .quiz-question h3 { font-size: 2rem; margin-bottom: 10px; }
+        .quiz-question p { color: var(--text-muted); margin-bottom: 30px; }
+
+        .quiz-options { display: flex; flex-direction: column; gap: 15px; }
+        .option-btn {
+            padding: 18px 25px; text-align: left;
+            background: var(--charcoal-lighter); border: 1px solid var(--border-subtle);
+            color: var(--white); font-weight: 600; font-size: 1rem;
+            border-radius: var(--radius-sm); transition: var(--transition-smooth);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .option-btn:hover { background: var(--navy-accent); border-color: var(--navy-highlight); padding-left: 35px; }
+        
+        /* ==========================================================================
+           9. FOOTER COMMAND CENTER
+           ========================================================================== */
         footer {
             background: #000;
-            padding: 80px 5vw;
-            text-align: center;
-            border-top: 2px solid var(--steel);
-            position: relative;
+            padding: 80px 5% 40px;
+            border-top: 1px solid var(--border-subtle);
         }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px;}
+        .footer-col h4 { margin-bottom: 25px; color: var(--gold-elite); font-size: 1.2rem;}
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: var(--text-muted); font-size: 0.9rem; transition: var(--transition-smooth); }
+        .footer-links a:hover { color: var(--white); padding-left: 5px;}
+        .copyright { text-align: center; padding-top: 30px; border-top: 1px solid var(--charcoal-lighter); color: var(--text-muted); font-size: 0.8rem; font-family: 'Roboto Mono';}
 
-        .footer-logo {
-            font-family: 'Bebas Neue', cursive;
-            font-size: 3rem;
-            color: var(--steel);
-            letter-spacing: 5px;
-            margin-bottom: 20px;
-        }
-
-        .footer-logo span {
-            color: var(--text-dim);
-        }
-
-        .sys-msg {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.7rem;
-            color: var(--crimson);
-            letter-spacing: 8px;
-            text-transform: uppercase;
-        }
-
-        /* Animations */
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(211, 16, 39, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(211, 16, 39, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(211, 16, 39, 0); }
-        }
-
-        /* Mobile Optimization */
-        @media (max-width: 768px) {
-            .nav-matrix { display: none; } /* Add a hamburger menu in JS for prod */
-            .hero-sector h1 { font-size: 3.5rem; }
-            .module-title { font-size: 2.5rem; }
+        /* Responsive */
+        @media (max-width: 992px) {
+            .dashboard-grid, .tool-container, .forum-grid, .footer-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Add JS hamburger for production */
         }
     </style>
 </head>
 <body>
 
-    <nav class="vanguard-nav">
-        <a href="#" class="brand">WILSON<span>VANGUARD</span></a>
-        <ul class="nav-matrix">
-            <li><a href="#initiate">01. Initiate</a></li>
-            <li><a href="#capital">02. Wealth Architecture</a></li>
-            <li><a href="#focus">03. Iron Protocol</a></li>
-            <li><a href="#syndicate">04. The Syndicate</a></li>
+    <nav class="navbar">
+        <a href="#" class="brand-logo">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13.5h-13L12 6.5z"/></svg>
+            WILSON VANGUARD
+        </a>
+        <ul class="nav-links">
+            <li><a href="#hub" class="active">Dashboard</a></li>
+            <li><a href="#pillars">The 4 Pillars</a></li>
+            <li><a href="#tools">Mastery Tools</a></li>
+            <li><a href="#brotherhood">Brotherhood</a></li>
         </ul>
+        <div class="auth-buttons">
+            <button class="btn-login">Member Log In</button>
+            <button class="btn-action" onclick="openQuiz()">Initiate Protocol</button>
+        </div>
     </nav>
 
-    <header class="hero-sector" id="initiate">
-        <div class="hero-bg"></div>
-        <div class="status-badge">SYSTEM SECURE // TOP 1% PROTOCOL</div>
-        <h1>ERADICATE WEAKNESS</h1>
-        <p class="hero-sub">Boys wait for permission. Men forge their own empires. The Wilson Vanguard is the definitive architectural blueprint for dominance in finance, physique, and absolute sovereignty.</p>
-        <a href="#capital" class="btn-primary">Initialize Transformation</a>
-    </header>
-
-    <section class="module" id="capital">
-        <div class="module-header">
-            <span class="module-id">// SEC-01 : WEALTH.GENERATION</span>
-            <h2 class="module-title">The Financial Arsenal</h2>
-        </div>
-        
-        <div class="arsenal-grid">
-            <a href="https://www.youtube.com/watch?v=TUGOPWEWeMg" target="_blank" class="data-card">
-                <div class="visual-feed">
-                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2071&auto=format&fit=crop" alt="Corporate Dominance">
-                    <div class="play-core"></div>
-                </div>
-                <div class="intel-box">
-                    <h3>Henry Musangi: Career Design</h3>
-                    <p>Strategic deployment of high-value skills. Corporate ascension and architectural legacy building.</p>
-                </div>
-            </a>
-
-            <a href="https://www.youtube.com/watch?v=i1ZDaLALITU" target="_blank" class="data-card">
-                <div class="visual-feed">
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" alt="Real Estate Empire">
-                    <div class="play-core"></div>
-                </div>
-                <div class="intel-box">
-                    <h3>Leonard Mcharo: 11,000 Units</h3>
-                    <p>Brutal mathematical precision in mass-scale real estate development. Build the empire brick by brick.</p>
-                </div>
-            </a>
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-tag">SYSTEM ONLINE // VER. 4.0 APEX</span>
+            <h1>TRANSFORM POTENTIAL INTO <span class="accent-text">ABSOLUTE POWER</span></h1>
+            <p>The definitive architecture for the modern man. Eliminate weakness, forge discipline, and dominate across finance, fitness, mindset, and social dynamics. Your empire starts here.</p>
+            <div class="cta-group">
+                <button class="btn-massive" onclick="openQuiz()">Begin Transformation Quiz</button>
+                <a href="#hub" style="display:flex; align-items:center; color: var(--white); font-weight:700; font-family:'Roboto Mono'; text-decoration:underline;">EXPLORE DASHBOARD</a>
+            </div>
         </div>
     </section>
 
-    <section class="isolation-chamber" id="focus">
-        <div class="isolation-bg"></div>
-        <div class="chamber-content">
-            <span class="module-id">// SEC-02 : MENTAL.FORTITUDE</span>
-            <h2 class="module-title" style="margin-bottom: 20px;">Deep Work Isolation</h2>
-            <p style="color: var(--text-dim); max-width: 600px; margin: 0 auto;">Distraction is the enemy of the masculine drive. Enter the hyper-focus state. No noise. No excuses. Only execution.</p>
-            <br>
-            <a href="https://youtu.be/Y-JQ-RCyPpQ?si=YBLfeBqXIMLEDtqi" target="_blank" class="pulse-btn">ENGAGE 4-HOUR FREQUENCY</a>
+    <section id="hub" class="dashboard-container">
+        <div class="section-header">
+            <h2>Command Center</h2>
+            <p>Your individualized progression matrix. Track your growth from raw recruit to Apex Vanguard across the core disciplines.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <aside class="profile-card">
+                <div class="avatar">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1974&auto=format&fit=crop" alt="User Avatar">
+                </div>
+                <h3>ALEX MERCER</h3>
+                <div class="rank-badge">RANK: IRON INITIATE</div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Day 14 of 90 Protocol</p>
+                
+                <hr style="border:0; border-top: 1px solid var(--border-subtle); margin: 20px 0;">
+                
+                <div class="pillar-stats">
+                    <div class="stat-bar">
+                        <div class="stat-header"><span>Financial Mastery</span> <span>65%</span></div>
+                        <div class="progress-track"><div class="progress-fill fill-finance"></div></div>
+                    </div>
+                    <div class="stat-bar">
+                        <div class="stat-header"><span>Physical Forging</span> <span>40%</span></div>
+                        <div class="progress-track"><div class="progress-fill fill-fitness"></div></div>
+                    </div>
+                    <div class="stat-bar">
+                        <div class="stat-header"><span>Mental Resilience</span> <span>80%</span></div>
+                        <div class="progress-track"><div class="progress-fill fill-mental"></div></div>
+                    </div>
+                    <div class="stat-bar">
+                        <div class="stat-header"><span>Social Dynamics</span> <span>55%</span></div>
+                        <div class="progress-track"><div class="progress-fill fill-social"></div></div>
+                    </div>
+                </div>
+            </aside>
+
+            <div id="pillars" class="pillar-grid">
+                
+                <div class="pillar-card">
+                    <div class="pillar-img">
+                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop" alt="Finance">
+                        <div class="pillar-icon">F</div>
+                    </div>
+                    <div class="pillar-content">
+                        <h3>Financial Architecture</h3>
+                        <p>Wealth is engineered, not stumbled upon. Build cash-flowing assets and unbreakable career capital.</p>
+                        <ul class="feature-list">
+                            <li>Investment Portfolio Blueprint</li>
+                            <li>High-Income Skill Acquisition</li>
+                            <li>Tax & Corporate Structuring</li>
+                        </ul>
+                        <button class="btn-outline">Access Vault</button>
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-img">
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop" alt="Fitness">
+                        <div class="pillar-icon">P</div>
+                    </div>
+                    <div class="pillar-content">
+                        <h3>Physical Forging</h3>
+                        <p>A weak vessel corrupts a strong mind. Build functional strength, endurance, and apex aesthetics.</p>
+                        <ul class="feature-list">
+                            <li>Hypertrophy & Strength Protocols</li>
+                            <li>Macro & Micronutrient Systems</li>
+                            <li>Testosterone Optimization</li>
+                        </ul>
+                        <button class="btn-outline">View Program</button>
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-img">
+                        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop" alt="Mindset">
+                        <div class="pillar-icon">M</div>
+                    </div>
+                    <div class="pillar-content">
+                        <h3>Cognitive Resilience</h3>
+                        <p>Master your internal narrative. Focus, discipline, and emotional regulation in high-stress environments.</p>
+                        <ul class="feature-list">
+                            <li>Deep Work & Flow State Triggers</li>
+                            <li>Stoic Philosophy Integration</li>
+                            <li>Dopamine Detox Protocols</li>
+                        </ul>
+                        <button class="btn-outline">Enter Chamber</button>
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-img">
+                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop" alt="Social">
+                        <div class="pillar-icon">S</div>
+                    </div>
+                    <div class="pillar-content">
+                        <h3>Social Dominance</h3>
+                        <p>Influence is power. Master human psychology, negotiation, networking, and high-value dating dynamics.</p>
+                        <ul class="feature-list">
+                            <li>Charisma & Frame Control</li>
+                            <li>High-Stakes Negotiation</li>
+                            <li>Building an Elite Network</li>
+                        </ul>
+                        <button class="btn-outline">Study Dynamics</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
-    <section class="module" id="syndicate">
-        <div class="module-header">
-            <span class="module-id">// SEC-03 : BROTHERHOOD.DYNAMICS</span>
-            <h2 class="module-title">The Syndicate</h2>
+    <section id="tools" class="tools-section">
+        <div class="section-header">
+            <h2>Calculators & Tools</h2>
+            <p>Data drives decisions. Utilize our proprietary algorithms to calculate your path to physiological and financial dominance.</p>
         </div>
-        
-        <div class="arsenal-grid">
-            <a href="https://www.youtube.com/watch?v=NEOCow9d1Kg" target="_blank" class="data-card">
-                <div class="visual-feed">
-                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop" alt="High End Network">
-                    <div class="play-core"></div>
-                </div>
-                <div class="intel-box">
-                    <h3>3 Men Army: The 97s</h3>
-                    <p>Establishing the inner circle. Modern masculine hierarchy, unbreakable loyalty, and elite social dynamics.</p>
-                </div>
-            </a>
 
-            <a href="https://www.youtube.com/watch?v=Cdmgis-toZM" target="_blank" class="data-card">
-                <div class="visual-feed">
-                    <img src="https://images.unsplash.com/photo-1612413158316-d8050e50f3b0?q=80&w=2070&auto=format&fit=crop" alt="Leadership">
-                    <div class="play-core"></div>
+        <div class="tool-container">
+            <div class="tool-card">
+                <h3 style="margin-bottom: 25px; color: var(--gold-elite);">Compound Wealth Engine</h3>
+                <div class="input-group">
+                    <label>Initial Capital ($)</label>
+                    <input type="number" id="calc-initial" value="10000">
                 </div>
-                <div class="intel-box">
-                    <h3>The Professional Man</h3>
-                    <p>Ruthless decorum, stoic presence, and absolute leadership in high-stakes, volatile environments.</p>
+                <div class="input-group">
+                    <label>Monthly Contribution ($)</label>
+                    <input type="number" id="calc-monthly" value="1000">
                 </div>
-            </a>
+                <div class="input-group">
+                    <label>Annual Return Rate (%)</label>
+                    <input type="number" id="calc-rate" value="10">
+                </div>
+                <div class="input-group">
+                    <label>Years to Hold</label>
+                    <input type="number" id="calc-years" value="10">
+                </div>
+                <button class="btn-outline" style="background: var(--navy-highlight); border:none; color:white;" onclick="calculateWealth()">Run Algorithm</button>
+            </div>
+            
+            <div class="result-box" id="wealth-result">
+                <h4>PROJECTED EMPIRE</h4>
+                <div class="result-value" id="res-val">$245,684</div>
+                <div class="result-desc">Capital generated through disciplined architecture.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="brotherhood" class="community-section">
+        <div class="section-header">
+            <h2>The Syndicate</h2>
+            <p>Iron sharpens iron. Connect with the 1%, hold each other accountable, and rise together in the global hierarchy.</p>
+        </div>
+
+        <div class="forum-grid">
+            <div class="thread-list">
+                <div class="thread-item">
+                    <div class="thread-info">
+                        <div class="thread-meta">POSTED 2H AGO BY @STRATEGIST</div>
+                        <h4>Q4 Commercial Real Estate Acquisitions</h4>
+                    </div>
+                    <div class="thread-stats"><span>142 REPLIES</span> <span>3.2K VIEWS</span></div>
+                </div>
+                <div class="thread-item">
+                    <div class="thread-info">
+                        <div class="thread-meta">POSTED 5H AGO BY @IRON_FORGED</div>
+                        <h4>Breaking the 400lb Deadlift Plateau - Routine Adjustments</h4>
+                    </div>
+                    <div class="thread-stats"><span>89 REPLIES</span> <span>1.8K VIEWS</span></div>
+                </div>
+                <div class="thread-item">
+                    <div class="thread-info">
+                        <div class="thread-meta">POSTED 1 DAY AGO BY @STOIC_MIND</div>
+                        <h4>Navigating Corporate Politics without Compromising Integrity</h4>
+                    </div>
+                    <div class="thread-stats"><span>215 REPLIES</span> <span>5.5K VIEWS</span></div>
+                </div>
+                <div class="thread-item" style="justify-content: center; padding: 15px;">
+                    <a href="#" style="color: var(--gold-elite); font-weight: 700; font-family: 'Roboto Mono';">ENTER FULL FORUM -></a>
+                </div>
+            </div>
+
+            <div class="leaderboard">
+                <h3 style="margin-bottom: 25px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">Weekly Top Operators</h3>
+                <div class="leader-item">
+                    <div class="leader-rank">1</div>
+                    <div class="leader-avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop" alt=""></div>
+                    <div class="leader-name">Marcus T.</div>
+                    <div class="leader-score">9,420 XP</div>
+                </div>
+                <div class="leader-item">
+                    <div class="leader-rank">2</div>
+                    <div class="leader-avatar"><img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?q=80&w=1974&auto=format&fit=crop" alt=""></div>
+                    <div class="leader-name">Elijah Vance</div>
+                    <div class="leader-score">8,850 XP</div>
+                </div>
+                <div class="leader-item">
+                    <div class="leader-rank">3</div>
+                    <div class="leader-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" alt=""></div>
+                    <div class="leader-name">Julian K.</div>
+                    <div class="leader-score">8,100 XP</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-logo">WILSON<span>VANGUARD</span></div>
-        <p class="sys-msg">PROTOCOL ONLINE. SEPARATING THE 1% FROM THE HERD.</p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="brand-logo" style="margin-bottom: 20px;">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13.5h-13L12 6.5z"/></svg>
+                    VANGUARD
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">The systematic architecture for the top 1% of men. Eradicate weakness. Build your empire.</p>
+            </div>
+            <div class="footer-col">
+                <h4>THE PROTOCOL</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Financial Architecture</a></li>
+                    <li><a href="#">Physical Forging</a></li>
+                    <li><a href="#">Cognitive Resilience</a></li>
+                    <li><a href="#">Social Dominance</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>PLATFORM</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Dashboard Login</a></li>
+                    <li><a href="#">Brotherhood Forum</a></li>
+                    <li><a href="#">Calculators</a></li>
+                    <li><a href="#">Live Events</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>LEGAL</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 WILSON VANGUARD PROTOCOL. ALL RIGHTS RESERVED. FORGED IN DISCIPLINE.
+        </div>
     </footer>
 
+    <div class="modal-overlay" id="quizModal">
+        <div class="quiz-container">
+            <button class="close-modal" onclick="closeQuiz()">&times;</button>
+            <div class="quiz-progress" id="quizProgress">
+                <div class="q-step active"></div>
+                <div class="q-step"></div>
+                <div class="q-step"></div>
+                <div class="q-step"></div>
+            </div>
+            <div id="quizContent">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // Wealth Calculator Logic
+        function calculateWealth() {
+            const P = parseFloat(document.getElementById('calc-initial').value);
+            const PMT = parseFloat(document.getElementById('calc-monthly').value);
+            const r = parseFloat(document.getElementById('calc-rate').value) / 100 / 12;
+            const t = parseFloat(document.getElementById('calc-years').value) * 12;
+            
+            if(isNaN(P) || isNaN(PMT) || isNaN(r) || isNaN(t)) return;
+
+            // Future Value of a Series formula
+            const futureValue = P * Math.pow(1 + r, t) + PMT * ((Math.pow(1 + r, t) - 1) / r);
+            
+            // Format number
+            const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(futureValue);
+            
+            // Animate Box
+            const resBox = document.getElementById('wealth-result');
+            resBox.style.transform = 'scale(1.05)';
+            resBox.style.boxShadow = '0 0 30px rgba(45, 106, 79, 0.8)';
+            setTimeout(() => {
+                resBox.style.transform = 'scale(1)';
+                resBox.style.boxShadow = 'none';
+            }, 300);
+
+            document.getElementById('res-val').innerText = formatted;
+        }
+
+        // Quiz System State Machine
+        const quizData = [
+            {
+                q: "What is your primary deficiency right now?",
+                options: ["Financial Capital (Low Income/Debt)", "Physical Form (Weak/Overweight)", "Mental Clarity (Brain Fog/Anxiety)", "Social Influence (Poor Network/Isolation)"]
+            },
+            {
+                q: "How many hours of Deep Work can you sustain?",
+                options: ["Under 1 Hour (Distracted easily)", "1-2 Hours", "3-4 Hours", "4+ Hours (Total Flow State)"]
+            },
+            {
+                q: "What is your physical training frequency?",
+                options: ["Sedentary (No formal training)", "1-2 times a week", "3-4 times a week (Structured)", "5+ times a week (Athlete level)"]
+            },
+            {
+                q: "Are you ready to commit to the 90-Day Apex Protocol?",
+                options: ["Yes. No excuses.", "I need more information", "I'm not ready for this level of discipline"]
+            }
+        ];
+
+        let currentStep = 0;
+
+        function openQuiz() {
+            document.getElementById('quizModal').classList.add('active');
+            renderQuiz();
+        }
+
+        function closeQuiz() {
+            document.getElementById('quizModal').classList.remove('active');
+            setTimeout(() => { currentStep = 0; }, 300);
+        }
+
+        function renderQuiz() {
+            const content = document.getElementById('quizContent');
+            const progress = document.getElementById('quizProgress');
+            
+            // Update Progress Bar
+            progress.innerHTML = '';
+            for(let i=0; i<quizData.length; i++) {
+                progress.innerHTML += `<div class="q-step ${i <= currentStep ? 'active' : ''}"></div>`;
+            }
+
+            // End of Quiz
+            if(currentStep >= quizData.length) {
+                content.innerHTML = `
+                    <div style="text-align:center;">
+                        <svg viewBox="0 0 24 24" style="width:80px; fill:var(--green-neon); margin-bottom:20px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        <h3 style="font-size:2.5rem; margin-bottom:15px; color:var(--gold-elite);">ARCHETYPE IDENTIFIED</h3>
+                        <p style="font-size:1.1rem; color:var(--text-muted); margin-bottom:30px;">Your custom blueprint has been generated. Your transformation begins now.</p>
+                        <button class="btn-massive" onclick="closeQuiz()" style="width:100%;">ACCESS YOUR DASHBOARD</button>
+                    </div>
+                `;
+                return;
+            }
+
+            // Render Current Question
+            const stepData = quizData[currentStep];
+            let html = `
+                <div class="quiz-question">
+                    <p style="font-family:'Roboto Mono'; color:var(--gold-elite);">PHASE 0${currentStep + 1} // CALIBRATION</p>
+                    <h3>${stepData.q}</h3>
+                </div>
+                <div class="quiz-options">
+            `;
+            
+            stepData.options.forEach(opt => {
+                html += `<button class="option-btn" onclick="nextStep()">${opt} <span>&#8594;</span></button>`;
+            });
+            
+            html += `</div>`;
+            content.innerHTML = html;
+        }
+
+        function nextStep() {
+            currentStep++;
+            renderQuiz();
+        }
+    </script>
 </body>
 </html>
