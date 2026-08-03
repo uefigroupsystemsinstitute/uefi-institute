@@ -3,575 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELEVATE YOUR GAME | The Apex Protocol</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&family=Oswald:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <title>Journey to Manhood | Transformation Portal</title>
     <style>
-        /* ==========================================================================
-           1. ENTERPRISE DESIGN SYSTEM & VARIABLES
-           ========================================================================== */
+        /* CSS Variables for Consistent Theming */
         :root {
-            /* Masculine Palette: Navy, Charcoal, Deep Green, Gold */
-            --bg-primary: #0A0F16;
-            --bg-secondary: #131A26;
-            --bg-tertiary: #1E293B;
-            
-            --accent-gold: #D4AF37;
-            --accent-gold-hover: #F3C94B;
-            --accent-green: #1B4332;
-            --accent-green-light: #2D6A4F;
-            --accent-blue: #0F3B6C;
-            --danger-red: #7F1D1D;
-            
-            --text-main: #F1F5F9;
-            --text-muted: #94A3B8;
-            --text-dark: #0F172A;
-            
-            --border-color: rgba(212, 175, 55, 0.2);
-            --border-solid: #334155;
-            
-            --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.15);
-            --shadow-depth: 0 10px 30px rgba(0, 0, 0, 0.8);
-            
-            --font-display: 'Oswald', sans-serif;
-            --font-body: 'Montserrat', sans-serif;
-            --font-mono: 'Roboto Mono', monospace;
-            
-            --transition-fast: 0.2s ease;
-            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-dark: #1a1a24;
+            --accent-blue: #2c5282;
+            --accent-gold: #d69e2e;
+            --text-light: #f7fafc;
+            --text-dark: #2d3748;
+            --bg-gray: #edf2f7;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* ==========================================================================
-           2. RESET & BASE
-           ========================================================================== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        html { scroll-behavior: smooth; font-size: 16px; }
-        
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            font-family: var(--font-body);
+            font-family: var(--font-main);
+            color: var(--text-dark);
             line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            background-color: var(--bg-gray);
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: var(--font-display);
+        /* Navigation */
+        header {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 26, 36, 0.8), rgba(44, 82, 130, 0.8)), url('https://images.unsplash.com/photo-1552083974-186346191183?auto=format&fit=crop&q=80') center/cover;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-weight: 700;
         }
 
-        a { text-decoration: none; color: inherit; }
-        button { cursor: pointer; border: none; font-family: inherit; }
-        img { max-width: 100%; height: auto; display: block; }
-
-        /* ==========================================================================
-           3. NAVIGATION ARCHITECTURE
-           ========================================================================== */
-        .site-header {
-            position: fixed; top: 0; width: 100%; height: 80px;
-            background: rgba(10, 15, 22, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 9999;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%;
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
         }
 
-        .brand {
-            font-family: var(--font-display); font-size: 2rem;
-            color: var(--text-main); letter-spacing: 2px;
+        .cta-button {
+            background-color: var(--accent-gold);
+            color: var(--primary-dark);
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
-        .brand span { color: var(--accent-gold); }
 
-        .nav-menu { display: flex; gap: 2rem; list-style: none; }
-        .nav-menu a {
-            font-size: 0.85rem; font-weight: 700; letter-spacing: 1.5px;
-            color: var(--text-muted); text-transform: uppercase;
-            transition: var(--transition-fast);
+        .cta-button:hover {
+            background-color: #ecc94b;
+            transform: translateY(-2px);
         }
-        .nav-menu a:hover { color: var(--accent-gold); }
 
-        .btn-join {
-            background: var(--accent-gold); color: var(--bg-primary);
-            padding: 10px 24px; font-weight: 700; text-transform: uppercase;
-            border-radius: 2px; transition: var(--transition-smooth);
-        }
-        .btn-join:hover { background: var(--text-main); box-shadow: var(--shadow-glow); }
-
-        /* ==========================================================================
-           4. HERO SECTION (Mapped to image_592934.jpg concept)
-           ========================================================================== */
-        .hero {
-            padding-top: 120px;
-            min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        /* Pillars Section */
+        .pillars-section {
+            padding: 5rem 5%;
             text-align: center;
-            background: linear-gradient(to bottom, rgba(10,15,22,0.4), var(--bg-primary)), url('image_592934.jpg') center/cover;
-            border-bottom: 1px solid var(--border-solid);
-            position: relative;
         }
 
-        .hero h1 { font-size: clamp(3.5rem, 8vw, 7rem); line-height: 1; margin-bottom: 10px; }
-        .hero h1 span { color: var(--accent-gold); border-bottom: 4px solid var(--accent-gold); }
-        .hero p { font-size: 1.2rem; color: var(--text-muted); letter-spacing: 4px; margin-bottom: 40px; text-transform: uppercase; font-weight: 500; }
-
-        .hero-actions { display: flex; gap: 20px; }
-        .btn-primary, .btn-secondary {
-            padding: 15px 40px; font-family: var(--font-display); font-size: 1.2rem;
-            text-transform: uppercase; letter-spacing: 1px; border-radius: 2px;
-            transition: var(--transition-smooth);
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-dark);
         }
-        .btn-primary { background: var(--accent-gold); color: var(--bg-primary); }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: var(--shadow-glow); }
-        .btn-secondary { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); }
-        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
-
-        /* ==========================================================================
-           5. THE FOUR PILLARS SECTION
-           ========================================================================== */
-        .section-wrapper { padding: 100px 5%; }
-        .section-header { text-align: center; margin-bottom: 60px; }
-        .section-header h2 { font-size: 3rem; color: var(--text-main); display: inline-block; position: relative; }
-        .section-header h2::before, .section-header h2::after {
-            content: ''; position: absolute; top: 50%; width: 50px; height: 2px; background: var(--accent-gold);
-        }
-        .section-header h2::before { left: -70px; }
-        .section-header h2::after { right: -70px; }
 
         .pillars-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
         }
 
         .pillar-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-solid);
-            transition: var(--transition-smooth);
-            overflow: hidden;
-            display: flex; flex-direction: column;
-        }
-        .pillar-card:hover { border-color: var(--accent-gold); transform: translateY(-5px); box-shadow: var(--shadow-depth); }
-        
-        .pillar-img { width: 100%; height: 250px; object-fit: cover; border-bottom: 2px solid var(--accent-gold); }
-        
-        .pillar-content { padding: 25px; text-align: center; flex-grow: 1; }
-        .pillar-content h3 { font-size: 1.5rem; margin-bottom: 10px; }
-        .pillar-content p { font-size: 0.9rem; color: var(--text-muted); }
-
-        /* ==========================================================================
-           6. CONTENT STRATEGY & WORKFLOW SECTION
-           ========================================================================== */
-        .strategy-container {
-            background: var(--bg-tertiary); padding: 60px; border-radius: 4px;
-            border-left: 4px solid var(--accent-gold); margin-bottom: 40px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            text-align: left;
         }
 
-        .workflow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: var(--font-mono); font-size: 0.85rem; }
-        .data-table th, .data-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-solid); }
-        .data-table th { color: var(--accent-gold); text-transform: uppercase; }
-        .data-table tr:hover { background: rgba(255,255,255,0.02); }
-
-        /* ==========================================================================
-           7. MEDIA VAULT (YouTube & TikTok)
-           ========================================================================== */
-        .media-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start; }
-        .video-wrapper {
-            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
-            border: 2px solid var(--border-solid); border-radius: 4px; background: #000;
-        }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
-        .tiktok-container {
-            background: var(--bg-secondary); border: 1px solid var(--border-solid);
-            padding: 20px; border-radius: 4px; display: flex; justify-content: center;
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
         }
 
-        /* ==========================================================================
-           8. INTERACTIVE TOOLS (Pomodoro & Macro Calculator)
-           ========================================================================== */
-        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        
-        .tool-panel {
-            background: var(--bg-secondary); padding: 40px; border: 1px solid var(--border-solid);
-            text-align: center; position: relative;
+        .pillar-card h3 {
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 0.5rem;
+            display: inline-block;
         }
 
-        .timer-display {
-            font-family: var(--font-mono); font-size: 5rem; font-weight: 700; color: var(--text-main);
-            margin: 20px 0; text-shadow: 0 0 20px rgba(211, 39, 39, 0.4);
-        }
-        
-        .form-group { text-align: left; margin-bottom: 20px; }
-        .form-group label { display: block; font-family: var(--font-display); color: var(--text-muted); margin-bottom: 5px; letter-spacing: 1px; }
-        .form-group input, .form-group select {
-            width: 100%; padding: 12px; background: var(--bg-tertiary); border: 1px solid var(--border-solid);
-            color: var(--text-main); font-family: var(--font-body);
-        }
-        .form-group input:focus { outline: none; border-color: var(--accent-gold); }
-
-        .result-box {
-            margin-top: 20px; padding: 20px; background: var(--accent-green);
-            border-radius: 2px; font-weight: 700; font-size: 1.2rem; display: none;
+        .pillar-card p {
+            font-size: 1rem;
+            color: #4a5568;
         }
 
-        /* ==========================================================================
-           9. FOOTER
-           ========================================================================== */
+        /* Footer */
         footer {
-            background: #05080C; padding: 80px 5% 40px; border-top: 1px solid var(--border-solid);
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
         }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-        .footer-col h4 { color: var(--accent-gold); margin-bottom: 20px; font-size: 1.2rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 10px; }
-        .footer-col ul a { color: var(--text-muted); font-size: 0.9rem; transition: 0.2s; }
-        .footer-col ul a:hover { color: var(--text-main); padding-left: 5px; }
 
-        @media (max-width: 992px) {
-            .media-grid, .tools-grid, .workflow-grid { grid-template-columns: 1fr; }
-            .nav-menu { display: none; }
-            .hero h1 { font-size: 4rem; }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none; /* In a full build, add a hamburger menu here */
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <nav class="site-header">
-        <a href="#" class="brand">APEX<span>PROTOCOL</span></a>
-        <ul class="nav-menu">
-            <li><a href="#pillars">The 4 Pillars</a></li>
-            <li><a href="#strategy">Strategy & Workflow</a></li>
-            <li><a href="#vault">Media Vault</a></li>
-            <li><a href="#tools">Mastery Tools</a></li>
-        </ul>
-        <button class="btn-join">Join Brotherhood</button>
-    </nav>
-
-    <header class="hero">
-        <h1>ELEVATE <span>YOUR GAME</span></h1>
-        <p>Transform your life. Master your potential.</p>
-        <div class="hero-actions">
-            <button class="btn-primary" onclick="document.getElementById('pillars').scrollIntoView();">Get Started</button>
-            <button class="btn-secondary" onclick="document.getElementById('vault').scrollIntoView();">Watch Intro</button>
-        </div>
+    <header>
+        <a href="#" class="logo">Future Men</a>
+        <nav>
+            <ul>
+                <li><a href="#about">The Journey</a></li>
+                <li><a href="#pillars">Core Pillars</a></li>
+                <li><a href="#mentorship">Mentorship</a></li>
+                <li><a href="#community">Community</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <section id="pillars" class="section-wrapper">
-        <div class="section-header">
-            <h2>THE FOUR PILLARS OF SUCCESS</h2>
-        </div>
+    <section class="hero">
+        <h1>Transforming Boys into Men</h1>
+        <p>A comprehensive journey building resilience, fostering entrepreneurship, and cultivating emotionally intelligent leaders for tomorrow.</p>
+        <a href="#pillars" class="cta-button">Begin the Transformation</a>
+    </section>
+
+    <section id="pillars" class="pillars-section">
+        <h2 class="section-title">The Four Pillars of Transformation</h2>
         <div class="pillars-grid">
             
             <div class="pillar-card">
-                <img src="image_592934.jpg" alt="Financial Freedom" class="pillar-img" style="object-position: top left;">
-                <div class="pillar-content">
-                    <h3>Financial Freedom</h3>
-                    <p>Build Wealth & Achieve Success. Master investing, trading, entrepreneurship, and exponential career growth.</p>
-                </div>
+                <h3>Resilience & Stoicism</h3>
+                <p>Developing mental fortitude. We teach young men how to process adversity, manage their psychology during tough times, and turn challenges into fuel for personal growth rather than suppressing emotions.</p>
             </div>
 
             <div class="pillar-card">
-                <img src="image_58b0d4.png" alt="Peak Physicality" class="pillar-img">
-                <div class="pillar-content">
-                    <h3>Peak Physicality</h3>
-                    <p>Get Strong & Fit. Actionable workout programs tailored for strength, endurance, and elite aesthetics.</p>
-                </div>
+                <h3>Entrepreneurial Drive</h3>
+                <p>Economic empowerment through skill-building. Learning the mechanics of value creation, financial literacy, problem-solving, and taking calculated risks to build a sustainable future.</p>
             </div>
 
             <div class="pillar-card">
-                <img src="image_585ed8.png" alt="Mental Toughness" class="pillar-img">
-                <div class="pillar-content">
-                    <h3>Mental Toughness</h3>
-                    <p>Sharpen Your Mindset. Cultivate discipline, focus, emotional intelligence, and relentless resilience.</p>
-                </div>
+                <h3>Respectful Relationships</h3>
+                <p>Building strong partnerships. We focus on emotional intelligence, communication, empathy, and moving away from rigid stereotypes to become true allies and partners in both personal and professional life.</p>
             </div>
 
             <div class="pillar-card">
-                <img src="image_585e41.png" alt="Social Mastery" class="pillar-img">
-                <div class="pillar-content">
-                    <h3>Social Mastery</h3>
-                    <p>Excel in Communication. Elite lessons on leadership, networking, boundaries, and high-value relationships.</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="strategy" class="section-wrapper" style="background: var(--bg-secondary);">
-        <div class="section-header">
-            <h2>STRATEGIC BLUEPRINT</h2>
-        </div>
-        
-        <div class="workflow-grid">
-            <div class="strategy-container">
-                <h3 style="color: var(--accent-gold); margin-bottom: 20px; font-size: 1.8rem;"><i class="fas fa-chess-knight"></i> Content Strategy Blueprint</h3>
-                <p style="margin-bottom: 15px; color: var(--text-muted);">Designed to build authority, engagement, and long-term loyalty across the four growth pillars.</p>
-                
-                <h4 style="margin-top: 20px; border-bottom: 1px solid var(--border-solid); padding-bottom: 5px;">💼 Financial Transformation</h4>
-                <ul style="list-style: square; margin-left: 20px; color: var(--text-muted); font-size: 0.95rem;">
-                    <li>Money Mastery Series: Investing, trading, business building.</li>
-                    <li>Career Acceleration Guides: Promotions, negotiation, leadership.</li>
-                </ul>
-
-                <h4 style="margin-top: 20px; border-bottom: 1px solid var(--border-solid); padding-bottom: 5px;">🏋️ Physical Transformation</h4>
-                <ul style="list-style: square; margin-left: 20px; color: var(--text-muted); font-size: 0.95rem;">
-                    <li>Workout Programs: Strength, endurance, physique plans.</li>
-                    <li>Nutrition Blueprints: Meal plans, supplement reviews.</li>
-                </ul>
-
-                <h4 style="margin-top: 20px; border-bottom: 1px solid var(--border-solid); padding-bottom: 5px;">🧠 Mental Transformation</h4>
-                <ul style="list-style: square; margin-left: 20px; color: var(--text-muted); font-size: 0.95rem;">
-                    <li>Mindset Mastery: Discipline, focus, emotional control.</li>
-                    <li>Resilience Training: Stress management exercises.</li>
-                </ul>
-            </div>
-
-            <div class="strategy-container">
-                <h3 style="color: var(--accent-gold); margin-bottom: 20px; font-size: 1.8rem;"><i class="fas fa-cogs"></i> Production Workflow</h3>
-                <p style="margin-bottom: 15px; color: var(--text-muted);">A structured system to keep output consistent, high-quality, and aligned with the mission.</p>
-                
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Day</th><th>Task</th><th>Output Target</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Monday</td><td>Research & Outline</td><td>Draft article or video script</td></tr>
-                        <tr><td>Tuesday</td><td>Create Visuals</td><td>Design thumbnails, infographics</td></tr>
-                        <tr><td>Wednesday</td><td>Record & Edit</td><td>Produce video or podcast</td></tr>
-                        <tr><td>Thursday</td><td>Publish & Promote</td><td>Upload content + social posts</td></tr>
-                        <tr><td>Friday</td><td>Engage Community</td><td>Host live Q&A or challenge</td></tr>
-                        <tr><td>Sunday</td><td>Review Analytics</td><td>Adjust next week’s plan</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px;">
-            <img src="image_585eb8.png" alt="Mental Resilience Strategies" style="border: 1px solid var(--border-solid); border-radius: 4px;">
-            <img src="image_58b095.jpg" alt="Nutrition Guide" style="border: 1px solid var(--border-solid); border-radius: 4px;">
-            <img src="image_585ef9.jpg" alt="10 Minute Workout" style="border: 1px solid var(--border-solid); border-radius: 4px;">
-        </div>
-    </section>
-
-    <section id="vault" class="section-wrapper">
-        <div class="section-header">
-            <h2>THE MEDIA VAULT</h2>
-        </div>
-        
-        <div class="media-grid">
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-                <h3 style="color: var(--accent-gold);"><i class="fab fa-youtube"></i> Masterclass Lecture</h3>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/j2aZW8F-v8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
-                <p style="color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem;">Status: Online // Topic: High-Value Masculine Transformation</p>
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-                <h3 style="color: var(--accent-gold);"><i class="fab fa-tiktok"></i> Daily Motivation Feed</h3>
-                <div class="tiktok-container">
-                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@tonystephenssr/video/7618610698070805773" data-video-id="7618610698070805773" style="max-width: 605px;min-width: 325px; margin: 0;">
-                        <section>
-                            <a target="_blank" title="@tonystephenssr" href="https://www.tiktok.com/@tonystephenssr?refer=embed">@tonystephenssr</a>
-                        </section>
-                    </blockquote>
-                    <script async src="https://www.tiktok.com/embed.js"></script>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="tools" class="section-wrapper" style="background: var(--bg-secondary);">
-        <div class="section-header">
-            <h2>MASTERY TOOLS</h2>
-        </div>
-
-        <div class="tools-grid">
-            
-            <div class="tool-panel">
-                <img src="image_585e62.png" alt="Pomodoro Science" style="width: 100%; margin-bottom: 20px; border: 1px solid var(--border-solid);">
-                <h3 style="color: var(--accent-gold); margin-bottom: 10px;">Deep Work Protocol</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Mitigate distractions. Boost Dopamine. Engage Focus Mode.</p>
-                
-                <div class="timer-display" id="time-display">25:00</div>
-                
-                <div style="display: flex; justify-content: center; gap: 15px;">
-                    <button class="btn-primary" id="start-btn" onclick="startPomodoro()">Engage</button>
-                    <button class="btn-secondary" id="reset-btn" onclick="resetPomodoro()">Reset</button>
-                </div>
-            </div>
-
-            <div class="tool-panel">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                    <h3 style="color: var(--accent-gold);">Physical Forging Engine</h3>
-                    <i class="fas fa-dumbbell" style="font-size: 2rem; color: var(--text-muted);"></i>
-                </div>
-                
-                <div class="form-group">
-                    <label>Weight (lbs)</label>
-                    <input type="number" id="calc-weight" placeholder="e.g. 185">
-                </div>
-                <div class="form-group">
-                    <label>Goal</label>
-                    <select id="calc-goal">
-                        <option value="cut">Fat Loss (Cut)</option>
-                        <option value="maintain">Maintenance</option>
-                        <option value="bulk">Muscle Gain (Bulk)</option>
-                    </select>
-                </div>
-                
-                <button class="btn-primary" style="width: 100%; margin-top: 10px;" onclick="calculateMacros()">Calculate Protocol</button>
-                
-                <div class="result-box" id="macro-result">
-                    </div>
-                
-                <div style="margin-top: 20px; border-top: 1px solid var(--border-solid); padding-top: 20px; text-align: left;">
-                    <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Coaching vs Disciplining</h4>
-                    <img src="image_585e83.png" alt="Coaching vs Disciplining" style="border-radius: 4px; width: 100%;">
-                </div>
+                <h3>Social Engagement</h3>
+                <p>Stepping up for the community. True strength is lifting others up. This pillar focuses on civic duty, mentorship, and utilizing one's capabilities to enact positive, lasting change in society.</p>
             </div>
 
         </div>
     </section>
 
     <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h2 style="font-family: var(--font-display); color: var(--text-main); font-size: 1.8rem; margin-bottom: 10px;">APEX<span style="color: var(--accent-gold);">PROTOCOL</span></h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">The ultimate architecture for masculine development. Transforming lives through financial, physical, mental, and social discipline.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Core Pillars</h4>
-                <ul>
-                    <li><a href="#">Financial Freedom</a></li>
-                    <li><a href="#">Peak Physicality</a></li>
-                    <li><a href="#">Mental Toughness</a></li>
-                    <li><a href="#">Social Mastery</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Community</h4>
-                <ul>
-                    <li><a href="#">The Brotherhood Forum</a></li>
-                    <li><a href="#">Live Mentorship</a></li>
-                    <li><a href="#">Success Stories</a></li>
-                    <li><a href="#">Daily Challenges</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Legal & Support</h4>
-                <ul>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Contact Support</a></li>
-                </ul>
-            </div>
-        </div>
-        <div style="text-align: center; border-top: 1px solid var(--border-solid); padding-top: 20px; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8rem;">
-            &copy; 2026 THE APEX PROTOCOL. ENGINEERED FOR EXCELLENCE. ALL RIGHTS RESERVED.
-        </div>
+        <p>&copy; 2026 Future Men Transformation Initiative. Empowering the next generation.</p>
     </footer>
 
     <script>
-        /* ==========================================
-           POMODORO TIMER LOGIC
-           ========================================== */
-        let timer;
-        let timeLeft = 25 * 60; // 25 minutes
-        let isRunning = false;
-
-        function updateDisplay() {
-            let minutes = Math.floor(timeLeft / 60);
-            let seconds = timeLeft % 60;
-            document.getElementById('time-display').innerText = 
-                (minutes < 10 ? "0" : "") + minutes + ":" + 
-                (seconds < 10 ? "0" : "") + seconds;
-        }
-
-        function startPomodoro() {
-            if (isRunning) return;
-            isRunning = true;
-            document.getElementById('start-btn').innerText = "Working...";
-            document.getElementById('start-btn').style.background = "var(--danger-red)";
-            
-            timer = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    updateDisplay();
-                } else {
-                    clearInterval(timer);
-                    isRunning = false;
-                    alert("Focus session complete. Take a 5 minute break.");
-                    resetPomodoro();
-                }
-            }, 1000);
-        }
-
-        function resetPomodoro() {
-            clearInterval(timer);
-            isRunning = false;
-            timeLeft = 25 * 60;
-            updateDisplay();
-            document.getElementById('start-btn').innerText = "Engage";
-            document.getElementById('start-btn').style.background = "var(--accent-gold)";
-        }
-
-        /* ==========================================
-           MACRO CALCULATOR LOGIC
-           ========================================== */
-        function calculateMacros() {
-            const weight = parseFloat(document.getElementById('calc-weight').value);
-            const goal = document.getElementById('calc-goal').value;
-            const resBox = document.getElementById('macro-result');
-
-            if (isNaN(weight) || weight <= 0) {
-                resBox.style.display = "block";
-                resBox.style.background = "var(--danger-red)";
-                resBox.innerHTML = "Error: Input valid body weight.";
-                return;
-            }
-
-            // Simple Bodybuilding Baseline Formula
-            let calories = 0;
-            let protein = weight * 1.1; // 1.1g per lb
-            let fats = weight * 0.4;    // 0.4g per lb
-            let carbs = 0;
-
-            if (goal === 'cut') {
-                calories = weight * 11;
-            } else if (goal === 'maintain') {
-                calories = weight * 14;
-            } else {
-                calories = weight * 17;
-            }
-
-            // Remaining calories to carbs (Protein = 4cal, Fat = 9cal, Carbs = 4cal)
-            let proteinCals = protein * 4;
-            let fatCals = fats * 9;
-            carbs = (calories - (proteinCals + fatCals)) / 4;
-
-            resBox.style.display = "block";
-            resBox.style.background = "var(--accent-green)";
-            resBox.innerHTML = `
-                <div style="font-family: var(--font-mono); font-size: 0.9rem;">
-                    <div>TARGET: <span style="color:var(--bg-primary);">${Math.round(calories)} KCAL</span></div>
-                    <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.2); margin: 10px 0;">
-                    <div>PROTEIN: ${Math.round(protein)}g</div>
-                    <div>CARBS: ${Math.round(carbs)}g</div>
-                    <div>FATS: ${Math.round(fats)}g</div>
-                </div>
-            `;
-        }
+        // Smooth Scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
     </script>
 </body>
 </html>
