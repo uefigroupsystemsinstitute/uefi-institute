@@ -1,1 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+* {
+    box-sizing: border-box;
+    /* ADD THIS */
+    font-family: 'Quicksand', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #fff
+}
+
+body {
+    color: #fff;
+    background-color: aqua;
+    background-image: linear-gradient(315deg, hwb(130 4% 5%) 0%, hsl(4, 89%, 49%) 74%);
+    min-height: 100vh;
+
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.navbar {
+    width: 85vw;
+    max-width: 1150px;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 35px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(11.6px);
+    -webkit-backdrop-filter: blur(11.6px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.glass-container {
+    width: 85vw;
+    max-width: 1150px;
+    margin-bottom: 30px;
+    background: #0de95326;
+    padding: 50px;
+    border-radius: 16px;
+    border: 1px solid rgba (255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px hsla(191, 89%, 49%, 0.102);
+    backdrop-filter: blur(11.6px);
+    -webkit-backdrop-filter: blur(11.6px);
+
+}
+
+
+.logo {
+    display: inline-block;
+    font-size: 30px;
+    font-weight: 600;
+    margin-top: -10px;
+
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+}
+
+ul.nav-links {
+    margin: 0;
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+li.nav-link {
+    display: inline-block;
+    margin-left: 30px;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+}
+
+.main {
+    display: inline-block;
+    padding: 20px;
+}
+
+.main h2 {
+    font-size: 35px;
+}
+
+.main p {
+    font-size: 16px;
+    line-height: 23px;
+}
+
+button {
+    margin-top: 10px;
+    width: 100%;
+    height: 40px;
+    font-size: 15px;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+}
+
+button:hover {
+    border-color: #2668db;
+    background-color: hsl(245, 98%, 51%);
+
+}
+
+.image-wrapper {
+    display: flex;
+    margin-top: 5vh;
+    position: relative;
+
+}
+
+.image-wrapper {
+    max-width: 500px;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: auto;
+}
+
+.attrebute {
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    font-size: 12px;
+
+}
+
+@media screen and (max-width: 1075px) {
+    .content {
+        flex-direction: column;
+    }
+
+}
+
+@media screen and (max-width: 720px) {
+    .logo {
+        font-size: 22px;
+
+    }
+
+    li.nav-link {
+        font-size: 13px;
+    }
+
+    .main h2 {
+        font-size: 28px;
+
+    }
+
+    .main p {
+        font-size: 15px;
+    }
+
+    button {
+        font-size: 13px;
+
+    }
+
+    .image-wrapper {
+        max-width: 400px;
+
+    }
+}
+
+/* Pricing Section Container */
+.pricing-section {
+    width: 85vw;
+    max-width: 1150px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.pricing-section h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+/* Places cards side-by-side in columns */
+.pricing-cards {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+}
+
+/* Individual Card Styling */
+.pricing-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    text-align: left;
+}
+
+.pricing-card h3 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.pricing-card .price {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #00ffff;
+}
+
+.pricing-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.pricing-card li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Highlight the Premium card slightly */
+.pricing-card.highlight {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Mobile responsive collapse */
+@media screen and (max-width: 850px) {
+    .pricing-cards {
+        flex-direction: column;
+    }
+}
 
