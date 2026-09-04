@@ -3,60 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academy for Men | Higher Education & Transformation</title>
+    <title>Wilsons' Transform | From Boy to a Man</title>
     
-    <!-- Google Fonts for Peterson Academy Serif/Sans Design Language -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-
     <style>
         /* ==========================================================================
-           1. DESIGN SYSTEM & CSS VARIABLES (PETERSON ACADEMY COLOR PALETTE)
+           1. CSS VARIABLES & THEMING
            ========================================================================== */
         :root {
-            /* Background Shades */
-            --bg-dark-base: #080c14;
-            --bg-dark-surface: #0e1420;
-            --bg-dark-elevated: #161f30;
-            --bg-light-faculty: #eef2f6;
+            --bg-dark: #080c14;
+            --bg-dark-card: #0e1420;
+            --bg-light-section: #eef2f6;
             --bg-light-card: #ffffff;
             
-            /* Gold Accents & Typography */
-            --gold-bright: #dfc385;
-            --gold-classic: #c59b27;
-            --gold-dark: #8c6a15;
+            --text-gold-light: #dfc385;
+            --text-gold: #c59b27;
             
-            /* Text Colors */
-            --text-light-primary: #f8fafc;
-            --text-light-secondary: #94a3b8;
-            --text-dark-primary: #0f172a;
-            --text-dark-secondary: #475569;
+            /* High visibility color settings */
+            --text-light: #ffffff;
+            --text-muted: #d1d5db; 
+            --text-dark: #000000;
+            --text-dark-muted: #1f2937;
             
-            /* Badges & Highlights */
             --accent-red: #c5221f;
-            --accent-blue: #1e3a8a;
             
-            /* Borders & Shadows */
-            --border-dark: rgba(255, 255, 255, 0.1);
-            --border-gold: rgba(197, 155, 39, 0.3);
-            --border-light: rgba(0, 0, 0, 0.08);
-            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.5);
-            --shadow-glow: 0 0 25px rgba(197, 155, 39, 0.2);
+            --border-dark: rgba(255, 255, 255, 0.2);
+            --border-light: rgba(0, 0, 0, 0.15);
             
-            /* Typography Families */
-            --font-serif-title: 'Playfair Display', Georgia, serif;
-            --font-serif-crest: 'Cinzel', Georgia, serif;
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            /* Font overridden to purely Times New Roman globally */
+            --font-primary: 'Times New Roman', Times, serif;
             
-            /* Geometry & Transitions */
-            --radius-card: 12px;
-            --radius-btn: 6px;
-            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --radius-card: 14px;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Global Resets */
-        *, *::before, *::after {
+        /* Reset & Base */
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -64,13 +45,12 @@
 
         html {
             scroll-behavior: smooth;
-            font-size: 16px;
         }
 
         body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-dark-base);
-            color: var(--text-light-primary);
+            font-family: var(--font-primary);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -81,649 +61,375 @@
             color: inherit;
         }
 
-        button {
-            cursor: pointer;
-            border: none;
-            outline: none;
-            font-family: inherit;
-        }
-
         /* ==========================================================================
-           2. HEADER & NAVIGATION WITH TOP-RIGHT DROPDOWN MENU
+           2. HEADER & NAVIGATION
            ========================================================================== */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 80px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 4rem;
-            background: rgba(8, 12, 20, 0.92);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            padding: 1.5rem 5rem;
+            background: rgba(8, 12, 20, 0.95);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border-dark);
             z-index: 1000;
         }
 
-        .brand-logo-wrap {
+        .brand-logo {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 15px;
         }
 
         .brand-crest {
-            width: 42px;
-            height: 42px;
-            border: 1px solid var(--gold-classic);
+            width: 45px;
+            height: 45px;
+            border: 2px solid var(--text-gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: var(--font-serif-crest);
-            color: var(--gold-bright);
-            font-size: 1.1rem;
-            font-weight: 700;
-            box-shadow: var(--shadow-glow);
-            background: radial-gradient(circle, rgba(197, 155, 39, 0.15) 0%, rgba(8, 12, 20, 1) 100%);
+            color: var(--text-gold);
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand-title {
-            font-family: var(--font-serif-crest);
-            font-size: 1.15rem;
-            letter-spacing: 2px;
-            color: var(--text-light-primary);
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .brand-subtitle {
-            font-size: 0.65rem;
-            color: var(--text-light-secondary);
-            letter-spacing: 1.5px;
+        .brand-name {
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            font-weight: bold;
+            color: var(--text-light);
             text-transform: uppercase;
         }
 
-        /* Navigation Bar Left / Center Links */
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-link-item {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-light-secondary);
-            transition: var(--transition-smooth);
-            position: relative;
-        }
-
-        .nav-link-item:hover {
-            color: var(--text-light-primary);
-        }
-
-        /* Header Right Controls & Disciplines Dropdown */
-        .header-right-controls {
-            display: flex;
-            align-items: center;
-            gap: 1.8rem;
-        }
-
-        /* Disciplines Dropdown Container */
-        .dropdown-container {
-            position: relative;
-        }
-
-        .dropdown-trigger {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-gold);
-            color: var(--gold-bright);
-            padding: 8px 18px;
-            border-radius: var(--radius-btn);
-            font-size: 0.88rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition-smooth);
-        }
-
-        .dropdown-trigger:hover {
-            background: rgba(197, 155, 39, 0.15);
-            border-color: var(--gold-bright);
-            color: #ffffff;
-        }
-
-        .dropdown-arrow {
-            font-size: 0.7rem;
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown-container.active .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-
-        /* Dropdown Menu Popup Panel */
-        .dropdown-menu {
-            position: absolute;
-            top: calc(100% + 12px);
-            right: 0;
-            width: 280px;
-            background: var(--bg-dark-surface);
-            border: 1px solid var(--border-gold);
-            border-radius: var(--radius-card);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-            padding: 10px 0;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: var(--transition-smooth);
-            z-index: 1100;
-        }
-
-        .dropdown-container.active .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-header {
-            padding: 8px 18px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-light-secondary);
-            border-bottom: 1px solid var(--border-dark);
-            margin-bottom: 5px;
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 18px;
-            color: var(--text-light-primary);
-            font-size: 0.9rem;
-            transition: var(--transition-smooth);
-        }
-
-        .dropdown-item:hover {
-            background: rgba(197, 155, 39, 0.12);
-            color: var(--gold-bright);
-            padding-left: 24px;
-        }
-
-        .dropdown-item-icon {
-            font-size: 1rem;
-            width: 20px;
-            text-align: center;
-            color: var(--gold-classic);
-        }
-
-        .auth-btns {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn-signin {
-            color: var(--text-light-primary);
-            font-size: 0.88rem;
-            font-weight: 500;
-            transition: var(--transition-smooth);
-        }
-
-        .btn-signin:hover {
-            color: var(--gold-bright);
-        }
-
-        .btn-enroll {
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            padding: 8px 20px;
-            border-radius: var(--radius-btn);
+        .brand-beta {
             font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: #ffffff;
-            transition: var(--transition-smooth);
-            background: transparent;
+            color: var(--text-gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
-        .btn-enroll:hover {
-            border-color: var(--gold-bright);
-            color: var(--gold-bright);
-            box-shadow: var(--shadow-glow);
+        nav.nav-links {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        nav.nav-links a {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+        }
+
+        nav.nav-links a:hover {
+            color: var(--text-gold-light);
+            text-shadow: 0 0 10px rgba(223, 195, 133, 0.5);
+        }
+
+        .auth-actions {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .btn-link {
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-link:hover {
+            color: var(--text-gold-light);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--text-gold);
+            padding: 0.7rem 1.8rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--text-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(197, 155, 39, 0.4);
         }
 
         /* ==========================================================================
-           3. HERO SECTION WITH CURVED PREVIEW CAROUSEL
+           3. HERO SECTION (Custom Reference Image & Main Header)
            ========================================================================== */
         .hero-section {
-            padding-top: 140px;
-            padding-bottom: 60px;
-            background: radial-gradient(circle at 50% 20%, rgba(30, 41, 59, 0.4) 0%, rgba(8, 12, 20, 1) 75%);
+            padding-top: 160px;
+            padding-bottom: 80px;
             text-align: center;
-            position: relative;
+            background: radial-gradient(circle at 50% 30%, rgba(30, 41, 59, 0.8) 0%, var(--bg-dark) 80%);
         }
 
-        .hero-stats-strip {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2.5rem;
-            margin-bottom: 2rem;
-            color: var(--text-light-secondary);
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .hero-stats-number {
-            font-family: var(--font-serif-title);
-            font-size: 1.6rem;
-            color: var(--text-light-primary);
-            font-weight: 600;
-            display: inline-block;
-            margin-right: 6px;
-        }
-
-        .hero-title {
-            font-family: var(--font-serif-title);
+        .main-headline {
             font-size: 3.5rem;
-            font-weight: 400;
-            line-height: 1.15;
-            margin-bottom: 1rem;
-            letter-spacing: -0.5px;
-            color: var(--text-light-primary);
+            color: var(--text-gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 3rem;
+            font-weight: bold;
+            padding: 0 2rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
         }
 
-        .hero-subtitle {
-            max-width: 720px;
-            margin: 0 auto 3rem auto;
-            font-size: 1.1rem;
-            color: var(--text-light-secondary);
-            font-weight: 300;
-        }
-
-        /* Peterson Academy Curved Banner Deck */
-        .banner-carousel-deck {
+        .hero-image-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 18px;
-            padding: 20px 0;
-            perspective: 1200px;
             overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        /* Forces the image to stretch both sides while maintaining center focal point */
+        .hero-image-container img {
             width: 100%;
-        }
-
-        .deck-card {
-            width: 240px;
-            height: 150px;
-            border-radius: var(--radius-card);
-            overflow: hidden;
-            position: relative;
-            border: 1px solid var(--border-dark);
-            box-shadow: var(--shadow-card);
-            transition: var(--transition-smooth);
-            flex-shrink: 0;
-            opacity: 0.65;
-            transform: scale(0.9);
-        }
-
-        .deck-card.center-focus {
-            width: 360px;
-            height: 220px;
-            opacity: 1;
-            transform: scale(1);
-            border-color: var(--border-gold);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), var(--shadow-glow);
-            z-index: 10;
-        }
-
-        .deck-card img {
-            width: 100%;
-            height: 100%;
+            height: auto;
+            min-height: 400px;
             object-fit: cover;
-        }
-
-        .deck-card-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(8,12,20,0.95) 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 16px;
-            text-align: left;
-        }
-
-        .deck-card-title {
-            font-family: var(--font-serif-title);
-            font-size: 1.05rem;
-            color: #ffffff;
-            line-height: 1.2;
-        }
-
-        .deck-card-author {
-            font-size: 0.75rem;
-            color: var(--gold-bright);
-            margin-top: 4px;
+            object-position: center center;
+            display: block;
         }
 
         /* ==========================================================================
-           4. DISCIPLINE LECTURES CATALOG & FILTER TABS
+           4. LECTURE CATALOG & TABS SECTION
            ========================================================================== */
-        .catalog-container {
-            padding: 80px 4rem;
-            max-width: 1480px;
+        .catalog-section {
+            padding: 80px 5rem;
+            max-width: 1800px;
             margin: 0 auto;
         }
 
-        .catalog-header {
+        .section-header {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3.5rem;
         }
 
-        .catalog-header h2 {
-            font-family: var(--font-serif-title);
-            font-size: 2.8rem;
-            font-weight: 400;
+        .section-header h2 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
             margin-bottom: 1rem;
+            color: var(--text-light);
         }
 
-        /* Discipline Tabs Bar */
-        .discipline-tabs-nav {
+        .category-tabs {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            border-bottom: 1px solid var(--border-dark);
-            padding-bottom: 1rem;
-            margin-bottom: 3.5rem;
+            gap: 3.5rem;
+            border-bottom: 2px solid var(--border-dark);
+            padding-bottom: 1.5rem;
+            margin-bottom: 4rem;
             flex-wrap: wrap;
         }
 
         .tab-btn {
-            background: transparent;
-            color: var(--text-light-secondary);
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 8px 16px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            font-family: var(--font-primary);
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding-bottom: 8px;
             position: relative;
             transition: var(--transition-smooth);
+            letter-spacing: 1px;
         }
 
-        .tab-btn:hover, .tab-btn.active {
-            color: var(--text-light-primary);
+        .tab-btn.active, .tab-btn:hover {
+            color: var(--text-gold);
         }
 
         .tab-btn.active::after {
             content: '';
             position: absolute;
-            bottom: -1rem;
+            bottom: -1.6rem;
             left: 0;
             width: 100%;
-            height: 2px;
-            background-color: var(--gold-classic);
-            box-shadow: var(--shadow-glow);
+            height: 3px;
+            background-color: var(--text-gold);
         }
 
-        /* Discipline Section Blocks */
-        .discipline-block {
-            margin-bottom: 90px;
-        }
-
-        .discipline-title-wrap {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 1.8rem;
-            border-left: 3px solid var(--gold-classic);
-            padding-left: 15px;
-        }
-
-        .discipline-title-wrap h3 {
-            font-family: var(--font-serif-title);
-            font-size: 2rem;
-            font-weight: 400;
-            color: var(--text-light-primary);
-        }
-
-        .discipline-badge {
-            background: rgba(197, 155, 39, 0.15);
-            color: var(--gold-bright);
-            border: 1px solid var(--border-gold);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        /* Dynamic Grid Layout for Cards */
-        .lecture-cards-grid {
+        .course-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
         }
 
-        /* Master Course & Video Card */
         .course-card {
-            background: var(--bg-dark-surface);
+            background: var(--bg-dark-card);
             border-radius: var(--radius-card);
-            border: 1px solid var(--border-dark);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            border: 1px solid var(--border-dark);
             transition: var(--transition-smooth);
             cursor: pointer;
-            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .course-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+            border-color: var(--text-gold);
         }
 
-        .card-thumbnail-wrap {
+        .course-thumb {
             position: relative;
             width: 100%;
-            height: 200px;
-            background: #111827;
+            height: 250px;
+            background-color: #1a202c;
             overflow: hidden;
         }
 
-        .card-thumbnail-wrap img {
+        .course-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .course-card:hover .card-thumbnail-wrap img {
-            transform: scale(1.06);
-        }
-
-        .play-overlay-btn {
-            position: absolute;
-            inset: 0;
-            background: rgba(8, 12, 20, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
             transition: var(--transition-smooth);
         }
 
-        .course-card:hover .play-overlay-btn {
-            opacity: 1;
-            background: rgba(8, 12, 20, 0.6);
+        .course-card:hover .course-thumb img {
+            transform: scale(1.08);
         }
 
-        .play-icon-circle {
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            background: var(--gold-classic);
-            color: var(--bg-dark-base);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            padding-left: 4px;
-            box-shadow: 0 0 20px rgba(197, 155, 39, 0.6);
-            transition: transform 0.2s ease;
-        }
-
-        .course-card:hover .play-icon-circle {
-            transform: scale(1.1);
-        }
-
-        .video-duration-tag {
+        .badge-tag {
             position: absolute;
-            bottom: 12px;
-            right: 12px;
-            background: rgba(0, 0, 0, 0.85);
-            color: #ffffff;
-            font-size: 0.72rem;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
+            top: 15px;
+            right: 15px;
+            background: rgba(8, 12, 20, 0.9);
+            backdrop-filter: blur(5px);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-gold-light);
+            border: 1px solid var(--text-gold);
         }
 
-        .card-content-body {
-            padding: 1.4rem;
+        .course-info {
+            padding: 1.8rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
-        .instructor-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--gold-bright);
-            margin-bottom: 4px;
+        .course-instructor {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin-bottom: 5px;
         }
 
-        .course-topic-meta {
-            font-size: 0.75rem;
-            color: var(--text-light-secondary);
-            margin-bottom: 0.8rem;
-        }
-
-        .course-title-text {
-            font-family: var(--font-serif-title);
-            font-size: 1.15rem;
-            line-height: 1.35;
-            color: var(--text-light-primary);
-            margin-bottom: 0.8rem;
-        }
-
-        .course-description-snippet {
-            font-size: 0.85rem;
-            color: var(--text-light-secondary);
-            line-height: 1.5;
+        .course-meta {
+            font-size: 0.9rem;
+            color: var(--text-gold);
             margin-bottom: 1.2rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            font-style: italic;
         }
 
-        .card-footer-action {
-            margin-top: auto;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-dark);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: var(--text-light-secondary);
-        }
-
-        .action-link {
-            color: var(--gold-bright);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
+        .course-title {
+            font-size: 1.4rem;
+            line-height: 1.4;
+            color: var(--text-light);
+            font-weight: bold;
         }
 
         /* ==========================================================================
-           5. FACULTY SHOWCASE (EXACT MATCH TO LIGHT SCREENSHOT 1)
+           5. FACULTY SHOWCASE SECTION (ENLARGED & HEIGHTENED)
            ========================================================================== */
         .faculty-section {
-            background-color: var(--bg-light-faculty);
-            color: var(--text-dark-primary);
-            padding: 100px 4rem;
+            background-color: var(--bg-light-section);
+            color: var(--text-dark);
+            padding: 120px 5rem;
+            position: relative;
         }
 
-        .faculty-inner-wrap {
-            max-width: 1480px;
-            margin: 0 auto;
+        .faculty-header {
+            margin-bottom: 4.5rem;
+            text-align: center;
         }
 
         .faculty-header h2 {
-            font-family: var(--font-serif-title);
-            font-size: 3.2rem;
-            font-weight: 400;
-            color: var(--text-dark-primary);
-            margin-bottom: 0.4rem;
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
         }
 
         .faculty-header p {
-            font-size: 1.15rem;
-            color: var(--text-dark-secondary);
+            font-size: 1.4rem;
+            color: var(--text-dark-muted);
+            font-weight: bold;
         }
 
-        .faculty-divider-title {
-            margin-top: 2.5rem;
-            margin-bottom: 2rem;
-            font-size: 0.8rem;
+        .faculty-subhead {
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #64748b;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            letter-spacing: 4px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-red);
+            margin-top: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0,0,0,0.2);
+            display: inline-block;
         }
 
-        .faculty-grid-cards {
+        .faculty-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.8rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
         }
 
-        .faculty-profile-card {
+        /* Vastly increased height as requested */
+        .faculty-card {
             background: var(--bg-light-card);
             border-radius: var(--radius-card);
             overflow: hidden;
-            height: 420px;
+            height: 650px; 
             position: relative;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transition: var(--transition-smooth);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
+            border: 2px solid transparent;
         }
 
-        .faculty-profile-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 35px rgba(0,0,0,0.12);
+        .faculty-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+            border-color: var(--text-gold);
         }
 
-        .faculty-photo {
+        .faculty-img {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -732,104 +438,81 @@
             object-position: top center;
         }
 
-        .faculty-card-overlay {
+        .faculty-overlay {
             position: relative;
             z-index: 2;
-            padding: 1.8rem 1.4rem;
-            background: linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,0.95) 60%);
-            color: #ffffff;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 75%);
+            color: #fff;
         }
 
-        .faculty-card-name {
-            font-family: var(--font-serif-title);
-            font-size: 1.35rem;
-            line-height: 1.25;
-            margin-bottom: 6px;
+        .faculty-name {
+            font-size: 2.2rem;
+            line-height: 1.2;
+            margin-bottom: 10px;
             color: #ffffff;
+            font-weight: bold;
         }
 
-        .faculty-card-bio {
-            font-size: 0.82rem;
-            color: #cbd5e1;
-            line-height: 1.4;
+        .faculty-bio {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+            line-height: 1.6;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
 
-        .faculty-profile-link {
-            font-size: 0.75rem;
+        .faculty-action {
+            font-size: 1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--gold-bright);
-            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--text-gold);
+            font-weight: bold;
         }
 
         /* ==========================================================================
-           6. INTERACTIVE VIDEO PLAYER MODAL
+           6. CURATED TALKS & MEDIA (MASSIVE VIDEO CARDS)
            ========================================================================== */
-        .video-modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(4, 6, 10, 0.92);
-            backdrop-filter: blur(12px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition-smooth);
-            padding: 2rem;
+        .media-section {
+            padding: 120px 5rem;
+            max-width: 1800px;
+            margin: 0 auto;
         }
 
-        .video-modal-backdrop.open {
-            opacity: 1;
-            visibility: visible;
+        /* Videos made significantly larger. 1 column on smaller screens, max 2 on large */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
+            gap: 4rem;
+            margin-top: 4rem;
         }
 
-        .modal-container {
-            width: 100%;
-            max-width: 960px;
-            background: var(--bg-dark-surface);
+        .media-card {
+            background: var(--bg-dark-card);
             border-radius: var(--radius-card);
-            border: 1px solid var(--border-gold);
+            border: 1px solid var(--border-dark);
             overflow: hidden;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.9);
-            position: relative;
-        }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: rgba(0,0,0,0.6);
-            color: #ffffff;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
             transition: var(--transition-smooth);
         }
-
-        .modal-close-btn:hover {
-            background: var(--accent-red);
+        
+        .media-card:hover {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            border-color: var(--text-gold);
         }
 
-        .modal-video-frame {
+        .media-video-wrapper {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 ratio */
             height: 0;
-            background: #000000;
+            overflow: hidden;
+            background: #000;
         }
 
-        .modal-video-frame iframe {
+        .media-video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -838,20 +521,30 @@
             border: 0;
         }
 
-        .modal-info-bar {
-            padding: 1.5rem;
+        .media-details {
+            padding: 2.5rem;
         }
 
-        .modal-video-title {
-            font-family: var(--font-serif-title);
-            font-size: 1.4rem;
-            margin-bottom: 6px;
-            color: var(--text-light-primary);
+        .media-category {
+            font-size: 1.1rem;
+            color: var(--text-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
-        .modal-video-meta {
-            font-size: 0.85rem;
-            color: var(--gold-bright);
+        .media-title {
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .media-desc {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.6;
         }
 
         /* ==========================================================================
@@ -859,709 +552,392 @@
            ========================================================================== */
         .sticky-promo-bar {
             position: fixed;
-            bottom: 24px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(14, 20, 32, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 15px 45px rgba(0,0,0,0.85);
+            background: rgba(14, 20, 32, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--text-gold);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.9);
             border-radius: 50px;
-            padding: 8px 16px 8px 28px;
+            padding: 12px 20px 12px 35px;
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 2.5rem;
             z-index: 999;
         }
 
-        .promo-price-text {
-            font-family: var(--font-serif-title);
-            font-size: 1.35rem;
-            color: #ffffff;
-            font-weight: 600;
+        .promo-price {
+            font-size: 1.6rem;
+            color: #fff;
+            font-weight: bold;
         }
 
-        .promo-price-text span {
-            font-size: 0.85rem;
-            font-weight: 400;
-            color: var(--text-light-secondary);
-        }
-
-        .promo-sale-badge {
-            background-color: var(--accent-red);
-            color: #ffffff;
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
+        .promo-price span {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--text-gold-light);
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn-sticky-join {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 1px solid var(--border-gold);
-            color: var(--gold-bright);
-            padding: 10px 28px;
-            border-radius: 30px;
+        .promo-badge {
+            background-color: var(--accent-red);
+            color: #fff;
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 6px;
             letter-spacing: 1px;
             text-transform: uppercase;
-            transition: var(--transition-smooth);
         }
 
-        .btn-sticky-join:hover {
-            background: var(--gold-classic);
-            color: var(--bg-dark-base);
-            box-shadow: var(--shadow-glow);
+        .btn-join {
+            background: linear-gradient(135deg, #c59b27 0%, #8b6b15 100%);
+            border: none;
+            color: #fff;
+            padding: 14px 35px;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-family: var(--font-primary);
+        }
+
+        .btn-join:hover {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
         }
 
         footer {
-            background-color: #04060a;
-            padding: 80px 4rem 120px 4rem;
+            background-color: #030508;
+            padding: 80px 5rem 150px 5rem;
             border-top: 1px solid var(--border-dark);
-            color: var(--text-light-secondary);
-            font-size: 0.85rem;
-        }
-
-        .footer-grid {
-            max-width: 1480px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr repeat(3, 1fr);
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-col h4 {
-            font-family: var(--font-serif-title);
-            color: var(--text-light-primary);
+            text-align: center;
+            color: var(--text-muted);
             font-size: 1.1rem;
-            margin-bottom: 1.2rem;
         }
 
-        .footer-col ul {
-            list-style: none;
+        footer h3 {
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .footer-col ul li {
-            margin-bottom: 0.6rem;
+        footer p {
+            margin-top: 1.5rem;
         }
 
-        .footer-col ul li a:hover {
-            color: var(--gold-bright);
-        }
-
-        .footer-bottom {
-            max-width: 1480px;
-            margin: 0 auto;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-dark);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Responsive Breakpoints */
+        /* Responsive Adjustments */
         @media (max-width: 1024px) {
-            header, .catalog-container, .faculty-section, footer {
-                padding-left: 2rem;
-                padding-right: 2rem;
+            header, .catalog-section, .faculty-section, .media-section, footer {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
             }
-            .hero-title {
-                font-size: 2.8rem;
-            }
-            .deck-card.center-focus {
-                width: 280px;
-                height: 180px;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
+            .media-grid {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 768px) {
-            .nav-links {
+            nav.nav-links {
                 display: none;
+            }
+            .main-headline {
+                font-size: 2.2rem;
             }
             .sticky-promo-bar {
-                width: 92%;
+                width: 95%;
                 justify-content: space-between;
-                padding: 10px 16px;
+                padding: 15px 20px;
             }
-            .promo-sale-badge {
+            .promo-badge {
                 display: none;
             }
-            .hero-title {
-                font-size: 2.2rem;
+            .course-grid, .faculty-grid {
+                grid-template-columns: 1fr;
+            }
+            .media-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .faculty-card {
+                height: 500px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ==========================================================================
-       HEADER & TOP-RIGHT DISCIPLINES DROPDOWN MENU
-       ========================================================================== -->
     <header>
-        <a href="#" class="brand-logo-wrap">
-            <div class="brand-crest">P</div>
-            <div class="brand-text">
-                <span class="brand-title">ACADEMY</span>
-                <span class="brand-subtitle">TRANSFORMATION PORTAL</span>
+        <div class="brand-logo">
+            <div class="brand-crest">W</div>
+            <div>
+                <div class="brand-name">WILSONS' TRANSFORM</div>
+                <div class="brand-beta">From Boy To A Man</div>
             </div>
-        </a>
+        </div>
 
-        <!-- Center Navigation Links -->
         <nav class="nav-links">
-            <a href="#catalog" class="nav-link-item">All Lectures</a>
-            <a href="#faculty" class="nav-link-item">Faculty</a>
-            <a href="#about" class="nav-link-item">The Mission</a>
+            <a href="#catalog">Lectures</a>
+            <a href="#faculty">Faculty</a>
+            <a href="#media">Discussions</a>
+            <a href="#about">Mission</a>
         </nav>
 
-        <!-- Right Side Controls & Disciplines Dropdown -->
-        <div class="header-right-controls">
-            
-            <!-- DISCIPLINES DROPDOWN -->
-            <div class="dropdown-container" id="disciplinesDropdown">
-                <button class="dropdown-trigger" onclick="toggleDropdown(event)">
-                    <span>Disciplines</span>
-                    <span class="dropdown-arrow">▼</span>
-                </button>
-                <div class="dropdown-menu">
-                    <div class="dropdown-header">Select Subject</div>
-                    <a href="#finance" class="dropdown-item" onclick="filterCategory('finance')">
-                        <span class="dropdown-item-icon">📈</span>
-                        <span>Finance & Economics</span>
-                    </a>
-                    <a href="#education" class="dropdown-item" onclick="filterCategory('education')">
-                        <span class="dropdown-item-icon">🎓</span>
-                        <span>Education & Mastery</span>
-                    </a>
-                    <a href="#philosophy" class="dropdown-item" onclick="filterCategory('philosophy')">
-                        <span class="dropdown-item-icon">🏛️</span>
-                        <span>Philosophy & Ethics</span>
-                    </a>
-                    <a href="#science" class="dropdown-item" onclick="filterCategory('science')">
-                        <span class="dropdown-item-icon">🔬</span>
-                        <span>Science & Biology</span>
-                    </a>
-                    <a href="#mathematics" class="dropdown-item" onclick="filterCategory('mathematics')">
-                        <span class="dropdown-item-icon">∑</span>
-                        <span>Mathematics & Logic</span>
-                    </a>
-                    <a href="#wellbeing" class="dropdown-item" onclick="filterCategory('wellbeing')">
-                        <span class="dropdown-item-icon">⚡</span>
-                        <span>Well-Being & Strength</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Auth Actions -->
-            <div class="auth-btns">
-                <a href="#" class="btn-signin">Sign In</a>
-                <a href="#" class="btn-enroll">Enroll</a>
-            </div>
+        <div class="auth-actions">
+            <a href="#" class="btn-link">Sign In</a>
+            <a href="#" class="btn-outline">Enroll</a>
         </div>
     </header>
 
-    <!-- ==========================================================================
-       HERO SECTION WITH PETERSON ACADEMY PREVIEW CURVE
-       ========================================================================== -->
     <section class="hero-section">
-        <div class="hero-stats-strip">
-            <div><span class="hero-stats-number">850+</span> Hours of Lectures</div>
-            <div>•</div>
-            <div><span class="hero-stats-number">68k+</span> Active Scholars</div>
-            <div>•</div>
-            <div><span class="hero-stats-number">6</span> Core Disciplines</div>
-        </div>
-
-        <h1 class="hero-title">Rigorous Higher Education<br>for Men of Purpose</h1>
-        <p class="hero-subtitle">Expand your intellect, master financial sovereignty, and strengthen your character with deep lectures taught by world-leading professors.</p>
-
-        <!-- Curved Preview Carousel Deck -->
-        <div class="banner-carousel-deck">
-            <div class="deck-card">
-                <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80" alt="Finance">
-                <div class="deck-card-overlay">
-                    <div class="deck-card-title">Economic Sovereignty</div>
-                    <div class="deck-card-author">Dr. Stephen R. C. Hicks</div>
-                </div>
-            </div>
-
-            <div class="deck-card center-focus">
-                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80" alt="Personality">
-                <div class="deck-card-overlay">
-                    <div class="deck-card-title">Personality & Transformations</div>
-                    <div class="deck-card-author">Dr. Jordan B. Peterson</div>
-                </div>
-            </div>
-
-            <div class="deck-card">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" alt="History">
-                <div class="deck-card-overlay">
-                    <div class="deck-card-title">Classical Wisdom & Ethics</div>
-                    <div class="deck-card-author">Dr. John Vervaeke</div>
-                </div>
-            </div>
+        <h1 class="main-headline">I AM THE VOICE OF LIFE; I CALL YOU: COME AND LEARN!</h1>
+        
+        <div class="hero-image-container">
+            <!-- Using the exact image referenced in the prompt, stretching wide while centering focal point -->
+            <img src="Screenshot 2026-09-04 at 20.26.22_2.jpg" alt="Perspective Setup - Masculinity Centered">
         </div>
     </section>
 
-    <!-- ==========================================================================
-       MAIN LECTURES CATALOG - BREAKDOWN BY DISCIPLINES
-       ========================================================================== -->
-    <main class="catalog-container" id="catalog">
-        <div class="catalog-header">
-            <h2>Explore the Disciplines</h2>
+    <section class="catalog-section" id="catalog">
+        <div class="section-header">
+            <h2>850+ Hours of Brilliant Lectures.</h2>
         </div>
 
-        <!-- Discipline Filter Tabs -->
-        <div class="discipline-tabs-nav">
-            <button class="tab-btn active" onclick="filterCategory('all')">All Disciplines</button>
-            <button class="tab-btn" onclick="filterCategory('finance')">Finance</button>
-            <button class="tab-btn" onclick="filterCategory('education')">Education</button>
-            <button class="tab-btn" onclick="filterCategory('philosophy')">Philosophy</button>
-            <button class="tab-btn" onclick="filterCategory('science')">Science</button>
-            <button class="tab-btn" onclick="filterCategory('mathematics')">Mathematics</button>
-            <button class="tab-btn" onclick="filterCategory('wellbeing')">Well-Being</button>
+        <div class="category-tabs">
+            <button class="tab-btn active" onclick="filterCategory('all', this)">All Disciplines</button>
+            <button class="tab-btn" onclick="filterCategory('wealth', this)">Wealth & Finance</button>
+            <button class="tab-btn" onclick="filterCategory('psychology', this)">Psychology</button>
+            <button class="tab-btn" onclick="filterCategory('leadership', this)">Leadership & Manhood</button>
+            <button class="tab-btn" onclick="filterCategory('philosophy', this)">Philosophy</button>
         </div>
 
-        <!-- 1. FINANCE & ECONOMICS -->
-        <section class="discipline-block" id="finance">
-            <div class="discipline-title-wrap">
-                <h3>Finance & Capital Mastery</h3>
-                <span class="discipline-badge">140+ Hours</span>
-            </div>
+        <div class="course-grid" id="courseGrid">
 
-            <div class="lecture-cards-grid">
-                <!-- Course 1 -->
-                <div class="course-card" onclick="openVideoModal('The Psychology of Wealth & Capital', 'Dr. W. Keith Campbell', 'https://www.youtube-nocookie.com/embed/Lp7E973zozc')">
-                    <div class="card-thumbnail-wrap">
-                        <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80" alt="Finance">
-                        <div class="play-overlay-btn">
-                            <div class="play-icon-circle">▶</div>
-                        </div>
-                        <span class="video-duration-tag">12 Lectures • 14h</span>
-                    </div>
-                    <div class="card-content-body">
-                        <div class="instructor-name">Dr. W. Keith Campbell</div>
-                        <div class="course-topic-meta">Finance • Wealth Mindset</div>
-                        <div class="course-title-text">The Psychology of Wealth & Economic Sovereignty</div>
-                        <div class="course-description-snippet">Understand long-term wealth accumulation, risk management, and the cognitive habits of financially independent leaders.</div>
-                        <div class="card-footer-action">
-                            <span>Watch Module</span>
-                            <span class="action-link">Start Video →</span>
-                        </div>
-                    </div>
+            <div class="course-card" data-category="psychology philosophy">
+                <div class="course-thumb">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80" alt="Maps of Meaning">
+                    <span class="badge-tag">Psychology</span>
                 </div>
-
-                <!-- Course 2 -->
-                <div class="course-card" onclick="openVideoModal('Macroeconomics & Asset Allocation', 'Dr. Stephen Hicks', 'https://www.youtube-nocookie.com/embed/Lp7E973zozc')">
-                    <div class="card-thumbnail-wrap">
-                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="Economics">
-                        <div class="play-overlay-btn">
-                            <div class="play-icon-circle">▶</div>
-                        </div>
-                        <span class="video-duration-tag">8 Lectures • 9h</span>
-                    </div>
-                    <div class="card-content-body">
-                        <div class="instructor-name">Dr. Stephen R. C. Hicks</div>
-                        <div class="course-topic-meta">Economics • Free Markets</div>
-                        <div class="course-title-text">Capitalism, Enterprise & Value Creation</div>
-                        <div class="course-description-snippet">The history of enterprise, global market mechanics, and how value is created and sustained across economic shifts.</div>
-                        <div class="card-footer-action">
-                            <span>Watch Module</span>
-                            <span class="action-link">Start Video →</span>
-                        </div>
-                    </div>
+                <div class="course-info">
+                    <div class="course-instructor">Dr. Jordan B. Peterson</div>
+                    <div class="course-meta">Psychology • Philosophy</div>
+                    <div class="course-title">Maps of Meaning: The Architecture of Belief</div>
                 </div>
             </div>
-        </section>
 
-        <!-- 2. EDUCATION & MASTERY -->
-        <section class="discipline-block" id="education">
-            <div class="discipline-title-wrap">
-                <h3>Education & Self-Mastery</h3>
-                <span class="discipline-badge">110+ Hours</span>
-            </div>
-
-            <div class="lecture-cards-grid">
-                <!-- Course 1 -->
-                <div class="course-card" onclick="openVideoModal('Deep Work & Cognitive Discipline', 'Dr. Rob Henderson', 'https://www.youtube-nocookie.com/embed/iCvmsMzlF7o')">
-                    <div class="card-thumbnail-wrap">
-                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80" alt="Education">
-                        <div class="play-overlay-btn">
-                            <div class="play-icon-circle">▶</div>
-                        </div>
-                        <span class="video-duration-tag">10 Lectures • 11h</span>
-                    </div>
-                    <div class="card-content-body">
-                        <div class="instructor-name">Dr. Rob Henderson</div>
-                        <div class="course-topic-meta">Pedagogy • Social Dynamics</div>
-                        <div class="course-title-text">The Psychology of Social Status & Learning</div>
-                        <div class="course-description-snippet">An examination of luxury beliefs, intellectual discipline, and building lifelong learning systems.</div>
-                        <div class="card-footer-action">
-                            <span>Watch Module</span>
-                            <span class="action-link">Start Video →</span>
-                        </div>
-                    </div>
+            <div class="course-card" data-category="wealth leadership">
+                <div class="course-thumb">
+                    <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80" alt="Psychology of Wealth">
+                    <span class="badge-tag">Finance</span>
+                </div>
+                <div class="course-info">
+                    <div class="course-instructor">Dr. W. Keith Campbell</div>
+                    <div class="course-meta">Finance • Social Sciences</div>
+                    <div class="course-title">The Psychology of Wealth & Economic Mindset</div>
                 </div>
             </div>
-        </section>
 
-        <!-- 3. PHILOSOPHY -->
-        <section class="discipline-block" id="philosophy">
-            <div class="discipline-title-wrap">
-                <h3>Philosophy & Existential Ethics</h3>
-                <span class="discipline-badge">200+ Hours</span>
-            </div>
-
-            <div class="lecture-cards-grid">
-                <!-- Course 1 -->
-                <div class="course-card" onclick="openVideoModal('Maps of Meaning', 'Dr. Jordan B. Peterson', 'https://www.youtube-nocookie.com/embed/iCvmsMzlF7o')">
-                    <div class="card-thumbnail-wrap">
-                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" alt="Philosophy">
-                        <div class="play-overlay-btn">
-                            <div class="play-icon-circle">▶</div>
-                        </div>
-                        <span class="video-duration-tag">16 Lectures • 22h</span>
-                    </div>
-                    <div class="card-content-body">
-                        <div class="instructor-name">Dr. Jordan B. Peterson</div>
-                        <div class="course-topic-meta">Philosophy • Psychology</div>
-                        <div class="course-title-text">Maps of Meaning: The Architecture of Belief</div>
-                        <div class="course-description-snippet">A deep analysis of myth, morality, personal responsibility, and the cognitive structures of human order and chaos.</div>
-                        <div class="card-footer-action">
-                            <span>Watch Module</span>
-                            <span class="action-link">Start Video →</span>
-                        </div>
-                    </div>
+            <div class="course-card" data-category="leadership psychology">
+                <div class="course-thumb">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80" alt="Boy Crisis">
+                    <span class="badge-tag">Manhood</span>
                 </div>
-
-                <!-- Course 2 -->
-                <div class="course-card" onclick="openVideoModal('Meaning Crisis & Awakening', 'Dr. John Vervaeke', 'https://www.youtube-nocookie.com/embed/iCvmsMzlF7o')">
-                    <div class="card-thumbnail-wrap">
-                        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80" alt="Wisdom">
-                        <div class="play-overlay-btn">
-                            <div class="play-icon-circle">▶</div>
-                        </div>
-                        <span class="video-duration-tag">14 Lectures • 18h</span>
-                    </div>
-                    <div class="card-content-body">
-                        <div class="instructor-name">Dr. John Vervaeke</div>
-                        <div class="course-topic-meta">Cognitive Science • Ethics</div>
-                        <div class="course-title-text">Awakening from the Meaning Crisis</div>
-                        <div class="course-description-snippet">Integrating ancient philosophy with modern cognitive science to cultivate wisdom and purpose.</div>
-                        <div class="card-footer-action">
-                            <span>Watch Module</span>
-                            <span class="action-link">Start Video →</span>
-                        </div>
-                    </div>
+                <div class="course-info">
+                    <div class="course-instructor">Dr. Warren Farrell</div>
+                    <div class="course-meta">Psychology • Social Sciences</div>
+                    <div class="course-title">The Boy Crisis: Purpose, Discipline & Growth</div>
                 </div>
             </div>
-        </section>
 
-        <!-- 4. SCIENCE -->
-        <section class="discipline-block" id="science">
-            <div class="discipline-title-wrap">
-                <h3>Science & Biology</h3>
-                <span class="discipline-badge">150+ Hours</span>
-            </div>
-
-            <div class="lecture-cards-grid">
-                <!-- Course 1 -->
-                <div class="course-card" onclick="openVideoModal('Evolutionary Biology & Human Behavior', 'Dr. Heather Heying', 'https://www.youtube-nocookie.com/embed/78nsxRxbf4w')">
-                    <div class="card-thumbnail-wrap">
-                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80" alt="Biology">
-                        <div class="play-overlay-btn">
-                            <div class="play-icon-circle">▶</div>
-                        </div>
-                        <span class="video-duration-tag">12 Lectures • 15h</span>
-                    </div>
-                    <div class="card-content-body">
-                        <div class="instructor-name">Dr. Heather Heying</div>
-                        <div class="course-topic-meta">Biology • Evolutionary Psychology</div>
-                        <div class="course-title-text">Evolutionary Science & Modern Adaptation</div>
-                        <div class="course-description-snippet">Exploring how ancient evolutionary biology dictates modern behavior, health, and social dynamics.</div>
-                        <div class="card-footer-action">
-                            <span>Watch Module</span>
-                            <span class="action-link">Start Video →</span>
-                        </div>
-                    </div>
+            <div class="course-card" data-category="wealth leadership">
+                <div class="course-thumb">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80" alt="Social Status">
+                    <span class="badge-tag">Leadership</span>
+                </div>
+                <div class="course-info">
+                    <div class="course-instructor">Dr. Rob Henderson</div>
+                    <div class="course-meta">Psychology • Social Dynamics</div>
+                    <div class="course-title">The Psychology of Social Status & Luxury Beliefs</div>
                 </div>
             </div>
-        </section>
 
-        <!-- 5. MATHEMATICS -->
-        <section class="discipline-block" id="mathematics">
-            <div class="discipline-title-wrap">
-                <h3>Mathematics & Strategic Logic</h3>
-                <span class="discipline-badge">95+ Hours</span>
-            </div>
-
-            <div class="lecture-cards-grid">
-                <!-- Course 1 -->
-                <div class="course-card" onclick="openVideoModal('Game Theory & Logic Systems', 'Dr. David Eagleman', 'https://www.youtube-nocookie.com/embed/Lp7E973zozc')">
-                    <div class="card-thumbnail-wrap">
-                        <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" alt="Math">
-                        <div class="play-overlay-btn">
-                            <div class="play-icon-circle">▶</div>
-                        </div>
-                        <span class="video-duration-tag">9 Lectures • 10h</span>
-                    </div>
-                    <div class="card-content-body">
-                        <div class="instructor-name">Dr. David Eagleman</div>
-                        <div class="course-topic-meta">Mathematics • Probability</div>
-                        <div class="course-title-text">Logic, Game Theory & Decision Modeling</div>
-                        <div class="course-description-snippet">Mathematical thinking, statistical probability, and quantitative strategy for complex problem-solving.</div>
-                        <div class="card-footer-action">
-                            <span>Watch Module</span>
-                            <span class="action-link">Start Video →</span>
-                        </div>
-                    </div>
+            <div class="course-card" data-category="philosophy">
+                <div class="course-thumb">
+                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" alt="Intelligence">
+                    <span class="badge-tag">Cognition</span>
+                </div>
+                <div class="course-info">
+                    <div class="course-instructor">Dr. John Vervaeke</div>
+                    <div class="course-meta">Psychology • Social Sciences</div>
+                    <div class="course-title">Introduction to Human Intelligence & Cognition</div>
                 </div>
             </div>
-        </section>
 
-        <!-- 6. WELL-BEING -->
-        <section class="discipline-block" id="wellbeing">
-            <div class="discipline-title-wrap">
-                <h3>Well-Being, Health & Fortitude</h3>
-                <span class="discipline-badge">130+ Hours</span>
-            </div>
-
-            <div class="lecture-cards-grid">
-                <!-- Course 1 -->
-                <div class="course-card" onclick="openVideoModal('Metabolic Health & Performance', 'Max Lugavere', 'https://www.youtube-nocookie.com/embed/78nsxRxbf4w')">
-                    <div class="card-thumbnail-wrap">
-                        <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80" alt="Fitness">
-                        <div class="play-overlay-btn">
-                            <div class="play-icon-circle">▶</div>
-                        </div>
-                        <span class="video-duration-tag">11 Lectures • 13h</span>
-                    </div>
-                    <div class="card-content-body">
-                        <div class="instructor-name">Max Lugavere</div>
-                        <div class="course-topic-meta">Neuroscience • Longevity</div>
-                        <div class="course-title-text">Optimizing Brain Health & Physical Vitality</div>
-                        <div class="course-description-snippet">Actionable science on nutrition, sleep optimization, metabolic performance, and cognitive stamina.</div>
-                        <div class="card-footer-action">
-                            <span>Watch Module</span>
-                            <span class="action-link">Start Video →</span>
-                        </div>
-                    </div>
+            <div class="course-card" data-category="psychology">
+                <div class="course-thumb">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Narcissism">
+                    <span class="badge-tag">Psychology</span>
+                </div>
+                <div class="course-info">
+                    <div class="course-instructor">Dr. W. Keith Campbell</div>
+                    <div class="course-meta">Psychology • Human Behavior</div>
+                    <div class="course-title">On Narcissism & Dark Triad Traits</div>
                 </div>
             </div>
-        </section>
-    </main>
 
-    <!-- ==========================================================================
-       FACULTY SECTION (EXACT LIGHT COLOR SCHEME FROM SCREENSHOT 1)
-       ========================================================================== -->
+        </div>
+    </section>
+
     <section class="faculty-section" id="faculty">
-        <div class="faculty-inner-wrap">
-            <div class="faculty-header">
-                <h2>Meet our faculty.</h2>
-                <p>Our faculty is composed of some of the world's most respected minds.</p>
-                <div class="faculty-divider-title">THE PROFESSORS</div>
+        <div class="faculty-header">
+            <h2>Meet Our Faculty.</h2>
+            <p>Our faculty is composed of some of the world's most respected minds.</p>
+            <div class="faculty-subhead">THE PROFESSORS</div>
+        </div>
+
+        <div class="faculty-grid">
+
+            <div class="faculty-card">
+                <img class="faculty-img" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80" alt="Dr. Stephen R. C. Hicks">
+                <div class="faculty-overlay">
+                    <div class="faculty-name">Dr. Stephen R. C. Hicks</div>
+                    <div class="faculty-bio">Eminent Professor of Philosophy and Senior Scholar at The Atlas Society. Specializes in modern history, logic, and the philosophical foundations of entrepreneurship and personal autonomy.</div>
+                    <div class="faculty-action">VIEW PROFILE</div>
+                </div>
             </div>
 
-            <div class="faculty-grid-cards">
-                <!-- Professor 1 -->
-                <div class="faculty-profile-card">
-                    <img class="faculty-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80" alt="Stephen Hicks">
-                    <div class="faculty-card-overlay">
-                        <div class="faculty-card-name">Dr. Stephen R. C. Hicks</div>
-                        <div class="faculty-card-bio">An eminent Professor of Philosophy and Senior Scholar at The Atlas Society...</div>
-                        <div class="faculty-profile-link">VIEW PROFILE</div>
-                    </div>
+            <div class="faculty-card">
+                <img class="faculty-img" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80" alt="Max Lugavere">
+                <div class="faculty-overlay">
+                    <div class="faculty-name">Max Lugavere</div>
+                    <div class="faculty-bio">Acclaimed health and wellness expert, researcher, and filmmaker. Focuses on the deep connection between diet, neurology, and cognitive preservation for modern men facing high stress.</div>
+                    <div class="faculty-action">VIEW PROFILE</div>
                 </div>
+            </div>
 
-                <!-- Professor 2 -->
-                <div class="faculty-profile-card">
-                    <img class="faculty-photo" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80" alt="Max Lugavere">
-                    <div class="faculty-card-overlay">
-                        <div class="faculty-card-name">Max Lugavere</div>
-                        <div class="faculty-card-bio">Acclaimed health and wellness expert, researcher, and science filmmaker...</div>
-                        <div class="faculty-profile-link">VIEW PROFILE</div>
-                    </div>
+            <div class="faculty-card">
+                <img class="faculty-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" alt="Dr. Heather Heying">
+                <div class="faculty-overlay">
+                    <div class="faculty-name">Dr. Heather Heying</div>
+                    <div class="faculty-bio">Distinguished evolutionary biologist and educator, has conducted extensive research into mating strategies, the biological underpinnings of behavior, and the evolutionary history of human gender roles.</div>
+                    <div class="faculty-action">VIEW PROFILE</div>
                 </div>
+            </div>
 
-                <!-- Professor 3 -->
-                <div class="faculty-profile-card">
-                    <img class="faculty-photo" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="Heather Heying">
-                    <div class="faculty-card-overlay">
-                        <div class="faculty-card-name">Dr. Heather Heying</div>
-                        <div class="faculty-card-bio">Distinguished evolutionary biologist and educator, has conducted extensive research...</div>
-                        <div class="faculty-profile-link">VIEW PROFILE</div>
-                    </div>
+            <div class="faculty-card">
+                <img class="faculty-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Dr. David Eagleman">
+                <div class="faculty-overlay">
+                    <div class="faculty-name">Dr. David Eagleman</div>
+                    <div class="faculty-bio">Celebrated neuroscientist and New York Times bestselling author, known for groundbreaking work on neuroplasticity, time perception, and how the brain constructs our entire sense of reality.</div>
+                    <div class="faculty-action">VIEW PROFILE</div>
                 </div>
+            </div>
 
-                <!-- Professor 4 -->
-                <div class="faculty-profile-card">
-                    <img class="faculty-photo" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="David Eagleman">
-                    <div class="faculty-card-overlay">
-                        <div class="faculty-card-name">Dr. David Eagleman</div>
-                        <div class="faculty-card-bio">Celebrated neuroscientist and New York Times bestselling author...</div>
-                        <div class="faculty-profile-link">VIEW PROFILE</div>
-                    </div>
+        </div>
+    </section>
+
+    <section class="media-section" id="media">
+        <div class="section-header">
+            <h2>Critical Debates & Knowledge</h2>
+            <p style="color: var(--text-muted); font-size: 1.4rem;">Curated massive format masterclasses and debates for modern men. Videos are fully playable below.</p>
+        </div>
+
+        <div class="media-grid">
+            <div class="media-card">
+                <div class="media-video-wrapper">
+                    <!-- Increased format: These players are huge via the grid sizing -->
+                    <iframe src="https://www.youtube-nocookie.com/embed/iCvmsMzlF7o" title="TED Talk Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="media-details">
+                    <div class="media-category">TED Talk • Mindset</div>
+                    <div class="media-title">The Power of Vulnerability & True Strength</div>
+                    <div class="media-desc">Understanding emotional intelligence and building unwavering mental resilience in high-stress environments. A vital lecture for overcoming internal limitations.</div>
+                </div>
+            </div>
+
+            <div class="media-card">
+                <div class="media-video-wrapper">
+                    <iframe src="https://www.youtube-nocookie.com/embed/78nsxRxbf4w" title="Jubilee Spectrum Debate" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="media-details">
+                    <div class="media-category">Jubilee • Social Debate</div>
+                    <div class="media-title">The Spectrum: Traditional vs Modern Masculinity</div>
+                    <div class="media-desc">A deep dive discussion confronting traditional expectations of men with modern cultural shifts. Listen, learn, and adapt to the changing socio-cultural paradigm.</div>
+                </div>
+            </div>
+            
+            <div class="media-card">
+                <div class="media-video-wrapper">
+                    <iframe src="https://www.youtube-nocookie.com/embed/aE1KVJqEouE" title="Masterclass Focus" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="media-details">
+                    <div class="media-category">Lecture • Cognitive Science</div>
+                    <div class="media-title">Rewiring Your Brain for Unstoppable Discipline</div>
+                    <div class="media-desc">Discover the neurological mechanisms behind habit formation. This video breaks down how to transform chaotic habits into structured, powerful discipline.</div>
+                </div>
+            </div>
+            
+            <div class="media-card">
+                <div class="media-video-wrapper">
+                    <iframe src="https://www.youtube-nocookie.com/embed/Q54jS_TzE3M" title="Wealth Seminar" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="media-details">
+                    <div class="media-category">Seminar • Wealth</div>
+                    <div class="media-title">The Architecture of Financial Sovereignty</div>
+                    <div class="media-desc">Money is a tool, not a master. Learn the foundational rules of capital allocation, personal resource management, and achieving true independence.</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ==========================================================================
-       INTERACTIVE VIDEO MODAL PLAYER
-       ========================================================================== -->
-    <div class="video-modal-backdrop" id="videoModal">
-        <div class="modal-container">
-            <button class="modal-close-btn" onclick="closeVideoModal()">✕</button>
-            <div class="modal-video-frame">
-                <iframe id="modalIframe" src="" title="Academy Video Lecture" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
-            <div class="modal-info-bar">
-                <div class="modal-video-title" id="modalTitle">Lecture Title</div>
-                <div class="modal-video-meta" id="modalMeta">Instructor Name</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==========================================================================
-       STICKY CALL TO ACTION PROMO BAR
-       ========================================================================== -->
     <div class="sticky-promo-bar">
-        <div class="promo-price-text">$399 <span>/year</span></div>
-        <div class="promo-sale-badge">LABOR DAY SALE • SAVE UP TO $1776</div>
-        <button class="btn-sticky-join">JOIN NOW</button>
+        <div class="promo-badge">Limited Access</div>
+        <div class="promo-price">$29 <span>/ month</span></div>
+        <button class="btn-join">Join Transform</button>
     </div>
 
-    <!-- ==========================================================================
-       FOOTER
-       ========================================================================== -->
     <footer>
-        <div class="footer-grid">
-            <div>
-                <div class="brand-crest" style="margin-bottom: 1rem;">P</div>
-                <p>The Peterson Academy Transformation Portal offers rigorous higher education designed to cultivate disciplined, knowledgeable, and responsible leaders.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Disciplines</h4>
-                <ul>
-                    <li><a href="#finance">Finance & Economics</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#philosophy">Philosophy</a></li>
-                    <li><a href="#science">Science</a></li>
-                    <li><a href="#mathematics">Mathematics</a></li>
-                    <li><a href="#wellbeing">Well-Being</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Academy</h4>
-                <ul>
-                    <li><a href="#faculty">Professors</a></li>
-                    <li><a href="#">Curriculum</a></li>
-                    <li><a href="#">Tuition & Plans</a></li>
-                    <li><a href="#">Community Forum</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Legal & Contact</h4>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Support Center</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <div>&copy; 2026 Peterson Academy Initiative. All rights reserved.</div>
-            <div>Higher Education Restored.</div>
-        </div>
+        <h3>Wilsons' Transform</h3>
+        <p>Providing the educational foundation to build competence, resilience, and purpose.</p>
+        <p>&copy; 2026 Wilsons' Transform Academy. All Rights Reserved.</p>
     </footer>
 
-    <!-- ==========================================================================
-       JAVASCRIPT FOR INTERACTIVITY, DROPDOWN, FILTERING & VIDEO MODAL
-       ========================================================================== -->
+    <!-- JavaScript to make the category tabs fully functional -->
     <script>
-        /* 1. Toggle Disciplines Dropdown Menu */
-        function toggleDropdown(event) {
-            event.stopPropagation();
-            const container = document.getElementById('disciplinesDropdown');
-            container.classList.toggle('active');
-        }
-
-        /* Close Dropdown when clicking anywhere outside */
-        window.addEventListener('click', function(e) {
-            const container = document.getElementById('disciplinesDropdown');
-            if (container && !container.contains(e.target)) {
-                container.classList.remove('active');
+        function filterCategory(category, element) {
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            if (element) {
+                element.classList.add('active');
             }
-        });
 
-        /* 2. Filter Category Blocks Functionality */
-        function filterCategory(categoryKey) {
-            // Close dropdown if open
-            const container = document.getElementById('disciplinesDropdown');
-            if (container) container.classList.remove('active');
-
-            // Update Tab Button styles
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            tabBtns.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent.toLowerCase().includes(categoryKey) || (categoryKey === 'all' && btn.textContent.includes('All'))) {
-                    btn.classList.add('active');
-                }
-            });
-
-            // Show/Hide Discipline Blocks
-            const blocks = document.querySelectorAll('.discipline-block');
-            blocks.forEach(block => {
-                if (categoryKey === 'all') {
-                    block.style.display = 'block';
+            // Filter courses
+            const courses = document.querySelectorAll('.course-card');
+            courses.forEach(course => {
+                const courseCategories = course.getAttribute('data-category');
+                
+                if (category === 'all') {
+                    course.style.display = 'flex';
                 } else {
-                    if (block.id === categoryKey) {
-                        block.style.display = 'block';
+                    if (courseCategories.includes(category)) {
+                        course.style.display = 'flex';
                     } else {
-                        block.style.display = 'none';
+                        course.style.display = 'none';
                     }
                 }
             });
         }
-
-        /* 3. Interactive Video Player Modal Handlers */
-        function openVideoModal(title, instructor, videoUrl) {
-            const modal = document.getElementById('videoModal');
-            const iframe = document.getElementById('modalIframe');
-            const titleEl = document.getElementById('modalTitle');
-            const metaEl = document.getElementById('modalMeta');
-
-            titleEl.textContent = title;
-            metaEl.textContent = instructor;
-            
-            // Add autoplay parameter to URL if not present
-            const autoUrl = videoUrl.includes('?') ? `${videoUrl}&autoplay=1` : `${videoUrl}?autoplay=1`;
-            iframe.src = autoUrl;
-
-            modal.classList.add('open');
-        }
-
-        function closeVideoModal() {
-            const modal = document.getElementById('videoModal');
-            const iframe = document.getElementById('modalIframe');
-            
-            modal.classList.remove('open');
-            iframe.src = ''; // Clear video source to stop playback
-        }
-
-        /* Close Modal on pressing ESC key */
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeVideoModal();
-            }
-        });
     </script>
 </body>
 </html>
