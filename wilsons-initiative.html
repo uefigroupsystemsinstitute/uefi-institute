@@ -7,33 +7,59 @@
     
     <style>
         /* ==========================================================================
-           1. CSS VARIABLES & THEMING
+           1. CSS VARIABLES, GLOBALS & ANIMATIONS
            ========================================================================== */
         :root {
+            /* Color Palette */
             --bg-dark: #080c14;
             --bg-dark-card: #0e1420;
             --bg-light-section: #eef2f6;
             --bg-light-card: #ffffff;
+            --bg-modal: rgba(8, 12, 20, 0.95);
             
             --text-gold-light: #dfc385;
             --text-gold: #c59b27;
+            --text-gold-dark: #8b6b15;
             
-            /* High visibility color settings */
             --text-light: #ffffff;
             --text-muted: #d1d5db; 
             --text-dark: #000000;
             --text-dark-muted: #1f2937;
             
             --accent-red: #c5221f;
+            --accent-red-hover: #9c1a17;
             
             --border-dark: rgba(255, 255, 255, 0.2);
             --border-light: rgba(0, 0, 0, 0.15);
+            --border-glow: rgba(197, 155, 39, 0.4);
             
-            /* Font overridden to purely Times New Roman globally */
+            /* Typography */
             --font-primary: 'Times New Roman', Times, serif;
             
+            /* Structural */
             --radius-card: 14px;
+            --radius-btn: 8px;
             --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-fast: all 0.2s ease-in-out;
+            
+            /* Layout */
+            --section-padding: 100px 5rem;
+            --max-width: 1600px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-gold-dark); 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-gold); 
         }
 
         /* Reset & Base */
@@ -61,6 +87,40 @@
             color: inherit;
         }
 
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px var(--border-glow); }
+            50% { box-shadow: 0 0 25px var(--text-gold); }
+            100% { box-shadow: 0 0 10px var(--border-glow); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Utility Classes */
+        .fade-in-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: var(--transition-smooth);
+        }
+        
+        .fade-in-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* ==========================================================================
            2. HEADER & NAVIGATION
            ========================================================================== */
@@ -72,31 +132,47 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 5rem;
-            background: rgba(8, 12, 20, 0.95);
-            backdrop-filter: blur(15px);
+            padding: 1.2rem 5rem;
+            background: rgba(8, 12, 20, 0.85);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-dark);
             z-index: 1000;
+            transition: var(--transition-smooth);
+        }
+
+        header.scrolled {
+            padding: 0.8rem 5rem;
+            background: rgba(8, 12, 20, 0.98);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
         }
 
         .brand-logo {
             display: flex;
             align-items: center;
             gap: 15px;
+            cursor: pointer;
         }
 
         .brand-crest {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             border: 2px solid var(--text-gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-gold);
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             letter-spacing: 1px;
+            box-shadow: inset 0 0 10px rgba(197, 155, 39, 0.2);
+            transition: var(--transition-smooth);
+        }
+
+        .brand-logo:hover .brand-crest {
+            background: var(--text-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--text-gold);
         }
 
         .brand-name {
@@ -128,11 +204,26 @@
             letter-spacing: 1px;
             transition: var(--transition-smooth);
             text-transform: uppercase;
+            position: relative;
+        }
+
+        nav.nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--text-gold);
+            transition: var(--transition-smooth);
         }
 
         nav.nav-links a:hover {
             color: var(--text-gold-light);
-            text-shadow: 0 0 10px rgba(223, 195, 133, 0.5);
+        }
+
+        nav.nav-links a:hover::after {
+            width: 100%;
         }
 
         .auth-actions {
@@ -145,6 +236,8 @@
             font-size: 1.1rem;
             font-weight: bold;
             transition: var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn-link:hover {
@@ -154,13 +247,15 @@
         .btn-outline {
             border: 2px solid var(--text-gold);
             padding: 0.7rem 1.8rem;
-            border-radius: 8px;
+            border-radius: var(--radius-btn);
             font-size: 1rem;
             font-weight: bold;
             color: var(--text-gold);
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: var(--transition-smooth);
+            cursor: pointer;
+            background: transparent;
         }
 
         .btn-outline:hover {
@@ -169,25 +264,54 @@
             box-shadow: 0 0 20px rgba(197, 155, 39, 0.4);
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-gold);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
         /* ==========================================================================
-           3. HERO SECTION (Custom Reference Image & Main Header)
+           3. HERO SECTION
            ========================================================================== */
         .hero-section {
-            padding-top: 160px;
+            padding-top: 180px;
             padding-bottom: 80px;
             text-align: center;
-            background: radial-gradient(circle at 50% 30%, rgba(30, 41, 59, 0.8) 0%, var(--bg-dark) 80%);
+            background: radial-gradient(circle at 50% 20%, rgba(30, 41, 59, 0.8) 0%, var(--bg-dark) 80%);
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+            opacity: 0.2;
+            pointer-events: none;
         }
 
         .main-headline {
-            font-size: 3.5rem;
+            font-size: 4rem;
             color: var(--text-gold);
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 3rem;
+            letter-spacing: 4px;
+            margin-bottom: 1.5rem;
             font-weight: bold;
             padding: 0 2rem;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.9);
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        .sub-headline {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            letter-spacing: 1px;
+            animation: fadeIn 2s ease-out forwards;
         }
 
         .hero-image-container {
@@ -198,27 +322,46 @@
             display: flex;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-            border-top: 1px solid var(--border-dark);
-            border-bottom: 1px solid var(--border-dark);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+            border-top: 2px solid var(--border-dark);
+            border-bottom: 2px solid var(--border-dark);
+            animation: fadeIn 2.5s ease-out forwards;
         }
 
-        /* Forces the image to stretch both sides while maintaining center focal point */
         .hero-image-container img {
             width: 100%;
             height: auto;
-            min-height: 400px;
+            min-height: 500px;
+            max-height: 70vh;
             object-fit: cover;
             object-position: center center;
             display: block;
+            filter: contrast(1.1) brightness(0.9);
+        }
+
+        .hero-overlay-text {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(8, 12, 20, 0.8);
+            padding: 15px 40px;
+            border: 1px solid var(--text-gold);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            color: var(--text-light);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulseGlow 3s infinite;
         }
 
         /* ==========================================================================
            4. LECTURE CATALOG & TABS SECTION
            ========================================================================== */
         .catalog-section {
-            padding: 80px 5rem;
-            max-width: 1800px;
+            padding: var(--section-padding);
+            max-width: var(--max-width);
             margin: 0 auto;
         }
 
@@ -230,16 +373,24 @@
         .section-header h2 {
             font-size: 3.5rem;
             font-weight: bold;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             margin-bottom: 1rem;
             color: var(--text-light);
+            text-transform: uppercase;
+        }
+        
+        .section-header p {
+            color: var(--text-gold);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .category-tabs {
             display: flex;
             justify-content: center;
-            gap: 3.5rem;
-            border-bottom: 2px solid var(--border-dark);
+            gap: 3rem;
+            border-bottom: 1px solid var(--border-dark);
             padding-bottom: 1.5rem;
             margin-bottom: 4rem;
             flex-wrap: wrap;
@@ -249,7 +400,7 @@
             background: none;
             border: none;
             color: var(--text-muted);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-family: var(--font-primary);
             font-weight: bold;
             text-transform: uppercase;
@@ -257,26 +408,32 @@
             padding-bottom: 8px;
             position: relative;
             transition: var(--transition-smooth);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         .tab-btn.active, .tab-btn:hover {
             color: var(--text-gold);
         }
 
-        .tab-btn.active::after {
+        .tab-btn::after {
             content: '';
             position: absolute;
             bottom: -1.6rem;
-            left: 0;
-            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
             height: 3px;
             background-color: var(--text-gold);
+            transition: var(--transition-smooth);
+        }
+
+        .tab-btn.active::after {
+            width: 100%;
         }
 
         .course-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
             gap: 3rem;
         }
 
@@ -289,18 +446,23 @@
             cursor: pointer;
             display: flex;
             flex-direction: column;
+            height: 100%;
+        }
+
+        .course-card.hide {
+            display: none;
         }
 
         .course-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
             border-color: var(--text-gold);
         }
 
         .course-thumb {
             position: relative;
             width: 100%;
-            height: 250px;
+            height: 260px;
             background-color: #1a202c;
             overflow: hidden;
         }
@@ -310,10 +472,12 @@
             height: 100%;
             object-fit: cover;
             transition: var(--transition-smooth);
+            filter: grayscale(20%);
         }
 
         .course-card:hover .course-thumb img {
-            transform: scale(1.08);
+            transform: scale(1.1);
+            filter: grayscale(0%);
         }
 
         .badge-tag {
@@ -330,13 +494,30 @@
             letter-spacing: 1px;
             color: var(--text-gold-light);
             border: 1px solid var(--text-gold);
+            z-index: 2;
+        }
+        
+        .duration-tag {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: white;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .course-info {
-            padding: 1.8rem;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            background: linear-gradient(180deg, var(--bg-dark-card) 0%, var(--bg-dark) 100%);
         }
 
         .course-instructor {
@@ -344,6 +525,7 @@
             font-weight: bold;
             color: var(--text-light);
             margin-bottom: 5px;
+            letter-spacing: 1px;
         }
 
         .course-meta {
@@ -354,39 +536,170 @@
         }
 
         .course-title {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             line-height: 1.4;
             color: var(--text-light);
             font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .course-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-footer {
+            border-top: 1px solid var(--border-dark);
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-gold);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .course-footer span:hover {
+            color: var(--text-light);
         }
 
         /* ==========================================================================
-           5. FACULTY SHOWCASE SECTION (ENLARGED & HEIGHTENED)
+           5. PATH TO MASTERY (CURRICULUM TIMELINE)
+           ========================================================================== */
+        .timeline-section {
+            padding: var(--section-padding);
+            background: url('https://www.transparenttextures.com/patterns/black-linen.png') var(--bg-dark);
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+            position: relative;
+        }
+
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: var(--text-gold);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--bg-dark-card);
+            padding: 2.5rem;
+            border-radius: var(--radius-card);
+            border: 1px solid var(--border-dark);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .timeline-content:hover {
+            border-color: var(--text-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(197, 155, 39, 0.2);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            text-align: right;
+            margin-left: auto;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            text-align: left;
+            margin-right: auto;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            width: 24px;
+            height: 24px;
+            background: var(--bg-dark);
+            border: 4px solid var(--text-gold);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 15px var(--text-gold);
+        }
+
+        .timeline-phase {
+            color: var(--text-gold);
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .timeline-title {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* ==========================================================================
+           6. FACULTY SHOWCASE SECTION
            ========================================================================== */
         .faculty-section {
             background-color: var(--bg-light-section);
             color: var(--text-dark);
-            padding: 120px 5rem;
+            padding: var(--section-padding);
             position: relative;
         }
 
         .faculty-header {
-            margin-bottom: 4.5rem;
+            margin-bottom: 5rem;
             text-align: center;
         }
 
         .faculty-header h2 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             font-weight: bold;
             color: var(--text-dark);
             margin-bottom: 1rem;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .faculty-header p {
             font-size: 1.4rem;
             color: var(--text-dark-muted);
             font-weight: bold;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .faculty-subhead {
@@ -403,29 +716,32 @@
 
         .faculty-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
             margin-top: 3rem;
+            max-width: var(--max-width);
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Vastly increased height as requested */
         .faculty-card {
             background: var(--bg-light-card);
             border-radius: var(--radius-card);
             overflow: hidden;
             height: 650px; 
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             transition: var(--transition-smooth);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             border: 2px solid transparent;
+            cursor: pointer;
         }
 
         .faculty-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
             border-color: var(--text-gold);
         }
 
@@ -436,34 +752,46 @@
             height: 100%;
             object-fit: cover;
             object-position: top center;
+            transition: transform 0.6s ease;
+        }
+
+        .faculty-card:hover .faculty-img {
+            transform: scale(1.05);
         }
 
         .faculty-overlay {
             position: relative;
             z-index: 2;
-            padding: 2.5rem 2rem;
-            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 75%);
+            padding: 3rem 2.5rem;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,1) 100%);
             color: #fff;
+            transition: var(--transition-smooth);
         }
 
         .faculty-name {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             line-height: 1.2;
             margin-bottom: 10px;
             color: #ffffff;
             font-weight: bold;
+            text-transform: uppercase;
         }
 
         .faculty-bio {
             font-size: 1.1rem;
             color: #e2e8f0;
-            line-height: 1.6;
+            line-height: 1.7;
             display: -webkit-box;
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .faculty-card:hover .faculty-bio {
+            -webkit-line-clamp: unset;
+            overflow: visible;
         }
 
         .faculty-action {
@@ -472,22 +800,34 @@
             letter-spacing: 2px;
             color: var(--text-gold);
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faculty-action::after {
+            content: '→';
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faculty-card:hover .faculty-action::after {
+            transform: translateX(10px);
         }
 
         /* ==========================================================================
-           6. CURATED TALKS & MEDIA (MASSIVE VIDEO CARDS)
+           7. MASSIVE MEDIA / DISCUSSIONS SECTION
            ========================================================================== */
         .media-section {
-            padding: 120px 5rem;
-            max-width: 1800px;
+            padding: var(--section-padding);
+            max-width: var(--max-width);
             margin: 0 auto;
         }
 
-        /* Videos made significantly larger. 1 column on smaller screens, max 2 on large */
         .media-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
-            gap: 4rem;
+            gap: 5rem;
             margin-top: 4rem;
         }
 
@@ -500,8 +840,9 @@
         }
         
         .media-card:hover {
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
             border-color: var(--text-gold);
+            transform: translateY(-5px);
         }
 
         .media-video-wrapper {
@@ -522,55 +863,324 @@
         }
 
         .media-details {
-            padding: 2.5rem;
+            padding: 3rem;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.5));
         }
 
         .media-category {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-gold);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .media-title {
-            font-size: 2rem;
+            font-size: 2.4rem;
             color: var(--text-light);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-weight: bold;
+            line-height: 1.3;
         }
 
         .media-desc {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--text-muted);
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         /* ==========================================================================
-           7. STICKY PROMO BAR & FOOTER
+           8. TESTIMONIALS / BROTHERHOOD SECTION
+           ========================================================================== */
+        .testimonial-section {
+            padding: var(--section-padding);
+            background: var(--bg-dark-card);
+            border-top: 1px solid var(--border-dark);
+            text-align: center;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: var(--max-width);
+            margin: 4rem auto 0;
+        }
+
+        .testimonial-card {
+            background: var(--bg-dark);
+            padding: 3rem;
+            border-radius: var(--radius-card);
+            border: 1px solid var(--border-dark);
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 4rem;
+            color: var(--text-gold);
+            opacity: 0.2;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            line-height: 1;
+            font-family: serif;
+        }
+
+        .testimonial-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--text-gold);
+            object-fit: cover;
+        }
+
+        .author-info {
+            text-align: left;
+        }
+
+        .author-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+        
+        .author-title {
+            color: var(--text-gold);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           9. GUILD PRICING / MEMBERSHIP
+           ========================================================================== */
+        .pricing-section {
+            padding: var(--section-padding);
+            background: radial-gradient(circle at center, rgba(197, 155, 39, 0.05) 0%, var(--bg-dark) 70%);
+            border-top: 1px solid var(--border-dark);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 4rem auto 0;
+        }
+
+        .pricing-card {
+            background: var(--bg-dark-card);
+            border: 1px solid var(--border-dark);
+            border-radius: var(--radius-card);
+            padding: 3rem;
+            text-align: center;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--text-gold);
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(197, 155, 39, 0.2);
+            position: relative;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-gold);
+            color: var(--bg-dark);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+        }
+
+        .tier-name {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .tier-price {
+            font-size: 3.5rem;
+            color: var(--text-gold);
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+        }
+
+        .tier-price span {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .tier-features {
+            list-style: none;
+            margin-bottom: 3rem;
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .tier-features li {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tier-features li::before {
+            content: '✓';
+            color: var(--text-gold);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .btn-full {
+            width: 100%;
+            background: transparent;
+            border: 2px solid var(--text-gold);
+            color: var(--text-gold);
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: var(--radius-btn);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-family: var(--font-primary);
+        }
+
+        .pricing-card.featured .btn-full, .btn-full:hover {
+            background: linear-gradient(135deg, var(--text-gold) 0%, var(--text-gold-dark) 100%);
+            color: var(--text-light);
+            box-shadow: 0 10px 20px rgba(197, 155, 39, 0.4);
+            border-color: transparent;
+        }
+
+        /* ==========================================================================
+           10. FAQ ACCORDION SECTION
+           ========================================================================== */
+        .faq-section {
+            padding: var(--section-padding);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-dark);
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.4rem;
+            font-family: var(--font-primary);
+            font-weight: bold;
+            text-align: left;
+            padding: 1.5rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition-smooth);
+        }
+
+        .faq-question:hover {
+            color: var(--text-gold);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: var(--text-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .faq-answer-inner {
+            padding-bottom: 2rem;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* ==========================================================================
+           11. STICKY PROMO BAR
            ========================================================================== */
         .sticky-promo-bar {
             position: fixed;
-            bottom: 30px;
+            bottom: -100px; /* Hidden by default, slide up via JS */
             left: 50%;
             transform: translateX(-50%);
             background: rgba(14, 20, 32, 0.98);
             backdrop-filter: blur(20px);
             border: 2px solid var(--text-gold);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.9);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.9), 0 0 20px var(--border-glow);
             border-radius: 50px;
             padding: 12px 20px 12px 35px;
             display: flex;
             align-items: center;
             gap: 2.5rem;
             z-index: 999;
+            transition: bottom 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .sticky-promo-bar.show {
+            bottom: 30px;
+        }
+
+        .promo-text-wrap {
+            display: flex;
+            flex-direction: column;
         }
 
         .promo-price {
             font-size: 1.6rem;
             color: #fff;
             font-weight: bold;
+            line-height: 1;
         }
 
         .promo-price span {
@@ -586,19 +1196,22 @@
             color: #fff;
             font-size: 0.85rem;
             font-weight: bold;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 4px 10px;
+            border-radius: 4px;
             letter-spacing: 1px;
             text-transform: uppercase;
+            margin-top: 5px;
+            display: inline-block;
+            width: fit-content;
         }
 
         .btn-join {
-            background: linear-gradient(135deg, #c59b27 0%, #8b6b15 100%);
+            background: linear-gradient(135deg, var(--text-gold) 0%, var(--text-gold-dark) 100%);
             border: none;
             color: #fff;
-            padding: 14px 35px;
+            padding: 14px 40px;
             border-radius: 40px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -613,70 +1226,269 @@
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
         }
 
-        footer {
-            background-color: #030508;
-            padding: 80px 5rem 150px 5rem;
-            border-top: 1px solid var(--border-dark);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 1.1rem;
+        /* ==========================================================================
+           12. MODALS (LOGIN / ENROLL)
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
         }
 
-        footer h3 {
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: var(--bg-dark-card);
+            width: 100%;
+            max-width: 500px;
+            padding: 3rem;
+            border-radius: var(--radius-card);
+            border: 1px solid var(--text-gold);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+            position: relative;
+            transform: translateY(-50px);
+            transition: var(--transition-smooth);
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
             font-size: 2rem;
-            color: var(--text-light);
-            margin-bottom: 20px;
+            color: var(--text-muted);
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: var(--transition-fast);
+        }
+
+        .close-modal:hover {
+            color: var(--text-gold);
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-size: 2.2rem;
+            color: var(--text-gold);
+            margin-bottom: 2rem;
+            text-align: center;
+            text-transform: uppercase;
             letter-spacing: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border-dark);
+            border-radius: var(--radius-btn);
+            color: #fff;
+            font-family: var(--font-primary);
+            font-size: 1.1rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--text-gold);
+            box-shadow: 0 0 10px rgba(197, 155, 39, 0.3);
+        }
+
+        /* ==========================================================================
+           13. FOOTER
+           ========================================================================== */
+        footer {
+            background-color: #030508;
+            padding: 100px 5rem 150px 5rem;
+            border-top: 1px solid var(--border-dark);
+            color: var(--text-muted);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 4rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .footer-brand h3 {
+            font-size: 2rem;
+            color: var(--text-gold);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
             text-transform: uppercase;
         }
 
-        footer p {
-            margin-top: 1.5rem;
+        .footer-desc {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
         }
 
-        /* Responsive Adjustments */
-        @media (max-width: 1024px) {
-            header, .catalog-section, .faculty-section, .media-section, footer {
-                padding-left: 2.5rem;
-                padding-right: 2.5rem;
-            }
+        .footer-links h4 {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            font-size: 1.1rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-gold);
+            padding-left: 5px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .newsletter-form input {
+            padding: 10px 15px;
+            border: 1px solid var(--border-dark);
+            background: transparent;
+            color: white;
+            border-radius: 4px 0 0 4px;
+            width: 100%;
+        }
+
+        .newsletter-form button {
+            background: var(--text-gold);
+            border: none;
+            padding: 10px 20px;
+            color: var(--bg-dark);
+            font-weight: bold;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           14. RESPONSIVE QUERIES
+           ========================================================================== */
+        @media (max-width: 1200px) {
             .media-grid {
                 grid-template-columns: 1fr;
             }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            header, .catalog-section, .faculty-section, .media-section, .timeline-section, .testimonial-section, .pricing-section, .faq-section, footer {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+            .main-headline { font-size: 3rem; }
+            .timeline-content { width: 100%; margin-left: 0 !important; margin-right: 0 !important; margin-bottom: 2rem; }
+            .timeline-item:nth-child(even) .timeline-content, .timeline-item:nth-child(odd) .timeline-content { text-align: left; }
+            .timeline-container::before { left: 0; }
+            .timeline-dot { left: 0; }
+            .timeline-item { padding-left: 40px; }
         }
 
         @media (max-width: 768px) {
-            nav.nav-links {
-                display: none;
+            nav.nav-links, .auth-actions {
+                display: none; /* Mobile menu logic can be added */
             }
-            .main-headline {
-                font-size: 2.2rem;
-            }
+            .mobile-menu-btn { display: block; }
+            .main-headline { font-size: 2.2rem; }
+            .sub-headline { font-size: 1.1rem; }
             .sticky-promo-bar {
                 width: 95%;
                 justify-content: space-between;
                 padding: 15px 20px;
+                gap: 1rem;
             }
-            .promo-badge {
-                display: none;
-            }
-            .course-grid, .faculty-grid {
+            .promo-badge { display: none; }
+            .btn-join { padding: 10px 20px; font-size: 1rem; }
+            .course-grid, .faculty-grid, .testimonial-grid {
                 grid-template-columns: 1fr;
             }
             .media-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
-            .faculty-card {
-                height: 500px;
-            }
+            .faculty-card { height: 500px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .category-tabs { flex-direction: column; align-items: center; gap: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand-logo">
+    <!-- MODAL: LOGIN / ENROLL (Hidden by default) -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-box">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title">Enter The Guild</h2>
+            <form onsubmit="event.preventDefault(); alert('Authentication system connected to backend.'); closeModal();">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" required placeholder="scholar@domain.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-full" style="margin-top: 1rem;">Authenticate</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header id="mainHeader">
+        <div class="brand-logo" onclick="window.scrollTo(0,0)">
             <div class="brand-crest">W</div>
             <div>
                 <div class="brand-name">WILSONS' TRANSFORM</div>
@@ -686,32 +1498,39 @@
 
         <nav class="nav-links">
             <a href="#catalog">Lectures</a>
+            <a href="#path">Mastery</a>
             <a href="#faculty">Faculty</a>
             <a href="#media">Discussions</a>
-            <a href="#about">Mission</a>
+            <a href="#pricing">Guild</a>
         </nav>
 
         <div class="auth-actions">
-            <a href="#" class="btn-link">Sign In</a>
-            <a href="#" class="btn-outline">Enroll</a>
+            <a href="#" class="btn-link" onclick="openModal()">Sign In</a>
+            <a href="#pricing" class="btn-outline">Enroll</a>
         </div>
+        
+        <button class="mobile-menu-btn">☰</button>
     </header>
 
+    <!-- HERO SECTION -->
     <section class="hero-section">
-        <h1 class="main-headline">I AM THE VOICE OF LIFE; I CALL YOU: COME AND LEARN!</h1>
+        <h1 class="main-headline fade-in-on-scroll">I am the voice of life;<br>I call you: Come and Learn!</h1>
+        <p class="sub-headline fade-in-on-scroll">Awaken your intellect, forge unbreakable discipline, and master the fundamental realities of wealth, psychology, and masculinity in the modern world.</p>
         
-        <div class="hero-image-container">
-            <!-- Using the exact image referenced in the prompt, stretching wide while centering focal point -->
-            <img src="Screenshot 2026-09-04 at 20.26.22_2.jpg" alt="Perspective Setup - Masculinity Centered">
+        <div class="hero-image-container fade-in-on-scroll">
+            <img src="https://images.unsplash.com/photo-1552083974-186346191183?auto=format&fit=crop&w=2000&q=80" alt="Perspective Setup - Masculinity Centered">
+            <div class="hero-overlay-text">The Journey Begins Here</div>
         </div>
     </section>
 
+    <!-- LECTURE CATALOG SECTION -->
     <section class="catalog-section" id="catalog">
-        <div class="section-header">
+        <div class="section-header fade-in-on-scroll">
+            <p>The Archives</p>
             <h2>850+ Hours of Brilliant Lectures.</h2>
         </div>
 
-        <div class="category-tabs">
+        <div class="category-tabs fade-in-on-scroll">
             <button class="tab-btn active" onclick="filterCategory('all', this)">All Disciplines</button>
             <button class="tab-btn" onclick="filterCategory('wealth', this)">Wealth & Finance</button>
             <button class="tab-btn" onclick="filterCategory('psychology', this)">Psychology</button>
@@ -720,92 +1539,216 @@
         </div>
 
         <div class="course-grid" id="courseGrid">
-
-            <div class="course-card" data-category="psychology philosophy">
+            <!-- Card 1 -->
+            <div class="course-card fade-in-on-scroll" data-category="psychology philosophy">
                 <div class="course-thumb">
                     <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80" alt="Maps of Meaning">
                     <span class="badge-tag">Psychology</span>
+                    <span class="duration-tag">▶ 45:20</span>
                 </div>
                 <div class="course-info">
                     <div class="course-instructor">Dr. Jordan B. Peterson</div>
                     <div class="course-meta">Psychology • Philosophy</div>
                     <div class="course-title">Maps of Meaning: The Architecture of Belief</div>
+                    <div class="course-desc">Delve deep into the neurobiology and psychology of belief systems, mythology, and human motivation.</div>
+                    <div class="course-footer">
+                        <span>Begin Lecture</span>
+                        <span>View Details →</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="course-card" data-category="wealth leadership">
+            <!-- Card 2 -->
+            <div class="course-card fade-in-on-scroll" data-category="wealth leadership">
                 <div class="course-thumb">
                     <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80" alt="Psychology of Wealth">
                     <span class="badge-tag">Finance</span>
+                    <span class="duration-tag">▶ 1:12:05</span>
                 </div>
                 <div class="course-info">
                     <div class="course-instructor">Dr. W. Keith Campbell</div>
                     <div class="course-meta">Finance • Social Sciences</div>
                     <div class="course-title">The Psychology of Wealth & Economic Mindset</div>
+                    <div class="course-desc">Understand how neurological frameworks influence financial decision-making and wealth retention.</div>
+                    <div class="course-footer">
+                        <span>Begin Lecture</span>
+                        <span>View Details →</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="course-card" data-category="leadership psychology">
+            <!-- Card 3 -->
+            <div class="course-card fade-in-on-scroll" data-category="leadership psychology">
                 <div class="course-thumb">
                     <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80" alt="Boy Crisis">
                     <span class="badge-tag">Manhood</span>
+                    <span class="duration-tag">▶ 58:10</span>
                 </div>
                 <div class="course-info">
                     <div class="course-instructor">Dr. Warren Farrell</div>
                     <div class="course-meta">Psychology • Social Sciences</div>
                     <div class="course-title">The Boy Crisis: Purpose, Discipline & Growth</div>
+                    <div class="course-desc">Addressing the modern crisis of purpose among young men and strategies for rebuilding resilient masculinity.</div>
+                    <div class="course-footer">
+                        <span>Begin Lecture</span>
+                        <span>View Details →</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="course-card" data-category="wealth leadership">
+            <!-- Card 4 -->
+            <div class="course-card fade-in-on-scroll" data-category="wealth leadership">
                 <div class="course-thumb">
                     <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80" alt="Social Status">
                     <span class="badge-tag">Leadership</span>
+                    <span class="duration-tag">▶ 34:15</span>
                 </div>
                 <div class="course-info">
                     <div class="course-instructor">Dr. Rob Henderson</div>
                     <div class="course-meta">Psychology • Social Dynamics</div>
                     <div class="course-title">The Psychology of Social Status & Luxury Beliefs</div>
+                    <div class="course-desc">Analyze how status dictates societal structure and how to navigate modern hierarchical dominance.</div>
+                    <div class="course-footer">
+                        <span>Begin Lecture</span>
+                        <span>View Details →</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="course-card" data-category="philosophy">
+            <!-- Card 5 -->
+            <div class="course-card fade-in-on-scroll" data-category="philosophy">
                 <div class="course-thumb">
                     <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" alt="Intelligence">
                     <span class="badge-tag">Cognition</span>
+                    <span class="duration-tag">▶ 2:05:40</span>
                 </div>
                 <div class="course-info">
                     <div class="course-instructor">Dr. John Vervaeke</div>
-                    <div class="course-meta">Psychology • Social Sciences</div>
-                    <div class="course-title">Introduction to Human Intelligence & Cognition</div>
+                    <div class="course-meta">Philosophy • Cognitive Science</div>
+                    <div class="course-title">Awakening from the Meaning Crisis</div>
+                    <div class="course-desc">A deep historical and cognitive exploration into the loss of meaning in the western world.</div>
+                    <div class="course-footer">
+                        <span>Begin Lecture</span>
+                        <span>View Details →</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="course-card" data-category="psychology">
+            <!-- Card 6 -->
+            <div class="course-card fade-in-on-scroll" data-category="psychology">
                 <div class="course-thumb">
                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Narcissism">
                     <span class="badge-tag">Psychology</span>
+                    <span class="duration-tag">▶ 51:22</span>
                 </div>
                 <div class="course-info">
                     <div class="course-instructor">Dr. W. Keith Campbell</div>
                     <div class="course-meta">Psychology • Human Behavior</div>
                     <div class="course-title">On Narcissism & Dark Triad Traits</div>
+                    <div class="course-desc">Identify, understand, and defend against Machiavellianism and narcissistic behaviors in professional life.</div>
+                    <div class="course-footer">
+                        <span>Begin Lecture</span>
+                        <span>View Details →</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 7 -->
+            <div class="course-card fade-in-on-scroll" data-category="philosophy leadership">
+                <div class="course-thumb">
+                    <img src="https://images.unsplash.com/photo-1507676184212-d0330a15233c?auto=format&fit=crop&w=800&q=80" alt="Stoicism">
+                    <span class="badge-tag">Philosophy</span>
+                    <span class="duration-tag">▶ 1:15:00</span>
+                </div>
+                <div class="course-info">
+                    <div class="course-instructor">Prof. Massimo Pigliucci</div>
+                    <div class="course-meta">Philosophy • Ancient Wisdom</div>
+                    <div class="course-title">Practical Stoicism for the Modern Man</div>
+                    <div class="course-desc">Apply the teachings of Marcus Aurelius and Seneca to forge emotional invulnerability.</div>
+                    <div class="course-footer">
+                        <span>Begin Lecture</span>
+                        <span>View Details →</span>
+                    </div>
                 </div>
             </div>
 
+            <!-- Card 8 -->
+            <div class="course-card fade-in-on-scroll" data-category="wealth">
+                <div class="course-thumb">
+                    <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800&q=80" alt="Capital">
+                    <span class="badge-tag">Finance</span>
+                    <span class="duration-tag">▶ 48:30</span>
+                </div>
+                <div class="course-info">
+                    <div class="course-instructor">Dr. Saifedean Ammous</div>
+                    <div class="course-meta">Economics • Wealth Building</div>
+                    <div class="course-title">The Architecture of Hard Money & Capital</div>
+                    <div class="course-desc">Understand time preference, sound economic principles, and the creation of generational wealth.</div>
+                    <div class="course-footer">
+                        <span>Begin Lecture</span>
+                        <span>View Details →</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
+    <!-- PATH TO MASTERY (TIMELINE) -->
+    <section class="timeline-section" id="path">
+        <div class="section-header fade-in-on-scroll">
+            <p>The Curriculum</p>
+            <h2>The Path to Mastery</h2>
+        </div>
+        
+        <div class="timeline-container">
+            <div class="timeline-item fade-in-on-scroll">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-phase">Phase I</div>
+                    <h3 class="timeline-title">Awakening & Awareness</h3>
+                    <p class="timeline-desc">Stripping away societal conditioning. You will learn the biological, psychological, and evolutionary truths of human nature, unclouded by modern luxury beliefs.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item fade-in-on-scroll">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-phase">Phase II</div>
+                    <h3 class="timeline-title">Cognitive Discipline</h3>
+                    <p class="timeline-desc">Mastering the mind. Through applied Stoicism and neurobiology, you build an unbreakable internal framework, capable of extreme emotional regulation and focus.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in-on-scroll">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-phase">Phase III</div>
+                    <h3 class="timeline-title">Physical & Financial Competence</h3>
+                    <p class="timeline-desc">Translating mindset into tangible power. This phase focuses on wealth accumulation strategies, economic literacy, and optimized biological performance.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in-on-scroll">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-phase">Phase IV</div>
+                    <h3 class="timeline-title">Sovereign Leadership</h3>
+                    <p class="timeline-desc">Ascending the hierarchy. You will learn the dynamics of social status, negotiation, and how to command respect and build a sovereign domain.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FACULTY SECTION -->
     <section class="faculty-section" id="faculty">
-        <div class="faculty-header">
+        <div class="faculty-header fade-in-on-scroll">
             <h2>Meet Our Faculty.</h2>
-            <p>Our faculty is composed of some of the world's most respected minds.</p>
-            <div class="faculty-subhead">THE PROFESSORS</div>
+            <p>Our faculty is composed of some of the world's most respected academic minds, renegade thinkers, and masters of industry.</p>
+            <div class="faculty-subhead">THE PROFESSORS & MENTORS</div>
         </div>
 
         <div class="faculty-grid">
-
-            <div class="faculty-card">
+            <div class="faculty-card fade-in-on-scroll">
                 <img class="faculty-img" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80" alt="Dr. Stephen R. C. Hicks">
                 <div class="faculty-overlay">
                     <div class="faculty-name">Dr. Stephen R. C. Hicks</div>
@@ -814,7 +1757,7 @@
                 </div>
             </div>
 
-            <div class="faculty-card">
+            <div class="faculty-card fade-in-on-scroll" style="transition-delay: 0.1s;">
                 <img class="faculty-img" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80" alt="Max Lugavere">
                 <div class="faculty-overlay">
                     <div class="faculty-name">Max Lugavere</div>
@@ -823,7 +1766,7 @@
                 </div>
             </div>
 
-            <div class="faculty-card">
+            <div class="faculty-card fade-in-on-scroll" style="transition-delay: 0.2s;">
                 <img class="faculty-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" alt="Dr. Heather Heying">
                 <div class="faculty-overlay">
                     <div class="faculty-name">Dr. Heather Heying</div>
@@ -832,7 +1775,7 @@
                 </div>
             </div>
 
-            <div class="faculty-card">
+            <div class="faculty-card fade-in-on-scroll" style="transition-delay: 0.3s;">
                 <img class="faculty-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Dr. David Eagleman">
                 <div class="faculty-overlay">
                     <div class="faculty-name">Dr. David Eagleman</div>
@@ -840,104 +1783,414 @@
                     <div class="faculty-action">VIEW PROFILE</div>
                 </div>
             </div>
+            
+            <div class="faculty-card fade-in-on-scroll" style="transition-delay: 0.4s;">
+                <img class="faculty-img" src="https://images.unsplash.com/photo-1555952517-2e8e729e0b44?auto=format&fit=crop&w=800&q=80" alt="Rollo Tomassi">
+                <div class="faculty-overlay">
+                    <div class="faculty-name">Rollo Tomassi</div>
+                    <div class="faculty-bio">Pioneer of intersexual dynamics and author of The Rational Male. Analyzes the socio-sexual hierarchy and behavioral imperatives driving modern relationships.</div>
+                    <div class="faculty-action">VIEW PROFILE</div>
+                </div>
+            </div>
 
+            <div class="faculty-card fade-in-on-scroll" style="transition-delay: 0.5s;">
+                <img class="faculty-img" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80" alt="Dr. Andrew Huberman">
+                <div class="faculty-overlay">
+                    <div class="faculty-name">Dr. Andrew Huberman</div>
+                    <div class="faculty-bio">Professor of Neurobiology and Ophthalmology at Stanford. Specializes in brain development, neuroplasticity, and neural regeneration applied to daily optimization.</div>
+                    <div class="faculty-action">VIEW PROFILE</div>
+                </div>
+            </div>
         </div>
     </section>
 
+    <!-- CURATED MEDIA / DISCUSSIONS -->
     <section class="media-section" id="media">
-        <div class="section-header">
+        <div class="section-header fade-in-on-scroll">
+            <p>Masterclasses</p>
             <h2>Critical Debates & Knowledge</h2>
-            <p style="color: var(--text-muted); font-size: 1.4rem;">Curated massive format masterclasses and debates for modern men. Videos are fully playable below.</p>
+            <p style="color: var(--text-muted); font-size: 1.2rem; max-width: 700px; margin: 10px auto 0;">Curated massive format masterclasses and debates for modern men. Videos are fully playable directly from the academy interface.</p>
         </div>
 
         <div class="media-grid">
-            <div class="media-card">
+            <div class="media-card fade-in-on-scroll">
                 <div class="media-video-wrapper">
-                    <!-- Increased format: These players are huge via the grid sizing -->
                     <iframe src="https://www.youtube-nocookie.com/embed/iCvmsMzlF7o" title="TED Talk Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="media-details">
                     <div class="media-category">TED Talk • Mindset</div>
                     <div class="media-title">The Power of Vulnerability & True Strength</div>
-                    <div class="media-desc">Understanding emotional intelligence and building unwavering mental resilience in high-stress environments. A vital lecture for overcoming internal limitations.</div>
+                    <div class="media-desc">Understanding emotional intelligence and building unwavering mental resilience in high-stress environments. A vital lecture for overcoming internal limitations and forging stoic endurance.</div>
                 </div>
             </div>
 
-            <div class="media-card">
+            <div class="media-card fade-in-on-scroll">
                 <div class="media-video-wrapper">
                     <iframe src="https://www.youtube-nocookie.com/embed/78nsxRxbf4w" title="Jubilee Spectrum Debate" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="media-details">
                     <div class="media-category">Jubilee • Social Debate</div>
                     <div class="media-title">The Spectrum: Traditional vs Modern Masculinity</div>
-                    <div class="media-desc">A deep dive discussion confronting traditional expectations of men with modern cultural shifts. Listen, learn, and adapt to the changing socio-cultural paradigm.</div>
+                    <div class="media-desc">A deep dive discussion confronting traditional expectations of men with modern cultural shifts. Listen, learn, and adapt to the changing socio-cultural paradigm without losing core identity.</div>
                 </div>
             </div>
             
-            <div class="media-card">
+            <div class="media-card fade-in-on-scroll">
                 <div class="media-video-wrapper">
                     <iframe src="https://www.youtube-nocookie.com/embed/aE1KVJqEouE" title="Masterclass Focus" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="media-details">
                     <div class="media-category">Lecture • Cognitive Science</div>
                     <div class="media-title">Rewiring Your Brain for Unstoppable Discipline</div>
-                    <div class="media-desc">Discover the neurological mechanisms behind habit formation. This video breaks down how to transform chaotic habits into structured, powerful discipline.</div>
+                    <div class="media-desc">Discover the neurological mechanisms behind habit formation. This video breaks down how to transform chaotic impulses into structured, powerful daily discipline using dopamine regulation.</div>
                 </div>
             </div>
             
-            <div class="media-card">
+            <div class="media-card fade-in-on-scroll">
                 <div class="media-video-wrapper">
                     <iframe src="https://www.youtube-nocookie.com/embed/Q54jS_TzE3M" title="Wealth Seminar" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="media-details">
                     <div class="media-category">Seminar • Wealth</div>
                     <div class="media-title">The Architecture of Financial Sovereignty</div>
-                    <div class="media-desc">Money is a tool, not a master. Learn the foundational rules of capital allocation, personal resource management, and achieving true independence.</div>
+                    <div class="media-desc">Step-by-step masterclass on detaching from consumer debt cycles, understanding macro-economics, and positioning assets to thrive in inflationary environments.</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="sticky-promo-bar">
-        <div class="promo-badge">Limited Access</div>
-        <div class="promo-price">$29 <span>/ month</span></div>
-        <button class="btn-join">Join Transform</button>
+    <!-- TESTIMONIALS SECTION -->
+    <section class="testimonial-section fade-in-on-scroll">
+        <div class="section-header">
+            <p>The Brotherhood</p>
+            <h2>Voices of the Transformed</h2>
+        </div>
+        
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="quote-icon">"</div>
+                <p class="testimonial-text">"Before Wilsons' Transform, I was drifting. The psychological frameworks provided by Dr. Peterson and Dr. Campbell completely rebuilt my understanding of my own potential. I've doubled my income and reclaimed my focus."</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Marcus T." class="author-avatar">
+                    <div class="author-info">
+                        <div class="author-name">Marcus T.</div>
+                        <div class="author-title">Entrepreneur, Cohort III</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon">"</div>
+                <p class="testimonial-text">"The lectures on Stoicism and social dynamics are unparalleled. This isn't generic self-help; this is rigorous, academic, and brutally honest truth about what it takes to be a sovereign man today."</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" alt="David R." class="author-avatar">
+                    <div class="author-info">
+                        <div class="author-name">David R.</div>
+                        <div class="author-title">Software Architect, Cohort I</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon">"</div>
+                <p class="testimonial-text">"The path to mastery module rewired my dopamine system. I stopped consuming trash media and started building. The brotherhood and the faculty hold you to a standard you can't fake."</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=150&q=80" alt="Elias V." class="author-avatar">
+                    <div class="author-info">
+                        <div class="author-name">Elias V.</div>
+                        <div class="author-title">Former Marine, Cohort IV</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GUILD PRICING SECTION -->
+    <section class="pricing-section" id="pricing">
+        <div class="section-header fade-in-on-scroll">
+            <p>Enrollment</p>
+            <h2>Join The Guild</h2>
+            <p style="color: var(--text-muted); font-size: 1.2rem; max-width: 600px; margin: 10px auto 0;">Choose your path. Access the world's most dense repository of knowledge regarding masculinity, wealth, and power.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card fade-in-on-scroll">
+                <h3 class="tier-name">Initiate</h3>
+                <div class="tier-price">$0 <span>/ forever</span></div>
+                <ul class="tier-features">
+                    <li>Access to 5 Introductory Lectures</li>
+                    <li>Weekly Newsletter (The Dispatch)</li>
+                    <li>Public Forum Access</li>
+                    <li>Basic Reading List</li>
+                </ul>
+                <button class="btn-full" onclick="openModal()">Start Free</button>
+            </div>
+
+            <div class="pricing-card featured fade-in-on-scroll" style="transition-delay: 0.15s;">
+                <div class="featured-badge">Most Popular</div>
+                <h3 class="tier-name">Scholar</h3>
+                <div class="tier-price">$49 <span>/ month</span></div>
+                <ul class="tier-features">
+                    <li>Access to All 850+ Hours of Lectures</li>
+                    <li>Live Monthly Faculty Q&A</li>
+                    <li>Private Discord Brotherhood</li>
+                    <li>Curriculum Tracking System</li>
+                    <li>Exclusive Audio Feed</li>
+                </ul>
+                <button class="btn-full" onclick="openModal()">Enroll Now</button>
+            </div>
+
+            <div class="pricing-card fade-in-on-scroll" style="transition-delay: 0.3s;">
+                <h3 class="tier-name">Patriarch</h3>
+                <div class="tier-price">$997 <span>/ lifetime</span></div>
+                <ul class="tier-features">
+                    <li>Lifetime Access to Everything</li>
+                    <li>2x Private Coaching Sessions/yr</li>
+                    <li>In-Person Summit Invitations</li>
+                    <li>Advanced Networking Directory</li>
+                    <li>Founding Member Crest</li>
+                </ul>
+                <button class="btn-full" onclick="openModal()">Claim Legacy</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq-section fade-in-on-scroll">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-accordion">
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is this program suitable for beginners?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Yes. Phase I of our curriculum is designed specifically to deprogram modern societal conditioning and lay the foundational groundwork for complex philosophical and psychological concepts. No prior academic background is required, only the willingness to learn.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How is the content delivered?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Content is delivered primarily through high-definition, cinematic video lectures, accompanied by rigorous audio versions for listening on the go. Each module includes supplementary reading materials, PDF workbooks, and practical exercises.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Do I interact directly with the faculty?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Scholar and Patriarch tier members get access to live monthly Q&A seminars where selected faculty members address questions submitted by the brotherhood. One-on-one interaction is reserved for the Patriarch tier during our bi-annual summits.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can I cancel my membership at any time?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Absolutely. The Scholar tier operates on a month-to-month basis with no binding contracts. You can cancel your subscription from your dashboard with two clicks. Patriarch tier is a one-time lifetime payment.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STICKY PROMO BAR -->
+    <div class="sticky-promo-bar" id="promoBar">
+        <div class="promo-text-wrap">
+            <div class="promo-price">$49 <span>/ month</span></div>
+            <div class="promo-badge">Limited Time Offer</div>
+        </div>
+        <button class="btn-join" onclick="openModal()">Secure Your Seat</button>
     </div>
 
+    <!-- FOOTER -->
     <footer>
-        <h3>Wilsons' Transform</h3>
-        <p>Providing the educational foundation to build competence, resilience, and purpose.</p>
-        <p>&copy; 2026 Wilsons' Transform Academy. All Rights Reserved.</p>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Wilsons' Transform</h3>
+                <p class="footer-desc">The premier digital academy dedicated to the optimization, education, and elevation of the modern man. Through rigorous academics and unyielding truth, we turn boys into sovereign men.</p>
+                <div style="display: flex; gap: 15px; font-size: 1.5rem; color: var(--text-gold);">
+                    <!-- Placeholder Social Icons -->
+                    <span style="cursor:pointer">𝕏</span>
+                    <span style="cursor:pointer">IG</span>
+                    <span style="cursor:pointer">YT</span>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Academy</h4>
+                <ul>
+                    <li><a href="#catalog">The Curriculum</a></li>
+                    <li><a href="#faculty">Faculty Directory</a></li>
+                    <li><a href="#media">Masterclasses</a></li>
+                    <li><a href="#">Reading List</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account Settings</a></li>
+                    <li><a href="#">Billing</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>The Dispatch</h4>
+                <p style="font-size: 1rem; margin-bottom: 10px;">Join 50,000+ men receiving weekly insights on philosophy, wealth, and power.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
+                    <input type="email" placeholder="Your Email Address" required>
+                    <button type="submit">Join</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Wilsons' Transform Academy. All Rights Reserved. | <a href="#" style="text-decoration: underline;">Privacy Policy</a> | <a href="#" style="text-decoration: underline;">Terms of Service</a></p>
+        </div>
     </footer>
 
-    <!-- JavaScript to make the category tabs fully functional -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        function filterCategory(category, element) {
-            // Remove active class from all tabs
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            // Add active class to clicked tab
-            if (element) {
-                element.classList.add('active');
-            }
+        /* --- Category Filtering --- */
+        function filterCategory(category, btn) {
+            // Update active state on buttons
+            document.querySelectorAll('.tab-btn').forEach(button => {
+                button.classList.remove('active');
+            });
+            btn.classList.add('active');
 
             // Filter courses
             const courses = document.querySelectorAll('.course-card');
             courses.forEach(course => {
-                const courseCategories = course.getAttribute('data-category');
+                const categories = course.getAttribute('data-category').split(' ');
                 
-                if (category === 'all') {
-                    course.style.display = 'flex';
+                // Using a slight delay to allow CSS transitions if we wanted to animate them
+                if (category === 'all' || categories.includes(category)) {
+                    course.classList.remove('hide');
+                    course.style.opacity = '0';
+                    setTimeout(() => {
+                        course.style.opacity = '1';
+                    }, 50);
                 } else {
-                    if (courseCategories.includes(category)) {
-                        course.style.display = 'flex';
-                    } else {
-                        course.style.display = 'none';
-                    }
+                    course.classList.add('hide');
                 }
             });
         }
+
+        /* --- Intersection Observer for Scroll Animations --- */
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            const scrollElements = document.querySelectorAll('.fade-in-on-scroll');
+            scrollElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        /* --- Header & Promo Bar Scroll Logic --- */
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            const promoBar = document.getElementById('promoBar');
+            const heroHeight = document.querySelector('.hero-section').offsetHeight;
+            
+            // Header shrink effect
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            // Promo Bar slide up effect (shows after scrolling past hero)
+            if (window.scrollY > heroHeight + 100) {
+                promoBar.classList.add('show');
+            } else {
+                promoBar.classList.remove('show');
+            }
+        });
+
+        /* --- FAQ Accordion Logic --- */
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const btn = item.querySelector('.faq-question');
+            btn.addEventListener('click', () => {
+                // Close currently open items (optional, makes it act like a true accordion)
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                    }
+                });
+
+                // Toggle current item
+                item.classList.toggle('active');
+                const answer = item.querySelector('.faq-answer');
+                if (item.classList.contains('active')) {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                } else {
+                    answer.style.maxHeight = null;
+                }
+            });
+        });
+
+        /* --- Modal Logic --- */
+        const modal = document.getElementById('authModal');
+        
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside the box
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
