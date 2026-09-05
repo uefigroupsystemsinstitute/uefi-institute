@@ -3,137 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI GO GIRL | Empowering the Next Generation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>UEFI GO GIRL | The Ultimate Ecosystem for Empowerment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* ==========================================================================
-           1. BASE STYLES & VARIABLES
+           1. CSS VARIABLES & THEME SETUP
            ========================================================================== */
         :root {
-            --bg-color: #0d0d12;
-            --text-color: #f0f0f0;
+            --bg-color-main: #0a0a0f;
+            --bg-color-alt: #12121a;
+            --bg-color-card: #1c1c28;
+            --text-main: #f5f5f7;
+            --text-muted: #a1a1aa;
             --pink-primary: #ff007f;
             --pink-secondary: #ff4da6;
+            --pink-tertiary: #ff80c0;
             --pink-dark: #b30059;
-            --box-bg: #1a1a24;
-            --nav-bg: rgba(13, 13, 18, 0.95);
-            --font-main: 'Poppins', sans-serif;
-            --border-radius: 12px;
-            --transition: all 0.4s ease;
+            --pink-glow: rgba(255, 0, 127, 0.5);
+            --accent-cyan: #00ffcc;
+            --accent-gold: #ffcc00;
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            --border-radius-full: 9999px;
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 1rem;
+            --spacing-4: 1.5rem;
+            --spacing-5: 2rem;
+            --spacing-6: 3rem;
+            --spacing-8: 4rem;
+            --spacing-10: 6rem;
+            --spacing-12: 8rem;
+            --font-family: 'Poppins', sans-serif;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.4s ease;
+            --transition-slow: 0.8s ease;
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 20px var(--pink-glow);
+            --z-index-back: -1;
+            --z-index-normal: 1;
+            --z-index-above: 10;
+            --z-index-nav: 1000;
+            --z-index-modal: 2000;
+            --z-index-toast: 3000;
         }
 
-        * {
+        /* ==========================================================================
+           2. RESET & BASE STYLES
+           ========================================================================== */
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: var(--font-main);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.8;
+            font-family: var(--font-family);
+            background-color: var(--bg-color-main);
+            color: var(--text-main);
+            line-height: 1.7;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        h1, h2, h3, h4 {
-            color: var(--pink-primary);
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
             font-weight: 800;
-            margin-bottom: 20px;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-4);
+            color: var(--pink-primary);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--pink-primary), transparent);
+            border-radius: var(--border-radius-full);
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--text-main);
         }
 
         p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            text-align: left;
+            margin-bottom: var(--spacing-4);
+            font-size: 1.125rem;
+            color: var(--text-muted);
         }
 
         a {
             color: var(--pink-secondary);
             text-decoration: none;
-            transition: var(--transition);
+            transition: var(--transition-fast);
         }
 
         a:hover {
             color: var(--pink-primary);
+            text-shadow: 0 0 10px var(--pink-glow);
+        }
+
+        ul, ol {
+            margin-bottom: var(--spacing-4);
+            padding-left: var(--spacing-5);
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: var(--spacing-2);
+        }
+
+        strong {
+            color: var(--text-main);
+            font-weight: 700;
         }
 
         /* ==========================================================================
-           2. NAVIGATION & TABS
+           3. LAYOUT UTILITIES
            ========================================================================== */
-        nav {
-            position: fixed;
-            top: 0;
+        .container {
             width: 100%;
-            background: var(--nav-bg);
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            border-bottom: 1px solid var(--pink-dark);
-            backdrop-filter: blur(10px);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-5);
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--pink-primary);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .section-padding {
+            padding-top: var(--spacing-12);
+            padding-bottom: var(--spacing-12);
         }
 
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-links button {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            text-transform: uppercase;
-            padding: 10px 15px;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-        }
-
-        .nav-links button:hover, .nav-links button.active {
-            background-color: var(--pink-primary);
-            color: #fff;
-            transform: scale(1.05);
-        }
-
-        /* ==========================================================================
-           3. LAYOUT & CONTAINERS (LEFT TO RIGHT FOCUS)
-           ========================================================================== */
-        .tab-content {
-            display: none;
-            padding: 120px 50px 50px 50px;
-            min-height: 100vh;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Asymmetric Flex Layout */
         .flex-row {
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            gap: 50px;
-            margin-bottom: 80px;
+            gap: var(--spacing-8);
+            margin-bottom: var(--spacing-10);
         }
 
         .flex-row.reverse {
@@ -141,85 +171,380 @@
         }
 
         .flex-col-text {
-            flex: 1;
+            flex: 1 1 50%;
             text-align: left;
         }
 
         .flex-col-img {
-            flex: 1;
+            flex: 1 1 50%;
             position: relative;
         }
 
         .flex-col-img img {
             width: 100%;
-            border-radius: var(--border-radius);
-            box-shadow: 0 15px 30px rgba(255, 0, 127, 0.2);
-            transition: var(--transition);
+            height: auto;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition-normal);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .flex-col-img img:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(255, 0, 127, 0.4);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(255, 0, 127, 0.3);
+            border-color: var(--pink-dark);
         }
 
-        /* Text OVER Image Effect */
-        .text-over-img-container {
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-6);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-6);
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-6);
+        }
+
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+
+        /* ==========================================================================
+           4. COMPONENTS
+           ========================================================================== */
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: var(--border-radius-full);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            border: none;
+            outline: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--pink-primary), var(--pink-dark));
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--pink-secondary), var(--pink-primary));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.6);
+            color: #ffffff;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--pink-primary);
+            border: 2px solid var(--pink-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--pink-primary);
+            color: #ffffff;
+            box-shadow: 0 0 20px var(--pink-glow);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-color-card);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition-normal);
             position: relative;
-            width: 100%;
-            height: 60vh;
-            border-radius: var(--border-radius);
             overflow: hidden;
-            margin-bottom: 60px;
-            background: url('https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80') center/cover no-repeat;
         }
 
-        .text-over-img-container::before {
+        .card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to right, rgba(13,13,18,0.9) 0%, rgba(13,13,18,0.3) 100%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--pink-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-normal);
         }
 
-        .text-over-img-content {
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(255, 0, 127, 0.2);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Text Over Image (Hero Style) */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--spacing-10);
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-banner-img {
             position: absolute;
-            top: 50%;
-            left: 10%;
-            transform: translateY(-50%);
-            z-index: 2;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: var(--z-index-back);
         }
 
-        .text-over-img-content h1 {
-            font-size: 5rem;
-            color: #fff;
-            text-shadow: 4px 4px 15px rgba(255, 0, 127, 0.8);
-            margin-bottom: 0;
-            line-height: 1;
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.7) 50%, rgba(10,10,15,0.2) 100%);
+            z-index: 0;
         }
 
-        .text-over-img-content h2 {
-            font-size: 3rem;
+        .hero-content {
+            position: relative;
+            z-index: var(--z-index-normal);
+            padding: var(--spacing-8);
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            color: #ffffff;
+            margin-bottom: var(--spacing-2);
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-content h1 span {
             color: var(--pink-primary);
         }
 
-        /* ==========================================================================
-           4. VIDEO GRIDS & MEDIA
-           ========================================================================== */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
-            margin-bottom: 80px;
+        /* Word in front of image effect */
+        .overlap-text-wrapper {
+            position: relative;
+            display: inline-block;
         }
 
+        .overlap-text-wrapper .bg-text {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            font-size: 8rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            z-index: -1;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           5. NAVIGATION & TABS
+           ========================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 0, 127, 0.2);
+            z-index: var(--z-index-nav);
+            padding: 1rem 0;
+            transition: var(--transition-normal);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 var(--spacing-5);
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo span {
+            color: var(--pink-primary);
+        }
+
+        .nav-logo-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--pink-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 0, 127, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0); }
+        }
+
+        .nav-links-container {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .nav-links-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+
+        .nav-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-family);
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--border-radius-full);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-tab.active {
+            color: #ffffff;
+            background: var(--pink-primary);
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Tab Content Control */
+        .tab-section {
+            display: none;
+            min-height: 100vh;
+            padding-top: 100px;
+            animation: fadeInTab 0.5s ease forwards;
+        }
+
+        .tab-section.active {
+            display: block;
+        }
+
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+           6. SPECIFIC SECTIONS STYLING
+           ========================================================================== */
+
+        /* Stats Cards */
+        .stat-card {
+            background: var(--bg-color-alt);
+            border-left: 4px solid var(--pink-primary);
+            padding: var(--spacing-5);
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: var(--spacing-2);
+            background: linear-gradient(135deg, #ffffff, var(--pink-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-card-label {
+            font-size: 1rem;
+            color: var(--pink-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-2);
+        }
+
+        .stat-card-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Video Grid (We Talk, Girls In Tech) */
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            padding-bottom: 56.25%; /* 16:9 */
             height: 0;
-            border-radius: var(--border-radius);
+            border-radius: var(--border-radius-md);
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            border: 2px solid var(--pink-dark);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid rgba(255, 0, 127, 0.2);
+            transition: var(--transition-normal);
+            background: #000;
+        }
+
+        .video-wrapper:hover {
+            border-color: var(--pink-primary);
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 0, 127, 0.3);
         }
 
         .video-wrapper iframe {
@@ -231,707 +556,1137 @@
             border: 0;
         }
 
-        .video-caption {
-            margin-top: 15px;
+        .video-meta {
+            margin-top: var(--spacing-3);
+        }
+
+        .video-meta h4 {
+            margin-bottom: var(--spacing-1);
             font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--pink-secondary);
+            color: var(--text-main);
         }
 
-        /* ==========================================================================
-           5. DATA & STATISTICS CARDS
-           ========================================================================== */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
+        .video-meta p {
+            font-size: 0.9rem;
+            color: var(--pink-tertiary);
         }
 
-        .stat-card {
-            background: var(--box-bg);
-            padding: 30px;
-            border-radius: var(--border-radius);
-            border-left: 5px solid var(--pink-primary);
-            transition: var(--transition);
+        /* Profiles List (My Muse) */
+        .muse-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-8);
         }
 
-        .stat-card:hover {
-            transform: scale(1.03);
-            background: #232332;
+        .muse-card {
+            display: flex;
+            flex-direction: row;
+            background: var(--bg-color-alt);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition-normal);
         }
 
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--pink-secondary);
+        .muse-card:hover {
+            transform: translateX(10px);
+            border-color: var(--pink-dark);
+            box-shadow: -10px 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* ==========================================================================
-           6. SECRET BOX & DIARY 3D ANIMATIONS
-           ========================================================================== */
-        .secret-container {
-            perspective: 1500px;
+        .muse-img-container {
+            width: 35%;
+            position: relative;
+            min-height: 300px;
+        }
+
+        .muse-img-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .muse-content {
+            width: 65%;
+            padding: var(--spacing-6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .muse-category {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(255,0,127,0.1);
+            color: var(--pink-primary);
+            border-radius: var(--border-radius-full);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-3);
+            align-self: flex-start;
+        }
+
+        /* Terminal Window (Girls in Tech) */
+        .terminal-window {
+            background: #0d0d12;
+            border-radius: var(--border-radius-md);
+            border: 1px solid #333;
+            overflow: hidden;
+            margin: var(--spacing-6) 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        .terminal-header {
+            background: #1a1a24;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-btn.close { background: #ff5f56; }
+        .terminal-btn.min { background: #ffbd2e; }
+        .terminal-btn.max { background: #27c93f; }
+
+        .terminal-title {
+            color: #888;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .terminal-body {
+            padding: var(--spacing-5);
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #00ffcc;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .terminal-line { margin-bottom: 5px; }
+        .terminal-prompt::before {
+            content: 'user@uefigogirl:~$ ';
+            color: var(--pink-primary);
+        }
+        .terminal-comment { color: #6272a4; }
+        .terminal-keyword { color: #ff79c6; }
+        .terminal-string { color: #f1fa8c; }
+        .terminal-function { color: #50fa7b; }
+
+        /* Secret Box & 3D Environment */
+        .secret-environment {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 50px;
+            perspective: 2000px; /* Strong perspective for 3D */
+            padding: var(--spacing-8) 0;
+            background: radial-gradient(circle at center, #1a1a24 0%, #0a0a0f 70%);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid rgba(255, 0, 127, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .secret-box-wrapper {
+        /* Ambient light for box area */
+        .secret-environment::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,0,127,0.15) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .box-scene {
             width: 300px;
             height: 300px;
             position: relative;
+            margin-bottom: var(--spacing-10);
+            z-index: var(--z-index-normal);
+        }
+
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: absolute;
             transform-style: preserve-3d;
-            transition: transform 2s cubic-bezier(0.25, 1, 0.5, 1); /* The 720 rotation */
-            margin-bottom: 50px;
+            /* Default slight angle */
+            transform: rotateX(-15deg) rotateY(25deg);
+            /* Smooth long transition for the 720 rotation */
+            transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .secret-box-wrapper.rotate {
-            transform: rotateY(720deg) scale(1.1);
+        /* The rotation class injected via JS */
+        .cube.spin-hide {
+            transform: rotateX(720deg) rotateY(1080deg) rotateZ(360deg) scale(0.5);
         }
 
-        .box-face {
+        .cube.spin-reveal {
+            transform: rotateX(-720deg) rotateY(-1080deg) rotateZ(-360deg) scale(1.2);
+        }
+
+        .cube-face {
             position: absolute;
             width: 300px;
             height: 300px;
-            background: linear-gradient(135deg, var(--pink-dark), var(--pink-primary));
-            border: 4px solid #fff;
+            border: 2px solid var(--pink-primary);
+            background: rgba(20, 20, 30, 0.85);
+            backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            font-weight: 800;
-            color: #fff;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-            backface-visibility: hidden;
-            border-radius: 15px;
+            font-weight: 900;
+            color: var(--pink-primary);
+            text-shadow: 0 0 10px var(--pink-glow);
+            box-shadow: inset 0 0 40px rgba(255, 0, 127, 0.2);
+            border-radius: 12px;
         }
 
-        .box-front { transform: translateZ(150px); }
-        .box-back { transform: rotateY(180deg) translateZ(150px); background: #111; color: var(--pink-secondary); }
-        
-        /* Form inside the box context */
-        .secret-form-area {
-            background: var(--box-bg);
-            padding: 40px;
-            border-radius: var(--border-radius);
+        .cube-face-front  { transform: rotateY(  0deg) translateZ(150px); }
+        .cube-face-right  { transform: rotateY( 90deg) translateZ(150px); }
+        .cube-face-back   { transform: rotateY(180deg) translateZ(150px); }
+        .cube-face-left   { transform: rotateY(-90deg) translateZ(150px); }
+        .cube-face-top    { transform: rotateX( 90deg) translateZ(150px); }
+        .cube-face-bottom { transform: rotateX(-90deg) translateZ(150px); }
+
+        .cube-face-front { background: linear-gradient(135deg, rgba(255,0,127,0.8), rgba(179,0,89,0.9)); color: #fff; }
+        .cube-face-back { background: #000; }
+
+        /* Secret Entry Form */
+        .secret-form-wrapper {
+            background: var(--bg-color-card);
+            padding: var(--spacing-6);
+            border-radius: var(--border-radius-md);
             width: 100%;
-            max-width: 800px;
-            border: 1px solid var(--pink-dark);
+            max-width: 700px;
+            z-index: var(--z-index-normal);
+            box-shadow: var(--shadow-lg);
+            border-top: 4px solid var(--pink-primary);
         }
 
-        textarea, input[type="text"] {
+        .form-group {
+            margin-bottom: var(--spacing-4);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-2);
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-input, .form-textarea {
             width: 100%;
-            background: #111;
-            border: 2px solid var(--pink-dark);
-            color: #fff;
-            padding: 15px;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            resize: vertical;
+            background: var(--bg-color-main);
+            border: 1px solid #333;
+            color: var(--text-main);
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-family);
+            font-size: 1rem;
+            transition: var(--transition-fast);
         }
 
-        textarea:focus, input[type="text"]:focus {
+        .form-input:focus, .form-textarea:focus {
             outline: none;
             border-color: var(--pink-primary);
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+            box-shadow: 0 0 0 3px rgba(255, 0, 127, 0.2);
         }
 
-        .btn-action {
-            background: var(--pink-primary);
-            color: #fff;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(255, 0, 127, 0.4);
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
         }
 
-        .btn-action:hover {
-            background: #fff;
-            color: var(--pink-primary);
-            transform: translateY(-3px);
+        /* Diary Entries Display */
+        .diary-timeline {
+            margin-top: var(--spacing-8);
+            width: 100%;
+            max-width: 800px;
+            display: none; /* hidden until reveal */
         }
 
         .diary-entry {
-            background: #111;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
             border-left: 4px solid var(--pink-secondary);
-            margin-top: 20px;
-            border-radius: 0 8px 8px 0;
+            padding: var(--spacing-5);
+            margin-bottom: var(--spacing-4);
+            border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+            position: relative;
+            animation: slideInRight 0.5s ease forwards;
         }
 
-        .diary-time {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 10px;
-            display: block;
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .diary-meta {
+            font-size: 0.85rem;
+            color: var(--pink-tertiary);
+            margin-bottom: var(--spacing-2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .diary-title {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: var(--spacing-2);
+        }
+
+        .diary-content {
+            color: var(--text-muted);
+            white-space: pre-wrap;
         }
 
         /* Celebration Canvas */
-        #celebrationCanvas {
+        #celebration-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 9999;
+            z-index: var(--z-index-modal);
+        }
+
+        /* Financial Calculator */
+        .calculator-card {
+            background: var(--bg-color-alt);
+            padding: var(--spacing-6);
+            border-radius: var(--border-radius-md);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            margin-top: var(--spacing-6);
+        }
+
+        .calc-result {
+            margin-top: var(--spacing-5);
+            padding: var(--spacing-4);
+            background: rgba(0, 255, 204, 0.1);
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+        }
+
+        .calc-result h4 {
+            color: var(--accent-cyan);
+            font-size: 2rem;
+            margin: 0;
         }
 
         /* ==========================================================================
-           7. MISCELLANEOUS (PROFILES, CARDS)
+           7. MEDIA QUERIES
            ========================================================================== */
-        .profile-list {
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
+        @media (max-width: 1024px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .flex-row, .flex-row.reverse { flex-direction: column; }
+            .muse-card { flex-direction: column; }
+            .muse-img-container { width: 100%; height: 250px; }
+            .muse-content { width: 100%; }
         }
 
-        .profile-card {
-            display: flex;
-            background: var(--box-bg);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            border: 1px solid #333;
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .nav-links-container {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 15, 0.98);
+                width: 100%;
+                height: calc(100vh - 70px);
+                padding: var(--spacing-5);
+                transition: var(--transition-normal);
+            }
+            .nav-links-container.show { left: 0; }
+            .mobile-menu-btn { display: block; }
+            .nav-tab { font-size: 1.2rem; padding: 1rem; width: 100%; text-align: left; }
+            h1 { font-size: 2.5rem; }
+            .overlap-text-wrapper .bg-text { font-size: 4rem; top: -10px; }
+            .hero-banner { height: 50vh; min-height: 400px; }
         }
-
-        .profile-img {
-            width: 400px;
-            flex-shrink: 0;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .profile-info {
-            padding: 40px;
-        }
-
-        .profile-info h3 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .profile-role {
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
     </style>
 </head>
 <body>
 
-    <canvas id="celebrationCanvas"></canvas>
+    <!-- Confetti Canvas -->
+    <canvas id="celebration-canvas"></canvas>
 
-    <nav>
-        <div class="logo">UEFI GO GIRL</div>
-        <div class="nav-links">
-            <button class="active" onclick="openTab('home')">Home</button>
-            <button onclick="openTab('magazines')">Magazines</button>
-            <button onclick="openTab('how-she-did-it')">How She Did It</button>
-            <button onclick="openTab('we-talk')">We Talk</button>
-            <button onclick="openTab('my-muse')">My Muse</button>
-            <button onclick="openTab('girls-in-tech')">Girls in Tech</button>
-            <button onclick="openTab('networth')">My Net Worth</button>
-            <button onclick="openTab('secret-box')">Secret Box & Diary</button>
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="nav-logo-icon"></div>
+                UEFI <span>GO GIRL</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <div class="nav-links-container" id="navLinks">
+                <button class="nav-tab active" data-target="tab-home">Home</button>
+                <button class="nav-tab" data-target="tab-magazines">Magazines</button>
+                <button class="nav-tab" data-target="tab-how-she-did-it">How She Did It</button>
+                <button class="nav-tab" data-target="tab-we-talk">We Talk</button>
+                <button class="nav-tab" data-target="tab-muse">My Muse</button>
+                <button class="nav-tab" data-target="tab-tech">Girls in Tech</button>
+                <button class="nav-tab" data-target="tab-networth">My Net Worth</button>
+                <button class="nav-tab" data-target="tab-secret">Secret Box</button>
+            </div>
         </div>
     </nav>
 
-    <section id="home" class="tab-content active">
-        <div class="text-over-img-container">
-            <div class="text-over-img-content">
-                <h2>Welcome to</h2>
-                <h1>UEFI GO GIRL</h1>
-                <p style="color: #ddd; font-size: 1.5rem; max-width: 600px;">A powerful ecosystem designed to transform, educate, and empower the modern girl.</p>
-            </div>
-        </div>
-
-        <div class="flex-row">
-            <div class="flex-col-text">
-                <h2>Our Mission</h2>
-                <p>UEFI GO GIRL is not just a website; it is a movement. Built meticulously for girls who are ready to take on the world, we provide resources across technology, financial literacy, inspiration, and mental health. This is your safe haven, your classroom, and your stage.</p>
-                
-                <h3>Grounded in Reality: The Gender Data</h3>
-                <p>We partner with the ideals of the United Nations to bring you accurate data regarding women's empowerment. Knowing where we stand is the first step to changing the trajectory.</p>
-                <p>According to UN Women and the Kenya Women's Empowerment Index (WEI), <strong>only about 29% to 40.6% of women in Kenya are currently considered fully empowered</strong> to participate equally in political, economic, and cultural life. Furthermore, as of February 2024, only 23.3% of seats in the Kenyan parliament are held by women. Among working-age adults, employment rates show a stark contrast: 34% for women compared to 47% for men.</p>
-                <p>This platform exists to shatter those statistics. Through tech education, financial mastery, and powerful mentorship, we are increasing that percentage, one girl at a time.</p>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80" alt="Empowered Girls">
-            </div>
-        </div>
-    </section>
-
-    <section id="magazines" class="tab-content">
-        <h2>The UEFI GO GIRL Magazines</h2>
-        <p>Dive into our extensive digital print collections featuring essays, editorials, and avant-garde thinking for the modern female.</p>
-        
-        <div class="flex-row reverse">
-            <div class="flex-col-text">
-                <h3>Issue 01: The Dawn of the Digital Matriarch</h3>
-                <p>In our inaugural issue, we explore what it means to be a woman in the 21st century. We cover topics ranging from navigating male-dominated corporate spaces to understanding the nuances of mental health in an age of constant connectivity. Read profound articles contributed by thought leaders aligned with UN Sustainable Development Goal 5 (Gender Equality).</p>
-                <button class="btn-action">Read Issue 01</button>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80" alt="Magazine Cover">
-            </div>
-        </div>
-
-        <div class="flex-row">
-            <div class="flex-col-text">
-                <h3>Issue 02: Wealth & Wellness</h3>
-                <p>Balancing the pursuit of financial independence with holistic wellness. This issue breaks down systemic barriers, analyzes the gender pay gap—which persists heavily in regions like Kenya where women earn significantly less per hour in female-dominated sectors—and offers actionable strategies for closing it.</p>
-                <button class="btn-action">Read Issue 02</button>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80" alt="Wealth Wellness">
-            </div>
-        </div>
-    </section>
-
-    <section id="how-she-did-it" class="tab-content">
-        <h2>How She Did It</h2>
-        <p>A deep dive into the exact methodologies, struggles, and ultimate triumphs of women who broke the glass ceiling. From policy makers to grassroots activists, these are their blueprints.</p>
-
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-number">23.3%</div>
-                <p>Women in Parliament (Kenya, 2024). We interview the women making up this vital percentage.</p>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">91%</div>
-                <p>Female Literacy Rate. Education is the foundation of "How She Did It".</p>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">53%</div>
-                <p>Empowerment rate for women in the wealthiest households—showing the link between economics and freedom.</p>
-            </div>
-        </div>
-
-        <div class="flex-row">
-            <div class="flex-col-text">
-                <h3>The Blueprint of Resilience</h3>
-                <p>Success is rarely a straight line. In this section, we document case studies of women who navigated restrictive legal frameworks and societal expectations. For example, examining the impact of the Sexual Offences Act 2006 and the Prevention Against Domestic Violence Act 2015, and how legal advocates fought for these rights. We track their steps from adversity to legislation, from local markets to global boardrooms.</p>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80" alt="Professional Woman">
-            </div>
-        </div>
-    </section>
-
-    <section id="we-talk" class="tab-content">
-        <h2>We Talk</h2>
-        <p>Your curated theater of inspiration. Watch powerful videos of girls and women who have made it in life, advocating for impactful change. Featuring voices from Jubilee, TEDx, and top podcasts like "We Can Do Hard Things".</p>
-
-        <div class="video-grid">
-            <div>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/hg3umXU_qWc" title="TEDx Talk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <div class="video-caption">TEDx: Redefining Female Leadership</div>
-            </div>
+    <!-- ==========================================================================
+         HOME TAB
+         ========================================================================== -->
+    <section id="tab-home" class="tab-section active">
+        <div class="container">
             
-            <div>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/1IHKfQ-N0Q4" title="Jubilee Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="hero-banner">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1920&q=80" alt="Empowered woman" class="hero-banner-img">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="overlap-text-wrapper">
+                        <span class="bg-text">EMPOWER</span>
+                        <h1>Welcome to <span>UEFI GO GIRL</span></h1>
+                    </div>
+                    <p style="color: #fff; font-size: 1.25rem; max-width: 600px;">A comprehensive, data-driven ecosystem designed to transform, educate, and elevate the modern girl. Your journey to mastery begins here.</p>
+                    <button class="btn btn-primary" onclick="switchTab('tab-magazines')">Explore the Ecosystem</button>
                 </div>
-                <div class="video-caption">Jubilee: Women Discussing Modern Advocacy</div>
             </div>
 
-            <div>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/v1oqeprcCG8" title="Podcast Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="section-padding">
+                <div class="flex-row">
+                    <div class="flex-col-text">
+                        <h2>The Reality & The Mission</h2>
+                        <p>We do not operate on platitudes; we operate on data. The UEFI GO GIRL platform is built in alignment with the United Nations Sustainable Development Goal 5 (SDG5) to achieve gender equality and empower all women and girls.</p>
+                        
+                        <p>The numbers dictate our urgency. According to the UN Women and the Kenya Women's Empowerment Index (WEI), <strong>40.6 per cent of women in Kenya are considered empowered in 2025</strong>, an improvement from 29.3 per cent in 2020. Yet, this means nearly 60% of women still face severe barriers to economic, political, and cultural participation. Furthermore, as of February 2024, <strong>only 23.3% of seats in the Kenyan parliament are held by women</strong>.</p>
+                        
+                        <p>This platform exists to shatter those barriers. Through relentless education in technology, financial literacy, and mental fortitude, we are building the next generation of female leaders, coders, and wealth creators.</p>
+                    </div>
+                    <div class="flex-col-img">
+                        <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80" alt="Women collaborating">
+                    </div>
                 </div>
-                <div class="video-caption">We Can Do Hard Things Podcast: Empowering Conversations</div>
-            </div>
-            
-            <div>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/fW8amMCVAJQ" title="UN Women" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+                <div class="grid-3">
+                    <div class="stat-card">
+                        <div class="stat-card-number">40.6%</div>
+                        <div class="stat-card-label">Empowerment Rate</div>
+                        <p class="stat-card-desc">Women empowered in Kenya as of 2025 according to the WEI report. We strive for 100%.</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-number">23.3%</div>
+                        <div class="stat-card-label">Political Representation</div>
+                        <p class="stat-card-desc">Women holding parliamentary seats in Kenya (2024). Leadership needs your voice.</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-number">53%</div>
+                        <div class="stat-card-label">Wealth Correlation</div>
+                        <p class="stat-card-desc">Empowerment rate of women in wealthier households, proving financial literacy is essential.</p>
+                    </div>
                 </div>
-                <div class="video-caption">UN Women: The Fight for Global Gender Parity</div>
             </div>
+
         </div>
-        
-        <div class="flex-row reverse">
-            <div class="flex-col-text">
-                <h3>Amplify Your Voice</h3>
-                <p>The videos above represent just a fraction of the global conversation. "We Talk" is dedicated to showcasing the unapologetic voices of women addressing climate change, gender parity, economic freedom, and bodily autonomy. Grab your headphones, take notes, and get ready to be transformed.</p>
+    </section>
+
+    <!-- ==========================================================================
+         MAGAZINES TAB
+         ========================================================================== -->
+    <section id="tab-magazines" class="tab-section">
+        <div class="container section-padding">
+            <div class="text-center" style="max-width: 800px; margin: 0 auto var(--spacing-10);">
+                <h2>The UEFI Magazines</h2>
+                <p>Immerse yourself in our premier digital publications. Thought-provoking essays, avant-garde editorials, and deep dives into the socio-economic landscapes shaping the modern female experience.</p>
             </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1516280440502-86161bce2b7d?auto=format&fit=crop&q=80" alt="Podcast Microphone">
+
+            <div class="grid-2">
+                <!-- Magazine 1 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" alt="Issue 01" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-4);">
+                    <div class="stat-card-label">Issue 01 • September</div>
+                    <h3>The Digital Matriarch</h3>
+                    <p>Navigating the transition from traditional corporate hierarchies to decentralized digital economies. Featuring essays on breaking into tech boardrooms and leveraging personal branding.</p>
+                    <a href="#" class="btn btn-outline" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read Issue</a>
+                </div>
+
+                <!-- Magazine 2 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" alt="Issue 02" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-4);">
+                    <div class="stat-card-label">Issue 02 • October</div>
+                    <h3>Wealth & Wellness</h3>
+                    <p>The intersection of financial independence and mental health. We analyze the gender pay gap and how closing it improves holistic wellbeing for women across Africa.</p>
+                    <a href="#" class="btn btn-outline" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read Issue</a>
+                </div>
+
+                <!-- Magazine 3 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80" alt="Issue 03" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-4);">
+                    <div class="stat-card-label">Issue 03 • November</div>
+                    <h3>Policy & Power</h3>
+                    <p>A breakdown of legislative frameworks. Understanding the Sexual Offences Act and the Prevention Against Domestic Violence Act, and how policy shapes our daily reality.</p>
+                    <a href="#" class="btn btn-outline" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read Issue</a>
+                </div>
+
+                <!-- Magazine 4 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Issue 04" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-4);">
+                    <div class="stat-card-label">Issue 04 • December</div>
+                    <h3>The Innovators</h3>
+                    <p>Spotlighting Kenyan women in STEM. From agritech solutions to AI development, read about the local pioneers pushing boundaries on a global scale.</p>
+                    <a href="#" class="btn btn-outline" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read Issue</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="my-muse" class="tab-content">
-        <h2>My Muse</h2>
-        <p>A dedicated blog profiling the unapologetic, the brilliant, and the groundbreaking women across all fields. Find your muse here.</p>
+    <!-- ==========================================================================
+         HOW SHE DID IT TAB
+         ========================================================================== -->
+    <section id="tab-how-she-did-it" class="tab-section">
+        <div class="container section-padding">
+            <h2>How She Did It</h2>
+            <p style="max-width: 800px; margin-bottom: var(--spacing-8);">Success leaves clues. We deconstruct the blueprints of women who shattered the glass ceiling. This is the anatomical breakdown of ambition, resilience, and strategic execution.</p>
 
-        <div class="profile-list">
-            <div class="profile-card">
-                <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1520638025251-ce0360a4f5fb?auto=format&fit=crop&q=80');"></div>
-                <div class="profile-info">
-                    <h3>Cardi B</h3>
-                    <span class="profile-role">Artist / Entrepreneur</span>
-                    <p>Belcalis Marlenis Almánzar, known professionally as Cardi B, represents the raw, unfiltered ascent from the Bronx to global superstardom. Her story is a testament to authenticity, defying industry standards, and securing one's financial future while dominating male-heavy music charts. She is a muse for owning your narrative and turning adversity into an empire.</p>
+            <div class="flex-row">
+                <div class="flex-col-img">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" alt="Professional Woman Planning">
                 </div>
-            </div>
-
-            <div class="profile-card">
-                <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80');"></div>
-                <div class="profile-info">
-                    <h3>Professor Shini Somara</h3>
-                    <span class="profile-role">Mechanical Engineer / Broadcaster</span>
-                    <p>For the girls interested in science, Prof. Shini Somara is the ultimate muse. Armed with a Doctorate in Mechanical Engineering, she breaks down complex scientific concepts into accessible knowledge for the masses. She actively advocates for STEM education for girls, destroying the stereotype that engineering is a "boys' club".</p>
-                </div>
-            </div>
-
-            <div class="profile-card">
-                <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?auto=format&fit=crop&q=80');"></div>
-                <div class="profile-info">
-                    <h3>Candace Owens</h3>
-                    <span class="profile-role">Political Commentator / Author</span>
-                    <p>Known for her bold, controversial, and unwavering stance on political and social issues, Candace represents the power of having a distinct voice. Whether one agrees with her politics or not, her ability to articulate her viewpoints, debate fiercely, and build a massive independent media presence makes her a study in modern digital influence and conviction.</p>
+                <div class="flex-col-text">
+                    <h3>The Blueprint of Resilience</h3>
+                    <p>Consider the journey from a rural setup to parliament. The data shows empowerment rates are drastically lower in rural areas. Overcoming this requires immense strategy.</p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 20px;">
+                            <strong style="color: var(--pink-primary); display: block; font-size: 1.2rem;">1. Education as Leverage</strong>
+                            As the WEI reports, women in households with post-secondary education are significantly more empowered. "How She Did It" often starts with aggressive pursuit of knowledge.
+                        </li>
+                        <li style="margin-bottom: 20px;">
+                            <strong style="color: var(--pink-primary); display: block; font-size: 1.2rem;">2. Strategic Networking</strong>
+                            Building alliances across industries. Mentorship isn't just about advice; it's about sponsorship in rooms you haven't entered yet.
+                        </li>
+                        <li style="margin-bottom: 20px;">
+                            <strong style="color: var(--pink-primary); display: block; font-size: 1.2rem;">3. Navigating Policy</strong>
+                            Understanding legal frameworks to protect assets and rights, utilizing available legislation to secure business interests and personal safety.
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="girls-in-tech" class="tab-content">
-        <h2>Girls in Tech</h2>
-        <p>Technology is the future, and girls belong at the forefront of it. This extensive hub provides coding fundamentals, industry insights, and massive resources for girls looking to dominate the tech space.</p>
+    <!-- ==========================================================================
+         WE TALK TAB (VIDEOS)
+         ========================================================================== -->
+    <section id="tab-we-talk" class="tab-section">
+        <div class="container section-padding">
+            <h2>We Talk: The Theater of Inspiration</h2>
+            <p style="max-width: 800px; margin-bottom: var(--spacing-8);">Watch and learn from the best. A curated grid of powerful talks, podcasts, and documentaries featuring women who advocate, build, and lead.</p>
 
-        <div class="text-over-img-container" style="background-image: url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80'); height: 40vh;">
-            <div class="text-over-img-content">
-                <h1 style="font-size: 4rem;">CODE LIKE A GIRL</h1>
-            </div>
-        </div>
-
-        <div class="flex-row">
-            <div class="flex-col-text">
-                <h3>Why Tech Needs You</h3>
-                <p>The tech industry fundamentally shapes how humanity operates, yet women remain severely underrepresented. In Kenya, while we see strides in general literacy (91% for women), post-secondary education disparities still limit women's entry into high-tech engineering and software development roles. We are here to change that.</p>
-                <p>Learning to code isn't just about computers; it's about problem-solving, logic, and building scalable solutions. From Python to JavaScript, AI to Blockchain, the tools of tomorrow must be wielded by diverse minds to prevent algorithmic bias and create inclusive products.</p>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80" alt="Laptop Coding">
-            </div>
-        </div>
-
-        <h3>The Coding Bootcamp: Phase 1</h3>
-        <p>Understanding the basics of web architecture is your first superpower. Below is an introduction to HTML, CSS, and JavaScript—the trinity of the web.</p>
-        
-        <div style="background: #000; padding: 20px; border-radius: 8px; font-family: monospace; color: #0f0; margin-bottom: 30px; border-left: 5px solid var(--pink-primary);">
-            <p>// JavaScript Example: Empowering a variable</p>
-            <p>const girl = {</p>
-            <p>&nbsp;&nbsp;mindset: "unstoppable",</p>
-            <p>&nbsp;&nbsp;skills: ["Coding", "Leadership", "Finance"],</p>
-            <p>&nbsp;&nbsp;execute: function() {</p>
-            <p>&nbsp;&nbsp;&nbsp;&nbsp;return "Changing the world...";</p>
-            <p>&nbsp;&nbsp;}</p>
-            <p>};</p>
-            <p>console.log(girl.execute());</p>
-        </div>
-
-        <h3>Deep Dive Tech Videos</h3>
-        <div class="video-grid">
-            <div>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/Oax_6-wdslM" title="Intro to Coding" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="grid-2">
+                <!-- Video 1 -->
+                <div>
+                    <div class="video-wrapper">
+                        <!-- TEDx Placeholder (Using an official embed URL format) -->
+                        <iframe src="https://www.youtube.com/embed/hg3umXU_qWc" title="TEDx Talk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4>Redefining Female Leadership</h4>
+                        <p>TEDx • 18 mins</p>
+                    </div>
                 </div>
-                <div class="video-caption">Computer Science Fundamentals</div>
-            </div>
-            <div>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/zOjov-2OZ0E" title="Women in Tech" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <div class="video-caption">Navigating Silicon Valley as a Woman</div>
-            </div>
-        </div>
-
-        <div class="flex-row reverse">
-            <div class="flex-col-text">
-                <h3>Building Your Tech Portfolio</h3>
-                <p>Information is only potential power; execution is actual power. Start building projects. Build a calculator, design a personal portfolio, or create a script that automates your daily tasks. Push your code to GitHub. Network with other female developers. The UEFI GO GIRL community is your open-source family.</p>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80" alt="Team collaborating">
-            </div>
-        </div>
-    </section>
-
-    <section id="networth" class="tab-content">
-        <h2>My Net Worth Network</h2>
-        <p>Financial independence is the highest form of self-care. Learn how to keep your money, multiply it, and invest in your greatest asset: Yourself.</p>
-
-        <div class="flex-row">
-            <div class="flex-col-text">
-                <h3>The Reality of Wealth Disparity</h3>
-                <p>Economic empowerment is critical. According to recent UN Women data on Kenya, women in the poorest households have only a 7% chance of being classified as "empowered," compared to 53% in the wealthiest households. Furthermore, a 2023 study found that Kenyan women earn 17.7% less per hour than men. Financial literacy is our weapon against these statistics.</p>
-                <p>We teach you asset allocation, understanding compound interest, navigating the stock market, real estate basics, and how to negotiate your salary fiercely.</p>
-                <ul>
-                    <li style="margin-bottom: 10px; list-style: none;">✔️ <strong>Budgeting:</strong> Directing your money instead of wondering where it went.</li>
-                    <li style="margin-bottom: 10px; list-style: none;">✔️ <strong>Investing:</strong> Making your money work for you while you sleep.</li>
-                    <li style="margin-bottom: 10px; list-style: none;">✔️ <strong>Self-Investment:</strong> Courses, books, and health—the ultimate ROI.</li>
-                </ul>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80" alt="Financial Planning">
-            </div>
-        </div>
-
-        <div class="stats-container">
-            <div class="stat-card" style="border-left-color: #00ffcc;">
-                <h3 style="color:#00ffcc">Save</h3>
-                <p>Establish a 6-month emergency fund to ensure you never have to stay in a toxic situation for financial reasons.</p>
-            </div>
-            <div class="stat-card" style="border-left-color: #ffcc00;">
-                <h3 style="color:#ffcc00">Invest</h3>
-                <p>Understand index funds, ETFs, and local investment vehicles to beat inflation and build generational wealth.</p>
-            </div>
-            <div class="stat-card" style="border-left-color: #cc00ff;">
-                <h3 style="color:#cc00ff">Earn</h3>
-                <p>Create multiple streams of income. Side hustles, digital products, and high-income skills.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="secret-box" class="tab-content">
-        <h2>The Secret Box & Digital Diary</h2>
-        <p>A sacred, encrypted visual space. Write down your deepest secrets, aspirations, or daily diary entries. Store them in the 720-degree rotating box. Celebrate your vulnerability and growth!</p>
-
-        <div class="secret-container">
-            <div class="secret-box-wrapper" id="theBox">
-                <div class="box-face box-front">SECRETS</div>
-                <div class="box-face box-back">LOCKED</div>
-            </div>
-
-            <div class="secret-form-area">
-                <h3>Write your entry</h3>
-                <input type="text" id="entryTitle" placeholder="Title of your entry...">
-                <textarea id="entryText" rows="5" placeholder="Dear Diary, today I learned... or, My biggest secret is..."></textarea>
                 
-                <div style="display: flex; gap: 20px;">
-                    <button class="btn-action" onclick="hideSecret()">Hide Secret / Save</button>
-                    <button class="btn-action" style="background: #333; color: var(--pink-secondary);" onclick="revealSecrets()">Reveal Secrets</button>
+                <!-- Video 2 -->
+                <div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/1IHKfQ-N0Q4" title="Jubilee Talk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4>Modern Advocacy & Womanhood</h4>
+                        <p>Jubilee Media • 12 mins</p>
+                    </div>
                 </div>
 
-                <div id="diaryDisplayArea" style="margin-top: 40px; display: none;">
-                    <h3 style="border-bottom: 2px solid var(--pink-primary); padding-bottom: 10px;">Your Unlocked Secrets & Diary</h3>
-                    <div id="entriesList"></div>
+                <!-- Video 3 -->
+                <div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/v1oqeprcCG8" title="Podcast" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4>We Can Do Hard Things</h4>
+                        <p>Glennon Doyle Podcast • Full Episode</p>
+                    </div>
+                </div>
+                
+                <!-- Video 4 -->
+                <div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/fW8amMCVAJQ" title="UN Women" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4>The Fight for Global Gender Parity</h4>
+                        <p>UN Women Official • 8 mins</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ==========================================================================
+         MY MUSE TAB (PROFILES)
+         ========================================================================== -->
+    <section id="tab-muse" class="tab-section">
+        <div class="container section-padding">
+            <h2>My Muse</h2>
+            <p style="max-width: 800px; margin-bottom: var(--spacing-8);">Profiles of the unapologetic, the brilliant, and the groundbreaking. Find the archetype that resonates with your vision.</p>
+
+            <div class="muse-list">
+                <!-- Muse 1 -->
+                <div class="muse-card">
+                    <div class="muse-img-container">
+                        <img src="https://images.unsplash.com/photo-1520638025251-ce0360a4f5fb?auto=format&fit=crop&w=600&q=80" alt="Cardi B archetype">
+                    </div>
+                    <div class="muse-content">
+                        <span class="muse-category">Entertainment / Business</span>
+                        <h3>Cardi B</h3>
+                        <p>Belcalis Marlenis Almánzar represents the raw ascent from the Bronx to global superstardom. She is a muse for owning your narrative, refusing to code-switch for comfort, and turning authenticity into a multi-million dollar empire in a male-dominated industry.</p>
+                        <p><strong>Key Takeaway:</strong> Never apologize for your origins; monetize them.</p>
+                    </div>
+                </div>
+
+                <!-- Muse 2 -->
+                <div class="muse-card">
+                    <div class="muse-img-container">
+                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Prof Shini Somara archetype">
+                    </div>
+                    <div class="muse-content">
+                        <span class="muse-category">STEM / Media</span>
+                        <h3>Professor Shini Somara</h3>
+                        <p>Armed with a Doctorate in Mechanical Engineering, she destroys the stereotype that science is a "boys' club". By translating complex physics and engineering concepts into accessible media, she advocates fiercely for young girls entering STEM fields.</p>
+                        <p><strong>Key Takeaway:</strong> Intellect is your greatest asset. Build things.</p>
+                    </div>
+                </div>
+
+                <!-- Muse 3 -->
+                <div class="muse-card">
+                    <div class="muse-img-container">
+                        <img src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?auto=format&fit=crop&w=600&q=80" alt="Candace Owens archetype">
+                    </div>
+                    <div class="muse-content">
+                        <span class="muse-category">Media / Politics</span>
+                        <h3>Candace Owens</h3>
+                        <p>A polarizing and powerful figure in political commentary. Regardless of political alignment, her career is a masterclass in establishing an independent voice, debating fiercely, and building a massive digital media presence without institutional backing.</p>
+                        <p><strong>Key Takeaway:</strong> Conviction draws an audience. Stand firm in your ideology.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         GIRLS IN TECH TAB
+         ========================================================================== -->
+    <section id="tab-tech" class="tab-section">
+        <div class="container section-padding">
+            
+            <div class="hero-banner" style="height: 40vh; min-height: 300px;">
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1920&q=80" alt="Laptop" class="hero-banner-img">
+                <div class="hero-overlay"></div>
+                <div class="hero-content" style="text-align: center; width: 100%; max-width: 100%;">
+                    <h1 style="font-size: clamp(3rem, 6vw, 6rem);">CODE LIKE A <span style="color: #00ffcc;">GIRL</span></h1>
+                </div>
+            </div>
+
+            <div class="flex-row">
+                <div class="flex-col-text">
+                    <h2>The Future is Written in Code</h2>
+                    <p>Technology shapes humanity, yet women are underrepresented in its creation. To prevent algorithmic bias and build inclusive tools, we must become the engineers. Whether it's web development, AI, or blockchain, learning to code is learning the language of the future.</p>
+                    
+                    <h3>Phase 1: Logic & Structure</h3>
+                    <p>Coding is just problem-solving translated into syntax. Below is an interactive terminal snippet demonstrating how we define empowerment in JavaScript.</p>
+
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-buttons">
+                                <div class="terminal-btn close"></div>
+                                <div class="terminal-btn min"></div>
+                                <div class="terminal-btn max"></div>
+                            </div>
+                            <div class="terminal-title">uefi-engine.js</div>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line"><span class="terminal-comment">// Define the architect of the future</span></div>
+                            <div class="terminal-line"><span class="terminal-keyword">const</span> uefiGirl = {</div>
+                            <div class="terminal-line">&nbsp;&nbsp;mindset: <span class="terminal-string">"Unstoppable"</span>,</div>
+                            <div class="terminal-line">&nbsp;&nbsp;skills: [<span class="terminal-string">"Coding"</span>, <span class="terminal-string">"Finance"</span>, <span class="terminal-string">"Leadership"</span>],</div>
+                            <div class="terminal-line">&nbsp;&nbsp;<span class="terminal-function">executeVision</span>() {</div>
+                            <div class="terminal-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="terminal-keyword">return</span> <span class="terminal-string">"Changing the world, one line of code at a time."</span>;</div>
+                            <div class="terminal-line">&nbsp;&nbsp;}</div>
+                            <div class="terminal-line">};</div>
+                            <br>
+                            <div class="terminal-line"><span class="terminal-prompt"></span><span class="terminal-keyword">console</span>.<span class="terminal-function">log</span>(uefiGirl.<span class="terminal-function">executeVision</span>());</div>
+                            <div class="terminal-line" style="color: #fff; margin-top: 10px;">> Changing the world, one line of code at a time.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-col-img">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Coding workspace">
+                </div>
+            </div>
+
+            <h3>Tech Masterclass Videos</h3>
+            <div class="grid-2">
+                <div>
+                    <div class="video-wrapper" style="border-color: var(--accent-cyan);">
+                        <iframe src="https://www.youtube.com/embed/Oax_6-wdslM" title="Intro to Coding" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4 style="color: var(--accent-cyan);">Computer Science Fundamentals</h4>
+                    </div>
+                </div>
+                <div>
+                    <div class="video-wrapper" style="border-color: var(--accent-cyan);">
+                        <iframe src="https://www.youtube.com/embed/zOjov-2OZ0E" title="Women in Tech" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4 style="color: var(--accent-cyan);">Navigating Tech as a Woman</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         MY NET WORTH NETWORK TAB
+         ========================================================================== -->
+    <section id="tab-networth" class="tab-section">
+        <div class="container section-padding">
+            <h2>My Net Worth Network</h2>
+            <p style="max-width: 800px; margin-bottom: var(--spacing-8);">Financial independence is the highest form of self-care. Learn to keep your money, multiply it, and deploy it strategically.</p>
+
+            <div class="flex-row">
+                <div class="flex-col-text">
+                    <h3>The Economics of Freedom</h3>
+                    <p>In regions like Kenya, women earn significantly less per hour than men in similar sectors. Furthermore, UN data shows that poverty severely limits choice. By mastering budgeting, asset allocation, and the power of compound interest, you buy back your freedom.</p>
+                    
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 15px; background: rgba(255,204,0,0.1); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-gold);">
+                            <strong style="color: var(--accent-gold);">Save:</strong> The 6-Month Emergency Fund ensures you never stay in a toxic job or relationship for financial survival.
+                        </li>
+                        <li style="margin-bottom: 15px; background: rgba(0,255,204,0.1); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-cyan);">
+                            <strong style="color: var(--accent-cyan);">Invest:</strong> Index funds, ETFs, and Real Estate. Beating inflation is non-negotiable.
+                        </li>
+                        <li style="margin-bottom: 15px; background: rgba(255,0,127,0.1); padding: 15px; border-radius: 8px; border-left: 4px solid var(--pink-primary);">
+                            <strong style="color: var(--pink-primary);">Earn:</strong> High-income skills (like coding), negotiation, and side hustles.
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex-col-img">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80" alt="Finance Tracking">
+                </div>
+            </div>
+
+            <!-- Compound Interest Calculator Mini-App -->
+            <div class="calculator-card">
+                <h3 style="color: var(--accent-cyan);">Wealth Multiplier Calculator</h3>
+                <p>See how compound interest turns small consistent investments into massive wealth.</p>
+                
+                <div class="grid-3" style="gap: 15px; margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">Initial Investment ($)</label>
+                        <input type="number" id="calcPrincipal" class="form-input" value="1000">
+                    </div>
+                    <div>
+                        <label class="form-label">Monthly Contribution ($)</label>
+                        <input type="number" id="calcMonthly" class="form-input" value="200">
+                    </div>
+                    <div>
+                        <label class="form-label">Years to Grow</label>
+                        <input type="number" id="calcYears" class="form-input" value="10">
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="background: linear-gradient(135deg, var(--accent-cyan), #00b38f); color: #000; width: 100%;" onclick="calculateWealth()">Calculate Future Wealth</button>
+
+                <div class="calc-result" id="calcResultDisplay" style="display: none;">
+                    <p style="margin: 0; color: #fff;">Estimated Future Value (assuming 8% annual return):</p>
+                    <h4 id="calcFinalAmount">$0.00</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECRET BOX & DIARY TAB
+         ========================================================================== -->
+    <section id="tab-secret" class="tab-section">
+        <div class="container section-padding">
+            <div class="text-center" style="max-width: 800px; margin: 0 auto var(--spacing-8);">
+                <h2>The Secret Box & Digital Diary</h2>
+                <p>A sacred, encrypted space for your mind. Write your entries, cast them into the 720-degree rotating box, and celebrate your vulnerability. (Data is stored locally on your device).</p>
+            </div>
+
+            <div class="secret-environment">
+                
+                <!-- 3D Rotating Box -->
+                <div class="box-scene">
+                    <div class="cube" id="the3DBox">
+                        <div class="cube-face cube-face-front">SECRETS</div>
+                        <div class="cube-face cube-face-back">LOCKED</div>
+                        <div class="cube-face cube-face-right"></div>
+                        <div class="cube-face cube-face-left"></div>
+                        <div class="cube-face cube-face-top"></div>
+                        <div class="cube-face cube-face-bottom"></div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="secret-form-wrapper">
+                    <div class="form-group">
+                        <label class="form-label">Title your entry</label>
+                        <input type="text" id="diaryTitle" class="form-input" placeholder="e.g., The day I decided to start...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Your Thoughts</label>
+                        <textarea id="diaryText" class="form-textarea" placeholder="Dear Diary, my biggest ambition is..."></textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="hideIntoBox()" style="flex: 1;">Hide Secret</button>
+                        <button class="btn btn-outline" onclick="revealFromBox()" style="flex: 1;">Reveal Secrets</button>
+                    </div>
+                </div>
+
+                <!-- Diary Display -->
+                <div class="diary-timeline" id="diaryTimeline">
+                    <h3 style="border-bottom: 2px solid var(--pink-primary); padding-bottom: 10px; margin-bottom: 20px;">Your Unlocked Vault</h3>
+                    <div id="diaryEntriesContainer">
+                        <!-- JS injected entries go here -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         FOOTER
+         ========================================================================== -->
+    <footer style="background: var(--bg-color-alt); padding: var(--spacing-8) 0; border-top: 1px solid rgba(255,255,255,0.05); margin-top: var(--spacing-12);">
+        <div class="container text-center">
+            <h2 style="font-size: 2rem; margin-bottom: 10px;">UEFI <span>GO GIRL</span></h2>
+            <p>Empowering the next generation of female leaders.</p>
+            <p style="font-size: 0.8rem; color: #555;">&copy; 2026 UEFI GO GIRL. Data referenced from UN Women Reports.</p>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+         JAVASCRIPT LOGIC
+         ========================================================================== -->
     <script>
-        // --- Tab Navigation Logic ---
-        function openTab(tabId) {
-            // Hide all tabs
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
+        // ----------------------------------------------------------------------
+        // 1. Tab Navigation System
+        // ----------------------------------------------------------------------
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const tabSections = document.querySelectorAll('.tab-section');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinksContainer = document.getElementById('navLinks');
 
-            // Remove active class from all buttons
-            const btns = document.querySelectorAll('.nav-links button');
-            btns.forEach(btn => btn.classList.remove('active'));
+        function switchTab(targetId) {
+            // Hide all sections
+            tabSections.forEach(section => {
+                section.classList.remove('active');
+            });
 
-            // Show selected tab and highlight button
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-            
+            // Remove active state from tabs
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+                if(tab.getAttribute('data-target') === targetId) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Show target section
+            const targetSection = document.getElementById(targetId);
+            if(targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Close mobile menu if open
+            navLinksContainer.classList.remove('show');
+
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- Secret Box & Diary Logic ---
-        let diaryEntries = [];
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                const target = e.target.getAttribute('data-target');
+                switchTab(target);
+            });
+        });
 
-        function hideSecret() {
-            const title = document.getElementById('entryTitle').value;
-            const text = document.getElementById('entryText').value;
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('show');
+        });
+
+        // ----------------------------------------------------------------------
+        // 2. Financial Calculator Logic
+        // ----------------------------------------------------------------------
+        function calculateWealth() {
+            const p = parseFloat(document.getElementById('calcPrincipal').value) || 0;
+            const pmt = parseFloat(document.getElementById('calcMonthly').value) || 0;
+            const t = parseFloat(document.getElementById('calcYears').value) || 0;
+            const r = 0.08; // 8% annual return assumption
+            const n = 12; // monthly compounds
+
+            // Compound interest for principal: A = P(1 + r/n)^(nt)
+            const principalGrowth = p * Math.pow(1 + r/n, n*t);
+            
+            // Future value of a series (annuity): PMT × {[(1 + r/n)^(nt) - 1] / (r/n)}
+            const contributionGrowth = pmt * ((Math.pow(1 + r/n, n*t) - 1) / (r/n));
+
+            const total = principalGrowth + contributionGrowth;
+
+            // Display
+            const resultBox = document.getElementById('calcResultDisplay');
+            const amountDisplay = document.getElementById('calcFinalAmount');
+            
+            amountDisplay.innerText = "$" + total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            resultBox.style.display = 'block';
+            
+            // Mini celebration
+            triggerConfetti(50);
+        }
+
+        // ----------------------------------------------------------------------
+        // 3. Secret Box & Diary (Local Storage & 3D Rotation)
+        // ----------------------------------------------------------------------
+        const diaryStorageKey = 'uefi_gogirl_diary';
+        let entries = JSON.parse(localStorage.getItem(diaryStorageKey)) || [];
+
+        function hideIntoBox() {
+            const titleInput = document.getElementById('diaryTitle');
+            const textInput = document.getElementById('diaryText');
+            const timeline = document.getElementById('diaryTimeline');
+
+            const title = titleInput.value.trim();
+            const text = textInput.value.trim();
 
             if (!title || !text) {
-                alert("Please fill in both the title and your secret/diary entry!");
+                alert("Please fill in both fields before hiding your secret.");
                 return;
             }
 
-            // Get Current Date and Time
+            // Create Entry Object
             const now = new Date();
-            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            const dayName = days[now.getDay()];
-            const timeString = now.toLocaleTimeString();
-            const dateString = now.toLocaleDateString();
-            const fullTimestamp = `${dayName}, ${dateString} at ${timeString}`;
-
-            // Save Entry
-            diaryEntries.push({
+            const timestamp = now.toLocaleDateString() + ' at ' + now.toLocaleTimeString();
+            
+            const newEntry = {
+                id: Date.now(),
                 title: title,
                 text: text,
-                timestamp: fullTimestamp
-            });
+                time: timestamp
+            };
 
-            // Trigger Box Rotation (720 Degrees)
-            const box = document.getElementById('theBox');
-            box.classList.add('rotate');
+            entries.push(newEntry);
+            localStorage.setItem(diaryStorageKey, JSON.stringify(entries));
 
-            // Clear inputs
-            document.getElementById('entryTitle').value = '';
-            document.getElementById('entryText').value = '';
-            document.getElementById('diaryDisplayArea').style.display = 'none';
+            // Trigger Animation (720 Spin Hide)
+            const box = document.getElementById('the3DBox');
+            // Ensure previous classes are cleared
+            box.className = 'cube'; 
+            // Force reflow
+            void box.offsetWidth; 
+            box.classList.add('spin-hide');
 
-            // Trigger Celebration!
-            triggerCelebration();
+            // Clear inputs & hide timeline
+            titleInput.value = '';
+            textInput.value = '';
+            timeline.style.display = 'none';
 
-            // Reset box rotation class after animation ends so it can be done again
+            // Celebration
+            triggerConfetti(150);
+
+            // Reset box visually after animation
             setTimeout(() => {
-                box.classList.remove('rotate');
-            }, 2500);
+                box.className = 'cube';
+            }, 3000);
         }
 
-        function revealSecrets() {
-            if (diaryEntries.length === 0) {
-                alert("The box is empty. Hide a secret first!");
+        function revealFromBox() {
+            if (entries.length === 0) {
+                alert("Your vault is empty. Write a secret first!");
                 return;
             }
 
-            const box = document.getElementById('theBox');
-            // Rotate backwards for reveal
-            box.style.transform = "rotateY(-720deg) scale(1.1)";
-            
+            const box = document.getElementById('the3DBox');
+            box.className = 'cube';
+            void box.offsetWidth;
+            box.classList.add('spin-reveal');
+
             setTimeout(() => {
-                box.style.transform = ""; // Reset inline style
-                renderEntries();
-                document.getElementById('diaryDisplayArea').style.display = 'block';
-                triggerCelebration(); // Celebrate the reveal too!
-            }, 2000);
+                renderDiary();
+                document.getElementById('diaryTimeline').style.display = 'block';
+                triggerConfetti(200); // Big celebration on reveal
+                box.className = 'cube'; // reset
+            }, 3000);
         }
 
-        function renderEntries() {
-            const list = document.getElementById('entriesList');
-            list.innerHTML = ''; // clear current
+        function renderDiary() {
+            const container = document.getElementById('diaryEntriesContainer');
+            container.innerHTML = ''; // clear existing
 
-            // Render from newest to oldest
-            [...diaryEntries].reverse().forEach(entry => {
+            // Copy and reverse to show newest first
+            const displayList = [...entries].reverse();
+
+            displayList.forEach(entry => {
                 const div = document.createElement('div');
                 div.className = 'diary-entry';
                 
-                const timeSpan = document.createElement('span');
-                timeSpan.className = 'diary-time';
-                timeSpan.innerText = `Recorded on: ${entry.timestamp}`;
-                
-                const h4 = document.createElement('h4');
-                h4.innerText = entry.title;
-                h4.style.color = 'var(--pink-secondary)';
-                h4.style.margin = '10px 0';
-                
-                const p = document.createElement('p');
-                p.innerText = entry.text;
-                p.style.marginBottom = '0';
-
-                div.appendChild(timeSpan);
-                div.appendChild(h4);
-                div.appendChild(p);
-                
-                list.appendChild(div);
+                div.innerHTML = `
+                    <div class="diary-meta">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        ${entry.time}
+                    </div>
+                    <h4 class="diary-title">${escapeHTML(entry.title)}</h4>
+                    <div class="diary-content">${escapeHTML(entry.text)}</div>
+                `;
+                container.appendChild(div);
             });
         }
 
-        // --- Confetti / Celebration Canvas Logic ---
-        const canvas = document.getElementById('celebrationCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // Basic HTML escaper to prevent XSS in diary
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag])
+            );
+        }
 
-        let particles = [];
-        let animationId;
+        // ----------------------------------------------------------------------
+        // 4. Celebration Canvas System (Confetti Particle Engine)
+        // ----------------------------------------------------------------------
+        const canvas = document.getElementById('celebration-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+        let animId;
+
+        // Resize handler
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
         class Particle {
-            constructor(x, y, color) {
+            constructor(x, y) {
                 this.x = x;
                 this.y = y;
-                this.color = color;
-                // Random explosion velocities
-                this.velocity = {
-                    x: (Math.random() - 0.5) * 15,
-                    y: (Math.random() - 0.5) * 15
-                };
-                this.radius = Math.random() * 4 + 2;
+                this.size = Math.random() * 8 + 3;
+                this.speedX = (Math.random() - 0.5) * 15;
+                this.speedY = (Math.random() - 0.5) * 15 - 5; // initial upward bias
+                this.gravity = 0.3;
                 this.friction = 0.98;
-                this.gravity = 0.2;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 10;
                 this.opacity = 1;
+                
+                // Color palette: Pinks, Cyans, Golds, Whites
+                const colors = ['#ff007f', '#ff4da6', '#00ffcc', '#ffcc00', '#ffffff'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random shape (0 = circle, 1 = square)
+                this.type = Math.floor(Math.random() * 2);
+            }
+
+            update() {
+                this.speedX *= this.friction;
+                this.speedY *= this.friction;
+                this.speedY += this.gravity;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+                this.opacity -= 0.01;
             }
 
             draw() {
                 ctx.save();
                 ctx.globalAlpha = this.opacity;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
                 ctx.fillStyle = this.color;
-                ctx.fill();
-                ctx.closePath();
+                
+                if (this.type === 0) {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                }
                 ctx.restore();
             }
-
-            update() {
-                this.velocity.x *= this.friction;
-                this.velocity.y *= this.friction;
-                this.velocity.y += this.gravity;
-                this.x += this.velocity.x;
-                this.y += this.velocity.y;
-                this.opacity -= 0.01;
-                this.draw();
-            }
         }
 
-        function triggerCelebration() {
-            // Resize canvas just in case window changed
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        function triggerConfetti(amount = 100) {
+            cancelAnimationFrame(animId);
             
-            const colors = ['#ff007f', '#ff4da6', '#fff', '#00ffcc', '#ffcc00'];
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
+            const originX = canvas.width / 2;
+            const originY = canvas.height / 2 + 100;
 
-            // Create particles
-            for (let i = 0; i < 200; i++) {
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                particles.push(new Particle(centerX, centerY, color));
+            for (let i = 0; i < amount; i++) {
+                particlesArray.push(new Particle(originX, originY));
             }
 
-            cancelAnimationFrame(animationId);
-            animateParticles();
+            animateConfetti();
         }
 
-        function animateParticles() {
-            animationId = requestAnimationFrame(animateParticles);
-            // Clear canvas with transparent black for trailing effect
+        function animateConfetti() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            particles.forEach((particle, index) => {
-                if (particle.opacity <= 0) {
-                    particles.splice(index, 1);
-                } else {
-                    particle.update();
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                // Remove dead particles
+                if (particlesArray[i].opacity <= 0) {
+                    particlesArray.splice(i, 1);
+                    i--;
                 }
-            });
+            }
+
+            if (particlesArray.length > 0) {
+                animId = requestAnimationFrame(animateConfetti);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
         }
-
-        // Handle Window Resize for Canvas
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
     </script>
 </body>
 </html>
