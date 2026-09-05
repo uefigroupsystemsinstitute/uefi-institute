@@ -116,10 +116,11 @@
     </span>
   </div>
 
-  <header class="sticky top-0 z-50 glass-card border-b border-gray-800/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+ <header class="sticky top-0 z-50 glass-card border-b border-gray-800/80">
+    <div class="w-full px-6 lg:px-12 h-20 flex items-center justify-between">
       
-      <a href="home.html" class="flex items-center gap-3 group">
+      <!-- Left: Logo & Title -->
+      <a href="home.html" class="flex items-center gap-3 group shrink-0">
         <div class="relative p-1 rounded-full bg-gradient-to-tr from-kenya-green via-kenya-gold to-kenya-red transition transform group-hover:scale-105">
           <img src="assets/main-logo.png" onerror="this.onerror=null; this.src='https://via.placeholder.com/60/008751/FFFFFF?text=UEFI';" alt="UEFI Global Logo" class="w-12 h-12 rounded-full object-cover bg-black border-2 border-black">
         </div>
@@ -131,17 +132,19 @@
         </div>
       </a>
 
-      <nav class="hidden lg:flex items-left gap-6 text-sm font-semibold">
+      <!-- Center: Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-semibold">
         <a href="#curriculum" class="hover:text-kenya-gold transition">Curriculum</a>
         <a href="#ms-utilities" class="hover:text-kenya-gold transition">Microsoft Suite</a>
         <a href="#python-ai" class="hover:text-kenya-gold transition">Python & AI</a>
         <a href="#databases" class="hover:text-kenya-gold transition">Databases</a>
         <a href="#ecosystem" class="hover:text-kenya-gold transition">Azure & Tools</a>
         <a href="#video-vault" class="hover:text-kenya-gold transition">Video Vault</a>
-        <a href="#notes-hub" class="hover:text-kenya-gold transition"><i class="fa-solid fa-note-sticky text-kenya-gold mr-1"></i> My Notes</a>
+        <a href="#notes-hub" class="hover:text-kenya-gold transition whitespace-nowrap"><i class="fa-solid fa-note-sticky text-kenya-gold mr-1"></i> My Notes</a>
       </nav>
 
-      <div class="flex items-center gap-3">
+      <!-- Right: Action Buttons -->
+      <div class="flex items-center gap-3 shrink-0">
         <button onclick="toggleChatbot()" class="bg-kenya-green hover:bg-kenya-greenhover text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-lg shadow-kenya-green/20">
           <i class="fa-solid fa-robot text-kenya-gold"></i>
           <span>ALAL AI Chat</span>
@@ -151,6 +154,7 @@
           <span class="hidden sm:inline">Get Certified</span>
         </a>
       </div>
+      
     </div>
   </header>
 
