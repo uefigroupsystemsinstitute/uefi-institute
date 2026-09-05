@@ -257,6 +257,9 @@
             justify-content: space-between;
             align-items: center;
             height: 80px;
+            width: 100%; 
+            max-width: 100%; /* Ensures no other max-width rules interfere */
+            padding: 0 3%; /* Gives a nice breathing room on the left and right */
         }
 
         /* Brand Logo Area */
@@ -1280,7 +1283,7 @@
 ======================================================================== -->
 
 <header class="main-header">
-    <div class="container nav-wrapper">
+    <div class="nav-wrapper">
         <!-- Logo -->
         <a href="home.html" class="brand-logo">
             <img src="assets/main-logo.png" alt="UEFI Logo" class="logo-image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
