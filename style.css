@@ -172,14 +172,14 @@ nav {
    ========================================== */
 .hero {
     position: relative;
-    text-align: center;
+    text-align: left ;
     padding: 100px 20px;
     min-height: 60vh;
     color: var(--off-white);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: left;
 }
 
 .hero h1 {
