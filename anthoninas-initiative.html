@@ -125,6 +125,7 @@
             padding: 1.2rem 5%;
             transition: var(--transition-main);
             box-shadow: 0 2px 20px rgba(0,0,0,0.02);
+            box-sizing: border-box;
         }
 
         nav {
@@ -155,7 +156,7 @@
             list-style: none; 
             display: flex; 
             gap: 2.5rem; 
-            align-items: left; 
+            align-items: center; 
         }
 
         .nav-links a { 
@@ -167,6 +168,8 @@
             letter-spacing: 1px;
             transition: var(--transition-main);
             position: relative;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .nav-links a::after {
