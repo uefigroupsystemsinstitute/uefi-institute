@@ -3,808 +3,1689 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI GO GIRL | Empowering the Next Generation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>UEFI GO GIRL | The Ultimate Ecosystem for Empowerment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* ==========================================================================
-           1. ROOT VARIABLES & GLOBAL RESETS
+           1. CSS VARIABLES & THEME SETUP
            ========================================================================== */
         :root {
-            --bg-color: #0d0d12;
-            --text-color: #f0f0f0;
-            --text-main: #cccccc;
-            --text-muted: #888888;
+            --bg-color-main: #0a0a0f;
+            --bg-color-alt: #12121a;
+            --bg-color-card: #1c1c28;
+            --text-main: #f5f5f7;
+            --text-muted: #a1a1aa;
             --pink-primary: #ff007f;
             --pink-secondary: #ff4da6;
+            --pink-tertiary: #ff80c0;
             --pink-dark: #b30059;
-            --accent-gold: #ffcc00;
+            --pink-glow: rgba(255, 0, 127, 0.5);
             --accent-cyan: #00ffcc;
-            --accent-purple: #9d00ff;
-            --box-bg: #1a1a24;
-            --box-bg-hover: #232332;
-            --nav-bg: rgba(13, 13, 18, 0.95);
-            --font-main: 'Poppins', sans-serif;
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 20px;
-            --radius-pill: 50px;
-            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --shadow-glow: 0 0 20px rgba(255, 0, 127, 0.3);
-            --shadow-card: 0 10px 30px rgba(0,0,0,0.5);
+            --accent-gold: #ffcc00;
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            --border-radius-full: 9999px;
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 1rem;
+            --spacing-4: 1.5rem;
+            --spacing-5: 2rem;
+            --spacing-6: 3rem;
+            --spacing-8: 4rem;
+            --spacing-10: 6rem;
+            --spacing-12: 8rem;
+            --font-family: 'Poppins', sans-serif;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.4s ease;
+            --transition-slow: 0.8s ease;
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 20px var(--pink-glow);
+            --z-index-back: -1;
+            --z-index-normal: 1;
+            --z-index-above: 10;
+            --z-index-nav: 1000;
+            --z-index-modal: 2000;
+            --z-index-toast: 3000;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
-        html { scroll-behavior: smooth; }
-        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.8; overflow-x: hidden; }
+        /* ==========================================================================
+           2. RESET & BASE STYLES
+           ========================================================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: var(--pink-dark); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--pink-primary); }
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
         /* Typography */
-        h1, h2, h3, h4, h5, h6 { color: var(--pink-primary); font-weight: 800; margin-bottom: 20px; line-height: 1.2; }
-        p { margin-bottom: 20px; font-size: 1.1rem; color: var(--text-main); }
-        a { color: var(--pink-secondary); text-decoration: none; transition: var(--transition); }
-        a:hover { color: var(--pink-primary); text-shadow: var(--shadow-glow); }
-        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-4);
+            color: var(--pink-primary);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--pink-primary), transparent);
+            border-radius: var(--border-radius-full);
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--text-main);
+        }
+
+        p {
+            margin-bottom: var(--spacing-4);
+            font-size: 1.125rem;
+            color: var(--text-muted);
+        }
+
+        a {
+            color: var(--pink-secondary);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--pink-primary);
+            text-shadow: 0 0 10px var(--pink-glow);
+        }
+
+        ul, ol {
+            margin-bottom: var(--spacing-4);
+            padding-left: var(--spacing-5);
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: var(--spacing-2);
+        }
+
+        strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        /* ==========================================================================
+           3. LAYOUT UTILITIES
+           ========================================================================== */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-5);
+        }
+
+        .section-padding {
+            padding-top: var(--spacing-12);
+            padding-bottom: var(--spacing-12);
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-8);
+            margin-bottom: var(--spacing-10);
+        }
+
+        .flex-row.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .flex-col-text {
+            flex: 1 1 50%;
+            text-align: left;
+        }
+
+        .flex-col-img {
+            flex: 1 1 50%;
+            position: relative;
+        }
+
+        .flex-col-img img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition-normal);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .flex-col-img img:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(255, 0, 127, 0.3);
+            border-color: var(--pink-dark);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-6);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-6);
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-6);
+        }
+
         .text-center { text-align: center; }
-        .text-gradient { background: linear-gradient(90deg, var(--pink-primary), var(--accent-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .mb-4 { margin-bottom: 40px; }
-        .mb-8 { margin-bottom: 80px; }
-        .mt-4 { margin-top: 40px; }
-        .mt-8 { margin-top: 80px; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
 
-        /* Grids */
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-        
-        .card { padding: 30px; border-radius: var(--radius-md); background: var(--box-bg); box-shadow: var(--shadow-card); transition: var(--transition); border: 1px solid rgba(255,255,255,0.05); }
-        .card:hover { transform: translateY(-5px); background: var(--box-bg-hover); border-color: rgba(255,0,127,0.3); }
-
+        /* ==========================================================================
+           4. COMPONENTS
+           ========================================================================== */
         /* Buttons */
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 40px; font-size: 1.1rem; font-weight: 800; border: none; border-radius: var(--radius-pill); cursor: pointer; text-transform: uppercase; transition: var(--transition); letter-spacing: 1px; }
-        .btn-primary { background: var(--pink-primary); color: #fff; box-shadow: 0 5px 20px rgba(255, 0, 127, 0.4); }
-        .btn-primary:hover { background: #fff; color: var(--pink-primary); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255, 0, 127, 0.6); }
-        .btn-outline { background: transparent; color: var(--pink-primary); border: 2px solid var(--pink-primary); }
-        .btn-outline:hover { background: var(--pink-primary); color: #fff; transform: translateY(-3px); }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: var(--border-radius-full);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            border: none;
+            outline: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--pink-primary), var(--pink-dark));
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--pink-secondary), var(--pink-primary));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.6);
+            color: #ffffff;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--pink-primary);
+            border: 2px solid var(--pink-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--pink-primary);
+            color: #ffffff;
+            box-shadow: 0 0 20px var(--pink-glow);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-color-card);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--pink-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-normal);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(255, 0, 127, 0.2);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Text Over Image (Hero Style) */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--spacing-10);
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-banner-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: var(--z-index-back);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.7) 50%, rgba(10,10,15,0.2) 100%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: var(--z-index-normal);
+            padding: var(--spacing-8);
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            color: #ffffff;
+            margin-bottom: var(--spacing-2);
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-content h1 span {
+            color: var(--pink-primary);
+        }
+
+        /* Word in front of image effect */
+        .overlap-text-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .overlap-text-wrapper .bg-text {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            font-size: 8rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            z-index: -1;
+            white-space: nowrap;
+            pointer-events: none;
+        }
 
         /* ==========================================================================
-           2. NAVIGATION & HEADER
+           5. NAVIGATION & TABS
            ========================================================================== */
-        nav { position: fixed; top: 0; width: 100%; background: var(--nav-bg); padding: 15px 3vw; display: flex; justify-content: space-between; align-items: center; z-index: 1000; border-bottom: 1px solid var(--pink-dark); backdrop-filter: blur(12px); flex-wrap: wrap; gap: 10px; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
-        .logo { font-size: 20px; font-weight: 800; color: var(--pink-primary); letter-spacing: 2px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
-        .logo::before { content: ''; display: inline-block; width: 12px; height: 12px; background: var(--accent-cyan); border-radius: 50%; box-shadow: 0 0 10px var(--accent-cyan); }
-        
-        .nav-links { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
-        .nav-links button { background: none; border: none; color: var(--text-color); font-size: 12px; font-weight: 600; cursor: pointer; text-transform: uppercase; padding: 10px 12px; border-radius: var(--radius-sm); transition: var(--transition); position: relative; overflow: hidden; }
-        .nav-links button::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: var(--pink-primary); transition: var(--transition); }
-        .nav-links button:hover::after, .nav-links button.active::after { width: 80%; }
-        .nav-links button:hover, .nav-links button.active { background-color: rgba(255, 0, 127, 0.1); color: var(--pink-primary); }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 0, 127, 0.2);
+            z-index: var(--z-index-nav);
+            padding: 1rem 0;
+            transition: var(--transition-normal);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 var(--spacing-5);
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo span {
+            color: var(--pink-primary);
+        }
+
+        .nav-logo-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--pink-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 0, 127, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0); }
+        }
+
+        .nav-links-container {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .nav-links-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+
+        .nav-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-family);
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--border-radius-full);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-tab.active {
+            color: #ffffff;
+            background: var(--pink-primary);
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Tab Content Control */
+        .tab-section {
+            display: none;
+            min-height: 100vh;
+            padding-top: 100px;
+            animation: fadeInTab 0.5s ease forwards;
+        }
+
+        .tab-section.active {
+            display: block;
+        }
+
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* ==========================================================================
-           3. LAYOUT & CONTAINERS
+           6. SPECIFIC SECTIONS STYLING
            ========================================================================== */
-        .tab-content { display: none; padding: 120px 5vw 100px 5vw; min-height: 100vh; max-width: 1600px; margin: 0 auto; }
-        .tab-content.active { display: block; animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
 
-        .flex-row { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 60px; margin-bottom: 80px; }
-        .flex-row.reverse { flex-direction: row-reverse; }
-        .flex-col-text { flex: 1; text-align: left; }
-        .flex-col-img { flex: 1; position: relative; }
-        .flex-col-img img { width: 100%; height: auto; max-height: 600px; object-fit: cover; border-radius: var(--radius-md); box-shadow: var(--shadow-card); transition: var(--transition); border: 1px solid rgba(255,255,255,0.1); }
-        .flex-col-img img:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 50px rgba(255, 0, 127, 0.3); border-color: var(--pink-primary); }
+        /* Stats Cards */
+        .stat-card {
+            background: var(--bg-color-alt);
+            border-left: 4px solid var(--pink-primary);
+            padding: var(--spacing-5);
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-md);
+        }
 
-        .hero-container { position: relative; width: 100%; height: 80vh; min-height: 600px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 80px; display: flex; align-items: center; }
-        .hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(13,13,18,0.95) 0%, rgba(13,13,18,0.4) 50%, rgba(13,13,18,0.1) 100%); z-index: 1; }
-        .hero-content { position: relative; z-index: 2; padding: 0 8%; max-width: 900px; }
-        .hero-content h1 { font-size: clamp(3rem, 7vw, 6.5rem); color: #fff; text-shadow: 0 10px 30px rgba(0,0,0,0.8); margin-bottom: 10px; line-height: 1.1; text-transform: uppercase; }
-        .hero-content h2 { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--pink-primary); text-transform: uppercase; letter-spacing: 3px; font-weight: 600; }
+        .stat-card-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: var(--spacing-2);
+            background: linear-gradient(135deg, #ffffff, var(--pink-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-card-label {
+            font-size: 1rem;
+            color: var(--pink-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-2);
+        }
+
+        .stat-card-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Video Grid (We Talk, Girls In Tech) */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid rgba(255, 0, 127, 0.2);
+            transition: var(--transition-normal);
+            background: #000;
+        }
+
+        .video-wrapper:hover {
+            border-color: var(--pink-primary);
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 0, 127, 0.3);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .video-meta {
+            margin-top: var(--spacing-3);
+        }
+
+        .video-meta h4 {
+            margin-bottom: var(--spacing-1);
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .video-meta p {
+            font-size: 0.9rem;
+            color: var(--pink-tertiary);
+        }
+
+        /* Profiles List (My Muse) */
+        .muse-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-8);
+        }
+
+        .muse-card {
+            display: flex;
+            flex-direction: row;
+            background: var(--bg-color-alt);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition-normal);
+        }
+
+        .muse-card:hover {
+            transform: translateX(10px);
+            border-color: var(--pink-dark);
+            box-shadow: -10px 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .muse-img-container {
+            width: 35%;
+            position: relative;
+            min-height: 300px;
+        }
+
+        .muse-img-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .muse-content {
+            width: 65%;
+            padding: var(--spacing-6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .muse-category {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(255,0,127,0.1);
+            color: var(--pink-primary);
+            border-radius: var(--border-radius-full);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-3);
+            align-self: flex-start;
+        }
+
+        /* Terminal Window (Girls in Tech) */
+        .terminal-window {
+            background: #0d0d12;
+            border-radius: var(--border-radius-md);
+            border: 1px solid #333;
+            overflow: hidden;
+            margin: var(--spacing-6) 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        .terminal-header {
+            background: #1a1a24;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-btn.close { background: #ff5f56; }
+        .terminal-btn.min { background: #ffbd2e; }
+        .terminal-btn.max { background: #27c93f; }
+
+        .terminal-title {
+            color: #888;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .terminal-body {
+            padding: var(--spacing-5);
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #00ffcc;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .terminal-line { margin-bottom: 5px; }
+        .terminal-prompt::before {
+            content: 'user@uefigogirl:~$ ';
+            color: var(--pink-primary);
+        }
+        .terminal-comment { color: #6272a4; }
+        .terminal-keyword { color: #ff79c6; }
+        .terminal-string { color: #f1fa8c; }
+        .terminal-function { color: #50fa7b; }
+
+        /* Secret Box & 3D Environment */
+        .secret-environment {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            perspective: 2000px; /* Strong perspective for 3D */
+            padding: var(--spacing-8) 0;
+            background: radial-gradient(circle at center, #1a1a24 0%, #0a0a0f 70%);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid rgba(255, 0, 127, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ambient light for box area */
+        .secret-environment::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,0,127,0.15) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .box-scene {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin-bottom: var(--spacing-10);
+            z-index: var(--z-index-normal);
+        }
+
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            /* Default slight angle */
+            transform: rotateX(-15deg) rotateY(25deg);
+            /* Smooth long transition for the 720 rotation */
+            transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* The rotation class injected via JS */
+        .cube.spin-hide {
+            transform: rotateX(720deg) rotateY(1080deg) rotateZ(360deg) scale(0.5);
+        }
+
+        .cube.spin-reveal {
+            transform: rotateX(-720deg) rotateY(-1080deg) rotateZ(-360deg) scale(1.2);
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 2px solid var(--pink-primary);
+            background: rgba(20, 20, 30, 0.85);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--pink-primary);
+            text-shadow: 0 0 10px var(--pink-glow);
+            box-shadow: inset 0 0 40px rgba(255, 0, 127, 0.2);
+            border-radius: 12px;
+        }
+
+        .cube-face-front  { transform: rotateY(  0deg) translateZ(150px); }
+        .cube-face-right  { transform: rotateY( 90deg) translateZ(150px); }
+        .cube-face-back   { transform: rotateY(180deg) translateZ(150px); }
+        .cube-face-left   { transform: rotateY(-90deg) translateZ(150px); }
+        .cube-face-top    { transform: rotateX( 90deg) translateZ(150px); }
+        .cube-face-bottom { transform: rotateX(-90deg) translateZ(150px); }
+
+        .cube-face-front { background: linear-gradient(135deg, rgba(255,0,127,0.8), rgba(179,0,89,0.9)); color: #fff; }
+        .cube-face-back { background: #000; }
+
+        /* Secret Entry Form */
+        .secret-form-wrapper {
+            background: var(--bg-color-card);
+            padding: var(--spacing-6);
+            border-radius: var(--border-radius-md);
+            width: 100%;
+            max-width: 700px;
+            z-index: var(--z-index-normal);
+            box-shadow: var(--shadow-lg);
+            border-top: 4px solid var(--pink-primary);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-4);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-2);
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            background: var(--bg-color-main);
+            border: 1px solid #333;
+            color: var(--text-main);
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-family);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--pink-primary);
+            box-shadow: 0 0 0 3px rgba(255, 0, 127, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Diary Entries Display */
+        .diary-timeline {
+            margin-top: var(--spacing-8);
+            width: 100%;
+            max-width: 800px;
+            display: none; /* hidden until reveal */
+        }
+
+        .diary-entry {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--pink-secondary);
+            padding: var(--spacing-5);
+            margin-bottom: var(--spacing-4);
+            border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+            position: relative;
+            animation: slideInRight 0.5s ease forwards;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .diary-meta {
+            font-size: 0.85rem;
+            color: var(--pink-tertiary);
+            margin-bottom: var(--spacing-2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .diary-title {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: var(--spacing-2);
+        }
+
+        .diary-content {
+            color: var(--text-muted);
+            white-space: pre-wrap;
+        }
+
+        /* Celebration Canvas */
+        #celebration-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: var(--z-index-modal);
+        }
+
+        /* Financial Calculator */
+        .calculator-card {
+            background: var(--bg-color-alt);
+            padding: var(--spacing-6);
+            border-radius: var(--border-radius-md);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            margin-top: var(--spacing-6);
+        }
+
+        .calc-result {
+            margin-top: var(--spacing-5);
+            padding: var(--spacing-4);
+            background: rgba(0, 255, 204, 0.1);
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+        }
+
+        .calc-result h4 {
+            color: var(--accent-cyan);
+            font-size: 2rem;
+            margin: 0;
+        }
 
         /* ==========================================================================
-           4. DATA, STATS & COMPONENTS
+           7. MEDIA QUERIES
            ========================================================================== */
-        .stat-card { background: var(--box-bg); padding: 30px; border-radius: var(--radius-md); border-top: 4px solid var(--pink-primary); transition: var(--transition); text-align: center; position: relative; overflow: hidden; }
-        .stat-card:hover { transform: translateY(-8px); background: #232332; border-color: var(--accent-cyan); }
-        .stat-card-number { font-size: 3.5rem; font-weight: 800; color: #fff; margin-bottom: 5px; line-height: 1; }
-        .stat-card-label { font-size: 1rem; font-weight: 600; color: var(--pink-secondary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: block; }
+        @media (max-width: 1024px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .flex-row, .flex-row.reverse { flex-direction: column; }
+            .muse-card { flex-direction: column; }
+            .muse-img-container { width: 100%; height: 250px; }
+            .muse-content { width: 100%; }
+        }
 
-        /* Media */
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 50px; margin: 40px 0; }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: var(--radius-md); overflow: hidden; border: 2px solid #333; transition: var(--transition); box-shadow: var(--shadow-card); }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .video-caption { margin-top: 20px; }
-        
-        /* Profiles */
-        .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 40px; margin-top: 40px; }
-        .profile-card { display: flex; flex-direction: column; background: var(--box-bg); border-radius: var(--radius-md); overflow: hidden; border: 1px solid #333; transition: var(--transition); }
-        .profile-card:hover { border-color: var(--pink-secondary); box-shadow: var(--shadow-card); transform: translateY(-5px); }
-        .profile-img { width: 100%; height: 350px; background-size: cover; background-position: center; position: relative; }
-        .profile-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to top, var(--box-bg), transparent); }
-        .profile-info { padding: 30px; position: relative; z-index: 2; margin-top: -40px; }
-        .profile-role { color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-weight: 800; display: inline-block; background: rgba(0,0,0,0.8); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; }
-        
-        /* Tables */
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 40px; background: var(--box-bg); border-radius: var(--radius-md); overflow: hidden; }
-        .data-table th, .data-table td { padding: 20px; text-align: left; border-bottom: 1px solid #333; }
-        .data-table th { background: #111; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 2px; font-weight: 800; }
-        .data-table tr:hover td { background: rgba(0, 255, 204, 0.05); }
-
-        /* Modals for Magazines */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; transition: opacity 0.3s ease; }
-        .modal-content { background: var(--box-bg); width: 90%; max-width: 800px; max-height: 80vh; border-radius: var(--radius-lg); border: 1px solid var(--pink-primary); padding: 40px; overflow-y: auto; position: relative; transform: translateY(50px); transition: transform 0.3s ease; }
-        .close-modal { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; transition: color 0.3s; }
-        .close-modal:hover { color: var(--pink-primary); }
-
-        /* Forms & Inputs */
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; color: var(--text-main); font-weight: 600; text-transform: uppercase; font-size: 0.9rem; }
-        .form-control { width: 100%; padding: 15px; background: #0a0a0f; border: 2px solid #333; color: #fff; border-radius: var(--radius-sm); font-size: 1rem; transition: var(--transition); }
-        .form-control:focus { outline: none; border-color: var(--pink-primary); box-shadow: 0 0 15px rgba(255, 0, 127, 0.2); }
-        textarea.form-control { resize: vertical; min-height: 150px; }
-
-        /* Audio Player UI */
-        .audio-player-bar { position: fixed; bottom: -100px; left: 0; width: 100%; background: #111; border-top: 2px solid var(--accent-purple); padding: 15px 5vw; display: flex; align-items: center; justify-content: space-between; z-index: 1500; transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 -10px 30px rgba(0,0,0,0.8); }
-        .audio-player-bar.active { bottom: 0; }
-        .player-info { display: flex; align-items: center; gap: 20px; flex: 1; }
-        .player-controls { display: flex; align-items: center; gap: 20px; flex: 1; justify-content: center; }
-        .player-progress { flex: 1; display: flex; align-items: center; gap: 10px; }
-        .progress-bar-container { flex: 1; height: 6px; background: #333; border-radius: 3px; overflow: hidden; cursor: pointer; }
-        .progress-bar-fill { height: 100%; width: 30%; background: var(--accent-purple); }
-        
-        .podcast-card { display: flex; align-items: center; gap: 20px; background: var(--box-bg); padding: 20px; border-radius: var(--radius-md); border-left: 4px solid var(--accent-purple); transition: var(--transition); cursor: pointer; }
-        .podcast-card:hover { background: var(--box-bg-hover); transform: translateX(10px); }
-        .play-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--accent-purple); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: none; flex-shrink: 0; }
-
-        /* Quiz UI */
-        .quiz-container { background: #111; padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--accent-cyan); text-align: center; }
-        .quiz-options { display: flex; flex-direction: column; gap: 15px; margin: 30px 0; }
-        .quiz-option { padding: 15px; background: var(--box-bg); border: 2px solid #333; border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); color: #fff; font-size: 1.1rem; }
-        .quiz-option:hover { border-color: var(--accent-cyan); background: rgba(0, 255, 204, 0.1); }
-        .quiz-option.correct { border-color: #00ffcc; background: rgba(0, 255, 204, 0.2); }
-        .quiz-option.wrong { border-color: #ff007f; background: rgba(255, 0, 127, 0.2); }
-
-        /* Secret Box */
-        .secret-container { perspective: 2000px; display: flex; flex-direction: column; align-items: center; margin-top: 40px; }
-        .secret-box-wrapper { width: 300px; height: 300px; position: relative; transform-style: preserve-3d; transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); margin-bottom: 40px; cursor: pointer; z-index: 10; }
-        .secret-box-wrapper.rotate { transform: rotateY(720deg) rotateX(10deg) scale(1.1); }
-        .box-face { position: absolute; width: 300px; height: 300px; background: linear-gradient(135deg, #111, var(--box-bg)); border: 2px solid var(--pink-dark); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: #fff; box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 20px 50px rgba(255,0,127,0.2); backface-visibility: hidden; border-radius: 20px; text-align: center; padding: 20px; }
-        .box-front { transform: translateZ(150px); }
-        .box-back { transform: rotateY(180deg) translateZ(150px); background: linear-gradient(135deg, var(--pink-dark), var(--pink-primary)); }
-        
-        #celebrationCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
-
-        @media (max-width: 1024px) { .flex-row, .flex-row.reverse { flex-direction: column; text-align: center; } .flex-col-text { text-align: center; } }
-        @media (max-width: 768px) { nav { padding: 10px; justify-content: center; } .logo { width: 100%; justify-content: center; } .hero-content h1 { font-size: 2.5rem; } .tab-content { padding-top: 180px; } }
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .nav-links-container {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 15, 0.98);
+                width: 100%;
+                height: calc(100vh - 70px);
+                padding: var(--spacing-5);
+                transition: var(--transition-normal);
+            }
+            .nav-links-container.show { left: 0; }
+            .mobile-menu-btn { display: block; }
+            .nav-tab { font-size: 1.2rem; padding: 1rem; width: 100%; text-align: left; }
+            h1 { font-size: 2.5rem; }
+            .overlap-text-wrapper .bg-text { font-size: 4rem; top: -10px; }
+            .hero-banner { height: 50vh; min-height: 400px; }
+        }
     </style>
 </head>
 <body>
 
-    <canvas id="celebrationCanvas"></canvas>
+    <!-- Confetti Canvas -->
+    <canvas id="celebration-canvas"></canvas>
 
-    <nav>
-        <div class="logo">UEFI GO GIRL</div>
-        <div class="nav-links" id="nav-links">
-            <button class="active" onclick="openTab(event, 'home')">Home</button>
-            <button onclick="openTab(event, 'magazines')">Magazines</button>
-            <button onclick="openTab(event, 'how-she-did-it')">How She Did It</button>
-            <button onclick="openTab(event, 'we-talk')">We Talk</button>
-            <button onclick="openTab(event, 'my-muse')">My Muse</button>
-            <button onclick="openTab(event, 'girls-in-tech')">Girls in Tech</button>
-            <button onclick="openTab(event, 'networth')">Net Worth</button>
-            <button onclick="openTab(event, 'network')">Network</button>
-            <button onclick="openTab(event, 'secret-box')">Secret Box</button>
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="nav-logo-icon"></div>
+                UEFI <span>GO GIRL</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <div class="nav-links-container" id="navLinks">
+                <button class="nav-tab active" data-target="tab-home">Home</button>
+                <button class="nav-tab" data-target="tab-magazines">Magazines</button>
+                <button class="nav-tab" data-target="tab-how-she-did-it">How She Did It</button>
+                <button class="nav-tab" data-target="tab-we-talk">We Talk</button>
+                <button class="nav-tab" data-target="tab-muse">My Muse</button>
+                <button class="nav-tab" data-target="tab-tech">Girls in Tech</button>
+                <button class="nav-tab" data-target="tab-networth">My Net Worth</button>
+                <button class="nav-tab" data-target="tab-secret">Secret Box</button>
+            </div>
         </div>
     </nav>
 
-    <section id="home" class="tab-content active">
-        <div class="hero-container" style="background: url('https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1600&h=900&q=80') center/cover no-repeat;">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h2>Welcome to the Movement</h2>
-                <h1>Architects of<br><span class="text-gradient">The Future</span></h1>
-                <p style="color: #ddd; font-size: 1.3rem; max-width: 700px; border-left: 4px solid var(--pink-primary); padding-left: 20px;">A powerful, uncompromising ecosystem designed to transform, educate, and relentlessly empower the modern girl. We don't just break glass ceilings; we dismantle the entire building.</p>
-                <div class="mt-4">
-                    <button class="btn btn-primary" onclick="openTab(event, 'how-she-did-it')">Initiate Journey</button>
-                    <button class="btn btn-outline" onclick="openTab(event, 'secret-box')" style="margin-left: 15px;">Unlock Diary</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex-row animate-on-scroll">
-            <div class="flex-col-text">
-                <span class="text-gradient" style="font-weight: 800; letter-spacing: 2px;">THE MANIFESTO</span>
-                <h2 style="font-size: 3rem; margin-top: 10px;">Our Core Mission</h2>
-                <p>UEFI GO GIRL is not just a website; it is an architectural blueprint for female success. Built meticulously for girls who are ready to take on the world, we provide hard-hitting resources across technology, financial literacy, bold inspiration, and uncompromising mental health. This is your safe haven, your classroom, and your global stage.</p>
-                <p>According to UN Women and the Kenya Women's Empowerment Index (WEI), only 29% to 40.6% of women are currently considered fully empowered. Employment rates show a stark contrast: 34% for women compared to 47% for men.</p>
-                <p style="color: var(--pink-secondary); font-weight: bold; font-size: 1.2rem;">This platform exists to shatter those statistics permanently.</p>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&h=800&q=80" alt="Empowered Girls">
-            </div>
-        </div>
-
-        <div class="text-center mt-8 animate-on-scroll">
-            <h2 style="font-size: 3rem;">The Three Pillars of UEFI</h2>
-            <div class="grid-3 mt-4">
-                <div class="card" style="border-top-color: var(--accent-cyan);">
-                    <div style="font-size: 3rem; margin-bottom: 20px;">💻</div>
-                    <h3 style="color: var(--accent-cyan);">Education</h3>
-                    <p>Access to curated tech courses, coding bootcamps, and digital literacy tools to ensure you are building the future.</p>
-                </div>
-                <div class="card" style="border-top-color: var(--accent-gold);">
-                    <div style="font-size: 3rem; margin-bottom: 20px;">📈</div>
-                    <h3 style="color: var(--accent-gold);">Economics</h3>
-                    <p>Financial mastery is non-negotiable. Learn how to bootstrap, invest, and demand the salary you deserve.</p>
-                </div>
-                <div class="card" style="border-top-color: var(--pink-primary);">
-                    <div style="font-size: 3rem; margin-bottom: 20px;">🧠</div>
-                    <h3 style="color: var(--pink-primary);">Elevation</h3>
-                    <p>Mental fortitude and community support. Access encrypted diary tracking, peer networking, and mentorship.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="magazines" class="tab-content">
-        <div class="text-center mb-8 animate-on-scroll">
-            <h2 style="font-size: 4rem;">The UEFI Archives</h2>
-            <p style="max-width: 900px; margin: 0 auto;">Dive into our extensive digital print collections featuring long-form essays, heavy-hitting editorials, and avant-garde thinking.</p>
-        </div>
-        
-        <div class="grid-2 animate-on-scroll">
-            <div class="card" style="display: flex; flex-direction: column;">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&h=600&q=80" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 20px;">
-                <span style="color: var(--pink-secondary); font-weight: bold;">VOL 01</span>
-                <h3>The Digital Matriarch</h3>
-                <p style="flex-grow: 1;">Navigating male-dominated corporate spaces and mental health in an age of constant connectivity.</p>
-                <button class="btn btn-outline" onclick="openModal('modal-vol1')" style="width: 100%;">Read Article</button>
-            </div>
-            <div class="card" style="display: flex; flex-direction: column;">
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&h=600&q=80" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 20px;">
-                <span style="color: var(--accent-gold); font-weight: bold;">VOL 02</span>
-                <h3>Wealth & Wellness</h3>
-                <p style="flex-grow: 1;">Balancing the pursuit of financial independence with holistic wellness and breaking pay gaps.</p>
-                <button class="btn btn-outline" onclick="openModal('modal-vol2')" style="width: 100%; border-color: var(--accent-gold); color: var(--accent-gold);">Read Article</button>
-            </div>
-            <div class="card" style="display: flex; flex-direction: column;">
-                <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=800&h=600&q=80" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 20px;">
-                <span style="color: var(--accent-cyan); font-weight: bold;">VOL 03</span>
-                <h3>The Code Breakers</h3>
-                <p style="flex-grow: 1;">An exclusive deep dive into the girls transforming the tech industry and securing VC funding.</p>
-                <button class="btn btn-outline" onclick="openModal('modal-vol3')" style="width: 100%; border-color: var(--accent-cyan); color: var(--accent-cyan);">Read Article</button>
-            </div>
-            <div class="card" style="display: flex; flex-direction: column;">
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&h=600&q=80" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 20px;">
-                <span style="color: var(--accent-purple); font-weight: bold;">VOL 04</span>
-                <h3>Sustainable Futures</h3>
-                <p style="flex-grow: 1;">Highlighting women leading the charge in climate tech and sustainable agriculture.</p>
-                <button class="btn btn-outline" onclick="openModal('modal-vol4')" style="width: 100%; border-color: var(--accent-purple); color: var(--accent-purple);">Read Article</button>
-            </div>
-        </div>
-    </section>
-
-    <div class="modal-overlay" id="modal-vol1">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('modal-vol1')">✖</button>
-            <h2 style="font-size: 2.5rem;">The Dawn of the Digital Matriarch</h2>
-            <span style="color: var(--pink-secondary); font-weight: bold;">By The UEFI Editorial Board</span>
-            <hr style="border: 1px solid #333; margin: 20px 0;">
-            <p>The modern era demands a new archetype of leadership. For decades, the narrative of power has been overwhelmingly masculine, characterized by rigid hierarchies and zero-sum paradigms. The Digital Matriarch disrupts this entirely.</p>
-            <p>She understands that empathy is not a weakness; it is the ultimate data-gathering tool. By understanding the emotional and systemic friction points within a team or a market, she can engineer solutions that are exponentially more effective than brute-force management.</p>
-            <p>In this inaugural issue, we surveyed 500 female executives in the Fortune 1000. The consensus? The most significant barrier wasn't a lack of technical skill, but the systemic exhaustion of having to over-prove their competence. The antidote is unapologetic self-assurance paired with airtight execution.</p>
-            <p>Read the full 40-page manifesto in our physical print edition, releasing this Fall.</p>
-        </div>
-    </div>
-    <div class="modal-overlay" id="modal-vol2">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('modal-vol2')">✖</button>
-            <h2 style="font-size: 2.5rem; color: var(--accent-gold);">Wealth & Wellness</h2>
-            <p>Burnout is a corporate mechanism designed to extract maximum labor before discarding the human. Wellness, therefore, is an act of economic rebellion. We explore how female founders are building 8-figure businesses while strictly adhering to 4-day work weeks, proving that output is decoupled from suffering.</p>
-        </div>
-    </div>
-    <div class="modal-overlay" id="modal-vol3">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('modal-vol3')">✖</button>
-            <h2 style="font-size: 2.5rem; color: var(--accent-cyan);">The Code Breakers</h2>
-            <p>Web3 and AI are the new frontiers. If women do not write the algorithms, the algorithms will be written to exclude women. This issue profiles 10 female Principal Engineers who are currently shaping the neural networks of tomorrow.</p>
-        </div>
-    </div>
-    <div class="modal-overlay" id="modal-vol4">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('modal-vol4')">✖</button>
-            <h2 style="font-size: 2.5rem; color: var(--accent-purple);">Sustainable Futures</h2>
-            <p>Climate change disproportionately affects women in developing nations. The leaders featured in this volume are not politicians; they are material scientists, agronomists, and solar grid architects engineering our survival.</p>
-        </div>
-    </div>
-
-    <section id="how-she-did-it" class="tab-content">
-        <div class="hero-container" style="background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1600&h=900&q=80') center/cover;">
-            <div class="hero-overlay"></div>
-            <div class="hero-content text-center" style="margin: 0 auto;">
-                <h2 style="color: #fff; letter-spacing: 6px;">LOOKING TO BE</h2>
-                <h1 style="color: var(--pink-primary);">ONE OF THEM?</h1>
-                <p style="color: #fff; font-size: 1.3rem;">Find out exactly how other girls and inspiring women broke the glass ceiling, step by calculated step.</p>
-            </div>
-        </div>
-
-        <div class="grid-4 mb-8 animate-on-scroll">
-            <div class="stat-card"><div class="stat-card-number">23.3%</div><div class="stat-card-label">Political Power</div><p style="font-size: 0.9rem;">Women in Parliament. We interview the women holding the line.</p></div>
-            <div class="stat-card"><div class="stat-card-number">91%</div><div class="stat-card-label">Literacy Rate</div><p style="font-size: 0.9rem;">Education is the absolute foundation of every success story.</p></div>
-            <div class="stat-card"><div class="stat-card-number">53%</div><div class="stat-card-label">Wealth Link</div><p style="font-size: 0.9rem;">Empowerment rate in wealthiest households.</p></div>
-            <div class="stat-card"><div class="stat-card-number">40.6%</div><div class="stat-card-label">WEI Index</div><p style="font-size: 0.9rem;">The current empowerment rate. We push this to 100%.</p></div>
-        </div>
-
-        <div class="flex-row animate-on-scroll">
-            <div class="flex-col-text">
-                <span style="color: var(--pink-primary); font-weight: 800; letter-spacing: 2px;">BLUEPRINT 01</span>
-                <h3 style="font-size: 2.5rem; margin-top: 10px;">The Architecture of Resilience</h3>
-                <p>Success is rarely a straight line. We document case studies of women who navigated highly restrictive legal frameworks and patriarchal bottlenecks. We deeply examine the impact of the Sexual Offences Act 2006 and the Prevention Against Domestic Violence Act 2015.</p>
-                <p><strong>The Strategy:</strong> Turn adversity into legislation. We track their steps from local grassroots organizing to global boardrooms.</p>
-            </div>
-            <div class="flex-col-img"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&h=800&q=80"></div>
-        </div>
-    </section>
-
-    <section id="we-talk" class="tab-content">
-        <div class="text-center mb-8 animate-on-scroll">
-            <h2 style="font-size: 4rem;">We Talk. You Listen.</h2>
-            <p style="max-width: 800px; margin: 0 auto;">Your curated theater of inspiration. Watch powerful videos and listen to podcasts.</p>
-        </div>
-
-        <h3 class="animate-on-scroll border-bottom pb-2">Featured Keynotes</h3>
-        <div class="video-grid animate-on-scroll">
-            <div>
-                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/hg3umXU_qWc" allowfullscreen></iframe></div>
-                <div class="video-caption"><h4>Redefining Female Leadership</h4><p>TEDx masterclass on empathy.</p></div>
-            </div>
-            <div>
-                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/1IHKfQ-N0Q4" allowfullscreen></iframe></div>
-                <div class="video-caption"><h4>Shattering the Glass Ceiling</h4><p>Jubilee's unfiltered conversations.</p></div>
-            </div>
-        </div>
-
-        <h3 class="mt-8 animate-on-scroll" style="color: var(--accent-purple);">UEFI Audio Network (Click to Play)</h3>
-        <div class="grid-2 mt-4 animate-on-scroll">
-            <div class="podcast-card" onclick="loadTrack('Ep 01: The Art of Saying No', 'Protecting your peace as a founder.', '45:00')">
-                <button class="play-btn">▶</button>
-                <div><h4 style="margin: 0; color: var(--accent-purple);">Ep 01: The Art of Saying No</h4><p style="margin: 0; font-size: 0.9rem;">45 mins</p></div>
-            </div>
-            <div class="podcast-card" onclick="loadTrack('Ep 02: Negotiating 6 Figures', 'Script teardowns of salary negotiations.', '32:15')">
-                <button class="play-btn">▶</button>
-                <div><h4 style="margin: 0; color: var(--accent-purple);">Ep 02: Negotiating 6 Figures</h4><p style="margin: 0; font-size: 0.9rem;">32 mins</p></div>
-            </div>
-            <div class="podcast-card" onclick="loadTrack('Ep 03: Funding Without Men', 'Tapping into female-led VC funds.', '55:20')">
-                <button class="play-btn">▶</button>
-                <div><h4 style="margin: 0; color: var(--accent-purple);">Ep 03: Funding Without Men</h4><p style="margin: 0; font-size: 0.9rem;">55 mins</p></div>
-            </div>
-            <div class="podcast-card" onclick="loadTrack('Ep 04: Surviving Burnout', 'Clinical psychology for high-achievers.', '40:05')">
-                <button class="play-btn">▶</button>
-                <div><h4 style="margin: 0; color: var(--accent-purple);">Ep 04: Surviving Burnout</h4><p style="margin: 0; font-size: 0.9rem;">40 mins</p></div>
-            </div>
-        </div>
-    </section>
-
-    <div class="audio-player-bar" id="audioPlayer">
-        <div class="player-info">
-            <div style="width: 50px; height: 50px; background: var(--accent-purple); border-radius: var(--radius-sm); display: flex; align-items:center; justify-content:center; font-size: 24px;">🎙️</div>
-            <div>
-                <h4 id="trackTitle" style="margin: 0; color: #fff; font-size: 1rem;">Select a Podcast</h4>
-                <p id="trackDesc" style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">--</p>
-            </div>
-        </div>
-        <div class="player-controls">
-            <button style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">⏮</button>
-            <button id="mainPlayBtn" onclick="togglePlay()" style="width: 40px; height: 40px; border-radius: 50%; background: #fff; color: var(--accent-purple); border: none; font-size: 18px; cursor: pointer; display:flex; align-items:center; justify-content:center;">⏸</button>
-            <button style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">⏭</button>
-        </div>
-        <div class="player-progress">
-            <span style="font-size: 0.8rem; color: var(--text-muted);" id="currTime">12:34</span>
-            <div class="progress-bar-container"><div class="progress-bar-fill" id="progressBar"></div></div>
-            <span style="font-size: 0.8rem; color: var(--text-muted);" id="totalTime">45:00</span>
-            <button onclick="closePlayer()" style="background:none; border:none; color:#ff4d4d; font-size:20px; cursor:pointer; margin-left: 20px;">✖</button>
-        </div>
-    </div>
-
-    <section id="my-muse" class="tab-content">
-        <div class="text-center mb-8 animate-on-scroll">
-            <h2 style="font-size: 4rem;">My Muse</h2>
-            <p style="max-width: 800px; margin: 0 auto;">History is written by those who refuse to be silent. Profile the giants whose shoulders we stand upon.</p>
-        </div>
-
-        <div class="profile-grid animate-on-scroll">
-            <div class="profile-card">
-                <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&h=800&q=80');"></div>
-                <div class="profile-info">
-                    <span class="profile-role">Tech Innovator & CEO</span>
-                    <h3 style="color: #fff;">Dr. Amina Kenyatta</h3>
-                    <p>Built one of East Africa's largest Agritech platforms, connecting over 200,000 female farmers directly to global markets.</p>
-                    <button class="btn btn-outline" style="width: 100%;">Dossier</button>
-                </div>
-            </div>
-            <div class="profile-card">
-                <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&h=800&q=80');"></div>
-                <div class="profile-info">
-                    <span class="profile-role" style="color: var(--accent-gold);">Global Policy Advocate</span>
-                    <h3 style="color: #fff;">Sarah Ndlovu</h3>
-                    <p>Drafting key amendments for the UN Sustainable Development Goal 5, her legal frameworks adopted by 14 nations.</p>
-                    <button class="btn btn-outline" style="width: 100%; border-color: var(--accent-gold); color: var(--accent-gold);">Dossier</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="girls-in-tech" class="tab-content">
-        <div class="flex-row animate-on-scroll">
-            <div class="flex-col-text">
-                <h2 style="font-size: 4rem;">Girls in Tech</h2>
-                <h3 style="color: var(--accent-cyan); font-size: 2rem;">The Future is Coded by Women</h3>
-                <p>The tech industry has historically sidelined female voices. UEFI GO GIRL provides comprehensive roadmaps for entering STEM fields.</p>
-                <button class="btn btn-primary" style="background: var(--accent-cyan); color: #000;">Join a Bootcamp</button>
-            </div>
-            <div class="flex-col-img"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&h=800&q=80" style="border: 2px solid var(--accent-cyan);"></div>
-        </div>
-
-        <h3 class="mt-8 text-center animate-on-scroll">The UEFI Code Curriculum</h3>
-        <table class="data-table animate-on-scroll">
-            <thead><tr><th>Module</th><th>Tech</th><th>Duration</th></tr></thead>
-            <tbody>
-                <tr><td><strong>01. Web Foundations</strong></td><td>HTML5, CSS3, Flexbox</td><td>4 Weeks</td></tr>
-                <tr><td><strong>02. Interactive Logic</strong></td><td>JavaScript, DOM</td><td>6 Weeks</td></tr>
-                <tr><td><strong>03. Data Science</strong></td><td>Python, SQL</td><td>8 Weeks</td></tr>
-                <tr><td><strong>04. Full-Stack</strong></td><td>Node.js, React</td><td>10 Weeks</td></tr>
-            </tbody>
-        </table>
-
-        <div class="mt-8 animate-on-scroll">
-            <h3 style="text-align: center; color: var(--accent-cyan);">Test Your Tech Aptitude</h3>
-            <p style="text-align: center;">Take our quick assessment to see which tech track fits your logic style.</p>
+    <!-- ==========================================================================
+         HOME TAB
+         ========================================================================== -->
+    <section id="tab-home" class="tab-section active">
+        <div class="container">
             
-            <div class="quiz-container" id="quizContainer">
-                <h4 id="quizQuestion" style="font-size: 1.8rem; color: #fff;">Question 1 of 5</h4>
-                <p id="quizText" style="font-size: 1.2rem; margin-bottom: 20px;">If you have a massive dataset of customer behavior, what do you want to do with it?</p>
-                <div class="quiz-options" id="quizOptions">
-                    <button class="quiz-option" onclick="nextQuiz(1)">A) Build a beautiful dashboard to visualize it.</button>
-                    <button class="quiz-option" onclick="nextQuiz(2)">B) Write algorithms to predict future purchases.</button>
-                    <button class="quiz-option" onclick="nextQuiz(3)">C) Build secure servers to store it safely.</button>
-                    <button class="quiz-option" onclick="nextQuiz(4)">D) Decentralize the data so no single corp owns it.</button>
+            <div class="hero-banner">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1920&q=80" alt="Empowered woman" class="hero-banner-img">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="overlap-text-wrapper">
+                        <span class="bg-text">EMPOWER</span>
+                        <h1>Welcome to <span>UEFI GO GIRL</span></h1>
+                    </div>
+                    <p style="color: #fff; font-size: 1.25rem; max-width: 600px;">A comprehensive, data-driven ecosystem designed to transform, educate, and elevate the modern girl. Your journey to mastery begins here.</p>
+                    <button class="btn btn-primary" onclick="switchTab('tab-magazines')">Explore the Ecosystem</button>
                 </div>
             </div>
-            <div id="quizResult" style="display:none; text-align:center; padding: 40px; background: var(--box-bg); border-radius: var(--radius-lg); border: 2px solid var(--accent-cyan);">
-                <h3 style="font-size: 3rem; color: var(--accent-cyan);">Your Tech Persona:</h3>
-                <h2 id="personaResult" style="font-size: 4rem; color: #fff; text-transform: uppercase;">Data Scientist</h2>
-                <p id="personaDesc">You have an analytical mind perfect for Python, Machine Learning, and Big Data.</p>
-                <button class="btn btn-primary" onclick="resetQuiz()" style="background: var(--accent-cyan); color: #000; margin-top: 20px;">Retake Assessment</button>
+
+            <div class="section-padding">
+                <div class="flex-row">
+                    <div class="flex-col-text">
+                        <h2>The Reality & The Mission</h2>
+                        <p>We do not operate on platitudes; we operate on data. The UEFI GO GIRL platform is built in alignment with the United Nations Sustainable Development Goal 5 (SDG5) to achieve gender equality and empower all women and girls.</p>
+                        
+                        <p>The numbers dictate our urgency. According to the UN Women and the Kenya Women's Empowerment Index (WEI), <strong>40.6 per cent of women in Kenya are considered empowered in 2025</strong>, an improvement from 29.3 per cent in 2020. Yet, this means nearly 60% of women still face severe barriers to economic, political, and cultural participation. Furthermore, as of February 2024, <strong>only 23.3% of seats in the Kenyan parliament are held by women</strong>.</p>
+                        
+                        <p>This platform exists to shatter those barriers. Through relentless education in technology, financial literacy, and mental fortitude, we are building the next generation of female leaders, coders, and wealth creators.</p>
+                    </div>
+                    <div class="flex-col-img">
+                        <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80" alt="Women collaborating">
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <div class="stat-card">
+                        <div class="stat-card-number">40.6%</div>
+                        <div class="stat-card-label">Empowerment Rate</div>
+                        <p class="stat-card-desc">Women empowered in Kenya as of 2025 according to the WEI report. We strive for 100%.</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-number">23.3%</div>
+                        <div class="stat-card-label">Political Representation</div>
+                        <p class="stat-card-desc">Women holding parliamentary seats in Kenya (2024). Leadership needs your voice.</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-number">53%</div>
+                        <div class="stat-card-label">Wealth Correlation</div>
+                        <p class="stat-card-desc">Empowerment rate of women in wealthier households, proving financial literacy is essential.</p>
+                    </div>
+                </div>
             </div>
+
         </div>
     </section>
 
-    <section id="networth" class="tab-content">
-        <div class="text-center mb-8 animate-on-scroll">
-            <h2 style="font-size: 4rem; color: var(--accent-gold);">My Net Worth</h2>
-            <p style="max-width: 800px; margin: 0 auto;">Aggressive wealth tracking. Enter your raw data below.</p>
-        </div>
+    <!-- ==========================================================================
+         MAGAZINES TAB
+         ========================================================================== -->
+    <section id="tab-magazines" class="tab-section">
+        <div class="container section-padding">
+            <div class="text-center" style="max-width: 800px; margin: 0 auto var(--spacing-10);">
+                <h2>The UEFI Magazines</h2>
+                <p>Immerse yourself in our premier digital publications. Thought-provoking essays, avant-garde editorials, and deep dives into the socio-economic landscapes shaping the modern female experience.</p>
+            </div>
 
-        <div style="background: var(--box-bg); padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--accent-gold); max-width: 1000px; margin: 0 auto;" class="animate-on-scroll">
             <div class="grid-2">
-                <div class="card" style="border: none; background: rgba(0, 255, 204, 0.05); border-top: 3px solid var(--accent-cyan);">
-                    <h4 style="color: var(--accent-cyan);">+ ASSETS</h4>
-                    <div class="form-group"><label>Bank Accounts ($)</label><input type="number" class="form-control" id="assetCash" value="0" oninput="calculateNetWorth()"></div>
-                    <div class="form-group"><label>Investments ($)</label><input type="number" class="form-control" id="assetInvest" value="0" oninput="calculateNetWorth()"></div>
-                    <div class="form-group"><label>Real Estate ($)</label><input type="number" class="form-control" id="assetRealEstate" value="0" oninput="calculateNetWorth()"></div>
+                <!-- Magazine 1 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" alt="Issue 01" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-4);">
+                    <div class="stat-card-label">Issue 01 • September</div>
+                    <h3>The Digital Matriarch</h3>
+                    <p>Navigating the transition from traditional corporate hierarchies to decentralized digital economies. Featuring essays on breaking into tech boardrooms and leveraging personal branding.</p>
+                    <a href="#" class="btn btn-outline" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read Issue</a>
                 </div>
-                <div class="card" style="border: none; background: rgba(255, 0, 127, 0.05); border-top: 3px solid var(--pink-primary);">
-                    <h4 style="color: var(--pink-primary);">- LIABILITIES</h4>
-                    <div class="form-group"><label>Credit Card ($)</label><input type="number" class="form-control" id="liabCredit" value="0" oninput="calculateNetWorth()"></div>
-                    <div class="form-group"><label>Student Loans ($)</label><input type="number" class="form-control" id="liabStudent" value="0" oninput="calculateNetWorth()"></div>
-                    <div class="form-group"><label>Mortgage ($)</label><input type="number" class="form-control" id="liabMortgage" value="0" oninput="calculateNetWorth()"></div>
-                </div>
-            </div>
 
-            <div style="background: #0a0a0f; padding: 40px; border-radius: var(--radius-md); text-align: center; border: 2px dashed var(--accent-gold); margin-top: 40px;">
-                <h4 style="color: var(--text-muted); margin: 0;">Total Calculated Net Worth</h4>
-                <div style="font-size: 4rem; font-weight: 800; color: var(--accent-gold); margin: 20px 0; word-break: break-all; line-height: 1;" id="netWorthResult">$0</div>
-                <p id="netWorthMessage" style="font-weight: bold; margin: 0;"></p>
+                <!-- Magazine 2 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" alt="Issue 02" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-4);">
+                    <div class="stat-card-label">Issue 02 • October</div>
+                    <h3>Wealth & Wellness</h3>
+                    <p>The intersection of financial independence and mental health. We analyze the gender pay gap and how closing it improves holistic wellbeing for women across Africa.</p>
+                    <a href="#" class="btn btn-outline" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read Issue</a>
+                </div>
+
+                <!-- Magazine 3 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80" alt="Issue 03" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-4);">
+                    <div class="stat-card-label">Issue 03 • November</div>
+                    <h3>Policy & Power</h3>
+                    <p>A breakdown of legislative frameworks. Understanding the Sexual Offences Act and the Prevention Against Domestic Violence Act, and how policy shapes our daily reality.</p>
+                    <a href="#" class="btn btn-outline" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read Issue</a>
+                </div>
+
+                <!-- Magazine 4 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Issue 04" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-4);">
+                    <div class="stat-card-label">Issue 04 • December</div>
+                    <h3>The Innovators</h3>
+                    <p>Spotlighting Kenyan women in STEM. From agritech solutions to AI development, read about the local pioneers pushing boundaries on a global scale.</p>
+                    <a href="#" class="btn btn-outline" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read Issue</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="network" class="tab-content">
-        <div class="text-center mb-8 animate-on-scroll">
-            <h2 style="font-size: 4rem;">The Network</h2>
-            <p style="max-width: 800px; margin: 0 auto;">Connect directly with female mentors, investors, and peers. Submit your dossier for matching.</p>
-        </div>
+    <!-- ==========================================================================
+         HOW SHE DID IT TAB
+         ========================================================================== -->
+    <section id="tab-how-she-did-it" class="tab-section">
+        <div class="container section-padding">
+            <h2>How She Did It</h2>
+            <p style="max-width: 800px; margin-bottom: var(--spacing-8);">Success leaves clues. We deconstruct the blueprints of women who shattered the glass ceiling. This is the anatomical breakdown of ambition, resilience, and strategic execution.</p>
 
-        <div class="card animate-on-scroll" style="max-width: 800px; margin: 0 auto; border-top: 4px solid var(--pink-primary);">
-            <form id="networkForm" onsubmit="submitForm(event)">
-                <div class="grid-2">
-                    <div class="form-group"><label>Full Name</label><input type="text" class="form-control" required></div>
-                    <div class="form-group"><label>Professional Email</label><input type="email" class="form-control" required></div>
+            <div class="flex-row">
+                <div class="flex-col-img">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" alt="Professional Woman Planning">
                 </div>
-                <div class="form-group"><label>Current Industry / Field of Study</label><input type="text" class="form-control" required></div>
-                <div class="form-group"><label>What is your primary goal?</label>
-                    <select class="form-control" style="background:#0a0a0f; color:#fff;" required>
-                        <option value="">Select an objective...</option>
-                        <option>Find a Technical Mentor</option>
-                        <option>Pitch a Startup for Funding</option>
-                        <option>Join a Peer Accountability Group</option>
-                    </select>
+                <div class="flex-col-text">
+                    <h3>The Blueprint of Resilience</h3>
+                    <p>Consider the journey from a rural setup to parliament. The data shows empowerment rates are drastically lower in rural areas. Overcoming this requires immense strategy.</p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 20px;">
+                            <strong style="color: var(--pink-primary); display: block; font-size: 1.2rem;">1. Education as Leverage</strong>
+                            As the WEI reports, women in households with post-secondary education are significantly more empowered. "How She Did It" often starts with aggressive pursuit of knowledge.
+                        </li>
+                        <li style="margin-bottom: 20px;">
+                            <strong style="color: var(--pink-primary); display: block; font-size: 1.2rem;">2. Strategic Networking</strong>
+                            Building alliances across industries. Mentorship isn't just about advice; it's about sponsorship in rooms you haven't entered yet.
+                        </li>
+                        <li style="margin-bottom: 20px;">
+                            <strong style="color: var(--pink-primary); display: block; font-size: 1.2rem;">3. Navigating Policy</strong>
+                            Understanding legal frameworks to protect assets and rights, utilizing available legislation to secure business interests and personal safety.
+                        </li>
+                    </ul>
                 </div>
-                <div class="form-group"><label>Your Pitch / Bio (Why should we match you?)</label><textarea class="form-control" required></textarea></div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit to the UEFI Grid</button>
-            </form>
+            </div>
         </div>
     </section>
 
-    <section id="secret-box" class="tab-content">
-        <div class="text-center mb-4 animate-on-scroll">
-            <h2 style="font-size: 4rem;">The Secret Box</h2>
-            <p style="max-width: 600px; margin: 0 auto;">Your private, locally encrypted sanctuary. Tap the vault to unlock.</p>
-        </div>
+    <!-- ==========================================================================
+         WE TALK TAB (VIDEOS)
+         ========================================================================== -->
+    <section id="tab-we-talk" class="tab-section">
+        <div class="container section-padding">
+            <h2>We Talk: The Theater of Inspiration</h2>
+            <p style="max-width: 800px; margin-bottom: var(--spacing-8);">Watch and learn from the best. A curated grid of powerful talks, podcasts, and documentaries featuring women who advocate, build, and lead.</p>
 
-        <div class="secret-container animate-on-scroll">
-            <div class="secret-box-wrapper" id="secretBox" onclick="toggleDiary()">
-                <div class="box-face box-front">🔒<br>UNLOCK</div>
-                <div class="box-face box-back">🔓<br>UNLOCKED</div>
-            </div>
-
-            <div style="background: var(--box-bg); padding: 40px; border-radius: var(--radius-lg); width: 100%; max-width: 900px; border: 1px solid var(--pink-dark); display: none; opacity: 0; transition: opacity 0.8s ease; box-shadow: var(--shadow-card);" id="diaryForm">
-                <input type="text" placeholder="Title your thoughts..." id="diaryTitle" class="form-control mb-4">
-                <textarea placeholder="Speak your absolute truth..." id="diaryBody" class="form-control mb-4"></textarea>
-                <button class="btn btn-primary" onclick="saveDiaryEntry()" style="width: 100%;">Seal inside the Box</button>
+            <div class="grid-2">
+                <!-- Video 1 -->
+                <div>
+                    <div class="video-wrapper">
+                        <!-- TEDx Placeholder (Using an official embed URL format) -->
+                        <iframe src="https://www.youtube.com/embed/hg3umXU_qWc" title="TEDx Talk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4>Redefining Female Leadership</h4>
+                        <p>TEDx • 18 mins</p>
+                    </div>
+                </div>
                 
-                <div style="margin-top: 40px; border-top: 1px solid #333; padding-top: 40px;">
-                    <h4 style="color: var(--text-muted); margin-bottom: 20px;">Past Entries (Saved Locally)</h4>
-                    <div id="diaryEntriesContainer"></div>
+                <!-- Video 2 -->
+                <div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/1IHKfQ-N0Q4" title="Jubilee Talk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4>Modern Advocacy & Womanhood</h4>
+                        <p>Jubilee Media • 12 mins</p>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/v1oqeprcCG8" title="Podcast" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4>We Can Do Hard Things</h4>
+                        <p>Glennon Doyle Podcast • Full Episode</p>
+                    </div>
+                </div>
+                
+                <!-- Video 4 -->
+                <div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/fW8amMCVAJQ" title="UN Women" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4>The Fight for Global Gender Parity</h4>
+                        <p>UN Women Official • 8 mins</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ==========================================================================
+         MY MUSE TAB (PROFILES)
+         ========================================================================== -->
+    <section id="tab-muse" class="tab-section">
+        <div class="container section-padding">
+            <h2>My Muse</h2>
+            <p style="max-width: 800px; margin-bottom: var(--spacing-8);">Profiles of the unapologetic, the brilliant, and the groundbreaking. Find the archetype that resonates with your vision.</p>
+
+            <div class="muse-list">
+                <!-- Muse 1 -->
+                <div class="muse-card">
+                    <div class="muse-img-container">
+                        <img src="https://images.unsplash.com/photo-1520638025251-ce0360a4f5fb?auto=format&fit=crop&w=600&q=80" alt="Cardi B archetype">
+                    </div>
+                    <div class="muse-content">
+                        <span class="muse-category">Entertainment / Business</span>
+                        <h3>Cardi B</h3>
+                        <p>Belcalis Marlenis Almánzar represents the raw ascent from the Bronx to global superstardom. She is a muse for owning your narrative, refusing to code-switch for comfort, and turning authenticity into a multi-million dollar empire in a male-dominated industry.</p>
+                        <p><strong>Key Takeaway:</strong> Never apologize for your origins; monetize them.</p>
+                    </div>
+                </div>
+
+                <!-- Muse 2 -->
+                <div class="muse-card">
+                    <div class="muse-img-container">
+                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Prof Shini Somara archetype">
+                    </div>
+                    <div class="muse-content">
+                        <span class="muse-category">STEM / Media</span>
+                        <h3>Professor Shini Somara</h3>
+                        <p>Armed with a Doctorate in Mechanical Engineering, she destroys the stereotype that science is a "boys' club". By translating complex physics and engineering concepts into accessible media, she advocates fiercely for young girls entering STEM fields.</p>
+                        <p><strong>Key Takeaway:</strong> Intellect is your greatest asset. Build things.</p>
+                    </div>
+                </div>
+
+                <!-- Muse 3 -->
+                <div class="muse-card">
+                    <div class="muse-img-container">
+                        <img src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?auto=format&fit=crop&w=600&q=80" alt="Candace Owens archetype">
+                    </div>
+                    <div class="muse-content">
+                        <span class="muse-category">Media / Politics</span>
+                        <h3>Candace Owens</h3>
+                        <p>A polarizing and powerful figure in political commentary. Regardless of political alignment, her career is a masterclass in establishing an independent voice, debating fiercely, and building a massive digital media presence without institutional backing.</p>
+                        <p><strong>Key Takeaway:</strong> Conviction draws an audience. Stand firm in your ideology.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         GIRLS IN TECH TAB
+         ========================================================================== -->
+    <section id="tab-tech" class="tab-section">
+        <div class="container section-padding">
+            
+            <div class="hero-banner" style="height: 40vh; min-height: 300px;">
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1920&q=80" alt="Laptop" class="hero-banner-img">
+                <div class="hero-overlay"></div>
+                <div class="hero-content" style="text-align: center; width: 100%; max-width: 100%;">
+                    <h1 style="font-size: clamp(3rem, 6vw, 6rem);">CODE LIKE A <span style="color: #00ffcc;">GIRL</span></h1>
+                </div>
+            </div>
+
+            <div class="flex-row">
+                <div class="flex-col-text">
+                    <h2>The Future is Written in Code</h2>
+                    <p>Technology shapes humanity, yet women are underrepresented in its creation. To prevent algorithmic bias and build inclusive tools, we must become the engineers. Whether it's web development, AI, or blockchain, learning to code is learning the language of the future.</p>
+                    
+                    <h3>Phase 1: Logic & Structure</h3>
+                    <p>Coding is just problem-solving translated into syntax. Below is an interactive terminal snippet demonstrating how we define empowerment in JavaScript.</p>
+
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-buttons">
+                                <div class="terminal-btn close"></div>
+                                <div class="terminal-btn min"></div>
+                                <div class="terminal-btn max"></div>
+                            </div>
+                            <div class="terminal-title">uefi-engine.js</div>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line"><span class="terminal-comment">// Define the architect of the future</span></div>
+                            <div class="terminal-line"><span class="terminal-keyword">const</span> uefiGirl = {</div>
+                            <div class="terminal-line">&nbsp;&nbsp;mindset: <span class="terminal-string">"Unstoppable"</span>,</div>
+                            <div class="terminal-line">&nbsp;&nbsp;skills: [<span class="terminal-string">"Coding"</span>, <span class="terminal-string">"Finance"</span>, <span class="terminal-string">"Leadership"</span>],</div>
+                            <div class="terminal-line">&nbsp;&nbsp;<span class="terminal-function">executeVision</span>() {</div>
+                            <div class="terminal-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="terminal-keyword">return</span> <span class="terminal-string">"Changing the world, one line of code at a time."</span>;</div>
+                            <div class="terminal-line">&nbsp;&nbsp;}</div>
+                            <div class="terminal-line">};</div>
+                            <br>
+                            <div class="terminal-line"><span class="terminal-prompt"></span><span class="terminal-keyword">console</span>.<span class="terminal-function">log</span>(uefiGirl.<span class="terminal-function">executeVision</span>());</div>
+                            <div class="terminal-line" style="color: #fff; margin-top: 10px;">> Changing the world, one line of code at a time.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-col-img">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Coding workspace">
+                </div>
+            </div>
+
+            <h3>Tech Masterclass Videos</h3>
+            <div class="grid-2">
+                <div>
+                    <div class="video-wrapper" style="border-color: var(--accent-cyan);">
+                        <iframe src="https://www.youtube.com/embed/Oax_6-wdslM" title="Intro to Coding" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4 style="color: var(--accent-cyan);">Computer Science Fundamentals</h4>
+                    </div>
+                </div>
+                <div>
+                    <div class="video-wrapper" style="border-color: var(--accent-cyan);">
+                        <iframe src="https://www.youtube.com/embed/zOjov-2OZ0E" title="Women in Tech" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <h4 style="color: var(--accent-cyan);">Navigating Tech as a Woman</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         MY NET WORTH NETWORK TAB
+         ========================================================================== -->
+    <section id="tab-networth" class="tab-section">
+        <div class="container section-padding">
+            <h2>My Net Worth Network</h2>
+            <p style="max-width: 800px; margin-bottom: var(--spacing-8);">Financial independence is the highest form of self-care. Learn to keep your money, multiply it, and deploy it strategically.</p>
+
+            <div class="flex-row">
+                <div class="flex-col-text">
+                    <h3>The Economics of Freedom</h3>
+                    <p>In regions like Kenya, women earn significantly less per hour than men in similar sectors. Furthermore, UN data shows that poverty severely limits choice. By mastering budgeting, asset allocation, and the power of compound interest, you buy back your freedom.</p>
+                    
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 15px; background: rgba(255,204,0,0.1); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-gold);">
+                            <strong style="color: var(--accent-gold);">Save:</strong> The 6-Month Emergency Fund ensures you never stay in a toxic job or relationship for financial survival.
+                        </li>
+                        <li style="margin-bottom: 15px; background: rgba(0,255,204,0.1); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-cyan);">
+                            <strong style="color: var(--accent-cyan);">Invest:</strong> Index funds, ETFs, and Real Estate. Beating inflation is non-negotiable.
+                        </li>
+                        <li style="margin-bottom: 15px; background: rgba(255,0,127,0.1); padding: 15px; border-radius: 8px; border-left: 4px solid var(--pink-primary);">
+                            <strong style="color: var(--pink-primary);">Earn:</strong> High-income skills (like coding), negotiation, and side hustles.
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex-col-img">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80" alt="Finance Tracking">
+                </div>
+            </div>
+
+            <!-- Compound Interest Calculator Mini-App -->
+            <div class="calculator-card">
+                <h3 style="color: var(--accent-cyan);">Wealth Multiplier Calculator</h3>
+                <p>See how compound interest turns small consistent investments into massive wealth.</p>
+                
+                <div class="grid-3" style="gap: 15px; margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">Initial Investment ($)</label>
+                        <input type="number" id="calcPrincipal" class="form-input" value="1000">
+                    </div>
+                    <div>
+                        <label class="form-label">Monthly Contribution ($)</label>
+                        <input type="number" id="calcMonthly" class="form-input" value="200">
+                    </div>
+                    <div>
+                        <label class="form-label">Years to Grow</label>
+                        <input type="number" id="calcYears" class="form-input" value="10">
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="background: linear-gradient(135deg, var(--accent-cyan), #00b38f); color: #000; width: 100%;" onclick="calculateWealth()">Calculate Future Wealth</button>
+
+                <div class="calc-result" id="calcResultDisplay" style="display: none;">
+                    <p style="margin: 0; color: #fff;">Estimated Future Value (assuming 8% annual return):</p>
+                    <h4 id="calcFinalAmount">$0.00</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECRET BOX & DIARY TAB
+         ========================================================================== -->
+    <section id="tab-secret" class="tab-section">
+        <div class="container section-padding">
+            <div class="text-center" style="max-width: 800px; margin: 0 auto var(--spacing-8);">
+                <h2>The Secret Box & Digital Diary</h2>
+                <p>A sacred, encrypted space for your mind. Write your entries, cast them into the 720-degree rotating box, and celebrate your vulnerability. (Data is stored locally on your device).</p>
+            </div>
+
+            <div class="secret-environment">
+                
+                <!-- 3D Rotating Box -->
+                <div class="box-scene">
+                    <div class="cube" id="the3DBox">
+                        <div class="cube-face cube-face-front">SECRETS</div>
+                        <div class="cube-face cube-face-back">LOCKED</div>
+                        <div class="cube-face cube-face-right"></div>
+                        <div class="cube-face cube-face-left"></div>
+                        <div class="cube-face cube-face-top"></div>
+                        <div class="cube-face cube-face-bottom"></div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="secret-form-wrapper">
+                    <div class="form-group">
+                        <label class="form-label">Title your entry</label>
+                        <input type="text" id="diaryTitle" class="form-input" placeholder="e.g., The day I decided to start...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Your Thoughts</label>
+                        <textarea id="diaryText" class="form-textarea" placeholder="Dear Diary, my biggest ambition is..."></textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="hideIntoBox()" style="flex: 1;">Hide Secret</button>
+                        <button class="btn btn-outline" onclick="revealFromBox()" style="flex: 1;">Reveal Secrets</button>
+                    </div>
+                </div>
+
+                <!-- Diary Display -->
+                <div class="diary-timeline" id="diaryTimeline">
+                    <h3 style="border-bottom: 2px solid var(--pink-primary); padding-bottom: 10px; margin-bottom: 20px;">Your Unlocked Vault</h3>
+                    <div id="diaryEntriesContainer">
+                        <!-- JS injected entries go here -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         FOOTER
+         ========================================================================== -->
+    <footer style="background: var(--bg-color-alt); padding: var(--spacing-8) 0; border-top: 1px solid rgba(255,255,255,0.05); margin-top: var(--spacing-12);">
+        <div class="container text-center">
+            <h2 style="font-size: 2rem; margin-bottom: 10px;">UEFI <span>GO GIRL</span></h2>
+            <p>Empowering the next generation of female leaders.</p>
+            <p style="font-size: 0.8rem; color: #555;">&copy; 2026 UEFI GO GIRL. Data referenced from UN Women Reports.</p>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+         JAVASCRIPT LOGIC
+         ========================================================================== -->
     <script>
-        /* 1. FIXED TAB NAVIGATION */
-        function openTab(event, tabId) {
-            // Hide all contents
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            // Remove active from all buttons
-            document.querySelectorAll('.nav-links button').forEach(btn => btn.classList.remove('active'));
-            
-            // Show selected content
-            document.getElementById(tabId).classList.add('active');
-            
-            // Add active to clicked button (Fixed: utilizing the passed 'event' object)
-            if(event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
+        // ----------------------------------------------------------------------
+        // 1. Tab Navigation System
+        // ----------------------------------------------------------------------
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const tabSections = document.querySelectorAll('.tab-section');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinksContainer = document.getElementById('navLinks');
+
+        function switchTab(targetId) {
+            // Hide all sections
+            tabSections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active state from tabs
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+                if(tab.getAttribute('data-target') === targetId) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Show target section
+            const targetSection = document.getElementById(targetId);
+            if(targetSection) {
+                targetSection.classList.add('active');
             }
-            
-            triggerScrollAnimations();
+
+            // Close mobile menu if open
+            navLinksContainer.classList.remove('show');
+
+            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        /* 2. INTERSECTION OBSERVER */
-        function triggerScrollAnimations() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.animate-on-scroll').forEach(el => { el.classList.remove('visible'); observer.observe(el); });
-        }
-        document.addEventListener('DOMContentLoaded', triggerScrollAnimations);
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                const target = e.target.getAttribute('data-target');
+                switchTab(target);
+            });
+        });
 
-        /* 3. MODAL LOGIC */
-        function openModal(id) {
-            const modal = document.getElementById(id);
-            modal.style.display = 'flex';
-            setTimeout(() => { modal.style.opacity = '1'; modal.querySelector('.modal-content').style.transform = 'translateY(0)'; }, 10);
-        }
-        function closeModal(id) {
-            const modal = document.getElementById(id);
-            modal.style.opacity = '0';
-            modal.querySelector('.modal-content').style.transform = 'translateY(50px)';
-            setTimeout(() => { modal.style.display = 'none'; }, 300);
-        }
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('show');
+        });
 
-        /* 4. AUDIO PLAYER LOGIC */
-        let isPlaying = false;
-        let progressInterval;
-        function loadTrack(title, desc, time) {
-            document.getElementById('trackTitle').innerText = title;
-            document.getElementById('trackDesc').innerText = desc;
-            document.getElementById('totalTime').innerText = time;
-            document.getElementById('audioPlayer').classList.add('active');
+        // ----------------------------------------------------------------------
+        // 2. Financial Calculator Logic
+        // ----------------------------------------------------------------------
+        function calculateWealth() {
+            const p = parseFloat(document.getElementById('calcPrincipal').value) || 0;
+            const pmt = parseFloat(document.getElementById('calcMonthly').value) || 0;
+            const t = parseFloat(document.getElementById('calcYears').value) || 0;
+            const r = 0.08; // 8% annual return assumption
+            const n = 12; // monthly compounds
+
+            // Compound interest for principal: A = P(1 + r/n)^(nt)
+            const principalGrowth = p * Math.pow(1 + r/n, n*t);
             
-            isPlaying = true;
-            document.getElementById('mainPlayBtn').innerText = '⏸';
-            startProgress();
-        }
-        function togglePlay() {
-            isPlaying = !isPlaying;
-            document.getElementById('mainPlayBtn').innerText = isPlaying ? '⏸' : '▶';
-            if(isPlaying) startProgress(); else clearInterval(progressInterval);
-        }
-        function closePlayer() {
-            document.getElementById('audioPlayer').classList.remove('active');
-            clearInterval(progressInterval);
-            isPlaying = false;
-        }
-        function startProgress() {
-            clearInterval(progressInterval);
-            let w = parseInt(document.getElementById('progressBar').style.width) || 30;
-            progressInterval = setInterval(() => {
-                if(w >= 100) w = 0;
-                w += 0.5;
-                document.getElementById('progressBar').style.width = w + '%';
-            }, 1000);
-        }
+            // Future value of a series (annuity): PMT × {[(1 + r/n)^(nt) - 1] / (r/n)}
+            const contributionGrowth = pmt * ((Math.pow(1 + r/n, n*t) - 1) / (r/n));
 
-        /* 5. QUIZ LOGIC */
-        let currentQuestion = 0;
-        let scores = { frontend: 0, backend: 0, data: 0, web3: 0 };
-        const questions = [
-            { q: "If you have a massive dataset of customer behavior, what do you want to do with it?", opts: [{t: "Build a visual dashboard.", v: "frontend"}, {t: "Write algorithms for predictions.", v: "data"}, {t: "Build secure servers for it.", v: "backend"}, {t: "Decentralize the data.", v: "web3"}] },
-            { q: "When you look at a website, what bothers you most?", opts: [{t: "Ugly design and bad colors.", v: "frontend"}, {t: "It takes too long to load.", v: "backend"}, {t: "It doesn't recommend what I actually want.", v: "data"}, {t: "I have to give them my personal email.", v: "web3"}] },
-            { q: "Choose a superpower:", opts: [{t: "Making things incredibly beautiful.", v: "frontend"}, {t: "Organizing chaos into perfect structure.", v: "backend"}, {t: "Predicting the future based on the past.", v: "data"}, {t: "Creating systems no single person controls.", v: "web3"}] }
-        ];
+            const total = principalGrowth + contributionGrowth;
 
-        function nextQuiz(choiceIndex) {
-            // Tally score based on previous question (if choice is passed, though we simplified UI to direct passing. Let's map it based on options)
-            const currentQ = questions[currentQuestion];
-            const choiceVal = currentQ.opts[choiceIndex - 1].v;
-            scores[choiceVal]++;
-
-            currentQuestion++;
+            // Display
+            const resultBox = document.getElementById('calcResultDisplay');
+            const amountDisplay = document.getElementById('calcFinalAmount');
             
-            if(currentQuestion < questions.length) {
-                document.getElementById('quizQuestion').innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
-                document.getElementById('quizText').innerText = questions[currentQuestion].q;
-                const btns = document.querySelectorAll('.quiz-option');
-                questions[currentQuestion].opts.forEach((opt, i) => {
-                    btns[i].innerText = `${String.fromCharCode(65+i)}) ${opt.t}`;
-                });
-            } else {
-                showQuizResult();
+            amountDisplay.innerText = "$" + total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            resultBox.style.display = 'block';
+            
+            // Mini celebration
+            triggerConfetti(50);
+        }
+
+        // ----------------------------------------------------------------------
+        // 3. Secret Box & Diary (Local Storage & 3D Rotation)
+        // ----------------------------------------------------------------------
+        const diaryStorageKey = 'uefi_gogirl_diary';
+        let entries = JSON.parse(localStorage.getItem(diaryStorageKey)) || [];
+
+        function hideIntoBox() {
+            const titleInput = document.getElementById('diaryTitle');
+            const textInput = document.getElementById('diaryText');
+            const timeline = document.getElementById('diaryTimeline');
+
+            const title = titleInput.value.trim();
+            const text = textInput.value.trim();
+
+            if (!title || !text) {
+                alert("Please fill in both fields before hiding your secret.");
+                return;
             }
-        }
 
-        function showQuizResult() {
-            document.getElementById('quizContainer').style.display = 'none';
-            document.getElementById('quizResult').style.display = 'block';
+            // Create Entry Object
+            const now = new Date();
+            const timestamp = now.toLocaleDateString() + ' at ' + now.toLocaleTimeString();
             
-            // Find highest score
-            let max = 0;
-            let persona = '';
-            for(let key in scores) { if(scores[key] > max) { max = scores[key]; persona = key; } }
-            
-            const results = {
-                frontend: { title: "UX/UI & Frontend Architect", desc: "You care about the human experience. HTML, CSS, and React are your tools." },
-                backend: { title: "Backend Systems Engineer", desc: "You are the structural foundation. Node.js, Databases, and APIs await." },
-                data: { title: "Data Scientist", desc: "You see the matrix. Python and Machine Learning will make you unstoppable." },
-                web3: { title: "Web3 Blockchain Developer", desc: "You want to rewrite the financial rules. Solidity and Smart Contracts are your future." }
+            const newEntry = {
+                id: Date.now(),
+                title: title,
+                text: text,
+                time: timestamp
             };
-            
-            document.getElementById('personaResult').innerText = results[persona].title;
-            document.getElementById('personaDesc').innerText = results[persona].desc;
-            triggerConfetti();
+
+            entries.push(newEntry);
+            localStorage.setItem(diaryStorageKey, JSON.stringify(entries));
+
+            // Trigger Animation (720 Spin Hide)
+            const box = document.getElementById('the3DBox');
+            // Ensure previous classes are cleared
+            box.className = 'cube'; 
+            // Force reflow
+            void box.offsetWidth; 
+            box.classList.add('spin-hide');
+
+            // Clear inputs & hide timeline
+            titleInput.value = '';
+            textInput.value = '';
+            timeline.style.display = 'none';
+
+            // Celebration
+            triggerConfetti(150);
+
+            // Reset box visually after animation
+            setTimeout(() => {
+                box.className = 'cube';
+            }, 3000);
         }
 
-        function resetQuiz() {
-            currentQuestion = 0;
-            scores = { frontend: 0, backend: 0, data: 0, web3: 0 };
-            document.getElementById('quizContainer').style.display = 'block';
-            document.getElementById('quizResult').style.display = 'none';
-            // Reset to Q1
-            document.getElementById('quizQuestion').innerText = `Question 1 of ${questions.length}`;
-            document.getElementById('quizText').innerText = questions[0].q;
-            const btns = document.querySelectorAll('.quiz-option');
-            questions[0].opts.forEach((opt, i) => btns[i].innerText = `${String.fromCharCode(65+i)}) ${opt.t}`);
-        }
-
-        /* 6. NET WORTH LOGIC */
-        function calculateNetWorth() {
-            const assets = ['assetCash', 'assetInvest', 'assetRealEstate'].reduce((sum, id) => sum + (parseFloat(document.getElementById(id).value)||0), 0);
-            const liabs = ['liabCredit', 'liabStudent', 'liabMortgage'].reduce((sum, id) => sum + (parseFloat(document.getElementById(id).value)||0), 0);
-            const net = assets - liabs;
-            
-            const resEl = document.getElementById('netWorthResult');
-            const msgEl = document.getElementById('netWorthMessage');
-            resEl.innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(net);
-            
-            if(net < 0) { resEl.style.color = '#ff4d4d'; msgEl.innerText = "Building mode. Attack debt strategically."; msgEl.style.color = '#ff4d4d'; }
-            else if(net < 100000) { resEl.style.color = 'var(--accent-cyan)'; msgEl.innerText = "Positive territory. Keep scaling."; msgEl.style.color = 'var(--accent-cyan)'; }
-            else { resEl.style.color = 'var(--accent-gold)'; msgEl.innerText = "Six-figure territory. You are a force."; msgEl.style.color = 'var(--accent-gold)'; triggerConfetti(); }
-        }
-
-        /* 7. FORM SUBMISSION LOGIC */
-        function submitForm(e) {
-            e.preventDefault();
-            alert("Dossier successfully encrypted and submitted to the UEFI Network. A mentor will reach out within 48 hours.");
-            e.target.reset();
-            triggerConfetti();
-        }
-
-        /* 8. DIARY LOGIC */
-        let isBoxOpen = false;
-        function toggleDiary() {
-            const box = document.getElementById('secretBox');
-            const form = document.getElementById('diaryForm');
-            isBoxOpen = !isBoxOpen;
-            box.classList.toggle('rotate');
-            if(isBoxOpen) {
-                setTimeout(() => { form.style.display = 'block'; loadDiary(); setTimeout(() => form.style.opacity = '1', 50); }, 800);
-            } else {
-                form.style.opacity = '0'; setTimeout(() => form.style.display = 'none', 500);
+        function revealFromBox() {
+            if (entries.length === 0) {
+                alert("Your vault is empty. Write a secret first!");
+                return;
             }
+
+            const box = document.getElementById('the3DBox');
+            box.className = 'cube';
+            void box.offsetWidth;
+            box.classList.add('spin-reveal');
+
+            setTimeout(() => {
+                renderDiary();
+                document.getElementById('diaryTimeline').style.display = 'block';
+                triggerConfetti(200); // Big celebration on reveal
+                box.className = 'cube'; // reset
+            }, 3000);
         }
-        function saveDiaryEntry() {
-            const title = document.getElementById('diaryTitle').value.trim();
-            const body = document.getElementById('diaryBody').value.trim();
-            if(!title || !body) return alert("Fill both fields to seal the box.");
-            let entries = JSON.parse(localStorage.getItem('uefi_diary')) || [];
-            entries.unshift({ id: Date.now(), date: new Date().toLocaleString(), title, body });
-            localStorage.setItem('uefi_diary', JSON.stringify(entries));
-            document.getElementById('diaryTitle').value = ''; document.getElementById('diaryBody').value = '';
-            triggerConfetti(); loadDiary();
-        }
-        function loadDiary() {
+
+        function renderDiary() {
             const container = document.getElementById('diaryEntriesContainer');
-            let entries = JSON.parse(localStorage.getItem('uefi_diary')) || [];
-            if(!entries.length) return container.innerHTML = '<p style="color: #666; font-style: italic;">The vault is empty.</p>';
-            container.innerHTML = entries.map(e => `
-                <div style="background: #0a0a0f; padding: 25px; border-left: 4px solid var(--pink-primary); margin-bottom: 20px; position:relative;">
-                    <button onclick="deleteEntry(${e.id})" style="position:absolute; top:20px; right:20px; background:none; border:none; color:#ff4d4d; cursor:pointer;">✖</button>
-                    <span style="font-size: 0.85rem; color: var(--text-muted);">${e.date}</span>
-                    <h4 style="margin: 5px 0; color: #fff;">${e.title}</h4>
-                    <p style="margin: 0; color: #ccc; white-space: pre-wrap;">${e.body}</p>
-                </div>
-            `).join('');
-        }
-        function deleteEntry(id) {
-            if(confirm("Burn this entry?")) {
-                let entries = JSON.parse(localStorage.getItem('uefi_diary')) || [];
-                localStorage.setItem('uefi_diary', JSON.stringify(entries.filter(e => e.id !== id)));
-                loadDiary();
-            }
+            container.innerHTML = ''; // clear existing
+
+            // Copy and reverse to show newest first
+            const displayList = [...entries].reverse();
+
+            displayList.forEach(entry => {
+                const div = document.createElement('div');
+                div.className = 'diary-entry';
+                
+                div.innerHTML = `
+                    <div class="diary-meta">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        ${entry.time}
+                    </div>
+                    <h4 class="diary-title">${escapeHTML(entry.title)}</h4>
+                    <div class="diary-content">${escapeHTML(entry.text)}</div>
+                `;
+                container.appendChild(div);
+            });
         }
 
-        /* 9. CONFETTI PHYSICS ENGINE */
-        const canvas = document.getElementById('celebrationCanvas');
+        // Basic HTML escaper to prevent XSS in diary
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag])
+            );
+        }
+
+        // ----------------------------------------------------------------------
+        // 4. Celebration Canvas System (Confetti Particle Engine)
+        // ----------------------------------------------------------------------
+        const canvas = document.getElementById('celebration-canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-        
-        let particles = [];
-        const colors = ['#ff007f', '#ff4da6', '#ffcc00', '#00ffcc', '#ffffff'];
+        let particlesArray = [];
+        let animId;
+
+        // Resize handler
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
         class Particle {
             constructor(x, y) {
-                this.x = x; this.y = y; this.size = Math.random() * 8 + 3;
-                this.speedX = Math.random() * 10 - 5; this.speedY = Math.random() * -10 - 5;
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 8 + 3;
+                this.speedX = (Math.random() - 0.5) * 15;
+                this.speedY = (Math.random() - 0.5) * 15 - 5; // initial upward bias
+                this.gravity = 0.3;
+                this.friction = 0.98;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 10;
+                this.opacity = 1;
+                
+                // Color palette: Pinks, Cyans, Golds, Whites
+                const colors = ['#ff007f', '#ff4da6', '#00ffcc', '#ffcc00', '#ffffff'];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.gravity = 0.3; this.opacity = 1; this.rot = Math.random() * 360; this.rotSpeed = Math.random() * 10 - 5;
+                
+                // Random shape (0 = circle, 1 = square)
+                this.type = Math.floor(Math.random() * 2);
             }
-            update() { this.x += this.speedX; this.y += this.speedY; this.speedY += this.gravity; this.opacity -= 0.01; this.rot += this.rotSpeed; }
+
+            update() {
+                this.speedX *= this.friction;
+                this.speedY *= this.friction;
+                this.speedY += this.gravity;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+                this.opacity -= 0.01;
+            }
+
             draw() {
-                ctx.save(); ctx.globalAlpha = this.opacity; ctx.translate(this.x, this.y); ctx.rotate(this.rot * Math.PI / 180);
-                ctx.fillStyle = this.color; ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size); ctx.restore();
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.fillStyle = this.color;
+                
+                if (this.type === 0) {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                }
+                ctx.restore();
             }
         }
-        let isAnimating = false;
-        function triggerConfetti() {
-            for(let i=0; i<150; i++) particles.push(new Particle(window.innerWidth/2, window.innerHeight));
-            if(!isAnimating) animateParticles();
-        }
-        function animateParticles() {
-            isAnimating = true; ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for(let i=0; i<particles.length; i++) {
-                particles[i].update(); particles[i].draw();
-                if(particles[i].opacity <= 0 || particles[i].y > canvas.height) { particles.splice(i, 1); i--; }
+
+        function triggerConfetti(amount = 100) {
+            cancelAnimationFrame(animId);
+            
+            const originX = canvas.width / 2;
+            const originY = canvas.height / 2 + 100;
+
+            for (let i = 0; i < amount; i++) {
+                particlesArray.push(new Particle(originX, originY));
             }
-            if(particles.length > 0) requestAnimationFrame(animateParticles); else { isAnimating = false; ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                // Remove dead particles
+                if (particlesArray[i].opacity <= 0) {
+                    particlesArray.splice(i, 1);
+                    i--;
+                }
+            }
+
+            if (particlesArray.length > 0) {
+                animId = requestAnimationFrame(animateConfetti);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
         }
     </script>
 </body>
