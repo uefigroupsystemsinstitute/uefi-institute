@@ -178,7 +178,7 @@ nav {
     color: var(--off-white);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: left;
     align-items: left;
 }
 
@@ -290,7 +290,7 @@ nav {
 footer {
     background-color: var(--midnight-blue);
     color: var(--off-white);
-    text-align: center;
+    text-align: left;
     padding: 2.5rem;
     margin-top: 4rem;
 }
