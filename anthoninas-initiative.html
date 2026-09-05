@@ -3,615 +3,1096 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Anthoninas Initiative | Global Female Sovereignty</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>UEFI Go Girls | Influential Women Replica</title>
+    
+    <!-- Elegant, highly-requested feminine font pairing -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & THEMING
+           ========================================================================== */
         :root {
-            --berry: #4A0E2E; 
-            --rose-pale: #FFF5F7; 
-            --gold-muted: #8E7341; 
-            --slate: #1E293B;
-            --white: #ffffff;
-            --text-main: #0F172A; 
-            --text-muted: #475569; 
-            --un-blue: #008CBA; 
+            /* Influential Women Color Palette */
+            --plum-dark: #2B081A;
+            --plum-main: #4A0E2E;
+            --plum-light: #6C1445;
+            --pink-soft: #FDF2F7;
+            --pink-bright: #F687B3;
+            --pink-neon: #FF66A3;
+            --white: #FFFFFF;
+            --text-dark: #1F2937;
+            --text-muted: #4B5563;
+            --bg-light: #F9FAFB;
+            
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
+            
+            /* 3D & Shadows */
+            --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-3d: 0 20px 40px rgba(74, 14, 46, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            --shadow-float: 0 30px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            
+            /* Transitions */
+            --transition-smooth: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ==========================================================================
+           2. RESET & BASE STYLES
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-body);
             background-color: var(--white);
-            color: var(--text-main);
-            line-height: 1.7;
+            color: var(--text-dark);
+            line-height: 1.6;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
-        /* --- NAVIGATION --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--plum-main);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ==========================================================================
+           3. CELEBRATION & 3D EFFECTS (IMPROVED)
+           ========================================================================== */
+        .celebration-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: var(--pink-neon);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--pink-neon), 0 0 20px var(--pink-bright);
+            animation: float-up linear infinite, twinkle 1.5s ease-in-out infinite alternate;
+            opacity: 0;
+        }
+
+        /* Generate multiple sparkles with delays */
+        .sparkle:nth-child(1) { left: 10%; animation-duration: 4s; animation-delay: 0s; }
+        .sparkle:nth-child(2) { left: 25%; animation-duration: 5s; animation-delay: 1s; }
+        .sparkle:nth-child(3) { left: 45%; animation-duration: 3.5s; animation-delay: 0.5s; }
+        .sparkle:nth-child(4) { left: 65%; animation-duration: 6s; animation-delay: 2s; }
+        .sparkle:nth-child(5) { left: 85%; animation-duration: 4.5s; animation-delay: 1.5s; }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 1; transform: translateY(80vh) scale(1); }
+            80% { opacity: 1; transform: translateY(20vh) scale(1); }
+            100% { transform: translateY(-10vh) scale(0); opacity: 0; }
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Advanced 3D Hover Class */
+        .card-3d-wrapper {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .card-3d-element {
+            transition: var(--transition-smooth);
+            transform-style: preserve-3d;
+        }
+
+        .card-3d-wrapper:hover .card-3d-element {
+            transform: translateY(-15px) rotateX(5deg) rotateY(-5deg);
+            box-shadow: var(--shadow-float);
+        }
+
+        /* ==========================================================================
+           4. NAVIGATION (EXACT REPLICA + HOME/FINANCIAL HUB)
+           ========================================================================== */
         header {
             background: var(--white);
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             padding: 1rem 5%;
-        }
-
-        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
-            margin: auto;
+            box-shadow: var(--shadow-subtle);
         }
 
-        .logo {
-            font-family: 'Playfair Display', serif;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-letters {
+            font-family: var(--font-heading);
+            font-size: 2rem;
             font-weight: 900;
-            color: var(--berry);
-            text-decoration: none;
-            font-size: 1.2rem;
-            letter-spacing: -0.5px;
+            letter-spacing: -2px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: baseline;
         }
 
-        .nav-links { list-style: none; display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { 
-            text-decoration: none; color: var(--text-muted); 
-            font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+        .logo-letters span { color: var(--pink-bright); }
+        
+        .logo-text {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--plum-main);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
             transition: 0.3s;
         }
-        .nav-links a:hover { color: var(--berry); }
 
-        .btn-cta {
-            background: var(--berry);
-            color: white !important;
-            padding: 10px 25px;
-            border-radius: 2px;
-            font-size: 0.75rem !important;
+        .nav-links a:hover {
+            color: var(--pink-neon);
         }
 
-        /* --- HERO: THE MANIFESTO --- */
-        .hero {
-            height: 100vh;
+        .auth-buttons {
             display: flex;
-            align-items: center;
-            background: var(--rose-pale);
-            padding: 0 8%;
-            margin-top: 60px;
-            position: relative;
+            gap: 1rem;
         }
 
-        .hero-content { flex: 1; z-index: 2; }
-        .hero-content span { 
-            font-family: 'JetBrains Mono', monospace; 
-            color: var(--gold-muted); 
-            font-weight: 700; 
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            display: block;
+        .btn-outline {
+            border: 1px solid var(--text-dark);
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.3s;
         }
 
-        .hero-content h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 5vw, 5.5rem);
-            color: var(--berry);
-            line-height: 1;
-            margin-bottom: 2rem;
-            font-weight: 900;
+        .btn-pink {
+            background: var(--pink-soft);
+            border: 1px solid var(--pink-bright);
+            color: var(--plum-main);
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.3s;
         }
 
-        .hero-content p {
-            font-size: 1.2rem;
-            max-width: 550px;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-        }
+        .btn-pink:hover { background: var(--pink-bright); color: var(--white); }
+        .btn-outline:hover { background: var(--text-dark); color: var(--white); }
 
-        .hero-image {
-            position: absolute;
-            right: 0;
-            top: 10%;
-            width: 45%;
-            height: 80%;
-            background: url('https://images.unsplash.com/photo-1573163281534-10d744760c1a?auto=format&fit=crop&q=80&w=1200') center/cover;
-            border-radius: 500px 0 0 500px; 
-            box-shadow: -20px 20px 60px rgba(74, 14, 46, 0.1);
-        }
-
-        /* --- IMPACT STRATEGY (UN ATTRACTION) --- */
-        .impact-metrics {
-            padding: 100px 8%;
+        /* ==========================================================================
+           5. PODCAST GUESTS HERO GRID (3D EFFECT)
+           ========================================================================== */
+        .podcast-grid-section {
+            padding: 120px 5% 60px;
             background: var(--white);
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            border-bottom: 1px solid #f0f0f0;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .metric h3 { font-family: 'JetBrains Mono'; font-size: 2.5rem; color: var(--berry); }
-        .metric p { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--gold-muted); }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
 
-        /* --- SDG ALIGNMENT SECTION --- */
-        .sdg-tag {
-            background: #E5243B; 
-            color: white;
-            padding: 4px 12px;
-            font-size: 10px;
-            font-weight: 900;
-            display: inline-block;
-            margin-bottom: 10px;
+        .guest-card {
+            background: var(--plum-main);
+            border-radius: 12px;
+            overflow: hidden;
+            color: var(--white);
+            box-shadow: var(--shadow-3d);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .guest-image-wrapper {
+            height: 280px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.2) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Creating the "cutout" sticker effect from the screenshot */
+        .guest-image-wrapper img {
+            height: 95%;
+            object-fit: cover;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+            transform: translateZ(30px); /* 3D pop */
+            transition: var(--transition-smooth);
+        }
+
+        .card-3d-wrapper:hover .guest-image-wrapper img {
+            transform: translateZ(50px) scale(1.05);
+        }
+
+        .guest-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .guest-info h3 {
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 30px;
+        }
+
+        .guest-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+
+        .guest-name {
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-
-        /* --- PILLARS OF SOVEREIGNTY --- */
-        .pillars-section { padding: 120px 8%; }
-        .section-intro { max-width: 800px; margin-bottom: 80px; }
-        .section-intro h2 { font-family: 'Playfair Display'; font-size: 3.5rem; color: var(--berry); margin-bottom: 20px; line-height: 1.1; }
-
-        .pillars-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 60px;
-        }
-
-        .pillar-card { border-top: 1px solid #eee; padding-top: 30px; }
-        .pillar-card h4 { font-family: 'Playfair Display'; font-size: 1.8rem; margin-bottom: 15px; color: var(--berry); }
-        .pillar-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
-        
-        .pillar-link { 
-            text-decoration: none; color: var(--gold-muted); font-weight: 800; font-size: 0.7rem; 
-            text-transform: uppercase; letter-spacing: 2px;
-        }
-
-        /* --- THE SHE PODCAST / BIG SIS TALK --- */
-        .podcast-section {
-            padding: 120px 8%;
-            background: var(--slate); 
-            color: var(--white);
-        }
-
-        .podcast-section .section-intro h2 {
-            color: var(--white);
-        }
-
-        .podcast-section .section-intro p {
-            color: #94a3b8;
-        }
-
-        .podcast-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .podcast-card {
-            background: #0F172A;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 5px 10px;
             border-radius: 4px;
+        }
+
+        .listen-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--pink-bright);
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid var(--pink-bright);
+            padding: 5px 15px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .listen-btn:hover {
+            background: var(--pink-bright);
+            color: var(--plum-dark);
+        }
+
+        /* ==========================================================================
+           6. CTA SEMI-CIRCLE SECTION
+           ========================================================================== */
+        .cta-section {
+            background: var(--pink-soft);
+            padding: 0 0 100px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .semi-circle {
+            background: #222;
+            color: var(--white);
+            width: 800px;
+            height: 400px;
+            border-bottom-left-radius: 400px;
+            border-bottom-right-radius: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 100px;
+            box-shadow: var(--shadow-3d);
+        }
+
+        .semi-circle h2 {
+            color: var(--white);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-family: var(--font-body);
+            font-weight: 600;
+        }
+
+        .semi-circle h2 span {
+            font-family: var(--font-heading);
+            font-style: italic;
+            color: var(--pink-neon);
+            font-size: 2.5rem;
+        }
+
+        .semi-circle p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .semi-circle a {
+            color: var(--pink-neon);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* ==========================================================================
+           7. EXPLORE SECTION (DARK GRADIENT)
+           ========================================================================== */
+        .explore-section {
+            background: linear-gradient(135deg, var(--plum-dark) 0%, var(--plum-light) 100%);
+            padding: 100px 8%;
+            color: var(--white);
+        }
+
+        .explore-header {
+            margin-bottom: 50px;
+        }
+
+        .explore-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--pink-bright);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .explore-label::before { content: ''; width: 30px; height: 1px; background: var(--pink-bright); }
+
+        .explore-header h2 {
+            font-family: var(--font-heading);
+            font-style: italic;
+            font-size: 4rem;
+            color: var(--white);
+            font-weight: 700;
+        }
+        .explore-header h2 span { font-style: normal; font-weight: 900; }
+
+        .explore-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .explore-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.3s ease;
-            border: 1px solid #334155;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding-bottom: 30px;
+            transition: var(--transition-smooth);
         }
 
-        .podcast-card:hover {
+        .explore-card:hover {
             transform: translateY(-10px);
-            border-color: var(--gold-muted);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: var(--pink-bright);
         }
 
-        .video-thumbnail {
+        .exp-img {
             height: 220px;
-            background-color: #000;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 2px solid var(--plum-main);
         }
 
-        .video-thumbnail::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
-            transition: background 0.3s ease;
-        }
-
-        .podcast-card:hover .video-thumbnail::after {
-            background: rgba(0,0,0,0.1);
-        }
-
-        .play-btn {
-            width: 60px;
-            height: 60px;
-            background: var(--berry);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            z-index: 2;
-            padding-left: 5px; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-
-        .podcast-card:hover .play-btn {
-            transform: scale(1.1);
-            background: var(--gold-muted);
-        }
-
-        .podcast-info {
+        .exp-content {
             padding: 25px;
         }
 
-        .podcast-category {
-            font-family: 'JetBrains Mono';
-            color: var(--gold-muted);
-            font-size: 0.7rem;
+        .tag-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
         }
 
-        .podcast-info h4 {
-            font-family: 'Playfair Display';
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+        .exp-content h3 {
             color: var(--white);
-            line-height: 1.2;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-family: var(--font-body);
+            font-weight: 700;
         }
 
-        .podcast-info p {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            line-height: 1.5;
+        .exp-content p {
+            font-size: 0.85rem;
+            color: #d1d5db;
+            margin-bottom: 25px;
+            min-height: 60px;
         }
 
-        /* Library Divider */
-        .library-divider {
-            margin: 80px 0 40px;
+        .exp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .explore-card:hover .exp-btn { background: var(--white); color: var(--plum-dark); }
+
+        /* ==========================================================================
+           8. THE LIBRARY / AUTHORS SECTION
+           ========================================================================== */
+        .library-section {
+            padding: 100px 15%;
+            background: var(--white);
+        }
+
+        .lib-header-small {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .library-section h2 {
+            font-size: 5rem;
+            font-style: italic;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1;
+        }
+        .library-section h2 span { font-style: normal; }
+
+        .library-section p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            max-width: 800px;
+        }
+
+        /* Library Author Cards Grid */
+        .author-grid {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .author-card {
+            background: var(--pink-soft);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+        }
+
+        .author-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-3d); }
+
+        .auth-img-container {
+            position: relative;
+            height: 250px;
+        }
+
+        .auth-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .auth-name-tag {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 8px;
+            backdrop-filter: blur(5px);
         }
 
-        .library-divider::before, .library-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #334155;
+        .auth-info {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .library-divider span {
-            font-family: 'JetBrains Mono';
-            color: var(--gold-muted);
+        .auth-info h4 {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .auth-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 15px;
+        }
+
+        .auth-category { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        .login-member-btn {
+            background: var(--pink-bright);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 6px 15px;
+            border-radius: 20px;
+        }
+
+        /* ==========================================================================
+           9. MAGAZINE OFFSET SECTION
+           ========================================================================== */
+        .magazine-section {
+            background: #222;
+            padding: 100px 8%;
+            position: relative;
+        }
+
+        .mag-image-frame {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .mag-bg-pink {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: var(--pink-soft);
+            z-index: 1;
+        }
+
+        .mag-image-frame img {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: auto;
+            display: block;
+            box-shadow: var(--shadow-float);
+        }
+
+        .mag-content-wrapper {
+            background: var(--white);
+            padding: 80px 15%;
+            margin-top: -5px; /* Pull up slightly */
+            position: relative;
+            z-index: 3;
+        }
+
+        .mag-content-wrapper h2 {
+            font-family: var(--font-body);
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .mag-content-wrapper h3 {
+            font-family: var(--font-body);
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin: 30px 0 15px;
+        }
+
+        .mag-content-wrapper p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .mag-content-wrapper ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+        .mag-content-wrapper li { margin-bottom: 10px; }
+
+        /* ==========================================================================
+           10. WHO WE ARE (COLLAGE) & MISSION
+           ========================================================================== */
+        .who-we-are {
+            padding: 100px 5%;
+            background: var(--white);
+            text-align: center;
+        }
+
+        .who-we-are h5 {
+            font-family: var(--font-body);
+            color: var(--pink-bright);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 0.8rem;
+            margin-bottom: 10px;
         }
 
-        /* --- THE SOVEREIGN VOICE (Success Story) --- */
-        .testimonial-vogue {
-            background: var(--white);
-            color: var(--slate);
+        .who-we-are h2 {
+            font-family: var(--font-body);
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .collage-container {
             display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 50px;
+            height: 400px;
+        }
+
+        .collage-item {
+            width: 200px;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: var(--transition-smooth);
+        }
+        .collage-item:nth-child(2) { transform: translateY(20px); }
+        .collage-item:nth-child(4) { transform: translateY(-20px); }
+        .collage-item:hover { transform: scale(1.05); box-shadow: var(--shadow-float); z-index: 10; position: relative;}
+
+        .mission-strip {
+            background: var(--pink-soft);
+            padding: 80px 10%;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            min-height: 80vh;
         }
 
-        .test-img {
+        .mission-text { flex: 1; padding-right: 50px; }
+        .mission-text h3 { font-family: var(--font-body); font-size: 1.8rem; color: var(--text-dark); margin-bottom: 15px; }
+        .mission-text p { color: var(--text-muted); font-size: 1rem; }
+        
+        .mission-quote {
             flex: 1;
-            height: 80vh;
-            background: url('https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=1000') center/cover;
-            filter: grayscale(100%);
-            transition: 0.5s;
-        }
-        .test-img:hover { filter: grayscale(0%); }
-
-        .test-content { flex: 1; padding: 0 8%; }
-        .test-content blockquote { font-family: 'Playfair Display'; font-size: 2.5rem; font-style: italic; line-height: 1.2; margin-bottom: 30px; color: var(--berry); }
-        .test-content cite { font-family: 'JetBrains Mono'; color: var(--gold-muted); font-style: normal; font-weight: 700; }
-
-        /* --- FOOTER --- */
-        footer {
-            background: #000;
-            color: white;
-            padding: 100px 8% 40px;
+            font-size: 10rem;
+            font-family: var(--font-heading);
+            color: var(--white);
+            line-height: 0;
+            text-align: right;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.05);
         }
 
-        .footer-grid {
+        .offer-grid {
+            background: var(--white);
+            padding: 80px 10%;
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 100px;
-            margin-bottom: 80px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            text-align: center;
         }
 
-        .footer-logo { font-family: 'Playfair Display'; font-size: 2rem; color: var(--white); margin-bottom: 20px; }
-        .footer-links h5 { color: var(--gold-muted); text-transform: uppercase; font-size: 0.8rem; margin-bottom: 20px; letter-spacing: 2px; }
-        .footer-links ul { list-style: none; }
-        .footer-links li { margin-bottom: 10px; }
-        .footer-links a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; }
-
-        @media (max-width: 1024px) {
-            .hero-image { display: none; }
-            .hero-content { text-align: center; }
-            .pillars-grid, .impact-metrics, .testimonial-vogue, .podcast-grid { grid-template-columns: 1fr; flex-direction: column; }
-            .test-img { height: 40vh; width: 100%; }
+        .offer-item .icon-circle {
+            width: 80px; height: 80px;
+            background: var(--pink-soft);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; color: var(--text-dark);
         }
+
+        .offer-item h4 { font-family: var(--font-body); color: var(--text-dark); margin-bottom: 10px; }
+        .offer-item p { font-size: 0.9rem; color: var(--text-muted); }
+
     </style>
 </head>
 <body>
 
+    <!-- CSS ONLY CELEBRATION EFFECTS -->
+    <div class="celebration-container">
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+    </div>
+
+    <!-- HEADER / NAVIGATION (As Requested: Exact Replica + Home + Financial Hub) -->
     <header>
+        <div class="logo-container">
+            <div class="logo-letters">i<span>W</span></div>
+            <div class="logo-text">INFLUENTIAL<br>WOMEN</div>
+        </div>
         <nav>
-            <a href="home.html" class="logo">ANTHONINAS // GLOBAL</a>
             <ul class="nav-links">
                 <li><a href="home.html">Home</a></li>
-                <li><a href="tech-lab.html">Research Lab</a></li>
-                <li><a href="courses.html">Sovereignty Path</a></li>
-                <li><a href="she.html">The She Podcast</a></li>
-                <li><a href="financial-hub.html">UEFI Financial Hub</a></li>
-                <li><a href="growth.html">UEFI Girl Growth </a></li>
-                <li><a href="enroll.html" class="btn-cta">Initialize Enrollment</a></li>
+                <li><a href="#">Who We Are</a></li>
+                <li><a href="#">Magazine</a></li>
+                <li><a href="#">Podcast</a></li>
+                <li><a href="#">Masterclasses</a></li>
+                <li><a href="#">How She Did It</a></li>
+                <li><a href="financial-hub.html">Financial Hub</a></li>
+                <li><a href="#">The Library</a></li>
             </ul>
         </nav>
+        <div class="auth-buttons">
+            <a href="#" class="btn-outline">Login</a>
+            <a href="#" class="btn-pink">Sign Up</a>
+        </div>
     </header>
 
     <main>
-        <section class="hero">
-            <div class="hero-content">
-                <span class="sdg-tag">SUPPORTING SDG 5: GENDER EQUALITY</span>
-                <span>The Anthoninas Initiative</span>
-                <h1>Engineering <span>Female</span> Sovereignty.</h1>
-                <p>Architecting a new paradigm of healthcare, high-tech leadership, and digital independence for the modern African woman.</p>
-                <div style="display: flex; gap: 20px;">
-                    <a href="enroll.html" style="background: var(--berry); color: white; padding: 20px 40px; text-decoration: none; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Join the 2026 Cohort</a>
-                    <a href="support-us.html" style="border: 1px solid var(--berry); color: var(--berry); padding: 20px 40px; text-decoration: none; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Download Impact Report</a>
-                </div>
-            </div>
-            <div class="hero-image"></div>
-        </section>
-
-        <section class="impact-metrics">
-            <div class="metric">
-                <h3>84%</h3>
-                <p>Sovereign Independence Rate</p>
-            </div>
-            <div class="metric">
-                <h3>12.5k</h3>
-                <p>Digital Health Consultations</p>
-            </div>
-            <div class="metric">
-                <h3>$2.1M</h3>
-                <p>Economic Alpha Generated</p>
-            </div>
-            <div class="metric">
-                <h3>SDG-5</h3>
-                <p>Full Compliance Framework</p>
-            </div>
-        </section>
-
-        <section class="pillars-section">
-            <div class="section-intro">
-                <h2>A Multidisciplinary Framework.</h2>
-                <p>We do not just teach; we deconstruct cultural barriers and rebuild them into ladders of economic and physical sovereignty.</p>
-            </div>
-
-            <div class="pillars-grid">
-                <div class="pillar-card">
-                    <div class="sdg-tag">TECH-VECTOR</div>
-                    <h4>Girls in AI & Tech</h4>
-                    <p>Advanced neural network training and cloud architecture designed to place women in the top 1% of global remote engineering roles.</p>
-                    <a href="tech-lab.html" class="pillar-link">Lab Specs →</a>
-                </div>
-                <div class="pillar-card">
-                    <div class="sdg-tag" style="background: #4C9F38;">BIO-VECTOR</div>
-                    <h4>Healthcare Sovereignty</h4>
-                    <p>Proprietary health literacy programs focusing on reproductive autonomy, mental wellness, and preventative bio-data tracking.</p>
-                    <a href="#" class="pillar-link">Health Framework →</a>
-                </div>
-                <div class="pillar-card">
-                    <div class="sdg-tag" style="background: #FFA500;">LEAD-VECTOR</div>
-                    <h4>Diplomacy & Strategy</h4>
-                    <p>High-stakes leadership training to prepare female executives for corporate boardrooms and international policy advocacy.</p>
-                    <a href="#" class="pillar-link">Leadership Path →</a>
-                </div>
-                <div class="pillar-card">
-                    <div class="sdg-tag" style="background: #26BDE2;">AGRI-VECTOR</div>
-                    <h4>Digital Agritech</h4>
-                    <p>Empowering female farmers with IoT sensor technology and AI supply chains to transition from subsistence to global e-commerce.</p>
-                    <a href="#" class="pillar-link">View Modules →</a>
-                </div>
-                <div class="pillar-card">
-                    <div class="sdg-tag" style="background: #D81B60;">FIN-VECTOR</div>
-                    <h4>Fintech Liberty</h4>
-                    <p>Decentralized finance training to help women bypass traditional banking barriers and build independent, cross-border wealth.</p>
-                    <a href="#" class="pillar-link">Financial Node →</a>
-                </div>
-                <div class="pillar-card">
-                    <div class="sdg-tag" style="background: #000;">STEM-VECTOR</div>
-                    <h4>Biotech Research</h4>
-                    <p>A specialized incubator for women pursuing breakthroughs in genetic engineering, green energy, and sustainable materials.</p>
-                    <a href="#" class="pillar-link">Apply for Lab →</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="podcast" class="podcast-section">
-            <div class="section-intro">
-                <div class="sdg-tag" style="background: var(--gold-muted); margin-bottom: 20px;">THE SHE PODCAST</div>
-                <h2>Big Sis Talk.</h2>
-                <p>Candid, high-value conversations deconstructing hygiene, leadership, relationships, and what it truly takes to architect a sovereign life as a modern woman.</p>
-            </div>
-
-            <div class="podcast-grid">
-                <div class="podcast-card">
-                    <div class="video-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600');">
-                        <div class="play-btn">▶</div>
-                    </div>
-                    <div class="podcast-info">
-                        <span class="podcast-category">Health & Hygiene</span>
-                        <h4>The Biology of Confidence</h4>
-                        <p>A deep dive into women's physiological health, destigmatizing hygiene, and understanding your body as a high-performance system.</p>
+        <!-- PODCAST GUEST GRID (Replicating Screenshots 1 & 2) -->
+        <section class="podcast-grid-section">
+            <div class="grid-container">
+                <!-- Card 1 -->
+                <div class="card-3d-wrapper">
+                    <div class="guest-card card-3d-element">
+                        <div class="guest-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" alt="Guest">
+                        </div>
+                        <div class="guest-info">
+                            <h3>Bet on Yourself: Grit, Leadership, and Opening Doors for Others</h3>
+                            <div class="guest-footer">
+                                <span class="guest-name">TIFFANY DERRY</span>
+                                <a href="#" class="listen-btn">🎧 Listen</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="podcast-card">
-                    <div class="video-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=600');">
-                        <div class="play-btn">▶</div>
-                    </div>
-                    <div class="podcast-info">
-                        <span class="podcast-category">Leadership</span>
-                        <h4>Boardroom Sovereignty</h4>
-                        <p>Tactics for young women stepping into executive roles. How to command a room, negotiate equity, and lead without apology.</p>
-                    </div>
-                </div>
-
-                <div class="podcast-card">
-                    <div class="video-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600');">
-                        <div class="play-btn">▶</div>
-                    </div>
-                    <div class="podcast-info">
-                        <span class="podcast-category">Girls & Relationships</span>
-                        <h4>Navigating the Noise</h4>
-                        <p>Real talk for the younger generation on establishing boundaries, recognizing healthy relationships, and protecting your peace.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="library-divider">
-                <span>Full Episode Library</span>
-            </div>
-
-            <div class="podcast-grid">
-                <div class="podcast-card">
-                    <div class="video-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600');">
-                        <div class="play-btn">▶</div>
-                    </div>
-                    <div class="podcast-info">
-                        <span class="podcast-category">Wealth & Mindset</span>
-                        <h4>Funding Your Sovereignty</h4>
-                        <p>Breaking down financial literacy, untangling emotional spending, and building a bulletproof emergency fund before investing.</p>
+                <!-- Card 2 -->
+                <div class="card-3d-wrapper">
+                    <div class="guest-card card-3d-element">
+                        <div class="guest-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=400" alt="Guest">
+                        </div>
+                        <div class="guest-info">
+                            <h3>Building the Dream Before Anyone Else Believes It</h3>
+                            <div class="guest-footer">
+                                <span class="guest-name">CHEF AARTHI SAMPATH</span>
+                                <a href="#" class="listen-btn">🎧 Listen</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="podcast-card">
-                    <div class="video-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600');">
-                        <div class="play-btn">▶</div>
-                    </div>
-                    <div class="podcast-info">
-                        <span class="podcast-category">Girls & Relationships</span>
-                        <h4>The Sisterhood Algorithm</h4>
-                        <p>How to audit your inner circle, heal from toxic friendships, and cultivate relationships that push you to level up.</p>
-                    </div>
-                </div>
-
-                <div class="podcast-card">
-                    <div class="video-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=600');">
-                        <div class="play-btn">▶</div>
-                    </div>
-                    <div class="podcast-info">
-                        <span class="podcast-category">Health & Hygiene</span>
-                        <h4>Radical Self-Care</h4>
-                        <p>Going beyond aesthetic routines to actual biological maintenance: sleep hygiene, dermatological truths, and hormonal tracking.</p>
+                <!-- Card 3 -->
+                <div class="card-3d-wrapper">
+                    <div class="guest-card card-3d-element">
+                        <div class="guest-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=400" alt="Guest">
+                        </div>
+                        <div class="guest-info">
+                            <h3>Why Your Next Chapter Doesn't Require Permission</h3>
+                            <div class="guest-footer">
+                                <span class="guest-name">DEBORAH SASS</span>
+                                <a href="#" class="listen-btn">🎧 Listen</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="podcast-card">
-                    <div class="video-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&q=80&w=600');">
-                        <div class="play-btn">▶</div>
-                    </div>
-                    <div class="podcast-info">
-                        <span class="podcast-category">Tech Leadership</span>
-                        <h4>Code as Power</h4>
-                        <p>Why understanding AI and cloud infrastructure is the modern equivalent of literacy. Overcoming imposter syndrome in STEM.</p>
-                    </div>
-                </div>
-
-                <div class="podcast-card">
-                    <div class="video-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=600');">
-                        <div class="play-btn">▶</div>
-                    </div>
-                    <div class="podcast-info">
-                        <span class="podcast-category">Leadership</span>
-                        <h4>Owning Your Narrative</h4>
-                        <p>The mechanics of public speaking, articulating your value, and refusing to shrink yourself in male-dominated environments.</p>
+                <!-- Card 4 -->
+                <div class="card-3d-wrapper">
+                    <div class="guest-card card-3d-element">
+                        <div class="guest-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400" alt="Guest">
+                        </div>
+                        <div class="guest-info">
+                            <h3>Modern Dating Sucks: Why Your Love Story Doesn't Have To</h3>
+                            <div class="guest-footer">
+                                <span class="guest-name">JACKIE DORMAN</span>
+                                <a href="#" class="listen-btn">🎧 Listen</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="podcast-card">
-                    <div class="video-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1522881113591-b462c0b4baed?auto=format&fit=crop&q=80&w=600');">
-                        <div class="play-btn">▶</div>
-                    </div>
-                    <div class="podcast-info">
-                        <span class="podcast-category">Health & Mindset</span>
-                        <h4>Mental Fortitude</h4>
-                        <p>Strategies for emotional regulation, dealing with burnout, and the hygiene of protecting your mental space from digital exhaustion.</p>
+                <!-- Card 5 -->
+                <div class="card-3d-wrapper">
+                    <div class="guest-card card-3d-element">
+                        <div class="guest-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400" alt="Guest">
+                        </div>
+                        <div class="guest-info">
+                            <h3>The Sacred Art of Selling: Building Success Without Sacrificing</h3>
+                            <div class="guest-footer">
+                                <span class="guest-name">KELLY ROACH</span>
+                                <a href="#" class="listen-btn">🎧 Listen</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <a href="#" style="color: var(--gold-muted); text-decoration: none; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid var(--gold-muted); padding-bottom: 5px;">Load More Archives ↓</a>
+                <!-- Card 6 -->
+                <div class="card-3d-wrapper">
+                    <div class="guest-card card-3d-element">
+                        <div class="guest-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=400" alt="Guest">
+                        </div>
+                        <div class="guest-info">
+                            <h3>Leading by Design, Not Default</h3>
+                            <div class="guest-footer">
+                                <span class="guest-name">TRACY O'MALLEY</span>
+                                <a href="#" class="listen-btn">🎧 Listen</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section class="testimonial-vogue">
-            <div class="test-img"></div>
-            <div class="test-content">
-                <span>// GLOBAL AMBASSADOR CASE STUDY</span>
-                <blockquote>
-                    "The Initiative didn't grant me opportunity; it gave me the physical and digital toolkit to seize it. I am no longer a beneficiary of aid; I am an architect of systems."
-                </blockquote>
-                <cite>AMANI J. // SENIOR AI ARCHITECT, CLASS OF '24</cite>
+        <!-- CTA SEMI-CIRCLE (Replicating Screenshot 3) -->
+        <section class="cta-section">
+            <div class="semi-circle">
+                <h2>Interested in <span>being a guest?</span></h2>
+                <p>Being featured on the Influential Women Podcast is an incredible opportunity to position yourself as an authority in your field and share your message with a growing audience of professional women who are driven to learn, lead, and make a difference.</p>
+                <p>To learn more or apply to be featured, email our team at <br><a href="mailto:clientservices@influentialwomen.com">clientservices@influentialwomen.com</a></p>
             </div>
         </section>
 
-        <section style="padding: 120px 8%; text-align: center; background: var(--rose-pale);">
-            <h2 style="font-family: 'Playfair Display'; font-size: 3rem; color: var(--berry); line-height: 1.1;">Architecting Change.</h2>
-            <p style="max-width: 600px; margin: 20px auto 40px; color: var(--text-muted);">The Anthoninas Initiative is currently seeking institutional partners for our 2027 Expansion. Align your ESG goals with high-impact, sovereign results.</p>
-            <a href="contactus.html" style="background: var(--berry); color: white; padding: 25px 60px; text-decoration: none; font-weight: 900; letter-spacing: 2px;">INQUIRE FOR PARTNERSHIP</a>
+        <!-- EXPLORE SECTION (Replicating Screenshot 4) -->
+        <section class="explore-section">
+            <div class="explore-header">
+                <span class="explore-label">EXPLORE</span>
+                <h2><i>Influential</i> <span>Women</span></h2>
+            </div>
+            
+            <div class="explore-grid">
+                <div class="explore-card card-3d-wrapper">
+                    <div class="card-3d-element" style="height: 100%;">
+                        <img src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&q=80&w=500" class="exp-img">
+                        <div class="exp-content">
+                            <span class="tag-pill">ARTICLES</span>
+                            <h3>Be Inspired</h3>
+                            <p>Explore career advice, leadership perspectives, and inspiring reads from Influential Women.</p>
+                            <a href="#" class="exp-btn">View All Articles →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="explore-card card-3d-wrapper">
+                    <div class="card-3d-element" style="height: 100%;">
+                        <img src="https://images.unsplash.com/photo-1522881113591-b462c0b4baed?auto=format&fit=crop&q=80&w=500" class="exp-img">
+                        <div class="exp-content">
+                            <span class="tag-pill">LEARN</span>
+                            <h3>Masterclasses & Coaching</h3>
+                            <p>Learn from trusted experts across career growth, leadership, wellness, and more.</p>
+                            <a href="#" class="exp-btn">View Masterclasses →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="explore-card card-3d-wrapper">
+                    <div class="card-3d-element" style="height: 100%;">
+                        <img src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&q=80&w=500" class="exp-img">
+                        <div class="exp-content">
+                            <span class="tag-pill">STORIES</span>
+                            <h3>How She Did It Stories</h3>
+                            <p>Real stories from women who navigated challenges, growth, and transformation.</p>
+                            <a href="#" class="exp-btn">View All Stories →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="explore-card card-3d-wrapper">
+                    <div class="card-3d-element" style="height: 100%;">
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=500" class="exp-img">
+                        <div class="exp-content">
+                            <span class="tag-pill">ABOUT</span>
+                            <h3>Who We Are</h3>
+                            <p>Learn about our mission and the story behind Influential Women.</p>
+                            <a href="#" class="exp-btn">Who We Are →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+
+        <!-- LIBRARY SECTION (Replicating Screenshots 5 & 6) -->
+        <section class="library-section">
+            <div class="lib-header-small">— INFLUENTIAL WOMEN / THE LIBRARY</div>
+            <h2><i>Influential</i> <span>Authors</span></h2>
+            <p>Discover books written by members of Influential Women. This collection highlights accomplished founders, executives, entrepreneurs, and professionals who have shared their knowledge and experiences through published works.</p>
+            <p>From business and leadership to personal development, memoirs, health, finance, children's books, and fiction, our members have written across a wide range of genres. Each listing features the author, one of their books, a brief overview, and a link to learn more or purchase a copy.</p>
+            
+            <div style="border-top: 1px solid #eee; margin-top: 40px; padding-top: 20px;">
+                <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-dark); letter-spacing: 1px;">ON THE SHELF / MORE FROM OUR MEMBERS</span>
+            </div>
+
+            <div class="author-grid">
+                <!-- Author 1 -->
+                <div class="author-card card-3d-wrapper">
+                    <div class="card-3d-element">
+                        <div class="auth-img-container">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=500">
+                            <div class="auth-name-tag">👤 Rachel Erikson</div>
+                        </div>
+                        <div class="auth-info">
+                            <h4>The Visible CEO</h4>
+                            <div class="auth-bottom">
+                                <span class="auth-category">EXECUTIVE PRESENCE & PERSONAL BRAND</span>
+                                <a href="#" class="login-member-btn">Login for Members</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Author 2 -->
+                <div class="author-card card-3d-wrapper">
+                    <div class="card-3d-element">
+                        <div class="auth-img-container">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=500">
+                            <div class="auth-name-tag">👤 MariaAngelica Deeb</div>
+                        </div>
+                        <div class="auth-info">
+                            <h4>I Made It Here - And I Will Make It Anywhere</h4>
+                            <div class="auth-bottom">
+                                <span class="auth-category">RESILIENCE</span>
+                                <a href="#" class="login-member-btn">Login for Members</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Author 3 -->
+                <div class="author-card card-3d-wrapper">
+                    <div class="card-3d-element">
+                        <div class="auth-img-container">
+                            <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=500">
+                            <div class="auth-name-tag">👤 Jennifer Recla</div>
+                        </div>
+                        <div class="auth-info">
+                            <h4>Navigating Your Workload: Prioritization & Resilience</h4>
+                            <div class="auth-bottom">
+                                <span class="auth-category">RESILIENCE</span>
+                                <a href="#" class="login-member-btn">Login for Members</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAGAZINE SECTION (Replicating Screenshots 7 & 8) -->
+        <section class="magazine-section">
+            <div class="mag-image-frame card-3d-wrapper">
+                <div class="mag-bg-pink"></div>
+                <img src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&q=80&w=1200" alt="Woman reading magazine" class="card-3d-element">
+            </div>
+            
+            <div class="mag-content-wrapper">
+                <h2>Influential Women Magazine</h2>
+                <p>The official magazine of Influential Women — leadership, inspiration, and authentic stories written by women leaders.</p>
+                <p>Influential Women Magazine is the publication dedicated to amplifying women's voices and showcasing the impact of women leaders across industries. Launching this fall, the magazine is written entirely by professional women who share their knowledge, experiences, and journeys of triumph. Every article in Influential Women Magazine is authored by women in business, women in technology, women in healthcare, women in law, and women in creative fields.</p>
+                
+                <h3>A magazine written by women leaders for women leaders</h3>
+                <p>Influential Women Magazine is unique because it is not written by outsiders. Every feature is created by members of the Influential Women community. These contributors include executives, entrepreneurs, innovators, authors, and professionals from diverse sectors. The magazine covers leadership, executive presence, business growth, personal branding, and the authentic voices of women who are creating change.</p>
+                <p>One of the most popular features of Influential Women is the How She Did It series. In these articles, women leaders share powerful quotes and insights about success, authenticity, resilience, and leadership. This same spirit of inspiration will carry into Influential Women Magazine.</p>
+
+                <h3>What readers will discover in the first issue</h3>
+                <ul>
+                    <li><strong>Executive presence and leadership communication:</strong> Learn proven strategies for building influence and authority. A preview can be found in our executive presence article.</li>
+                    <li><strong>Personal journeys of triumph:</strong> Real stories from women who have turned challenges into opportunities and setbacks into success.</li>
+                    <li><strong>Authentic leadership and thought leadership:</strong> Articles that highlight the unique ways women in leadership are transforming industries.</li>
+                    <li><strong>Exclusive cover feature:</strong> A world renowned leader in finance and empowerment will be revealed on the debut cover of Influential Women Magazine.</li>
+                </ul>
+                <h3>Articles and contributors</h3>
+            </div>
+        </section>
+
+        <!-- WHO WE ARE & MISSION (Replicating Screenshots 9 & 10) -->
+        <section class="who-we-are">
+            <h5>Empower. Connect. Influence.</h5>
+            <h2>Who We Are</h2>
+            <p>At Influential Women, We Believe In The Power Of Women's Voices</p>
+            
+            <div class="collage-container">
+                <img src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&q=80&w=300" class="collage-item">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=300" class="collage-item">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300" class="collage-item">
+                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=300" class="collage-item">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300" class="collage-item">
+            </div>
+        </section>
+
+        <section class="mission-strip">
+            <div class="mission-text">
+                <h3>Our Mission</h3>
+                <p>At Influential Women, we provide a platform where women from all backgrounds can connect, share their perspectives, and create content that empowers themselves and others. Through storytelling, thought leadership, and creative expression, we amplify voices that inspire change.</p>
+            </div>
+            <div class="mission-quote">“</div>
+        </section>
+
+        <section class="offer-grid">
+            <div style="grid-column: 1 / -1; margin-bottom: 20px;">
+                <h3 style="font-size: 1.8rem; color: var(--text-dark);">What We Offer</h3>
+            </div>
+            <div class="offer-item">
+                <div class="icon-circle">👩‍💼</div>
+                <h4>A Community of Trailblazers</h4>
+                <p>Connect with inspiring women across industries.</p>
+            </div>
+            <div class="offer-item">
+                <div class="icon-circle">🎙️</div>
+                <h4>A Platform for Your Voice</h4>
+                <p>Showcase your expertise through content creation.</p>
+            </div>
+            <div class="offer-item">
+                <div class="icon-circle">📢</div>
+                <h4>Empowerment Through Content</h4>
+                <p>Access blogs, podcasts & live discussions that inspire growth.</p>
+            </div>
+        </section>
+
     </main>
-
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <div class="footer-logo">ANTHONINAS</div>
-                <p style="color: #64748b; font-size: 0.9rem;">A division of UEFI Group Systems Institute. Dedicated to the advancement of African female sovereignty through technical and physical empowerment.</p>
-            </div>
-            <div class="footer-links">
-                <h5>Governance</h5>
-                <ul>
-                    <li><a href="abouts.html">Our Vision</a></li>
-                    <li><a href="#">Compliance</a></li>
-                    <li><a href="support-us.html">Strategic Support</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h5>Connect</h5>
-                <ul>
-                    <li><a href="#">LinkedIn / Impact</a></li>
-                    <li><a href="#">X / Technical News</a></li>
-                    <li><a href="contactus.html">Global Inquiries</a></li>
-                </ul>
-            </div>
-        </div>
-        <div style="border-top: 1px solid #222; padding-top: 40px; font-family: 'JetBrains Mono'; font-size: 0.7rem; color: #444; display: flex; justify-content: space-between;">
-            <p>&copy; 2026 ANTHONINAS INITIATIVE // ALL RIGHTS RESERVED.</p>
-            <p>DESIGNED FOR GLOBAL IMPACT</p>
-        </div>
-    </footer>
 
 </body>
 </html>
-
-
