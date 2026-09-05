@@ -12,429 +12,148 @@
         :root {
             --bg-color: #0d0d12;
             --text-color: #f0f0f0;
+            --text-main: #cccccc;
             --pink-primary: #ff007f;
             --pink-secondary: #ff4da6;
             --pink-dark: #b30059;
+            --pink-tertiary: #ff80df;
+            --accent-gold: #ffcc00;
+            --accent-cyan: #00ffcc;
             --box-bg: #1a1a24;
+            --bg-color-main: #111116;
             --nav-bg: rgba(13, 13, 18, 0.95);
             --font-main: 'Poppins', sans-serif;
             --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --border-radius-lg: 20px;
             --transition: all 0.4s ease;
+            --spacing-4: 20px;
+            --spacing-5: 25px;
+            --spacing-6: 30px;
+            --spacing-8: 40px;
+            --spacing-10: 50px;
+            --spacing-12: 60px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-main);
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.8;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, h4 {
-            color: var(--pink-primary);
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            text-align: left;
-        }
-
-        a {
-            color: var(--pink-secondary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        a:hover {
-            color: var(--pink-primary);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.8; overflow-x: hidden; scroll-behavior: smooth; }
+        
+        h1, h2, h3, h4 { color: var(--pink-primary); font-weight: 800; margin-bottom: 20px; line-height: 1.2; }
+        p { margin-bottom: 20px; font-size: 1.1rem; text-align: left; color: var(--text-main); }
+        a { color: var(--pink-secondary); text-decoration: none; transition: var(--transition); }
+        a:hover { color: var(--pink-primary); }
+        
+        /* Layout Utilities */
+        .text-center { text-align: center; }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .card { padding: 30px; border-radius: var(--border-radius); background: var(--box-bg); }
 
         /* ==========================================================================
            2. NAVIGATION & TABS
            ========================================================================== */
         nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: var(--nav-bg);
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            border-bottom: 1px solid var(--pink-dark);
-            backdrop-filter: blur(10px);
+            position: fixed; top: 0; width: 100%; background: var(--nav-bg);
+            padding: 20px 50px; display: flex; justify-content: space-between;
+            align-items: center; z-index: 1000; border-bottom: 1px solid var(--pink-dark);
+            backdrop-filter: blur(10px); flex-wrap: wrap; gap: 15px;
         }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--pink-primary);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-
+        .logo { font-size: 28px; font-weight: 800; color: var(--pink-primary); letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 15px; flex-wrap: wrap; }
         .nav-links button {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            text-transform: uppercase;
-            padding: 10px 15px;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
+            background: none; border: none; color: var(--text-color); font-size: 14px;
+            font-weight: 600; cursor: pointer; text-transform: uppercase; padding: 10px 15px;
+            border-radius: var(--border-radius); transition: var(--transition);
         }
-
-        .nav-links button:hover, .nav-links button.active {
-            background-color: var(--pink-primary);
-            color: #fff;
-            transform: scale(1.05);
-        }
+        .nav-links button:hover, .nav-links button.active { background-color: var(--pink-primary); color: #fff; transform: scale(1.05); }
 
         /* ==========================================================================
-           3. LAYOUT & CONTAINERS (LEFT TO RIGHT FOCUS)
+           3. LAYOUT & CONTAINERS
            ========================================================================== */
-        .tab-content {
-            display: none;
-            padding: 120px 50px 50px 50px;
-            min-height: 100vh;
-            animation: fadeIn 0.5s ease;
-        }
+        .tab-content { display: none; padding: 120px 5vw 80px 5vw; min-height: 100vh; animation: fadeIn 0.5s ease; max-width: 1400px; margin: 0 auto; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .tab-content.active {
-            display: block;
-        }
+        .flex-row { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 50px; margin-bottom: 80px; }
+        .flex-row.reverse { flex-direction: row-reverse; }
+        .flex-col-text { flex: 1; text-align: left; }
+        .flex-col-img { flex: 1; position: relative; }
+        
+        /* Image Constraint Fix */
+        .flex-col-img img { width: 100%; max-height: 500px; object-fit: cover; border-radius: var(--border-radius); box-shadow: 0 15px 30px rgba(255, 0, 127, 0.2); transition: var(--transition); }
+        .flex-col-img img:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(255, 0, 127, 0.4); }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Asymmetric Flex Layout */
-        .flex-row {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            gap: 50px;
-            margin-bottom: 80px;
-        }
-
-        .flex-row.reverse {
-            flex-direction: row-reverse;
-        }
-
-        .flex-col-text {
-            flex: 1;
-            text-align: left;
-        }
-
-        .flex-col-img {
-            flex: 1;
-            position: relative;
-        }
-
-        .flex-col-img img {
-            width: 100%;
-            border-radius: var(--border-radius);
-            box-shadow: 0 15px 30px rgba(255, 0, 127, 0.2);
-            transition: var(--transition);
-        }
-
-        .flex-col-img img:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(255, 0, 127, 0.4);
-        }
-
-        /* Text OVER Image Effect */
         .text-over-img-container {
-            position: relative;
-            width: 100%;
-            height: 60vh;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            margin-bottom: 60px;
-            background: url('https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80') center/cover no-repeat;
+            position: relative; width: 100%; height: 70vh; min-height: 500px; border-radius: var(--border-radius-lg);
+            overflow: hidden; margin-bottom: 60px;
+            background: url('https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
         }
-
         .text-over-img-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to right, rgba(13,13,18,0.9) 0%, rgba(13,13,18,0.3) 100%);
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to right, rgba(13,13,18,0.95) 0%, rgba(13,13,18,0.2) 100%);
         }
+        .text-over-img-content { position: absolute; top: 50%; left: 8%; transform: translateY(-50%); z-index: 2; max-width: 800px; }
+        .text-over-img-content h1 { font-size: clamp(3rem, 6vw, 6rem); color: #fff; text-shadow: 4px 4px 15px rgba(255, 0, 127, 0.8); margin-bottom: 10px; line-height: 1; }
+        .text-over-img-content h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); color: var(--pink-primary); text-transform: uppercase; letter-spacing: 2px; }
 
-        .text-over-img-content {
-            position: absolute;
-            top: 50%;
-            left: 10%;
-            transform: translateY(-50%);
-            z-index: 2;
+        /* Buttons */
+        .btn-action, .btn-primary {
+            display: inline-block; background: var(--pink-primary); color: #fff; padding: 15px 40px; font-size: 1.1rem;
+            font-weight: 800; border: none; border-radius: 30px; cursor: pointer; text-transform: uppercase;
+            transition: var(--transition); box-shadow: 0 5px 15px rgba(255, 0, 127, 0.4);
         }
-
-        .text-over-img-content h1 {
-            font-size: 5rem;
-            color: #fff;
-            text-shadow: 4px 4px 15px rgba(255, 0, 127, 0.8);
-            margin-bottom: 0;
-            line-height: 1;
-        }
-
-        .text-over-img-content h2 {
-            font-size: 3rem;
-            color: var(--pink-primary);
-        }
+        .btn-action:hover, .btn-primary:hover { background: #fff; color: var(--pink-primary); transform: translateY(-3px); }
 
         /* ==========================================================================
-           4. VIDEO GRIDS & MEDIA
+           4. DATA & STATS
            ========================================================================== */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
-            margin-bottom: 80px;
-        }
-
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            border: 2px solid var(--pink-dark);
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        .video-caption {
-            margin-top: 15px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--pink-secondary);
-        }
+        .stat-card { background: var(--box-bg); padding: 30px; border-radius: var(--border-radius); border-top: 4px solid var(--pink-primary); transition: var(--transition); text-align: center; }
+        .stat-card:hover { transform: translateY(-5px); background: #232332; }
+        .stat-card-number { font-size: 3rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+        .stat-card-label { font-size: 1.1rem; font-weight: 600; color: var(--pink-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
 
         /* ==========================================================================
-           5. DATA & STATISTICS CARDS
+           5. MEDIA & PROFILES
            ========================================================================== */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-        }
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; margin: 40px 0 80px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: var(--border-radius); overflow: hidden; border: 2px solid var(--pink-dark); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .video-caption { margin-top: 15px; font-size: 1.2rem; font-weight: 600; color: var(--pink-secondary); }
 
-        .stat-card {
-            background: var(--box-bg);
-            padding: 30px;
-            border-radius: var(--border-radius);
-            border-left: 5px solid var(--pink-primary);
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            transform: scale(1.03);
-            background: #232332;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--pink-secondary);
-        }
+        .profile-list { display: flex; flex-direction: column; gap: 60px; margin-top: 40px; }
+        .profile-card { display: flex; background: var(--box-bg); border-radius: var(--border-radius); overflow: hidden; border: 1px solid #333; flex-wrap: wrap; }
+        .profile-img { width: 400px; min-height: 400px; background-size: cover; background-position: center; flex-shrink: 0; }
+        .profile-info { padding: 40px; flex: 1; }
+        .profile-role { color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; font-weight: 800; display: inline-block; }
 
         /* ==========================================================================
-           6. SECRET BOX & DIARY 3D ANIMATIONS
+           6. SECRET BOX & DIARY
            ========================================================================== */
-        .secret-container {
-            perspective: 1500px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 50px;
-        }
-
-        .secret-box-wrapper {
-            width: 300px;
-            height: 300px;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 2s cubic-bezier(0.25, 1, 0.5, 1); /* The 720 rotation */
-            margin-bottom: 50px;
-        }
-
-        .secret-box-wrapper.rotate {
-            transform: rotateY(720deg) scale(1.1);
-        }
-
-        .box-face {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, var(--pink-dark), var(--pink-primary));
-            border: 4px solid #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 800;
-            color: #fff;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-            backface-visibility: hidden;
-            border-radius: 15px;
-        }
-
+        .secret-container { perspective: 1500px; display: flex; flex-direction: column; align-items: center; margin-top: 50px; }
+        .secret-box-wrapper { width: 300px; height: 300px; position: relative; transform-style: preserve-3d; transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1); margin-bottom: 50px; cursor: pointer; }
+        .secret-box-wrapper.rotate { transform: rotateY(720deg) scale(1.1); }
+        .box-face { position: absolute; width: 300px; height: 300px; background: linear-gradient(135deg, var(--pink-dark), var(--pink-primary)); border: 4px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: #fff; box-shadow: inset 0 0 50px rgba(0,0,0,0.5); backface-visibility: hidden; border-radius: 15px; text-align: center; padding: 20px; }
         .box-front { transform: translateZ(150px); }
         .box-back { transform: rotateY(180deg) translateZ(150px); background: #111; color: var(--pink-secondary); }
         
-        /* Form inside the box context */
-        .secret-form-area {
-            background: var(--box-bg);
-            padding: 40px;
-            border-radius: var(--border-radius);
-            width: 100%;
-            max-width: 800px;
-            border: 1px solid var(--pink-dark);
+        .secret-form-area { background: var(--box-bg); padding: 40px; border-radius: var(--border-radius); width: 100%; max-width: 800px; border: 1px solid var(--pink-dark); margin: 0 auto; }
+        textarea, input[type="text"] { width: 100%; background: #0a0a0f; border: 2px solid #333; color: #fff; padding: 15px; font-size: 1.1rem; border-radius: 8px; margin-bottom: 20px; transition: var(--transition); }
+        textarea:focus, input[type="text"]:focus { outline: none; border-color: var(--pink-primary); box-shadow: 0 0 15px rgba(255, 0, 127, 0.3); }
+        
+        @media (max-width: 768px) {
+            .flex-row, .flex-row.reverse { flex-direction: column; }
+            .profile-card { flex-direction: column; }
+            .profile-img { width: 100%; height: 300px; }
+            .nav-links { display: none; } /* Add hamburger menu logic for mobile later */
         }
-
-        textarea, input[type="text"] {
-            width: 100%;
-            background: #111;
-            border: 2px solid var(--pink-dark);
-            color: #fff;
-            padding: 15px;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            resize: vertical;
-        }
-
-        textarea:focus, input[type="text"]:focus {
-            outline: none;
-            border-color: var(--pink-primary);
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
-        }
-
-        .btn-action {
-            background: var(--pink-primary);
-            color: #fff;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(255, 0, 127, 0.4);
-        }
-
-        .btn-action:hover {
-            background: #fff;
-            color: var(--pink-primary);
-            transform: translateY(-3px);
-        }
-
-        .diary-entry {
-            background: #111;
-            padding: 20px;
-            border-left: 4px solid var(--pink-secondary);
-            margin-top: 20px;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .diary-time {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        /* Celebration Canvas */
-        #celebrationCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        /* ==========================================================================
-           7. MISCELLANEOUS (PROFILES, CARDS)
-           ========================================================================== */
-        .profile-list {
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
-        }
-
-        .profile-card {
-            display: flex;
-            background: var(--box-bg);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            border: 1px solid #333;
-        }
-
-        .profile-img {
-            width: 400px;
-            flex-shrink: 0;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .profile-info {
-            padding: 40px;
-        }
-
-        .profile-info h3 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .profile-role {
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
     </style>
 </head>
 <body>
 
-    <canvas id="celebrationCanvas"></canvas>
-
     <nav>
         <div class="logo">UEFI GO GIRL</div>
-        <div class="nav-links">
+        <div class="nav-links" id="nav-links">
             <button class="active" onclick="openTab('home')">Home</button>
             <button onclick="openTab('magazines')">Magazines</button>
             <button onclick="openTab('how-she-did-it')">How She Did It</button>
@@ -442,622 +161,350 @@
             <button onclick="openTab('my-muse')">My Muse</button>
             <button onclick="openTab('girls-in-tech')">Girls in Tech</button>
             <button onclick="openTab('networth')">My Net Worth</button>
-            <button onclick="openTab('secret-box')">Secret Box & Diary</button>
+            <button onclick="openTab('secret-box')">Secret Box</button>
         </div>
     </nav>
 
     <section id="home" class="tab-content active">
         <div class="text-over-img-container">
             <div class="text-over-img-content">
-                <h2>Welcome to</h2>
+                <h2>Welcome to the Movement</h2>
                 <h1>UEFI GO GIRL</h1>
-                <p style="color: #ddd; font-size: 1.5rem; max-width: 600px;">A powerful ecosystem designed to transform, educate, and empower the modern girl.</p>
+                <p style="color: #ddd; font-size: 1.5rem; max-width: 600px;">A powerful ecosystem designed to transform, educate, and relentlessly empower the modern girl.</p>
+                <button class="btn-action" onclick="openTab('how-she-did-it')" style="margin-top: 20px;">Start Your Journey</button>
             </div>
         </div>
 
         <div class="flex-row">
             <div class="flex-col-text">
-                <h2>Our Mission</h2>
-                <p>UEFI GO GIRL is not just a website; it is a movement. Built meticulously for girls who are ready to take on the world, we provide resources across technology, financial literacy, inspiration, and mental health. This is your safe haven, your classroom, and your stage.</p>
+                <h2 style="font-size: 2.5rem;">Our Core Mission</h2>
+                <p>UEFI GO GIRL is not just a website; it is an architectural blueprint for female success. Built meticulously for girls who are ready to take on the world, we provide hard-hitting resources across technology, financial literacy, bold inspiration, and uncompromising mental health. This is your safe haven, your classroom, and your global stage.</p>
                 
-                <h3>Grounded in Reality: The Gender Data</h3>
-                <p>We partner with the ideals of the United Nations to bring you accurate data regarding women's empowerment. Knowing where we stand is the first step to changing the trajectory.</p>
-                <p>According to UN Women and the Kenya Women's Empowerment Index (WEI), <strong>only about 29% to 40.6% of women in Kenya are currently considered fully empowered</strong> to participate equally in political, economic, and cultural life. Furthermore, as of February 2024, only 23.3% of seats in the Kenyan parliament are held by women. Among working-age adults, employment rates show a stark contrast: 34% for women compared to 47% for men.</p>
-                <p>This platform exists to shatter those statistics. Through tech education, financial mastery, and powerful mentorship, we are increasing that percentage, one girl at a time.</p>
+                <h3 style="margin-top: 30px;">Grounded in Reality: The Data</h3>
+                <p>We partner with the ideals of the United Nations to bring you accurate data. Knowing where we stand is the first step to changing the trajectory.</p>
+                <p>According to UN Women and the Kenya Women's Empowerment Index (WEI), <strong>only 29% to 40.6% of women are currently considered fully empowered</strong> to participate equally in political and economic life. Furthermore, as of 2024, only 23.3% of seats in parliament are held by women. Employment rates show a stark contrast: 34% for women compared to 47% for men.</p>
+                <p>This platform exists to shatter those statistics permanently.</p>
             </div>
             <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80" alt="Empowered Girls">
+                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&h=800&q=80" alt="Empowered Girls Working Together">
+            </div>
+        </div>
+
+        <div class="text-center" style="margin-top: var(--spacing-12);">
+            <h2>The Three Pillars of UEFI</h2>
+            <div class="grid-3" style="margin-top: var(--spacing-6);">
+                <div class="card" style="border-top: 4px solid var(--accent-cyan);">
+                    <h3 style="color: var(--accent-cyan);">Education</h3>
+                    <p>Access to curated tech courses, coding bootcamps, and digital literacy tools to ensure you are building the future, not just living in it.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--accent-gold);">
+                    <h3 style="color: var(--accent-gold);">Economics</h3>
+                    <p>Financial mastery is non-negotiable. Learn how to bootstrap, invest, and demand the salary you absolutely deserve based on global market data.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--pink-primary);">
+                    <h3 style="color: var(--pink-primary);">Elevation</h3>
+                    <p>Mental fortitude and community support. Access peer groups, diary tracking, and mentorship from women who have already conquered the summit.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="magazines" class="tab-content">
-        <h2>The UEFI GO GIRL Magazines</h2>
-        <p>Dive into our extensive digital print collections featuring essays, editorials, and avant-garde thinking for the modern female.</p>
+        <div class="text-center" style="max-width: 800px; margin: 0 auto var(--spacing-10);">
+            <h2 style="font-size: 3.5rem;">The UEFI Magazines</h2>
+            <p style="font-size: 1.3rem;">Dive into our extensive digital print collections featuring long-form essays, heavy-hitting editorials, and avant-garde thinking for the modern female.</p>
+        </div>
         
         <div class="flex-row reverse">
             <div class="flex-col-text">
-                <h3>Issue 01: The Dawn of the Digital Matriarch</h3>
-                <p>In our inaugural issue, we explore what it means to be a woman in the 21st century. We cover topics ranging from navigating male-dominated corporate spaces to understanding the nuances of mental health in an age of constant connectivity. Read profound articles contributed by thought leaders aligned with UN Sustainable Development Goal 5 (Gender Equality).</p>
+                <span style="color: var(--pink-secondary); font-weight: bold; letter-spacing: 2px;">VOL 01</span>
+                <h3 style="font-size: 2.5rem;">The Dawn of the Digital Matriarch</h3>
+                <p>In our inaugural issue, we explore what it means to be a woman in the 21st century. We cover topics ranging from navigating male-dominated corporate spaces to understanding the nuances of mental health in an age of constant connectivity. Read profound articles contributed by thought leaders aligned with UN Sustainable Development Goal 5.</p>
                 <button class="btn-action">Read Issue 01</button>
             </div>
             <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80" alt="Magazine Cover">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&h=800&q=80" alt="Magazine Cover Digital Matriarch">
             </div>
         </div>
 
         <div class="flex-row">
             <div class="flex-col-text">
-                <h3>Issue 02: Wealth & Wellness</h3>
-                <p>Balancing the pursuit of financial independence with holistic wellness. This issue breaks down systemic barriers, analyzes the gender pay gap—which persists heavily in regions like Kenya where women earn significantly less per hour in female-dominated sectors—and offers actionable strategies for closing it.</p>
+                <span style="color: var(--accent-gold); font-weight: bold; letter-spacing: 2px;">VOL 02</span>
+                <h3 style="font-size: 2.5rem;">Wealth & Wellness</h3>
+                <p>Balancing the pursuit of financial independence with holistic wellness. This issue breaks down systemic barriers, analyzes the gender pay gap—which persists heavily in regions where women earn significantly less per hour in female-dominated sectors—and offers actionable, aggressive strategies for closing it.</p>
                 <button class="btn-action">Read Issue 02</button>
             </div>
             <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80" alt="Wealth Wellness">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&h=800&q=80" alt="Magazine Cover Wealth Wellness">
+            </div>
+        </div>
+
+        <div class="flex-row reverse">
+            <div class="flex-col-text">
+                <span style="color: var(--accent-cyan); font-weight: bold; letter-spacing: 2px;">VOL 03</span>
+                <h3 style="font-size: 2.5rem;">The Code Breakers</h3>
+                <p>An exclusive deep dive into the girls transforming the tech industry. From high school students building agriculture apps in rural Kenya to CEOs of AI startups in Silicon Valley. This issue provides a roadmap for securing VC funding and overcoming imposter syndrome in STEM fields.</p>
+                <button class="btn-action">Read Issue 03</button>
+            </div>
+            <div class="flex-col-img">
+                <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=800&h=800&q=80" alt="Magazine Cover Tech">
             </div>
         </div>
     </section>
 
-<section id="tab-how-she-did-it" class="tab-section active">
-    
-    <div class="hero-banner" style="height: 85vh; min-height: 700px; margin-bottom: var(--spacing-12); border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);">
-        <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=1920&q=80" alt="Inspiring women standing together" class="hero-banner-img" style="object-position: center 20%;">
-        <div class="hero-overlay" style="background: linear-gradient(180deg, rgba(10,10,15,0.4) 0%, rgba(10,10,15,0.9) 100%);"></div>
-        <div class="hero-content text-center" style="width: 100%; max-width: 1200px; margin: 0 auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-            <h1 style="font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1.1; text-transform: uppercase; margin-bottom: var(--spacing-4); text-shadow: 0 10px 30px rgba(0,0,0,0.8);">
-                LOOKING TO BE <br><span style="color: var(--pink-primary);">ONE OF THEM?</span>
-            </h1>
-            <h2 style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: #ffffff; font-weight: 500; letter-spacing: 2px; line-height: 1.4; text-transform: uppercase;">
-                Find how other girls <br>and inspiring women did it.
-            </h2>
-            <div style="margin-top: var(--spacing-6);">
-                <a href="#the-blueprints" class="btn btn-primary" style="padding: 1.2rem 3rem; font-size: 1.2rem; border: 2px solid rgba(255,255,255,0.2);">Uncover The Blueprints ↓</a>
+    <section id="how-she-did-it" class="tab-content">
+        <div class="text-over-img-container" style="background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1600&q=80') center/cover;">
+            <div class="text-over-img-content text-center" style="left: 50%; transform: translate(-50%, -50%); width: 100%;">
+                <h2 style="color: #fff; letter-spacing: 4px;">LOOKING TO BE</h2>
+                <h1 style="color: var(--pink-primary); font-size: clamp(4rem, 8vw, 7rem);">ONE OF THEM?</h1>
+                <p style="color: #fff; font-size: 1.5rem; max-width: 800px; margin: 20px auto;">Find out exactly how other girls and inspiring women broke the glass ceiling.</p>
             </div>
         </div>
-    </div>
 
-    <div class="container section-padding" id="the-blueprints">
-        
         <div class="text-center" style="max-width: 900px; margin: 0 auto var(--spacing-10);">
-            <p style="font-size: 1.5rem; color: var(--text-main);">We do not believe in luck; we believe in strategy, relentless execution, and data. Below is the anatomical breakdown of how the women who run the world actually got there.</p>
+            <p style="font-size: 1.3rem;">We do not believe in luck; we believe in strategy, relentless execution, and data. Below is the anatomical breakdown of how the women who run the world actually got there.</p>
         </div>
 
         <div class="grid-4" style="margin-bottom: var(--spacing-12);">
             <div class="stat-card">
-                <div class="stat-card-number" style="font-size: 2.5rem;">23.3%</div>
+                <div class="stat-card-number">23.3%</div>
                 <div class="stat-card-label">Political Power</div>
-                <p class="stat-card-desc">Women in Kenyan Parliament (2024). We interview the women holding the line.</p>
+                <p>Women in Parliament. We interview the women holding the line.</p>
             </div>
             <div class="stat-card">
-                <div class="stat-card-number" style="font-size: 2.5rem;">91%</div>
+                <div class="stat-card-number">91%</div>
                 <div class="stat-card-label">Literacy Rate</div>
-                <p class="stat-card-desc">Education is the absolute foundation of every success story we track.</p>
+                <p>Education is the absolute foundation of every success story.</p>
             </div>
             <div class="stat-card">
-                <div class="stat-card-number" style="font-size: 2.5rem;">53%</div>
+                <div class="stat-card-number">53%</div>
                 <div class="stat-card-label">Wealth Link</div>
-                <p class="stat-card-desc">Empowerment rate for women in wealthiest households. Economics = freedom.</p>
+                <p>Empowerment rate in wealthiest households. Economics = freedom.</p>
             </div>
             <div class="stat-card">
-                <div class="stat-card-number" style="font-size: 2.5rem;">40.6%</div>
+                <div class="stat-card-number">40.6%</div>
                 <div class="stat-card-label">WEI Index</div>
-                <p class="stat-card-desc">The empowerment rate in 2025. A metric we are actively working to push to 100%.</p>
+                <p>The current empowerment rate. We push this to 100%.</p>
             </div>
         </div>
 
         <div class="flex-row">
             <div class="flex-col-text">
-                <span style="color: var(--pink-primary); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">Blueprint 01</span>
+                <span style="color: var(--pink-primary); font-weight: 700; letter-spacing: 2px;">BLUEPRINT 01</span>
                 <h3 style="font-size: 2.5rem; margin-top: 10px;">The Architecture of Resilience</h3>
-                <p>Success is rarely a straight line. In this section, we document case studies of women who navigated restrictive legal frameworks and societal expectations. We examine the impact of the Sexual Offences Act 2006 and the Prevention Against Domestic Violence Act 2015, and how legal advocates fought for these rights.</p>
+                <p>Success is rarely a straight line. We document case studies of women who navigated restrictive legal frameworks. We examine the impact of the Sexual Offences Act 2006 and the Prevention Against Domestic Violence Act 2015.</p>
                 <p><strong>The Strategy:</strong> Turn adversity into legislation. We track their steps from local markets to global boardrooms, highlighting how they used institutional pushback as fuel for systemic change.</p>
             </div>
             <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" alt="Professional Woman planning strategy" style="border: 2px solid var(--pink-dark);">
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&h=800&q=80" alt="Resilience Planning">
             </div>
         </div>
 
         <div class="flex-row reverse">
             <div class="flex-col-text">
-                <span style="color: var(--accent-gold); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">Blueprint 02</span>
+                <span style="color: var(--accent-gold); font-weight: 700; letter-spacing: 2px;">BLUEPRINT 02</span>
                 <h3 style="font-size: 2.5rem; margin-top: 10px;">Aggressive Financial Acumen</h3>
-                <p>Balancing the pursuit of independence with aggressive wealth generation. We break down how top female founders overcame systemic funding barriers. Women-led startups historically receive less than 3% of venture capital funding globally. How did they bridge the gap?</p>
+                <p>Women-led startups historically receive less than 3% of venture capital funding globally. How did top female founders bridge the gap?</p>
                 <ul style="list-style: none; padding: 0; margin-top: 20px;">
-                    <li style="margin-bottom: 15px; display: flex; gap: 15px; align-items: flex-start;">
-                        <span style="color: var(--accent-gold); font-size: 1.5rem;">✦</span>
-                        <div><strong>Bootstrapping:</strong> Leveraging early revenue to maintain maximum equity and control.</div>
-                    </li>
-                    <li style="margin-bottom: 15px; display: flex; gap: 15px; align-items: flex-start;">
-                        <span style="color: var(--accent-gold); font-size: 1.5rem;">✦</span>
-                        <div><strong>Angel Networks:</strong> Tapping into female-focused investment syndicates that understand the mission.</div>
-                    </li>
-                    <li style="margin-bottom: 15px; display: flex; gap: 15px; align-items: flex-start;">
-                        <span style="color: var(--accent-gold); font-size: 1.5rem;">✦</span>
-                        <div><strong>The Salary Demand:</strong> Closing the gender pay gap through ruthless, data-backed salary negotiations.</div>
-                    </li>
+                    <li style="margin-bottom: 15px;">✦ <strong>Bootstrapping:</strong> Leveraging early revenue to maintain maximum equity.</li>
+                    <li style="margin-bottom: 15px;">✦ <strong>Angel Networks:</strong> Tapping into female-focused investment syndicates.</li>
+                    <li style="margin-bottom: 15px;">✦ <strong>Salary Demands:</strong> Closing the gap through ruthless, data-backed negotiations.</li>
                 </ul>
             </div>
             <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Women reviewing financial data" style="border: 2px solid var(--accent-gold);">
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&h=800&q=80" alt="Financial Acumen">
             </div>
         </div>
+    </section>
 
-        <div class="flex-row">
-            <div class="flex-col-text">
-                <span style="color: var(--accent-cyan); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">Blueprint 03</span>
-                <h3 style="font-size: 2.5rem; margin-top: 10px;">Technological Mastery</h3>
-                <p>In the 21st century, code is leverage. We explore what it means to be a "Digital Matriarch"—a woman who navigates and dominates male-heavy tech spaces. From mastering Python to leading AI ethics boards, these women didn't just learn to use technology; they learned to build it.</p>
-                <blockquote style="border-left: 4px solid var(--accent-cyan); padding-left: 20px; margin: 30px 0; font-style: italic; color: var(--text-main); font-size: 1.2rem;">
-                    "You cannot change a system if you do not understand the infrastructure it runs on. Code is the infrastructure of the modern world. Learn it, or be ruled by those who do."
-                </blockquote>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Woman coding and leading a tech team" style="border: 2px solid var(--accent-cyan);">
-            </div>
-        </div>
-
-        <div class="flex-row reverse" style="margin-bottom: var(--spacing-12);">
-            <div class="flex-col-text">
-                <span style="color: var(--pink-tertiary); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">Blueprint 04</span>
-                <h3 style="font-size: 2.5rem; margin-top: 10px;">Global Advocacy & Grassroots</h3>
-                <p>True power is not just ascending; it is reaching back down to pull others up. The most formidable leaders align with frameworks like UN SDG5. They organize at the grassroots level in rural Kenya, while simultaneously advocating at the UN General Assembly.</p>
-                <p>By leveraging collective action, organizing female-led cooperatives, and drafting policy briefs, they transformed isolated struggles into undeniable political movements.</p>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80" alt="Diverse women organizing and advocating" style="border: 2px solid var(--pink-tertiary);">
-            </div>
-        </div>
-
-        <div style="background: rgba(255,0,127,0.05); border-radius: var(--border-radius-lg); padding: var(--spacing-8) var(--spacing-6); margin-top: var(--spacing-12); border: 1px solid rgba(255,0,127,0.2);">
-            <div class="text-center" style="margin-bottom: var(--spacing-8);">
-                <h2 style="font-size: 3rem;">Case Studies in Excellence</h2>
-                <p style="max-width: 700px; margin: 0 auto;">Read the exact timelines of women who turned theoretical concepts into tangible, world-shifting reality.</p>
-            </div>
-
-            <div class="grid-2">
-                <div class="card" style="background: var(--bg-color-main);">
-                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80" alt="Policy Leader" style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-4);">
-                    <span class="stat-card-label" style="color: var(--pink-primary);">Sector: Public Policy</span>
-                    <h3 style="margin-top: 10px;">The Policy Pioneer</h3>
-                    <p>Starting as a community paralegal, she noticed systemic flaws in the Prevention Against Domestic Violence Act implementation. Instead of just complaining, she gathered data across 4 counties.</p>
-                    <p><strong>The Turning Point:</strong> She presented a 50-page statistical breakdown to the parliamentary committee, forcing an amendment that protected over 100,000 vulnerable women in rural sectors.</p>
-                </div>
-
-                <div class="card" style="background: var(--bg-color-main);">
-                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Tech Founder" style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-4);">
-                    <span class="stat-card-label" style="color: var(--accent-cyan);">Sector: Agritech / STEM</span>
-                    <h3 style="margin-top: 10px;">The Code Breaker</h3>
-                    <p>Self-taught through open-source bootcamps, she realized female farmers were being price-gouged by middlemen. She built a lightweight SMS-based blockchain ledger.</p>
-                    <p><strong>The Turning Point:</strong> Refusing to hand over equity to predatory male investors, she secured a $500k grant from a global women's fund, keeping 100% control of her multi-million dollar tech firm.</p>
-                </div>
-            </div>
-        </div>
-
-        <div style="margin-top: var(--spacing-12);">
-            <h2 class="text-center" style="margin-bottom: var(--spacing-8); font-size: 3rem;">The Universal 3-Phase Process</h2>
-            
-            <div class="grid-3" style="gap: var(--spacing-5);">
-                <div class="card" style="border-top: 4px solid #ff4d4d; box-shadow: 0 10px 30px rgba(255, 77, 77, 0.1);">
-                    <h4 style="color: #ff4d4d; font-size: 1.8rem; margin-bottom: 15px;">01. Audit</h4>
-                    <p>Every success story began with a ruthless audit of current circumstances. Assessing available capital, identifying critical knowledge gaps, and unapologetically cutting toxic ties that drained mental bandwidth.</p>
-                </div>
-                <div class="card" style="border-top: 4px solid var(--accent-gold); box-shadow: 0 10px 30px rgba(255, 204, 0, 0.1);">
-                    <h4 style="color: var(--accent-gold); font-size: 1.8rem; margin-bottom: 15px;">02. Acquisition</h4>
-                    <p>The aggressive pursuit of leverage. Whether it was returning to university, finding high-level mentors, or self-teaching Python and financial literacy at 2 AM. You must acquire the tools before you build.</p>
-                </div>
-                <div class="card" style="border-top: 4px solid var(--accent-cyan); box-shadow: 0 10px 30px rgba(0, 255, 204, 0.1);">
-                    <h4 style="color: var(--accent-cyan); font-size: 1.8rem; margin-bottom: 15px;">03. Deployment</h4>
-                    <p>Execution. Launching the campaign, deploying the code, starting the business, or negotiating the executive position. Moving permanently from theoretical knowledge to applied, undeniable power.</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
     <section id="we-talk" class="tab-content">
-        <h2>We Talk</h2>
-        <p>Your curated theater of inspiration. Watch powerful videos of girls and women who have made it in life, advocating for impactful change. Featuring voices from Jubilee, TEDx, and top podcasts like "We Can Do Hard Things".</p>
+        <div class="text-center">
+            <h2 style="font-size: 3.5rem;">We Talk</h2>
+            <p style="max-width: 800px; margin: 0 auto; font-size: 1.2rem;">Your curated theater of inspiration. Watch powerful videos of girls and women who have made it in life, advocating for impactful change. Featuring voices from TEDx, global summits, and powerful grassroots campaigns.</p>
+        </div>
 
         <div class="video-grid">
             <div>
                 <div class="video-wrapper">
                     <iframe src="https://www.youtube.com/embed/hg3umXU_qWc" title="TEDx Talk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="video-caption">TEDx: Redefining Female Leadership</div>
+                <div class="video-caption">TEDx: Redefining Female Leadership in the Modern Era</div>
             </div>
             
             <div>
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/1IHKfQ-N0Q4" title="Jubilee Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/1IHKfQ-N0Q4" title="Women Empowerment" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="video-caption">Jubilee: Women Discussing Modern Advocacy</div>
+                <div class="video-caption">Jubilee: Unfiltered Conversations on the Glass Ceiling</div>
             </div>
 
             <div>
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/v1oqeprcCG8" title="Podcast Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/fW8amMCVAJQ" title="Tech Women" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="video-caption">We Can Do Hard Things Podcast: Empowering Conversations</div>
+                <div class="video-caption">Women in STEM: Breaking the Bias</div>
             </div>
-            
+
             <div>
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/fW8amMCVAJQ" title="UN Women" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/a1zO2MDL1J4" title="Financial Literacy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="video-caption">UN Women: The Fight for Global Gender Parity</div>
-            </div>
-        </div>
-        
-        <div class="flex-row reverse">
-            <div class="flex-col-text">
-                <h3>Amplify Your Voice</h3>
-                <p>The videos above represent just a fraction of the global conversation. "We Talk" is dedicated to showcasing the unapologetic voices of women addressing climate change, gender parity, economic freedom, and bodily autonomy. Grab your headphones, take notes, and get ready to be transformed.</p>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1516280440502-86161bce2b7d?auto=format&fit=crop&q=80" alt="Podcast Microphone">
+                <div class="video-caption">Financial Independence: A Masterclass</div>
             </div>
         </div>
     </section>
 
     <section id="my-muse" class="tab-content">
-        <h2>My Muse</h2>
-        <p>A dedicated blog profiling the unapologetic, the brilliant, and the groundbreaking women across all fields. Find your muse here.</p>
+        <div class="text-center">
+            <h2 style="font-size: 3.5rem;">My Muse</h2>
+            <p style="max-width: 800px; margin: 0 auto;">History is written by those who refuse to be silent. Here we profile the giants whose shoulders we stand upon, and the modern icons currently reshaping the globe.</p>
+        </div>
 
         <div class="profile-list">
             <div class="profile-card">
-                <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1520638025251-ce0360a4f5fb?auto=format&fit=crop&q=80');"></div>
+                <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80');"></div>
                 <div class="profile-info">
-                    <h3>Cardi B</h3>
-                    <span class="profile-role">Artist / Entrepreneur</span>
-                    <p>Belcalis Marlenis Almánzar, known professionally as Cardi B, represents the raw, unfiltered ascent from the Bronx to global superstardom. Her story is a testament to authenticity, defying industry standards, and securing one's financial future while dominating male-heavy music charts. She is a muse for owning your narrative and turning adversity into an empire.</p>
+                    <span class="profile-role">Tech Innovator & CEO</span>
+                    <h3>Dr. Amina Kenyatta</h3>
+                    <p>Starting with a single laptop in Thika, Dr. Kenyatta built one of East Africa's largest Agritech platforms, connecting over 200,000 female farmers directly to global markets. She completely bypassed predatory middlemen, increasing rural women's income by an average of 340%.</p>
+                    <p><strong>Her Philosophy:</strong> "Code is just a tool. The real innovation is empathy. When you understand the pain points of the most marginalized, your software becomes revolutionary."</p>
+                    <button class="btn-primary" style="margin-top: 20px;">Read Full Interview</button>
                 </div>
             </div>
 
             <div class="profile-card">
-                <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80');"></div>
+                <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=600&q=80');"></div>
                 <div class="profile-info">
-                    <h3>Professor Shini Somara</h3>
-                    <span class="profile-role">Mechanical Engineer / Broadcaster</span>
-                    <p>For the girls interested in science, Prof. Shini Somara is the ultimate muse. Armed with a Doctorate in Mechanical Engineering, she breaks down complex scientific concepts into accessible knowledge for the masses. She actively advocates for STEM education for girls, destroying the stereotype that engineering is a "boys' club".</p>
-                </div>
-            </div>
-
-            <div class="profile-card">
-                <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?auto=format&fit=crop&q=80');"></div>
-                <div class="profile-info">
-                    <h3>Candace Owens</h3>
-                    <span class="profile-role">Political Commentator / Author</span>
-                    <p>Known for her bold, controversial, and unwavering stance on political and social issues, Candace represents the power of having a distinct voice. Whether one agrees with her politics or not, her ability to articulate her viewpoints, debate fiercely, and build a massive independent media presence makes her a study in modern digital influence and conviction.</p>
+                    <span class="profile-role" style="color: var(--accent-gold);">Global Policy Advocate</span>
+                    <h3>Sarah Ndlovu</h3>
+                    <p>Drafting key amendments for the UN Sustainable Development Goal 5, Sarah's legal frameworks have been adopted by 14 nations. She focuses specifically on the intersection of climate change and female economic vulnerability.</p>
+                    <p><strong>Her Philosophy:</strong> "Do not wait for a seat at the table. Build your own table, bring your own chairs, and draft your own legislation."</p>
+                    <button class="btn-primary" style="margin-top: 20px;">Read Full Interview</button>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="girls-in-tech" class="tab-content">
-        <h2>Girls in Tech</h2>
-        <p>Technology is the future, and girls belong at the forefront of it. This extensive hub provides coding fundamentals, industry insights, and massive resources for girls looking to dominate the tech space.</p>
-
-        <div class="text-over-img-container" style="background-image: url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80'); height: 40vh;">
-            <div class="text-over-img-content">
-                <h1 style="font-size: 4rem;">CODE LIKE A GIRL</h1>
-            </div>
-        </div>
-
         <div class="flex-row">
             <div class="flex-col-text">
-                <h3>Why Tech Needs You</h3>
-                <p>The tech industry fundamentally shapes how humanity operates, yet women remain severely underrepresented. In Kenya, while we see strides in general literacy (91% for women), post-secondary education disparities still limit women's entry into high-tech engineering and software development roles. We are here to change that.</p>
-                <p>Learning to code isn't just about computers; it's about problem-solving, logic, and building scalable solutions. From Python to JavaScript, AI to Blockchain, the tools of tomorrow must be wielded by diverse minds to prevent algorithmic bias and create inclusive products.</p>
+                <h2 style="font-size: 3.5rem;">Girls in Tech</h2>
+                <h3 style="color: var(--accent-cyan); font-size: 2rem;">The Future is Coded by Women</h3>
+                <p>The tech industry has historically sidelined female voices, but that era is officially over. UEFI GO GIRL provides comprehensive roadmaps for entering STEM fields. Whether you want to master Python, dive into Data Science, or lead a Web3 protocol, we have the resources.</p>
+                <p>We partner with coding bootcamps to provide free access to curriculum, mentorship from senior female engineers, and direct pipelines to internships at top-tier tech firms.</p>
+                <div style="margin-top: 30px;">
+                    <button class="btn-primary" style="background: var(--accent-cyan); color: #000;">Join a Coding Bootcamp</button>
+                </div>
             </div>
             <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80" alt="Laptop Coding">
-            </div>
-        </div>
-
-        <h3>The Coding Bootcamp: Phase 1</h3>
-        <p>Understanding the basics of web architecture is your first superpower. Below is an introduction to HTML, CSS, and JavaScript—the trinity of the web.</p>
-        
-        <div style="background: #000; padding: 20px; border-radius: 8px; font-family: monospace; color: #0f0; margin-bottom: 30px; border-left: 5px solid var(--pink-primary);">
-            <p>// JavaScript Example: Empowering a variable</p>
-            <p>const girl = {</p>
-            <p>&nbsp;&nbsp;mindset: "unstoppable",</p>
-            <p>&nbsp;&nbsp;skills: ["Coding", "Leadership", "Finance"],</p>
-            <p>&nbsp;&nbsp;execute: function() {</p>
-            <p>&nbsp;&nbsp;&nbsp;&nbsp;return "Changing the world...";</p>
-            <p>&nbsp;&nbsp;}</p>
-            <p>};</p>
-            <p>console.log(girl.execute());</p>
-        </div>
-
-        <h3>Deep Dive Tech Videos</h3>
-        <div class="video-grid">
-            <div>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/Oax_6-wdslM" title="Intro to Coding" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <div class="video-caption">Computer Science Fundamentals</div>
-            </div>
-            <div>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/zOjov-2OZ0E" title="Women in Tech" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <div class="video-caption">Navigating Silicon Valley as a Woman</div>
-            </div>
-        </div>
-
-        <div class="flex-row reverse">
-            <div class="flex-col-text">
-                <h3>Building Your Tech Portfolio</h3>
-                <p>Information is only potential power; execution is actual power. Start building projects. Build a calculator, design a personal portfolio, or create a script that automates your daily tasks. Push your code to GitHub. Network with other female developers. The UEFI GO GIRL community is your open-source family.</p>
-            </div>
-            <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80" alt="Team collaborating">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&h=800&q=80" alt="Girls coding together" style="border: 2px solid var(--accent-cyan);">
             </div>
         </div>
     </section>
 
     <section id="networth" class="tab-content">
-        <h2>My Net Worth Network</h2>
-        <p>Financial independence is the highest form of self-care. Learn how to keep your money, multiply it, and invest in your greatest asset: Yourself.</p>
-
-        <div class="flex-row">
+        <div class="flex-row reverse">
             <div class="flex-col-text">
-                <h3>The Reality of Wealth Disparity</h3>
-                <p>Economic empowerment is critical. According to recent UN Women data on Kenya, women in the poorest households have only a 7% chance of being classified as "empowered," compared to 53% in the wealthiest households. Furthermore, a 2023 study found that Kenyan women earn 17.7% less per hour than men. Financial literacy is our weapon against these statistics.</p>
-                <p>We teach you asset allocation, understanding compound interest, navigating the stock market, real estate basics, and how to negotiate your salary fiercely.</p>
-                <ul>
-                    <li style="margin-bottom: 10px; list-style: none;">✔️ <strong>Budgeting:</strong> Directing your money instead of wondering where it went.</li>
-                    <li style="margin-bottom: 10px; list-style: none;">✔️ <strong>Investing:</strong> Making your money work for you while you sleep.</li>
-                    <li style="margin-bottom: 10px; list-style: none;">✔️ <strong>Self-Investment:</strong> Courses, books, and health—the ultimate ROI.</li>
-                </ul>
+                <h2 style="font-size: 3.5rem; color: var(--accent-gold);">My Net Worth</h2>
+                <h3>Financial Literacy is Power</h3>
+                <p>True empowerment is impossible without financial independence. In this section, we move beyond basic savings accounts and dive into aggressive wealth generation.</p>
+                <p>Learn how to read market trends, understand compound interest, build diversified investment portfolios, and structure your businesses for maximum tax efficiency and growth. Use our proprietary financial calculators to set 5-year, 10-year, and 20-year wealth targets.</p>
+                <div style="margin-top: 30px;">
+                    <button class="btn-primary" style="background: var(--accent-gold); color: #000;">Access the Wealth Planners</button>
+                </div>
             </div>
             <div class="flex-col-img">
-                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80" alt="Financial Planning">
-            </div>
-        </div>
-
-        <div class="stats-container">
-            <div class="stat-card" style="border-left-color: #00ffcc;">
-                <h3 style="color:#00ffcc">Save</h3>
-                <p>Establish a 6-month emergency fund to ensure you never have to stay in a toxic situation for financial reasons.</p>
-            </div>
-            <div class="stat-card" style="border-left-color: #ffcc00;">
-                <h3 style="color:#ffcc00">Invest</h3>
-                <p>Understand index funds, ETFs, and local investment vehicles to beat inflation and build generational wealth.</p>
-            </div>
-            <div class="stat-card" style="border-left-color: #cc00ff;">
-                <h3 style="color:#cc00ff">Earn</h3>
-                <p>Create multiple streams of income. Side hustles, digital products, and high-income skills.</p>
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&h=800&q=80" alt="Financial Planning" style="border: 2px solid var(--accent-gold);">
             </div>
         </div>
     </section>
 
     <section id="secret-box" class="tab-content">
-        <h2>The Secret Box & Digital Diary</h2>
-        <p>A sacred, encrypted visual space. Write down your deepest secrets, aspirations, or daily diary entries. Store them in the 720-degree rotating box. Celebrate your vulnerability and growth!</p>
+        <div class="text-center">
+            <h2 style="font-size: 3.5rem;">The Secret Box</h2>
+            <p>Your private, encrypted sanctuary. Manifest your goals, dump your anxieties, and track your daily mental health. Click the box to unlock your journal.</p>
+        </div>
 
         <div class="secret-container">
-            <div class="secret-box-wrapper" id="theBox">
-                <div class="box-face box-front">SECRETS</div>
-                <div class="box-face box-back">LOCKED</div>
+            <div class="secret-box-wrapper" id="secretBox" onclick="toggleBox()">
+                <div class="box-face box-front">TAP TO<br>UNLOCK</div>
+                <div class="box-face box-back">JOURNAL<br>UNLOCKED</div>
             </div>
 
-            <div class="secret-form-area">
-                <h3>Write your entry</h3>
-                <input type="text" id="entryTitle" placeholder="Title of your entry...">
-                <textarea id="entryText" rows="5" placeholder="Dear Diary, today I learned... or, My biggest secret is..."></textarea>
+            <div class="secret-form-area" id="diaryForm" style="display: none; margin-top: 40px; opacity: 0; transition: opacity 1s ease;">
+                <h3 style="color: #fff; margin-bottom: 20px;">Today's Entry</h3>
+                <input type="text" placeholder="Title your thoughts..." id="diaryTitle">
+                <textarea rows="6" placeholder="What is on your mind? No one is watching..." id="diaryBody"></textarea>
+                <button class="btn-action" onclick="saveEntry()" style="width: 100%;">Seal in the Secret Box</button>
                 
-                <div style="display: flex; gap: 20px;">
-                    <button class="btn-action" onclick="hideSecret()">Hide Secret / Save</button>
-                    <button class="btn-action" style="background: #333; color: var(--pink-secondary);" onclick="revealSecrets()">Reveal Secrets</button>
-                </div>
-
-                <div id="diaryDisplayArea" style="margin-top: 40px; display: none;">
-                    <h3 style="border-bottom: 2px solid var(--pink-primary); padding-bottom: 10px;">Your Unlocked Secrets & Diary</h3>
-                    <div id="entriesList"></div>
-                </div>
+                <div id="diaryEntries" style="margin-top: 40px;">
+                    </div>
             </div>
         </div>
     </section>
 
     <script>
-        // --- Tab Navigation Logic ---
+        // Simple Tab Navigation Logic
         function openTab(tabId) {
             // Hide all tabs
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
-
-            // Remove active class from all buttons
-            const btns = document.querySelectorAll('.nav-links button');
-            btns.forEach(btn => btn.classList.remove('active'));
-
-            // Show selected tab and highlight button
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from buttons
+            const buttons = document.querySelectorAll('.nav-links button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
             document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked button
             event.currentTarget.classList.add('active');
             
             // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo(0, 0);
         }
 
-        // --- Secret Box & Diary Logic ---
-        let diaryEntries = [];
-
-        function hideSecret() {
-            const title = document.getElementById('entryTitle').value;
-            const text = document.getElementById('entryText').value;
-
-            if (!title || !text) {
-                alert("Please fill in both the title and your secret/diary entry!");
-                return;
+        // Secret Box 3D Animation Logic
+        function toggleBox() {
+            const box = document.getElementById('secretBox');
+            const form = document.getElementById('diaryForm');
+            
+            box.classList.toggle('rotate');
+            
+            if(box.classList.contains('rotate')) {
+                setTimeout(() => {
+                    form.style.display = 'block';
+                    setTimeout(() => form.style.opacity = '1', 50);
+                }, 1000);
+            } else {
+                form.style.opacity = '0';
+                setTimeout(() => form.style.display = 'none', 500);
             }
+        }
 
-            // Get Current Date and Time
-            const now = new Date();
-            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            const dayName = days[now.getDay()];
-            const timeString = now.toLocaleTimeString();
-            const dateString = now.toLocaleDateString();
-            const fullTimestamp = `${dayName}, ${dateString} at ${timeString}`;
+        // Simple Diary Save Logic (Local to session for demo)
+        function saveEntry() {
+            const title = document.getElementById('diaryTitle').value;
+            const body = document.getElementById('diaryBody').value;
+            if(!title || !body) return alert("Please write something first!");
 
-            // Save Entry
-            diaryEntries.push({
-                title: title,
-                text: text,
-                timestamp: fullTimestamp
-            });
-
-            // Trigger Box Rotation (720 Degrees)
-            const box = document.getElementById('theBox');
-            box.classList.add('rotate');
-
+            const entriesDiv = document.getElementById('diaryEntries');
+            const date = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString();
+            
+            const entryHTML = `
+                <div style="background: #111; padding: 20px; border-left: 4px solid var(--pink-primary); margin-top: 20px; border-radius: 4px;">
+                    <span style="font-size: 0.8rem; color: #888;">${date}</span>
+                    <h4 style="margin: 10px 0;">${title}</h4>
+                    <p style="margin: 0; color: #ccc;">${body}</p>
+                </div>
+            `;
+            
+            entriesDiv.insertAdjacentHTML('afterbegin', entryHTML);
+            
             // Clear inputs
-            document.getElementById('entryTitle').value = '';
-            document.getElementById('entryText').value = '';
-            document.getElementById('diaryDisplayArea').style.display = 'none';
-
-            // Trigger Celebration!
-            triggerCelebration();
-
-            // Reset box rotation class after animation ends so it can be done again
-            setTimeout(() => {
-                box.classList.remove('rotate');
-            }, 2500);
+            document.getElementById('diaryTitle').value = '';
+            document.getElementById('diaryBody').value = '';
         }
-
-        function revealSecrets() {
-            if (diaryEntries.length === 0) {
-                alert("The box is empty. Hide a secret first!");
-                return;
-            }
-
-            const box = document.getElementById('theBox');
-            // Rotate backwards for reveal
-            box.style.transform = "rotateY(-720deg) scale(1.1)";
-            
-            setTimeout(() => {
-                box.style.transform = ""; // Reset inline style
-                renderEntries();
-                document.getElementById('diaryDisplayArea').style.display = 'block';
-                triggerCelebration(); // Celebrate the reveal too!
-            }, 2000);
-        }
-
-        function renderEntries() {
-            const list = document.getElementById('entriesList');
-            list.innerHTML = ''; // clear current
-
-            // Render from newest to oldest
-            [...diaryEntries].reverse().forEach(entry => {
-                const div = document.createElement('div');
-                div.className = 'diary-entry';
-                
-                const timeSpan = document.createElement('span');
-                timeSpan.className = 'diary-time';
-                timeSpan.innerText = `Recorded on: ${entry.timestamp}`;
-                
-                const h4 = document.createElement('h4');
-                h4.innerText = entry.title;
-                h4.style.color = 'var(--pink-secondary)';
-                h4.style.margin = '10px 0';
-                
-                const p = document.createElement('p');
-                p.innerText = entry.text;
-                p.style.marginBottom = '0';
-
-                div.appendChild(timeSpan);
-                div.appendChild(h4);
-                div.appendChild(p);
-                
-                list.appendChild(div);
-            });
-        }
-
-        // --- Confetti / Celebration Canvas Logic ---
-        const canvas = document.getElementById('celebrationCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particles = [];
-        let animationId;
-
-        class Particle {
-            constructor(x, y, color) {
-                this.x = x;
-                this.y = y;
-                this.color = color;
-                // Random explosion velocities
-                this.velocity = {
-                    x: (Math.random() - 0.5) * 15,
-                    y: (Math.random() - 0.5) * 15
-                };
-                this.radius = Math.random() * 4 + 2;
-                this.friction = 0.98;
-                this.gravity = 0.2;
-                this.opacity = 1;
-            }
-
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = this.opacity;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-                ctx.closePath();
-                ctx.restore();
-            }
-
-            update() {
-                this.velocity.x *= this.friction;
-                this.velocity.y *= this.friction;
-                this.velocity.y += this.gravity;
-                this.x += this.velocity.x;
-                this.y += this.velocity.y;
-                this.opacity -= 0.01;
-                this.draw();
-            }
-        }
-
-        function triggerCelebration() {
-            // Resize canvas just in case window changed
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const colors = ['#ff007f', '#ff4da6', '#fff', '#00ffcc', '#ffcc00'];
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-
-            // Create particles
-            for (let i = 0; i < 200; i++) {
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                particles.push(new Particle(centerX, centerY, color));
-            }
-
-            cancelAnimationFrame(animationId);
-            animateParticles();
-        }
-
-        function animateParticles() {
-            animationId = requestAnimationFrame(animateParticles);
-            // Clear canvas with transparent black for trailing effect
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            particles.forEach((particle, index) => {
-                if (particle.opacity <= 0) {
-                    particles.splice(index, 1);
-                } else {
-                    particle.update();
-                }
-            });
-        }
-
-        // Handle Window Resize for Canvas
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
     </script>
 </body>
 </html>
