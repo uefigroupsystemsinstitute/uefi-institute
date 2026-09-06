@@ -1,0 +1,472 @@
+<!-- ======================================================= -->
+<!-- NEW CUSTOM CSS FOR THE UPDATED SECTIONS                 -->
+<!-- ======================================================= -->
+<style>
+    /* Global Color & Font Variables matching the screenshots */
+    :root {
+        --bg-dark: #0a1118;
+        --bg-panel: #111a24;
+        --text-main: #ffffff;
+        --text-muted: #8b96a5;
+        --font-serif: 'Playfair Display', 'Georgia', serif;
+        --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
+        --accent-line: #1f2d3d;
+    }
+
+    /* 1. HERO VIDEO SECTION */
+    .hero-video-section {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background-color: #000;
+        font-family: var(--font-sans);
+    }
+    
+    .hero-bg-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        opacity: 0.6; /* Darken video so text is readable */
+    }
+    
+    .hero-video-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(to right, rgba(10,17,24,0.8) 0%, rgba(10,17,24,0.2) 50%, rgba(10,17,24,0.8) 100%);
+        z-index: 1;
+    }
+
+    .hero-content-container {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 4rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text-main);
+    }
+
+    .hero-text-block {
+        max-width: 500px;
+    }
+
+    .hero-text-block h1 {
+        font-family: var(--font-serif);
+        font-size: 4rem;
+        font-weight: 400;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-text-block p {
+        font-size: 1.05rem;
+        line-height: 1.6;
+        color: #d1d5db;
+        margin-bottom: 2.5rem;
+    }
+
+    .hero-text-block a {
+        color: var(--text-main);
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1.5px;
+        text-decoration: none;
+        border-bottom: 1px solid var(--text-main);
+        padding-bottom: 4px;
+        transition: opacity 0.3s ease;
+    }
+    
+    .hero-text-block a:hover { opacity: 0.7; }
+
+    .hero-timer-block {
+        text-align: right;
+    }
+
+    .hero-timer-title {
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        color: #d1d5db;
+    }
+
+    .hero-timer-clock {
+        font-family: var(--font-serif);
+        font-size: 5rem;
+        font-weight: 400;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-timer-labels {
+        display: flex;
+        justify-content: flex-end;
+        gap: 3.2rem;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        padding-right: 0.5rem;
+    }
+
+    /* 2. 850+ HOURS CATALOG SECTION */
+    .new-catalog-section {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        padding: 5rem 4rem;
+        font-family: var(--font-sans);
+    }
+
+    .new-catalog-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 1rem;
+    }
+
+    .new-catalog-header h2 {
+        font-family: var(--font-serif);
+        font-size: 3rem;
+        font-weight: 400;
+        margin: 0;
+    }
+
+    .new-catalog-header a {
+        color: var(--text-main);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        text-decoration: none;
+        border-bottom: 1px solid var(--text-muted);
+        padding-bottom: 4px;
+    }
+
+    /* Tabs Navigation */
+    .catalog-tabs-nav {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--accent-line);
+        margin-bottom: 3rem;
+        overflow-x: auto;
+    }
+
+    .catalog-tabs-nav span {
+        padding: 1.5rem 0;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        position: relative;
+        white-space: nowrap;
+        margin-right: 2rem;
+        transition: color 0.3s ease;
+    }
+
+    .catalog-tabs-nav span:hover {
+        color: var(--text-main);
+    }
+
+    .catalog-tabs-nav span.active-tab {
+        color: var(--text-main);
+    }
+
+    .catalog-tabs-nav span.active-tab::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--text-main);
+    }
+
+    /* Course Grid */
+    .new-course-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem 1rem;
+    }
+
+    .new-course-card {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .new-course-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .new-course-img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+
+    .new-course-instructor {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 0.2rem;
+        color: var(--text-main);
+    }
+
+    .new-course-meta {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    /* 3. QUOTES SECTION (The world's leading minds) */
+    .quotes-section {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        padding: 5rem 4rem;
+        font-family: var(--font-sans);
+        border-top: 1px solid var(--accent-line);
+    }
+
+    .quotes-section h2 {
+        font-family: var(--font-serif);
+        font-size: 2.8rem;
+        font-weight: 400;
+        margin-bottom: 3rem;
+    }
+
+    .quotes-carousel {
+        display: flex;
+        gap: 2rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 2rem;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    
+    .quotes-carousel::-webkit-scrollbar {
+        display: none;
+    }
+
+    .quote-card {
+        min-width: 650px;
+        height: 380px;
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        scroll-snap-align: start;
+        flex-shrink: 0;
+        background-color: var(--bg-panel);
+    }
+
+    .quote-bg-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.35) grayscale(20%);
+        transition: filter 0.5s ease;
+    }
+
+    .quote-card:hover .quote-bg-img {
+        filter: brightness(0.5) grayscale(0%);
+    }
+
+    .quote-content {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem 4rem;
+        text-align: center;
+    }
+
+    .quote-text {
+        font-family: var(--font-serif);
+        font-size: 1.6rem;
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+    }
+
+    .quote-author {
+        font-size: 0.9rem;
+        color: #d1d5db;
+        letter-spacing: 1px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+        .hero-text-block h1 { font-size: 3rem; }
+        .hero-timer-clock { font-size: 3.5rem; }
+        .new-course-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .quote-card { min-width: 500px; }
+    }
+    @media (max-width: 768px) {
+        .hero-content-container { flex-direction: column; align-items: flex-start; padding: 0 2rem; }
+        .hero-timer-block { text-align: left; margin-top: 3rem; }
+        .hero-timer-labels { justify-content: flex-start; gap: 2rem; }
+        .new-catalog-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        .quote-card { min-width: 100%; }
+        .catalog-tabs-nav { padding-bottom: 1rem; }
+    }
+</style>
+
+<!-- ======================================================= -->
+<!-- 1. NEW HERO SECTION (With Video Loop & Timer)           -->
+<!-- ======================================================= -->
+<section class="hero-video-section">
+    <!-- Background Video (Replace src with your actual Jordan Peterson/Mentor mp4 file) -->
+    <video class="hero-bg-video" autoplay loop muted playsinline>
+        <source src="https://cdn.pixabay.com/video/2020/05/25/40149-424856006_large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+    
+    <div class="hero-content-container fade-in-on-scroll">
+        <div class="hero-text-block">
+            <h1>Learn How to Think,<br>Not What to Think.</h1>
+            <p>A global academy dedicated to intellectual freedom led by distinguished professors from Harvard, Oxford, MIT, Cambridge, and other great institutions.</p>
+            <a href="#pricing">JOIN THE ACADEMY</a>
+        </div>
+
+        <div class="hero-timer-block">
+            <div class="hero-timer-title">Time Remaining</div>
+            <!-- Static timer for visual replica, you can add JS later to make it countdown -->
+            <div class="hero-timer-clock">00 : 00 : 07 : 35</div>
+            <div class="hero-timer-labels">
+                <span>Days</span>
+                <span>Hours</span>
+                <span>Minutes</span>
+                <span>Seconds</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- 2. REBUILT LECTURE CATALOG (Exact Match to Screenshot)  -->
+<!-- ======================================================= -->
+<section class="new-catalog-section" id="catalog">
+    <div class="new-catalog-header fade-in-on-scroll">
+        <h2>850+ hours of brilliant lectures.</h2>
+        <a href="#library">Explore Library</a>
+    </div>
+
+    <div class="catalog-tabs-nav fade-in-on-scroll">
+        <span>Psychology</span>
+        <span>Philosophy</span>
+        <span class="active-tab">Science</span>
+        <span>History</span>
+        <span>Social Sciences</span>
+        <span>Humanities</span>
+        <span>Mathematics</span>
+    </div>
+
+    <div class="new-course-grid fade-in-on-scroll">
+        <!-- Card 1 -->
+        <div class="new-course-card">
+            <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=600&q=80" class="new-course-img" alt="Neuroscience">
+            <div class="new-course-instructor">Dr. Baland Jalal</div>
+            <div class="new-course-meta">Psychology • Science</div>
+        </div>
+        
+        <!-- Card 2 -->
+        <div class="new-course-card">
+            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80" class="new-course-img" alt="Brain Plasticity">
+            <div class="new-course-instructor">Dr. David Eagleman</div>
+            <div class="new-course-meta">Science • Psychology</div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="new-course-card">
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=600&q=80" class="new-course-img" alt="Nutrition">
+            <div class="new-course-instructor">Max Lugavere</div>
+            <div class="new-course-meta">Science</div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="new-course-card">
+            <img src="https://images.unsplash.com/photo-1530213786676-412f174bc1fb?auto=format&fit=crop&w=600&q=80" class="new-course-img" alt="Biology">
+            <div class="new-course-instructor">Dr. Benjamin Bikman</div>
+            <div class="new-course-meta">Science</div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="new-course-card">
+            <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=600&q=80" class="new-course-img" alt="Astronomy">
+            <div class="new-course-instructor">Dr. Brian Keating</div>
+            <div class="new-course-meta">Science</div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="new-course-card">
+            <img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=600&q=80" class="new-course-img" alt="Endocrinology">
+            <div class="new-course-instructor">Dr. Benjamin Bikman</div>
+            <div class="new-course-meta">Science</div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="new-course-card">
+            <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=600&q=80" class="new-course-img" alt="Mental Health">
+            <div class="new-course-instructor">Dr. Chris Palmer</div>
+            <div class="new-course-meta">Psychology • Science</div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="new-course-card">
+            <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=600&q=80" class="new-course-img" alt="Human Nature">
+            <div class="new-course-instructor">Dr. Baland Jalal</div>
+            <div class="new-course-meta">Science • Psychology</div>
+        </div>
+    </div>
+</section>
+
+<!-- 
+    [ KEEP YOUR EXISTING 'PATH TO MASTERY', 'FACULTY', 'MEDIA', AND 'PRICING' SECTIONS HERE ]
+-->
+
+<!-- ======================================================= -->
+<!-- 3. NEW QUOTES SECTION (Add this right BEFORE your Footer)-->
+<!-- ======================================================= -->
+<section class="quotes-section fade-in-on-scroll">
+    <h2>The world's leading minds, unfiltered.</h2>
+    
+    <div class="quotes-carousel">
+        <!-- Quote 1 -->
+        <div class="quote-card">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80" class="quote-bg-img" alt="Gerald Posner">
+            <div class="quote-content">
+                <p class="quote-text">"For those seeking a real education—serious scholarship, clear reasoning, and intellectual independence—Peterson Academy is building it without the debt trap."</p>
+                <div class="quote-author">- Gerald Posner</div>
+            </div>
+        </div>
+
+        <!-- Quote 2 -->
+        <div class="quote-card">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" class="quote-bg-img" alt="Dr. James Orr">
+            <div class="quote-content">
+                <p class="quote-text">"Peterson Academy offers a banquet of courses served up from a vast range of perspectives."</p>
+                <div class="quote-author">- Dr. James Orr</div>
+            </div>
+        </div>
+        
+        <!-- Quote 3 -->
+        <div class="quote-card">
+            <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=800&q=80" class="quote-bg-img" alt="Instructor 3">
+            <div class="quote-content">
+                <p class="quote-text">"An unparalleled gathering of intellectuals committed to uncovering the foundational truths of western civilization and human psychology."</p>
+                <div class="quote-author">- Dr. W. Keith Campbell</div>
+            </div>
+        </div>
+    </div>
+</section>
