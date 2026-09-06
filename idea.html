@@ -5,6 +5,159 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UEFI Global - Higher Education</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+const translations = {
+    en: {
+        logo_text: "UEFI GLOBAL",
+        nav_signin: "Sign In",
+        nav_enroll: "Enroll",
+        hero_title: "Learn How to Think, Not What to Think.",
+        hero_subtitle: "A global academy dedicated to intellectual freedom, powered by next-generation technology.",
+        hero_cta: "Join the Academy",
+        countdown_title: "TIME REMAINING",
+        time_days: "DAYS",
+        time_hours: "HOURS",
+        time_mins: "MINUTES",
+        time_secs: "SECONDS",
+        faculty_title: "Meet our faculty.",
+        prof_1_name: "Dr. Stephen R. C. Hicks",
+        prof_1_desc: "An eminent Professor of Philosophy and Senior Scholar.",
+        prof_2_name: "Max Lugavere",
+        prof_2_desc: "Acclaimed health and wellness expert, researcher, and filmmaker.",
+        prof_3_name: "Dr. Heather Heying",
+        prof_3_desc: "Distinguished evolutionary biologist and educator.",
+        view_profile: "View Profile",
+        pricing_title: "Choose your plan",
+        plan_annual: "Annual",
+        plan_annual_desc: "18 Month Access. Renewed annually.",
+        plan_twoyear: "Two Year",
+        plan_twoyear_desc: "3 Year Access. Complete academic program.",
+        badge_top: "TOP CHOICE"
+    },
+    sw: {
+        logo_text: "UEFI KIMATAIFA",
+        nav_signin: "Ingia",
+        nav_enroll: "Jiandikishe",
+        hero_title: "Jifunze Jinsi ya Kufikiri, Sio Nini cha Kufikiri.",
+        hero_subtitle: "Chuo cha kimataifa kilichojitolea kwa uhuru wa kiakili.",
+        hero_cta: "Jiunge na Chuo",
+        countdown_title: "MUDA ULIOBAKI",
+        time_days: "SIKU",
+        time_hours: "SAA",
+        time_mins: "DAKIKA",
+        time_secs: "SEKUNDE",
+        faculty_title: "Kutana na walimu wetu.",
+        prof_1_name: "Dkt. Stephen R. C. Hicks",
+        prof_1_desc: "Profesa mashuhuri wa Falsafa na Msomi Mwandamizi.",
+        prof_2_name: "Max Lugavere",
+        prof_2_desc: "Mtaalamu anayesifika wa afya na ustawi, mtafiti, na mtengenezaji filamu.",
+        prof_3_name: "Dkt. Heather Heying",
+        prof_3_desc: "Mwanabiolojia mashuhuri wa mageuzi na mwalimu.",
+        view_profile: "Tazama Wasifu",
+        pricing_title: "Chagua mpango wako",
+        plan_annual: "Kila Mwaka",
+        plan_annual_desc: "Ufikiaji wa Miezi 18. Inasasishwa kila mwaka.",
+        plan_twoyear: "Miaka Miwili",
+        plan_twoyear_desc: "Ufikiaji wa Miaka 3. Programu kamili ya kitaaluma.",
+        badge_top: "CHAGUO BORA"
+    },
+    kik: {
+        logo_text: "UEFI THI YOTHE",
+        nav_signin: "Toonya",
+        nav_enroll: "Iyandikishe",
+        hero_title: "Wĩrute Kũgwĩciria, Tĩ Kĩrĩa Gĩakũgwĩciria.",
+        hero_subtitle: "Kĩgomano kĩa thĩ yothe kĩrĩa kĩrutĩte wĩyathi wa meciria.",
+        hero_cta: "Nyita Nda Kĩgomano",
+        countdown_title: "IHINDA RĨTIGARU",
+        time_days: "MATUKŨ",
+        time_hours: "MATHAA",
+        time_mins: "NDAGĨKA",
+        time_secs: "SEKONDI",
+        // Adding generic translations for structural demo
+        faculty_title: "Tũngana na arutani aitũ.",
+        prof_1_name: "Dkt. Stephen R. C. Hicks",
+        prof_1_desc: "Mwarimũ wa gĩkĩro kĩa igũrũ wa ũũgĩ.",
+        prof_2_name: "Max Lugavere",
+        prof_2_desc: "Mũthuthuria na mũthondeki wa mbica cia gwĩkenia.",
+        prof_3_name: "Dkt. Heather Heying",
+        prof_3_desc: "Mwarimũ wa maũndũ ma mĩmera na nyamũ.",
+        view_profile: "Rora Kĩroto",
+        pricing_title: "Thuura mũbango waku",
+        plan_annual: "O Mwaka",
+        plan_annual_desc: "Mĩeri 18. Gũcookerera o mwaka.",
+        plan_twoyear: "Mĩaka Ĩĩrĩ",
+        plan_twoyear_desc: "Mĩaka 3. Mũbango mũkinyanĩru.",
+        badge_top: "GĨTHUURANO GĨA MBERE"
+    },
+    // Placeholders for the other languages to demonstrate the data structure
+    luo: {
+        logo_text: "UEFI PINY NGIMA",
+        nav_signin: "Donji",
+        nav_enroll: "Ndik nyingi",
+        hero_title: "Puonjri Kaka Iparo, Ok Gima Iparo.",
+        hero_subtitle: "Skul mar piny ngima ma ochiwore ne thuolo mar paro.",
+        hero_cta: "Donj e Skul",
+        countdown_title: "SA MADONG'",
+        time_days: "NDALO",
+        time_hours: "SAA",
+        time_mins: "DAKIKA",
+        time_secs: "SEKONDE",
+        faculty_title: "Rom gi jopuonj wa.",
+        prof_1_name: "Japuonj Stephen R. C. Hicks",
+        prof_1_desc: "Japuonj maduong' mar rieko.",
+        prof_2_name: "Max Lugavere",
+        prof_2_desc: "Ng'at mong'ere e weche ngima.",
+        prof_3_name: "Japuonj Heather Heying",
+        prof_3_desc: "Japuonj maduong' mar biology.",
+        view_profile: "Nen Kido",
+        pricing_title: "Yier chenro mari",
+        plan_annual: "Higa Ka Higa",
+        plan_annual_desc: "Dweche 18. Iruako higa ka higa.",
+        plan_twoyear: "Higa Ariyo",
+        plan_twoyear_desc: "Higa 3. Chenro makare.",
+        badge_top: "GIMA OYIER MABER"
+    },
+    // The dictionary architecture handles German, Kalenjin, Kamba, Maasai, Kuria similarly. 
+    // You duplicate the structure above and input the exact linguistic translations.
+    de: { hero_title: "Lerne wie man denkt, nicht was man denkt." },
+    kal: { hero_title: "Noman iman, mwa noman ng'al." },
+    kam: { hero_title: "Imanyisye kũsũanĩa, ti kĩla kya kũsũanĩa." },
+    maa: { hero_title: "Teng'ena ajo inji iting'ida, meeta ajo ainyo iting'ida." },
+    kur: { hero_title: "Wegere kogonya, ntagokonya eke." }
+};
+
+// Core Translation Function
+function switchLanguage(langCode) {
+    // Check if the language exists in our dictionary
+    if (!translations[langCode]) {
+        console.warn("Language not fully supported yet: " + langCode);
+        return;
+    }
+
+    // Find all HTML elements that have the data-translate attribute
+    const translatableElements = document.querySelectorAll('[data-translate]');
+
+    // Loop through them and replace text
+    translatableElements.forEach(element => {
+        const key = element.getAttribute('data-translate');
+        
+        // If the key exists in our dictionary for the selected language, update it
+        if (translations[langCode][key]) {
+            element.innerText = translations[langCode][key];
+        }
+    });
+
+    // Optional: Save preference to local storage so it remembers on reload
+    localStorage.setItem('preferredLanguage', langCode);
+}
+
+// Auto-load saved language on startup
+window.onload = () => {
+    const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+    document.getElementById('language-selector').value = savedLang;
+    switchLanguage(savedLang);
+};
+</style>
 </head>
 <body>
 
