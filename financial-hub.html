@@ -3,530 +3,445 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Financial Empowerment Hub</title>
+    <title>EconoVerse | UEFI Global Fin Hub</title>
     <style>
-        /* --- CORE CONFIGURATION & BRAND SOLID COLORS --- */
         :root {
-            --safaricom-green: #00A859;
-            --flag-red: #BB0000;
-            --flag-black: #111111;
-            --clean-white: #FFFFFF;
-            --bg-light: #F4F6F4;
-            --border-gray: #E0E4E0;
-            --text-muted: #555555;
-            --radius-sm: 6px;
-            --radius-md: 12px;
-            --radius-pill: 50px;
-            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --neon-green: #00FF66;
+            --dark-bg: #0B0E14;
+            --glass-bg: rgba(20, 25, 35, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --danger-red: #FF3366;
+            --text-main: #FFFFFF;
+            --text-muted: #8892B0;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-stack);
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+            user-select: none;
         }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--flag-black);
-            padding-bottom: 60px;
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            overflow: hidden; /* Canvas covers everything */
         }
 
-        /* --- UNIQUE UEFI NAVIGATION HEADER --- */
-        header {
-            background-color: var(--flag-black);
-            color: var(--clean-white);
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 5px solid var(--safaricom-green);
-            position: sticky;
+        /* --- BACKGROUND CANVAS --- */
+        #simulation-canvas {
+            position: absolute;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
         }
 
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        /* --- GLASSMORPHISM UI OVERLAY --- */
+        .ui-layer {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 300px 1fr 350px;
+            padding: 20px;
+            gap: 20px;
+            pointer-events: none; /* Let clicks pass to canvas if needed */
         }
 
-        .flag-accent {
-            width: 24px;
-            height: 16px;
+        .panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            pointer-events: auto; /* Re-enable clicks on panels */
             display: flex;
             flex-direction: column;
-        }
-        .flag-accent .b { background: #000; flex: 1; }
-        .flag-accent .r { background: var(--flag-red); height: 4px; }
-        .flag-accent .g { background: var(--safaricom-green); flex: 1; }
-
-        .logo-text {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .logo-text span {
-            color: var(--safaricom-green);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
 
-        .hub-title {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            background-color: var(--flag-red);
-            padding: 4px 12px;
-            border-radius: var(--radius-sm);
-        }
-
-        /* --- MAIN LAYOUT CONTROLLER --- */
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-
-        @media (min-width: 900px) {
-            .container {
-                grid-template-columns: 2.5fr 1.5fr;
-            }
-        }
-
-        /* --- HERO & METRICS VIEW --- */
-        .dashboard-hero {
-            background-color: var(--clean-white);
-            border: 2px solid var(--flag-black);
-            border-radius: var(--radius-md);
-            padding: 30px;
-            box-shadow: 4px 4px 0px var(--flag-black);
-        }
-
-        .hero-header h1 {
-            font-size: 2rem;
-            font-weight: 900;
-            margin-bottom: 8px;
-        }
-
-        .hero-header p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            margin-bottom: 25px;
-        }
-
-        /* --- METRICS SUB-GRID --- */
-        .metrics-bar-container {
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-gray);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .metric-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .progress-track {
-            background-color: var(--border-gray);
-            height: 14px;
-            border-radius: var(--radius-pill);
-            overflow: hidden;
-            border: 1px solid var(--flag-black);
-        }
-
-        .progress-fill {
-            background-color: var(--safaricom-green);
-            height: 100%;
-            width: 35%; /* Updated via JS */
-            transition: width 0.5s ease-in-out;
-        }
-
-        /* --- THE SOLID DYNAMIC CAPSULES --- */
-        .capsule-section-title {
-            font-size: 1.1rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 15px;
+        /* --- HEADER & BRANDING --- */
+        .brand {
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .capsule-container {
-            display: flex;
-            flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 30px;
         }
 
-        .capsule {
-            background-color: var(--clean-white);
-            color: var(--flag-black);
-            border: 2px solid var(--flag-black);
-            padding: 10px 20px;
-            border-radius: var(--radius-pill);
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
+        .brand h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .capsule:hover {
-            background-color: var(--bg-light);
+        .brand span {
+            color: var(--neon-green);
+        }
+
+        /* --- MARKET TICKER --- */
+        .market-ticker {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .market-ticker h3 {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .asset {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+
+        .up { color: var(--neon-green); }
+        .down { color: var(--danger-red); }
+
+        /* --- ACTION CONTROLS --- */
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .btn {
+            background: rgba(0, 255, 102, 0.1);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px var(--neon-green);
             transform: translateY(-2px);
         }
 
-        .capsule.active {
-            background-color: var(--safaricom-green);
-            color: var(--clean-white);
-            border-color: var(--flag-black);
-            box-shadow: 2px 2px 0px var(--flag-black);
+        .btn.danger {
+            border-color: var(--danger-red);
+            color: var(--danger-red);
+            background: rgba(255, 51, 102, 0.1);
         }
 
-        /* --- DYNAMIC CONTENT DISPLAY AREA --- */
-        .content-card {
-            background-color: var(--clean-white);
-            border: 2px solid var(--flag-black);
-            border-radius: var(--radius-md);
-            padding: 25px;
-            min-height: 220px;
-            box-shadow: 4px 4px 0px var(--flag-black);
+        .btn.danger:hover {
+            background: var(--danger-red);
+            color: var(--text-main);
+            box-shadow: 0 0 15px var(--danger-red);
         }
 
-        .content-card h3 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            color: var(--flag-black);
-        }
-
-        .content-card p {
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .action-button {
-            background-color: var(--flag-black);
-            color: var(--clean-white);
-            border: none;
-            padding: 12px 24px;
-            font-weight: 700;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .action-button:hover {
-            background-color: var(--safaricom-green);
-        }
-
-        /* --- LIVE INTERACTIVE TOOLS (SIDEBAR) --- */
-        .sidebar-panel {
+        /* --- CENTER HUD --- */
+        .center-hud {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: 40px;
         }
 
-        .tool-box {
-            background-color: var(--clean-white);
-            border: 2px solid var(--flag-black);
-            border-radius: var(--radius-md);
-            padding: 25px;
-            box-shadow: 4px 4px 0px var(--flag-black);
+        .balance-display {
+            text-align: center;
+            background: var(--glass-bg);
+            padding: 20px 40px;
+            border-radius: 50px;
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.2);
+            pointer-events: auto;
         }
 
-        .tool-box h2 {
-            font-size: 1.25rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--flag-black);
-            padding-bottom: 8px;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-        }
-
-        .input-group input, .input-group select {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid var(--flag-black);
-            border-radius: var(--radius-sm);
-            font-weight: 600;
+        .balance-display h2 {
             font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
         }
 
-        .tool-btn {
-            width: 100%;
-            background-color: var(--safaricom-green);
-            color: var(--clean-white);
-            border: 2px solid var(--flag-black);
-            padding: 12px;
-            font-weight: 700;
-            font-size: 1rem;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            box-shadow: 2px 2px 0px var(--flag-black);
-        }
-
-        .tool-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 0px 0px 0px var(--flag-black);
-        }
-
-        .ledger-display {
-            background-color: var(--flag-black);
-            color: #00FF00;
+        .balance-display .amount {
+            font-size: 3rem;
+            font-weight: 900;
             font-family: monospace;
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            margin-top: 15px;
-            font-size: 0.85rem;
-            max-height: 120px;
-            overflow-y: auto;
+            color: var(--text-main);
         }
+
     </style>
 </head>
 <body>
-<header class="main-header">
-    <div class="nav-wrapper">
-        <!-- Logo -->
-        <a href="home.html" class="brand-logo">
-            <img src="assets/GL.PNG" alt="UEFI Logo" class="logo-image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
-            <div class="logo-text">
-                <h1>UEFI<span>GLOBAL</span></h1>
-                <p>Republic of Kenya Node</p>
+
+    <!-- The Living Physics Engine Background -->
+    <canvas id="simulation-canvas"></canvas>
+
+    <!-- UI Overlay -->
+    <div class="ui-layer">
+        <!-- Left Panel: Market & Stats -->
+        <div class="panel">
+            <div class="brand">
+                <h1>Econo<span>Verse</span></h1>
             </div>
-        </a>
-    </div>
-</header>
-
-    <div class="container">
-        
-        <main style="display: flex; flex-direction: column; gap: 30px;">
-            <div class="dashboard-hero">
-                <div class="hero-header">
-                    <h1>Succeed in the Modern Digital Economy</h1>
-                    <p>Master money, build scalable ventures, and claim global funding opportunities.</p>
-                </div>
-
-                <div class="metrics-bar-container">
-                    <div class="metric-row">
-                        <span>UEFI Financial Literacy Progress</span>
-                        <span id="progress-text">35%</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill" id="progress-bar" style="width: 35%;"></div>
-                    </div>
-                </div>
-
-                <div class="capsule-section-title">Select an Action Track</div>
-                <div class="capsule-container" id="capsules-wrapper">
-                    </div>
-            </div>
-
-            <div class="content-card" id="display-card">
-                <h3 id="card-title">Select a track above</h3>
-                <p id="card-description">Click any solid capsule to explore targeted challenges, resources, and growth mechanics.</p>
-                <div id="card-action-container"></div>
-            </div>
-        </main>
-
-        <aside class="sidebar-panel">
             
-            <div class="tool-box">
-                <h2>Ledger & Budget Simulation</h2>
-                <div class="input-group">
-                    <label for="transaction-type">Transaction Target</label>
-                    <select id="transaction-type">
-                        <option value="freelance">Freelancing Income (+)</option>
-                        <option value="business">Digital Business Sale (+)</option>
-                        <option value="expense">Expense / Input Cost (-)</option>
-                        <option value="saving">Locked Savings Account (->)</option>
-                    </select>
+            <div class="market-ticker">
+                <h3>Live Market Exchange</h3>
+                <div class="asset">
+                    <span>Maize Index (MZI)</span>
+                    <span id="asset-1" class="up">KES 142.50 ▲</span>
                 </div>
-                <div class="input-group">
-                    <label for="amount">Amount (KES)</label>
-                    <input type="number" id="amount" placeholder="e.g. 2500" value="1000">
+                <div class="asset">
+                    <span>Tech Hub Fund (THF)</span>
+                    <span id="asset-2" class="down">KES 89.20 ▼</span>
                 </div>
-                <button class="tool-btn" onclick="executeSimulatedTransaction()">Log to UEFI Ledger</button>
-                
-                <div class="ledger-display" id="ledger-box">
-                    [System Initialized]<br>
-                    > Wallet Ready...
+                <div class="asset">
+                    <span>SME Credit Yield</span>
+                    <span id="asset-3" class="up">12.4% ▲</span>
                 </div>
             </div>
 
-            <div class="tool-box">
-                <h2>Grant & Pitch Simulator</h2>
-                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">
-                    Simulate a submission for your venture funding.
-                </p>
-                <div class="input-group">
-                    <label for="pitch-type">Funding Avenue</label>
-                    <select id="pitch-type">
-                        <option value="grant">Innovation Grant (Zero Equity)</option>
-                        <option value="fundraise">Angel Pre-seed Round</option>
-                    </select>
-                </div>
-                <button class="tool-btn" style="background-color: var(--flag-black);" onclick="simulatePitch()">Submit Pitch Deck</button>
+            <div style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
+                System Status: <span style="color: var(--neon-green)">Optimal</span><br>
+                Node Connections: Live<br>
+                Learning Matrix: Engaged
             </div>
+        </div>
 
-        </aside>
+        <!-- Center: Main HUD -->
+        <div class="center-hud">
+            <div class="balance-display">
+                <h2>Total Liquid Assets</h2>
+                <div class="amount" id="main-balance">KES 5,000</div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Actions & Network -->
+        <div class="panel">
+            <h2 style="margin-bottom: 20px; font-size: 1.2rem;">Action Matrix</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
+                Inject kinetic energy into your economy. Watch the cash flow particles travel through your node network.
+            </p>
+            
+            <div class="control-group">
+                <button class="btn" onclick="triggerHustle()">Execute Hustle Contract (+KES)</button>
+                <button class="btn" onclick="triggerSave()">Lock to Growth Vault (Save)</button>
+                <button class="btn danger" onclick="triggerExpense()">Pay Operational Tax (-KES)</button>
+            </div>
+        </div>
     </div>
 
+    <!-- The Mathematics & Animation Logic -->
     <script>
-        // Core Hub content matrix directly mapping user specific parameters
-        const hubData = {
-            "budgeting": {
-                title: "Smart Budgeting Frameworks",
-                desc: "Learn to build defensive and tactical spending maps. Move past basic records into automated sub-accounts engineered to preserve your capital before allocation.",
-                actionText: "Launch Budget Builder Challenge (+10% Progress)"
-            },
-            "saving": {
-                title: "High-Yield Saving Strategies",
-                desc: "Discover compounding mechanisms within defensive localized ecosystems. Learn how structural interest counters inflationary forces across local markets.",
-                actionText: "Lock Simulated Savings Vault (+5% Progress)"
-            },
-            "investing basics": {
-                title: "Introduction to Asset Classes",
-                desc: "Unpack risk management profiles, index allocations, and capital market variables. Understand how market dynamics interact without speculative hype.",
-                actionText: "Analyze Mock Portfolio (+10% Progress)"
-            },
-            "entrepreneurship": {
-                title: "Venture Ideation & Execution",
-                desc: "Transform structural inefficiencies into viable services. Learn Lean Startup methodologies, customer discovery, and minimal operational structures.",
-                actionText: "Build Venture Model Canvas (+15% Progress)"
-            },
-            "digital business": {
-                title: "Building Borderless Digital Pipelines",
-                desc: "Deploy online assets that process international value. Master product positioning, dropshipping frameworks, digital product design, and processing nodes.",
-                actionText: "Audit System Pipeline (+10% Progress)"
-            },
-            "freelancing": {
-                title: "Monetizing High-Value Skills",
-                desc: "Package tech, design, or writing competencies into cross-border contracts. Master global platform mechanics, client acquisition, and cross-border invoicing.",
-                actionText: "Draft Freelance Proposal (+5% Progress)"
-            },
-            "financial planning": {
-                title: "Strategic Lifecycle Mapping",
-                desc: "Construct micro-milestones for cash allocation over continuous cycles. Mitigate existential risk while maximizing structural leverage across tech assets.",
-                actionText: "Generate Roadmap (+10% Progress)"
-            },
-            "responsible use of digital finance": {
-                title: "Digital Security & Consumer Protection",
-                desc: "Avoid systemic traps found inside mobile lending vectors and high-interest digital credit algorithms. Protect digital wallets and securely optimize transactional metadata.",
-                actionText: "Take Digital Safety Audit (+10% Progress)"
-            },
-            "fundraising": {
-                title: "Venture Capital & Pre-Seed Pooling",
-                desc: "Learn the exact processes used to approach syndicates, value your startup, orchestrate cap tables, and preserve structural governance.",
-                actionText: "Initialize Term Sheet Demo (+15% Progress)"
-            },
-            "grant writing": {
-                title: "Securing Non-Dilutive Capital",
-                desc: "Structure bulletproof proposals tailored for international research, climate innovation, and economic empowerment grants. Write tracking indices that secure awards.",
-                actionText: "Review Winning Grant Template (+15% Progress)"
-            }
+        const canvas = document.getElementById('simulation-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Resize Canvas
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // --- GAME STATE ---
+        let balance = 5000;
+        let vault = 0;
+        const balanceEl = document.getElementById('main-balance');
+
+        // --- NODE MAP ARCHITECTURE ---
+        // We define positions on the screen for the visual nodes
+        const nodes = {
+            wallet: { x: canvas.width / 2, y: canvas.height / 2 + 100, radius: 40, color: '#00FF66', label: 'Pocket Wallet' },
+            hustle: { x: canvas.width / 2 - 300, y: canvas.height / 2 - 100, radius: 30, color: '#00BFFF', label: 'Digital Hustle' },
+            vault: { x: canvas.width / 2 + 300, y: canvas.height / 2 - 100, radius: 35, color: '#FFD700', label: '2-Mo Vault' },
+            market: { x: canvas.width / 2, y: canvas.height / 2 - 250, radius: 25, color: '#FF3366', label: 'Market Maker' }
         };
 
-        // Initialize state inside local storage for persistent judges presentation
-        let currentProgress = parseInt(localStorage.getItem('uefi_hub_progress')) || 35;
-        
-        function updateProgressBar(amount) {
-            currentProgress = Math.min(currentProgress + amount, 100);
-            localStorage.setItem('uefi_hub_progress', currentProgress);
-            document.getElementById('progress-bar').style.width = currentProgress + '%';
-            document.getElementById('progress-text').innerText = currentProgress + '%';
-        }
+        // --- PARTICLE PHYSICS SYSTEM ---
+        let particles = [];
 
-        // Generate Capsular Architecture
-        const wrapper = document.getElementById('capsules-wrapper');
-        Object.keys(hubData).forEach((key, index) => {
-            const btn = document.createElement('div');
-            btn.className = `capsule ${index === 0 ? 'active' : ''}`;
-            btn.innerText = key.charAt(0).toUpperCase() + key.slice(1);
-            btn.onclick = function() {
-                document.querySelectorAll('.capsule').forEach(c => c.classList.remove('active'));
-                btn.classList.add('active');
-                renderContentCard(key);
-            };
-            wrapper.appendChild(btn);
-        });
-
-        // Dynamic Card Engine
-        function renderContentCard(key) {
-            const item = hubData[key];
-            document.getElementById('card-title').innerText = item.title;
-            document.getElementById('card-description').innerText = item.desc;
-            
-            const actionArea = document.getElementById('card-action-container');
-            actionArea.innerHTML = '';
-            
-            const actionBtn = document.createElement('button');
-            actionBtn.className = 'action-button';
-            actionBtn.innerText = item.actionText;
-            actionBtn.onclick = function() {
-                alert(`🎉 Challenge complete! Added metric growth points to your UEFI Dashboard profile.`);
-                updateProgressBar(5);
-            };
-            actionArea.appendChild(actionBtn);
-        }
-
-        // Ledger Simulator Operation
-        function executeSimulatedTransaction() {
-            const type = document.getElementById('transaction-type').value;
-            const amount = document.getElementById('amount').value;
-            const ledger = document.getElementById('ledger-box');
-            
-            if(!amount || amount <= 0) return alert("Enter valid numerical values.");
-
-            const timestamp = new Date().toLocaleTimeString();
-            let logLine = "";
-
-            if(type === 'freelance' || type === 'business') {
-                logLine = `>[${timestamp}] CR: +KES ${amount} via Verified Node.`;
-                updateProgressBar(2);
-            } else if (type === 'expense') {
-                logLine = `>[${timestamp}] DR: -KES ${amount} Allocation Logged.`;
-            } else {
-                logLine = `>[${timestamp}] MV: -> KES ${amount} Locked in Asset Vault.`;
-                updateProgressBar(3);
+        class Particle {
+            constructor(startX, startY, targetX, targetY, color, value) {
+                this.x = startX;
+                this.y = startY;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.color = color;
+                this.value = value;
+                this.progress = 0;
+                this.speed = 0.02 + Math.random() * 0.015; // Random speed variance
+                
+                // Bezier curve control points for arc movement
+                this.cpX = (startX + targetX) / 2 + (Math.random() * 100 - 50);
+                this.cpY = Math.min(startY, targetY) - 100 - Math.random() * 50;
             }
 
-            ledger.innerHTML += `<br>${logLine}`;
-            ledger.scrollTop = ledger.scrollHeight;
+            update() {
+                this.progress += this.speed;
+                // Quadratic bezier calculation
+                let u = 1 - this.progress;
+                let tt = this.progress * this.progress;
+                let uu = u * u;
+                
+                this.x = uu * this.startX + 2 * u * this.progress * this.cpX + tt * this.targetX;
+                this.y = uu * this.startY + 2 * u * this.progress * this.cpY + tt * this.targetY;
+                
+                // To keep start coordinates static for math
+                if(!this.startX) { this.startX = this.x; this.startY = this.y; }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 0; // Reset
+            }
         }
 
-        // Pitch Simulator
-        function simulatePitch() {
-            const type = document.getElementById('pitch-type').value;
-            alert(`🚀 Your UEFI ecosystem venture profile has generated a automated submission log for the chosen ${type.toUpperCase()} track. Data package sent to simulated evaluation queue!`);
-            updateProgressBar(10);
+        // --- RENDER LOOP ---
+        function animate() {
+            // Dark trailing effect
+            ctx.fillStyle = 'rgba(11, 14, 20, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Node Connections
+            ctx.beginPath();
+            ctx.moveTo(nodes.hustle.x, nodes.hustle.y);
+            ctx.lineTo(nodes.wallet.x, nodes.wallet.y);
+            ctx.lineTo(nodes.vault.x, nodes.vault.y);
+            ctx.moveTo(nodes.wallet.x, nodes.wallet.y);
+            ctx.lineTo(nodes.market.x, nodes.market.y);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Draw Nodes
+            for (let key in nodes) {
+                let n = nodes[key];
+                
+                // Pulsing effect
+                let pulse = Math.sin(Date.now() * 0.003) * 3;
+                
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.radius + pulse, 0, Math.PI * 2);
+                ctx.fillStyle = n.color;
+                ctx.globalAlpha = 0.8;
+                ctx.fill();
+                
+                // Inner ring
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.radius - 5, 0, Math.PI * 2);
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.globalAlpha = 1.0;
+
+                // Labels
+                ctx.fillStyle = '#fff';
+                ctx.font = '12px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText(n.label, n.x, n.y + n.radius + 20);
+            }
+
+            // Update & Draw Particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                p.update();
+                p.draw();
+
+                // Collision / Arrival logic
+                if (p.progress >= 1) {
+                    if (p.targetX === nodes.wallet.x && p.targetY === nodes.wallet.y && p.value > 0) {
+                        balance += p.value;
+                    } else if (p.targetX === nodes.vault.x && p.targetY === nodes.vault.y) {
+                        vault += p.value;
+                    } else if (p.targetX === nodes.market.x) {
+                        balance -= p.value;
+                    }
+                    updateBalanceUI();
+                    particles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
         }
 
-        // Trigger default state presentation
-        renderContentCard(Object.keys(hubData)[0]);
-        document.getElementById('progress-bar').style.width = currentProgress + '%';
-        document.getElementById('progress-text').innerText = currentProgress + '%';
+        // --- INTERACTION LOGIC ---
+        function triggerHustle() {
+            // Spawn 5 particles from Hustle to Wallet
+            for(let i=0; i<5; i++) {
+                setTimeout(() => {
+                    particles.push(new Particle(nodes.hustle.x, nodes.hustle.y, nodes.wallet.x, nodes.wallet.y, '#00BFFF', 100));
+                }, i * 100);
+            }
+        }
+
+        function triggerSave() {
+            if (balance >= 200) {
+                balance -= 200; // Deduct immediately
+                updateBalanceUI();
+                // Spawn particles from Wallet to Vault
+                for(let i=0; i<3; i++) {
+                    setTimeout(() => {
+                        particles.push(new Particle(nodes.wallet.x, nodes.wallet.y, nodes.vault.x, nodes.vault.y, '#FFD700', 200/3));
+                    }, i * 150);
+                }
+            }
+        }
+
+        function triggerExpense() {
+             if (balance >= 150) {
+                 // Send to Market (lost to player)
+                 for(let i=0; i<3; i++) {
+                    setTimeout(() => {
+                        particles.push(new Particle(nodes.wallet.x, nodes.wallet.y, nodes.market.x, nodes.market.y, '#FF3366', 50));
+                    }, i * 100);
+                }
+             }
+        }
+
+        function updateBalanceUI() {
+            balanceEl.innerText = `KES ${Math.floor(balance).toLocaleString()}`;
+            // Optional: flash red if low, green if high
+            balanceEl.style.color = balance < 1000 ? '#FF3366' : '#FFFFFF';
+        }
+
+        // --- LIVE MARKET SIMULATOR (Background Math) ---
+        let assetPrices = [142.50, 89.20, 12.4];
+        setInterval(() => {
+            // Random walk simulation for assets
+            for(let i=0; i<3; i++) {
+                let change = (Math.random() - 0.5) * 2;
+                assetPrices[i] += change;
+                
+                let el = document.getElementById(`asset-${i+1}`);
+                if(!el) continue;
+                
+                let dir = change >= 0 ? '▲' : '▼';
+                let cls = change >= 0 ? 'up' : 'down';
+                let format = i === 2 ? `${assetPrices[i].toFixed(1)}%` : `KES ${assetPrices[i].toFixed(2)}`;
+                
+                el.innerText = `${format} ${dir}`;
+                el.className = cls;
+            }
+        }, 2000);
+
+        // Start engine
+        animate();
+
     </script>
 </body>
 </html>
