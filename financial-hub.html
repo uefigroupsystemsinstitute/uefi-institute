@@ -3,34 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EconoVerse | UEFI Global Fin Hub</title>
+    <title>EconoVerse | UEFI Global Fin Hub Engine</title>
     <style>
+        /* ==========================================================================
+           1. CORE SYSTEM VARIABLES & NEO-BRUTALIST GLASSMORPHISM THEMING
+           ========================================================================== */
         :root {
+            --bg-dark: #07090E;
+            --panel-bg: rgba(15, 20, 30, 0.75);
+            --panel-border: rgba(255, 255, 255, 0.12);
+            --panel-border-glow: rgba(0, 255, 102, 0.3);
+            
+            --safaricom-green: #00A859;
             --neon-green: #00FF66;
-            --dark-bg: #0B0E14;
-            --glass-bg: rgba(20, 25, 35, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --danger-red: #FF3366;
-            --text-main: #FFFFFF;
-            --text-muted: #8892B0;
+            --flag-red: #E60000;
+            --neon-red: #FF3366;
+            --flag-black: #111111;
+            --gold-accent: #FFD700;
+            --cyber-blue: #00BFFF;
+            --purple-glow: #9D00FF;
+
+            --text-main: #F0F4F8;
+            --text-muted: #8292A6;
+            --text-dark: #07090E;
+
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-pill: 50px;
+
+            --shadow-soft: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+            --shadow-glow: 0 0 20px rgba(0, 255, 102, 0.2);
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* ==========================================================================
+           2. RESET & BASE LAYOUT
+           ========================================================================== */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+            font-family: var(--font-main);
             user-select: none;
+            -webkit-user-select: none;
         }
 
         body {
-            background-color: var(--dark-bg);
+            background-color: var(--bg-dark);
             color: var(--text-main);
-            overflow: hidden; /* Canvas covers everything */
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* --- BACKGROUND CANVAS --- */
-        #simulation-canvas {
+        /* Background Animated Grid */
+        #bg-canvas {
             position: absolute;
             top: 0;
             left: 0;
@@ -39,409 +72,1264 @@
             z-index: 1;
         }
 
-        /* --- GLASSMORPHISM UI OVERLAY --- */
-        .ui-layer {
+        /* Main UI Container Layer */
+        .app-shell {
             position: relative;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
             height: 100vh;
-            display: grid;
-            grid-template-columns: 300px 1fr 350px;
-            padding: 20px;
-            gap: 20px;
-            pointer-events: none; /* Let clicks pass to canvas if needed */
+            width: 100vw;
+            pointer-events: none; /* Let canvas handle pointer unless over panels */
         }
 
-        .panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 20px;
-            pointer-events: auto; /* Re-enable clicks on panels */
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-        }
-
-        /* --- HEADER & BRANDING --- */
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .brand h1 {
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .brand span {
-            color: var(--neon-green);
-        }
-
-        /* --- MARKET TICKER --- */
-        .market-ticker {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .market-ticker h3 {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .asset {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-family: monospace;
-            font-size: 1.1rem;
-        }
-
-        .up { color: var(--neon-green); }
-        .down { color: var(--danger-red); }
-
-        /* --- ACTION CONTROLS --- */
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: auto;
-        }
-
-        .btn {
-            background: rgba(0, 255, 102, 0.1);
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            background: var(--neon-green);
-            color: var(--dark-bg);
-            box-shadow: 0 0 15px var(--neon-green);
-            transform: translateY(-2px);
-        }
-
-        .btn.danger {
-            border-color: var(--danger-red);
-            color: var(--danger-red);
-            background: rgba(255, 51, 102, 0.1);
-        }
-
-        .btn.danger:hover {
-            background: var(--danger-red);
-            color: var(--text-main);
-            box-shadow: 0 0 15px var(--danger-red);
-        }
-
-        /* --- CENTER HUD --- */
-        .center-hud {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            padding-bottom: 40px;
-        }
-
-        .balance-display {
-            text-align: center;
-            background: var(--glass-bg);
-            padding: 20px 40px;
-            border-radius: 50px;
-            border: 1px solid var(--neon-green);
-            box-shadow: 0 0 20px rgba(0, 255, 102, 0.2);
+        .interactive {
             pointer-events: auto;
         }
 
-        .balance-display h2 {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 5px;
+        /* ==========================================================================
+           3. NAVIGATION & HEADER HUD
+           ========================================================================== */
+        header.top-nav {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--panel-border);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-soft);
         }
 
-        .balance-display .amount {
-            font-size: 3rem;
+        .brand-block {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .kenya-flag-badge {
+            width: 28px;
+            height: 18px;
+            border-radius: 2px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .flag-b { background: #000000; flex: 1; }
+        .flag-r { background: var(--flag-red); height: 4px; }
+        .flag-g { background: var(--safaricom-green); flex: 1; }
+
+        .brand-title {
+            font-size: 1.25rem;
             font-weight: 900;
-            font-family: monospace;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .brand-title span { color: var(--neon-green); }
+
+        .hub-pill {
+            background: rgba(230, 0, 0, 0.15);
+            border: 1px solid var(--flag-red);
+            color: #FF6B6B;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* HUD Metrics Strip */
+        .hud-metrics {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--panel-border);
+            border-radius: var(--radius-md);
+            padding: 6px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .metric-card .label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-card .value {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .metric-card .value.green { color: var(--neon-green); }
+        .metric-card .value.gold { color: var(--gold-accent); }
+        .metric-card .value.blue { color: var(--cyber-blue); }
+
+        /* ==========================================================================
+           4. MAIN CONTENT VIEWPORT & SIDEBAR SYSTEM
+           ========================================================================== */
+        .viewport-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 260px 1fr 340px;
+            gap: 16px;
+            padding: 16px;
+            overflow: hidden;
+        }
+
+        .panel-sidebar, .panel-inspector {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: var(--shadow-soft);
+            overflow-y: auto;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-green); }
+
+        /* Nav Tab Buttons */
+        .nav-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border-color: var(--panel-border);
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 255, 102, 0.1);
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 12px rgba(0, 255, 102, 0.15);
+        }
+
+        /* Central Simulation Area */
+        .simulation-viewport {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Tab Views */
+        .view-pane {
+            display: none;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .view-pane.active { display: flex; }
+
+        /* Card Panels inside Views */
+        .glass-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 8px;
+        }
+
+        .card-header h2 {
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             color: var(--text-main);
         }
 
+        /* ==========================================================================
+           5. SPECIFIC COMPONENT STYLES (CHARTS, HUSTLES, CHAMA)
+           ========================================================================== */
+        /* Hustle Grid */
+        .hustle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .hustle-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--panel-border);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: var(--transition-fast);
+        }
+
+        .hustle-card:hover {
+            border-color: var(--cyber-blue);
+            transform: translateY(-2px);
+        }
+
+        .hustle-title {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--cyber-blue);
+        }
+
+        .hustle-stats {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            background: var(--safaricom-green);
+            color: var(--text-dark);
+            border: none;
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-action:hover {
+            background: var(--neon-green);
+            box-shadow: var(--shadow-glow);
+            transform: scale(1.02);
+        }
+
+        .btn-action:active { transform: scale(0.98); }
+
+        .btn-action.secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--panel-border);
+        }
+
+        .btn-action.secondary:hover {
+            border-color: var(--text-main);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-action.danger {
+            background: rgba(230, 0, 0, 0.2);
+            color: var(--neon-red);
+            border: 1px solid var(--flag-red);
+        }
+
+        .btn-action.danger:hover {
+            background: var(--flag-red);
+            color: var(--text-main);
+            box-shadow: 0 0 15px rgba(230, 0, 0, 0.4);
+        }
+
+        /* Canvas Chart Container */
+        .chart-box {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            background: rgba(0,0,0,0.3);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--panel-border);
+            overflow: hidden;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Terminal Ledger Box */
+        .terminal-box {
+            background: #000000;
+            border: 1px solid var(--panel-border);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--neon-green);
+            height: 140px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .terminal-line { line-height: 1.4; }
+        .terminal-line.warn { color: var(--gold-accent); }
+        .terminal-line.err { color: var(--neon-red); }
+
+        /* Form Inputs */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .input-control {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--panel-border);
+            border-radius: var(--radius-sm);
+            padding: 10px;
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition-fast);
+        }
+
+        .input-control:focus {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 8px rgba(0, 255, 102, 0.2);
+        }
+
+        /* Modal Overlay System */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-card {
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-green);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 500px;
+            padding: 24px;
+            box-shadow: var(--shadow-glow);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-transform: uppercase;
+        }
+
+        /* Utilities */
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .gap-10 { gap: 10px; }
+        .mt-10 { margin-top: 10px; }
+        .text-mono { font-family: var(--font-mono); }
     </style>
 </head>
 <body>
 
-    <!-- The Living Physics Engine Background -->
-    <canvas id="simulation-canvas"></canvas>
+    <!-- 1. BACKGROUND ENGINE CANVAS (Node physics & market visualizer) -->
+    <canvas id="bg-canvas"></canvas>
 
-    <!-- UI Overlay -->
-    <div class="ui-layer">
-        <!-- Left Panel: Market & Stats -->
-        <div class="panel">
-            <div class="brand">
-                <h1>Econo<span>Verse</span></h1>
+    <!-- 2. APPLICATION SHELL LAYER -->
+    <div class="app-shell">
+        
+        <!-- HEADER HUD -->
+        <header class="top-nav interactive">
+            <div class="brand-block">
+                <div class="kenya-flag-badge">
+                    <div class="flag-b"></div>
+                    <div class="flag-r"></div>
+                    <div class="flag-g"></div>
+                </div>
+                <div class="brand-title">Econo<span>Verse</span></div>
+                <div class="hub-pill">UEFI Global Fin Hub</div>
             </div>
+
+            <div class="hud-metrics">
+                <div class="metric-card">
+                    <span class="label">Day Simulation</span>
+                    <span class="value gold" id="hud-day">Day 1 / 60</span>
+                </div>
+                <div class="metric-card">
+                    <span class="label">Pocket Wallet</span>
+                    <span class="value green" id="hud-cash">KES 5,000</span>
+                </div>
+                <div class="metric-card">
+                    <span class="label">Growth Vault</span>
+                    <span class="value blue" id="hud-vault">KES 0</span>
+                </div>
+                <div class="metric-card">
+                    <span class="label">Credit Rating</span>
+                    <span class="value" id="hud-credit">720 (Good)</span>
+                </div>
+                <div class="metric-card">
+                    <span class="label">Fin-Lit XP</span>
+                    <span class="value gold" id="hud-xp">150 XP</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN VIEWPORT GRID -->
+        <div class="viewport-body">
             
-            <div class="market-ticker">
-                <h3>Live Market Exchange</h3>
-                <div class="asset">
-                    <span>Maize Index (MZI)</span>
-                    <span id="asset-1" class="up">KES 142.50 ▲</span>
+            <!-- LEFT NAVIGATION PANEL -->
+            <aside class="panel-sidebar interactive">
+                <div style="font-weight: 800; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">
+                    Control Matrices
                 </div>
-                <div class="asset">
-                    <span>Tech Hub Fund (THF)</span>
-                    <span id="asset-2" class="down">KES 89.20 ▼</span>
+                
+                <nav class="nav-tabs">
+                    <button class="tab-btn active" onclick="switchTab('map')">
+                        🌐 Ecosystem Physics Node
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('hustles')">
+                        🛵 Local Hustle Engine
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('markets')">
+                        📈 Live Market Exchange
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('chama')">
+                        🤝 Chama Table Banking
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('credit')">
+                        💳 Micro-Credit & Debt
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('grant')">
+                        🏆 $100k Grant Simulator
+                    </button>
+                </nav>
+
+                <div style="margin-top: auto;">
+                    <button class="btn-action danger" style="width: 100%;" onclick="resetEngine()">
+                        ↺ Reset Simulation
+                    </button>
                 </div>
-                <div class="asset">
-                    <span>SME Credit Yield</span>
-                    <span id="asset-3" class="up">12.4% ▲</span>
+            </aside>
+
+            <!-- CENTER MAIN SIMULATION AREA -->
+            <main class="simulation-viewport">
+                
+                <!-- TAB 1: ECOSYSTEM NODE GRAPH MAP -->
+                <div id="view-map" class="view-pane active">
+                    <!-- Overlay Canvas Controls inside view -->
+                    <div class="glass-card interactive" style="position: absolute; top: 16px; left: 16px; width: 280px; z-index: 20;">
+                        <div class="card-header">
+                            <h2>Dynamic Liquidity Node</h2>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
+                            Visualize cash flow mechanics using dynamic particle vectors. Money transfers execute in real-time.
+                        </p>
+                        <div class="input-group">
+                            <label>Simulate Daily Hustle Rate</label>
+                            <button class="btn-action" onclick="engine.executeHustleCycle()">Inject Hustle Income (+KES 800)</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
-                System Status: <span style="color: var(--neon-green)">Optimal</span><br>
-                Node Connections: Live<br>
-                Learning Matrix: Engaged
-            </div>
-        </div>
+                <!-- TAB 2: LOCAL KENYAN HUSTLES -->
+                <div id="view-hustles" class="view-pane interactive">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h2>Kenyan Micro-Venture Incubator</h2>
+                            <span style="font-size: 0.8rem; color: var(--neon-green);">Active Ventures: <span id="hustle-count">1</span></span>
+                        </div>
+                        
+                        <div class="hustle-grid">
+                            <!-- Boda Boda Fleet -->
+                            <div class="hustle-card">
+                                <div class="hustle-title">🛵 Boda Boda Operations</div>
+                                <div class="hustle-stats">
+                                    <span>Daily Net Revenue: KES 1,200</span>
+                                    <span>Fuel & Maintenance: -KES 450</span>
+                                    <span>Risk Factor: Moderate (12%)</span>
+                                </div>
+                                <button class="btn-action" onclick="engine.runHustle('boda')">Run Day Shift (+KES 750)</button>
+                            </div>
 
-        <!-- Center: Main HUD -->
-        <div class="center-hud">
-            <div class="balance-display">
-                <h2>Total Liquid Assets</h2>
-                <div class="amount" id="main-balance">KES 5,000</div>
-            </div>
-        </div>
+                            <!-- Smokie Pasua Cart -->
+                            <div class="hustle-card">
+                                <div class="hustle-title">🥚 Smokie-Pasua Vendor Cart</div>
+                                <div class="hustle-stats">
+                                    <span>Stock Input Cost: KES 800</span>
+                                    <span>Expected Sales: KES 1,500</span>
+                                    <span>Profit Margin: 46.6%</span>
+                                </div>
+                                <button class="btn-action" onclick="engine.runHustle('smokie')">Buy Inventory & Sell (+KES 700)</button>
+                            </div>
 
-        <!-- Right Panel: Actions & Network -->
-        <div class="panel">
-            <h2 style="margin-bottom: 20px; font-size: 1.2rem;">Action Matrix</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
-                Inject kinetic energy into your economy. Watch the cash flow particles travel through your node network.
-            </p>
-            
-            <div class="control-group">
-                <button class="btn" onclick="triggerHustle()">Execute Hustle Contract (+KES)</button>
-                <button class="btn" onclick="triggerSave()">Lock to Growth Vault (Save)</button>
-                <button class="btn danger" onclick="triggerExpense()">Pay Operational Tax (-KES)</button>
-            </div>
+                            <!-- Agri-Tech Tomato Farm -->
+                            <div class="hustle-card">
+                                <div class="hustle-title">🍅 Agri-Tech Greenhouse</div>
+                                <div class="hustle-stats">
+                                    <span>Cycle Duration: 14 Days</span>
+                                    <span>Capital Required: KES 4,000</span>
+                                    <span>Harvest Yield: KES 11,500</span>
+                                </div>
+                                <button class="btn-action secondary" id="agri-btn" onclick="engine.investAgri()">Plant Cycle (Cost KES 4k)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: LIVE MARKET EXCHANGE -->
+                <div id="view-markets" class="view-pane interactive">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h2>Maize Commodity Index (MZI / KES)</h2>
+                            <span class="text-mono" id="market-price-tag" style="font-size: 1.1rem; color: var(--neon-green);">KES 145.20 ▲</span>
+                        </div>
+                        <div class="chart-box">
+                            <canvas id="market-chart" class="chart-canvas"></canvas>
+                        </div>
+                        <div style="display: flex; gap: 12px; margin-top: 14px;">
+                            <button class="btn-action" style="flex: 1;" onclick="engine.buyMarketAsset()">Buy 10 Units (MZI)</button>
+                            <button class="btn-action danger" style="flex: 1;" onclick="engine.sellMarketAsset()">Sell 10 Units (MZI)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: CHAMA TABLE BANKING -->
+                <div id="view-chama" class="view-pane interactive">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h2>Vijana Digital Chama Pool</h2>
+                            <span class="text-mono" style="color: var(--gold-accent);">Fund Equity: KES <span id="chama-pool-val">45,000</span></span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+                            Equation: \( F_n = F_{n-1} + C + r \cdot L \) — Pool contributions earn compounding dividend yields from micro-loans extended to peer ventures.
+                        </p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                            <div class="input-group">
+                                <label>Contribution Amount (KES)</label>
+                                <input type="number" id="chama-input" class="input-control" value="500">
+                                <button class="btn-action mt-10" onclick="engine.depositChama()">Deposit to Chama</button>
+                            </div>
+                            <div class="input-group">
+                                <label>Request Chama Dividend</label>
+                                <p style="font-size: 0.8rem; color: var(--text-muted);">Accrued Interest Dividend: <b style="color: var(--neon-green);" id="chama-div-val">KES 0</b></p>
+                                <button class="btn-action secondary mt-10" onclick="engine.claimChamaDividend()">Claim Dividends</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: CREDIT & LOANS -->
+                <div id="view-credit" class="view-pane interactive">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h2>Micro-Credit Facility</h2>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div>
+                                <h3 style="font-size: 0.9rem; margin-bottom: 8px;">Active Loan Balance</h3>
+                                <div style="font-size: 1.8rem; font-family: var(--font-mono); color: var(--neon-red);" id="loan-balance-txt">KES 0</div>
+                                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">
+                                    Daily Interest Rate: 1.5% compounding. Maintain repayments to keep your credit score above 700.
+                                </p>
+                            </div>
+                            <div class="input-group">
+                                <label>Request Instant Loan</label>
+                                <button class="btn-action secondary" onclick="engine.takeLoan(1000)">Borrow KES 1,000</button>
+                                <button class="btn-action danger mt-10" onclick="engine.repayLoan()">Repay Full Loan Balance</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 6: GRANT PITCH SIMULATOR -->
+                <div id="view-grant" class="view-pane interactive">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h2>$100,000 UEFI Global Fin Hub Grant Submission</h2>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+                            Submit your simulated track performance metrics directly to the grant jury evaluation matrix. High Fin-Lit XP and balanced risk models drastically increase approval odds.
+                        </p>
+                        <div class="input-group">
+                            <label>Venture Proposal Focus Track</label>
+                            <select id="grant-track-select" class="input-control">
+                                <option value="agri">Agri-Tech & Supply Chain Yield Optimization</option>
+                                <option value="fintech">Peer-to-Peer Chama Micro-Credit Protocol</option>
+                                <option value="clean">Renewable Boda-Boda Fleet Electrification</option>
+                            </select>
+                        </div>
+                        <button class="btn-action mt-10" style="background: var(--gold-accent);" onclick="engine.submitGrantPitch()">
+                            🚀 Submit Pitch Deck to Jury
+                        </button>
+                    </div>
+                </div>
+
+            </main>
+
+            <!-- RIGHT INSPECTOR & TERMINAL PANEL -->
+            <aside class="panel-inspector interactive">
+                <div style="font-weight: 800; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">
+                    Real-Time System Ledger
+                </div>
+
+                <!-- Real-time Terminal Log -->
+                <div class="terminal-box" id="ledger-terminal">
+                    <div class="terminal-line">[SYSTEM OK] EconoVerse Kernel v4.2 Initialized...</div>
+                    <div class="terminal-line">[NODE LINK] M-PESA Go Gateway: Ready</div>
+                    <div class="terminal-line">[PHYSICS] Particle Vector Matrix: Active</div>
+                </div>
+
+                <div class="card-header mt-10">
+                    <h2>Market Ticker</h2>
+                </div>
+                <div style="font-family: var(--font-mono); font-size: 0.8rem; display: flex; flex-direction: column; gap: 8px;">
+                    <div class="flex-between">
+                        <span>Maize Index (MZI)</span>
+                        <span class="text-mono" id="ticker-mzi" style="color: var(--neon-green)">145.20 ▲</span>
+                    </div>
+                    <div class="flex-between">
+                        <span>Central Bank Rate</span>
+                        <span class="text-mono" style="color: var(--gold-accent)">13.00%</span>
+                    </div>
+                    <div class="flex-between">
+                        <span>Inflation Friction</span>
+                        <span class="text-mono" style="color: var(--neon-red)">6.8%</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: auto;">
+                    <button class="btn-action secondary" style="width: 100%;" onclick="engine.advanceSimulationDay()">
+                        ▶ Advance 1 Day Simulation
+                    </button>
+                </div>
+            </aside>
+
         </div>
     </div>
 
-    <!-- The Mathematics & Animation Logic -->
+    <!-- 3. MODAL OVERLAY FOR MACROECONOMIC EVENTS -->
+    <div class="modal-overlay" id="event-modal">
+        <div class="modal-card">
+            <div class="modal-title" id="modal-event-title">⚠️ Macroeconomic Shock Event</div>
+            <p id="modal-event-desc" style="font-size: 0.9rem; color: var(--text-main); line-height: 1.5;"></p>
+            <button class="btn-action" onclick="closeModal()">Acknowledge & Adjust Strategy</button>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       4. JAVASCRIPT KERNEL ENGINE & MATHEMATICAL MODEL
+       ========================================================================== -->
     <script>
-        const canvas = document.getElementById('simulation-canvas');
-        const ctx = canvas.getContext('2d');
-
-        // Resize Canvas
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        // --- GAME STATE ---
-        let balance = 5000;
-        let vault = 0;
-        const balanceEl = document.getElementById('main-balance');
-
-        // --- NODE MAP ARCHITECTURE ---
-        // We define positions on the screen for the visual nodes
-        const nodes = {
-            wallet: { x: canvas.width / 2, y: canvas.height / 2 + 100, radius: 40, color: '#00FF66', label: 'Pocket Wallet' },
-            hustle: { x: canvas.width / 2 - 300, y: canvas.height / 2 - 100, radius: 30, color: '#00BFFF', label: 'Digital Hustle' },
-            vault: { x: canvas.width / 2 + 300, y: canvas.height / 2 - 100, radius: 35, color: '#FFD700', label: '2-Mo Vault' },
-            market: { x: canvas.width / 2, y: canvas.height / 2 - 250, radius: 25, color: '#FF3366', label: 'Market Maker' }
-        };
-
-        // --- PARTICLE PHYSICS SYSTEM ---
-        let particles = [];
-
-        class Particle {
-            constructor(startX, startY, targetX, targetY, color, value) {
-                this.x = startX;
-                this.y = startY;
-                this.targetX = targetX;
-                this.targetY = targetY;
-                this.color = color;
-                this.value = value;
-                this.progress = 0;
-                this.speed = 0.02 + Math.random() * 0.015; // Random speed variance
-                
-                // Bezier curve control points for arc movement
-                this.cpX = (startX + targetX) / 2 + (Math.random() * 100 - 50);
-                this.cpY = Math.min(startY, targetY) - 100 - Math.random() * 50;
+        /* --------------------------------------------------------------------------
+           A. WEB AUDIO SYNTHESIZER ENGINE (Zero External Audio Files Needed)
+           -------------------------------------------------------------------------- */
+        class AudioSynthEngine {
+            constructor() {
+                this.ctx = null;
             }
 
-            update() {
-                this.progress += this.speed;
-                // Quadratic bezier calculation
-                let u = 1 - this.progress;
-                let tt = this.progress * this.progress;
-                let uu = u * u;
-                
-                this.x = uu * this.startX + 2 * u * this.progress * this.cpX + tt * this.targetX;
-                this.y = uu * this.startY + 2 * u * this.progress * this.cpY + tt * this.targetY;
-                
-                // To keep start coordinates static for math
-                if(!this.startX) { this.startX = this.x; this.startY = this.y; }
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
             }
 
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = this.color;
-                ctx.fill();
-                ctx.shadowBlur = 0; // Reset
+            playCoinSound() {
+                this.init();
+                if(!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(987.77, this.ctx.currentTime); // B5
+                osc.frequency.exponentialRampToValueAtTime(1318.51, this.ctx.currentTime + 0.08); // E6
+                gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.15);
+            }
+
+            playAlertSound() {
+                this.init();
+                if(!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(300, this.ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(150, this.ctx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.2);
             }
         }
+        const synth = new AudioSynthEngine();
 
-        // --- RENDER LOOP ---
-        function animate() {
-            // Dark trailing effect
-            ctx.fillStyle = 'rgba(11, 14, 20, 0.2)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Draw Node Connections
-            ctx.beginPath();
-            ctx.moveTo(nodes.hustle.x, nodes.hustle.y);
-            ctx.lineTo(nodes.wallet.x, nodes.wallet.y);
-            ctx.lineTo(nodes.vault.x, nodes.vault.y);
-            ctx.moveTo(nodes.wallet.x, nodes.wallet.y);
-            ctx.lineTo(nodes.market.x, nodes.market.y);
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            // Draw Nodes
-            for (let key in nodes) {
-                let n = nodes[key];
-                
-                // Pulsing effect
-                let pulse = Math.sin(Date.now() * 0.003) * 3;
-                
-                ctx.beginPath();
-                ctx.arc(n.x, n.y, n.radius + pulse, 0, Math.PI * 2);
-                ctx.fillStyle = n.color;
-                ctx.globalAlpha = 0.8;
-                ctx.fill();
-                
-                // Inner ring
-                ctx.beginPath();
-                ctx.arc(n.x, n.y, n.radius - 5, 0, Math.PI * 2);
-                ctx.strokeStyle = '#fff';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.globalAlpha = 1.0;
-
-                // Labels
-                ctx.fillStyle = '#fff';
-                ctx.font = '12px monospace';
-                ctx.textAlign = 'center';
-                ctx.fillText(n.label, n.x, n.y + n.radius + 20);
+        /* --------------------------------------------------------------------------
+           B. GEOMETRIC BROWNAN MOTION MARKET CHART ENGINE
+           -------------------------------------------------------------------------- */
+        class CustomMarketChart {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas.getContext('2d');
+                this.history = [];
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
             }
 
-            // Update & Draw Particles
-            for (let i = particles.length - 1; i >= 0; i--) {
-                let p = particles[i];
-                p.update();
-                p.draw();
+            resize() {
+                if(!this.canvas) return;
+                this.canvas.width = this.canvas.parentElement.clientWidth;
+                this.canvas.height = this.canvas.parentElement.clientHeight;
+            }
 
-                // Collision / Arrival logic
-                if (p.progress >= 1) {
-                    if (p.targetX === nodes.wallet.x && p.targetY === nodes.wallet.y && p.value > 0) {
-                        balance += p.value;
-                    } else if (p.targetX === nodes.vault.x && p.targetY === nodes.vault.y) {
-                        vault += p.value;
-                    } else if (p.targetX === nodes.market.x) {
-                        balance -= p.value;
+            updateData(newPrice) {
+                this.history.push(newPrice);
+                if (this.history.length > 40) this.history.shift();
+                this.render();
+            }
+
+            render() {
+                const w = this.canvas.width;
+                const h = this.canvas.height;
+                this.ctx.clearRect(0, 0, w, h);
+
+                if (this.history.length < 2) return;
+
+                const min = Math.min(...this.history) * 0.98;
+                const max = Math.max(...this.history) * 1.02;
+
+                // Draw Grid Lines
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                this.ctx.lineWidth = 1;
+                for (let i = 1; i < 4; i++) {
+                    let y = (h / 4) * i;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(0, y);
+                    this.ctx.lineTo(w, y);
+                    this.ctx.stroke();
+                }
+
+                // Draw Price Line with Gradient Fill
+                this.ctx.beginPath();
+                const step = w / (this.history.length - 1);
+                
+                this.history.forEach((val, index) => {
+                    let x = index * step;
+                    let y = h - ((val - min) / (max - min)) * h;
+                    if (index === 0) this.ctx.moveTo(x, y);
+                    else this.ctx.lineTo(x, y);
+                });
+
+                this.ctx.strokeStyle = '#00FF66';
+                this.ctx.lineWidth = 3;
+                this.ctx.stroke();
+
+                // Gradient Fill below chart
+                const lastX = (this.history.length - 1) * step;
+                const lastY = h - ((this.history[this.history.length - 1] - min) / (max - min)) * h;
+                
+                this.ctx.lineTo(lastX, h);
+                this.ctx.lineTo(0, h);
+                this.ctx.closePath();
+
+                const grad = this.ctx.createLinearGradient(0, 0, 0, h);
+                grad.addColorStop(0, 'rgba(0, 255, 102, 0.25)');
+                grad.addColorStop(1, 'rgba(0, 255, 102, 0.0)');
+                this.ctx.fillStyle = grad;
+                this.ctx.fill();
+            }
+        }
+
+        /* --------------------------------------------------------------------------
+           C. HTML5 CANVAS NODE & PARTICLE PHYSICS ENGINE
+           -------------------------------------------------------------------------- */
+        class PhysicsGraphEngine {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.nodes = {};
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.initNodes();
+                this.loop();
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                if(this.nodes.wallet) this.initNodes(); // Re-center nodes on screen resize
+            }
+
+            initNodes() {
+                const cx = this.canvas.width / 2;
+                const cy = this.canvas.height / 2;
+
+                this.nodes = {
+                    wallet: { x: cx, y: cy + 80, r: 35, color: '#00FF66', name: 'Pocket Wallet' },
+                    hustle: { x: cx - 260, y: cy - 100, r: 30, color: '#00BFFF', name: 'Boda / Smokie' },
+                    vault:  { x: cx + 260, y: cy - 100, r: 30, color: '#FFD700', name: 'Growth Vault' },
+                    chama:  { x: cx, y: cy - 220, r: 28, color: '#9D00FF', name: 'Chama Pool' }
+                };
+            }
+
+            spawnFlow(sourceKey, targetKey, color, count = 6) {
+                const src = this.nodes[sourceKey];
+                const tgt = this.nodes[targetKey];
+                if (!src || !tgt) return;
+
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        this.particles.push({
+                            x: src.x,
+                            y: src.y,
+                            startX: src.x,
+                            startY: src.y,
+                            targetX: tgt.x,
+                            targetY: tgt.y,
+                            progress: 0,
+                            speed: 0.02 + Math.random() * 0.01,
+                            color: color,
+                            cpX: (src.x + tgt.x) / 2 + (Math.random() * 80 - 40),
+                            cpY: Math.min(src.y, tgt.y) - 60
+                        });
+                    }, i * 80);
+                }
+            }
+
+            loop() {
+                // Dark trailing clear
+                this.ctx.fillStyle = 'rgba(7, 9, 14, 0.25)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+                // Draw Connecting Vector Lines
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.nodes.hustle.x, this.nodes.hustle.y);
+                this.ctx.lineTo(this.nodes.wallet.x, this.nodes.wallet.y);
+                this.ctx.lineTo(this.nodes.vault.x, this.nodes.vault.y);
+                this.ctx.moveTo(this.nodes.wallet.x, this.nodes.wallet.y);
+                this.ctx.lineTo(this.nodes.chama.x, this.nodes.chama.y);
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+                this.ctx.lineWidth = 2;
+                this.ctx.setLineDash([6, 6]);
+                this.ctx.stroke();
+                this.ctx.setLineDash([]);
+
+                // Update & Render Flow Particles
+                for (let i = this.particles.length - 1; i >= 0; i--) {
+                    let p = this.particles[i];
+                    p.progress += p.speed;
+
+                    // Quadratic Bezier interpolation
+                    let u = 1 - p.progress;
+                    let tt = p.progress * p.progress;
+                    let uu = u * u;
+
+                    p.x = uu * p.startX + 2 * u * p.progress * p.cpX + tt * p.targetX;
+                    p.y = uu * p.startY + 2 * u * p.progress * p.cpY + tt * p.targetY;
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                    this.ctx.fillStyle = p.color;
+                    this.ctx.shadowBlur = 10;
+                    this.ctx.shadowColor = p.color;
+                    this.ctx.fill();
+                    this.ctx.shadowBlur = 0;
+
+                    if (p.progress >= 1) {
+                        this.particles.splice(i, 1);
                     }
-                    updateBalanceUI();
-                    particles.splice(i, 1);
                 }
-            }
 
-            requestAnimationFrame(animate);
+                // Render Nodes
+                for (let key in this.nodes) {
+                    let n = this.nodes[key];
+                    let pulse = Math.sin(Date.now() * 0.004) * 2;
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(n.x, n.y, n.r + pulse, 0, Math.PI * 2);
+                    this.ctx.fillStyle = n.color;
+                    this.ctx.globalAlpha = 0.85;
+                    this.ctx.fill();
+                    this.ctx.globalAlpha = 1.0;
+
+                    this.ctx.strokeStyle = '#FFFFFF';
+                    this.ctx.lineWidth = 2;
+                    this.ctx.stroke();
+
+                    this.ctx.fillStyle = '#FFFFFF';
+                    this.ctx.font = '700 11px sans-serif';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.fillText(n.name, n.x, n.y + n.r + 18);
+                }
+
+                requestAnimationFrame(() => this.loop());
+            }
         }
 
-        // --- INTERACTION LOGIC ---
-        function triggerHustle() {
-            // Spawn 5 particles from Hustle to Wallet
-            for(let i=0; i<5; i++) {
+        /* --------------------------------------------------------------------------
+           D. MAIN ECONOVERSE SIMULATION KERNEL (State & Business Logic)
+           -------------------------------------------------------------------------- */
+        class EconoVerseKernel {
+            constructor() {
+                this.day = 1;
+                this.cash = 5000;
+                this.vault = 0;
+                this.creditScore = 720;
+                this.xp = 150;
+                this.loanBalance = 0;
+                
+                // Market Data
+                this.mziPrice = 145.20;
+                this.mziHeld = 0;
+
+                // Chama
+                this.chamaPool = 45000;
+                this.chamaUserEquity = 0;
+                this.chamaDividends = 0;
+
+                this.chart = new CustomMarketChart('market-chart');
+                this.graph = new PhysicsGraphEngine('bg-canvas');
+
+                this.initEngine();
+            }
+
+            initEngine() {
+                this.updateHUD();
+                this.logTerminal("Simulation Kernel active. Select an action track.");
+
+                // Start Brownian Motion loop for Market Chart
+                setInterval(() => {
+                    let drift = 0.001; // Positive long term growth
+                    let volatility = 0.02; // Volatility factor
+                    let shock = (Math.random() - 0.48) * volatility;
+                    this.mziPrice = Math.max(80, this.mziPrice * (1 + drift + shock));
+                    
+                    this.chart.updateData(this.mziPrice);
+                    document.getElementById('market-price-tag').innerText = `KES ${this.mziPrice.toFixed(2)}`;
+                    document.getElementById('ticker-mzi').innerText = `${this.mziPrice.toFixed(2)}`;
+                }, 1500);
+            }
+
+            logTerminal(msg, type = '') {
+                const box = document.getElementById('ledger-terminal');
+                const line = document.createElement('div');
+                line.className = `terminal-line ${type}`;
+                const time = new Date().toLocaleTimeString();
+                line.innerText = `>[${time}] ${msg}`;
+                box.appendChild(line);
+                box.scrollTop = box.scrollHeight;
+            }
+
+            updateHUD() {
+                document.getElementById('hud-day').innerText = `Day ${this.day} / 60`;
+                document.getElementById('hud-cash').innerText = `KES ${Math.floor(this.cash).toLocaleString()}`;
+                document.getElementById('hud-vault').innerText = `KES ${Math.floor(this.vault).toLocaleString()}`;
+                document.getElementById('hud-credit').innerText = `${this.creditScore} (${this.getCreditStatus()})`;
+                document.getElementById('hud-xp').innerText = `${this.xp} XP`;
+                
+                document.getElementById('chama-pool-val').innerText = Math.floor(this.chamaPool).toLocaleString();
+                document.getElementById('chama-div-val').innerText = Math.floor(this.chamaDividends).toLocaleString();
+                document.getElementById('loan-balance-txt').innerText = `KES ${Math.floor(this.loanBalance).toLocaleString()}`;
+            }
+
+            getCreditStatus() {
+                if (this.creditScore >= 750) return 'Excellent';
+                if (this.creditScore >= 680) return 'Good';
+                if (this.creditScore >= 600) return 'Fair';
+                return 'Poor';
+            }
+
+            executeHustleCycle() {
+                let revenue = 800;
+                this.cash += revenue;
+                this.xp += 10;
+                synth.playCoinSound();
+                this.graph.spawnFlow('hustle', 'wallet', '#00FF66');
+                this.logTerminal(`Executed hustle cycle. Earned KES ${revenue}.`);
+                this.updateHUD();
+            }
+
+            runHustle(type) {
+                if (type === 'boda') {
+                    this.cash += 750;
+                    this.xp += 15;
+                    this.graph.spawnFlow('hustle', 'wallet', '#00BFFF');
+                    this.logTerminal("Completed Boda Boda daily shift. Net profit: KES 750.");
+                } else if (type === 'smokie') {
+                    if (this.cash < 800) {
+                        synth.playAlertSound();
+                        return alert("Insufficient cash balance for Smokie inventory!");
+                    }
+                    this.cash += 700; // Net profit (1500 revenue - 800 inventory)
+                    this.xp += 20;
+                    this.graph.spawnFlow('hustle', 'wallet', '#00FF66');
+                    this.logTerminal("Sold out Smokie-Pasua inventory. Net profit: KES 700.");
+                }
+                synth.playCoinSound();
+                this.updateHUD();
+            }
+
+            investAgri() {
+                if (this.cash < 4000) {
+                    synth.playAlertSound();
+                    return alert("You need KES 4,000 to seed the Greenhouse agri-cycle!");
+                }
+                this.cash -= 4000;
+                this.xp += 50;
+                this.graph.spawnFlow('wallet', 'vault', '#FFD700');
+                this.logTerminal("Invested KES 4,000 into 14-day Agri-Tech Greenhouse yield cycle.");
+                
+                // Simulate yield arrival after 3 simulation days
                 setTimeout(() => {
-                    particles.push(new Particle(nodes.hustle.x, nodes.hustle.y, nodes.wallet.x, nodes.wallet.y, '#00BFFF', 100));
-                }, i * 100);
-            }
-        }
+                    this.cash += 11500;
+                    this.logTerminal("🍅 HARVEST COMPLETE! Received KES 11,500 greenhouse yield!", "warn");
+                    synth.playCoinSound();
+                    this.updateHUD();
+                }, 8000);
 
-        function triggerSave() {
-            if (balance >= 200) {
-                balance -= 200; // Deduct immediately
-                updateBalanceUI();
-                // Spawn particles from Wallet to Vault
-                for(let i=0; i<3; i++) {
-                    setTimeout(() => {
-                        particles.push(new Particle(nodes.wallet.x, nodes.wallet.y, nodes.vault.x, nodes.vault.y, '#FFD700', 200/3));
-                    }, i * 150);
+                this.updateHUD();
+            }
+
+            buyMarketAsset() {
+                let cost = this.mziPrice * 10;
+                if (this.cash < cost) {
+                    synth.playAlertSound();
+                    return alert("Insufficient funds to buy 10 MZI units.");
                 }
+                this.cash -= cost;
+                this.mziHeld += 10;
+                synth.playCoinSound();
+                this.logTerminal(`Bought 10 MZI units at KES ${this.mziPrice.toFixed(2)} each.`);
+                this.updateHUD();
             }
-        }
 
-        function triggerExpense() {
-             if (balance >= 150) {
-                 // Send to Market (lost to player)
-                 for(let i=0; i<3; i++) {
-                    setTimeout(() => {
-                        particles.push(new Particle(nodes.wallet.x, nodes.wallet.y, nodes.market.x, nodes.market.y, '#FF3366', 50));
-                    }, i * 100);
+            sellMarketAsset() {
+                if (this.mziHeld < 10) {
+                    synth.playAlertSound();
+                    return alert("You hold zero MZI units in your trading portfolio.");
                 }
-             }
-        }
-
-        function updateBalanceUI() {
-            balanceEl.innerText = `KES ${Math.floor(balance).toLocaleString()}`;
-            // Optional: flash red if low, green if high
-            balanceEl.style.color = balance < 1000 ? '#FF3366' : '#FFFFFF';
-        }
-
-        // --- LIVE MARKET SIMULATOR (Background Math) ---
-        let assetPrices = [142.50, 89.20, 12.4];
-        setInterval(() => {
-            // Random walk simulation for assets
-            for(let i=0; i<3; i++) {
-                let change = (Math.random() - 0.5) * 2;
-                assetPrices[i] += change;
-                
-                let el = document.getElementById(`asset-${i+1}`);
-                if(!el) continue;
-                
-                let dir = change >= 0 ? '▲' : '▼';
-                let cls = change >= 0 ? 'up' : 'down';
-                let format = i === 2 ? `${assetPrices[i].toFixed(1)}%` : `KES ${assetPrices[i].toFixed(2)}`;
-                
-                el.innerText = `${format} ${dir}`;
-                el.className = cls;
+                let returnVal = this.mziPrice * 10;
+                this.cash += returnVal;
+                this.mziHeld -= 10;
+                synth.playCoinSound();
+                this.logTerminal(`Sold 10 MZI units at KES ${this.mziPrice.toFixed(2)} each.`);
+                this.updateHUD();
             }
-        }, 2000);
 
-        // Start engine
-        animate();
+            depositChama() {
+                let val = parseFloat(document.getElementById('chama-input').value) || 0;
+                if (val <= 0 || this.cash < val) {
+                    synth.playAlertSound();
+                    return alert("Enter a valid deposit amount within your available cash.");
+                }
+                this.cash -= val;
+                this.chamaUserEquity += val;
+                this.chamaPool += val;
+                this.xp += 25;
+                this.graph.spawnFlow('wallet', 'chama', '#9D00FF');
+                synth.playCoinSound();
+                this.logTerminal(`Deposited KES ${val} into Chama Table Banking Pool.`);
+                this.updateHUD();
+            }
 
+            claimChamaDividend() {
+                if (this.chamaDividends <= 0) {
+                    synth.playAlertSound();
+                    return alert("No dividends accrued yet. Deposit funds to earn interest!");
+                }
+                this.cash += this.chamaDividends;
+                this.logTerminal(`Claimed KES ${Math.floor(this.chamaDividends)} Chama interest dividends.`);
+                this.chamaDividends = 0;
+                synth.playCoinSound();
+                this.updateHUD();
+            }
+
+            takeLoan(amt) {
+                if (this.creditScore < 600) {
+                    synth.playAlertSound();
+                    return alert("Loan rejected. Your credit score is below the required 600 threshold.");
+                }
+                this.loanBalance += amt;
+                this.cash += amt;
+                this.logTerminal(`Approved instant micro-credit line of KES ${amt}.`, 'warn');
+                synth.playCoinSound();
+                this.updateHUD();
+            }
+
+            repayLoan() {
+                if (this.loanBalance <= 0) return alert("You have zero active outstanding loans.");
+                if (this.cash < this.loanBalance) {
+                    synth.playAlertSound();
+                    return alert("Insufficient cash to clear the entire loan balance.");
+                }
+                this.cash -= this.loanBalance;
+                this.logTerminal(`Cleared full loan balance of KES ${Math.floor(this.loanBalance)}.`);
+                this.loanBalance = 0;
+                this.creditScore = Math.min(850, this.creditScore + 25); // Credit score boost
+                synth.playCoinSound();
+                this.updateHUD();
+            }
+
+            advanceSimulationDay() {
+                this.day++;
+                
+                // Loan compounding interest
+                if (this.loanBalance > 0) {
+                    this.loanBalance *= 1.015; // 1.5% daily interest
+                    this.creditScore = Math.max(300, this.creditScore - 3); // Penalty for holding debt
+                }
+
+                // Chama Dividend Yield Accrual (Formula: Dividends = Equity * 0.008)
+                if (this.chamaUserEquity > 0) {
+                    this.chamaDividends += this.chamaUserEquity * 0.008;
+                }
+
+                this.logTerminal(`Advanced to Simulation Day ${this.day}.`);
+
+                // Trigger Random Event every 5 days
+                if (this.day % 5 === 0) {
+                    this.triggerRandomEvent();
+                }
+
+                this.updateHUD();
+            }
+
+            triggerRandomEvent() {
+                const events = [
+                    {
+                        title: "⚡ KPLC Power Grid Outage",
+                        desc: "A power blackout hit local business centers. Smokie vendor sales decreased by 20%, but solar-powered Boda charging stations gained pricing leverage!",
+                        action: () => { this.cash -= 300; }
+                    },
+                    {
+                        title: "🌧️ Heavy Rains Hit Farming Belt",
+                        desc: "High agricultural supply boosted regional market volume. Maize Futures (MZI) prices spiked by 12%!",
+                        action: () => { this.mziPrice *= 1.12; }
+                    },
+                    {
+                        title: "📈 Central Bank Rate Adjustment",
+                        desc: "Central Bank increased interest rates. Chama pool dividend yields surged!",
+                        action: () => { this.chamaDividends += 400; }
+                    }
+                ];
+
+                const ev = events[Math.floor(Math.random() * events.length)];
+                ev.action();
+                synth.playAlertSound();
+                
+                document.getElementById('modal-event-title').innerText = ev.title;
+                document.getElementById('modal-event-desc').innerText = ev.desc;
+                document.getElementById('event-modal').classList.add('active');
+            }
+
+            submitGrantPitch() {
+                const track = document.getElementById('grant-track-select').value;
+                if (this.xp < 200 || this.creditScore < 680) {
+                    synth.playAlertSound();
+                    return alert("Pitch Declined: Grant Jury requires a minimum of 200 Fin-Lit XP and a 680+ Credit Rating.");
+                }
+
+                synth.playCoinSound();
+                alert(`🎉 CONGRATULATIONS! Your proposal under track [${track.toUpperCase()}] passed the jury evaluation. Your venture won a $100,000 UEFI Global Fin Hub grant allocation!`);
+                this.xp += 500;
+                this.cash += 50000;
+                this.logTerminal("🏆 WON $100,000 UEFI GLOBAL FIN HUB GRANT AWARD!", "warn");
+                this.updateHUD();
+            }
+        }
+
+        /* --------------------------------------------------------------------------
+           E. GLOBAL INTERACTION CONTROLLERS & INITIALIZATION
+           -------------------------------------------------------------------------- */
+        let engine;
+
+        window.addEventListener('load', () => {
+            engine = new EconoVerseKernel();
+        });
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.view-pane').forEach(pane => pane.classList.remove('active'));
+
+            event.currentTarget.classList.add('active');
+            document.getElementById(`view-${tabId}`).classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('event-modal').classList.remove('active');
+        }
+
+        function resetEngine() {
+            if (confirm("Reset simulation to Day 1 default state?")) {
+                location.reload();
+            }
+        }
     </script>
 </body>
 </html>
