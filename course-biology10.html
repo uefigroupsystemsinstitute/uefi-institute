@@ -588,7 +588,7 @@
 const CURRICULUM_DATABASE = [
     {
         id: "g10-real",
-        title: "Unit 1: Real Numbers",
+        title: "INTRODUCTION TO BIOLOGY",
         videoUrl: "https://www.youtube.com/embed/aO858HyFbKI",
         questions: [
             { text: "Classify the evaluation profile as rational/irrational: <span class='math-expr'>3<span class='math-surd'>&radic;</span><span>5</span> &times; <span class='math-surd'>&radic;</span><span>20</span></span>.", ans: "rational", steps: "Simplify: 3 * sqrt(100) = 3 * 10 = 30. Result evaluates to an integer, which falls inside rational fields." },
@@ -605,7 +605,7 @@ const CURRICULUM_DATABASE = [
     },
     {
         id: "g10-ind",
-        title: "Unit 2: Indices and Logarithms",
+        title: "SPECIMEN COLLECTION AND PRESERVATION",
         videoUrl: "https://www.youtube.com/embed/92pZpFVdtD8",
         questions: [
             { text: "Simplify index variables: <span class='math-expr'>(2a<sup>3</sup>b<sup>2</sup>) &times; (4a<sup>-1</sup>b<sup>4</sup>)</span>. Use form: X*a^Y*b^Z.", ans: "8*a^2*b^6", steps: "Group constant and variable bases: (2*4) * a^(3-1) * b^(2+4) = 8*a^2*b^6." },
@@ -622,7 +622,7 @@ const CURRICULUM_DATABASE = [
     },
     {
         id: "g10-quad",
-        title: "Unit 3: Quadratic Expressions & Equations",
+        title: "CELL STRUCTURE AND SPECIALIZATION ",
         videoUrl: "https://www.youtube.com/embed/D6NYI41jnes",
         questions: [
             { text: "Factorize the expression structure completely: <span class='math-expr'>x<sup>2</sup> - 5x - 6</span>. Format: (x-A)(x+B).", ans: "x-6)(x+1", steps: "Find numbers that multiply to -6 and sum to -5. These are -6 and +1. Format matches (x-6)(x+1)." },
@@ -639,7 +639,7 @@ const CURRICULUM_DATABASE = [
     },
     {
         id: "g10-sim",
-        title: "Unit 4: Similarity and Enlargement",
+        title: "CHEMICALS OF LIFE ",
         videoUrl: "https://www.youtube.com/embed/03-G60uEeQs",
         questions: [
             { text: "Two similar triangles have matching sides of 4 cm and 12 cm. Find scale ratio factor <span class='math-expr'>k</span>.", ans: "3", steps: "Linear scale tracking calculation: Scale factor = Image length / Object length = 12 / 4 = 3." },
@@ -656,7 +656,7 @@ const CURRICULUM_DATABASE = [
     },
     {
         id: "g10-ref",
-        title: "Unit 5: Reflection and Congruence",
+        title: "PLANTS:NUTRITION ",
         videoUrl: "https://www.youtube.com/embed/2bQFDaH-w3s",
         questions: [
             { text: "Reflect node A(4, -3) across horizontal graph line <span class='math-expr'>y = 0</span>. Find image position coordinates.", ans: "(4,3)", steps: "Reflection across x-axis (y=0) preserves x-coordinate and negates y-value: (4, -(-3)) = (4, 3)." },
@@ -673,7 +673,7 @@ const CURRICULUM_DATABASE = [
     },
     {
         id: "g10-rot",
-        title: "Unit 6: Rotation",
+        title: "PLANTS:TRANSPORT",
         videoUrl: "https://www.youtube.com/embed/VJTxv-tRKj0",
         questions: [
             { text: "Rotate coordinate point P(3, 5) by 90° clockwise around origin grid center (0,0).", ans: "(5,-3)", steps: "Clockwise structural transform mapping identity across origin: (x, y) -> (y, -x). Thus node transitions to (5, -3)." },
@@ -690,7 +690,7 @@ const CURRICULUM_DATABASE = [
     },
     {
         id: "g10-trig",
-        title: "Unit 7: Trigonometry 1",
+        title: "PLANTS:GASEOUS EXCHANGE AND RESPIRATION",
         videoUrl: "https://www.youtube.com/embed/WFH_7n7hpHo",
         questions: [
             { text: "In a right triangle, opposite side is 5 cm and hypotenuse is 13 cm. State fraction ratio for <span class='math-expr'>sin(&theta;)</span>.", ans: "5/13", steps: "Sine tracking identity definition formula: opposite / hypotenuse. Directly substituting values gives 5/13." },
@@ -707,7 +707,7 @@ const CURRICULUM_DATABASE = [
     },
     {
         id: "g10-poly",
-        title: "Unit 8: Area of Polygons",
+        title: "ANIMAL: NUTRITION",
         videoUrl: "https://www.youtube.com/embed/bwyYgCGNOQ4",
         questions: [
             { text: "Calculate surface area of a triangle built with base dimension 14 cm and height 9 cm.", ans: "63", steps: "Standard triangular tracking formula: 0.5 * base * height = 0.5 * 14 * 9 = 7 * 9 = 63 cm²." },
@@ -724,7 +724,7 @@ const CURRICULUM_DATABASE = [
     },
     {
         id: "g10-circ",
-        title: "Unit 9: Area of a Part of a Circle",
+        title: "ANIMAL:TRANSPORT",
         videoUrl: "https://www.youtube.com/embed/nDMpINuq1w0",
         questions: [
             { text: "Calculate area of sector slice with radius 6 cm and central angle 60° (leave in terms of pi, e.g. X*pi).", ans: "6*pi", steps: "Sector area slice formula track: (angle/360) * pi * r^2 = (60/360) * pi * 6^2 = (1/6) * 36 * pi = 6*pi." },
@@ -741,7 +741,7 @@ const CURRICULUM_DATABASE = [
     },
     {
         id: "g10-surf",
-        title: "Unit 10: Surface Area & Volume of Solids",
+        title: "ANIMALS: GASEOUS EXCHANGE AND RESPIRATION",
         videoUrl: "https://www.youtube.com/embed/eBAq_caikJ4",
         questions: [
             { text: "Calculate volume capacity of a cylinder with radius 3 cm and height 7 cm (use pi = 22/7).", ans: "198", steps: "Cylinder volume metric integration formula: pi * r^2 * h = (22/7) * 3^2 * 7 = 22 * 9 = 198 cm³." },
@@ -755,74 +755,10 @@ const CURRICULUM_DATABASE = [
             { text: "A triangular prism cross-section area is 12 cm² and longitudinal length is 15 cm. Find volume.", ans: "180", steps: "Prism volume tracking operations: Cross Sectional Area * Length = 12 * 15 = 180 cm³." },
             { text: "Find volume of cone with base radius 6 cm and height 7 cm (use pi = 22/7).", ans: "264", steps: "Cone volume tracking logic formula: (1/3) * pi * r^2 * h = (1/3) * (22/7) * 6^2 * 7 = (1/3) * 22 * 36 = 264 cm³." }
         ]
+    
+    
     },
-    {
-        id: "g10-vec",
-        title: "Unit 11: Vectors 1",
-        videoUrl: "https://www.youtube.com/embed/xT5D7oYcKUQ",
-        questions: [
-            { text: "Given column vectors <span class='math-expr'>u = </span><span class='math-matrix'><span class='matrix-col'><span>3</span><span>-1</span></span></span> and <span class='math-expr'>v = </span><span class='math-matrix'><span class='matrix-col'><span>2</span><span>5</span></span></span>, calculate column vector <span class='math-expr'>u + v</span>. Format: [X,Y].", ans: "[5,4]", steps: "Sum matching components: top row 3+2=5, bottom row -1+5=4. Matrix column output matches [5,4]." },
-            { text: "Find absolute scalar magnitude length <span class='math-expr'>|a|</span> of matrix column vector <span class='math-expr'>a = </span><span class='math-matrix'><span class='matrix-col'><span>6</span><span>-8</span></span></span>.", ans: "10", steps: "Vector modulus distance formulation: sqrt(x^2 + y^2) = sqrt(6^2 + (-8)^2) = sqrt(36 + 64) = 10." },
-            { text: "Given vector <span class='math-expr'>m = </span><span class='math-matrix'><span class='matrix-col'><span>-2</span><span>4</span></span></span>, resolve scalar product vector <span class='math-expr'>3m</span>. Format: [X,Y].", ans: "[-6,12]", steps: "Scale all matrix rows by multi-factor 3: lower component 3*-2=-6, upper component 3*4=12. Result: [-6,12]." },
-            { text: "Find displacement vector column coordinates <span class='math-expr'>AB</span> from origin benchmarks A(1, 2) and B(5, -2). Format: [X,Y].", ans: "[4,-4]", steps: "Subtract vector positions (Terminal - Initial): [5-1, -2-2] maps out directly to column result [4,-4]." },
-            { text: "Solve for coordinate row <span class='math-expr'>x</span> in vector expression: <span class='math-matrix'><span class='matrix-col'><span>x</span><span>y</span></span></span> + <span class='math-matrix'><span class='matrix-col'><span>2</span><span>-3</span></span></span> = <span class='math-matrix'><span class='matrix-col'><span>7</span><span>0</span></span></span>.", ans: "5", steps: "Isolate horizontal component tracking path equation system: x + 2 = 7. Simple transposition yields x = 5." },
-            { text: "If vector <span class='math-expr'>p = </span><span class='math-matrix'><span class='matrix-col'><span>4</span><span>3</span></span></span>, calculate the magnitude of scaled double vector variable <span class='math-expr'>2p</span>.", ans: "10", steps: "Base vector magnitude is sqrt(4^2+3^2)=5. Double magnitude factor tracks directly to: 2 * 5 = 10." },
-            { text: "Calculate vector difference matrix subtraction <span class='math-expr'>a - b</span> given <span class='math-expr'>a = </span><span class='math-matrix'><span class='matrix-col'><span>0</span><span>4</span></span></span> and <span class='math-expr'>b = </span><span class='math-matrix'><span class='matrix-col'><span>-3</span><span>2</span></span></span>. Format: [X,Y].", ans: "[3,2]", steps: "Execute matrix operations components: row one 0 - (-3) = 3; row two 4 - 2 = 2. Vector equals [3,2]." },
-            { text: "Determine matching directional inverse matrix column layout for vector <span class='math-expr'>v = </span><span class='math-matrix'><span class='matrix-col'><span>-7</span><span>11</span></span></span>. Format: [X,Y].", ans: "[7,-11]", steps: "Invert sign orientations along all matrix rows to flip direction: -v equals column format [7,-11]." },
-            { text: "Find distance magnitude norm length of basic identity vector unit vector <span class='math-expr'>k = </span><span class='math-matrix'><span class='matrix-col'><span>1</span><span>1</span></span></span> to 3 decimal places.", ans: "1.414", steps: "Apply standard vector length formula tracking metrics: sqrt(1^2 + 1^2) = sqrt(2) = 1.414." },
-            { text: "Vectors <span class='math-matrix'><span class='matrix-col'><span>2</span><span>5</span></span></span> and <span class='math-matrix'><span class='matrix-col'><span>4</span><span>m</span></span></span> run parallel. Calculate matching scaling value of <span class='math-expr'>m</span>.", ans: "10", steps: "Parallel vectors display linear proportionality multipliers: x-row doubles (2 to 4), so y-row must double (5 to 10). m = 10." }
-        ]
-    },
-    {
-        id: "g10-mot",
-        title: "Unit 12: Linear Motion",
-        videoUrl: "https://www.youtube.com/embed/XIK8TYWzIPA",
-        questions: [
-            { text: "Convert standard highway cruiser velocity metric of 90 km/h into SI units of meters per second (m/s).", ans: "25", steps: "Velocity dimension transformation conversion logic multi-factor: 90 * (1000 / 3600) = 90 * (5/18) = 5 * 5 = 25 m/s." },
-            { text: "A train routes across a continuous distance track of 210 km at speed 70 km/h. Find travel time hours.", ans: "3", steps: "Linear kinematic tracking expression formula: Time = Distance / Speed = 210 / 70 = 3 hours." },
-            { text: "Car A routes at 40 km/h and Car B routes at 60 km/h heading directly toward each other. Compute relative closure velocity.", ans: "100", steps: "Vector vectors operating in inverse polar opposing paths possess additive relative speeds: 40 + 60 = 100 km/h." },
-            { text: "Using metrics from question 3, if initial gap separation distance is 150 km, find hours until collision crossover.", ans: "1.5", steps: "Crossover convergence timeline logic: Distance / Relative Velocity speed value = 150 / 100 = 1.5 hours." },
-            { text: "An asset accelerates uniformly from speed rest threshold 10 m/s to 30 m/s over 5 seconds. Find acceleration rate in m/s².", ans: "4", steps: "Acceleration change definition tracker formula: (v - u) / t = (30 - 10) / 5 = 20 / 5 = 4 m/s²." },
-            { text: "A track runner covers a total distance footprint of 400 meters in 50 seconds. Find average speed.", ans: "8", steps: "Average performance vector tracking formula: Distance / Total Time = 400 / 50 = 8 m/s." },
-            { text: "Boat X cruises at 25 m/s, while chasing Boat Y follows from behind along identical coordinates at 35 m/s. Find relative closure speed.", ans: "100", steps: "Since both move in the same direction, subtract their speeds to find the closing rate: 35 - 25 = 10 m/s." },
-            { text: "Find total meters traveled by a cyclist tracking constant velocity speed 6 m/s over a timeline duration of 2 minutes.", ans: "720", steps: "Convert duration parameters to standard SI base line units: 2 minutes = 120 seconds. Distance = 6 * 120 = 720 meters." },
-            { text: "A vehicle drives 60 km at 40 km/h, then another 60 km at 60 km/h. Find average speed across full track journey.", ans: "48", steps: "Total distance = 120km. Total time = (60/40) + (60/60) = 1.5 + 1 = 2.5 hours. Average speed = 120 / 2.5 = 48 km/h." },
-            { text: "An asset moves at 12 m/s for 10 seconds, then stands completely still for 10 seconds. Find net average speed.", ans: "6", steps: "Distance covered in segment one = 12 * 10 = 120m. Segment two distance = 0m. Total distance = 120m over 20s. Average speed = 120 / 20 = 6 m/s." }
-        ]
-    },
-    {
-        id: "g10-stat",
-        title: "Unit 13: Statistics",
-        videoUrl: "https://www.youtube.com/embed/XZo4xyJXCak",
-        questions: [
-            { text: "Calculate the arithmetic mean value of the recorded dataset collection array: 3, 7, 8, 8, 14.", ans: "8", steps: "Sum array content items: 3 + 7 + 8 + 8 + 14 = 40. Divide by component array count metrics: 40 / 5 = 8." },
-            { text: "Find median value threshold for unsorted statistical field array: 12, 5, 22, 17, 9, 11.", ans: "11.5", steps: "Sort elements array layout: 5, 9, 11, 12, 17, 22. Median splits the center pair average: (11 + 12) / 2 = 11.5." },
-            { text: "Identify structural mode value component parameter for distribution data: 4, 9, 6, 9, 4, 11, 9, 5.", ans: "9", steps: "The numerical value 9 appears with the highest frequency (3 instances) inside distribution array." },
-            { text: "Score parameters x=[1,2,3] hold frequencies f=[3,5,2]. Compute weighted structural mean score values.", ans: "1.9", steps: "Sum frequency intervals: 3+5+2=10. Cross product aggregation: (1*3)+(2*5)+(3*2)=19. Weighted mean value: 19/10 = 1.9." },
-            { text: "Determine the statistical range spread of given data collection: 43, 12, 67, 89, 34, 55.", ans: "77", steps: "Range calculation operations: Maximum element value - Minimum element value = 89 - 12 = 77." },
-            { text: "State explicit midpoint tracking coordinate for grouped frequency table data interval: <span class='math-expr'>10 &le; w &lt; 20</span>.", ans: "15", steps: "Class interval midpoint formulation logic: (Lower limit bound + Upper limit bound) / 2 = (10 + 20) / 2 = 15." },
-            { text: "Mean score value of 4 items equals 15. Inserting a 5th element shifts average to 16. Find value of 5th item.", ans: "20", steps: "Initial aggregate sum = 4 * 15 = 60. Secondary adjusted sum = 5 * 16 = 80. 5th item: 80 - 60 = 20." },
-            { text: "Cumulative frequency sequence reads 4, 12, 25, 34. Find standalone frequency of third tier interval class row.", ans: "13", steps: "Deduct previous accrued values from active row target boundary layer: 25 - 12 = 13." },
-            { text: "Determine modal interval bracket group class for frequencies [4, 9, 3] over segments [0-5, 5-10, 10-15].", ans: "5-10", steps: "Peak data density is 9, which matches directly with the mid-tier column class group 5-10." },
-            { text: "Find median split row calculation index position indicator value if collection item count is <span class='math-expr'>n = 49</span>.", ans: "25", steps: "Odd list midpoint location tracking index calculation formula: (n + 1) / 2 = (49 + 1) / 2 = 25th index slot position." }
-        ]
-    },
-    {
-        id: "g10-prob",
-        title: "Unit 14: Probability 1",
-        videoUrl: "https://www.youtube.com/embed/m95FVOfCx44",
-        questions: [
-            { text: "A standard six-sided die is rolled. Find probability of rolling a prime number asset fraction.", ans: "1/2", steps: "Favorable outcomes are prime entities: 2, 3, 5 (3 options). Sample domain size = 6. Probability value ratio = 3/6 = 1/2." },
-            { text: "The probability of an event target criteria is <span class='math-expr'>P(A) = 3/11</span>. Find value of complement <span class='math-expr'>P(A')</span>.", ans: "8/11", steps: "Complement rule transformation formula identity: 1 - P(A). Calculation: 1 - 3/11 = 8/11." },
-            { text: "Bag holds 4 red and 6 blue spheres. Pulling two with replacement, find chance of consecutive red pairs.", ans: "4/25", steps: "Events are independent due to replacement: (4/10) * (4/10) = 16/100 = 4/25." },
-            { text: "Using parameters from question 3, if extraction runs without replacement, find consecutive red probability values.", ans: "2/15", steps: "Dependent probability flow path configurations: (4/10) * (3/9) = 12 / 90 = 2/15." },
-            { text: "Independent pathways track profiles at <span class='math-expr'>P(X) = 0.5</span> and <span class='math-expr'>P(Y) = 0.3</span>. Find intersection <span class='math-expr'>P(X &cap; Y)</span>.", ans: "0.15", steps: "Multiplication rule for independent sets: P(X) * P(Y) = 0.5 * 0.3 = 0.15." },
-            { text: "A fair standard currency coin is flipped three times. Find probability value of scoring exactly three heads.", ans: "1/8", steps: "Combinatoric tree options layout count = 2^3 = 8. Target specific matching outcome path (H,H,H) equals 1 slot. Value is 1/8." },
-            { text: "The weather model gives rain index at 20% tomorrow. State probability that it will not rain tomorrow as a decimal.", ans: "0.8", steps: "Deduct probability criteria from unit whole scale profile value: 1.0 - 0.2 = 0.8 (or 80%)." },
-            { text: "A game spinner marks five equal slices numbered 1 to 5. Find chance of spinning a value greater than 3.", ans: "2/5", steps: "Favorable targets are numbers 4 and 5 (2 options). Total options field size = 5. Probability fraction = 2/5." },
-            { text: "A card is pulled from a standard deck of 52 cards. Find probability profile of pulling any Ace element.", ans: "1/13", steps: "Deck contains 4 Ace cards across the setup layout. Structural probability fraction = 4 / 52 = 1 / 13." },
-            { text: "Tree diagram nodes hold tracking success weights of 0.7 and 0.8. Find probability of complete path failure.", ans: "0.06", steps: "Determine independent failure track margins: (1 - 0.7) * (1 - 0.8) = 0.3 * 0.2 = 0.06." }
-        ]
+    
     }
 ];
 
