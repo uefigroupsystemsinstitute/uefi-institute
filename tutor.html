@@ -4,32 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Professor | UEFI Institute</title>
-    <link rel="stylesheet" href="style.css">
+    
     <style>
-        /* Professional Lab UI */
+        /* =========================================================
+           I. ROOT VARIABLES & GLOBAL STYLES
+           ========================================================= */
         :root {
-            --midnight: #0A140A; /* Safaricom-themed dark background */
+            --midnight: #0A140A; /* Dark Theme Base */
             --gold: #43B02A;     /* Safaricom Brand Green */
-            --safaricom-red: #E4002B; /* Safaricom Accent Red */
+            --gold-glow: rgba(67, 176, 42, 0.4);
+            --safaricom-red: #E4002B; /* Accent Red */
             --paper-white: #ffffff;
             --glass: rgba(255, 255, 255, 0.04);
-            /* Kenyan Flag Strip Gradient */
+            --glass-border: rgba(255, 255, 255, 0.1);
             --kenyan-flag: linear-gradient(to right, #000000 0%, #000000 25%, #BB0000 25%, #BB0000 50%, #006600 50%, #006600 75%, #FFFFFF 75%, #FFFFFF 100%);
+            --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-doc: 'Charter', 'Georgia', serif;
         }
 
-        .tutor-page {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body.tutor-page {
             background-color: var(--midnight);
-            background-image: radial-gradient(circle at 80% 20%, rgba(67, 176, 42, 0.15) 0%, transparent 50%);
+            background-image: radial-gradient(circle at 80% 20%, rgba(67, 176, 42, 0.1) 0%, transparent 60%);
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: var(--font-ui);
+            color: #fff;
         }
 
-        /* Continuous Kenyan flag accent line pinned safely below navigation */
+        /* Navigation Simulation */
         header {
             position: relative;
+            background: #050a05;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
         }
         
         header::after {
@@ -40,108 +58,205 @@
             width: 100%;
             height: 4px;
             background: var(--kenyan-flag);
-            z-index: 100;
         }
 
+        .logo {
+            color: var(--gold);
+            font-weight: 900;
+            text-decoration: none;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* =========================================================
+           II. MAIN LAYOUT: SPLIT SCREEN
+           ========================================================= */
         .tutor-container {
             display: flex;
             flex: 1;
-            margin-top: 84px; 
-            padding: 24px;
-            gap: 24px;
+            padding: 20px;
+            gap: 20px;
             overflow: hidden;
+            height: calc(100vh - 65px);
         }
 
-        /* LEFT: RESEARCH PAPER */
+        /* LEFT: RESEARCH PAPER / DOCUMENT UPLOAD ZONE */
         .paper-space {
-            flex: 2;
-            padding: 60px;
-            overflow-y: auto;
+            flex: 1.8;
             background: var(--paper-white);
             color: #1a1a1a;
             border-radius: 12px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            font-family: 'Charter', 'Georgia', serif;
+            font-family: var(--font-doc);
             line-height: 1.8;
             border-top: 6px solid var(--gold);
             position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        .paper-content h1 { font-size: 2.4rem; margin-bottom: 10px; font-weight: 800; color: #050a14; letter-spacing: -0.5px; }
-        .paper-content h3 { margin-top: 40px; color: #222; border-left: 4px solid var(--gold); padding-left: 15px; font-size: 1.25rem; font-weight: 700; }
+        .doc-toolbar {
+            background: #f4f4f4;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-ui);
+        }
+
+        .doc-toolbar h4 {
+            font-size: 0.9rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .upload-btn {
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .upload-btn:hover { background: var(--gold); }
+
+        #document-viewer {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            position: relative;
+        }
+
+        /* Drag and Drop Overlay */
+        .drop-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px dashed var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-ui);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold);
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .drop-overlay.active {
+            opacity: 1;
+        }
+
+        .paper-content h1 { font-size: 2.2rem; margin-bottom: 10px; font-weight: 800; color: #050a14; letter-spacing: -0.5px; }
+        .paper-content h3 { margin-top: 30px; color: #222; border-left: 4px solid var(--gold); padding-left: 15px; font-size: 1.25rem; font-weight: 700; }
+        
+        .uploaded-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
         /* RIGHT: PROFESSOR LIVE CONSOLE */
         .professor-console {
-            flex: 0.9;
+            flex: 1.2;
             display: flex;
             flex-direction: column;
-            padding: 25px;
+            padding: 20px;
             background: var(--glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            gap: 15px;
         }
 
-        /* FIXED PROFESSOR IMAGE BOX */
+        /* Fixed Video Box */
         .prof-video-box {
             position: relative;
             width: 100%;
-            height: 380px; 
-            background: #000; /* Background color if image fails */
-            border: 2px solid rgba(67, 176, 42, 0.4);
+            height: 320px; 
+            background: #000;
+            border: 2px solid var(--gold-glow);
             border-radius: 15px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+            flex-shrink: 0;
         }
 
         .prof-video-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%; /* Focus on the face */
-            display: block;
-            opacity: 1 !important;
-            visibility: visible !important;
+            object-position: center 20%;
             transition: transform 0.5s ease;
         }
         
-        .professor-console:hover .prof-video-box img {
-            transform: scale(1.02);
+        .prof-video-box.active-speaking img {
+            transform: scale(1.03);
         }
 
-        /* PROFESSOR OVERLAYS */
+        /* Visual Audio Pulse */
         #prof-pulse-indicator {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             width: 12px;
             height: 12px;
             background: rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             z-index: 10;
+            transition: background 0.3s;
         }
 
         #prof-pulse-indicator.speaking {
-            background: var(--safaricom-red);
-            box-shadow: 0 0 15px var(--safaricom-red);
-            animation: ring-pulse 1.5s infinite;
+            background: var(--gold);
+            box-shadow: 0 0 15px var(--gold);
+            animation: ring-pulse 1.2s infinite;
         }
 
         @keyframes ring-pulse {
             0% { transform: scale(1); opacity: 1; }
-            70% { transform: scale(2.2); opacity: 0; }
+            70% { transform: scale(2.5); opacity: 0; }
             100% { transform: scale(1); opacity: 0; }
         }
 
         .prof-status-tag {
             position: absolute;
-            top: 17px;
-            right: 40px;
+            top: 12px;
+            right: 35px;
             color: #fff;
             font-size: 0.7rem;
             font-weight: 900;
@@ -149,22 +264,59 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
             z-index: 10;
             background: rgba(0, 0, 0, 0.6);
-            padding: 2px 8px;
+            padding: 4px 8px;
             border-radius: 4px;
         }
 
-        /* INTERACTION CONTROLS */
-        .interaction-box {
-            margin-top: auto;
+        /* Transcript Chat Area */
+        .chat-transcript {
+            flex: 1;
+            background: rgba(0,0,0,0.4);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
+            font-size: 0.9rem;
+            scroll-behavior: smooth;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            line-height: 1.4;
+        }
+
+        .bubble-student {
+            align-self: flex-end;
+            background: var(--gold);
+            color: #fff;
+            border-bottom-right-radius: 2px;
+        }
+
+        .bubble-prof {
+            align-self: flex-start;
+            background: #2a2a2a;
+            color: #fff;
+            border-bottom-left-radius: 2px;
+            border: 1px solid #333;
+        }
+
+        /* Interaction Controls */
+        .interaction-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-shrink: 0;
         }
 
         #status-text {
             color: var(--gold);
             font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-align: center;
             font-weight: bold;
             letter-spacing: 1px;
@@ -172,7 +324,7 @@
         }
 
         #mic-toggle {
-            padding: 18px;
+            padding: 16px;
             border: 2px solid var(--gold);
             background: rgba(67, 176, 42, 0.1);
             color: #fff;
@@ -185,62 +337,70 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        #mic-toggle:hover {
-            background: var(--gold);
-            color: #fff;
-            box-shadow: 0 8px 20px rgba(67, 176, 42, 0.4);
-            transform: translateY(-2px);
+        #mic-toggle.listening {
+            background: var(--safaricom-red);
+            border-color: var(--safaricom-red);
+            animation: breathe 1.5s infinite alternate;
         }
-        
-        #mic-toggle:active {
-            transform: translateY(0);
+
+        @keyframes breathe {
+            from { box-shadow: 0 0 10px rgba(228, 0, 43, 0.4); }
+            to { box-shadow: 0 0 25px rgba(228, 0, 43, 0.8); }
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
         }
 
         #user-input {
-            padding: 18px;
+            flex: 1;
+            padding: 14px;
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
+            border-radius: 8px;
             color: white;
             outline: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
         }
 
         #user-input:focus { 
             border-color: var(--gold); 
             background: rgba(0, 0, 0, 0.6);
-            box-shadow: 0 0 12px rgba(67, 176, 42, 0.3), inset 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        #user-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+        #send-btn {
+            background: var(--gold);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0 20px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
+        /* Scrollbars */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
-        
+
         @media (max-width: 1024px) {
             .tutor-container {
                 flex-direction: column;
                 overflow-y: auto;
-            }
-            .tutor-page {
                 height: auto;
-                overflow: visible;
             }
             .paper-space {
                 flex: none;
-                height: 500px;
-                padding: 30px;
+                height: 50vh;
             }
             .professor-console {
                 flex: none;
+                height: 70vh;
             }
         }
     </style>
@@ -248,70 +408,317 @@
 <body class="tutor-page">
 
     <header>
-        <nav>
-            <a href="home.html" class="logo">U.E.F.I. INSTITUTE</a>
-            <ul class="nav-links">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="abouts.html">About</a></li>
-                <li><a href="tech-lab.html">Tech Lab</a></li>
-                <li><a href="courses.html">Courses</a></li>
-                <li><a href="anthoninas-initiative.html">Girls</a></li>
-                <li><a href="wilsons-initiative.html">Men</a></li>
-                <li><a href="uefi-zoom.html">UEFI Zoom</a></li>
-                <li><a href="opportunities-hub.html">Opportunities</a></li>
-                <li><a href="contactus.html">Contact</a></li>
-                <li><a href="support-us.html">Support Us</a></li>
-                <li><a href="enroll.html" class="btn-nav">Enroll</a></li>
-            </ul>
-        </nav>
+        <a href="#" class="logo">U.E.F.I. INSTITUTE</a>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">UEFI Zoom</a></li>
+            <li><a href="#" style="color:var(--gold); border: 1px solid var(--gold); padding: 5px 15px; border-radius: 20px;">Enroll</a></li>
+        </ul>
     </header>
 
     <main class="tutor-container">
-        <section class="paper-space">
-            <div class="paper-content" id="paper-content">
-                <p style="color: var(--gold); font-weight: bold; letter-spacing: 1px; margin-top: 0;">LECTURE MATERIAL: CS402</p>
-                <h1>Neural Architecture Search: Automated Deep Learning</h1>
-                <p style="font-style: italic; color: #777;">Published by UEFI Institute of Advanced Intelligence (2026)</p>
-                
-                <h3>I. Abstract</h3>
-                <p>Automating the design of neural network architectures (NAS) is the next frontier in AI. This paper outlines how algorithms can replace the manual "trial and error" process currently used by engineers to build large-scale models.</p>
-                
-                <h3>II. Key Terminologies</h3>
-                <ul>
-                    <li><strong>Search Space:</strong> The defined boundaries of possible model designs.</li>
-                    <li><strong>Search Strategy:</strong> The logic (RL or Evolution) used to pick designs.</li>
-                    <li><strong>Performance Estimation:</strong> Assessing a model's potential without full training.</li>
-                </ul>
+        <!-- LEFT: DOCUMENT VIEWER -->
+        <section class="paper-space" id="drop-zone">
+            <div class="drop-overlay" id="drop-overlay">Drop file to analyze</div>
+            
+            <div class="doc-toolbar">
+                <h4 id="doc-title">Active Document: NAS_Lecture.pdf</h4>
+                <input type="file" id="file-upload" accept="image/*,.pdf,.txt" style="display: none;">
+                <button class="upload-btn" onclick="document.getElementById('file-upload').click()">Upload File</button>
+            </div>
 
-                <h3>III. Core Content</h3>
-                <p>NAS allows for the discovery of architectures that are specifically optimized for hardware, such as edge devices or mobile processors, significantly reducing latency while maintaining accuracy.</p>
+            <div id="document-viewer">
+                <div class="paper-content" id="default-paper">
+                    <p style="color: var(--gold); font-weight: bold; letter-spacing: 1px; margin-top: 0;">LECTURE MATERIAL: CS402</p>
+                    <h1>Neural Architecture Search: Automated Deep Learning</h1>
+                    <p style="font-style: italic; color: #777;">Published by UEFI Institute of Advanced Intelligence (2026)</p>
+                    
+                    <h3>I. Abstract</h3>
+                    <p>Automating the design of neural network architectures (NAS) is the next frontier in AI. This paper outlines how algorithms can replace the manual "trial and error" process currently used by engineers to build large-scale models.</p>
+                    
+                    <h3>II. Key Terminologies</h3>
+                    <ul>
+                        <li><strong>Search Space:</strong> The defined boundaries of possible model designs.</li>
+                        <li><strong>Search Strategy:</strong> The logic (RL or Evolution) used to pick designs.</li>
+                        <li><strong>Performance Estimation:</strong> Assessing a model's potential without full training.</li>
+                    </ul>
 
-                <h3>IV. Summary</h3>
-                <p>The goal is a "Sovereign AI"—one that can improve its own structure through recursive architectural search.</p>
+                    <h3>III. Core Content</h3>
+                    <p>NAS allows for the discovery of architectures that are specifically optimized for hardware, such as edge devices or mobile processors, significantly reducing latency while maintaining accuracy.</p>
+                </div>
             </div>
         </section>
 
+        <!-- RIGHT: PROFESSOR CONSOLE -->
         <section class="professor-console">
-            <div class="prof-video-box">
+            <div class="prof-video-box" id="prof-video-container">
                 <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800&h=1000" alt="Professor Oneiro">
-                
                 <div id="prof-pulse-indicator"></div>
                 <span class="prof-status-tag">LECTURE LIVE</span>
             </div>
 
+            <div class="chat-transcript" id="chat-box">
+                <div class="chat-bubble bubble-prof">
+                    Welcome to the lab. Upload a problem or ask a question, and we'll break it down step by step.
+                </div>
+            </div>
+
             <div class="interaction-box">
-                <div id="status-text">PROFESSOR STANDBY...</div>
+                <div id="status-text">SYSTEM STANDBY...</div>
                 
-                <button id="mic-toggle">🎤 TOGGLE VOICE MODE</button>
+                <button id="mic-toggle">🎤 START SPEAKING</button>
                 
-                <input type="text" id="user-input" placeholder="Enter question for the Professor..." autocomplete="off">
+                <div class="input-row">
+                    <input type="text" id="user-input" placeholder="Type your question here..." autocomplete="off">
+                    <button id="send-btn">Send</button>
+                </div>
             </div>
         </section>
     </main>
 
-    <script src="script.js"></script>
+    <script>
+        /* =========================================================
+           I. DRAG & DROP FILE UPLOAD LOGIC
+           ========================================================= */
+        const dropZone = document.getElementById('drop-zone');
+        const dropOverlay = document.getElementById('drop-overlay');
+        const fileUpload = document.getElementById('file-upload');
+        const documentViewer = document.getElementById('document-viewer');
+        const docTitle = document.getElementById('doc-title');
+
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // Highlight drop zone
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropOverlay.classList.add('active'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropOverlay.classList.remove('active'), false);
+        });
+
+        // Handle file drops and clicks
+        dropZone.addEventListener('drop', handleDrop, false);
+        fileUpload.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            if (files.length === 0) return;
+            const file = files[0];
+            docTitle.textContent = `Analyzing: ${file.name}`;
+            
+            // If image, display it
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function() {
+                    documentViewer.innerHTML = `<img src="${reader.result}" class="uploaded-image" alt="Uploaded Problem">`;
+                    simulateAIVisionAnalysis();
+                }
+            } 
+            // If PDF or Text, we display a placeholder or text content
+            else {
+                documentViewer.innerHTML = `
+                    <div style="text-align:center; margin-top: 50px;">
+                        <h2 style="color:var(--gold);">Document Successfully Loaded</h2>
+                        <p style="color:#555; margin-top:10px;">The AI Professor has processed <b>${file.name}</b> and is ready to answer questions.</p>
+                    </div>`;
+                appendMessage("I've reviewed the document you just uploaded. What specific part would you like me to explain?", 'prof');
+            }
+        }
+
+        function simulateAIVisionAnalysis() {
+            appendMessage("Analyzing the image structure...", 'prof');
+            setTimeout(() => {
+                appendMessage("I've processed the uploaded image. I can see the structural data. Where would you like to start?", 'prof');
+                speakText("I've processed the uploaded image. Where would you like to start?");
+            }, 1500);
+        }
+
+        /* =========================================================
+           II. SPEECH SYNTHESIS (TEXT TO SPEECH)
+           ========================================================= */
+        const synth = window.speechSynthesis;
+        const pulseIndicator = document.getElementById('prof-pulse-indicator');
+        const videoContainer = document.getElementById('prof-video-container');
+        let profVoice = null;
+
+        // Load voices and select a professional human-like voice
+        function loadVoices() {
+            const voices = synth.getVoices();
+            // Look for high-quality English voices (Google UK/US or Apple Voices)
+            profVoice = voices.find(v => v.name.includes('Google UK English Male')) || 
+                        voices.find(v => v.name.includes('Samantha')) || 
+                        voices.find(v => v.lang === 'en-US');
+        }
+
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speakText(text) {
+            if (synth.speaking) {
+                synth.cancel(); // Stop current speech if any
+            }
+            if (text !== '') {
+                const utterThis = new SpeechSynthesisUtterance(text);
+                
+                if (profVoice) {
+                    utterThis.voice = profVoice;
+                }
+                // Tune properties for a professorial tone
+                utterThis.pitch = 0.9;  
+                utterThis.rate = 1.05;
+
+                utterThis.onstart = () => {
+                    pulseIndicator.classList.add('speaking');
+                    videoContainer.classList.add('active-speaking');
+                };
+
+                utterThis.onend = () => {
+                    pulseIndicator.classList.remove('speaking');
+                    videoContainer.classList.remove('active-speaking');
+                };
+
+                utterThis.onerror = (e) => {
+                    console.error('Speech synthesis error', e);
+                    pulseIndicator.classList.remove('speaking');
+                    videoContainer.classList.remove('active-speaking');
+                };
+
+                synth.speak(utterThis);
+            }
+        }
+
+        /* =========================================================
+           III. SPEECH RECOGNITION (SPEECH TO TEXT)
+           ========================================================= */
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const micToggleBtn = document.getElementById('mic-toggle');
+        const statusText = document.getElementById('status-text');
+        
+        let recognition;
+        let isListening = false;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onstart = function() {
+                isListening = true;
+                micToggleBtn.innerHTML = "🛑 STOP SPEAKING";
+                micToggleBtn.classList.add('listening');
+                statusText.textContent = "LISTENING...";
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                appendMessage(transcript, 'student');
+                processUserQuery(transcript);
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Speech recognition error", event.error);
+                statusText.textContent = "ERROR. TRY AGAIN.";
+                resetMicBtn();
+            };
+
+            recognition.onend = function() {
+                resetMicBtn();
+            };
+        } else {
+            micToggleBtn.style.display = 'none';
+            console.warn("Speech Recognition API not supported in this browser.");
+        }
+
+        function resetMicBtn() {
+            isListening = false;
+            micToggleBtn.innerHTML = "🎤 START SPEAKING";
+            micToggleBtn.classList.remove('listening');
+            statusText.textContent = "SYSTEM STANDBY...";
+        }
+
+        micToggleBtn.addEventListener('click', () => {
+            if (isListening) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        });
+
+        /* =========================================================
+           IV. CHAT LOGIC & AI SIMULATION
+           ========================================================= */
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        function appendMessage(text, sender) {
+            const div = document.createElement('div');
+            div.classList.add('chat-bubble');
+            div.classList.add(sender === 'student' ? 'bubble-student' : 'bubble-prof');
+            div.textContent = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        sendBtn.addEventListener('click', () => {
+            const text = userInput.value.trim();
+            if (text) {
+                appendMessage(text, 'student');
+                userInput.value = '';
+                processUserQuery(text);
+            }
+        });
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendBtn.click();
+            }
+        });
+
+        // Simulate AI Processing (This is where your real Backend/Gemini API call would go)
+        function processUserQuery(query) {
+            statusText.textContent = "PROFESSOR THINKING...";
+            
+            setTimeout(() => {
+                let response = "";
+                const q = query.toLowerCase();
+
+                if (q.includes("neural") || q.includes("architecture")) {
+                    response = "Neural Architecture Search essentially automates the job of a data scientist. Instead of manually testing layer configurations, an algorithm optimizes the structure for you. Let's look at the document's section on Search Strategies.";
+                } else if (q.includes("hello") || q.includes("hi")) {
+                    response = "Hello there! Have you uploaded your assignment to the left panel yet? I'm ready to walk you through it.";
+                } else if (q.includes("explain") || q.includes("how")) {
+                    response = "Step one is breaking down the core variables. Looking at the content provided, the primary function relies on mapping the search space correctly. Does that make sense before we move to step two?";
+                } else {
+                    response = "That's an excellent question. To address it properly, we need to apply the fundamental rules of the topic in front of us. Let me highlight the key mechanism for you.";
+                }
+
+                appendMessage(response, 'prof');
+                speakText(response);
+                statusText.textContent = "SYSTEM STANDBY...";
+
+            }, 1200); // simulated network delay
+        }
+    </script>
 </body>
 </html>
-
-
-
