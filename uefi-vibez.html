@@ -2,34 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Viewport settings prevent scaling to ensure native app feel -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UEFI VibeZ | Transformative Shorts</title>
+    <title>VibeZ | The Ultimate Knowledge Feed</title>
     
-    <!-- External Libraries: FontAwesome (Icons) & Google Fonts -->
+    <!-- External Libraries: FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Modern, artistic typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Fonts: Outfit (UI), Syne (Art), UnifrakturMaguntia (Gothic Diary), Cinzel (Nameplate) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Outfit:wght@300;400;600;800&family=Syne:wght@400;600;700;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
     
     <style>
-        /* =========================================
-           CORE ARCHITECTURE & GLASSMORPHISM
-        ========================================= */
+        /* ==========================================================================
+           1. CORE ARCHITECTURE & CSS VARIABLES
+           ========================================================================== */
         :root {
             --brand-cyan: #00ffcc;
             --brand-magenta: #ff007f;
-            --brand-glow: rgba(0, 255, 204, 0.4);
+            --brand-glow: rgba(0, 255, 204, 0.5);
             --bg-deep: #050508;
-            --glass-bg: rgba(20, 20, 30, 0.5);
-            --glass-border: rgba(255, 255, 255, 0.15);
             --danger: #ff2a5f;
             --success: #00e676;
             --text-main: #ffffff;
-            --text-muted: #a0a0b0;
             --font-art: 'Syne', sans-serif;
             --font-ui: 'Outfit', sans-serif;
+            --font-gothic: 'UnifrakturMaguntia', cursive;
+            --font-classic: 'Cinzel', serif;
+            
+            /* Diary Colors */
+            --parchment: #f1e4d3;
+            --parchment-dark: #d8c3a5;
+            --ink: #2b1b17;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -37,85 +40,85 @@
         body, html {
             height: 100vh; width: 100vw;
             background-color: var(--bg-deep);
-            /* A subtle background gradient for desktop viewers */
-            background-image: radial-gradient(circle at 15% 50%, rgba(0, 255, 204, 0.08), transparent 25%),
-                              radial-gradient(circle at 85% 30%, rgba(255, 0, 127, 0.08), transparent 25%);
             color: var(--text-main);
             font-family: var(--font-ui);
             overflow: hidden; 
             display: flex; justify-content: center; align-items: center;
         }
 
-        h1, h2, h3, .art-text { font-family: var(--font-art); }
+        /* Dynamic Environment Background */
+        #dynamic-bg {
+            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-size: cover; background-position: center;
+            opacity: 0.3; z-index: -2; transition: background-image 1.5s ease-in-out;
+            filter: blur(8px) brightness(0.5);
+            transform: scale(1.1); /* Prevents blur bleeding edges */
+        }
 
-        /* =========================================
-           THE MOBILE CAPSULE (Key Feature)
-        ========================================= */
+        /* ==========================================================================
+           2. THE MOBILE CAPSULE (Enlarged & Enhanced)
+           ========================================================================== */
         .mobile-capsule {
             position: relative;
-            width: 100%;
-            height: 100%;
-            max-width: 420px; /* iPhone Pro Max width */
-            max-height: 900px;
+            width: 100%; height: 100%;
+            max-width: 460px; /* Increased Size */
+            max-height: 920px; /* Increased Size */
             background: #000;
-            border-radius: 0px; /* Flat on mobile */
             overflow: hidden;
-            box-shadow: none;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
+            z-index: 10;
         }
 
-        /* Add Glassmorphism Capsule styling ONLY for larger screens (Tablets/MacBooks) */
         @media (min-width: 600px) {
             .mobile-capsule {
-                height: 90vh;
-                border-radius: 40px;
-                background: var(--glass-bg);
-                backdrop-filter: blur(20px);
-                border: 1px solid var(--glass-border);
-                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 
-                            0 0 40px var(--brand-glow);
+                height: 92vh;
+                border-radius: 45px;
+                background: rgba(10, 10, 15, 0.7);
+                backdrop-filter: blur(25px);
+                border: 2px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 30px 60px -10px rgba(0,0,0,0.8), 
+                            0 0 50px rgba(0, 255, 204, 0.15);
             }
-            /* Add an iPhone-like hardware notch simulation for aesthetics */
             .mobile-capsule::before {
                 content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-                width: 150px; height: 25px; background: #000;
-                border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 100;
+                width: 160px; height: 28px; background: #000;
+                border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; z-index: 100;
             }
         }
 
-        /* =========================================
-           TOP NAVIGATION (TIKTOK STYLE)
-        ========================================= */
+        /* ==========================================================================
+           3. TIKTOK TOP NAVIGATION
+           ========================================================================== */
         .top-nav {
             position: absolute; top: 0; left: 0; width: 100%;
             display: flex; justify-content: flex-start; align-items: center;
-            padding: 45px 15px 20px; z-index: 20;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
-            gap: 20px; overflow-x: auto; scrollbar-width: none;
+            padding: 50px 20px 20px; z-index: 30;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+            gap: 25px; overflow-x: auto; scrollbar-width: none;
         }
         .top-nav::-webkit-scrollbar { display: none; }
         
         .nav-item {
-            font-family: var(--font-art); font-size: 16px; font-weight: 700;
-            color: rgba(255, 255, 255, 0.5); cursor: pointer;
-            transition: 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
-            text-shadow: 0px 2px 10px rgba(0,0,0,0.8); white-space: nowrap;
+            font-family: var(--font-art); font-size: 17px; font-weight: 800;
+            color: rgba(255, 255, 255, 0.4); cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-transform: uppercase; letter-spacing: 1.5px;
+            white-space: nowrap; padding-bottom: 5px;
         }
         .nav-item.active {
-            color: #fff; transform: scale(1.1);
-            text-shadow: 0px 0px 10px var(--brand-cyan);
+            color: #fff; transform: scale(1.15);
+            text-shadow: 0px 0px 15px var(--brand-cyan);
         }
         .nav-item.active::after {
-            content: ''; position: absolute; bottom: -6px; left: 50%;
-            transform: translateX(-50%); width: 20px; height: 3px;
+            content: ''; position: absolute; bottom: -4px; left: 50%;
+            transform: translateX(-50%); width: 24px; height: 3px;
             background: var(--brand-cyan); border-radius: 2px;
-            box-shadow: 0 0 8px var(--brand-cyan);
+            box-shadow: 0 0 10px var(--brand-cyan);
         }
 
-        /* =========================================
-           FEED & VIDEO CONTAINERS
-        ========================================= */
+        /* ==========================================================================
+           4. LIGHTNING-FAST VIDEO FEED (Lazy Load Architecture)
+           ========================================================================== */
         .feed-container {
             height: 100%; width: 100%;
             overflow-y: scroll; scroll-snap-type: y mandatory;
@@ -127,185 +130,257 @@
         .video-container {
             position: relative; height: 100%; width: 100%;
             scroll-snap-align: start; scroll-snap-stop: always;
-            display: flex; justify-content: center; align-items: center;
-            background: #111; overflow: hidden;
+            background: #000; overflow: hidden;
         }
         
-        /* Iframe styling to mimic vertical native video */
+        /* High-res thumbnail placeholder before iframe loads */
+        .yt-placeholder {
+            width: 100%; height: 100%; background-size: cover;
+            background-position: center; filter: blur(10px); transition: filter 0.5s;
+        }
+        
         .yt-iframe {
+            position: absolute; top: 0; left: 0;
             width: 100%; height: 100%; pointer-events: none;
-            transform: scale(1.4); /* Crops out YouTube UI */
+            transform: scale(1.45); /* Crops out YouTube UI */
+            opacity: 0; transition: opacity 0.4s ease;
         }
 
-        /* Transparent UI overlay blocks clicks on iframe and holds TT elements */
+        /* Gradient overlay to make text pop powerfully */
         .ui-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 12; display: flex; flex-direction: column; justify-content: flex-end;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 40%, transparent 100%);
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 30%, transparent 70%);
         }
 
-        /* =========================================
-           SIDE ACTIONS & BOTTOM INFO
-        ========================================= */
+        /* ==========================================================================
+           5. SIDE ACTIONS & NEW DIARY BUTTON
+           ========================================================================== */
         .side-actions {
-            position: absolute; bottom: 90px; right: 12px;
-            display: flex; flex-direction: column; align-items: center; gap: 20px;
-            z-index: 15;
+            position: absolute; bottom: 100px; right: 15px;
+            display: flex; flex-direction: column; align-items: center; gap: 22px;
+            z-index: 20;
         }
         .action-btn {
-            display: flex; flex-direction: column; align-items: center;
-            color: #fff; cursor: pointer; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.8));
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #fff; cursor: pointer; filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.9));
             transition: transform 0.2s;
         }
-        .action-btn i { font-size: 30px; margin-bottom: 4px; transition: 0.3s; }
-        .action-btn:active i { transform: scale(0.8); }
-        .action-btn.liked i { color: var(--danger); animation: heartBurst 0.5s; }
-        .action-text { font-size: 12px; font-weight: 600; }
+        .action-btn i { font-size: 32px; margin-bottom: 5px; transition: 0.3s; }
+        .action-btn:active i { transform: scale(0.7); }
+        .action-btn.liked i { color: var(--danger); animation: heartBurst 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        /* The Diary Button Styling */
+        .diary-btn i { color: #f1c40f; text-shadow: 0 0 10px rgba(241, 196, 15, 0.5); }
+        
+        .action-text { font-size: 13px; font-weight: 700; text-shadow: 1px 1px 2px #000; }
 
-        .profile-pic {
-            width: 48px; height: 48px; border-radius: 50%;
-            border: 2px solid #fff; margin-bottom: 15px;
-            background: linear-gradient(135deg, var(--brand-magenta), var(--brand-cyan));
-            display: flex; justify-content: center; align-items: center;
-            font-family: var(--font-art); font-weight: 800; font-size: 22px;
-            position: relative; box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+        .profile-pic-container {
+            position: relative; margin-bottom: 15px;
         }
-        .profile-pic::after {
-            content: '+'; position: absolute; bottom: -6px; background: var(--danger);
-            width: 18px; height: 18px; border-radius: 50%;
+        .profile-pic {
+            width: 52px; height: 52px; border-radius: 50%;
+            border: 2px solid #fff; 
+            background: url('https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80') center/cover;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+        }
+        .profile-pic-container::after {
+            content: '+'; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+            background: var(--danger); width: 22px; height: 22px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 14px; font-weight: bold; border: 2px solid #fff;
+            font-size: 16px; font-weight: bold; border: 2px solid #fff;
         }
 
         .bottom-info {
-            position: absolute; bottom: 25px; left: 15px;
-            width: 75%; z-index: 15;
+            position: absolute; bottom: 30px; left: 15px;
+            width: 75%; z-index: 20; text-shadow: 1px 1px 3px #000;
         }
         .creator-name {
-            font-family: var(--font-art); font-size: 18px; font-weight: 700;
-            margin-bottom: 6px; display: flex; align-items: center; gap: 5px;
+            font-family: var(--font-art); font-size: 20px; font-weight: 800;
+            margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
         }
-        .verified-badge { color: var(--brand-cyan); font-size: 14px; }
-        .video-desc { font-size: 14px; font-weight: 300; line-height: 1.3; margin-bottom: 10px; opacity: 0.95; }
-        .tags { font-weight: 600; color: var(--brand-cyan); }
+        .verified-badge { color: var(--brand-cyan); font-size: 16px; }
+        .video-desc { font-size: 15px; font-weight: 400; line-height: 1.4; margin-bottom: 12px; }
+        .tags { font-weight: 700; color: var(--brand-cyan); }
         .music-ticker {
-            display: flex; align-items: center; gap: 8px; font-size: 12px;
-            background: rgba(0,0,0,0.4); padding: 5px 10px; border-radius: 20px;
-            width: fit-content; backdrop-filter: blur(5px);
+            display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;
+            background: rgba(0,0,0,0.5); padding: 6px 14px; border-radius: 20px;
+            width: fit-content; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1);
         }
         .music-ticker i { animation: spin 4s linear infinite; }
 
-        /* =========================================
-           ADVANCED QUIZ INTERCEPTOR (RULE OF 3)
-        ========================================= */
+        /* ==========================================================================
+           6. THE GOTHIC DIARY MODAL (The Vault)
+           ========================================================================== */
+        .diary-modal {
+            position: absolute; top: 100%; left: 0; width: 100%; height: 100%;
+            background: var(--parchment); z-index: 200;
+            transition: top 0.6s cubic-bezier(0.86, 0, 0.07, 1);
+            display: flex; flex-direction: column;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.5);
+            /* Shakespearean Paper Texture */
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2), rgba(0,0,0,0.1)),
+                url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23n)" opacity="0.08"/></svg>');
+        }
+        .diary-modal.open { top: 0; }
+
+        .diary-header {
+            padding: 30px 20px 10px; display: flex; flex-direction: column; align-items: center;
+            border-bottom: 2px solid var(--parchment-dark);
+            position: relative;
+        }
+        .close-diary {
+            position: absolute; top: 20px; right: 20px; font-size: 28px;
+            color: var(--ink); cursor: pointer; opacity: 0.7;
+        }
+        
+        /* The Feather Pen Profile Picture System */
+        .diary-profile-wrapper {
+            position: relative; width: 120px; height: 120px; margin-bottom: 15px;
+        }
+        .diary-profile-pic {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 10px; /* Square as requested */
+            border: 3px solid var(--ink);
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+        /* Feathers around the picture */
+        .feather-decor {
+            position: absolute; color: var(--ink); font-size: 40px; opacity: 0.8; pointer-events: none;
+        }
+        .feather-left { top: 30px; left: -35px; transform: rotate(-30deg); }
+        .feather-right { top: 30px; right: -35px; transform: rotate(30deg) scaleX(-1); }
+
+        .diary-name-input {
+            background: transparent; border: none; text-align: center;
+            font-family: var(--font-classic); font-size: 24px; font-weight: 800;
+            color: var(--ink); outline: none; width: 80%;
+            border-bottom: 1px dashed rgba(43, 27, 23, 0.3); padding-bottom: 5px;
+        }
+        .diary-name-input::placeholder { color: rgba(43, 27, 23, 0.5); }
+
+        /* The Gothic Writing Area */
+        .diary-body {
+            flex: 1; padding: 20px 25px; position: relative;
+            /* Lined paper effect */
+            background: repeating-linear-gradient(
+                transparent, transparent 34px, 
+                rgba(43, 27, 23, 0.15) 34px, rgba(43, 27, 23, 0.15) 35px
+            );
+        }
+        .gothic-textarea {
+            width: 100%; height: 100%; background: transparent; border: none; outline: none;
+            resize: none; font-family: var(--font-gothic); font-size: 26px;
+            color: var(--ink); line-height: 35px; /* Matches the gradient lines */
+            padding-top: 5px;
+        }
+        .gothic-textarea::placeholder { color: rgba(43, 27, 23, 0.4); }
+
+        /* Emoji Keyboard for Diary */
+        .emoji-bar {
+            background: rgba(216, 195, 165, 0.8); padding: 15px;
+            display: flex; justify-content: center; gap: 15px;
+            border-top: 2px solid var(--ink); backdrop-filter: blur(5px);
+        }
+        .emoji-btn {
+            font-size: 24px; cursor: pointer; transition: transform 0.2s;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        .emoji-btn:active { transform: scale(0.8); }
+
+        /* ==========================================================================
+           7. CHECKPOINT QUIZ (Rule of 3)
+           ========================================================================== */
         .quiz-modal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 10, 15, 0.98); z-index: 100;
+            background: rgba(5, 5, 8, 0.98); z-index: 150;
             display: none; flex-direction: column; justify-content: center; align-items: center;
             padding: 25px; text-align: center; opacity: 0; transition: opacity 0.4s;
-            backdrop-filter: blur(15px);
         }
         .quiz-modal.active { display: flex; opacity: 1; }
         .quiz-glow {
-            position: absolute; width: 250px; height: 250px;
+            position: absolute; width: 300px; height: 300px;
             background: radial-gradient(circle, var(--brand-glow) 0%, transparent 70%);
             top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1;
         }
-        
-        .quiz-title {
-            font-family: var(--font-art); color: var(--brand-cyan);
-            font-size: 28px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;
-        }
-        .quiz-subtitle { color: var(--danger); font-weight: 600; margin-bottom: 30px; font-size: 13px; }
-        .quiz-question { font-size: 20px; font-weight: 400; margin-bottom: 30px; line-height: 1.4; }
-        
-        .quiz-options { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        .quiz-title { font-family: var(--font-art); color: var(--brand-cyan); font-size: 32px; margin-bottom: 5px; font-weight: 800; }
+        .quiz-subtitle { color: #fff; font-weight: 400; margin-bottom: 35px; font-size: 15px; opacity: 0.7; }
+        .quiz-question { font-size: 22px; font-weight: 600; margin-bottom: 30px; line-height: 1.4; }
+        .quiz-options { width: 100%; display: flex; flex-direction: column; gap: 15px; }
         .quiz-btn {
-            background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,255,255,0.1);
-            color: #fff; padding: 18px; font-size: 15px; font-family: var(--font-ui); font-weight: 600;
-            border-radius: 12px; cursor: pointer; transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; padding: 20px; font-size: 16px; font-family: var(--font-ui); font-weight: 600;
+            border-radius: 15px; cursor: pointer; transition: all 0.2s;
         }
-        .quiz-btn:active { transform: scale(0.96); }
-        .quiz-btn.correct { background: var(--success); color: #000; border-color: var(--success); box-shadow: 0 0 15px rgba(0,230,118,0.4); }
+        .quiz-btn:active { transform: scale(0.95); }
+        .quiz-btn.correct { background: var(--success); color: #000; border-color: var(--success); box-shadow: 0 0 20px rgba(0,230,118,0.5); }
         .quiz-btn.wrong { background: var(--danger); color: #fff; border-color: var(--danger); animation: shake 0.4s; }
 
-        /* Explanation Box */
         .explanation-box {
-            display: none; margin-top: 25px; background: rgba(0, 255, 204, 0.1);
-            border-left: 3px solid var(--brand-cyan); padding: 15px;
-            border-radius: 0 8px 8px 0; text-align: left;
+            display: none; margin-top: 30px; background: rgba(0, 255, 204, 0.1);
+            border-left: 4px solid var(--brand-cyan); padding: 18px;
+            border-radius: 0 10px 10px 0; text-align: left;
             animation: slideUpFade 0.5s forwards;
         }
-        .exp-title { font-family: var(--font-art); font-weight: 700; color: var(--brand-cyan); margin-bottom: 8px; }
-        .exp-text { font-size: 14px; line-height: 1.5; }
+        .exp-title { font-family: var(--font-art); font-weight: 800; color: var(--brand-cyan); margin-bottom: 8px; font-size: 18px; }
+        .exp-text { font-size: 15px; line-height: 1.6; }
+        
         .continue-btn {
-            display: none; margin-top: 25px; background: #fff; color: #000;
-            padding: 15px 30px; font-family: var(--font-art); font-weight: 800;
-            border-radius: 30px; border: none; font-size: 16px; cursor: pointer;
+            display: none; margin-top: 30px; background: #fff; color: #000;
+            padding: 16px 35px; font-family: var(--font-art); font-weight: 800;
+            border-radius: 40px; border: none; font-size: 18px; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.3); transition: transform 0.2s;
         }
+        .continue-btn:active { transform: scale(0.9); }
 
-        /* =========================================
-           10-MIN TRANSFORMATION ADVICE MODAL
-        ========================================= */
-        .advice-modal {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            z-index: 200; display: none; flex-direction: column; justify-content: center; align-items: center;
-            padding: 30px; text-align: center;
-        }
-        .advice-header {
-            font-family: var(--font-art); font-size: 32px; font-weight: 800;
-            color: var(--brand-cyan); margin-bottom: 20px;
-        }
-        .advice-body {
-            font-size: 18px; line-height: 1.6; color: #ddd; margin-bottom: 40px; font-weight: 300;
-        }
-
-        /* =========================================
-           ANIMATIONS & PARTICLES
-        ========================================= */
+        /* ==========================================================================
+           8. ANIMATIONS & EFFECTS
+           ========================================================================== */
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes heartBurst { 0% { transform: scale(1); } 50% { transform: scale(1.4); } 100% { transform: scale(1); } }
+        @keyframes heartBurst { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
         @keyframes shake {
-            0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); } 75% { transform: translateX(-10px); }
+            0%, 100% { transform: translateX(0); } 25% { transform: translateX(-12px); }
+            50% { transform: translateX(12px); } 75% { transform: translateX(-12px); }
         }
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Floating Double-Tap Hearts */
         .floating-heart {
-            position: absolute; color: var(--danger); font-size: 60px;
-            pointer-events: none; z-index: 30; transform: translate(-50%, -50%) scale(0);
-            animation: floatUp 1s ease-out forwards; filter: drop-shadow(0 0 10px rgba(255,42,95,0.6));
+            position: absolute; color: var(--danger); font-size: 70px;
+            pointer-events: none; z-index: 50; transform: translate(-50%, -50%) scale(0);
+            animation: floatUp 1s ease-out forwards; filter: drop-shadow(0 0 15px rgba(255,42,95,0.8));
         }
         @keyframes floatUp {
             0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
             20% { transform: translate(-50%, -50%) scale(1.2) rotate(-15deg); }
-            100% { transform: translate(-50%, -150px) scale(1) rotate(15deg); opacity: 0; }
+            100% { transform: translate(-50%, -200px) scale(1) rotate(20deg); opacity: 0; }
         }
         
-        /* Confetti Canvas strictly inside capsule */
         #confetti-canvas {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 150; display: none;
+            pointer-events: none; z-index: 180; display: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- Celebration Audio -->
+    <!-- Celebration Sound Effect -->
     <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" preload="auto"></audio>
 
-    <!-- THE CAPSULE CONTAINER -->
+    <!-- World Background (Changes based on Category) -->
+    <div id="dynamic-bg" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=1000');"></div>
+
+    <!-- THE CAPSULE -->
     <div class="mobile-capsule">
         
-        <!-- Top Navigation -->
+        <!-- TikTok Nav -->
         <div class="top-nav" id="top-nav"></div>
 
-        <!-- Vertical Video Feed -->
+        <!-- Scrollable Feed -->
         <div class="feed-container" id="feed-container"></div>
 
-        <!-- Advanced Quiz Interceptor -->
+        <!-- The Quiz Interceptor -->
         <div class="quiz-modal" id="quiz-modal">
             <div class="quiz-glow"></div>
             <div class="quiz-title">Checkpoint</div>
@@ -322,82 +397,117 @@
             <button class="continue-btn" id="continue-scroll-btn" onclick="resumeScrolling()">Unlock Feed</button>
         </div>
 
-        <!-- 10-Minute Advice Modal -->
-        <div class="advice-modal" id="advice-modal">
-            <div class="advice-header">Time for Reality</div>
-            <div class="advice-body">
-                You've spent the last 10 minutes programming your mind with high-value inputs across finance, history, and science. <br><br>
-                Information without execution is a delusion. Close the app. Go apply this to your life right now.
+        <!-- THE GOTHIC DIARY (The Vault) -->
+        <div class="diary-modal" id="diary-modal">
+            <div class="diary-header">
+                <i class="fas fa-times close-diary" onclick="toggleDiary()"></i>
+                <div class="diary-profile-wrapper">
+                    <!-- Feather Decorations -->
+                    <i class="fas fa-feather-alt feather-decor feather-left"></i>
+                    <i class="fas fa-feather-alt feather-decor feather-right"></i>
+                    
+                    <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=200&q=80" 
+                         id="diary-img" class="diary-profile-pic" onclick="document.getElementById('img-upload').click()">
+                    <!-- Hidden File Input for Image Upload -->
+                    <input type="file" id="img-upload" style="display:none" accept="image/*" onchange="uploadDiaryImage(event)">
+                </div>
+                <input type="text" class="diary-name-input" id="diary-name" placeholder="Enter Thy Name..." value="Master Scholar">
             </div>
-            <button class="continue-btn" style="display: block;" onclick="document.getElementById('advice-modal').style.display='none'">I Am Ready</button>
+            
+            <div class="diary-body">
+                <textarea class="gothic-textarea" id="diary-notes" placeholder="Scribe thy thoughts and lore upon these ancient pages..."></textarea>
+            </div>
+
+            <div class="emoji-bar">
+                <div class="emoji-btn" onclick="addEmoji('💀')">💀</div>
+                <div class="emoji-btn" onclick="addEmoji('🔥')">🔥</div>
+                <div class="emoji-btn" onclick="addEmoji('🐐')">🐐</div>
+                <div class="emoji-btn" onclick="addEmoji('📈')">📈</div>
+                <div class="emoji-btn" onclick="addEmoji('🧠')">🧠</div>
+                <div class="emoji-btn" onclick="addEmoji('💸')">💸</div>
+            </div>
         </div>
 
-        <!-- Confetti Canvas -->
+        <!-- Confetti Overlay -->
         <canvas id="confetti-canvas"></canvas>
 
     </div> <!-- End Capsule -->
 
-    <!-- YouTube API -->
+    <!-- YouTube Iframe API -->
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        /* =========================================
-           DATABASE (Exact Videos Provided)
-        ========================================= */
+        /* ==========================================================================
+           1. DATABASE & CONFIGURATION
+           ========================================================================== */
+        // Mapping background images to categories for the cinematic feel
+        const BACKGROUNDS = {
+            "FACTS": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=1000",
+            "HISTORY": "https://images.unsplash.com/photo-1461360228754-6e81c478b882?auto=format&fit=crop&q=80&w=1000",
+            "MATH": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1000",
+            "SCIENCE": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=1000",
+            "VIBES": "https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&q=80&w=1000"
+        };
+
         const UEFI_DATABASE = {
             "FACTS": {
                 videos: ["z2rKDh9mh7Q", "jujgSDPlDOI", "lWGsVKlPz4s", "PwLki5sEQ8w", "suDhVin86Ps", "ZAIxy0_KrDg"],
                 quizzes: [
-                    { q: "What fundamentally separates an asset from a liability?", opts: ["Assets generate cash flow; liabilities consume it", "Assets are physical; liabilities are digital", "There is no difference"], ans: 0, exp: "The rich acquire assets. The poor and middle class acquire liabilities that they think are assets." },
-                    { q: "What does the Rule of 72 calculate?", opts: ["Your tax bracket", "How long it takes an investment to double", "Your retirement age"], ans: 1, exp: "Divide 72 by your interest rate. A 10% return means your money doubles every 7.2 years." }
+                    { q: "What fundamentally separates an asset from a liability?", opts: ["Assets generate cash flow; liabilities consume it", "Assets are physical; liabilities are digital", "There is no difference"], ans: 0, exp: "The rich acquire assets. The poor acquire liabilities they think are assets." },
+                    { q: "What does the Rule of 72 calculate?", opts: ["Your tax bracket", "How long it takes an investment to double", "Your retirement age"], ans: 1, exp: "Divide 72 by your interest rate. 10% return = doubles every 7.2 years." }
                 ]
             },
             "HISTORY": {
                 videos: ["0KQOrJ_K6ps", "i83WzFygvZ4", "lSflLzfWTUs"],
                 quizzes: [
-                    { q: "Why do top entrepreneurs obsess over studying history?", opts: ["To sound smart", "Because economic and geopolitical cycles repeat predictably", "To find old business models"], ans: 1, exp: "Human nature doesn't change. Macro-cycles like debt, inflation, and empire collapse repeat over centuries." }
+                    { q: "Why do top minds obsess over studying history?", opts: ["To sound smart", "Because economic and geopolitical cycles repeat", "To find old business models"], ans: 1, exp: "Human nature remains unchanged. Macro-cycles like inflation and empires repeat predictably." }
                 ]
             },
             "MATH": {
                 videos: ["-iiY2bqn9Wo", "UidCElWKF0E", "q_OGsBDRgz4", "pK9b1D3CUmg"],
                 quizzes: [
-                    { q: "What happens mathematically if you improve 1% every day for a year?", opts: ["You get 3.6x better", "You get 37.78x better", "You get 10x better"], ans: 1, exp: "(1.01)^365 = 37.78. Compound interest applies to habits, not just money." }
+                    { q: "What happens mathematically if you improve 1% daily for a year?", opts: ["You get 3.6x better", "You get 37.78x better", "You get 10x better"], ans: 1, exp: "(1.01)^365 = 37.78. Compound interest applies to your habits, not just your money." }
                 ]
             },
             "SCIENCE": {
                 videos: ["oR94cicO7xM", "5U-V0y-fkSw", "nHAFnH3xRl4", "ISUPZmjAWlQ", "ql0DrRJOpNg"],
                 quizzes: [
-                    { q: "What is the concept of Entropy in daily life?", opts: ["Systems naturally degrade into chaos without energy input", "Everything becomes more organized over time", "Energy is created from nothing"], ans: 0, exp: "If you don't put energy into your health, business, or relationships, they naturally decay. That is physics." }
+                    { q: "What is the concept of Entropy in daily life?", opts: ["Systems naturally degrade into chaos without energy", "Everything becomes more organized over time", "Energy is created from nothing"], ans: 0, exp: "If you don't put energy into your health, mind, or business, they naturally decay. That is physics." }
                 ]
             },
             "VIBES": {
                 videos: ["KHAOa2HrNTw", "3cSEEbwGKGk", "aYgA6cIzqm8", "7GBm5rbr50U", "mxb2sBLNK5Y", "9CRB8FTsErs", "txkwg5f37ws", "hlXD_AXtSIY"],
                 quizzes: [
-                    { q: "What is the danger of cheap dopamine?", opts: ["It raises your baseline, making hard work feel impossible", "It makes you sleep too much", "It hurts your eyes"], ans: 0, exp: "Unearned dopamine destroys your drive. You must detox to make building your future feel rewarding again." }
+                    { q: "What is the danger of cheap, unearned dopamine?", opts: ["It raises your baseline, making hard work feel impossible", "It makes you sleep too much", "It hurts your eyes"], ans: 0, exp: "Scrolling kills your drive. You must detox to make building your future feel rewarding again." }
                 ]
             }
         };
 
-        /* =========================================
-           STATE & INITIALIZATION
-        ========================================= */
+        /* ==========================================================================
+           2. STATE MANAGEMENT & LAZY LOADING VARIABLES
+           ========================================================================== */
         let currentCategory = "FACTS";
-        let playerRegistry = {};
         let activeQuizPool = [];
         let isInterceptorActive = false;
-        let activePlayerInstance = null;
-        let videosWatched = 0; // Tracks consecutive videos to trigger quiz
+        let videosWatched = 0; 
+        
+        // Lazy Load Registry
+        let playerRegistry = {}; // Holds YT objects
+        let currentlyPlayingId = null;
 
+        /* ==========================================================================
+           3. INITIALIZATION
+           ========================================================================== */
         function initApp() {
             renderNavigation();
             loadCategoryData(currentCategory);
-            setupScrollObserver();
+            setupIntersectionObserver();
             initDoubleTapLike();
-            setTimeout(triggerLifeAdvice, 600000); // 10 minutes
+            loadDiaryData(); // Load saved diary notes/name/img
         }
 
-        /* =========================================
-           UI RENDERING
-        ========================================= */
+        /* ==========================================================================
+           4. UI RENDERING & DYNAMIC BACKGROUNDS
+           ========================================================================== */
         function renderNavigation() {
             const nav = document.getElementById('top-nav');
             nav.innerHTML = '';
@@ -406,8 +516,13 @@
                 item.className = `nav-item ${cat === currentCategory ? 'active' : ''}`;
                 item.innerText = cat;
                 item.onclick = () => {
+                    if(currentCategory === cat) return;
                     currentCategory = cat;
                     videosWatched = 0;
+                    
+                    // Change Background
+                    document.getElementById('dynamic-bg').style.backgroundImage = `url('${BACKGROUNDS[cat]}')`;
+                    
                     renderNavigation();
                     loadCategoryData(cat);
                 };
@@ -418,6 +533,11 @@
         function loadCategoryData(catKey) {
             const feed = document.getElementById('feed-container');
             feed.innerHTML = '';
+            
+            // Clean up old players to free memory
+            Object.values(playerRegistry).forEach(p => {
+                if(p && typeof p.destroy === 'function') p.destroy();
+            });
             playerRegistry = {};
             activeQuizPool = [...UEFI_DATABASE[catKey].quizzes];
 
@@ -426,16 +546,24 @@
             vids.forEach((videoId, idx) => {
                 const container = document.createElement('div');
                 container.className = 'video-container';
-                container.id = `frame-${videoId}-${idx}`;
+                container.id = `container-${videoId}-${idx}`;
                 
                 const likes = Math.floor(Math.random() * 800) + 120;
                 const comments = Math.floor(Math.random() * 80) + 10;
                 
+                // Lightning Fast Template: We only render a blurry thumbnail initially.
+                // The actual iframe is built only when scrolled into view.
                 container.innerHTML = `
-                    <div id="yt-${videoId}-${idx}" class="yt-iframe"></div>
+                    <div class="yt-placeholder" id="placeholder-${videoId}-${idx}" 
+                         style="background-image: url('https://img.youtube.com/vi/${videoId}/hqdefault.jpg');">
+                    </div>
+                    <div id="player-wrapper-${videoId}-${idx}" class="yt-iframe"></div>
+                    
                     <div class="ui-overlay" data-idx="${idx}">
                         <div class="side-actions">
-                            <div class="profile-pic">V</div>
+                            <div class="profile-pic-container">
+                                <div class="profile-pic"></div>
+                            </div>
                             <div class="action-btn like-btn">
                                 <i class="fas fa-heart"></i>
                                 <span class="action-text">${likes}K</span>
@@ -444,9 +572,10 @@
                                 <i class="fas fa-comment-dots"></i>
                                 <span class="action-text">${comments}K</span>
                             </div>
-                            <div class="action-btn">
-                                <i class="fas fa-bookmark"></i>
-                                <span class="action-text">Save</span>
+                            <!-- NEW DIARY / VAULT BUTTON -->
+                            <div class="action-btn diary-btn" onclick="toggleDiary()">
+                                <i class="fas fa-book"></i>
+                                <span class="action-text">Diary</span>
                             </div>
                             <div class="action-btn">
                                 <i class="fas fa-share"></i>
@@ -455,75 +584,159 @@
                         </div>
                         <div class="bottom-info">
                             <div class="creator-name">@VibeZ <i class="fas fa-check-circle verified-badge"></i></div>
-                            <div class="video-desc">Rewire your brain for execution. <span class="tags">#${catKey.toLowerCase()} #uefi</span></div>
-                            <div class="music-ticker"><i class="fas fa-compact-disc"></i> Original Audio - VibeZ</div>
+                            <div class="video-desc">Systemize your mindset. <span class="tags">#${catKey.toLowerCase()} #lore</span></div>
+                            <div class="music-ticker"><i class="fas fa-compact-disc"></i> Original Audio - The Vault</div>
                         </div>
                     </div>
                 `;
                 feed.appendChild(container);
-
-                playerRegistry[`yt-${videoId}-${idx}`] = new YT.Player(`yt-${videoId}-${idx}`, {
-                    videoId: videoId,
-                    playerVars: {
-                        'autoplay': 0, 'controls': 0, 'rel': 0, 'showinfo': 0, 
-                        'modestbranding': 1, 'loop': 1, 'playlist': videoId,
-                        'playsinline': 1, 'mute': 0 
-                    }
-                });
             });
             feed.scrollTop = 0;
         }
 
-        /* =========================================
-           SCROLL OBSERVER & RULE OF 3 LOGIC
-        ========================================= */
-        function setupScrollObserver() {
+        /* ==========================================================================
+           5. INTELLIGENT LAZY LOADING OBSERVER (The Speed Fix)
+           ========================================================================== */
+        function setupIntersectionObserver() {
             const feed = document.getElementById('feed-container');
+            
+            // Fires when a video container takes up > 60% of the screen
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    const ytId = entry.target.querySelector('.yt-iframe').id;
-                    const player = playerRegistry[ytId];
+                    const containerId = entry.target.id;
+                    const parts = containerId.split('-');
+                    const videoId = parts[1];
+                    const idx = parts[2];
+                    const playerId = `player-${videoId}-${idx}`;
+                    const wrapperId = `player-wrapper-${videoId}-${idx}`;
 
                     if (entry.isIntersecting) {
-                        if (player && typeof player.playVideo === 'function') {
-                            player.playVideo();
-                            activePlayerInstance = player;
+                        // 1. If player doesn't exist yet, inject iframe and init YT Player
+                        if (!playerRegistry[playerId]) {
+                            const wrapper = document.getElementById(wrapperId);
+                            const div = document.createElement('div');
+                            div.id = playerId;
+                            wrapper.appendChild(div);
+
+                            playerRegistry[playerId] = new YT.Player(playerId, {
+                                videoId: videoId,
+                                playerVars: {
+                                    'autoplay': 1, 'controls': 0, 'rel': 0, 'showinfo': 0, 
+                                    'modestbranding': 1, 'loop': 1, 'playlist': videoId,
+                                    'playsinline': 1, 'mute': 0 
+                                },
+                                events: {
+                                    'onReady': (e) => {
+                                        // Fade in iframe, fade out placeholder
+                                        document.getElementById(wrapperId).style.opacity = '1';
+                                        e.target.playVideo();
+                                    }
+                                }
+                            });
+                        } else {
+                            // Already exists, just play
+                            if(typeof playerRegistry[playerId].playVideo === 'function'){
+                                playerRegistry[playerId].playVideo();
+                            }
                         }
                         
+                        currentlyPlayingId = playerId;
                         videosWatched++;
                         
-                        // Every 3rd video watched triggers the quiz (offsetting initial load)
+                        // Rule of 3 Quiz Logic
                         if (videosWatched > 1 && (videosWatched - 1) % 3 === 0 && !isInterceptorActive) {
-                            setTimeout(() => launchInterceptorQuiz(), 1500); // Wait 1.5s then freeze
+                            setTimeout(() => launchInterceptorQuiz(), 1500); 
                         }
+
                     } else {
-                        if (player && typeof player.pauseVideo === 'function') {
-                            player.pauseVideo();
+                        // Out of view -> Pause immediately
+                        if (playerRegistry[playerId] && typeof playerRegistry[playerId].pauseVideo === 'function') {
+                            playerRegistry[playerId].pauseVideo();
                         }
                     }
                 });
-            }, { root: feed, threshold: 0.65 });
+            }, { root: feed, threshold: 0.6 });
 
+            // Attach observer to dynamic children
             const mutObserver = new MutationObserver(() => {
                 document.querySelectorAll('.video-container').forEach(el => observer.observe(el));
             });
             mutObserver.observe(feed, { childList: true });
         }
 
-        /* =========================================
-           QUIZ ENGINE
-        ========================================= */
+        /* ==========================================================================
+           6. THE VAULT / DIARY LOGIC
+           ========================================================================== */
+        function toggleDiary() {
+            const modal = document.getElementById('diary-modal');
+            if(modal.classList.contains('open')) {
+                // Closing: Save data
+                saveDiaryData();
+                modal.classList.remove('open');
+                // Resume video if closed
+                if(currentlyPlayingId && playerRegistry[currentlyPlayingId]) {
+                    playerRegistry[currentlyPlayingId].playVideo();
+                }
+            } else {
+                // Opening
+                if(currentlyPlayingId && playerRegistry[currentlyPlayingId]) {
+                    playerRegistry[currentlyPlayingId].pauseVideo();
+                }
+                modal.classList.add('open');
+            }
+        }
+
+        function addEmoji(emoji) {
+            const textarea = document.getElementById('diary-notes');
+            textarea.value += emoji;
+            textarea.focus();
+        }
+
+        // Image Upload via FileReader
+        function uploadDiaryImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('diary-img').src = e.target.result;
+                    localStorage.setItem('vibez_profile_img', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Persistent Storage
+        function saveDiaryData() {
+            const notes = document.getElementById('diary-notes').value;
+            const name = document.getElementById('diary-name').value;
+            localStorage.setItem('vibez_notes', notes);
+            localStorage.setItem('vibez_name', name);
+        }
+
+        function loadDiaryData() {
+            const savedNotes = localStorage.getItem('vibez_notes');
+            const savedName = localStorage.getItem('vibez_name');
+            const savedImg = localStorage.getItem('vibez_profile_img');
+            
+            if(savedNotes) document.getElementById('diary-notes').value = savedNotes;
+            if(savedName) document.getElementById('diary-name').value = savedName;
+            if(savedImg) document.getElementById('diary-img').src = savedImg;
+        }
+
+        /* ==========================================================================
+           7. CHECKPOINT QUIZ ENGINE
+           ========================================================================== */
         function launchInterceptorQuiz() {
             isInterceptorActive = true;
-            if (activePlayerInstance && typeof activePlayerInstance.pauseVideo === 'function') {
-                activePlayerInstance.pauseVideo();
+            if (currentlyPlayingId && playerRegistry[currentlyPlayingId]) {
+                playerRegistry[currentlyPlayingId].pauseVideo();
             }
 
             document.getElementById('feed-container').classList.add('no-scroll');
 
             let quizObj = activeQuizPool.length > 0 
                 ? activeQuizPool.splice(Math.floor(Math.random() * activeQuizPool.length), 1)[0]
-                : { q: "Information without execution is a delusion. What is your next move today?", opts: ["Scroll mindlessly", "Apply one concept immediately", "Forget it by tomorrow"], ans: 1, exp: "Action is the only metric of truth." };
+                : { q: "Information without execution is a delusion. What is your next move today?", opts: ["Scroll mindlessly", "Apply one concept immediately", "Forget it"], ans: 1, exp: "Action is the only metric of truth. Write it in your Diary." };
 
             document.getElementById('quiz-q-text').innerText = quizObj.q;
             const btnBox = document.getElementById('quiz-options-container');
@@ -551,9 +764,10 @@
             if (selectedIdx === quizObj.ans) {
                 btnElement.classList.add('correct');
                 
-                // Play Celebration Audio
+                // Play Celebration Sound
                 const sfx = document.getElementById('success-sound');
-                sfx.volume = 0.8; sfx.currentTime = 0; sfx.play();
+                sfx.volume = 0.9; sfx.currentTime = 0; 
+                sfx.play().catch(e=>console.log("Audio play blocked by browser policy"));
 
                 triggerConfetti();
 
@@ -561,13 +775,13 @@
                     document.getElementById('exp-text-content').innerText = quizObj.exp;
                     document.getElementById('quiz-explanation').style.display = 'block';
                     document.getElementById('continue-scroll-btn').style.display = 'block';
-                }, 800);
+                }, 700);
             } else {
                 btnElement.classList.add('wrong');
                 setTimeout(() => {
                     btnElement.classList.remove('wrong');
                     buttons.forEach(b => b.style.pointerEvents = 'auto');
-                }, 600);
+                }, 500);
             }
         }
 
@@ -578,14 +792,23 @@
                 modal.style.display = 'none';
                 document.getElementById('feed-container').classList.remove('no-scroll');
                 isInterceptorActive = false;
-                if (activePlayerInstance) activePlayerInstance.playVideo();
+                if (currentlyPlayingId && playerRegistry[currentlyPlayingId]) {
+                    playerRegistry[currentlyPlayingId].playVideo();
+                }
                 document.getElementById('confetti-canvas').style.display = 'none';
+                
+                // Pulse the diary button to encourage writing notes
+                const diaryBtns = document.querySelectorAll('.diary-btn i');
+                diaryBtns.forEach(btn => {
+                    btn.style.transform = 'scale(1.5)';
+                    setTimeout(() => btn.style.transform = 'scale(1)', 400);
+                });
             }, 400);
         }
 
-        /* =========================================
-           DOUBLE TAP TO LIKE
-        ========================================= */
+        /* ==========================================================================
+           8. DOUBLE TAP TO LIKE
+           ========================================================================== */
         function initDoubleTapLike() {
             const feed = document.getElementById('feed-container');
             let lastTap = 0;
@@ -594,7 +817,6 @@
                 const currentTime = new Date().getTime();
                 const tapLength = currentTime - lastTap;
                 if (tapLength < 300 && tapLength > 0) {
-                    // Double Tap
                     const rect = e.target.getBoundingClientRect();
                     const x = e.touches[0].clientX - rect.left;
                     const y = e.touches[0].clientY - rect.top;
@@ -607,7 +829,6 @@
                 lastTap = currentTime;
             });
             
-            // Desktop fallback
             feed.addEventListener('dblclick', (e) => {
                 const rect = e.target.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -627,16 +848,9 @@
             setTimeout(() => heart.remove(), 1000);
         }
 
-        /* =========================================
-           10-MIN LOGIC & CONFETTI ENGINE
-        ========================================= */
-        function triggerLifeAdvice() {
-            if (activePlayerInstance && typeof activePlayerInstance.pauseVideo === 'function') {
-                activePlayerInstance.pauseVideo();
-            }
-            document.getElementById('advice-modal').style.display = 'flex';
-        }
-
+        /* ==========================================================================
+           9. CUSTOM CONFETTI PHYSICS ENGINE
+           ========================================================================== */
         function triggerConfetti() {
             const canvas = document.getElementById('confetti-canvas');
             canvas.style.display = 'block';
@@ -646,15 +860,14 @@
             canvas.height = parentRect.height;
 
             const particles = [];
-            const colors = ['#00ffcc', '#00e676', '#ff007f', '#ffffff'];
+            const colors = ['#00ffcc', '#00e676', '#ff007f', '#f1c40f', '#ffffff'];
 
-            for (let i = 0; i < 80; i++) {
+            for (let i = 0; i < 100; i++) {
                 particles.push({
-                    x: canvas.width / 2,
-                    y: canvas.height / 2,
-                    r: Math.random() * 5 + 2,
-                    dx: Math.random() * 16 - 8,
-                    dy: Math.random() * -16 - 4,
+                    x: canvas.width / 2, y: canvas.height / 2,
+                    r: Math.random() * 6 + 2,
+                    dx: Math.random() * 18 - 9,
+                    dy: Math.random() * -18 - 5,
                     color: colors[Math.floor(Math.random() * colors.length)],
                     tilt: Math.random() * 10
                 });
@@ -665,7 +878,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 let active = false;
                 particles.forEach(p => {
-                    p.dy += 0.5; // Gravity
+                    p.dy += 0.4; // Gravity
                     p.x += p.dx; p.y += p.dy; p.tilt += 0.1;
                     if (p.y < canvas.height) active = true;
 
@@ -683,7 +896,9 @@
             render();
         }
 
-        // Initialize App once YouTube API is loaded
+        /* ==========================================================================
+           10. BOOTSTRAP YOUTUBE API
+           ========================================================================== */
         window.onYouTubeIframeAPIReady = function() {
             initApp();
         };
