@@ -2,669 +2,631 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFI Vibez | Transformative Learning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UEFI Vibez | TikTok Learning Engine</title>
+    <!-- Load FontAwesome for TikTok-style icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* === CSS: HIGH-DOPAMINE, LOW-DISTRACTION UI === */
-        :root {
-            --bg-main: #0a0a0f;
-            --bg-panel: #16161e;
-            --bg-card: #20202a;
-            --accent: #00ffcc;
-            --accent-glow: rgba(0, 255, 204, 0.4);
-            --text-main: #e0e0e0;
-            --text-muted: #888896;
-            --locked: #333344;
-            --danger: #ff4a4a;
-            --success: #39ff14;
-        }
+        /* =========================================
+           TIKTOK CLONE CSS & UI ARCHITECTURE
+        ========================================= */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
+        body, html {
+            height: 100%;
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            overflow: hidden; /* Prevent native body scroll */
+        }
+
+        /* Top Navigation (Topics) */
+        .top-nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
             display: flex;
-            height: 100vh;
-            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 10px;
+            z-index: 10;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            gap: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
         }
-
-        /* Sidebar Navigation */
-        .sidebar {
-            width: 260px;
-            background-color: var(--bg-panel);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid var(--locked);
-        }
-
-        .brand {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--accent), #b026ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+        .top-nav::-webkit-scrollbar { display: none; }
 
         .nav-item {
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            cursor: pointer;
+            font-size: 16px;
             font-weight: 600;
-            transition: all 0.2s;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: 0.3s;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        .nav-item.active {
+            color: #fff;
+            transform: scale(1.1);
+            border-bottom: 2px solid #fff;
+            padding-bottom: 2px;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background-color: var(--bg-card);
-            color: var(--text-main);
-            box-shadow: 0 0 10px var(--accent-glow);
-            border-left: 4px solid var(--accent);
+        /* Feed Container (Scroll Snapping) */
+        .feed-container {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            /* Hide scrollbar */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .feed-container::-webkit-scrollbar { display: none; }
+        
+        /* Disable scroll when quiz is active */
+        .no-scroll {
+            overflow: hidden !important;
         }
 
-        /* Main Content Area */
-        .main-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        /* Header / Dashboard Stats */
-        .top-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background-color: var(--bg-panel);
-            border-bottom: 1px solid var(--locked);
-        }
-
-        .streak-counter {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ffa500;
-            background: rgba(255, 165, 0, 0.1);
-            padding: 8px 16px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Learning Environment (Theater Mode) */
-        .learning-theater {
-            padding: 30px 40px;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* Video Section */
+        /* Individual Video Wrapper */
         .video-container {
-            background: var(--bg-card);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            background: #000;
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #111;
         }
 
-        .video-wrapper iframe {
+        .yt-iframe {
+            width: 100%;
+            height: 100%;
+            /* Scale up slightly to crop out YT UI elements and mimic full screen vertical */
+            transform: scale(1.35); 
+            pointer-events: none; /* Prevent clicking YT UI, handled by transparent overlay */
+        }
+
+        /* UI Overlay to block YT clicks and show TT elements */
+        .ui-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: none;
-        }
-
-        /* Progress Bar */
-        .module-progress-container {
-            padding: 15px 20px;
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--locked);
-        }
-
-        .progress-text {
+            z-index: 2;
             display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--accent);
+            flex-direction: column;
+            justify-content: flex-end;
+            padding-bottom: 20px;
         }
 
-        .progress-bar {
-            height: 8px;
-            background: var(--locked);
-            border-radius: 4px;
-            overflow: hidden;
+        /* Bottom Info Area */
+        .bottom-info {
+            position: absolute;
+            bottom: 20px;
+            left: 15px;
+            width: 70%;
+            z-index: 5;
         }
-
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--accent);
-            box-shadow: 0 0 10px var(--accent-glow);
-            transition: width 0.4s ease;
-        }
-
-        /* Watch-Do-Reflect Sandbox */
-        .sandbox {
-            padding: 20px;
-        }
-
-        .sandbox-title {
+        .creator-name {
             font-size: 18px;
-            margin-bottom: 15px;
-            color: var(--accent);
-        }
-
-        .quiz-container {
-            background: var(--bg-panel);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .quiz-question {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .quiz-options button {
-            display: block;
-            width: 100%;
-            padding: 10px;
+            font-weight: 700;
             margin-bottom: 8px;
-            background: var(--locked);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            text-align: left;
-            transition: 0.2s;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
-
-        .quiz-options button:hover {
-            background: var(--bg-card);
-            border-left: 3px solid var(--accent);
+        .video-desc {
+            font-size: 14px;
+            line-height: 1.3;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
-
-        .action-box {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        textarea {
-            width: 100%;
-            background: var(--bg-panel);
-            border: 1px solid var(--locked);
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .btn-submit {
-            background: var(--accent);
-            color: #000;
-            font-weight: bold;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-submit:hover {
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
-
-        /* Right Panel: Path & Community */
-        .right-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .playlist {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 20px;
-        }
-
-        .playlist-title {
-            font-size: 16px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid var(--locked);
-            padding-bottom: 10px;
-        }
-
-        .short-item {
+        .music-ticker {
             display: flex;
             align-items: center;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            background: var(--bg-panel);
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        /* Right Side Action Buttons */
+        .side-actions {
+            position: absolute;
+            bottom: 30px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 5;
+        }
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            cursor: pointer;
+        }
+        .action-btn i {
+            font-size: 32px;
+            margin-bottom: 5px;
             transition: 0.2s;
         }
-
-        .short-item.active {
-            border: 1px solid var(--accent);
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .short-item.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .short-icon {
-            margin-right: 12px;
-            font-size: 18px;
-        }
-
-        /* Community Lightbulb Moments */
-        .community-board {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        .comment {
-            background: var(--bg-panel);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-muted);
-            margin-bottom: 5px;
+        .action-btn i:active { transform: scale(0.8); color: #fe2c55; } /* TT Red */
+        .action-text {
             font-size: 12px;
+            font-weight: 600;
         }
-
-        .upvote {
-            cursor: pointer;
-            color: var(--accent);
+        .profile-pic {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 10px;
         }
 
+        /* =========================================
+           THE INTERCEPTOR: QUIZ OVERLAY
+        ========================================= */
+        .quiz-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .quiz-title {
+            color: #00ffcc;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .quiz-warning {
+            font-size: 14px;
+            color: #ff4a4a;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .quiz-question {
+            font-size: 22px;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+        .quiz-options {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .quiz-btn {
+            background: #20202a;
+            border: 2px solid #333344;
+            color: #fff;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        .quiz-btn:active { transform: scale(0.98); }
+        .quiz-btn.correct { background: #39ff14; color: #000; border-color: #39ff14; }
+        .quiz-btn.wrong { background: #ff4a4a; color: #fff; border-color: #ff4a4a; animation: shake 0.4s; }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* =========================================
+           10-MINUTE LIFE ADVICE MODAL
+        ========================================= */
+        .advice-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(0,242,254,0.95), rgba(79,172,254,0.95));
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            color: #fff;
+        }
+        .advice-icon { font-size: 60px; margin-bottom: 20px; }
+        .advice-title { font-size: 32px; font-weight: 800; margin-bottom: 20px; }
+        .advice-text { font-size: 18px; line-height: 1.6; margin-bottom: 40px; max-width: 500px; }
+        .advice-close {
+            background: #fff;
+            color: #000;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="brand">UEFI Vibez</div>
-        <div id="nav-categories">
-            <!-- Populated by JS -->
+    <!-- Celebration Audio Element (Base64 lightweight ping) -->
+    <audio id="celebration-audio" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" preload="auto"></audio>
+
+    <!-- Top Navigation -->
+    <div class="top-nav" id="top-nav">
+        <!-- Generated by JS -->
+    </div>
+
+    <!-- Main Video Feed -->
+    <div class="feed-container" id="feed-container">
+        <!-- Videos Injected Here -->
+    </div>
+
+    <!-- Intercepting Quiz Overlay -->
+    <div class="quiz-overlay" id="quiz-overlay">
+        <div class="quiz-title"><i class="fas fa-brain"></i> Checkpoint</div>
+        <div class="quiz-warning">You must pass to keep scrolling.</div>
+        <div class="quiz-question" id="quiz-question-text">Loading question...</div>
+        <div class="quiz-options" id="quiz-options-container">
+            <!-- Buttons injected here -->
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        
-        <!-- HEADER -->
-        <div class="top-header">
-            <h2 id="current-category-title">SCIENCE: The Quantum Realm</h2>
-            <div class="streak-counter">
-                🔥 <span id="streak-days">14</span> Day Streak
-            </div>
+    <!-- 10-Minute Advice Modal -->
+    <div class="advice-modal" id="advice-modal">
+        <div class="advice-icon"><i class="fas fa-seedling"></i></div>
+        <div class="advice-title">You Are Growing</div>
+        <div class="advice-text">
+            You've spent the last 10 minutes intentionally feeding your brain. While others are mindlessly scrolling their lives away, you are building mental frameworks in finance, science, and history. 
+            <br><br>
+            Take this energy into the real world today. Build, create, and don't let anyone out-work your vision. Keep vibrating higher.
         </div>
-
-        <!-- THEATER MODE -->
-        <div class="learning-theater">
-            
-            <!-- LEFT: Video and Sandbox -->
-            <div class="video-section">
-                <div class="video-container">
-                    
-                    <!-- Progress Bar -->
-                    <div class="module-progress-container">
-                        <div class="progress-text">
-                            <span id="module-title">Module 1: Foundations</span>
-                            <span id="progress-percentage">0% Complete</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progress-fill"></div>
-                        </div>
-                    </div>
-
-                    <!-- YT Embed (Clean, ?rel=0) -->
-                    <div class="video-wrapper">
-                        <iframe id="yt-player" src="" allowfullscreen></iframe>
-                    </div>
-
-                    <!-- Sandbox: Watch-Do-Reflect -->
-                    <div class="sandbox">
-                        <h3 class="sandbox-title">🧠 The Intercepting Sandbox</h3>
-                        
-                        <!-- Phase 1: Quiz -->
-                        <div class="quiz-container" id="quiz-ui">
-                            <div class="quiz-question" id="q-text">Loading question...</div>
-                            <div class="quiz-options" id="q-options">
-                                <!-- Populated by JS -->
-                            </div>
-                        </div>
-
-                        <!-- Phase 2: Action / Reflect (Hidden until quiz passed) -->
-                        <div class="action-box" id="action-ui">
-                            <p style="color: var(--success); font-weight: bold;">✓ Correct! Now, lock it in:</p>
-                            <p id="action-prompt">What is one takeaway from this Short?</p>
-                            <textarea id="reflection-text" placeholder="Type your realization here to unlock the next video..."></textarea>
-                            <button class="btn-submit" onclick="submitReflection()">Submit & Unlock Next Short ➔</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RIGHT: Journey & Community -->
-            <div class="right-panel">
-                
-                <!-- Progressive Learning Path -->
-                <div class="playlist">
-                    <div class="playlist-title">📍 Your Journey</div>
-                    <div id="playlist-container">
-                        <!-- Populated by JS -->
-                    </div>
-                </div>
-
-                <!-- Community Board -->
-                <div class="community-board">
-                    <div class="playlist-title">💡 Lightbulb Moments</div>
-                    <div id="community-feed">
-                        <div class="comment">
-                            <div class="comment-header"><span>@YouthInnovator</span> <span class="upvote">▲ 142</span></div>
-                            "I never realized that compounding interest is basically a snowball rolling down a hill. Starting at 18 changes everything!"
-                        </div>
-                        <div class="comment">
-                            <div class="comment-header"><span>@SciGeek99</span> <span class="upvote">▲ 89</span></div>
-                            "Veritasium's explanation of gravity as a curve in spacetime makes so much more sense than just 'objects falling'."
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+        <button class="advice-close" onclick="closeAdvice()">I'm Ready</button>
     </div>
 
-    <!-- === JAVASCRIPT: LOGIC & STATE MANAGEMENT === -->
+    <!-- Load YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // 1. DATABASE CONSTRUCT (Using top creators as requested)
-        const db = {
-            categories: [
-                "SCIENCE", "HISTORY", "LANGUAGE", "MATH", "FINANCE", "TECH", "INNOVATION", "YOUTH VIBES"
-            ],
-            modules: {
-                "SCIENCE": {
-                    title: "Science: Physics & Reality",
-                    creator: "Inspired by Veritasium",
-                    shorts: [
-                        {
-                            id: "1",
-                            yt: "kVQv0Zk6Naw", // Placeholder YouTube Short ID
-                            title: "Why Gravity is NOT a Force",
-                            quiz: {
-                                question: "According to General Relativity, what is gravity?",
-                                options: ["A magnetic pull", "The curvature of spacetime", "A subatomic particle"],
-                                answer: 1
-                            },
-                            prompt: "Drop a pen right now. In one sentence, describe what actually happened to the space around it."
-                        },
-                        {
-                            id: "2",
-                            yt: "G3qZkEemNUE", 
-                            title: "The Double Slit Experiment",
-                            quiz: {
-                                question: "What changes the behavior of particles in this experiment?",
-                                options: ["The temperature", "The act of observing them", "The speed of light"],
-                                answer: 1
-                            },
-                            prompt: "If observation changes reality at a quantum level, how does that change your perspective on your own focus?"
-                        },
-                        {
-                            id: "3",
-                            yt: "ZzR2bIqO8tE",
-                            title: "Entropy Explained",
-                            quiz: {
-                                question: "What is entropy a measure of?",
-                                options: ["Energy", "Disorder / Chaos", "Time"],
-                                answer: 1
-                            },
-                            prompt: "Look at your bedroom. Is it in a state of high or low entropy? How will you reverse it?"
-                        }
-                    ]
-                },
-                "FINANCE": {
-                    title: "Finance: Wealth Building",
-                    creator: "School of Hard Knocks",
-                    shorts: [
-                        {
-                            id: "4",
-                            yt: "WvO2P4Xz4Ew", 
-                            title: "The Rule of 72",
-                            quiz: {
-                                question: "What does the Rule of 72 calculate?",
-                                options: ["How much tax you pay", "How long it takes to double your money", "Your credit score"],
-                                answer: 1
-                            },
-                            prompt: "If you get a 10% return on an investment, how many years until your money doubles? Calculate it here."
-                        },
-                        {
-                            id: "5",
-                            yt: "M89Qp4ZpxzE",
-                            title: "Assets vs Liabilities",
-                            quiz: {
-                                question: "Which of these is a true asset?",
-                                options: ["A brand new car", "A dividend-paying stock", "Designer shoes"],
-                                answer: 1
-                            },
-                            prompt: "List one liability you are currently spending money on, and one asset you could buy instead."
-                        }
-                    ]
-                }
-                // (More categories would be populated here following the same structure)
+        /* =========================================
+           DATABASE: VIDEOS & QUIZZES
+        ========================================= */
+        const uefiDB = {
+            "FACTS": {
+                videos: ["z2rKDh9mh7Q", "jujgSDPlDOI", "lWGsVKlPz4s", "PwLki5sEQ8w", "suDhVin86Ps", "ZAIxy0_KrDg"],
+                quizzes: [
+                    { q: "What is the primary difference between an asset and a liability?", opts: ["Assets take time to build, liabilities are fast", "Assets put money in your pocket, liabilities take money out", "Assets are for the rich, liabilities are for the poor", "There is no difference"], ans: 1 },
+                    { q: "What is the 'Rule of 72' used to calculate in finance?", opts: ["Your credit score limit", "How much tax you owe", "How long it takes an investment to double", "The maximum age for retirement"], ans: 2 }
+                ]
+            },
+            "HISTORY": {
+                videos: ["0KQOrJ_K6ps", "i83WzFygvZ4", "lSflLzfWTUs"],
+                quizzes: [
+                    { q: "Why is it important to study the rise and fall of historical empires?", opts: ["To memorize dates for exams", "To recognize repeating patterns in modern geopolitics and economics", "To find lost treasure", "Because history never repeats itself"], ans: 1 }
+                ]
+            },
+            "MATH": {
+                videos: ["-iiY2bqn9Wo", "UidCElWKF0E", "q_OGsBDRgz4", "pK9b1D3CUmg"],
+                quizzes: [
+                    { q: "If you improve by just 1% every day for a year (Compound Interest), mathematically, how much better do you become?", opts: ["3.65x better", "37x better", "100x better", "10x better"], ans: 1 }
+                ]
+            },
+            "SCIENCE": {
+                videos: ["oR94cicO7xM", "5U-V0y-fkSw", "nHAFnH3xRl4", "ISUPZmjAWlQ", "ql0DrRJOpNg"],
+                quizzes: [
+                    { q: "According to the principles of physics (Entropy), what happens to a system if you don't put energy into it?", opts: ["It stays exactly the same", "It naturally becomes more organized", "It degrades into chaos and disorder", "It generates its own energy"], ans: 2 },
+                    { q: "What causes the curvature of spacetime in Einstein's theory of relativity?", opts: ["Magnetic fields", "Mass and Energy", "Dark Matter only", "Quantum tunneling"], ans: 1 }
+                ]
+            },
+            "VIBES": {
+                videos: ["KHAOa2HrNTw", "3cSEEbwGKGk", "aYgA6cIzqm8", "7GBm5rbr50U", "mxb2sBLNK5Y", "9CRB8FTsErs", "txkwg5f37ws", "hlXD_AXtSIY"],
+                quizzes: [
+                    { q: "Motivation gets you started. What keeps you going when motivation fades?", opts: ["More motivation", "Watching more videos", "Discipline and structured habits", "Waiting for the right mood"], ans: 2 },
+                    { q: "What is the most effective way to re-wire your brain's dopamine baseline?", opts: ["Scroll TikTok for 3 hours", "Do hard things first before seeking cheap pleasure", "Eat high-sugar foods", "Multitasking constantly"], ans: 1 }
+                ]
             }
         };
 
-        // 2. STATE MANAGEMENT
-        let currentCategory = "SCIENCE";
-        let currentVideoIndex = 0;
-        let unlockedVideos = [0]; // Index 0 is unlocked by default
+        /* =========================================
+           APP STATE
+        ========================================= */
+        let currentCategory = "FACTS";
+        let ytPlayers = {}; // Store YT player instances
+        let videosWatchedInCategory = 0;
+        let currentQuizPool = [];
+        let isQuizActive = false;
 
-        // 3. INITIALIZATION
-        function init() {
-            renderSidebar();
+        /* =========================================
+           INITIALIZATION
+        ========================================= */
+        function initApp() {
+            renderNav();
             loadCategory(currentCategory);
+            setupIntersectionObserver();
+            start10MinuteTimer();
         }
 
-        // 4. RENDER UI FUNCTIONS
-        function renderSidebar() {
-            const nav = document.getElementById("nav-categories");
-            nav.innerHTML = "";
-            db.categories.forEach(cat => {
-                const div = document.createElement("div");
-                div.className = `nav-item ${cat === currentCategory ? 'active' : ''}`;
-                div.innerText = cat;
-                div.onclick = () => {
-                    // Reset progress when changing categories (for demo purposes)
+        function renderNav() {
+            const nav = document.getElementById('top-nav');
+            nav.innerHTML = '';
+            Object.keys(uefiDB).forEach(cat => {
+                const item = document.createElement('div');
+                item.className = `nav-item ${cat === currentCategory ? 'active' : ''}`;
+                item.innerText = cat;
+                item.onclick = () => {
                     currentCategory = cat;
-                    currentVideoIndex = 0;
-                    unlockedVideos = [0];
-                    renderSidebar();
-                    if(db.modules[cat]) {
-                        loadCategory(cat);
-                    } else {
-                        alert("Category data coming soon! Try SCIENCE or FINANCE.");
-                    }
+                    videosWatchedInCategory = 0; // Reset counter on category switch
+                    renderNav();
+                    loadCategory(cat);
                 };
-                nav.appendChild(div);
+                nav.appendChild(item);
             });
         }
 
-        function loadCategory(catKey) {
-            const module = db.modules[catKey];
-            document.getElementById("current-category-title").innerText = module.title;
-            document.getElementById("module-title").innerText = `By: ${module.creator}`;
-            
-            renderPlaylist();
-            loadVideo(currentVideoIndex);
-        }
+        /* =========================================
+           VIDEO FEED RENDERING
+        ========================================= */
+        function loadCategory(catName) {
+            const feed = document.getElementById('feed-container');
+            feed.innerHTML = '';
+            ytPlayers = {};
+            currentQuizPool = [...uefiDB[catName].quizzes];
 
-        function renderPlaylist() {
-            const container = document.getElementById("playlist-container");
-            container.innerHTML = "";
-            const shorts = db.modules[currentCategory].shorts;
+            const videoIds = uefiDB[catName].videos;
 
-            shorts.forEach((short, index) => {
-                const isUnlocked = unlockedVideos.includes(index);
-                const isActive = index === currentVideoIndex;
+            videoIds.forEach((vidId, index) => {
+                const container = document.createElement('div');
+                container.className = 'video-container';
+                container.id = `container-${vidId}-${index}`;
 
-                const div = document.createElement("div");
-                div.className = `short-item ${isActive ? 'active' : ''} ${!isUnlocked ? 'locked' : ''}`;
+                // YouTube Iframe Div
+                const playerDiv = document.createElement('div');
+                playerDiv.id = `yt-${vidId}-${index}`;
+                playerDiv.className = 'yt-iframe';
                 
-                let icon = !isUnlocked ? '🔒' : (isActive ? '▶️' : '✅');
+                // TikTok UI Overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'ui-overlay';
+                overlay.innerHTML = `
+                    <div class="side-actions">
+                        <div class="profile-pic">V</div>
+                        <div class="action-btn"><i class="fas fa-heart"></i><span class="action-text">${Math.floor(Math.random()*900)+10}K</span></div>
+                        <div class="action-btn"><i class="fas fa-comment-dots"></i><span class="action-text">${Math.floor(Math.random()*100)+5}K</span></div>
+                        <div class="action-btn"><i class="fas fa-bookmark"></i><span class="action-text">Save</span></div>
+                        <div class="action-btn"><i class="fas fa-share"></i><span class="action-text">Share</span></div>
+                    </div>
+                    <div class="bottom-info">
+                        <div class="creator-name">@VibeZ</div>
+                        <div class="video-desc">UEFI Transformation • ${catName} Mastery #learn #grow</div>
+                        <div class="music-ticker"><i class="fas fa-music"></i> Original Audio - VibeZ</div>
+                    </div>
+                `;
 
-                div.innerHTML = `<span class="short-icon">${icon}</span> Part ${index + 1}: ${short.title}`;
-                
-                if (isUnlocked) {
-                    div.onclick = () => {
-                        currentVideoIndex = index;
-                        loadVideo(index);
-                        renderPlaylist();
-                    };
-                    div.style.cursor = "pointer";
-                }
+                container.appendChild(playerDiv);
+                container.appendChild(overlay);
+                feed.appendChild(container);
 
-                container.appendChild(div);
+                // Initialize YouTube Player
+                ytPlayers[`yt-${vidId}-${index}`] = new YT.Player(`yt-${vidId}-${index}`, {
+                    videoId: vidId,
+                    playerVars: {
+                        'autoplay': 0, 'controls': 0, 'rel': 0, 'showinfo': 0, 
+                        'modestbranding': 1, 'loop': 1, 'playlist': vidId,
+                        'playsinline': 1, 'mute': 0 // Unmuted for immersive feel
+                    },
+                    events: {
+                        'onReady': onPlayerReady
+                    }
+                });
             });
-
-            updateProgressBar();
+            
+            // Scroll to top
+            feed.scrollTop = 0;
         }
 
-        function updateProgressBar() {
-            const shorts = db.modules[currentCategory].shorts;
-            const progress = (unlockedVideos.length / shorts.length) * 100;
-            
-            document.getElementById("progress-percentage").innerText = `${Math.round(progress)}% Complete`;
-            document.getElementById("progress-fill").style.width = `${progress}%`;
+        function onPlayerReady(event) {
+            // Player is ready, observer will handle playing
         }
 
-        function loadVideo(index) {
-            const short = db.modules[currentCategory].shorts[index];
+        /* =========================================
+           SCROLL INTERSECTION OBSERVER (AutoPlay)
+        ========================================= */
+        function setupIntersectionObserver() {
+            const feed = document.getElementById('feed-container');
             
-            // Embed parameters: rel=0 prevents related videos, modestbranding hides logo
-            const embedUrl = `https://www.youtube.com/embed/${short.yt}?rel=0&modestbranding=1`;
-            document.getElementById("yt-player").src = embedUrl;
+            const options = {
+                root: feed,
+                rootMargin: '0px',
+                threshold: 0.6 // 60% of video must be visible
+            };
 
-            // Reset Sandbox UI
-            document.getElementById("quiz-ui").style.display = "block";
-            document.getElementById("action-ui").style.display = "none";
-            document.getElementById("reflection-text").value = "";
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const playerId = entry.target.querySelector('.yt-iframe').id;
+                    const player = ytPlayers[playerId];
 
-            // Load Quiz
-            document.getElementById("q-text").innerText = short.quiz.question;
-            const optsContainer = document.getElementById("q-options");
-            optsContainer.innerHTML = "";
+                    if (entry.isIntersecting) {
+                        // Play Video
+                        if (player && typeof player.playVideo === 'function') {
+                            player.playVideo();
+                        }
+                        
+                        // --- THE INTERCEPTOR LOGIC (RULE OF 3) ---
+                        // Extract index from container id, e.g., container-vid-2
+                        const idx = parseInt(entry.target.id.split('-')[2]);
+                        
+                        // If user scrolls to a video and it's a multiple of 3 (meaning they just finished 3)
+                        // Trigger Quiz. (idx > 0 ensures it doesn't trigger on the very first video)
+                        if (idx > 0 && idx % 3 === 0 && !isQuizActive) {
+                            // Slight delay to let them see the video paused
+                            setTimeout(() => {
+                                triggerQuiz(player);
+                            }, 500);
+                        }
+                    } else {
+                        // Pause Video out of view
+                        if (player && typeof player.pauseVideo === 'function') {
+                            player.pauseVideo();
+                        }
+                    }
+                });
+            }, options);
 
-            short.quiz.options.forEach((opt, i) => {
-                const btn = document.createElement("button");
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(i, short.quiz.answer);
-                optsContainer.appendChild(btn);
+            // Mutation observer to dynamically observe new containers when category switches
+            const mutationObserver = new MutationObserver(() => {
+                document.querySelectorAll('.video-container').forEach(el => observer.observe(el));
             });
-
-            // Load Prompt
-            document.getElementById("action-prompt").innerText = short.prompt;
+            mutationObserver.observe(feed, { childList: true });
         }
 
-        // 5. INTERACTION LOGIC (The "Watch-Do-Reflect" Engine)
-        function checkAnswer(selectedIndex, correctIndex) {
-            if (selectedIndex === correctIndex) {
-                // Correct - Hide quiz, show reflection
-                document.getElementById("quiz-ui").style.display = "none";
-                document.getElementById("action-ui").style.display = "flex";
+        /* =========================================
+           QUIZ INTERCEPTOR SYSTEM
+        ========================================= */
+        let activePlayerRef = null;
+
+        function triggerQuiz(currentPlayer) {
+            isQuizActive = true;
+            activePlayerRef = currentPlayer;
+            
+            // Pause the current video
+            if (currentPlayer && typeof currentPlayer.pauseVideo === 'function') {
+                currentPlayer.pauseVideo();
+            }
+
+            // Lock scrolling
+            document.getElementById('feed-container').classList.add('no-scroll');
+
+            // Pick a quiz
+            let quizObj;
+            if (currentQuizPool.length > 0) {
+                // Pop a random quiz from pool
+                const randIdx = Math.floor(Math.random() * currentQuizPool.length);
+                quizObj = currentQuizPool.splice(randIdx, 1)[0];
             } else {
-                // Incorrect - Shake effect or alert
-                alert("Not quite! Re-watch the Short and try again.");
+                // Fallback if we run out of specific questions
+                quizObj = {
+                    q: "Information without execution is useless. Are you ready to apply what you've learned?",
+                    opts: ["No, I just want to scroll.", "Yes. Let's go.", "I don't know.", "Maybe later."],
+                    ans: 1
+                };
             }
+
+            // Render Quiz
+            document.getElementById('quiz-question-text').innerText = quizObj.q;
+            const btnContainer = document.getElementById('quiz-options-container');
+            btnContainer.innerHTML = '';
+
+            quizObj.opts.forEach((optText, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-btn';
+                btn.innerText = optText;
+                btn.onclick = () => handleQuizAnswer(btn, i, quizObj.ans);
+                btnContainer.appendChild(btn);
+            });
+
+            // Show Overlay
+            document.getElementById('quiz-overlay').style.display = 'flex';
         }
 
-        function submitReflection() {
-            const text = document.getElementById("reflection-text").value;
-            if (text.length < 10) {
-                alert("Please type a meaningful reflection (at least 10 characters) to lock in your knowledge!");
-                return;
-            }
+        function handleQuizAnswer(btnElement, selectedIdx, correctIdx) {
+            // Disable all buttons to prevent spam clicks
+            const allBtns = document.querySelectorAll('.quiz-btn');
+            allBtns.forEach(b => b.style.pointerEvents = 'none');
 
-            // Unlock next video
-            const shorts = db.modules[currentCategory].shorts;
-            if (currentVideoIndex < shorts.length - 1) {
-                if (!unlockedVideos.includes(currentVideoIndex + 1)) {
-                    unlockedVideos.push(currentVideoIndex + 1);
-                }
-                currentVideoIndex++;
+            if (selectedIdx === correctIdx) {
+                // Correct Answer
+                btnElement.classList.add('correct');
                 
-                // Add to community board (Mockup)
-                postToCommunity(text);
+                // Play Celebration Audio
+                const audio = document.getElementById('celebration-audio');
+                audio.volume = 0.5;
+                audio.currentTime = 0;
+                audio.play();
 
-                renderPlaylist();
-                loadVideo(currentVideoIndex);
+                // Unlock after 1 second
+                setTimeout(() => {
+                    document.getElementById('quiz-overlay').style.display = 'none';
+                    document.getElementById('feed-container').classList.remove('no-scroll');
+                    isQuizActive = false;
+                    
+                    // Resume video
+                    if (activePlayerRef && typeof activePlayerRef.playVideo === 'function') {
+                        activePlayerRef.playVideo();
+                    }
+                }, 1200);
+
             } else {
-                alert("🎉 Module Complete! You've successfully transformed scrolling into learning.");
-                postToCommunity(text);
-                updateProgressBar();
+                // Wrong Answer
+                btnElement.classList.add('wrong');
+                setTimeout(() => {
+                    btnElement.classList.remove('wrong');
+                    allBtns.forEach(b => b.style.pointerEvents = 'auto');
+                }, 500);
             }
         }
 
-        function postToCommunity(text) {
-            const feed = document.getElementById("community-feed");
-            const newComment = document.createElement("div");
-            newComment.className = "comment";
-            newComment.innerHTML = `
-                <div class="comment-header"><span>@You (Just Now)</span> <span class="upvote">▲ 0</span></div>
-                "${text}"
-            `;
-            feed.insertBefore(newComment, feed.firstChild);
+        /* =========================================
+           10-MINUTE TRANSFORMATION TIMER
+        ========================================= */
+        function start10MinuteTimer() {
+            // 10 minutes = 600,000 milliseconds
+            setTimeout(() => {
+                // Pause whatever video is currently playing
+                Object.values(ytPlayers).forEach(p => {
+                    if (p && typeof p.pauseVideo === 'function') { p.pauseVideo(); }
+                });
+                // Show modal
+                document.getElementById('advice-modal').style.display = 'flex';
+            }, 600000); 
         }
 
-        // Start Application
-        window.onload = init;
+        function closeAdvice() {
+            document.getElementById('advice-modal').style.display = 'none';
+        }
+
+        // Wait for YT API to load, then init
+        window.onYouTubeIframeAPIReady = function() {
+            initApp();
+        };
 
     </script>
 </body>
