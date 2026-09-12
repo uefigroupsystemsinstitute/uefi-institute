@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Vibez | Transformative Learning</title>
+    <style>
+        /* === CSS: HIGH-DOPAMINE, LOW-DISTRACTION UI === */
+        :root {
+            --bg-main: #0a0a0f;
+            --bg-panel: #16161e;
+            --bg-card: #20202a;
+            --accent: #00ffcc;
+            --accent-glow: rgba(0, 255, 204, 0.4);
+            --text-main: #e0e0e0;
+            --text-muted: #888896;
+            --locked: #333344;
+            --danger: #ff4a4a;
+            --success: #39ff14;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-panel);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--locked);
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--accent), #b026ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: var(--text-muted);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            box-shadow: 0 0 10px var(--accent-glow);
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Header / Dashboard Stats */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: var(--bg-panel);
+            border-bottom: 1px solid var(--locked);
+        }
+
+        .streak-counter {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffa500;
+            background: rgba(255, 165, 0, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Learning Environment (Theater Mode) */
+        .learning-theater {
+            padding: 30px 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Video Section */
+        .video-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Progress Bar */
+        .module-progress-container {
+            padding: 15px 20px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--locked);
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--locked);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: width 0.4s ease;
+        }
+
+        /* Watch-Do-Reflect Sandbox */
+        .sandbox {
+            padding: 20px;
+        }
+
+        .sandbox-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .quiz-container {
+            background: var(--bg-panel);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .quiz-options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: var(--locked);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s;
+        }
+
+        .quiz-options button:hover {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent);
+        }
+
+        .action-box {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            background: var(--bg-panel);
+            border: 1px solid var(--locked);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn-submit {
+            background: var(--accent);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* Right Panel: Path & Community */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .playlist {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .playlist-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--locked);
+            padding-bottom: 10px;
+        }
+
+        .short-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            background: var(--bg-panel);
+            transition: 0.2s;
+        }
+
+        .short-item.active {
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .short-item.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .short-icon {
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        /* Community Lightbulb Moments */
+        .community-board {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .comment {
+            background: var(--bg-panel);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+
+        .upvote {
+            cursor: pointer;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="brand">UEFI Vibez</div>
+        <div id="nav-categories">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        
+        <!-- HEADER -->
+        <div class="top-header">
+            <h2 id="current-category-title">SCIENCE: The Quantum Realm</h2>
+            <div class="streak-counter">
+                🔥 <span id="streak-days">14</span> Day Streak
+            </div>
+        </div>
+
+        <!-- THEATER MODE -->
+        <div class="learning-theater">
+            
+            <!-- LEFT: Video and Sandbox -->
+            <div class="video-section">
+                <div class="video-container">
+                    
+                    <!-- Progress Bar -->
+                    <div class="module-progress-container">
+                        <div class="progress-text">
+                            <span id="module-title">Module 1: Foundations</span>
+                            <span id="progress-percentage">0% Complete</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <!-- YT Embed (Clean, ?rel=0) -->
+                    <div class="video-wrapper">
+                        <iframe id="yt-player" src="" allowfullscreen></iframe>
+                    </div>
+
+                    <!-- Sandbox: Watch-Do-Reflect -->
+                    <div class="sandbox">
+                        <h3 class="sandbox-title">🧠 The Intercepting Sandbox</h3>
+                        
+                        <!-- Phase 1: Quiz -->
+                        <div class="quiz-container" id="quiz-ui">
+                            <div class="quiz-question" id="q-text">Loading question...</div>
+                            <div class="quiz-options" id="q-options">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Phase 2: Action / Reflect (Hidden until quiz passed) -->
+                        <div class="action-box" id="action-ui">
+                            <p style="color: var(--success); font-weight: bold;">✓ Correct! Now, lock it in:</p>
+                            <p id="action-prompt">What is one takeaway from this Short?</p>
+                            <textarea id="reflection-text" placeholder="Type your realization here to unlock the next video..."></textarea>
+                            <button class="btn-submit" onclick="submitReflection()">Submit & Unlock Next Short ➔</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Journey & Community -->
+            <div class="right-panel">
+                
+                <!-- Progressive Learning Path -->
+                <div class="playlist">
+                    <div class="playlist-title">📍 Your Journey</div>
+                    <div id="playlist-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Community Board -->
+                <div class="community-board">
+                    <div class="playlist-title">💡 Lightbulb Moments</div>
+                    <div id="community-feed">
+                        <div class="comment">
+                            <div class="comment-header"><span>@YouthInnovator</span> <span class="upvote">▲ 142</span></div>
+                            "I never realized that compounding interest is basically a snowball rolling down a hill. Starting at 18 changes everything!"
+                        </div>
+                        <div class="comment">
+                            <div class="comment-header"><span>@SciGeek99</span> <span class="upvote">▲ 89</span></div>
+                            "Veritasium's explanation of gravity as a curve in spacetime makes so much more sense than just 'objects falling'."
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- === JAVASCRIPT: LOGIC & STATE MANAGEMENT === -->
+    <script>
+        // 1. DATABASE CONSTRUCT (Using top creators as requested)
+        const db = {
+            categories: [
+                "SCIENCE", "HISTORY", "LANGUAGE", "MATH", "FINANCE", "TECH", "INNOVATION", "YOUTH VIBES"
+            ],
+            modules: {
+                "SCIENCE": {
+                    title: "Science: Physics & Reality",
+                    creator: "Inspired by Veritasium",
+                    shorts: [
+                        {
+                            id: "1",
+                            yt: "kVQv0Zk6Naw", // Placeholder YouTube Short ID
+                            title: "Why Gravity is NOT a Force",
+                            quiz: {
+                                question: "According to General Relativity, what is gravity?",
+                                options: ["A magnetic pull", "The curvature of spacetime", "A subatomic particle"],
+                                answer: 1
+                            },
+                            prompt: "Drop a pen right now. In one sentence, describe what actually happened to the space around it."
+                        },
+                        {
+                            id: "2",
+                            yt: "G3qZkEemNUE", 
+                            title: "The Double Slit Experiment",
+                            quiz: {
+                                question: "What changes the behavior of particles in this experiment?",
+                                options: ["The temperature", "The act of observing them", "The speed of light"],
+                                answer: 1
+                            },
+                            prompt: "If observation changes reality at a quantum level, how does that change your perspective on your own focus?"
+                        },
+                        {
+                            id: "3",
+                            yt: "ZzR2bIqO8tE",
+                            title: "Entropy Explained",
+                            quiz: {
+                                question: "What is entropy a measure of?",
+                                options: ["Energy", "Disorder / Chaos", "Time"],
+                                answer: 1
+                            },
+                            prompt: "Look at your bedroom. Is it in a state of high or low entropy? How will you reverse it?"
+                        }
+                    ]
+                },
+                "FINANCE": {
+                    title: "Finance: Wealth Building",
+                    creator: "School of Hard Knocks",
+                    shorts: [
+                        {
+                            id: "4",
+                            yt: "WvO2P4Xz4Ew", 
+                            title: "The Rule of 72",
+                            quiz: {
+                                question: "What does the Rule of 72 calculate?",
+                                options: ["How much tax you pay", "How long it takes to double your money", "Your credit score"],
+                                answer: 1
+                            },
+                            prompt: "If you get a 10% return on an investment, how many years until your money doubles? Calculate it here."
+                        },
+                        {
+                            id: "5",
+                            yt: "M89Qp4ZpxzE",
+                            title: "Assets vs Liabilities",
+                            quiz: {
+                                question: "Which of these is a true asset?",
+                                options: ["A brand new car", "A dividend-paying stock", "Designer shoes"],
+                                answer: 1
+                            },
+                            prompt: "List one liability you are currently spending money on, and one asset you could buy instead."
+                        }
+                    ]
+                }
+                // (More categories would be populated here following the same structure)
+            }
+        };
+
+        // 2. STATE MANAGEMENT
+        let currentCategory = "SCIENCE";
+        let currentVideoIndex = 0;
+        let unlockedVideos = [0]; // Index 0 is unlocked by default
+
+        // 3. INITIALIZATION
+        function init() {
+            renderSidebar();
+            loadCategory(currentCategory);
+        }
+
+        // 4. RENDER UI FUNCTIONS
+        function renderSidebar() {
+            const nav = document.getElementById("nav-categories");
+            nav.innerHTML = "";
+            db.categories.forEach(cat => {
+                const div = document.createElement("div");
+                div.className = `nav-item ${cat === currentCategory ? 'active' : ''}`;
+                div.innerText = cat;
+                div.onclick = () => {
+                    // Reset progress when changing categories (for demo purposes)
+                    currentCategory = cat;
+                    currentVideoIndex = 0;
+                    unlockedVideos = [0];
+                    renderSidebar();
+                    if(db.modules[cat]) {
+                        loadCategory(cat);
+                    } else {
+                        alert("Category data coming soon! Try SCIENCE or FINANCE.");
+                    }
+                };
+                nav.appendChild(div);
+            });
+        }
+
+        function loadCategory(catKey) {
+            const module = db.modules[catKey];
+            document.getElementById("current-category-title").innerText = module.title;
+            document.getElementById("module-title").innerText = `By: ${module.creator}`;
+            
+            renderPlaylist();
+            loadVideo(currentVideoIndex);
+        }
+
+        function renderPlaylist() {
+            const container = document.getElementById("playlist-container");
+            container.innerHTML = "";
+            const shorts = db.modules[currentCategory].shorts;
+
+            shorts.forEach((short, index) => {
+                const isUnlocked = unlockedVideos.includes(index);
+                const isActive = index === currentVideoIndex;
+
+                const div = document.createElement("div");
+                div.className = `short-item ${isActive ? 'active' : ''} ${!isUnlocked ? 'locked' : ''}`;
+                
+                let icon = !isUnlocked ? '🔒' : (isActive ? '▶️' : '✅');
+
+                div.innerHTML = `<span class="short-icon">${icon}</span> Part ${index + 1}: ${short.title}`;
+                
+                if (isUnlocked) {
+                    div.onclick = () => {
+                        currentVideoIndex = index;
+                        loadVideo(index);
+                        renderPlaylist();
+                    };
+                    div.style.cursor = "pointer";
+                }
+
+                container.appendChild(div);
+            });
+
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const shorts = db.modules[currentCategory].shorts;
+            const progress = (unlockedVideos.length / shorts.length) * 100;
+            
+            document.getElementById("progress-percentage").innerText = `${Math.round(progress)}% Complete`;
+            document.getElementById("progress-fill").style.width = `${progress}%`;
+        }
+
+        function loadVideo(index) {
+            const short = db.modules[currentCategory].shorts[index];
+            
+            // Embed parameters: rel=0 prevents related videos, modestbranding hides logo
+            const embedUrl = `https://www.youtube.com/embed/${short.yt}?rel=0&modestbranding=1`;
+            document.getElementById("yt-player").src = embedUrl;
+
+            // Reset Sandbox UI
+            document.getElementById("quiz-ui").style.display = "block";
+            document.getElementById("action-ui").style.display = "none";
+            document.getElementById("reflection-text").value = "";
+
+            // Load Quiz
+            document.getElementById("q-text").innerText = short.quiz.question;
+            const optsContainer = document.getElementById("q-options");
+            optsContainer.innerHTML = "";
+
+            short.quiz.options.forEach((opt, i) => {
+                const btn = document.createElement("button");
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(i, short.quiz.answer);
+                optsContainer.appendChild(btn);
+            });
+
+            // Load Prompt
+            document.getElementById("action-prompt").innerText = short.prompt;
+        }
+
+        // 5. INTERACTION LOGIC (The "Watch-Do-Reflect" Engine)
+        function checkAnswer(selectedIndex, correctIndex) {
+            if (selectedIndex === correctIndex) {
+                // Correct - Hide quiz, show reflection
+                document.getElementById("quiz-ui").style.display = "none";
+                document.getElementById("action-ui").style.display = "flex";
+            } else {
+                // Incorrect - Shake effect or alert
+                alert("Not quite! Re-watch the Short and try again.");
+            }
+        }
+
+        function submitReflection() {
+            const text = document.getElementById("reflection-text").value;
+            if (text.length < 10) {
+                alert("Please type a meaningful reflection (at least 10 characters) to lock in your knowledge!");
+                return;
+            }
+
+            // Unlock next video
+            const shorts = db.modules[currentCategory].shorts;
+            if (currentVideoIndex < shorts.length - 1) {
+                if (!unlockedVideos.includes(currentVideoIndex + 1)) {
+                    unlockedVideos.push(currentVideoIndex + 1);
+                }
+                currentVideoIndex++;
+                
+                // Add to community board (Mockup)
+                postToCommunity(text);
+
+                renderPlaylist();
+                loadVideo(currentVideoIndex);
+            } else {
+                alert("🎉 Module Complete! You've successfully transformed scrolling into learning.");
+                postToCommunity(text);
+                updateProgressBar();
+            }
+        }
+
+        function postToCommunity(text) {
+            const feed = document.getElementById("community-feed");
+            const newComment = document.createElement("div");
+            newComment.className = "comment";
+            newComment.innerHTML = `
+                <div class="comment-header"><span>@You (Just Now)</span> <span class="upvote">▲ 0</span></div>
+                "${text}"
+            `;
+            feed.insertBefore(newComment, feed.firstChild);
+        }
+
+        // Start Application
+        window.onload = init;
+
+    </script>
+</body>
+</html>
