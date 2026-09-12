@@ -3,627 +3,851 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UEFI Vibez | TikTok Learning Engine</title>
-    <!-- Load FontAwesome for TikTok-style icons -->
+    <title>UEFI Vibez | The Evolution of Learning</title>
+    <!-- Load FontAwesome & Artistic Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- SYNE for artistic/impact headers, OUTFIT for stylish UI text -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         /* =========================================
-           TIKTOK CLONE CSS & UI ARCHITECTURE
+           CORE ARCHITECTURE & VARIABLES
         ========================================= */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+        :root {
+            --brand-color: #00ffcc;
+            --brand-glow: rgba(0, 255, 204, 0.6);
+            --bg-dark: #050505;
+            --glass-bg: rgba(20, 20, 25, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --danger: #ff2a5f;
+            --success: #00e676;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --font-art: 'Syne', sans-serif;
+            --font-ui: 'Outfit', sans-serif;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body, html {
-            height: 100%;
-            width: 100%;
-            background-color: #000;
-            color: #fff;
-            overflow: hidden; /* Prevent native body scroll */
+            height: 100%; width: 100%;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            overflow: hidden;
+            overscroll-behavior-y: none;
         }
 
-        /* Top Navigation (Topics) */
+        h1, h2, h3, .art-text { font-family: var(--font-art); }
+
+        /* =========================================
+           TOP NAVIGATION (GLASSMORPHISM)
+        ========================================= */
         .top-nav {
-            position: absolute;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 10px;
-            z-index: 10;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-            gap: 15px;
-            overflow-x: auto;
-            white-space: nowrap;
-            scrollbar-width: none;
+            position: absolute; top: 0; left: 0; width: 100%;
+            display: flex; justify-content: center; align-items: center;
+            padding: 40px 15px 20px; z-index: 20;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
+            gap: 20px; overflow-x: auto; scrollbar-width: none;
+            backdrop-filter: blur(2px);
         }
         .top-nav::-webkit-scrollbar { display: none; }
-
         .nav-item {
-            font-size: 16px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.6);
-            cursor: pointer;
-            transition: 0.3s;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            font-family: var(--font-art); font-size: 18px; font-weight: 700;
+            color: rgba(255, 255, 255, 0.5); cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase; letter-spacing: 1px;
+            text-shadow: 0px 2px 10px rgba(0,0,0,0.8);
+            position: relative;
         }
         .nav-item.active {
-            color: #fff;
-            transform: scale(1.1);
-            border-bottom: 2px solid #fff;
-            padding-bottom: 2px;
+            color: var(--brand-color); transform: scale(1.15);
+            text-shadow: 0px 0px 15px var(--brand-glow);
+        }
+        .nav-item.active::after {
+            content: ''; position: absolute; bottom: -5px; left: 50%;
+            transform: translateX(-50%); width: 60%; height: 2px;
+            background: var(--brand-color); border-radius: 2px;
+            box-shadow: 0 0 10px var(--brand-color);
         }
 
-        /* Feed Container (Scroll Snapping) */
+        /* =========================================
+           FEED & VIDEO CONTAINERS
+        ========================================= */
         .feed-container {
-            height: 100vh;
-            width: 100vw;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
-            /* Hide scrollbar */
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+            height: 100vh; width: 100vw;
+            overflow-y: scroll; scroll-snap-type: y mandatory;
+            scroll-behavior: smooth; scrollbar-width: none;
+            position: relative; z-index: 10;
         }
-        .feed-container::-webkit-scrollbar { display: none; }
+        .feed-container.no-scroll { overflow-y: hidden !important; }
         
-        /* Disable scroll when quiz is active */
-        .no-scroll {
-            overflow: hidden !important;
-        }
-
-        /* Individual Video Wrapper */
         .video-container {
-            position: relative;
-            height: 100vh;
-            width: 100vw;
-            scroll-snap-align: start;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #111;
+            position: relative; height: 100vh; width: 100vw;
+            scroll-snap-align: start; scroll-snap-stop: always;
+            display: flex; justify-content: center; align-items: center;
+            background: #000; overflow: hidden;
         }
-
+        
         .yt-iframe {
-            width: 100%;
-            height: 100%;
-            /* Scale up slightly to crop out YT UI elements and mimic full screen vertical */
-            transform: scale(1.35); 
-            pointer-events: none; /* Prevent clicking YT UI, handled by transparent overlay */
+            width: 100%; height: 100%; pointer-events: none;
+            transform: scale(1.4); /* Zoom to crop standard YT layout into vertical */
+            transition: filter 0.3s;
         }
 
-        /* UI Overlay to block YT clicks and show TT elements */
+        /* UI OVERLAY (Protects iframe, holds interactions) */
         .ui-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding-bottom: 20px;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 12; display: flex; flex-direction: column; justify-content: flex-end;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 30%, transparent 100%);
         }
 
-        /* Bottom Info Area */
-        .bottom-info {
-            position: absolute;
-            bottom: 20px;
-            left: 15px;
-            width: 70%;
-            z-index: 5;
-        }
-        .creator-name {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-        }
-        .video-desc {
-            font-size: 14px;
-            line-height: 1.3;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-        }
-        .music-ticker {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-            font-size: 13px;
-        }
-
-        /* Right Side Action Buttons */
+        /* =========================================
+           SIDE ACTIONS & BOTTOM INFO
+        ========================================= */
         .side-actions {
-            position: absolute;
-            bottom: 30px;
-            right: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            z-index: 5;
+            position: absolute; bottom: 80px; right: 15px;
+            display: flex; flex-direction: column; align-items: center; gap: 25px;
+            z-index: 15;
         }
         .action-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-            cursor: pointer;
+            display: flex; flex-direction: column; align-items: center;
+            color: #fff; cursor: pointer; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.8));
+            transition: transform 0.2s;
         }
-        .action-btn i {
-            font-size: 32px;
-            margin-bottom: 5px;
-            transition: 0.2s;
-        }
-        .action-btn i:active { transform: scale(0.8); color: #fe2c55; } /* TT Red */
-        .action-text {
-            font-size: 12px;
-            font-weight: 600;
-        }
+        .action-btn i { font-size: 32px; margin-bottom: 6px; transition: color 0.3s; }
+        .action-btn:active i { transform: scale(0.8); }
+        .action-btn.liked i { color: var(--danger); animation: heartBurst 0.5s; }
+        .action-text { font-size: 13px; font-weight: 600; font-family: var(--font-ui); }
+
         .profile-pic {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 20px;
-            margin-bottom: 10px;
+            width: 50px; height: 50px; border-radius: 50%;
+            border: 2px solid #fff; margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--brand-color), #4facfe);
+            display: flex; justify-content: center; align-items: center;
+            font-family: var(--font-art); font-weight: 800; font-size: 22px;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+            position: relative;
+        }
+        .profile-pic::after {
+            content: '+'; position: absolute; bottom: -8px; background: var(--danger);
+            width: 20px; height: 20px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 14px; font-weight: bold; border: 2px solid #000;
         }
 
+        .bottom-info {
+            position: absolute; bottom: 30px; left: 15px;
+            width: 75%; z-index: 15;
+        }
+        .creator-name {
+            font-family: var(--font-art); font-size: 20px; font-weight: 700;
+            margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+        }
+        .verified-badge { color: var(--brand-color); font-size: 14px; }
+        .video-desc {
+            font-size: 15px; font-weight: 300; line-height: 1.4;
+            margin-bottom: 12px; opacity: 0.9;
+        }
+        .tags { color: var(--brand-color); font-weight: 600; }
+        .music-ticker {
+            display: flex; align-items: center; gap: 10px; font-size: 13px;
+            background: rgba(0,0,0,0.3); padding: 5px 12px; border-radius: 20px;
+            width: fit-content; backdrop-filter: blur(5px);
+        }
+        .music-ticker i { animation: spin 4s linear infinite; }
+
         /* =========================================
-           THE INTERCEPTOR: QUIZ OVERLAY
+           DRAWERS (COMMENTS & PROFILE)
         ========================================= */
-        .quiz-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            display: none; /* Hidden by default */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-            animation: fadeIn 0.3s ease-in-out;
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.6); z-index: 40; display: none; opacity: 0;
+            transition: opacity 0.3s;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .quiz-title {
-            color: #00ffcc;
-            font-size: 24px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .drawer {
+            position: fixed; bottom: -100%; left: 0; width: 100vw; height: 65vh;
+            background: var(--glass-bg); backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border); border-radius: 20px 20px 0 0;
+            z-index: 50; transition: bottom 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex; flex-direction: column;
         }
-        .quiz-warning {
-            font-size: 14px;
-            color: #ff4a4a;
-            margin-bottom: 30px;
-            font-weight: 600;
+        .drawer.open { bottom: 0; }
+        .drawer-header {
+            padding: 20px; text-align: center; font-family: var(--font-art);
+            font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: relative;
         }
-        .quiz-question {
-            font-size: 22px;
-            margin-bottom: 30px;
-            line-height: 1.4;
+        .close-drawer {
+            position: absolute; right: 20px; top: 20px; font-size: 20px; cursor: pointer;
         }
-        .quiz-options {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .quiz-btn {
-            background: #20202a;
-            border: 2px solid #333344;
-            color: #fff;
-            padding: 15px;
-            font-size: 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 600;
-        }
-        .quiz-btn:active { transform: scale(0.98); }
-        .quiz-btn.correct { background: #39ff14; color: #000; border-color: #39ff14; }
-        .quiz-btn.wrong { background: #ff4a4a; color: #fff; border-color: #ff4a4a; animation: shake 0.4s; }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
-            100% { transform: translateX(0); }
-        }
+        .drawer-content { padding: 20px; overflow-y: auto; flex-grow: 1; }
+        
+        /* Simulated Comments */
+        .comment-item { display: flex; gap: 15px; margin-bottom: 20px; }
+        .c-avatar { width: 40px; height: 40px; border-radius: 50%; background: #333; }
+        .c-body { flex-grow: 1; }
+        .c-name { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
+        .c-text { font-size: 15px; line-height: 1.4; }
+        .c-stats { font-size: 12px; color: var(--text-muted); margin-top: 8px; display: flex; gap: 15px; }
 
         /* =========================================
-           10-MINUTE LIFE ADVICE MODAL
+           ADVANCED QUIZ INTERCEPTOR (Rule of 3)
+        ========================================= */
+        .quiz-modal {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(5, 5, 5, 0.98); z-index: 100;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            padding: 30px; text-align: center; opacity: 0; transition: opacity 0.4s;
+        }
+        .quiz-modal.active { display: flex; opacity: 1; }
+        .quiz-glow {
+            position: absolute; width: 300px; height: 300px;
+            background: radial-gradient(circle, var(--brand-glow) 0%, transparent 70%);
+            top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1;
+        }
+        
+        .quiz-title {
+            font-family: var(--font-art); color: var(--brand-color);
+            font-size: 32px; margin-bottom: 10px; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .quiz-subtitle { color: var(--danger); font-weight: 600; margin-bottom: 40px; font-size: 14px; }
+        .quiz-question { font-size: 24px; font-weight: 300; margin-bottom: 40px; line-height: 1.5; max-width: 600px; }
+        
+        .quiz-options { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 15px; }
+        .quiz-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #fff; padding: 20px; font-size: 16px; font-family: var(--font-ui); font-weight: 600;
+            border-radius: 15px; cursor: pointer; transition: all 0.3s;
+            backdrop-filter: blur(10px); position: relative; overflow: hidden;
+        }
+        .quiz-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        .quiz-btn.correct { background: var(--success); color: #000; border-color: var(--success); box-shadow: 0 0 20px rgba(0,230,118,0.5); }
+        .quiz-btn.wrong { background: var(--danger); color: #fff; border-color: var(--danger); animation: shake 0.4s; }
+
+        /* Explanation Box */
+        .explanation-box {
+            display: none; margin-top: 30px; background: rgba(0, 255, 204, 0.1);
+            border-left: 4px solid var(--brand-color); padding: 20px;
+            border-radius: 0 10px 10px 0; text-align: left; max-width: 500px;
+            animation: slideUpFade 0.5s forwards;
+        }
+        .exp-title { font-family: var(--font-art); font-weight: 700; color: var(--brand-color); margin-bottom: 10px; }
+        .exp-text { font-size: 15px; line-height: 1.6; }
+        .continue-btn {
+            display: none; margin-top: 30px; background: var(--text-main); color: var(--bg-dark);
+            padding: 15px 40px; font-family: var(--font-art); font-weight: 800;
+            border-radius: 30px; border: none; font-size: 18px; cursor: pointer;
+            transition: 0.3s;
+        }
+        .continue-btn:hover { box-shadow: 0 0 15px rgba(255,255,255,0.5); transform: scale(1.05); }
+
+        /* =========================================
+           10-MIN TRANSFORMATION ADVICE MODAL
         ========================================= */
         .advice-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, rgba(0,242,254,0.95), rgba(79,172,254,0.95));
-            z-index: 200;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            text-align: center;
-            color: #fff;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #050505 100%);
+            z-index: 200; display: none; flex-direction: column; justify-content: center; align-items: center;
+            padding: 40px; text-align: center;
         }
-        .advice-icon { font-size: 60px; margin-bottom: 20px; }
-        .advice-title { font-size: 32px; font-weight: 800; margin-bottom: 20px; }
-        .advice-text { font-size: 18px; line-height: 1.6; margin-bottom: 40px; max-width: 500px; }
-        .advice-close {
-            background: #fff;
-            color: #000;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
+        .advice-art { font-size: 80px; margin-bottom: 30px; animation: float 3s ease-in-out infinite; }
+        .advice-header {
+            font-family: var(--font-art); font-size: 40px; font-weight: 800;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+        .advice-body {
+            font-size: 20px; line-height: 1.8; color: #ddd; max-width: 600px;
+            margin-bottom: 50px; font-weight: 300;
+        }
+        
+        /* =========================================
+           ANIMATIONS & PARTICLES
+        ========================================= */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes heartBurst { 0% { transform: scale(1); } 50% { transform: scale(1.4); } 100% { transform: scale(1); } }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); } 75% { transform: translateX(-10px); }
+        }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Floating Double-Tap Hearts */
+        .floating-heart {
+            position: absolute; color: var(--danger); font-size: 80px;
+            pointer-events: none; z-index: 30; transform: translate(-50%, -50%) scale(0);
+            animation: floatUp 1s ease-out forwards; filter: drop-shadow(0 0 10px rgba(255,42,95,0.6));
+        }
+        @keyframes floatUp {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            20% { transform: translate(-50%, -50%) scale(1.2) rotate(-15deg); }
+            100% { transform: translate(-50%, -150px) scale(1) rotate(15deg); opacity: 0; }
+        }
+        
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 150; display: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- Celebration Audio Element (Base64 lightweight ping) -->
-    <audio id="celebration-audio" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" preload="auto"></audio>
+    <!-- Audio Assets -->
+    <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" preload="auto"></audio>
+    <audio id="ambient-sound" src="https://assets.mixkit.co/active_storage/sfx/135/135-preview.mp3" loop preload="auto"></audio>
 
     <!-- Top Navigation -->
-    <div class="top-nav" id="top-nav">
-        <!-- Generated by JS -->
-    </div>
+    <div class="top-nav" id="top-nav"></div>
 
-    <!-- Main Video Feed -->
+    <!-- Main TikTok-style Feed Container -->
     <div class="feed-container" id="feed-container">
-        <!-- Videos Injected Here -->
+        <!-- JS dynamically injects video containers here -->
     </div>
 
-    <!-- Intercepting Quiz Overlay -->
-    <div class="quiz-overlay" id="quiz-overlay">
-        <div class="quiz-title"><i class="fas fa-brain"></i> Checkpoint</div>
-        <div class="quiz-warning">You must pass to keep scrolling.</div>
-        <div class="quiz-question" id="quiz-question-text">Loading question...</div>
+    <!-- Drawers (Comments) -->
+    <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawers()"></div>
+    <div class="drawer" id="comments-drawer">
+        <div class="drawer-header">
+            Community Insights
+            <i class="fas fa-times close-drawer" onclick="closeDrawers()"></i>
+        </div>
+        <div class="drawer-content" id="comments-content">
+            <!-- Simulated Comments will be injected here -->
+        </div>
+    </div>
+
+    <!-- The Interceptor: Advanced Quiz Modal -->
+    <div class="quiz-modal" id="quiz-modal">
+        <div class="quiz-glow"></div>
+        <div class="quiz-title">Mental Checkpoint</div>
+        <div class="quiz-subtitle">Scroll culture is dead. Active retrieval starts now.</div>
+        <div class="quiz-question" id="quiz-q-text">Loading cognitive challenge...</div>
+        
         <div class="quiz-options" id="quiz-options-container">
-            <!-- Buttons injected here -->
+            <!-- Options Injected by JS -->
         </div>
+
+        <div class="explanation-box" id="quiz-explanation">
+            <div class="exp-title">Why this matters:</div>
+            <div class="exp-text" id="exp-text-content"></div>
+        </div>
+
+        <button class="continue-btn" id="continue-scroll-btn" onclick="resumeScrolling()">Lock Knowledge & Continue</button>
     </div>
 
-    <!-- 10-Minute Advice Modal -->
+    <!-- 10-Minute Transformation Advice -->
     <div class="advice-modal" id="advice-modal">
-        <div class="advice-icon"><i class="fas fa-seedling"></i></div>
-        <div class="advice-title">You Are Growing</div>
-        <div class="advice-text">
-            You've spent the last 10 minutes intentionally feeding your brain. While others are mindlessly scrolling their lives away, you are building mental frameworks in finance, science, and history. 
+        <div class="advice-art">👁️‍🗨️</div>
+        <div class="advice-header">The 1% Rule</div>
+        <div class="advice-body">
+            You just spent 10 minutes deliberately constructing your mind instead of escaping it. 
             <br><br>
-            Take this energy into the real world today. Build, create, and don't let anyone out-work your vision. Keep vibrating higher.
+            While the algorithm usually programs you, today <strong>you programmed the algorithm</strong>. You absorbed financial literacy, historical precedent, and mathematical truth. 
+            <br><br>
+            Close this app. Go apply one thing you learned to your actual life. The real game is outside.
         </div>
-        <button class="advice-close" onclick="closeAdvice()">I'm Ready</button>
+        <button class="continue-btn" style="display: block;" onclick="document.getElementById('advice-modal').style.display='none'">Accept the Challenge</button>
     </div>
 
-    <!-- Load YouTube IFrame API -->
+    <!-- Confetti Canvas overlay -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- YouTube API -->
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         /* =========================================
-           DATABASE: VIDEOS & QUIZZES
+           MASSIVE DATA ARCHITECTURE
+           (Simulating a robust backend DB)
         ========================================= */
-        const uefiDB = {
+        const UEFI_DATABASE = {
             "FACTS": {
+                icon: "fa-bolt",
                 videos: ["z2rKDh9mh7Q", "jujgSDPlDOI", "lWGsVKlPz4s", "PwLki5sEQ8w", "suDhVin86Ps", "ZAIxy0_KrDg"],
                 quizzes: [
-                    { q: "What is the primary difference between an asset and a liability?", opts: ["Assets take time to build, liabilities are fast", "Assets put money in your pocket, liabilities take money out", "Assets are for the rich, liabilities are for the poor", "There is no difference"], ans: 1 },
-                    { q: "What is the 'Rule of 72' used to calculate in finance?", opts: ["Your credit score limit", "How much tax you owe", "How long it takes an investment to double", "The maximum age for retirement"], ans: 2 }
+                    {
+                        q: "What defines a true financial asset compared to a liability?",
+                        opts: ["Assets look expensive, liabilities are cheap", "Assets generate cash flow, liabilities consume it", "Assets are physical objects, liabilities are digital", "There is no functional difference"],
+                        ans: 1,
+                        exp: "Rich people buy assets (investments that pay them). Poor and middle class buy liabilities (things that cost money to maintain) thinking they are assets."
+                    },
+                    {
+                        q: "How does the 'Rule of 72' help you build wealth?",
+                        opts: ["It limits your tax bracket", "It calculates exact compound interest decay", "It estimates how many years it takes an investment to double", "It is the optimal age to retire"],
+                        ans: 2,
+                        exp: "Divide 72 by your annual interest rate. If you get a 10% return, 72/10 = 7.2 years to double your money. Understanding this makes you prioritize investing early."
+                    }
                 ]
             },
             "HISTORY": {
+                icon: "fa-landmark",
                 videos: ["0KQOrJ_K6ps", "i83WzFygvZ4", "lSflLzfWTUs"],
                 quizzes: [
-                    { q: "Why is it important to study the rise and fall of historical empires?", opts: ["To memorize dates for exams", "To recognize repeating patterns in modern geopolitics and economics", "To find lost treasure", "Because history never repeats itself"], ans: 1 }
+                    {
+                        q: "Why is the study of collapsed empires critical for modern entrepreneurs?",
+                        opts: ["To memorize trivia for social status", "Because human behavior and economic cycles reliably repeat", "To find outdated technology to sell", "History is mostly fictional"],
+                        ans: 1,
+                        exp: "Ray Dalio and other billionaires study history because macro-economic cycles (debt, inflation, revolution) happen over and over. If you know the pattern, you can predict the future."
+                    }
                 ]
             },
             "MATH": {
+                icon: "fa-infinity",
                 videos: ["-iiY2bqn9Wo", "UidCElWKF0E", "q_OGsBDRgz4", "pK9b1D3CUmg"],
                 quizzes: [
-                    { q: "If you improve by just 1% every day for a year (Compound Interest), mathematically, how much better do you become?", opts: ["3.65x better", "37x better", "100x better", "10x better"], ans: 1 }
+                    {
+                        q: "According to the math of compound interest, what happens if you get 1% better every day for 365 days?",
+                        opts: ["You are 3.6x better", "You are 10x better", "You are 37.78x better", "You stay the same due to diminishing returns"],
+                        ans: 2,
+                        exp: "(1.01)^365 = 37.78. Small, consistent daily habits completely warp the trajectory of your life over a year. The math proves that consistency beats intensity."
+                    }
                 ]
             },
             "SCIENCE": {
+                icon: "fa-flask",
                 videos: ["oR94cicO7xM", "5U-V0y-fkSw", "nHAFnH3xRl4", "ISUPZmjAWlQ", "ql0DrRJOpNg"],
                 quizzes: [
-                    { q: "According to the principles of physics (Entropy), what happens to a system if you don't put energy into it?", opts: ["It stays exactly the same", "It naturally becomes more organized", "It degrades into chaos and disorder", "It generates its own energy"], ans: 2 },
-                    { q: "What causes the curvature of spacetime in Einstein's theory of relativity?", opts: ["Magnetic fields", "Mass and Energy", "Dark Matter only", "Quantum tunneling"], ans: 1 }
+                    {
+                        q: "What is Entropy, and how does it apply to your daily life?",
+                        opts: ["The creation of new energy", "The natural tendency of systems to degrade into chaos without effort", "A quantum particle", "The speed of light"],
+                        ans: 1,
+                        exp: "Your room gets messy, your muscles atrophy, and relationships fade unless you put ENERGY into them. Fighting entropy is the literal definition of living."
+                    }
                 ]
             },
             "VIBES": {
+                icon: "fa-fire",
                 videos: ["KHAOa2HrNTw", "3cSEEbwGKGk", "aYgA6cIzqm8", "7GBm5rbr50U", "mxb2sBLNK5Y", "9CRB8FTsErs", "txkwg5f37ws", "hlXD_AXtSIY"],
                 quizzes: [
-                    { q: "Motivation gets you started. What keeps you going when motivation fades?", opts: ["More motivation", "Watching more videos", "Discipline and structured habits", "Waiting for the right mood"], ans: 2 },
-                    { q: "What is the most effective way to re-wire your brain's dopamine baseline?", opts: ["Scroll TikTok for 3 hours", "Do hard things first before seeking cheap pleasure", "Eat high-sugar foods", "Multitasking constantly"], ans: 1 }
+                    {
+                        q: "What is the neurological danger of cheap, unearned dopamine?",
+                        opts: ["It causes headaches", "It raises your baseline, making hard work feel impossible and boring", "It makes you sleep too much", "It improves memory retention"],
+                        ans: 1,
+                        exp: "When you flood your brain with TikTok or sugar, your dopamine baseline spikes and crashes. Reading a book or building a business now feels chemically agonizing. You must detox."
+                    }
                 ]
             }
         };
 
         /* =========================================
-           APP STATE
+           GLOBAL APP STATE
         ========================================= */
         let currentCategory = "FACTS";
-        let ytPlayers = {}; // Store YT player instances
-        let videosWatchedInCategory = 0;
-        let currentQuizPool = [];
-        let isQuizActive = false;
+        let playerRegistry = {};
+        let activeQuizPool = [];
+        let isInterceptorActive = false;
+        let activePlayerInstance = null;
+        
+        // Simulating Local Storage Stats
+        let userStats = {
+            streak: parseInt(localStorage.getItem('uefi_streak')) || 0,
+            videosWatched: parseInt(localStorage.getItem('uefi_watched')) || 0
+        };
 
         /* =========================================
-           INITIALIZATION
+           INITIALIZATION & UI RENDERING
         ========================================= */
         function initApp() {
-            renderNav();
-            loadCategory(currentCategory);
-            setupIntersectionObserver();
-            start10MinuteTimer();
+            renderNavigation();
+            loadCategoryData(currentCategory);
+            setupScrollObserver();
+            initDoubleTapLike();
+            
+            // Start the 10-Minute Engine (600,000 ms)
+            setTimeout(triggerLifeAdvice, 600000);
         }
 
-        function renderNav() {
+        function renderNavigation() {
             const nav = document.getElementById('top-nav');
             nav.innerHTML = '';
-            Object.keys(uefiDB).forEach(cat => {
+            Object.keys(UEFI_DATABASE).forEach(cat => {
                 const item = document.createElement('div');
                 item.className = `nav-item ${cat === currentCategory ? 'active' : ''}`;
-                item.innerText = cat;
+                item.innerHTML = `<i class="fas ${UEFI_DATABASE[cat].icon}"></i> ${cat}`;
                 item.onclick = () => {
                     currentCategory = cat;
-                    videosWatchedInCategory = 0; // Reset counter on category switch
-                    renderNav();
-                    loadCategory(cat);
+                    renderNavigation();
+                    loadCategoryData(cat);
                 };
                 nav.appendChild(item);
             });
         }
 
-        /* =========================================
-           VIDEO FEED RENDERING
-        ========================================= */
-        function loadCategory(catName) {
+        function loadCategoryData(catKey) {
             const feed = document.getElementById('feed-container');
             feed.innerHTML = '';
-            ytPlayers = {};
-            currentQuizPool = [...uefiDB[catName].quizzes];
+            playerRegistry = {};
+            activeQuizPool = [...UEFI_DATABASE[catKey].quizzes]; // Clone quiz array
 
-            const videoIds = uefiDB[catName].videos;
-
-            videoIds.forEach((vidId, index) => {
+            const vids = UEFI_DATABASE[catKey].videos;
+            
+            vids.forEach((videoId, idx) => {
                 const container = document.createElement('div');
                 container.className = 'video-container';
-                container.id = `container-${vidId}-${index}`;
-
-                // YouTube Iframe Div
-                const playerDiv = document.createElement('div');
-                playerDiv.id = `yt-${vidId}-${index}`;
-                playerDiv.className = 'yt-iframe';
+                container.id = `frame-${videoId}-${idx}`;
                 
-                // TikTok UI Overlay
-                const overlay = document.createElement('div');
-                overlay.className = 'ui-overlay';
-                overlay.innerHTML = `
-                    <div class="side-actions">
-                        <div class="profile-pic">V</div>
-                        <div class="action-btn"><i class="fas fa-heart"></i><span class="action-text">${Math.floor(Math.random()*900)+10}K</span></div>
-                        <div class="action-btn"><i class="fas fa-comment-dots"></i><span class="action-text">${Math.floor(Math.random()*100)+5}K</span></div>
-                        <div class="action-btn"><i class="fas fa-bookmark"></i><span class="action-text">Save</span></div>
-                        <div class="action-btn"><i class="fas fa-share"></i><span class="action-text">Share</span></div>
-                    </div>
-                    <div class="bottom-info">
-                        <div class="creator-name">@VibeZ</div>
-                        <div class="video-desc">UEFI Transformation • ${catName} Mastery #learn #grow</div>
-                        <div class="music-ticker"><i class="fas fa-music"></i> Original Audio - VibeZ</div>
+                // Construct TikTok-like Overlay dynamically
+                const likes = Math.floor(Math.random() * 800) + 120;
+                const comments = Math.floor(Math.random() * 80) + 10;
+                
+                container.innerHTML = `
+                    <div id="yt-${videoId}-${idx}" class="yt-iframe"></div>
+                    <div class="ui-overlay" data-idx="${idx}">
+                        
+                        <div class="side-actions">
+                            <div class="profile-pic">V</div>
+                            <div class="action-btn like-btn" onclick="toggleLike(this)">
+                                <i class="fas fa-heart"></i>
+                                <span class="action-text">${likes}K</span>
+                            </div>
+                            <div class="action-btn" onclick="openComments()">
+                                <i class="fas fa-comment-dots"></i>
+                                <span class="action-text">${comments}K</span>
+                            </div>
+                            <div class="action-btn">
+                                <i class="fas fa-bookmark"></i>
+                                <span class="action-text">Save</span>
+                            </div>
+                            <div class="action-btn">
+                                <i class="fas fa-share"></i>
+                                <span class="action-text">Share</span>
+                            </div>
+                        </div>
+
+                        <div class="bottom-info">
+                            <div class="creator-name">@VibeZ_Edu <i class="fas fa-check-circle verified-badge"></i></div>
+                            <div class="video-desc">
+                                Mastering the ${catKey.toLowerCase()} mindset. Rewire your brain for execution. 
+                                <span class="tags">#knowledge #growth #uefi</span>
+                            </div>
+                            <div class="music-ticker">
+                                <i class="fas fa-compact-disc"></i> Original Audio - VibeZ Frequency
+                            </div>
+                        </div>
                     </div>
                 `;
-
-                container.appendChild(playerDiv);
-                container.appendChild(overlay);
                 feed.appendChild(container);
 
-                // Initialize YouTube Player
-                ytPlayers[`yt-${vidId}-${index}`] = new YT.Player(`yt-${vidId}-${index}`, {
-                    videoId: vidId,
+                // Initialize YouTube API for this frame
+                playerRegistry[`yt-${videoId}-${idx}`] = new YT.Player(`yt-${videoId}-${idx}`, {
+                    videoId: videoId,
                     playerVars: {
                         'autoplay': 0, 'controls': 0, 'rel': 0, 'showinfo': 0, 
-                        'modestbranding': 1, 'loop': 1, 'playlist': vidId,
-                        'playsinline': 1, 'mute': 0 // Unmuted for immersive feel
-                    },
-                    events: {
-                        'onReady': onPlayerReady
+                        'modestbranding': 1, 'loop': 1, 'playlist': videoId,
+                        'playsinline': 1, 'mute': 0 
                     }
                 });
             });
-            
-            // Scroll to top
             feed.scrollTop = 0;
         }
 
-        function onPlayerReady(event) {
-            // Player is ready, observer will handle playing
-        }
-
         /* =========================================
-           SCROLL INTERSECTION OBSERVER (AutoPlay)
+           SCROLL OBSERVER & AUTO-PLAY LOGIC
         ========================================= */
-        function setupIntersectionObserver() {
+        function setupScrollObserver() {
             const feed = document.getElementById('feed-container');
-            
-            const options = {
-                root: feed,
-                rootMargin: '0px',
-                threshold: 0.6 // 60% of video must be visible
-            };
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    const playerId = entry.target.querySelector('.yt-iframe').id;
-                    const player = ytPlayers[playerId];
+                    const ytId = entry.target.querySelector('.yt-iframe').id;
+                    const player = playerRegistry[ytId];
+                    const overlay = entry.target.querySelector('.ui-overlay');
+                    const idx = parseInt(overlay.getAttribute('data-idx'));
 
                     if (entry.isIntersecting) {
                         // Play Video
                         if (player && typeof player.playVideo === 'function') {
                             player.playVideo();
+                            activePlayerInstance = player;
                         }
                         
-                        // --- THE INTERCEPTOR LOGIC (RULE OF 3) ---
-                        // Extract index from container id, e.g., container-vid-2
-                        const idx = parseInt(entry.target.id.split('-')[2]);
-                        
-                        // If user scrolls to a video and it's a multiple of 3 (meaning they just finished 3)
-                        // Trigger Quiz. (idx > 0 ensures it doesn't trigger on the very first video)
-                        if (idx > 0 && idx % 3 === 0 && !isQuizActive) {
-                            // Slight delay to let them see the video paused
-                            setTimeout(() => {
-                                triggerQuiz(player);
-                            }, 500);
+                        // Increment Stats
+                        userStats.videosWatched++;
+                        localStorage.setItem('uefi_watched', userStats.videosWatched);
+
+                        // --- RULE OF 3: THE INTERCEPTOR ---
+                        // Trigger quiz every 3rd video (idx 2, 5, 8 etc)
+                        if (idx > 0 && (idx + 1) % 3 === 0 && !isInterceptorActive) {
+                            setTimeout(() => launchInterceptorQuiz(), 1500); // Let them watch 1.5s then freeze
                         }
                     } else {
-                        // Pause Video out of view
+                        // Pause when scrolled out
                         if (player && typeof player.pauseVideo === 'function') {
                             player.pauseVideo();
                         }
                     }
                 });
-            }, options);
+            }, { root: feed, threshold: 0.65 });
 
-            // Mutation observer to dynamically observe new containers when category switches
-            const mutationObserver = new MutationObserver(() => {
+            // Watch for DOM changes to observe new videos
+            const mutObserver = new MutationObserver(() => {
                 document.querySelectorAll('.video-container').forEach(el => observer.observe(el));
             });
-            mutationObserver.observe(feed, { childList: true });
+            mutObserver.observe(feed, { childList: true });
         }
 
         /* =========================================
-           QUIZ INTERCEPTOR SYSTEM
+           ADVANCED QUIZ INTERCEPTOR
         ========================================= */
-        let activePlayerRef = null;
-
-        function triggerQuiz(currentPlayer) {
-            isQuizActive = true;
-            activePlayerRef = currentPlayer;
+        function launchInterceptorQuiz() {
+            isInterceptorActive = true;
             
-            // Pause the current video
-            if (currentPlayer && typeof currentPlayer.pauseVideo === 'function') {
-                currentPlayer.pauseVideo();
+            // Pause current video
+            if (activePlayerInstance && typeof activePlayerInstance.pauseVideo === 'function') {
+                activePlayerInstance.pauseVideo();
             }
 
-            // Lock scrolling
+            // Lock the feed
             document.getElementById('feed-container').classList.add('no-scroll');
 
-            // Pick a quiz
+            // Select Quiz Data
             let quizObj;
-            if (currentQuizPool.length > 0) {
-                // Pop a random quiz from pool
-                const randIdx = Math.floor(Math.random() * currentQuizPool.length);
-                quizObj = currentQuizPool.splice(randIdx, 1)[0];
+            if (activeQuizPool.length > 0) {
+                const rand = Math.floor(Math.random() * activeQuizPool.length);
+                quizObj = activeQuizPool.splice(rand, 1)[0];
             } else {
-                // Fallback if we run out of specific questions
+                // Generic Fallback
                 quizObj = {
-                    q: "Information without execution is useless. Are you ready to apply what you've learned?",
-                    opts: ["No, I just want to scroll.", "Yes. Let's go.", "I don't know.", "Maybe later."],
-                    ans: 1
+                    q: "Information without execution is a delusion. What is your next move today?",
+                    opts: ["Keep scrolling mindlessly", "Apply one concept immediately", "Forget it by tomorrow"],
+                    ans: 1,
+                    exp: "Action is the only metric of truth. If you learn but do not do, you have not actually learned."
                 };
             }
 
-            // Render Quiz
-            document.getElementById('quiz-question-text').innerText = quizObj.q;
-            const btnContainer = document.getElementById('quiz-options-container');
-            btnContainer.innerHTML = '';
+            // Populate UI
+            document.getElementById('quiz-q-text').innerText = quizObj.q;
+            const btnBox = document.getElementById('quiz-options-container');
+            btnBox.innerHTML = '';
+            document.getElementById('quiz-explanation').style.display = 'none';
+            document.getElementById('continue-scroll-btn').style.display = 'none';
 
-            quizObj.opts.forEach((optText, i) => {
+            quizObj.opts.forEach((optText, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'quiz-btn';
                 btn.innerText = optText;
-                btn.onclick = () => handleQuizAnswer(btn, i, quizObj.ans);
-                btnContainer.appendChild(btn);
+                btn.onclick = () => validateAnswer(btn, index, quizObj);
+                btnBox.appendChild(btn);
             });
 
-            // Show Overlay
-            document.getElementById('quiz-overlay').style.display = 'flex';
+            // Reveal Modal
+            const modal = document.getElementById('quiz-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.style.opacity = '1', 50);
         }
 
-        function handleQuizAnswer(btnElement, selectedIdx, correctIdx) {
-            // Disable all buttons to prevent spam clicks
-            const allBtns = document.querySelectorAll('.quiz-btn');
-            allBtns.forEach(b => b.style.pointerEvents = 'none');
+        function validateAnswer(btnElement, selectedIdx, quizObj) {
+            // Disable buttons
+            const buttons = document.querySelectorAll('.quiz-btn');
+            buttons.forEach(b => b.style.pointerEvents = 'none');
 
-            if (selectedIdx === correctIdx) {
-                // Correct Answer
+            if (selectedIdx === quizObj.ans) {
+                // SUCCESS
                 btnElement.classList.add('correct');
                 
-                // Play Celebration Audio
-                const audio = document.getElementById('celebration-audio');
-                audio.volume = 0.5;
-                audio.currentTime = 0;
-                audio.play();
+                // Play Audio
+                const sfx = document.getElementById('success-sound');
+                sfx.volume = 0.6; sfx.currentTime = 0; sfx.play();
 
-                // Unlock after 1 second
+                // Fire Confetti
+                triggerConfetti();
+
+                // Show Explanation
                 setTimeout(() => {
-                    document.getElementById('quiz-overlay').style.display = 'none';
-                    document.getElementById('feed-container').classList.remove('no-scroll');
-                    isQuizActive = false;
-                    
-                    // Resume video
-                    if (activePlayerRef && typeof activePlayerRef.playVideo === 'function') {
-                        activePlayerRef.playVideo();
-                    }
-                }, 1200);
+                    document.getElementById('exp-text-content').innerText = quizObj.exp;
+                    document.getElementById('quiz-explanation').style.display = 'block';
+                    document.getElementById('continue-scroll-btn').style.display = 'block';
+                }, 800);
 
             } else {
-                // Wrong Answer
+                // FAIL
                 btnElement.classList.add('wrong');
                 setTimeout(() => {
                     btnElement.classList.remove('wrong');
-                    allBtns.forEach(b => b.style.pointerEvents = 'auto');
-                }, 500);
+                    buttons.forEach(b => b.style.pointerEvents = 'auto');
+                }, 600);
             }
         }
 
-        /* =========================================
-           10-MINUTE TRANSFORMATION TIMER
-        ========================================= */
-        function start10MinuteTimer() {
-            // 10 minutes = 600,000 milliseconds
+        function resumeScrolling() {
+            const modal = document.getElementById('quiz-modal');
+            modal.style.opacity = '0';
             setTimeout(() => {
-                // Pause whatever video is currently playing
-                Object.values(ytPlayers).forEach(p => {
-                    if (p && typeof p.pauseVideo === 'function') { p.pauseVideo(); }
+                modal.style.display = 'none';
+                document.getElementById('feed-container').classList.remove('no-scroll');
+                isInterceptorActive = false;
+                
+                // Resume Video
+                if (activePlayerInstance) activePlayerInstance.playVideo();
+                
+                // Clear Confetti
+                const cvs = document.getElementById('confetti-canvas');
+                cvs.style.display = 'none';
+            }, 400);
+        }
+
+        /* =========================================
+           MICRO-INTERACTIONS: DOUBLE TAP TO LIKE
+        ========================================= */
+        function initDoubleTapLike() {
+            const feed = document.getElementById('feed-container');
+            let lastTap = 0;
+
+            feed.addEventListener('touchstart', (e) => {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTap;
+                if (tapLength < 300 && tapLength > 0) {
+                    // It's a double tap
+                    spawnHeart(e.touches[0].clientX, e.touches[0].clientY);
+                    
+                    // Visually activate the like button on the current overlay
+                    const currentOverlay = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY).closest('.ui-overlay');
+                    if(currentOverlay) {
+                        const likeBtn = currentOverlay.querySelector('.like-btn');
+                        if(likeBtn) likeBtn.classList.add('liked');
+                    }
+                    e.preventDefault();
+                }
+                lastTap = currentTime;
+            });
+            
+            // For desktop testing
+            feed.addEventListener('dblclick', (e) => {
+                spawnHeart(e.clientX, e.clientY);
+                const currentOverlay = e.target.closest('.ui-overlay');
+                if(currentOverlay) {
+                    const likeBtn = currentOverlay.querySelector('.like-btn');
+                    if(likeBtn) likeBtn.classList.add('liked');
+                }
+            });
+        }
+
+        function spawnHeart(x, y) {
+            const heart = document.createElement('i');
+            heart.className = 'fas fa-heart floating-heart';
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
+        }
+
+        function toggleLike(btn) {
+            btn.classList.toggle('liked');
+        }
+
+        /* =========================================
+           DRAWERS (COMMENTS SIMULATION)
+        ========================================= */
+        function openComments() {
+            document.getElementById('drawer-overlay').style.display = 'block';
+            setTimeout(() => document.getElementById('drawer-overlay').style.opacity = '1', 10);
+            document.getElementById('comments-drawer').classList.add('open');
+            
+            // Populate Fake Comments
+            const commentsContainer = document.getElementById('comments-content');
+            commentsContainer.innerHTML = `
+                <div class="comment-item">
+                    <div class="c-avatar" style="background: #ff0055"></div>
+                    <div class="c-body">
+                        <div class="c-name">@HustlerMentality</div>
+                        <div class="c-text">This literally changed how I view my bank account. Assets over everything.</div>
+                        <div class="c-stats"><span>3h</span> <span>Reply</span></div>
+                    </div>
+                </div>
+                <div class="comment-item">
+                    <div class="c-avatar" style="background: #00ffcc"></div>
+                    <div class="c-body">
+                        <div class="c-name">@ScienceNerd_99</div>
+                        <div class="c-text">The editing on this is insane. So much better than school lectures.</div>
+                        <div class="c-stats"><span>5h</span> <span>Reply</span></div>
+                    </div>
+                </div>
+                <div class="comment-item">
+                    <div class="c-avatar" style="background: #4facfe"></div>
+                    <div class="c-body">
+                        <div class="c-name">@FutureCEO</div>
+                        <div class="c-text">Locked this in my brain. Consistency > Intensity.</div>
+                        <div class="c-stats"><span>1d</span> <span>Reply</span></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function closeDrawers() {
+            document.getElementById('drawer-overlay').style.opacity = '0';
+            document.getElementById('comments-drawer').classList.remove('open');
+            setTimeout(() => document.getElementById('drawer-overlay').style.display = 'none', 300);
+        }
+
+        /* =========================================
+           10-MINUTE TRANSFORMATION MODAL
+        ========================================= */
+        function triggerLifeAdvice() {
+            if (activePlayerInstance && typeof activePlayerInstance.pauseVideo === 'function') {
+                activePlayerInstance.pauseVideo();
+            }
+            document.getElementById('advice-modal').style.display = 'flex';
+        }
+
+        /* =========================================
+           CUSTOM CONFETTI ENGINE (HTML5 CANVAS)
+        ========================================= */
+        function triggerConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#00ffcc', '#00e676', '#4facfe', '#ffffff'];
+
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2 + 100,
+                    r: Math.random() * 6 + 2,
+                    dx: Math.random() * 20 - 10,
+                    dy: Math.random() * -20 - 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    tilt: Math.random() * 10
                 });
-                // Show modal
-                document.getElementById('advice-modal').style.display = 'flex';
-            }, 600000); 
+            }
+
+            let animationFrame;
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let active = false;
+                particles.forEach(p => {
+                    p.dy += 0.5; // Gravity
+                    p.x += p.dx;
+                    p.y += p.dy;
+                    p.tilt += 0.1;
+                    
+                    if (p.y < canvas.height) active = true;
+
+                    ctx.beginPath();
+                    ctx.lineWidth = p.r;
+                    ctx.strokeStyle = p.color;
+                    ctx.moveTo(p.x + p.tilt + p.r, p.y);
+                    ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
+                    ctx.stroke();
+                });
+                
+                if (active) {
+                    animationFrame = requestAnimationFrame(render);
+                } else {
+                    cancelAnimationFrame(animationFrame);
+                }
+            }
+            render();
         }
 
-        function closeAdvice() {
-            document.getElementById('advice-modal').style.display = 'none';
-        }
-
-        // Wait for YT API to load, then init
+        // INIT YOUTUBE API
         window.onYouTubeIframeAPIReady = function() {
             initApp();
         };
