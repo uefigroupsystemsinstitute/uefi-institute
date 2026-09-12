@@ -3,741 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VibeZ | Immersive Cinematic Feed</title>
-    
-    <!-- External Libraries: FontAwesome & Google Fonts -->
+    <title>VibeZ - Immersive Feed</title>
+    <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cinzel:wght@600;800&family=Outfit:wght@300;400;600;800&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
         /* ==========================================================================
-           1. CORE ARCHITECTURE & CSS VARIABLES
+           1. CORE & RESET
            ========================================================================== */
-        :root {
-            --brand-cyan: #00ffcc;
-            --brand-magenta: #ff007f;
-            --brand-glow: rgba(0, 255, 204, 0.4);
-            --bg-deep: #050505;
-            --danger: #ff2a5f;
-            --success: #00e676;
-            --text-main: #ffffff;
-            --font-art: 'Syne', sans-serif;
-            --font-ui: 'Outfit', sans-serif;
-            --font-handwriting: 'Caveat', cursive;
-            --font-classic: 'Cinzel', serif;
-            
-            /* Diary Book Palette */
-            --parchment: #fcf8ec;
-            --parchment-dark: #ebd9b8;
-            --ink: #1a1512;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #000; color: #fff; overflow: hidden; height: 100vh; width: 100vw; }
         
-        body, html {
-            height: 100vh; width: 100vw;
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            font-family: var(--font-ui);
-            overflow: hidden; 
-            cursor: none; /* Custom laser cursor active */
-        }
-
         /* ==========================================================================
-           2. MULTI-COLOR LASER CURSOR ENGINE
+           2. FEED & VIDEO CONTAINERS
            ========================================================================== */
-        .laser-cursor {
-            position: fixed;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 12px currentColor, 0 0 24px currentColor, 0 0 36px currentColor;
-            transition: width 0.1s, height: 0.1s;
-            mix-blend-mode: screen;
-        }
-
-        .laser-trail {
-            position: fixed;
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99998;
-            transform: translate(-50%, -50%);
-            opacity: 0.65;
-            box-shadow: 0 0 8px currentColor;
-        }
-
-        /* ==========================================================================
-           3. FULL-SCREEN CLEAN SHORTS CONTAINER (No Dead Dark Space)
-           ========================================================================== */
-        .full-viewport-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            background: #000;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ==========================================================================
-           4. LEFT-CORNER NAVIGATION (Glass Frame Only)
-           ========================================================================== */
-        .left-corner-nav {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            z-index: 40;
-            background: rgba(15, 15, 15, 0.75);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            padding: 12px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
-            max-height: 85vh;
-            overflow-y: auto;
-            scrollbar-width: none;
-        }
-        .left-corner-nav::-webkit-scrollbar { display: none; }
-
-        .nav-item {
-            font-family: var(--font-art);
-            font-size: 13px;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.55);
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            padding: 9px 14px;
-            border-radius: 8px;
-            white-space: nowrap;
-        }
-        .nav-item:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .nav-item.active {
-            color: #000;
-            background: var(--brand-cyan);
-            transform: scale(1.03);
-            box-shadow: 0 0 18px var(--brand-cyan);
-        }
-
-        /* ==========================================================================
-           5. FULL-BLEED VIDEO FEED (Clean Shorts Format)
-           ========================================================================== */
-        .feed-container {
+        #feed-container {
             height: 100vh;
             width: 100vw;
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
+            -ms-overflow-style: none;
             scrollbar-width: none;
             position: relative;
-            z-index: 10;
         }
-        .feed-container.no-scroll { overflow-y: hidden !important; }
-        
+        #feed-container::-webkit-scrollbar { display: none; }
+        #feed-container.no-scroll { overflow-y: hidden; }
+
         .video-container {
-            position: relative;
             height: 100vh;
             width: 100vw;
             scroll-snap-align: start;
-            scroll-snap-stop: always;
-            background: #000;
-            overflow: hidden;
+            position: relative;
+            background: #111;
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-        
-        .yt-placeholder {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            filter: blur(10px);
-            opacity: 0.4;
-            z-index: 1;
-        }
-        
-        .yt-iframe-wrapper {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
         }
 
         .yt-iframe {
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            transform: scale(1.3); /* Fills screen completely without black letterboxing */
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; /* Crucial: Allows double tap on overlay */
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
+            object-fit: cover;
         }
 
-        /* Clean gradient overlay for text readability - NO global heavy blur */
+        /* The invisible layer that catches clicks/touches */
+        .interaction-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 5;
+        }
+
+        /* ==========================================================================
+           3. UI OVERLAYS (TikTok Style)
+           ========================================================================== */
         .ui-overlay {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 12;
+            bottom: 0; left: 0; width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+            z-index: 10;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 35%, transparent 70%);
-            pointer-events: none;
+            justify-content: space-between;
+            align-items: flex-end;
+            pointer-events: none; /* Let clicks pass through except for buttons */
         }
-        .ui-overlay > * { pointer-events: auto; }
 
-        /* ==========================================================================
-           6. TIKTOK SIDE ACTIONS & CREATOR INFO
-           ========================================================================== */
-        .side-actions {
-            position: absolute;
-            bottom: 45px;
-            right: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 22px;
-            z-index: 20;
+        .video-info { flex: 1; padding-right: 20px; pointer-events: auto; }
+        .author-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; gap: 5px;}
+        .verified-badge { color: #00e676; font-size: 0.9rem; }
+        .video-desc { font-size: 0.9rem; margin-bottom: 10px; line-height: 1.3; }
+        .tags { color: #00ffcc; font-weight: 600; }
+        .music-ticker { font-size: 0.8rem; display: flex; align-items: center; gap: 8px; animation: ticker 4s linear infinite; }
+
+        @keyframes ticker {
+            0% { transform: translateX(10%); }
+            100% { transform: translateX(-10%); }
         }
-        .action-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            cursor: pointer;
-            filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.8));
-            transition: transform 0.2s;
-        }
-        .action-btn i { font-size: 34px; margin-bottom: 5px; transition: 0.3s; }
-        .action-btn:active i { transform: scale(0.75); }
-        .action-btn.liked i { color: var(--danger); animation: heartBurst 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        .side-actions { display: flex; flex-direction: column; gap: 20px; align-items: center; pointer-events: auto; }
+        .action-btn { background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .action-btn span { font-size: 0.75rem; font-weight: 600; }
+        .action-btn:hover { transform: scale(1.1); }
+        .like-btn.liked i { color: #ff007f; animation: pulse 0.3s ease; }
         
-        .diary-btn i { color: #f1c40f; text-shadow: 0 0 12px rgba(241, 196, 15, 0.6); }
-        .action-text { font-size: 13px; font-weight: 700; text-shadow: 1px 1px 3px #000; }
+        .profile-pic { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #fff; margin-bottom: 10px; object-fit: cover;}
 
-        .profile-pic-container {
-            position: relative;
-            margin-bottom: 8px;
-        }
-        .profile-pic {
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            border: 2px solid #fff; 
-            background: url('https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=200&q=80') center/cover;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
-        }
-        .profile-pic-container::after {
-            content: '+';
-            position: absolute;
-            bottom: -5px; left: 50%;
-            transform: translateX(-50%);
-            background: var(--danger);
-            width: 22px; height: 22px;
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 14px; font-weight: bold;
-            border: 2px solid #fff;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
         }
 
-        .bottom-info {
-            position: absolute;
-            bottom: 35px;
-            left: 25px;
-            width: 65%;
-            z-index: 20;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
-        }
-        .creator-name {
-            font-family: var(--font-art);
-            font-size: 20px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .verified-badge { color: var(--brand-cyan); font-size: 16px; }
-        .video-desc {
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 1.4;
-            margin-bottom: 12px;
-            color: #f0f0f5;
-        }
-        .tags { font-weight: 700; color: var(--brand-cyan); }
-        .music-ticker {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            background: rgba(15, 15, 15, 0.65);
-            padding: 7px 14px;
-            border-radius: 20px;
-            width: fit-content;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.12);
-        }
-        .music-ticker i { animation: spin 4s linear infinite; }
-
-        /* ==========================================================================
-           7. ENLARGED NOTEBOOK DIARY MODAL (Handwriting Font & Square Photo)
-           ========================================================================== */
-        .diary-modal {
-            position: absolute;
-            top: 100%; left: 0;
-            width: 100vw; height: 100vh;
-            background: var(--parchment);
-            z-index: 200;
-            transition: top 0.55s cubic-bezier(0.86, 0, 0.07, 1);
-            display: flex;
-            flex-direction: column;
-            box-shadow: inset 0 0 100px rgba(0,0,0,0.18);
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.5), rgba(0,0,0,0.03)),
-                url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23n)" opacity="0.05"/></svg>');
-        }
-        .diary-modal.open { top: 0; }
-
-        .diary-header {
-            padding: 30px 40px 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-bottom: 3px solid var(--parchment-dark);
-            position: relative;
-        }
-        .close-diary {
-            position: absolute;
-            top: 25px; right: 35px;
-            font-size: 30px;
-            color: var(--ink);
-            cursor: pointer;
-            opacity: 0.8;
-            transition: transform 0.2s;
-        }
-        .close-diary:hover { transform: scale(1.1); }
-        
-        .diary-profile-wrapper {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin-bottom: 12px;
-        }
-        .diary-profile-pic {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            border-radius: 10px; /* Clean square frame */
-            border: 3.5px solid var(--ink);
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.25);
-            cursor: pointer;
-        }
-        .feather-decor {
-            position: absolute;
-            color: var(--ink);
-            font-size: 40px;
-            opacity: 0.8;
-            pointer-events: none;
-        }
-        .feather-left { top: 30px; left: -38px; transform: rotate(-35deg); }
-        .feather-right { top: 30px; right: -38px; transform: rotate(35deg) scaleX(-1); }
-
-        .diary-name-input {
-            background: transparent;
-            border: none;
-            text-align: center;
-            font-family: var(--font-classic);
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--ink);
-            outline: none;
-            width: 50%;
-            border-bottom: 2px dashed rgba(26, 21, 18, 0.35);
-            padding-bottom: 4px;
-        }
-
-        /* Lined Notebook Body with Clear Handwriting Font */
-        .diary-body {
-            flex: 1;
-            padding: 25px 50px;
-            position: relative;
-            background: repeating-linear-gradient(
-                transparent, transparent 38px, 
-                rgba(26, 21, 18, 0.15) 38px, rgba(26, 21, 18, 0.15) 39px
-            );
-        }
-        .gothic-textarea {
-            width: 100%; height: 100%;
-            background: transparent;
-            border: none;
-            outline: none;
-            resize: none;
-            font-family: var(--font-handwriting); /* Gorgeous legible handwriting font */
-            font-size: 30px; 
-            font-weight: 700;
-            color: var(--ink);
-            line-height: 39px; /* Aligns perfectly with notebook lines */
-            padding-top: 2px;
-        }
-        .gothic-textarea::placeholder { color: rgba(26, 21, 18, 0.35); }
-
-        .emoji-bar {
-            background: rgba(235, 217, 184, 0.92);
-            padding: 18px;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            border-top: 3px solid var(--ink);
-            backdrop-filter: blur(8px);
-        }
-        .emoji-btn {
-            font-size: 26px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
-        }
-        .emoji-btn:active { transform: scale(0.75); }
-
-        /* ==========================================================================
-           8. CHECKPOINT QUIZ MODAL
-           ========================================================================== */
-        .quiz-modal {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 150;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        .quiz-modal.active { display: flex; opacity: 1; }
-        .quiz-glow {
-            position: absolute; width: 320px; height: 320px;
-            background: radial-gradient(circle, var(--brand-glow) 0%, transparent 70%);
-            top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1;
-        }
-        .quiz-title { font-family: var(--font-art); color: var(--brand-cyan); font-size: 34px; margin-bottom: 6px; font-weight: 800; }
-        .quiz-subtitle { color: #fff; font-weight: 400; margin-bottom: 30px; font-size: 15px; opacity: 0.7; }
-        .quiz-question { font-size: 22px; font-weight: 600; margin-bottom: 25px; line-height: 1.4; max-width: 580px; }
-        .quiz-options { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 14px; }
-        .quiz-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: #fff; padding: 18px 22px;
-            font-size: 16px; font-family: var(--font-ui); font-weight: 600;
-            border-radius: 14px; cursor: pointer; transition: all 0.2s;
-            text-align: left;
-        }
-        .quiz-btn:hover { background: rgba(255, 255, 255, 0.09); }
-        .quiz-btn.correct { background: var(--success); color: #000; border-color: var(--success); box-shadow: 0 0 20px rgba(0,230,118,0.5); }
-        .quiz-btn.wrong { background: var(--danger); color: #fff; border-color: var(--danger); animation: shake 0.4s; }
-
-        .explanation-box {
-            display: none; margin-top: 25px;
-            background: rgba(0, 255, 204, 0.08);
-            border-left: 4px solid var(--brand-cyan);
-            padding: 18px; border-radius: 0 10px 10px 0;
-            text-align: left; max-width: 520px;
-            animation: slideUpFade 0.4s forwards;
-        }
-        .exp-title { font-family: var(--font-art); font-weight: 800; color: var(--brand-cyan); margin-bottom: 6px; font-size: 16px; }
-        .exp-text { font-size: 15px; line-height: 1.5; }
-        
-        .continue-btn {
-            display: none; margin-top: 25px;
-            background: #fff; color: #000;
-            padding: 15px 35px; font-family: var(--font-art); font-weight: 800;
-            border-radius: 35px; border: none; font-size: 17px; cursor: pointer;
-            box-shadow: 0 4px 18px rgba(255,255,255,0.35); transition: transform 0.2s;
-        }
-        .continue-btn:active { transform: scale(0.92); }
-
-        /* ==========================================================================
-           9. ANIMATIONS & EFFECTS
-           ========================================================================== */
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes heartBurst { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); } 75% { transform: translateX(-10px); }
-        }
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        
+        /* Floating Hearts Animation */
         .floating-heart {
-            position: absolute; color: var(--danger); font-size: 75px;
-            pointer-events: none; z-index: 50; transform: translate(-50%, -50%) scale(0);
-            animation: floatUp 0.9s ease-out forwards; filter: drop-shadow(0 0 15px rgba(255,42,95,0.8));
+            position: absolute;
+            color: #ff007f;
+            font-size: 4rem;
+            transform: translate(-50%, -50%) scale(0);
+            animation: floatUp 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            pointer-events: none;
+            z-index: 20;
+            text-shadow: 0 0 10px rgba(255,0,127,0.5);
         }
         @keyframes floatUp {
             0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-            25% { transform: translate(-50%, -50%) scale(1.2) rotate(-10deg); }
-            100% { transform: translate(-50%, -200px) scale(1) rotate(15deg); opacity: 0; }
+            50% { transform: translate(-50%, -100%) scale(1.2); opacity: 0.8; }
+            100% { transform: translate(-50%, -200%) scale(1); opacity: 0; }
         }
+
+        /* ==========================================================================
+           4. MODALS (Quiz & Diary) - Glassmorphism
+           ========================================================================== */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
+            z-index: 100; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal.open { display: flex; opacity: 1; }
         
-        #confetti-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 180; display: none;
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 30px; border-radius: 20px;
+            width: 90%; max-width: 400px;
+            text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
+
+        /* Quiz Specifics */
+        .quiz-title { font-size: 1.5rem; font-weight: 800; color: #00ffcc; margin-bottom: 15px; }
+        #quiz-q-text { font-size: 1.1rem; margin-bottom: 25px; }
+        .quiz-btn {
+            width: 100%; padding: 12px; margin: 8px 0;
+            background: rgba(255,255,255,0.05); color: #fff;
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 10px;
+            font-size: 1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .quiz-btn:hover { background: rgba(255,255,255,0.15); }
+        .quiz-btn.correct { background: #00e676; border-color: #00e676; color: #000; }
+        .quiz-btn.wrong { background: #ff007f; border-color: #ff007f; color: #fff; animation: shake 0.4s; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+        }
+
+        .explanation { margin-top: 20px; font-size: 0.9rem; color: #ddd; display: none; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border-left: 3px solid #00ffcc; }
+        .continue-btn { margin-top: 20px; width: 100%; padding: 12px; background: #00ffcc; color: #000; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; display: none; text-transform: uppercase; }
+
+        /* Diary Specifics */
+        .diary-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .diary-upload { position: relative; cursor: pointer; }
+        .diary-upload img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #00ffcc; object-fit: cover; }
+        .diary-upload i { position: absolute; bottom: 0; right: 0; background: #00ffcc; color: #000; border-radius: 50%; padding: 4px; font-size: 0.7rem; }
+        .diary-name-input { background: none; border: none; border-bottom: 2px solid rgba(255,255,255,0.2); color: #fff; font-size: 1.2rem; font-weight: 600; outline: none; width: 100%; padding: 5px; transition: border-color 0.3s; }
+        .diary-name-input:focus { border-bottom-color: #00ffcc; }
+        .diary-textarea { width: 100%; height: 150px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 15px; font-size: 1rem; resize: none; outline: none; margin-bottom: 15px; }
+        .diary-textarea:focus { border-color: #00ffcc; }
+        .emoji-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .emoji-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; transition: transform 0.2s; }
+        .emoji-btn:hover { transform: scale(1.2); }
+        .close-diary-btn { width: 100%; padding: 12px; background: #fff; color: #000; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase;}
+
+        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; display: none; }
+        
+        /* Loading Screen */
+        #loader { position: fixed; top:0; left:0; width:100vw; height:100vh; background:#000; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #00ffcc; }
+        .spinner { border: 4px solid rgba(0, 255, 204, 0.2); border-top: 4px solid #00ffcc; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 20px;}
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
+    
+    <!-- Load YouTube IFrame API properly -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
-    <!-- Dynamic Laser Cursor -->
-    <div class="laser-cursor" id="laser-cursor"></div>
-    <div class="laser-trail" id="laser-trail"></div>
-
-    <!-- Success Sound Audio Element -->
-    <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" preload="auto"></audio>
-
-    <!-- FULL SCREEN SHORTS CONTAINER -->
-    <div class="full-viewport-container">
-        
-        <!-- Left Corner Navigation -->
-        <div class="left-corner-nav" id="left-corner-nav"></div>
-
-        <!-- Scrollable Feed -->
-        <div class="feed-container" id="feed-container"></div>
-
-        <!-- Checkpoint Quiz Interceptor -->
-        <div class="quiz-modal" id="quiz-modal">
-            <div class="quiz-glow"></div>
-            <div class="quiz-title">Knowledge Checkpoint</div>
-            <div class="quiz-subtitle">Prove you are mastering the feed, not just swiping.</div>
-            <div class="quiz-question" id="quiz-q-text">Loading...</div>
-            
-            <div class="quiz-options" id="quiz-options-container"></div>
-
-            <div class="explanation-box" id="quiz-explanation">
-                <div class="exp-title">The Blueprint:</div>
-                <div class="exp-text" id="exp-text-content"></div>
-            </div>
-
-            <button class="continue-btn" id="continue-scroll-btn" onclick="resumeScrolling()">Unlock Feed</button>
-        </div>
-
-        <!-- ENLARGED NOTEBOOK DIARY MODAL -->
-        <div class="diary-modal" id="diary-modal">
-            <div class="diary-header">
-                <i class="fas fa-times close-diary" onclick="toggleDiary()"></i>
-                <div class="diary-profile-wrapper">
-                    <i class="fas fa-feather-alt feather-decor feather-left"></i>
-                    <i class="fas fa-feather-alt feather-decor feather-right"></i>
-                    
-                    <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=200&q=80" 
-                         id="diary-img" class="diary-profile-pic" onclick="document.getElementById('img-upload').click()">
-                    <input type="file" id="img-upload" style="display:none" accept="image/*" onchange="uploadDiaryImage(event)">
-                </div>
-                <input type="text" class="diary-name-input" id="diary-name" placeholder="Enter Thy Name..." value="Master Scholar">
-            </div>
-            
-            <div class="diary-body">
-                <textarea class="gothic-textarea" id="diary-notes" placeholder="Scribe thy thoughts, reflections, and brilliance here..."></textarea>
-            </div>
-
-            <div class="emoji-bar">
-                <div class="emoji-btn" onclick="addEmoji('💀')">💀</div>
-                <div class="emoji-btn" onclick="addEmoji('🔥')">🔥</div>
-                <div class="emoji-btn" onclick="addEmoji('🐐')">🐐</div>
-                <div class="emoji-btn" onclick="addEmoji('📈')">📈</div>
-                <div class="emoji-btn" onclick="addEmoji('🧠')">🧠</div>
-                <div class="emoji-btn" onclick="addEmoji('💸')">💸</div>
-                <div class="emoji-btn" onclick="addEmoji('⚡')">⚡</div>
-            </div>
-        </div>
-
-        <!-- Confetti Overlay -->
-        <canvas id="confetti-canvas"></canvas>
-
+    <!-- App Initialization Loader -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <h2>Initializing VibeZ...</h2>
     </div>
 
-    <!-- YouTube Iframe API -->
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <canvas id="confetti-canvas"></canvas>
+    
+    <!-- Audio for Success -->
+    <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3" preload="auto"></audio>
+
+    <div id="feed-container">
+        <!-- Videos will be injected here via JavaScript -->
+    </div>
+
+    <!-- Quiz Interceptor Modal -->
+    <div id="quiz-modal" class="modal">
+        <div class="modal-content">
+            <div class="quiz-title"><i class="fas fa-brain"></i> Mind Check</div>
+            <div id="quiz-q-text">Loading question...</div>
+            <div id="quiz-options-container"></div>
+            <div class="explanation" id="quiz-explanation">
+                <strong>Insight:</strong> <span id="exp-text-content"></span>
+            </div>
+            <button class="continue-btn" id="continue-scroll-btn" onclick="resumeScrolling()">Keep Scrolling <i class="fas fa-arrow-down"></i></button>
+        </div>
+    </div>
+
+    <!-- Diary Vault Modal -->
+    <div id="diary-modal" class="modal">
+        <div class="modal-content" style="background: rgba(20,20,30,0.9);">
+            <h3 style="color: #fff; margin-bottom: 20px;"><i class="fas fa-book-open"></i> Your Vault</h3>
+            <div class="diary-header">
+                <label class="diary-upload">
+                    <img id="diary-img" src="https://i.pravatar.cc/150?img=11" alt="Profile">
+                    <i class="fas fa-camera"></i>
+                    <input type="file" style="display: none;" accept="image/*" onchange="uploadDiaryImage(event)">
+                </label>
+                <input type="text" id="diary-name" class="diary-name-input" placeholder="Enter your name...">
+            </div>
+            <textarea id="diary-notes" class="diary-textarea" placeholder="Scribe your thoughts, goals, or lessons learned today..."></textarea>
+            <div class="emoji-bar">
+                <button class="emoji-btn" onclick="addEmoji('🔥')">🔥</button>
+                <button class="emoji-btn" onclick="addEmoji('💡')">💡</button>
+                <button class="emoji-btn" onclick="addEmoji('🚀')">🚀</button>
+                <button class="emoji-btn" onclick="addEmoji('🧘‍♂️')">🧘‍♂️</button>
+                <button class="emoji-btn" onclick="addEmoji('💯')">💯</button>
+            </div>
+            <button class="close-diary-btn" onclick="toggleDiary()">Save & Close</button>
+        </div>
+    </div>
+
     <script>
         /* ==========================================================================
-           1. DATABASE & CONFIGURATION
+           0. DATA CONFIGURATION & STATE
            ========================================================================== */
-        const UEFI_DATABASE = {
-            "FACTS": {
-                videos: ["z2rKDh9mh7Q", "jujgSDPlDOI", "lWGsVKlPz4s", "PwLki5sEQ8w", "suDhVin86Ps", "ZAIxy0_KrDg","YSAwI50XS00","Efvs9I5I_G0",],
-                quizzes: [
-                    { q: "What fundamentally separates an asset from a liability?", opts: ["Assets generate cash flow; liabilities consume it", "Assets are physical; liabilities are digital", "There is no difference"], ans: 0, exp: "The wealthy acquire assets. The average person acquires liabilities thinking they are assets." },
-                    { q: "What does the Rule of 72 calculate?", opts: ["Your tax bracket", "How long it takes an investment to double", "Your retirement age"], ans: 1, exp: "Divide 72 by your interest rate to find out how many years it takes for your money to double." }
-                ]
-            },
-            "HISTORY": {
-                videos: ["0KQOrJ_K6ps", "i83WzFygvZ4", "lSflLzfWTUs"],
-                quizzes: [
-                    { q: "Why do top strategists constantly study history?", opts: ["To memorize dates", "Because macroeconomic and civilizational cycles repeat", "To find old maps"], ans: 1, exp: "Human nature and economic cycles repeat across centuries. History is the ultimate playbook." }
-                ]
-            },
-            "MATH": {
-                videos: ["-iiY2bqn9Wo", "UidCElWKF0E", "q_OGsBDRgz4", "pK9b1D3CUmg"],
-                quizzes: [
-                    { q: "What is the compounding result of getting 1% better every single day for a year?", opts: ["3.6x better", "37.78x better", "10x better"], ans: 1, exp: "(1.01)^365 = 37.78. Small daily improvements lead to massive compounding over time." }
-                ]
-            },
-            "SCIENCE": {
-                videos: ["oR94cicO7xM", "5U-V0y-fkSw", "nHAFnH3xRl4", "ISUPZmjAWlQ", "ql0DrRJOpNg"],
-                quizzes: [
-                    { q: "How does the Second Law of Thermodynamics apply to daily life?", opts: ["Unattended systems naturally degrade into chaos without energy input", "Everything becomes cleaner over time", "Energy is created infinitely"], ans: 0, exp: "If you don't invest energy into your fitness, mind, or business, they naturally decay." }
-                ]
-            },
-            "VIBES": {
-                videos: ["KHAOa2HrNTw", "3cSEEbwGKGk", "aYgA6cIzqm8", "7GBm5rbr50U", "mxb2sBLNK5Y", "9CRB8FTsErs", "txkwg5f37ws", "hlXD_AXtSIY","s1a0NNaTbag","uYKhyFr3Bns","5nHlY2frPvc","zNPYkAWy03g","BpPoBNzeBHs","o2tz6bBznxU","cld-pL5bHzs","tIeWJjihTLU","X2cEvpFoaKQ","07QijAtvWYQ".],
-                quizzes: [
-                    { q: "What is the primary danger of constant unearned dopamine loops?", opts: ["They raise your baseline, making hard work feel impossible", "They improve your attention span", "They burn computer screens"], ans: 0, exp: "Endless scrolling destroys your dopamine receptors. Protect your focus." }
-                ]
-            }
-        };
+        // Use YouTube Shorts video IDs here
+        const videoDB = [
+            { id: '1sX4q6K74YI', author: 'MotivationHub', cat: 'Mindset' },
+            { id: 'dQw4w9WgXcQ', author: 'Rick Astley', cat: 'Music' }, // Classic test video
+            { id: '3JZ_D3ELwOQ', author: 'TechGuru', cat: 'Tech' },
+            { id: 'V-_O7nl0Ii0', author: 'FitnessPro', cat: 'Health' },
+            { id: '9bZkp7q19f0', author: 'PsycheVault', cat: 'Psychology' }
+        ];
 
-        /* ==========================================================================
-           2. STATE & MULTI-COLOR LASER CURSOR
-           ========================================================================== */
-        let currentCategory = "FACTS";
-        let activeQuizPool = [];
-        let isInterceptorActive = false;
-        let videosWatched = 0; 
-        
+        const quizDatabase = [
+            { q: "Information without execution is useless. What is your immediate next step?", opts: ["Apply what I learned", "Keep scrolling endlessly", "Close the app"], ans: 0, exp: "Action is the ultimate currency. Scribe your plan into your Diary." },
+            { q: "Focus is built by eliminating distractions. What is the biggest distraction?", opts: ["My environment", "My smartphone", "My lack of discipline"], ans: 2, exp: "Discipline dictates focus. External tools only amplify internal habits." },
+            { q: "Growth happens outside your comfort zone. Are you uncomfortable yet?", opts: ["Yes, I'm pushing limits", "No, I'm playing it safe", "I don't know"], ans: 0, exp: "Embrace the struggle. That is where character is built." }
+        ];
+
+        let activeQuizPool = [...quizDatabase];
         let playerRegistry = {};
+        let videosWatched = 0;
+        let isInterceptorActive = false;
         let currentlyPlayingId = null;
 
-        const laserColors = ['#00ffcc', '#ff007f', '#00e676', '#f1c40f', '#3498db', '#9b59b6'];
-        let colorIdx = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            const cursor = document.getElementById('laser-cursor');
-            const trail = document.getElementById('laser-trail');
-            
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-            
-            setTimeout(() => {
-                trail.style.left = `${e.clientX}px`;
-                trail.style.top = `${e.clientY}px`;
-            }, 40);
-
-            if(Math.random() < 0.12) {
-                colorIdx = (colorIdx + 1) % laserColors.length;
-                const col = laserColors[colorIdx];
-                cursor.style.color = col;
-                trail.style.color = col;
-            }
-        });
-
         /* ==========================================================================
-           3. INITIALIZATION
+           1. INITIALIZATION
            ========================================================================== */
         function initApp() {
-            renderLeftNav();
-            loadCategoryData(currentCategory);
+            // Hide Loader
+            document.getElementById('loader').style.display = 'none';
+
+            generateFeed();
             setupIntersectionObserver();
             initDoubleTapLike();
             loadDiaryData();
         }
 
+        /* YouTube API Callback */
+        window.onYouTubeIframeAPIReady = function() {
+            // YouTube library loaded successfully
+            initApp();
+        };
+
         /* ==========================================================================
-           4. NAVIGATION RENDERING
+           2. FEED GENERATION
            ========================================================================== */
-        function renderLeftNav() {
-            const nav = document.getElementById('left-corner-nav');
-            nav.innerHTML = '';
-            Object.keys(UEFI_DATABASE).forEach(cat => {
-                const item = document.createElement('div');
-                item.className = `nav-item ${cat === currentCategory ? 'active' : ''}`;
-                item.innerText = cat;
-                item.onclick = () => {
-                    if(currentCategory === cat) return;
-                    currentCategory = cat;
-                    videosWatched = 0;
-                    renderLeftNav();
-                    loadCategoryData(cat);
-                };
-                nav.appendChild(item);
-            });
-        }
-
-        function loadCategoryData(catKey) {
+        function generateFeed() {
             const feed = document.getElementById('feed-container');
-            feed.innerHTML = '';
             
-            Object.values(playerRegistry).forEach(p => {
-                if(p && typeof p.destroy === 'function') p.destroy();
-            });
-            playerRegistry = {};
-            activeQuizPool = [...UEFI_DATABASE[catKey].quizzes];
-
-            const vids = UEFI_DATABASE[catKey].videos;
-            
-            vids.forEach((videoId, idx) => {
+            // Loop through videos to create the UI elements
+            videoDB.forEach((vid, index) => {
                 const container = document.createElement('div');
                 container.className = 'video-container';
-                container.id = `container-${videoId}-${idx}`;
-                
-                const likes = Math.floor(Math.random() * 750) + 110;
-                const comments = Math.floor(Math.random() * 75) + 12;
-                
-                container.innerHTML = `
-                    <div class="yt-placeholder" style="background-image: url('https://img.youtube.com/vi/${videoId}/hqdefault.jpg');"></div>
-                    <div class="yt-iframe-wrapper" id="player-wrapper-${videoId}-${idx}">
-                        <div id="player-${videoId}-${idx}" class="yt-iframe"></div>
+                container.id = `wrapper-${vid.id}-${index}`;
+
+                // Using standard YouTube embed with params optimized for background/shorts
+                const playerHtml = `
+                    <div id="player-wrapper-${vid.id}-${index}" style="width:100%; height:100%;">
+                        <div id="player-${vid.id}-${index}" class="yt-iframe"></div>
                     </div>
+                `;
+
+                container.innerHTML = `
+                    ${playerHtml}
+                    <!-- Interaction layer to catch swipes and taps over the iframe -->
+                    <div class="interaction-layer"></div>
                     
-                    <div class="ui-overlay" data-idx="${idx}">
-                        <div class="side-actions">
-                            <div class="profile-pic-container">
-                                <div class="profile-pic"></div>
-                            </div>
-                            <div class="action-btn like-btn">
-                                <i class="fas fa-heart"></i>
-                                <span class="action-text">${likes}K</span>
-                            </div>
-                            <div class="action-btn">
-                                <i class="fas fa-comment-dots"></i>
-                                <span class="action-text">${comments}K</span>
-                            </div>
-                            <div class="action-btn diary-btn" onclick="toggleDiary()">
-                                <i class="fas fa-book"></i>
-                                <span class="action-text">Diary</span>
-                            </div>
-                            <div class="action-btn">
-                                <i class="fas fa-share"></i>
-                                <span class="action-text">Share</span>
-                            </div>
-                        </div>
-                        <div class="bottom-info">
-                            <div class="creator-name">@VibeZ <i class="fas fa-check-circle verified-badge"></i></div>
-                            <div class="video-desc">Master your craft daily. <span class="tags">#${catKey.toLowerCase()} #vibeZ</span></div>
+                    <div class="ui-overlay">
+                        <div class="video-info">
+                            <div class="author-name">@${vid.author} <i class="fas fa-check-circle verified-badge"></i></div>
+                            <div class="video-desc">Master your craft daily. <span class="tags">#${vid.cat.toLowerCase()} #vibeZ</span></div>
                             <div class="music-ticker"><i class="fas fa-compact-disc"></i> Original Audio - VibeZ Vault</div>
+                        </div>
+                        <div class="side-actions">
+                            <img src="https://i.pravatar.cc/150?u=${vid.author}" class="profile-pic" alt="Creator">
+                            <button class="action-btn like-btn"><i class="fas fa-heart"></i><span>Like</span></button>
+                            <button class="action-btn" onclick="toggleDiary()"><i class="fas fa-book-open"></i><span>Diary</span></button>
+                            <button class="action-btn"><i class="fas fa-share"></i><span>Share</span></button>
                         </div>
                     </div>
                 `;
@@ -747,14 +327,14 @@
         }
 
         /* ==========================================================================
-           5. LAZY LOADING & VIDEO OBSERVER
+           3. LAZY LOADING & VIDEO OBSERVER (Autoplay Logic)
            ========================================================================== */
         function setupIntersectionObserver() {
             const feed = document.getElementById('feed-container');
             
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    const containerId = entry.target.id;
+                    const containerId = entry.target.id; 
                     const parts = containerId.split('-');
                     const videoId = parts[1];
                     const idx = parts[2];
@@ -762,23 +342,33 @@
                     const wrapperId = `player-wrapper-${videoId}-${idx}`;
 
                     if (entry.isIntersecting) {
+                        // If player doesn't exist, create it
                         if (!playerRegistry[playerId]) {
                             playerRegistry[playerId] = new YT.Player(playerId, {
                                 videoId: videoId,
                                 playerVars: {
                                     'autoplay': 1, 'controls': 0, 'rel': 0, 'showinfo': 0, 
                                     'modestbranding': 1, 'loop': 1, 'playlist': videoId,
-                                    'playsinline': 1, 'mute': 0 
+                                    'playsinline': 1, 'mute': 0, 'disablekb': 1, 'fs': 0
                                 },
                                 events: {
                                     'onReady': (e) => {
-                                        const wrapper = document.querySelector(`#${wrapperId} .yt-iframe`);
+                                        const wrapper = document.querySelector(`#${playerId}`);
                                         if(wrapper) wrapper.style.opacity = '1';
+                                        
+                                        // Attempt to play (Browser policies might require mute if no user interaction yet)
                                         e.target.playVideo();
+                                    },
+                                    'onStateChange': (e) => {
+                                        // Loop fallback if API playlist fails
+                                        if (e.data === YT.PlayerState.ENDED) {
+                                            e.target.playVideo();
+                                        }
                                     }
                                 }
                             });
                         } else {
+                            // Resume if already loaded
                             if(typeof playerRegistry[playerId].playVideo === 'function'){
                                 playerRegistry[playerId].playVideo();
                             }
@@ -787,11 +377,13 @@
                         currentlyPlayingId = playerId;
                         videosWatched++;
                         
+                        // Trigger Interceptor Quiz every 3 videos
                         if (videosWatched > 1 && (videosWatched - 1) % 3 === 0 && !isInterceptorActive) {
-                            setTimeout(() => launchInterceptorQuiz(), 1000); 
+                            setTimeout(() => launchInterceptorQuiz(), 1200); 
                         }
 
                     } else {
+                        // Pause video when out of view
                         if (playerRegistry[playerId] && typeof playerRegistry[playerId].pauseVideo === 'function') {
                             playerRegistry[playerId].pauseVideo();
                         }
@@ -799,28 +391,29 @@
                 });
             }, { root: feed, threshold: 0.6 });
 
-            const mutObserver = new MutationObserver(() => {
-                document.querySelectorAll('.video-container').forEach(el => observer.observe(el));
-            });
-            mutObserver.observe(feed, { childList: true });
+            document.querySelectorAll('.video-container').forEach(el => observer.observe(el));
         }
 
         /* ==========================================================================
-           6. DIARY VAULT LOGIC
+           4. DIARY VAULT LOGIC
            ========================================================================== */
         function toggleDiary() {
             const modal = document.getElementById('diary-modal');
             if(modal.classList.contains('open')) {
                 saveDiaryData();
                 modal.classList.remove('open');
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+                // Resume video
                 if(currentlyPlayingId && playerRegistry[currentlyPlayingId]) {
                     playerRegistry[currentlyPlayingId].playVideo();
                 }
             } else {
+                modal.style.display = 'flex';
+                setTimeout(() => { modal.classList.add('open'); }, 10);
+                // Pause video while writing
                 if(currentlyPlayingId && playerRegistry[currentlyPlayingId]) {
                     playerRegistry[currentlyPlayingId].pauseVideo();
                 }
-                modal.classList.add('open');
             }
         }
 
@@ -860,7 +453,7 @@
         }
 
         /* ==========================================================================
-           7. QUIZ CHECKPOINT ENGINE
+           5. QUIZ CHECKPOINT ENGINE
            ========================================================================== */
         function launchInterceptorQuiz() {
             isInterceptorActive = true;
@@ -872,7 +465,7 @@
 
             let quizObj = activeQuizPool.length > 0 
                 ? activeQuizPool.splice(Math.floor(Math.random() * activeQuizPool.length), 1)[0]
-                : { q: "Information without execution is useless. What is your immediate next step?", opts: ["Apply what I learned", "Keep scrolling endlessly", "Close the app"], ans: 0, exp: "Action is the ultimate currency. Scribe your plan into your Diary." };
+                : { q: "You've answered all questions. Keep pushing forward.", opts: ["Let's Go"], ans: 0, exp: "Persistence is key." };
 
             document.getElementById('quiz-q-text').innerText = quizObj.q;
             const btnBox = document.getElementById('quiz-options-container');
@@ -890,7 +483,7 @@
 
             const modal = document.getElementById('quiz-modal');
             modal.style.display = 'flex';
-            setTimeout(() => modal.style.opacity = '1', 40);
+            setTimeout(() => modal.classList.add('open'), 40);
         }
 
         function validateAnswer(btnElement, selectedIdx, quizObj) {
@@ -902,7 +495,7 @@
                 
                 const sfx = document.getElementById('success-sound');
                 sfx.volume = 0.9; sfx.currentTime = 0; 
-                sfx.play().catch(e=>console.log("Audio play blocked"));
+                sfx.play().catch(e=>console.log("Audio play blocked by browser policy"));
 
                 triggerConfetti();
 
@@ -922,7 +515,7 @@
 
         function resumeScrolling() {
             const modal = document.getElementById('quiz-modal');
-            modal.style.opacity = '0';
+            modal.classList.remove('open');
             setTimeout(() => {
                 modal.style.display = 'none';
                 document.getElementById('feed-container').classList.remove('no-scroll');
@@ -935,35 +528,39 @@
         }
 
         /* ==========================================================================
-           8. INTERACTIONS & CONFETTI
+           6. INTERACTIONS (Double Tap & Confetti)
            ========================================================================== */
         function initDoubleTapLike() {
             const feed = document.getElementById('feed-container');
             let lastTap = 0;
 
+            // Touch support
             feed.addEventListener('touchstart', (e) => {
+                // Ignore clicks on buttons/inputs
+                if(e.target.closest('button') || e.target.closest('input') || e.target.closest('textarea')) return;
+
                 const currentTime = new Date().getTime();
                 const tapLength = currentTime - lastTap;
                 if (tapLength < 300 && tapLength > 0) {
                     const rect = e.target.getBoundingClientRect();
-                    const x = e.touches[0].clientX - rect.left;
-                    const y = e.touches[0].clientY - rect.top;
+                    const x = e.touches[0].clientX;
+                    const y = e.touches[0].clientY;
                     spawnHeart(x, y, feed);
                     
-                    const overlay = e.target.closest('.ui-overlay');
-                    if(overlay) overlay.querySelector('.like-btn').classList.add('liked');
+                    const overlay = e.target.closest('.video-container')?.querySelector('.like-btn');
+                    if(overlay) overlay.classList.add('liked');
                     e.preventDefault();
                 }
                 lastTap = currentTime;
             });
             
+            // Mouse support
             feed.addEventListener('dblclick', (e) => {
-                const rect = e.target.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                const x = e.clientX;
+                const y = e.clientY + feed.scrollTop; // Adjust for scroll position
                 spawnHeart(x, y, feed);
-                const overlay = e.target.closest('.ui-overlay');
-                if(overlay) overlay.querySelector('.like-btn').classList.add('liked');
+                const overlay = e.target.closest('.video-container')?.querySelector('.like-btn');
+                if(overlay) overlay.classList.add('liked');
             });
         }
 
@@ -1002,7 +599,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 let active = false;
                 particles.forEach(p => {
-                    p.dy += 0.4;
+                    p.dy += 0.4; // Gravity
                     p.x += p.dx; p.y += p.dy; p.tilt += 0.1;
                     if (p.y < canvas.height) active = true;
 
@@ -1019,10 +616,6 @@
             }
             render();
         }
-
-        window.onYouTubeIframeAPIReady = function() {
-            initApp();
-        };
     </script>
 </body>
 </html>
