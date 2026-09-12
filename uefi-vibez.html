@@ -2,29 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Viewport settings prevent scaling to ensure native app feel -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UEFI Vibez | The Evolution of Learning</title>
-    <!-- Load FontAwesome & Artistic Google Fonts -->
+    <title>UEFI VibeZ | Transformative Shorts</title>
+    
+    <!-- External Libraries: FontAwesome (Icons) & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- SYNE for artistic/impact headers, OUTFIT for stylish UI text -->
+    <!-- Modern, artistic typography -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* =========================================
-           CORE ARCHITECTURE & VARIABLES
+           CORE ARCHITECTURE & GLASSMORPHISM
         ========================================= */
         :root {
-            --brand-color: #00ffcc;
-            --brand-glow: rgba(0, 255, 204, 0.6);
-            --bg-dark: #050505;
-            --glass-bg: rgba(20, 20, 25, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --brand-cyan: #00ffcc;
+            --brand-magenta: #ff007f;
+            --brand-glow: rgba(0, 255, 204, 0.4);
+            --bg-deep: #050508;
+            --glass-bg: rgba(20, 20, 30, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.15);
             --danger: #ff2a5f;
             --success: #00e676;
             --text-main: #ffffff;
-            --text-muted: #aaaaaa;
+            --text-muted: #a0a0b0;
             --font-art: 'Syne', sans-serif;
             --font-ui: 'Outfit', sans-serif;
         }
@@ -32,52 +35,89 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body, html {
-            height: 100%; width: 100%;
-            background-color: var(--bg-dark);
+            height: 100vh; width: 100vw;
+            background-color: var(--bg-deep);
+            /* A subtle background gradient for desktop viewers */
+            background-image: radial-gradient(circle at 15% 50%, rgba(0, 255, 204, 0.08), transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(255, 0, 127, 0.08), transparent 25%);
             color: var(--text-main);
             font-family: var(--font-ui);
-            overflow: hidden;
-            overscroll-behavior-y: none;
+            overflow: hidden; 
+            display: flex; justify-content: center; align-items: center;
         }
 
         h1, h2, h3, .art-text { font-family: var(--font-art); }
 
         /* =========================================
-           TOP NAVIGATION (GLASSMORPHISM)
+           THE MOBILE CAPSULE (Key Feature)
+        ========================================= */
+        .mobile-capsule {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 420px; /* iPhone Pro Max width */
+            max-height: 900px;
+            background: #000;
+            border-radius: 0px; /* Flat on mobile */
+            overflow: hidden;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Add Glassmorphism Capsule styling ONLY for larger screens (Tablets/MacBooks) */
+        @media (min-width: 600px) {
+            .mobile-capsule {
+                height: 90vh;
+                border-radius: 40px;
+                background: var(--glass-bg);
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--glass-border);
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 
+                            0 0 40px var(--brand-glow);
+            }
+            /* Add an iPhone-like hardware notch simulation for aesthetics */
+            .mobile-capsule::before {
+                content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+                width: 150px; height: 25px; background: #000;
+                border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 100;
+            }
+        }
+
+        /* =========================================
+           TOP NAVIGATION (TIKTOK STYLE)
         ========================================= */
         .top-nav {
             position: absolute; top: 0; left: 0; width: 100%;
-            display: flex; justify-content: center; align-items: center;
-            padding: 40px 15px 20px; z-index: 20;
+            display: flex; justify-content: flex-start; align-items: center;
+            padding: 45px 15px 20px; z-index: 20;
             background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
             gap: 20px; overflow-x: auto; scrollbar-width: none;
-            backdrop-filter: blur(2px);
         }
         .top-nav::-webkit-scrollbar { display: none; }
+        
         .nav-item {
-            font-family: var(--font-art); font-size: 18px; font-weight: 700;
+            font-family: var(--font-art); font-size: 16px; font-weight: 700;
             color: rgba(255, 255, 255, 0.5); cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-transform: uppercase; letter-spacing: 1px;
-            text-shadow: 0px 2px 10px rgba(0,0,0,0.8);
-            position: relative;
+            transition: 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+            text-shadow: 0px 2px 10px rgba(0,0,0,0.8); white-space: nowrap;
         }
         .nav-item.active {
-            color: var(--brand-color); transform: scale(1.15);
-            text-shadow: 0px 0px 15px var(--brand-glow);
+            color: #fff; transform: scale(1.1);
+            text-shadow: 0px 0px 10px var(--brand-cyan);
         }
         .nav-item.active::after {
-            content: ''; position: absolute; bottom: -5px; left: 50%;
-            transform: translateX(-50%); width: 60%; height: 2px;
-            background: var(--brand-color); border-radius: 2px;
-            box-shadow: 0 0 10px var(--brand-color);
+            content: ''; position: absolute; bottom: -6px; left: 50%;
+            transform: translateX(-50%); width: 20px; height: 3px;
+            background: var(--brand-cyan); border-radius: 2px;
+            box-shadow: 0 0 8px var(--brand-cyan);
         }
 
         /* =========================================
            FEED & VIDEO CONTAINERS
         ========================================= */
         .feed-container {
-            height: 100vh; width: 100vw;
+            height: 100%; width: 100%;
             overflow-y: scroll; scroll-snap-type: y mandatory;
             scroll-behavior: smooth; scrollbar-width: none;
             position: relative; z-index: 10;
@@ -85,31 +125,31 @@
         .feed-container.no-scroll { overflow-y: hidden !important; }
         
         .video-container {
-            position: relative; height: 100vh; width: 100vw;
+            position: relative; height: 100%; width: 100%;
             scroll-snap-align: start; scroll-snap-stop: always;
             display: flex; justify-content: center; align-items: center;
-            background: #000; overflow: hidden;
+            background: #111; overflow: hidden;
         }
         
+        /* Iframe styling to mimic vertical native video */
         .yt-iframe {
             width: 100%; height: 100%; pointer-events: none;
-            transform: scale(1.4); /* Zoom to crop standard YT layout into vertical */
-            transition: filter 0.3s;
+            transform: scale(1.4); /* Crops out YouTube UI */
         }
 
-        /* UI OVERLAY (Protects iframe, holds interactions) */
+        /* Transparent UI overlay blocks clicks on iframe and holds TT elements */
         .ui-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 12; display: flex; flex-direction: column; justify-content: flex-end;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 30%, transparent 100%);
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 40%, transparent 100%);
         }
 
         /* =========================================
            SIDE ACTIONS & BOTTOM INFO
         ========================================= */
         .side-actions {
-            position: absolute; bottom: 80px; right: 15px;
-            display: flex; flex-direction: column; align-items: center; gap: 25px;
+            position: absolute; bottom: 90px; right: 12px;
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
             z-index: 15;
         }
         .action-btn {
@@ -117,159 +157,114 @@
             color: #fff; cursor: pointer; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.8));
             transition: transform 0.2s;
         }
-        .action-btn i { font-size: 32px; margin-bottom: 6px; transition: color 0.3s; }
+        .action-btn i { font-size: 30px; margin-bottom: 4px; transition: 0.3s; }
         .action-btn:active i { transform: scale(0.8); }
         .action-btn.liked i { color: var(--danger); animation: heartBurst 0.5s; }
-        .action-text { font-size: 13px; font-weight: 600; font-family: var(--font-ui); }
+        .action-text { font-size: 12px; font-weight: 600; }
 
         .profile-pic {
-            width: 50px; height: 50px; border-radius: 50%;
+            width: 48px; height: 48px; border-radius: 50%;
             border: 2px solid #fff; margin-bottom: 15px;
-            background: linear-gradient(135deg, var(--brand-color), #4facfe);
+            background: linear-gradient(135deg, var(--brand-magenta), var(--brand-cyan));
             display: flex; justify-content: center; align-items: center;
             font-family: var(--font-art); font-weight: 800; font-size: 22px;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
-            position: relative;
+            position: relative; box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
         }
         .profile-pic::after {
-            content: '+'; position: absolute; bottom: -8px; background: var(--danger);
-            width: 20px; height: 20px; border-radius: 50%;
+            content: '+'; position: absolute; bottom: -6px; background: var(--danger);
+            width: 18px; height: 18px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 14px; font-weight: bold; border: 2px solid #000;
+            font-size: 14px; font-weight: bold; border: 2px solid #fff;
         }
 
         .bottom-info {
-            position: absolute; bottom: 30px; left: 15px;
+            position: absolute; bottom: 25px; left: 15px;
             width: 75%; z-index: 15;
         }
         .creator-name {
-            font-family: var(--font-art); font-size: 20px; font-weight: 700;
-            margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+            font-family: var(--font-art); font-size: 18px; font-weight: 700;
+            margin-bottom: 6px; display: flex; align-items: center; gap: 5px;
         }
-        .verified-badge { color: var(--brand-color); font-size: 14px; }
-        .video-desc {
-            font-size: 15px; font-weight: 300; line-height: 1.4;
-            margin-bottom: 12px; opacity: 0.9;
-        }
-        .tags { color: var(--brand-color); font-weight: 600; }
+        .verified-badge { color: var(--brand-cyan); font-size: 14px; }
+        .video-desc { font-size: 14px; font-weight: 300; line-height: 1.3; margin-bottom: 10px; opacity: 0.95; }
+        .tags { font-weight: 600; color: var(--brand-cyan); }
         .music-ticker {
-            display: flex; align-items: center; gap: 10px; font-size: 13px;
-            background: rgba(0,0,0,0.3); padding: 5px 12px; border-radius: 20px;
+            display: flex; align-items: center; gap: 8px; font-size: 12px;
+            background: rgba(0,0,0,0.4); padding: 5px 10px; border-radius: 20px;
             width: fit-content; backdrop-filter: blur(5px);
         }
         .music-ticker i { animation: spin 4s linear infinite; }
 
         /* =========================================
-           DRAWERS (COMMENTS & PROFILE)
-        ========================================= */
-        .drawer-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.6); z-index: 40; display: none; opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .drawer {
-            position: fixed; bottom: -100%; left: 0; width: 100vw; height: 65vh;
-            background: var(--glass-bg); backdrop-filter: blur(20px);
-            border-top: 1px solid var(--glass-border); border-radius: 20px 20px 0 0;
-            z-index: 50; transition: bottom 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            display: flex; flex-direction: column;
-        }
-        .drawer.open { bottom: 0; }
-        .drawer-header {
-            padding: 20px; text-align: center; font-family: var(--font-art);
-            font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-        }
-        .close-drawer {
-            position: absolute; right: 20px; top: 20px; font-size: 20px; cursor: pointer;
-        }
-        .drawer-content { padding: 20px; overflow-y: auto; flex-grow: 1; }
-        
-        /* Simulated Comments */
-        .comment-item { display: flex; gap: 15px; margin-bottom: 20px; }
-        .c-avatar { width: 40px; height: 40px; border-radius: 50%; background: #333; }
-        .c-body { flex-grow: 1; }
-        .c-name { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
-        .c-text { font-size: 15px; line-height: 1.4; }
-        .c-stats { font-size: 12px; color: var(--text-muted); margin-top: 8px; display: flex; gap: 15px; }
-
-        /* =========================================
-           ADVANCED QUIZ INTERCEPTOR (Rule of 3)
+           ADVANCED QUIZ INTERCEPTOR (RULE OF 3)
         ========================================= */
         .quiz-modal {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(5, 5, 5, 0.98); z-index: 100;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 10, 15, 0.98); z-index: 100;
             display: none; flex-direction: column; justify-content: center; align-items: center;
-            padding: 30px; text-align: center; opacity: 0; transition: opacity 0.4s;
+            padding: 25px; text-align: center; opacity: 0; transition: opacity 0.4s;
+            backdrop-filter: blur(15px);
         }
         .quiz-modal.active { display: flex; opacity: 1; }
         .quiz-glow {
-            position: absolute; width: 300px; height: 300px;
+            position: absolute; width: 250px; height: 250px;
             background: radial-gradient(circle, var(--brand-glow) 0%, transparent 70%);
             top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1;
         }
         
         .quiz-title {
-            font-family: var(--font-art); color: var(--brand-color);
-            font-size: 32px; margin-bottom: 10px; letter-spacing: 2px; text-transform: uppercase;
+            font-family: var(--font-art); color: var(--brand-cyan);
+            font-size: 28px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;
         }
-        .quiz-subtitle { color: var(--danger); font-weight: 600; margin-bottom: 40px; font-size: 14px; }
-        .quiz-question { font-size: 24px; font-weight: 300; margin-bottom: 40px; line-height: 1.5; max-width: 600px; }
+        .quiz-subtitle { color: var(--danger); font-weight: 600; margin-bottom: 30px; font-size: 13px; }
+        .quiz-question { font-size: 20px; font-weight: 400; margin-bottom: 30px; line-height: 1.4; }
         
-        .quiz-options { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 15px; }
+        .quiz-options { width: 100%; display: flex; flex-direction: column; gap: 12px; }
         .quiz-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1);
-            color: #fff; padding: 20px; font-size: 16px; font-family: var(--font-ui); font-weight: 600;
-            border-radius: 15px; cursor: pointer; transition: all 0.3s;
-            backdrop-filter: blur(10px); position: relative; overflow: hidden;
+            background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,255,255,0.1);
+            color: #fff; padding: 18px; font-size: 15px; font-family: var(--font-ui); font-weight: 600;
+            border-radius: 12px; cursor: pointer; transition: all 0.3s;
         }
-        .quiz-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
-        .quiz-btn.correct { background: var(--success); color: #000; border-color: var(--success); box-shadow: 0 0 20px rgba(0,230,118,0.5); }
+        .quiz-btn:active { transform: scale(0.96); }
+        .quiz-btn.correct { background: var(--success); color: #000; border-color: var(--success); box-shadow: 0 0 15px rgba(0,230,118,0.4); }
         .quiz-btn.wrong { background: var(--danger); color: #fff; border-color: var(--danger); animation: shake 0.4s; }
 
         /* Explanation Box */
         .explanation-box {
-            display: none; margin-top: 30px; background: rgba(0, 255, 204, 0.1);
-            border-left: 4px solid var(--brand-color); padding: 20px;
-            border-radius: 0 10px 10px 0; text-align: left; max-width: 500px;
+            display: none; margin-top: 25px; background: rgba(0, 255, 204, 0.1);
+            border-left: 3px solid var(--brand-cyan); padding: 15px;
+            border-radius: 0 8px 8px 0; text-align: left;
             animation: slideUpFade 0.5s forwards;
         }
-        .exp-title { font-family: var(--font-art); font-weight: 700; color: var(--brand-color); margin-bottom: 10px; }
-        .exp-text { font-size: 15px; line-height: 1.6; }
+        .exp-title { font-family: var(--font-art); font-weight: 700; color: var(--brand-cyan); margin-bottom: 8px; }
+        .exp-text { font-size: 14px; line-height: 1.5; }
         .continue-btn {
-            display: none; margin-top: 30px; background: var(--text-main); color: var(--bg-dark);
-            padding: 15px 40px; font-family: var(--font-art); font-weight: 800;
-            border-radius: 30px; border: none; font-size: 18px; cursor: pointer;
-            transition: 0.3s;
+            display: none; margin-top: 25px; background: #fff; color: #000;
+            padding: 15px 30px; font-family: var(--font-art); font-weight: 800;
+            border-radius: 30px; border: none; font-size: 16px; cursor: pointer;
         }
-        .continue-btn:hover { box-shadow: 0 0 15px rgba(255,255,255,0.5); transform: scale(1.05); }
 
         /* =========================================
            10-MIN TRANSFORMATION ADVICE MODAL
         ========================================= */
         .advice-modal {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle at center, #1a1a2e 0%, #050505 100%);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             z-index: 200; display: none; flex-direction: column; justify-content: center; align-items: center;
-            padding: 40px; text-align: center;
+            padding: 30px; text-align: center;
         }
-        .advice-art { font-size: 80px; margin-bottom: 30px; animation: float 3s ease-in-out infinite; }
         .advice-header {
-            font-family: var(--font-art); font-size: 40px; font-weight: 800;
-            background: linear-gradient(90deg, #00f2fe, #4facfe);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
+            font-family: var(--font-art); font-size: 32px; font-weight: 800;
+            color: var(--brand-cyan); margin-bottom: 20px;
         }
         .advice-body {
-            font-size: 20px; line-height: 1.8; color: #ddd; max-width: 600px;
-            margin-bottom: 50px; font-weight: 300;
+            font-size: 18px; line-height: 1.6; color: #ddd; margin-bottom: 40px; font-weight: 300;
         }
-        
+
         /* =========================================
            ANIMATIONS & PARTICLES
         ========================================= */
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         @keyframes heartBurst { 0% { transform: scale(1); } 50% { transform: scale(1.4); } 100% { transform: scale(1); } }
         @keyframes shake {
             0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); }
@@ -279,7 +274,7 @@
         
         /* Floating Double-Tap Hearts */
         .floating-heart {
-            position: absolute; color: var(--danger); font-size: 80px;
+            position: absolute; color: var(--danger); font-size: 60px;
             pointer-events: none; z-index: 30; transform: translate(-50%, -50%) scale(0);
             animation: floatUp 1s ease-out forwards; filter: drop-shadow(0 0 10px rgba(255,42,95,0.6));
         }
@@ -289,188 +284,130 @@
             100% { transform: translate(-50%, -150px) scale(1) rotate(15deg); opacity: 0; }
         }
         
-        /* Confetti Canvas */
+        /* Confetti Canvas strictly inside capsule */
         #confetti-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 150; display: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- Audio Assets -->
+    <!-- Celebration Audio -->
     <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" preload="auto"></audio>
-    <audio id="ambient-sound" src="https://assets.mixkit.co/active_storage/sfx/135/135-preview.mp3" loop preload="auto"></audio>
 
-    <!-- Top Navigation -->
-    <div class="top-nav" id="top-nav"></div>
-
-    <!-- Main TikTok-style Feed Container -->
-    <div class="feed-container" id="feed-container">
-        <!-- JS dynamically injects video containers here -->
-    </div>
-
-    <!-- Drawers (Comments) -->
-    <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawers()"></div>
-    <div class="drawer" id="comments-drawer">
-        <div class="drawer-header">
-            Community Insights
-            <i class="fas fa-times close-drawer" onclick="closeDrawers()"></i>
-        </div>
-        <div class="drawer-content" id="comments-content">
-            <!-- Simulated Comments will be injected here -->
-        </div>
-    </div>
-
-    <!-- The Interceptor: Advanced Quiz Modal -->
-    <div class="quiz-modal" id="quiz-modal">
-        <div class="quiz-glow"></div>
-        <div class="quiz-title">Mental Checkpoint</div>
-        <div class="quiz-subtitle">Scroll culture is dead. Active retrieval starts now.</div>
-        <div class="quiz-question" id="quiz-q-text">Loading cognitive challenge...</div>
+    <!-- THE CAPSULE CONTAINER -->
+    <div class="mobile-capsule">
         
-        <div class="quiz-options" id="quiz-options-container">
-            <!-- Options Injected by JS -->
+        <!-- Top Navigation -->
+        <div class="top-nav" id="top-nav"></div>
+
+        <!-- Vertical Video Feed -->
+        <div class="feed-container" id="feed-container"></div>
+
+        <!-- Advanced Quiz Interceptor -->
+        <div class="quiz-modal" id="quiz-modal">
+            <div class="quiz-glow"></div>
+            <div class="quiz-title">Checkpoint</div>
+            <div class="quiz-subtitle">Prove you are learning, not just swiping.</div>
+            <div class="quiz-question" id="quiz-q-text">Loading...</div>
+            
+            <div class="quiz-options" id="quiz-options-container"></div>
+
+            <div class="explanation-box" id="quiz-explanation">
+                <div class="exp-title">The Blueprint:</div>
+                <div class="exp-text" id="exp-text-content"></div>
+            </div>
+
+            <button class="continue-btn" id="continue-scroll-btn" onclick="resumeScrolling()">Unlock Feed</button>
         </div>
 
-        <div class="explanation-box" id="quiz-explanation">
-            <div class="exp-title">Why this matters:</div>
-            <div class="exp-text" id="exp-text-content"></div>
+        <!-- 10-Minute Advice Modal -->
+        <div class="advice-modal" id="advice-modal">
+            <div class="advice-header">Time for Reality</div>
+            <div class="advice-body">
+                You've spent the last 10 minutes programming your mind with high-value inputs across finance, history, and science. <br><br>
+                Information without execution is a delusion. Close the app. Go apply this to your life right now.
+            </div>
+            <button class="continue-btn" style="display: block;" onclick="document.getElementById('advice-modal').style.display='none'">I Am Ready</button>
         </div>
 
-        <button class="continue-btn" id="continue-scroll-btn" onclick="resumeScrolling()">Lock Knowledge & Continue</button>
-    </div>
+        <!-- Confetti Canvas -->
+        <canvas id="confetti-canvas"></canvas>
 
-    <!-- 10-Minute Transformation Advice -->
-    <div class="advice-modal" id="advice-modal">
-        <div class="advice-art">👁️‍🗨️</div>
-        <div class="advice-header">The 1% Rule</div>
-        <div class="advice-body">
-            You just spent 10 minutes deliberately constructing your mind instead of escaping it. 
-            <br><br>
-            While the algorithm usually programs you, today <strong>you programmed the algorithm</strong>. You absorbed financial literacy, historical precedent, and mathematical truth. 
-            <br><br>
-            Close this app. Go apply one thing you learned to your actual life. The real game is outside.
-        </div>
-        <button class="continue-btn" style="display: block;" onclick="document.getElementById('advice-modal').style.display='none'">Accept the Challenge</button>
-    </div>
-
-    <!-- Confetti Canvas overlay -->
-    <canvas id="confetti-canvas"></canvas>
+    </div> <!-- End Capsule -->
 
     <!-- YouTube API -->
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         /* =========================================
-           MASSIVE DATA ARCHITECTURE
-           (Simulating a robust backend DB)
+           DATABASE (Exact Videos Provided)
         ========================================= */
         const UEFI_DATABASE = {
             "FACTS": {
-                icon: "fa-bolt",
                 videos: ["z2rKDh9mh7Q", "jujgSDPlDOI", "lWGsVKlPz4s", "PwLki5sEQ8w", "suDhVin86Ps", "ZAIxy0_KrDg"],
                 quizzes: [
-                    {
-                        q: "What defines a true financial asset compared to a liability?",
-                        opts: ["Assets look expensive, liabilities are cheap", "Assets generate cash flow, liabilities consume it", "Assets are physical objects, liabilities are digital", "There is no functional difference"],
-                        ans: 1,
-                        exp: "Rich people buy assets (investments that pay them). Poor and middle class buy liabilities (things that cost money to maintain) thinking they are assets."
-                    },
-                    {
-                        q: "How does the 'Rule of 72' help you build wealth?",
-                        opts: ["It limits your tax bracket", "It calculates exact compound interest decay", "It estimates how many years it takes an investment to double", "It is the optimal age to retire"],
-                        ans: 2,
-                        exp: "Divide 72 by your annual interest rate. If you get a 10% return, 72/10 = 7.2 years to double your money. Understanding this makes you prioritize investing early."
-                    }
+                    { q: "What fundamentally separates an asset from a liability?", opts: ["Assets generate cash flow; liabilities consume it", "Assets are physical; liabilities are digital", "There is no difference"], ans: 0, exp: "The rich acquire assets. The poor and middle class acquire liabilities that they think are assets." },
+                    { q: "What does the Rule of 72 calculate?", opts: ["Your tax bracket", "How long it takes an investment to double", "Your retirement age"], ans: 1, exp: "Divide 72 by your interest rate. A 10% return means your money doubles every 7.2 years." }
                 ]
             },
             "HISTORY": {
-                icon: "fa-landmark",
                 videos: ["0KQOrJ_K6ps", "i83WzFygvZ4", "lSflLzfWTUs"],
                 quizzes: [
-                    {
-                        q: "Why is the study of collapsed empires critical for modern entrepreneurs?",
-                        opts: ["To memorize trivia for social status", "Because human behavior and economic cycles reliably repeat", "To find outdated technology to sell", "History is mostly fictional"],
-                        ans: 1,
-                        exp: "Ray Dalio and other billionaires study history because macro-economic cycles (debt, inflation, revolution) happen over and over. If you know the pattern, you can predict the future."
-                    }
+                    { q: "Why do top entrepreneurs obsess over studying history?", opts: ["To sound smart", "Because economic and geopolitical cycles repeat predictably", "To find old business models"], ans: 1, exp: "Human nature doesn't change. Macro-cycles like debt, inflation, and empire collapse repeat over centuries." }
                 ]
             },
             "MATH": {
-                icon: "fa-infinity",
                 videos: ["-iiY2bqn9Wo", "UidCElWKF0E", "q_OGsBDRgz4", "pK9b1D3CUmg"],
                 quizzes: [
-                    {
-                        q: "According to the math of compound interest, what happens if you get 1% better every day for 365 days?",
-                        opts: ["You are 3.6x better", "You are 10x better", "You are 37.78x better", "You stay the same due to diminishing returns"],
-                        ans: 2,
-                        exp: "(1.01)^365 = 37.78. Small, consistent daily habits completely warp the trajectory of your life over a year. The math proves that consistency beats intensity."
-                    }
+                    { q: "What happens mathematically if you improve 1% every day for a year?", opts: ["You get 3.6x better", "You get 37.78x better", "You get 10x better"], ans: 1, exp: "(1.01)^365 = 37.78. Compound interest applies to habits, not just money." }
                 ]
             },
             "SCIENCE": {
-                icon: "fa-flask",
                 videos: ["oR94cicO7xM", "5U-V0y-fkSw", "nHAFnH3xRl4", "ISUPZmjAWlQ", "ql0DrRJOpNg"],
                 quizzes: [
-                    {
-                        q: "What is Entropy, and how does it apply to your daily life?",
-                        opts: ["The creation of new energy", "The natural tendency of systems to degrade into chaos without effort", "A quantum particle", "The speed of light"],
-                        ans: 1,
-                        exp: "Your room gets messy, your muscles atrophy, and relationships fade unless you put ENERGY into them. Fighting entropy is the literal definition of living."
-                    }
+                    { q: "What is the concept of Entropy in daily life?", opts: ["Systems naturally degrade into chaos without energy input", "Everything becomes more organized over time", "Energy is created from nothing"], ans: 0, exp: "If you don't put energy into your health, business, or relationships, they naturally decay. That is physics." }
                 ]
             },
             "VIBES": {
-                icon: "fa-fire",
                 videos: ["KHAOa2HrNTw", "3cSEEbwGKGk", "aYgA6cIzqm8", "7GBm5rbr50U", "mxb2sBLNK5Y", "9CRB8FTsErs", "txkwg5f37ws", "hlXD_AXtSIY"],
                 quizzes: [
-                    {
-                        q: "What is the neurological danger of cheap, unearned dopamine?",
-                        opts: ["It causes headaches", "It raises your baseline, making hard work feel impossible and boring", "It makes you sleep too much", "It improves memory retention"],
-                        ans: 1,
-                        exp: "When you flood your brain with TikTok or sugar, your dopamine baseline spikes and crashes. Reading a book or building a business now feels chemically agonizing. You must detox."
-                    }
+                    { q: "What is the danger of cheap dopamine?", opts: ["It raises your baseline, making hard work feel impossible", "It makes you sleep too much", "It hurts your eyes"], ans: 0, exp: "Unearned dopamine destroys your drive. You must detox to make building your future feel rewarding again." }
                 ]
             }
         };
 
         /* =========================================
-           GLOBAL APP STATE
+           STATE & INITIALIZATION
         ========================================= */
         let currentCategory = "FACTS";
         let playerRegistry = {};
         let activeQuizPool = [];
         let isInterceptorActive = false;
         let activePlayerInstance = null;
-        
-        // Simulating Local Storage Stats
-        let userStats = {
-            streak: parseInt(localStorage.getItem('uefi_streak')) || 0,
-            videosWatched: parseInt(localStorage.getItem('uefi_watched')) || 0
-        };
+        let videosWatched = 0; // Tracks consecutive videos to trigger quiz
 
-        /* =========================================
-           INITIALIZATION & UI RENDERING
-        ========================================= */
         function initApp() {
             renderNavigation();
             loadCategoryData(currentCategory);
             setupScrollObserver();
             initDoubleTapLike();
-            
-            // Start the 10-Minute Engine (600,000 ms)
-            setTimeout(triggerLifeAdvice, 600000);
+            setTimeout(triggerLifeAdvice, 600000); // 10 minutes
         }
 
+        /* =========================================
+           UI RENDERING
+        ========================================= */
         function renderNavigation() {
             const nav = document.getElementById('top-nav');
             nav.innerHTML = '';
             Object.keys(UEFI_DATABASE).forEach(cat => {
                 const item = document.createElement('div');
                 item.className = `nav-item ${cat === currentCategory ? 'active' : ''}`;
-                item.innerHTML = `<i class="fas ${UEFI_DATABASE[cat].icon}"></i> ${cat}`;
+                item.innerText = cat;
                 item.onclick = () => {
                     currentCategory = cat;
+                    videosWatched = 0;
                     renderNavigation();
                     loadCategoryData(cat);
                 };
@@ -482,7 +419,7 @@
             const feed = document.getElementById('feed-container');
             feed.innerHTML = '';
             playerRegistry = {};
-            activeQuizPool = [...UEFI_DATABASE[catKey].quizzes]; // Clone quiz array
+            activeQuizPool = [...UEFI_DATABASE[catKey].quizzes];
 
             const vids = UEFI_DATABASE[catKey].videos;
             
@@ -491,21 +428,19 @@
                 container.className = 'video-container';
                 container.id = `frame-${videoId}-${idx}`;
                 
-                // Construct TikTok-like Overlay dynamically
                 const likes = Math.floor(Math.random() * 800) + 120;
                 const comments = Math.floor(Math.random() * 80) + 10;
                 
                 container.innerHTML = `
                     <div id="yt-${videoId}-${idx}" class="yt-iframe"></div>
                     <div class="ui-overlay" data-idx="${idx}">
-                        
                         <div class="side-actions">
                             <div class="profile-pic">V</div>
-                            <div class="action-btn like-btn" onclick="toggleLike(this)">
+                            <div class="action-btn like-btn">
                                 <i class="fas fa-heart"></i>
                                 <span class="action-text">${likes}K</span>
                             </div>
-                            <div class="action-btn" onclick="openComments()">
+                            <div class="action-btn">
                                 <i class="fas fa-comment-dots"></i>
                                 <span class="action-text">${comments}K</span>
                             </div>
@@ -518,22 +453,15 @@
                                 <span class="action-text">Share</span>
                             </div>
                         </div>
-
                         <div class="bottom-info">
-                            <div class="creator-name">@VibeZ_Edu <i class="fas fa-check-circle verified-badge"></i></div>
-                            <div class="video-desc">
-                                Mastering the ${catKey.toLowerCase()} mindset. Rewire your brain for execution. 
-                                <span class="tags">#knowledge #growth #uefi</span>
-                            </div>
-                            <div class="music-ticker">
-                                <i class="fas fa-compact-disc"></i> Original Audio - VibeZ Frequency
-                            </div>
+                            <div class="creator-name">@VibeZ <i class="fas fa-check-circle verified-badge"></i></div>
+                            <div class="video-desc">Rewire your brain for execution. <span class="tags">#${catKey.toLowerCase()} #uefi</span></div>
+                            <div class="music-ticker"><i class="fas fa-compact-disc"></i> Original Audio - VibeZ</div>
                         </div>
                     </div>
                 `;
                 feed.appendChild(container);
 
-                // Initialize YouTube API for this frame
                 playerRegistry[`yt-${videoId}-${idx}`] = new YT.Player(`yt-${videoId}-${idx}`, {
                     videoId: videoId,
                     playerVars: {
@@ -547,7 +475,7 @@
         }
 
         /* =========================================
-           SCROLL OBSERVER & AUTO-PLAY LOGIC
+           SCROLL OBSERVER & RULE OF 3 LOGIC
         ========================================= */
         function setupScrollObserver() {
             const feed = document.getElementById('feed-container');
@@ -555,27 +483,20 @@
                 entries.forEach(entry => {
                     const ytId = entry.target.querySelector('.yt-iframe').id;
                     const player = playerRegistry[ytId];
-                    const overlay = entry.target.querySelector('.ui-overlay');
-                    const idx = parseInt(overlay.getAttribute('data-idx'));
 
                     if (entry.isIntersecting) {
-                        // Play Video
                         if (player && typeof player.playVideo === 'function') {
                             player.playVideo();
                             activePlayerInstance = player;
                         }
                         
-                        // Increment Stats
-                        userStats.videosWatched++;
-                        localStorage.setItem('uefi_watched', userStats.videosWatched);
-
-                        // --- RULE OF 3: THE INTERCEPTOR ---
-                        // Trigger quiz every 3rd video (idx 2, 5, 8 etc)
-                        if (idx > 0 && (idx + 1) % 3 === 0 && !isInterceptorActive) {
-                            setTimeout(() => launchInterceptorQuiz(), 1500); // Let them watch 1.5s then freeze
+                        videosWatched++;
+                        
+                        // Every 3rd video watched triggers the quiz (offsetting initial load)
+                        if (videosWatched > 1 && (videosWatched - 1) % 3 === 0 && !isInterceptorActive) {
+                            setTimeout(() => launchInterceptorQuiz(), 1500); // Wait 1.5s then freeze
                         }
                     } else {
-                        // Pause when scrolled out
                         if (player && typeof player.pauseVideo === 'function') {
                             player.pauseVideo();
                         }
@@ -583,7 +504,6 @@
                 });
             }, { root: feed, threshold: 0.65 });
 
-            // Watch for DOM changes to observe new videos
             const mutObserver = new MutationObserver(() => {
                 document.querySelectorAll('.video-container').forEach(el => observer.observe(el));
             });
@@ -591,35 +511,20 @@
         }
 
         /* =========================================
-           ADVANCED QUIZ INTERCEPTOR
+           QUIZ ENGINE
         ========================================= */
         function launchInterceptorQuiz() {
             isInterceptorActive = true;
-            
-            // Pause current video
             if (activePlayerInstance && typeof activePlayerInstance.pauseVideo === 'function') {
                 activePlayerInstance.pauseVideo();
             }
 
-            // Lock the feed
             document.getElementById('feed-container').classList.add('no-scroll');
 
-            // Select Quiz Data
-            let quizObj;
-            if (activeQuizPool.length > 0) {
-                const rand = Math.floor(Math.random() * activeQuizPool.length);
-                quizObj = activeQuizPool.splice(rand, 1)[0];
-            } else {
-                // Generic Fallback
-                quizObj = {
-                    q: "Information without execution is a delusion. What is your next move today?",
-                    opts: ["Keep scrolling mindlessly", "Apply one concept immediately", "Forget it by tomorrow"],
-                    ans: 1,
-                    exp: "Action is the only metric of truth. If you learn but do not do, you have not actually learned."
-                };
-            }
+            let quizObj = activeQuizPool.length > 0 
+                ? activeQuizPool.splice(Math.floor(Math.random() * activeQuizPool.length), 1)[0]
+                : { q: "Information without execution is a delusion. What is your next move today?", opts: ["Scroll mindlessly", "Apply one concept immediately", "Forget it by tomorrow"], ans: 1, exp: "Action is the only metric of truth." };
 
-            // Populate UI
             document.getElementById('quiz-q-text').innerText = quizObj.q;
             const btnBox = document.getElementById('quiz-options-container');
             btnBox.innerHTML = '';
@@ -634,37 +539,30 @@
                 btnBox.appendChild(btn);
             });
 
-            // Reveal Modal
             const modal = document.getElementById('quiz-modal');
             modal.style.display = 'flex';
             setTimeout(() => modal.style.opacity = '1', 50);
         }
 
         function validateAnswer(btnElement, selectedIdx, quizObj) {
-            // Disable buttons
             const buttons = document.querySelectorAll('.quiz-btn');
             buttons.forEach(b => b.style.pointerEvents = 'none');
 
             if (selectedIdx === quizObj.ans) {
-                // SUCCESS
                 btnElement.classList.add('correct');
                 
-                // Play Audio
+                // Play Celebration Audio
                 const sfx = document.getElementById('success-sound');
-                sfx.volume = 0.6; sfx.currentTime = 0; sfx.play();
+                sfx.volume = 0.8; sfx.currentTime = 0; sfx.play();
 
-                // Fire Confetti
                 triggerConfetti();
 
-                // Show Explanation
                 setTimeout(() => {
                     document.getElementById('exp-text-content').innerText = quizObj.exp;
                     document.getElementById('quiz-explanation').style.display = 'block';
                     document.getElementById('continue-scroll-btn').style.display = 'block';
                 }, 800);
-
             } else {
-                // FAIL
                 btnElement.classList.add('wrong');
                 setTimeout(() => {
                     btnElement.classList.remove('wrong');
@@ -680,18 +578,13 @@
                 modal.style.display = 'none';
                 document.getElementById('feed-container').classList.remove('no-scroll');
                 isInterceptorActive = false;
-                
-                // Resume Video
                 if (activePlayerInstance) activePlayerInstance.playVideo();
-                
-                // Clear Confetti
-                const cvs = document.getElementById('confetti-canvas');
-                cvs.style.display = 'none';
+                document.getElementById('confetti-canvas').style.display = 'none';
             }, 400);
         }
 
         /* =========================================
-           MICRO-INTERACTIONS: DOUBLE TAP TO LIKE
+           DOUBLE TAP TO LIKE
         ========================================= */
         function initDoubleTapLike() {
             const feed = document.getElementById('feed-container');
@@ -701,90 +594,41 @@
                 const currentTime = new Date().getTime();
                 const tapLength = currentTime - lastTap;
                 if (tapLength < 300 && tapLength > 0) {
-                    // It's a double tap
-                    spawnHeart(e.touches[0].clientX, e.touches[0].clientY);
+                    // Double Tap
+                    const rect = e.target.getBoundingClientRect();
+                    const x = e.touches[0].clientX - rect.left;
+                    const y = e.touches[0].clientY - rect.top;
+                    spawnHeart(x, y, feed);
                     
-                    // Visually activate the like button on the current overlay
-                    const currentOverlay = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY).closest('.ui-overlay');
-                    if(currentOverlay) {
-                        const likeBtn = currentOverlay.querySelector('.like-btn');
-                        if(likeBtn) likeBtn.classList.add('liked');
-                    }
+                    const overlay = e.target.closest('.ui-overlay');
+                    if(overlay) overlay.querySelector('.like-btn').classList.add('liked');
                     e.preventDefault();
                 }
                 lastTap = currentTime;
             });
             
-            // For desktop testing
+            // Desktop fallback
             feed.addEventListener('dblclick', (e) => {
-                spawnHeart(e.clientX, e.clientY);
-                const currentOverlay = e.target.closest('.ui-overlay');
-                if(currentOverlay) {
-                    const likeBtn = currentOverlay.querySelector('.like-btn');
-                    if(likeBtn) likeBtn.classList.add('liked');
-                }
+                const rect = e.target.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                spawnHeart(x, y, feed);
+                const overlay = e.target.closest('.ui-overlay');
+                if(overlay) overlay.querySelector('.like-btn').classList.add('liked');
             });
         }
 
-        function spawnHeart(x, y) {
+        function spawnHeart(x, y, parent) {
             const heart = document.createElement('i');
             heart.className = 'fas fa-heart floating-heart';
             heart.style.left = `${x}px`;
             heart.style.top = `${y}px`;
-            document.body.appendChild(heart);
+            parent.appendChild(heart);
             setTimeout(() => heart.remove(), 1000);
         }
 
-        function toggleLike(btn) {
-            btn.classList.toggle('liked');
-        }
-
         /* =========================================
-           DRAWERS (COMMENTS SIMULATION)
-        ========================================= */
-        function openComments() {
-            document.getElementById('drawer-overlay').style.display = 'block';
-            setTimeout(() => document.getElementById('drawer-overlay').style.opacity = '1', 10);
-            document.getElementById('comments-drawer').classList.add('open');
-            
-            // Populate Fake Comments
-            const commentsContainer = document.getElementById('comments-content');
-            commentsContainer.innerHTML = `
-                <div class="comment-item">
-                    <div class="c-avatar" style="background: #ff0055"></div>
-                    <div class="c-body">
-                        <div class="c-name">@HustlerMentality</div>
-                        <div class="c-text">This literally changed how I view my bank account. Assets over everything.</div>
-                        <div class="c-stats"><span>3h</span> <span>Reply</span></div>
-                    </div>
-                </div>
-                <div class="comment-item">
-                    <div class="c-avatar" style="background: #00ffcc"></div>
-                    <div class="c-body">
-                        <div class="c-name">@ScienceNerd_99</div>
-                        <div class="c-text">The editing on this is insane. So much better than school lectures.</div>
-                        <div class="c-stats"><span>5h</span> <span>Reply</span></div>
-                    </div>
-                </div>
-                <div class="comment-item">
-                    <div class="c-avatar" style="background: #4facfe"></div>
-                    <div class="c-body">
-                        <div class="c-name">@FutureCEO</div>
-                        <div class="c-text">Locked this in my brain. Consistency > Intensity.</div>
-                        <div class="c-stats"><span>1d</span> <span>Reply</span></div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function closeDrawers() {
-            document.getElementById('drawer-overlay').style.opacity = '0';
-            document.getElementById('comments-drawer').classList.remove('open');
-            setTimeout(() => document.getElementById('drawer-overlay').style.display = 'none', 300);
-        }
-
-        /* =========================================
-           10-MINUTE TRANSFORMATION MODAL
+           10-MIN LOGIC & CONFETTI ENGINE
         ========================================= */
         function triggerLifeAdvice() {
             if (activePlayerInstance && typeof activePlayerInstance.pauseVideo === 'function') {
@@ -793,41 +637,36 @@
             document.getElementById('advice-modal').style.display = 'flex';
         }
 
-        /* =========================================
-           CUSTOM CONFETTI ENGINE (HTML5 CANVAS)
-        ========================================= */
         function triggerConfetti() {
             const canvas = document.getElementById('confetti-canvas');
             canvas.style.display = 'block';
             const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            const parentRect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = parentRect.width;
+            canvas.height = parentRect.height;
 
             const particles = [];
-            const colors = ['#00ffcc', '#00e676', '#4facfe', '#ffffff'];
+            const colors = ['#00ffcc', '#00e676', '#ff007f', '#ffffff'];
 
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 80; i++) {
                 particles.push({
                     x: canvas.width / 2,
-                    y: canvas.height / 2 + 100,
-                    r: Math.random() * 6 + 2,
-                    dx: Math.random() * 20 - 10,
-                    dy: Math.random() * -20 - 5,
+                    y: canvas.height / 2,
+                    r: Math.random() * 5 + 2,
+                    dx: Math.random() * 16 - 8,
+                    dy: Math.random() * -16 - 4,
                     color: colors[Math.floor(Math.random() * colors.length)],
                     tilt: Math.random() * 10
                 });
             }
 
-            let animationFrame;
+            let frame;
             function render() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 let active = false;
                 particles.forEach(p => {
                     p.dy += 0.5; // Gravity
-                    p.x += p.dx;
-                    p.y += p.dy;
-                    p.tilt += 0.1;
-                    
+                    p.x += p.dx; p.y += p.dy; p.tilt += 0.1;
                     if (p.y < canvas.height) active = true;
 
                     ctx.beginPath();
@@ -838,20 +677,16 @@
                     ctx.stroke();
                 });
                 
-                if (active) {
-                    animationFrame = requestAnimationFrame(render);
-                } else {
-                    cancelAnimationFrame(animationFrame);
-                }
+                if (active) frame = requestAnimationFrame(render);
+                else cancelAnimationFrame(frame);
             }
             render();
         }
 
-        // INIT YOUTUBE API
+        // Initialize App once YouTube API is loaded
         window.onYouTubeIframeAPIReady = function() {
             initApp();
         };
-
     </script>
 </body>
 </html>
