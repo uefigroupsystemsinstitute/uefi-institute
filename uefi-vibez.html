@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VibeZ | The Ultimate Knowledge Feed</title>
+    <title>VibeZ | Full-Screen Cinematic Feed</title>
     
     <!-- External Libraries: FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Fonts: Outfit (UI), Syne (Art), UnifrakturMaguntia (Gothic Diary), Cinzel (Nameplate) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Outfit:wght@300;400;600;800&family=Syne:wght@400;600;700;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <!-- Fonts: Outfit, Syne, Caveat (Handwriting), Cinzel -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cinzel:wght@600;800&family=Outfit:wght@300;400;600;800&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* ==========================================================================
@@ -20,19 +20,19 @@
             --brand-cyan: #00ffcc;
             --brand-magenta: #ff007f;
             --brand-glow: rgba(0, 255, 204, 0.5);
-            --bg-deep: #050508;
+            --bg-deep: #000000;
             --danger: #ff2a5f;
             --success: #00e676;
             --text-main: #ffffff;
             --font-art: 'Syne', sans-serif;
             --font-ui: 'Outfit', sans-serif;
-            --font-gothic: 'UnifrakturMaguntia', cursive;
+            --font-handwriting: 'Caveat', cursive;
             --font-classic: 'Cinzel', serif;
             
-            /* Diary Colors */
-            --parchment: #f1e4d3;
-            --parchment-dark: #d8c3a5;
-            --ink: #2b1b17;
+            /* Diary Book Colors */
+            --parchment: #f9f3e6;
+            --parchment-dark: #e5d4bc;
+            --ink: #1f1b18;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -43,303 +43,441 @@
             color: var(--text-main);
             font-family: var(--font-ui);
             overflow: hidden; 
-            display: flex; justify-content: center; align-items: center;
-        }
-
-        /* Dynamic Environment Background */
-        #dynamic-bg {
-            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-size: cover; background-position: center;
-            opacity: 0.3; z-index: -2; transition: background-image 1.5s ease-in-out;
-            filter: blur(8px) brightness(0.5);
-            transform: scale(1.1); /* Prevents blur bleeding edges */
+            cursor: none; /* Hide default cursor to use custom laser cursor */
         }
 
         /* ==========================================================================
-           2. THE MOBILE CAPSULE (Enlarged & Enhanced)
+           2. LASER CURSOR ENGINE
            ========================================================================== */
-        .mobile-capsule {
+        .laser-cursor {
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 45px currentColor;
+            transition: width 0.1s, height: 0.1s;
+            mix-blend-mode: screen;
+        }
+
+        .laser-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99998;
+            transform: translate(-50%, -50%);
+            opacity: 0.7;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        /* ==========================================================================
+           3. FULL SCREEN TIKTOK CONTAINER (No Phone Shell)
+           ========================================================================== */
+        .full-viewport-container {
             position: relative;
-            width: 100%; height: 100%;
-            max-width: 460px; /* Increased Size */
-            max-height: 920px; /* Increased Size */
+            width: 100vw;
+            height: 100vh;
             background: #000;
             overflow: hidden;
-            display: flex; flex-direction: column;
-            z-index: 10;
-        }
-
-        @media (min-width: 600px) {
-            .mobile-capsule {
-                height: 92vh;
-                border-radius: 45px;
-                background: rgba(10, 10, 15, 0.7);
-                backdrop-filter: blur(25px);
-                border: 2px solid rgba(255, 255, 255, 0.1);
-                box-shadow: 0 30px 60px -10px rgba(0,0,0,0.8), 
-                            0 0 50px rgba(0, 255, 204, 0.15);
-            }
-            .mobile-capsule::before {
-                content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-                width: 160px; height: 28px; background: #000;
-                border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; z-index: 100;
-            }
+            display: flex;
+            flex-direction: column;
         }
 
         /* ==========================================================================
-           3. TIKTOK TOP NAVIGATION
+           4. LEFT-CORNER CATEGORY NAVIGATION
            ========================================================================== */
-        .top-nav {
-            position: absolute; top: 0; left: 0; width: 100%;
-            display: flex; justify-content: flex-start; align-items: center;
-            padding: 50px 20px 20px; z-index: 30;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
-            gap: 25px; overflow-x: auto; scrollbar-width: none;
+        .left-corner-nav {
+            position: absolute;
+            top: 25px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 40;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-height: 85vh;
+            overflow-y: auto;
+            scrollbar-width: none;
         }
-        .top-nav::-webkit-scrollbar { display: none; }
-        
+        .left-corner-nav::-webkit-scrollbar { display: none; }
+
         .nav-item {
-            font-family: var(--font-art); font-size: 17px; font-weight: 800;
-            color: rgba(255, 255, 255, 0.4); cursor: pointer;
+            font-family: var(--font-art);
+            font-size: 14px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            text-transform: uppercase; letter-spacing: 1.5px;
-            white-space: nowrap; padding-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
         }
         .nav-item.active {
-            color: #fff; transform: scale(1.15);
-            text-shadow: 0px 0px 15px var(--brand-cyan);
-        }
-        .nav-item.active::after {
-            content: ''; position: absolute; bottom: -4px; left: 50%;
-            transform: translateX(-50%); width: 24px; height: 3px;
-            background: var(--brand-cyan); border-radius: 2px;
-            box-shadow: 0 0 10px var(--brand-cyan);
+            color: #000;
+            background: var(--brand-cyan);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--brand-cyan);
         }
 
         /* ==========================================================================
-           4. LIGHTNING-FAST VIDEO FEED (Lazy Load Architecture)
+           5. LIGHTNING-FAST FULL-SCREEN VIDEO FEED
            ========================================================================== */
         .feed-container {
-            height: 100%; width: 100%;
-            overflow-y: scroll; scroll-snap-type: y mandatory;
-            scroll-behavior: smooth; scrollbar-width: none;
-            position: relative; z-index: 10;
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            position: relative;
+            z-index: 10;
         }
         .feed-container.no-scroll { overflow-y: hidden !important; }
         
         .video-container {
-            position: relative; height: 100%; width: 100%;
-            scroll-snap-align: start; scroll-snap-stop: always;
-            background: #000; overflow: hidden;
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            background: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         /* High-res thumbnail placeholder before iframe loads */
         .yt-placeholder {
-            width: 100%; height: 100%; background-size: cover;
-            background-position: center; filter: blur(10px); transition: filter 0.5s;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(15px);
+            transition: filter 0.5s;
+            z-index: 1;
         }
         
         .yt-iframe {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%; pointer-events: none;
-            transform: scale(1.45); /* Crops out YouTube UI */
-            opacity: 0; transition: opacity 0.4s ease;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            transform: scale(1.35); /* Crops out YouTube UI */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 2;
         }
 
-        /* Gradient overlay to make text pop powerfully */
+        /* Gradient overlay for gorgeous text visibility */
         .ui-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 12; display: flex; flex-direction: column; justify-content: flex-end;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 30%, transparent 70%);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 12;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 40%, transparent 80%);
+            pointer-events: none;
         }
+        .ui-overlay > * { pointer-events: auto; }
 
         /* ==========================================================================
-           5. SIDE ACTIONS & NEW DIARY BUTTON
+           6. TIKTOK SIDE ACTIONS & DIARY BUTTON
            ========================================================================== */
         .side-actions {
-            position: absolute; bottom: 100px; right: 15px;
-            display: flex; flex-direction: column; align-items: center; gap: 22px;
+            position: absolute;
+            bottom: 40px;
+            right: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
             z-index: 20;
         }
         .action-btn {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: #fff; cursor: pointer; filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.9));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.9));
             transition: transform 0.2s;
         }
-        .action-btn i { font-size: 32px; margin-bottom: 5px; transition: 0.3s; }
-        .action-btn:active i { transform: scale(0.7); }
+        .action-btn i { font-size: 36px; margin-bottom: 6px; transition: 0.3s; }
+        .action-btn:active i { transform: scale(0.75); }
         .action-btn.liked i { color: var(--danger); animation: heartBurst 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         
-        /* The Diary Button Styling */
-        .diary-btn i { color: #f1c40f; text-shadow: 0 0 10px rgba(241, 196, 15, 0.5); }
-        
-        .action-text { font-size: 13px; font-weight: 700; text-shadow: 1px 1px 2px #000; }
+        .diary-btn i { color: #f1c40f; text-shadow: 0 0 15px rgba(241, 196, 15, 0.7); }
+        .action-text { font-size: 14px; font-weight: 700; text-shadow: 1px 1px 3px #000; }
 
         .profile-pic-container {
-            position: relative; margin-bottom: 15px;
+            position: relative;
+            margin-bottom: 10px;
         }
         .profile-pic {
-            width: 52px; height: 52px; border-radius: 50%;
-            border: 2px solid #fff; 
-            background: url('https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80') center/cover;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            border: 2.5px solid #fff; 
+            background: url('https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=200&q=80') center/cover;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.7);
         }
         .profile-pic-container::after {
-            content: '+'; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
-            background: var(--danger); width: 22px; height: 22px; border-radius: 50%;
+            content: '+';
+            position: absolute;
+            bottom: -6px; left: 50%;
+            transform: translateX(-50%);
+            background: var(--danger);
+            width: 24px; height: 24px;
+            border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 16px; font-weight: bold; border: 2px solid #fff;
+            font-size: 16px; font-weight: bold;
+            border: 2px solid #fff;
         }
 
         .bottom-info {
-            position: absolute; bottom: 30px; left: 15px;
-            width: 75%; z-index: 20; text-shadow: 1px 1px 3px #000;
+            position: absolute;
+            bottom: 35px;
+            left: 25px;
+            width: 65%;
+            z-index: 20;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
         }
         .creator-name {
-            font-family: var(--font-art); font-size: 20px; font-weight: 800;
-            margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+            font-family: var(--font-art);
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .verified-badge { color: var(--brand-cyan); font-size: 16px; }
-        .video-desc { font-size: 15px; font-weight: 400; line-height: 1.4; margin-bottom: 12px; }
+        .verified-badge { color: var(--brand-cyan); font-size: 18px; }
+        .video-desc {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            color: #f0f0f5;
+        }
         .tags { font-weight: 700; color: var(--brand-cyan); }
         .music-ticker {
-            display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;
-            background: rgba(0,0,0,0.5); padding: 6px 14px; border-radius: 20px;
-            width: fit-content; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px 16px;
+            border-radius: 25px;
+            width: fit-content;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
         }
         .music-ticker i { animation: spin 4s linear infinite; }
 
         /* ==========================================================================
-           6. THE GOTHIC DIARY MODAL (The Vault)
+           7. ENLARGED GORGEOUS HANDWRITING DIARY MODAL
            ========================================================================== */
         .diary-modal {
-            position: absolute; top: 100%; left: 0; width: 100%; height: 100%;
-            background: var(--parchment); z-index: 200;
+            position: absolute;
+            top: 100%; left: 0;
+            width: 100vw; height: 100vh;
+            background: var(--parchment);
+            z-index: 200;
             transition: top 0.6s cubic-bezier(0.86, 0, 0.07, 1);
-            display: flex; flex-direction: column;
-            box-shadow: inset 0 0 60px rgba(0,0,0,0.5);
-            /* Shakespearean Paper Texture */
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.25);
             background-image: 
-                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2), rgba(0,0,0,0.1)),
-                url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23n)" opacity="0.08"/></svg>');
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4), rgba(0,0,0,0.05)),
+                url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23n)" opacity="0.06"/></svg>');
         }
         .diary-modal.open { top: 0; }
 
         .diary-header {
-            padding: 30px 20px 10px; display: flex; flex-direction: column; align-items: center;
-            border-bottom: 2px solid var(--parchment-dark);
+            padding: 35px 30px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 3px solid var(--parchment-dark);
             position: relative;
         }
         .close-diary {
-            position: absolute; top: 20px; right: 20px; font-size: 28px;
-            color: var(--ink); cursor: pointer; opacity: 0.7;
+            position: absolute;
+            top: 25px; right: 30px;
+            font-size: 32px;
+            color: var(--ink);
+            cursor: pointer;
+            opacity: 0.8;
+            transition: transform 0.2s;
         }
+        .close-diary:hover { transform: scale(1.1); }
         
-        /* The Feather Pen Profile Picture System */
         .diary-profile-wrapper {
-            position: relative; width: 120px; height: 120px; margin-bottom: 15px;
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin-bottom: 15px;
         }
         .diary-profile-pic {
-            width: 100%; height: 100%; object-fit: cover;
-            border-radius: 10px; /* Square as requested */
-            border: 3px solid var(--ink);
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 12px; /* Square as requested */
+            border: 4px solid var(--ink);
+            box-shadow: 6px 6px 15px rgba(0,0,0,0.3);
             cursor: pointer;
         }
-        /* Feathers around the picture */
         .feather-decor {
-            position: absolute; color: var(--ink); font-size: 40px; opacity: 0.8; pointer-events: none;
+            position: absolute;
+            color: var(--ink);
+            font-size: 45px;
+            opacity: 0.85;
+            pointer-events: none;
         }
-        .feather-left { top: 30px; left: -35px; transform: rotate(-30deg); }
-        .feather-right { top: 30px; right: -35px; transform: rotate(30deg) scaleX(-1); }
+        .feather-left { top: 35px; left: -42px; transform: rotate(-35deg); }
+        .feather-right { top: 35px; right: -42px; transform: rotate(35deg) scaleX(-1); }
 
         .diary-name-input {
-            background: transparent; border: none; text-align: center;
-            font-family: var(--font-classic); font-size: 24px; font-weight: 800;
-            color: var(--ink); outline: none; width: 80%;
-            border-bottom: 1px dashed rgba(43, 27, 23, 0.3); padding-bottom: 5px;
+            background: transparent;
+            border: none;
+            text-align: center;
+            font-family: var(--font-classic);
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--ink);
+            outline: none;
+            width: 60%;
+            border-bottom: 2px dashed rgba(31, 27, 24, 0.4);
+            padding-bottom: 6px;
         }
-        .diary-name-input::placeholder { color: rgba(43, 27, 23, 0.5); }
 
-        /* The Gothic Writing Area */
+        /* Lined Shakespearean Page with Handwriting Font */
         .diary-body {
-            flex: 1; padding: 20px 25px; position: relative;
-            /* Lined paper effect */
+            flex: 1;
+            padding: 30px 45px;
+            position: relative;
             background: repeating-linear-gradient(
-                transparent, transparent 34px, 
-                rgba(43, 27, 23, 0.15) 34px, rgba(43, 27, 23, 0.15) 35px
+                transparent, transparent 38px, 
+                rgba(31, 27, 24, 0.18) 38px, rgba(31, 27, 24, 0.18) 39px
             );
         }
         .gothic-textarea {
-            width: 100%; height: 100%; background: transparent; border: none; outline: none;
-            resize: none; font-family: var(--font-gothic); font-size: 26px;
-            color: var(--ink); line-height: 35px; /* Matches the gradient lines */
-            padding-top: 5px;
+            width: 100%; height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            resize: none;
+            font-family: var(--font-handwriting); /* Beautiful handwriting font */
+            font-size: 32px; /* Large, clear handwriting */
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 39px; /* Perfectly matches notebook lines */
+            padding-top: 4px;
         }
-        .gothic-textarea::placeholder { color: rgba(43, 27, 23, 0.4); }
+        .gothic-textarea::placeholder { color: rgba(31, 27, 24, 0.4); }
 
-        /* Emoji Keyboard for Diary */
         .emoji-bar {
-            background: rgba(216, 195, 165, 0.8); padding: 15px;
-            display: flex; justify-content: center; gap: 15px;
-            border-top: 2px solid var(--ink); backdrop-filter: blur(5px);
+            background: rgba(229, 212, 188, 0.9);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            border-top: 3px solid var(--ink);
+            backdrop-filter: blur(8px);
         }
         .emoji-btn {
-            font-size: 24px; cursor: pointer; transition: transform 0.2s;
+            font-size: 28px;
+            cursor: pointer;
+            transition: transform 0.2s;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
-        .emoji-btn:active { transform: scale(0.8); }
+        .emoji-btn:active { transform: scale(0.75); }
 
         /* ==========================================================================
-           7. CHECKPOINT QUIZ (Rule of 3)
+           8. CHECKPOINT QUIZ MODAL
            ========================================================================== */
         .quiz-modal {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 5, 8, 0.98); z-index: 150;
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            padding: 25px; text-align: center; opacity: 0; transition: opacity 0.4s;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.96);
+            z-index: 150;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s;
         }
         .quiz-modal.active { display: flex; opacity: 1; }
         .quiz-glow {
-            position: absolute; width: 300px; height: 300px;
+            position: absolute; width: 350px; height: 350px;
             background: radial-gradient(circle, var(--brand-glow) 0%, transparent 70%);
             top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1;
         }
-        .quiz-title { font-family: var(--font-art); color: var(--brand-cyan); font-size: 32px; margin-bottom: 5px; font-weight: 800; }
-        .quiz-subtitle { color: #fff; font-weight: 400; margin-bottom: 35px; font-size: 15px; opacity: 0.7; }
-        .quiz-question { font-size: 22px; font-weight: 600; margin-bottom: 30px; line-height: 1.4; }
-        .quiz-options { width: 100%; display: flex; flex-direction: column; gap: 15px; }
+        .quiz-title { font-family: var(--font-art); color: var(--brand-cyan); font-size: 36px; margin-bottom: 8px; font-weight: 800; }
+        .quiz-subtitle { color: #fff; font-weight: 400; margin-bottom: 35px; font-size: 16px; opacity: 0.75; }
+        .quiz-question { font-size: 24px; font-weight: 600; margin-bottom: 30px; line-height: 1.4; max-width: 600px; }
+        .quiz-options { width: 100%; max-width: 550px; display: flex; flex-direction: column; gap: 15px; }
         .quiz-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.2);
-            color: #fff; padding: 20px; font-size: 16px; font-family: var(--font-ui); font-weight: 600;
-            border-radius: 15px; cursor: pointer; transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; padding: 20px 25px;
+            font-size: 17px; font-family: var(--font-ui); font-weight: 600;
+            border-radius: 16px; cursor: pointer; transition: all 0.2s;
+            text-align: left;
         }
-        .quiz-btn:active { transform: scale(0.95); }
-        .quiz-btn.correct { background: var(--success); color: #000; border-color: var(--success); box-shadow: 0 0 20px rgba(0,230,118,0.5); }
+        .quiz-btn:hover { background: rgba(255,255,255,0.1); }
+        .quiz-btn.correct { background: var(--success); color: #000; border-color: var(--success); box-shadow: 0 0 25px rgba(0,230,118,0.6); }
         .quiz-btn.wrong { background: var(--danger); color: #fff; border-color: var(--danger); animation: shake 0.4s; }
 
         .explanation-box {
-            display: none; margin-top: 30px; background: rgba(0, 255, 204, 0.1);
-            border-left: 4px solid var(--brand-cyan); padding: 18px;
-            border-radius: 0 10px 10px 0; text-align: left;
+            display: none; margin-top: 30px;
+            background: rgba(0, 255, 204, 0.1);
+            border-left: 5px solid var(--brand-cyan);
+            padding: 20px; border-radius: 0 12px 12px 0;
+            text-align: left; max-width: 550px;
             animation: slideUpFade 0.5s forwards;
         }
         .exp-title { font-family: var(--font-art); font-weight: 800; color: var(--brand-cyan); margin-bottom: 8px; font-size: 18px; }
-        .exp-text { font-size: 15px; line-height: 1.6; }
+        .exp-text { font-size: 16px; line-height: 1.6; }
         
         .continue-btn {
-            display: none; margin-top: 30px; background: #fff; color: #000;
-            padding: 16px 35px; font-family: var(--font-art); font-weight: 800;
+            display: none; margin-top: 30px;
+            background: #fff; color: #000;
+            padding: 16px 40px; font-family: var(--font-art); font-weight: 800;
             border-radius: 40px; border: none; font-size: 18px; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255,255,255,0.3); transition: transform 0.2s;
+            box-shadow: 0 5px 20px rgba(255,255,255,0.4); transition: transform 0.2s;
         }
-        .continue-btn:active { transform: scale(0.9); }
+        .continue-btn:active { transform: scale(0.92); }
 
         /* ==========================================================================
-           8. ANIMATIONS & EFFECTS
+           9. ANIMATIONS & EFFECTS
            ========================================================================== */
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes heartBurst { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
+        @keyframes heartBurst { 0% { transform: scale(1); } 50% { transform: scale(1.6); } 100% { transform: scale(1); } }
         @keyframes shake {
             0%, 100% { transform: translateX(0); } 25% { transform: translateX(-12px); }
             50% { transform: translateX(12px); } 75% { transform: translateX(-12px); }
@@ -347,14 +485,14 @@
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
         .floating-heart {
-            position: absolute; color: var(--danger); font-size: 70px;
+            position: absolute; color: var(--danger); font-size: 80px;
             pointer-events: none; z-index: 50; transform: translate(-50%, -50%) scale(0);
-            animation: floatUp 1s ease-out forwards; filter: drop-shadow(0 0 15px rgba(255,42,95,0.8));
+            animation: floatUp 1s ease-out forwards; filter: drop-shadow(0 0 20px rgba(255,42,95,0.9));
         }
         @keyframes floatUp {
             0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-            20% { transform: translate(-50%, -50%) scale(1.2) rotate(-15deg); }
-            100% { transform: translate(-50%, -200px) scale(1) rotate(20deg); opacity: 0; }
+            20% { transform: translate(-50%, -50%) scale(1.3) rotate(-15deg); }
+            100% { transform: translate(-50%, -220px) scale(1) rotate(20deg); opacity: 0; }
         }
         
         #confetti-canvas {
@@ -365,26 +503,27 @@
 </head>
 <body>
 
+    <!-- Custom Laser Cursor Elements -->
+    <div class="laser-cursor" id="laser-cursor"></div>
+    <div class="laser-trail" id="laser-trail"></div>
+
     <!-- Celebration Sound Effect -->
     <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" preload="auto"></audio>
 
-    <!-- World Background (Changes based on Category) -->
-    <div id="dynamic-bg" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=1000');"></div>
-
-    <!-- THE CAPSULE -->
-    <div class="mobile-capsule">
+    <!-- FULL SCREEN TIKTOK CONTAINER -->
+    <div class="full-viewport-container">
         
-        <!-- TikTok Nav -->
-        <div class="top-nav" id="top-nav"></div>
+        <!-- Left Corner Navigation -->
+        <div class="left-corner-nav" id="left-corner-nav"></div>
 
         <!-- Scrollable Feed -->
         <div class="feed-container" id="feed-container"></div>
 
-        <!-- The Quiz Interceptor -->
+        <!-- Checkpoint Quiz Interceptor -->
         <div class="quiz-modal" id="quiz-modal">
             <div class="quiz-glow"></div>
-            <div class="quiz-title">Checkpoint</div>
-            <div class="quiz-subtitle">Prove you are learning, not just swiping.</div>
+            <div class="quiz-title">Knowledge Checkpoint</div>
+            <div class="quiz-subtitle">Prove you are absorbing the lore, not just swiping.</div>
             <div class="quiz-question" id="quiz-q-text">Loading...</div>
             
             <div class="quiz-options" id="quiz-options-container"></div>
@@ -397,7 +536,7 @@
             <button class="continue-btn" id="continue-scroll-btn" onclick="resumeScrolling()">Unlock Feed</button>
         </div>
 
-        <!-- THE GOTHIC DIARY (The Vault) -->
+        <!-- THE GORGEOUS DIARY MODAL -->
         <div class="diary-modal" id="diary-modal">
             <div class="diary-header">
                 <i class="fas fa-times close-diary" onclick="toggleDiary()"></i>
@@ -415,7 +554,7 @@
             </div>
             
             <div class="diary-body">
-                <textarea class="gothic-textarea" id="diary-notes" placeholder="Scribe thy thoughts and lore upon these ancient pages..."></textarea>
+                <textarea class="gothic-textarea" id="diary-notes" placeholder="Scribe thy thoughts, ideas, and reflections here..."></textarea>
             </div>
 
             <div class="emoji-bar">
@@ -425,13 +564,14 @@
                 <div class="emoji-btn" onclick="addEmoji('📈')">📈</div>
                 <div class="emoji-btn" onclick="addEmoji('🧠')">🧠</div>
                 <div class="emoji-btn" onclick="addEmoji('💸')">💸</div>
+                <div class="emoji-btn" onclick="addEmoji('⚡')">⚡</div>
             </div>
         </div>
 
         <!-- Confetti Overlay -->
         <canvas id="confetti-canvas"></canvas>
 
-    </div> <!-- End Capsule -->
+    </div> <!-- End Full Viewport Container -->
 
     <!-- YouTube Iframe API -->
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -439,77 +579,92 @@
         /* ==========================================================================
            1. DATABASE & CONFIGURATION
            ========================================================================== */
-        // Mapping background images to categories for the cinematic feel
-        const BACKGROUNDS = {
-            "FACTS": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=1000",
-            "HISTORY": "https://images.unsplash.com/photo-1461360228754-6e81c478b882?auto=format&fit=crop&q=80&w=1000",
-            "MATH": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1000",
-            "SCIENCE": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=1000",
-            "VIBES": "https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&q=80&w=1000"
-        };
-
         const UEFI_DATABASE = {
             "FACTS": {
                 videos: ["z2rKDh9mh7Q", "jujgSDPlDOI", "lWGsVKlPz4s", "PwLki5sEQ8w", "suDhVin86Ps", "ZAIxy0_KrDg"],
                 quizzes: [
-                    { q: "What fundamentally separates an asset from a liability?", opts: ["Assets generate cash flow; liabilities consume it", "Assets are physical; liabilities are digital", "There is no difference"], ans: 0, exp: "The rich acquire assets. The poor acquire liabilities they think are assets." },
-                    { q: "What does the Rule of 72 calculate?", opts: ["Your tax bracket", "How long it takes an investment to double", "Your retirement age"], ans: 1, exp: "Divide 72 by your interest rate. 10% return = doubles every 7.2 years." }
+                    { q: "What fundamentally separates an asset from a liability?", opts: ["Assets generate cash flow; liabilities consume it", "Assets are physical; liabilities are digital", "There is no difference"], ans: 0, exp: "The wealthy acquire assets. The average person acquires liabilities thinking they are assets." },
+                    { q: "What does the Rule of 72 calculate?", opts: ["Your tax bracket", "How long it takes an investment to double", "Your retirement age"], ans: 1, exp: "Divide 72 by your interest rate to find out how many years it takes for your money to double." }
                 ]
             },
             "HISTORY": {
                 videos: ["0KQOrJ_K6ps", "i83WzFygvZ4", "lSflLzfWTUs"],
                 quizzes: [
-                    { q: "Why do top minds obsess over studying history?", opts: ["To sound smart", "Because economic and geopolitical cycles repeat", "To find old business models"], ans: 1, exp: "Human nature remains unchanged. Macro-cycles like inflation and empires repeat predictably." }
+                    { q: "Why do top strategists constantly study history?", opts: ["To memorize dates", "Because macroeconomic and civilizational cycles repeat", "To find old maps"], ans: 1, exp: "Human nature and economic cycles repeat across centuries. History is the ultimate playbook." }
                 ]
             },
             "MATH": {
                 videos: ["-iiY2bqn9Wo", "UidCElWKF0E", "q_OGsBDRgz4", "pK9b1D3CUmg"],
                 quizzes: [
-                    { q: "What happens mathematically if you improve 1% daily for a year?", opts: ["You get 3.6x better", "You get 37.78x better", "You get 10x better"], ans: 1, exp: "(1.01)^365 = 37.78. Compound interest applies to your habits, not just your money." }
+                    { q: "What is the compounding result of getting 1% better every single day for a year?", opts: ["3.6x better", "37.78x better", "10x better"], ans: 1, exp: "(1.01)^365 = 37.78. Small daily improvements lead to massive compounding over time." }
                 ]
             },
             "SCIENCE": {
                 videos: ["oR94cicO7xM", "5U-V0y-fkSw", "nHAFnH3xRl4", "ISUPZmjAWlQ", "ql0DrRJOpNg"],
                 quizzes: [
-                    { q: "What is the concept of Entropy in daily life?", opts: ["Systems naturally degrade into chaos without energy", "Everything becomes more organized over time", "Energy is created from nothing"], ans: 0, exp: "If you don't put energy into your health, mind, or business, they naturally decay. That is physics." }
+                    { q: "How does the Second Law of Thermodynamics (Entropy) apply to daily life?", opts: ["Unattended systems naturally degrade into chaos without energy input", "Everything becomes cleaner over time", "Energy is created infinitely"], ans: 0, exp: "If you don't invest energy into your fitness, mind, or business, they naturally decay." }
                 ]
             },
             "VIBES": {
                 videos: ["KHAOa2HrNTw", "3cSEEbwGKGk", "aYgA6cIzqm8", "7GBm5rbr50U", "mxb2sBLNK5Y", "9CRB8FTsErs", "txkwg5f37ws", "hlXD_AXtSIY"],
                 quizzes: [
-                    { q: "What is the danger of cheap, unearned dopamine?", opts: ["It raises your baseline, making hard work feel impossible", "It makes you sleep too much", "It hurts your eyes"], ans: 0, exp: "Scrolling kills your drive. You must detox to make building your future feel rewarding again." }
+                    { q: "What is the primary danger of constant unearned dopamine loops?", opts: ["They raise your baseline, making hard work feel impossible", "They improve your attention span", "They burn computer screens"], ans: 0, exp: "Endless scrolling destroys your dopamine receptors. Protect your focus." }
                 ]
             }
         };
 
         /* ==========================================================================
-           2. STATE MANAGEMENT & LAZY LOADING VARIABLES
+           2. STATE MANAGEMENT & LASER CURSOR LOGIC
            ========================================================================== */
         let currentCategory = "FACTS";
         let activeQuizPool = [];
         let isInterceptorActive = false;
         let videosWatched = 0; 
         
-        // Lazy Load Registry
-        let playerRegistry = {}; // Holds YT objects
+        let playerRegistry = {};
         let currentlyPlayingId = null;
+
+        // Laser Cursor Color Cycling
+        const laserColors = ['#00ffcc', '#ff007f', '#00e676', '#f1c40f', '#3498db', '#9b59b6'];
+        let colorIdx = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('laser-cursor');
+            const trail = document.getElementById('laser-trail');
+            
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+            
+            setTimeout(() => {
+                trail.style.left = `${e.clientX}px`;
+                trail.style.top = `${e.clientY}px`;
+            }, 50);
+
+            // Cycle laser color smoothly on move
+            if(Math.random() < 0.1) {
+                colorIdx = (colorIdx + 1) % laserColors.length;
+                const col = laserColors[colorIdx];
+                cursor.style.color = col;
+                trail.style.color = col;
+            }
+        });
 
         /* ==========================================================================
            3. INITIALIZATION
            ========================================================================== */
         function initApp() {
-            renderNavigation();
+            renderLeftNav();
             loadCategoryData(currentCategory);
             setupIntersectionObserver();
             initDoubleTapLike();
-            loadDiaryData(); // Load saved diary notes/name/img
+            loadDiaryData();
         }
 
         /* ==========================================================================
-           4. UI RENDERING & DYNAMIC BACKGROUNDS
+           4. LEFT CORNER NAVIGATION RENDERING
            ========================================================================== */
-        function renderNavigation() {
-            const nav = document.getElementById('top-nav');
+        function renderLeftNav() {
+            const nav = document.getElementById('left-corner-nav');
             nav.innerHTML = '';
             Object.keys(UEFI_DATABASE).forEach(cat => {
                 const item = document.createElement('div');
@@ -520,10 +675,7 @@
                     currentCategory = cat;
                     videosWatched = 0;
                     
-                    // Change Background
-                    document.getElementById('dynamic-bg').style.backgroundImage = `url('${BACKGROUNDS[cat]}')`;
-                    
-                    renderNavigation();
+                    renderLeftNav();
                     loadCategoryData(cat);
                 };
                 nav.appendChild(item);
@@ -534,7 +686,6 @@
             const feed = document.getElementById('feed-container');
             feed.innerHTML = '';
             
-            // Clean up old players to free memory
             Object.values(playerRegistry).forEach(p => {
                 if(p && typeof p.destroy === 'function') p.destroy();
             });
@@ -551,8 +702,6 @@
                 const likes = Math.floor(Math.random() * 800) + 120;
                 const comments = Math.floor(Math.random() * 80) + 10;
                 
-                // Lightning Fast Template: We only render a blurry thumbnail initially.
-                // The actual iframe is built only when scrolled into view.
                 container.innerHTML = `
                     <div class="yt-placeholder" id="placeholder-${videoId}-${idx}" 
                          style="background-image: url('https://img.youtube.com/vi/${videoId}/hqdefault.jpg');">
@@ -572,7 +721,6 @@
                                 <i class="fas fa-comment-dots"></i>
                                 <span class="action-text">${comments}K</span>
                             </div>
-                            <!-- NEW DIARY / VAULT BUTTON -->
                             <div class="action-btn diary-btn" onclick="toggleDiary()">
                                 <i class="fas fa-book"></i>
                                 <span class="action-text">Diary</span>
@@ -584,8 +732,8 @@
                         </div>
                         <div class="bottom-info">
                             <div class="creator-name">@VibeZ <i class="fas fa-check-circle verified-badge"></i></div>
-                            <div class="video-desc">Systemize your mindset. <span class="tags">#${catKey.toLowerCase()} #lore</span></div>
-                            <div class="music-ticker"><i class="fas fa-compact-disc"></i> Original Audio - The Vault</div>
+                            <div class="video-desc">Master your craft daily. <span class="tags">#${catKey.toLowerCase()} #knowledge</span></div>
+                            <div class="music-ticker"><i class="fas fa-compact-disc"></i> Original Audio - VibeZ Vault</div>
                         </div>
                     </div>
                 `;
@@ -595,12 +743,11 @@
         }
 
         /* ==========================================================================
-           5. INTELLIGENT LAZY LOADING OBSERVER (The Speed Fix)
+           5. LIGHTNING-FAST LAZY LOADING OBSERVER
            ========================================================================== */
         function setupIntersectionObserver() {
             const feed = document.getElementById('feed-container');
             
-            // Fires when a video container takes up > 60% of the screen
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     const containerId = entry.target.id;
@@ -611,7 +758,6 @@
                     const wrapperId = `player-wrapper-${videoId}-${idx}`;
 
                     if (entry.isIntersecting) {
-                        // 1. If player doesn't exist yet, inject iframe and init YT Player
                         if (!playerRegistry[playerId]) {
                             const wrapper = document.getElementById(wrapperId);
                             const div = document.createElement('div');
@@ -627,14 +773,12 @@
                                 },
                                 events: {
                                     'onReady': (e) => {
-                                        // Fade in iframe, fade out placeholder
                                         document.getElementById(wrapperId).style.opacity = '1';
                                         e.target.playVideo();
                                     }
                                 }
                             });
                         } else {
-                            // Already exists, just play
                             if(typeof playerRegistry[playerId].playVideo === 'function'){
                                 playerRegistry[playerId].playVideo();
                             }
@@ -643,13 +787,11 @@
                         currentlyPlayingId = playerId;
                         videosWatched++;
                         
-                        // Rule of 3 Quiz Logic
                         if (videosWatched > 1 && (videosWatched - 1) % 3 === 0 && !isInterceptorActive) {
-                            setTimeout(() => launchInterceptorQuiz(), 1500); 
+                            setTimeout(() => launchInterceptorQuiz(), 1200); 
                         }
 
                     } else {
-                        // Out of view -> Pause immediately
                         if (playerRegistry[playerId] && typeof playerRegistry[playerId].pauseVideo === 'function') {
                             playerRegistry[playerId].pauseVideo();
                         }
@@ -657,7 +799,6 @@
                 });
             }, { root: feed, threshold: 0.6 });
 
-            // Attach observer to dynamic children
             const mutObserver = new MutationObserver(() => {
                 document.querySelectorAll('.video-container').forEach(el => observer.observe(el));
             });
@@ -665,20 +806,17 @@
         }
 
         /* ==========================================================================
-           6. THE VAULT / DIARY LOGIC
+           6. THE DIARY VAULT LOGIC
            ========================================================================== */
         function toggleDiary() {
             const modal = document.getElementById('diary-modal');
             if(modal.classList.contains('open')) {
-                // Closing: Save data
                 saveDiaryData();
                 modal.classList.remove('open');
-                // Resume video if closed
                 if(currentlyPlayingId && playerRegistry[currentlyPlayingId]) {
                     playerRegistry[currentlyPlayingId].playVideo();
                 }
             } else {
-                // Opening
                 if(currentlyPlayingId && playerRegistry[currentlyPlayingId]) {
                     playerRegistry[currentlyPlayingId].pauseVideo();
                 }
@@ -692,7 +830,6 @@
             textarea.focus();
         }
 
-        // Image Upload via FileReader
         function uploadDiaryImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -705,7 +842,6 @@
             }
         }
 
-        // Persistent Storage
         function saveDiaryData() {
             const notes = document.getElementById('diary-notes').value;
             const name = document.getElementById('diary-name').value;
@@ -736,7 +872,7 @@
 
             let quizObj = activeQuizPool.length > 0 
                 ? activeQuizPool.splice(Math.floor(Math.random() * activeQuizPool.length), 1)[0]
-                : { q: "Information without execution is a delusion. What is your next move today?", opts: ["Scroll mindlessly", "Apply one concept immediately", "Forget it"], ans: 1, exp: "Action is the only metric of truth. Write it in your Diary." };
+                : { q: "Information without execution is useless. What is your immediate next step?", opts: ["Apply what I learned", "Keep scrolling endlessly", "Close the app"], ans: 0, exp: "Action is the ultimate currency. Scribe your plan into your Diary." };
 
             document.getElementById('quiz-q-text').innerText = quizObj.q;
             const btnBox = document.getElementById('quiz-options-container');
@@ -764,10 +900,9 @@
             if (selectedIdx === quizObj.ans) {
                 btnElement.classList.add('correct');
                 
-                // Play Celebration Sound
                 const sfx = document.getElementById('success-sound');
                 sfx.volume = 0.9; sfx.currentTime = 0; 
-                sfx.play().catch(e=>console.log("Audio play blocked by browser policy"));
+                sfx.play().catch(e=>console.log("Audio play blocked"));
 
                 triggerConfetti();
 
@@ -775,7 +910,7 @@
                     document.getElementById('exp-text-content').innerText = quizObj.exp;
                     document.getElementById('quiz-explanation').style.display = 'block';
                     document.getElementById('continue-scroll-btn').style.display = 'block';
-                }, 700);
+                }, 600);
             } else {
                 btnElement.classList.add('wrong');
                 setTimeout(() => {
@@ -797,7 +932,6 @@
                 }
                 document.getElementById('confetti-canvas').style.display = 'none';
                 
-                // Pulse the diary button to encourage writing notes
                 const diaryBtns = document.querySelectorAll('.diary-btn i');
                 diaryBtns.forEach(btn => {
                     btn.style.transform = 'scale(1.5)';
@@ -807,7 +941,7 @@
         }
 
         /* ==========================================================================
-           8. DOUBLE TAP TO LIKE
+           8. DOUBLE TAP TO LIKE & CONFETTI
            ========================================================================== */
         function initDoubleTapLike() {
             const feed = document.getElementById('feed-container');
@@ -848,26 +982,22 @@
             setTimeout(() => heart.remove(), 1000);
         }
 
-        /* ==========================================================================
-           9. CUSTOM CONFETTI PHYSICS ENGINE
-           ========================================================================== */
         function triggerConfetti() {
             const canvas = document.getElementById('confetti-canvas');
             canvas.style.display = 'block';
             const ctx = canvas.getContext('2d');
-            const parentRect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = parentRect.width;
-            canvas.height = parentRect.height;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
             const particles = [];
             const colors = ['#00ffcc', '#00e676', '#ff007f', '#f1c40f', '#ffffff'];
 
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 120; i++) {
                 particles.push({
                     x: canvas.width / 2, y: canvas.height / 2,
-                    r: Math.random() * 6 + 2,
-                    dx: Math.random() * 18 - 9,
-                    dy: Math.random() * -18 - 5,
+                    r: Math.random() * 7 + 2,
+                    dx: Math.random() * 20 - 10,
+                    dy: Math.random() * -20 - 6,
                     color: colors[Math.floor(Math.random() * colors.length)],
                     tilt: Math.random() * 10
                 });
@@ -878,7 +1008,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 let active = false;
                 particles.forEach(p => {
-                    p.dy += 0.4; // Gravity
+                    p.dy += 0.45;
                     p.x += p.dx; p.y += p.dy; p.tilt += 0.1;
                     if (p.y < canvas.height) active = true;
 
@@ -896,9 +1026,6 @@
             render();
         }
 
-        /* ==========================================================================
-           10. BOOTSTRAP YOUTUBE API
-           ========================================================================== */
         window.onYouTubeIframeAPIReady = function() {
             initApp();
         };
