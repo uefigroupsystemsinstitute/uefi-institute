@@ -118,31 +118,27 @@
             box-shadow: var(--shadow-soft);
             z-index: 1000;
             position: relative;
-.brand-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: inherit;
-}
+        }
 
-.brand-logo {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--brand-accent), #ffb74d);
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.4);
-    overflow: hidden; /* Keeps image inside rounded corners */
-}
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-.brand-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--brand-accent), #ffb74d);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 900;
+            font-size: 20px;
+            color: var(--brand-primary);
+            box-shadow: 0 2px 8px rgba(255, 152, 0, 0.4);
+        }
 
         .brand-title {
             display: flex;
@@ -809,37 +805,14 @@
     <!-- ==========================================================================
          TOP HEADER NAVIGATION
          ========================================================================== -->
-<header>
-    <!-- 1. Brand Container Link (Closes properly before nav-menu) -->
-    <a href="home.html" class="brand-container">
-        <div class="brand-logo">
-            <img src="Assets/GF.PNG" alt="UEFI Logo">
+    <header>
+        <div class="brand-container">
+            <div class="brand-logo">U</div>
+            <div class="brand-title">
+                <h1>UEFI IB DP MATHEMATICS</h1>
+                <span>Interactive Learning Engine</span>
+            </div>
         </div>
-        <div class="brand-title">
-            <h1>UEFI IB DP MATHEMATICS</h1>
-            <span>Interactive Learning Engine</span>
-        </div>
-    </a>
-
-    <!-- 2. Navigation Links -->
-    <ul class="nav-menu">
-        <li class="nav-item active">DASHBOARD</li>
-        <li class="nav-item">
-            IB AA HL
-            <!-- Add dropdown menu if needed -->
-        </li>
-        <li class="nav-item">IB AA SL</li>
-        <li class="nav-item">IB AI HL</li>
-        <li class="nav-item">IB AI SL</li>
-    </ul>
-
-    <!-- 3. User / System Status Badge -->
-    <div class="user-status">
-        <div class="status-badge">
-            <span class="status-dot"></span> SECURE MODE
-        </div>
-    </div>
-</header>
 
         <nav class="nav-menu">
             <div class="nav-item active" onclick="filterData('ALL', 'ALL')">DASHBOARD</div>
@@ -1525,6 +1498,7 @@
     </script>
 </body>
 </html>
+
 
 
 
