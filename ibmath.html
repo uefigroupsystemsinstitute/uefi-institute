@@ -118,13 +118,12 @@
             box-shadow: var(--shadow-soft);
             z-index: 1000;
             position: relative;
-        }
 .brand-container {
     display: flex;
     align-items: center;
     gap: 12px;
-    text-decoration: none; /* Prevents underline on link */
-    color: inherit;        /* Keeps original text colors */
+    text-decoration: none;
+    color: inherit;
 }
 
 .brand-logo {
@@ -136,14 +135,13 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0 2px 8px rgba(255, 152, 0, 0.4);
-    overflow: hidden;      /* Clips image inside rounded corners */
+    overflow: hidden; /* Keeps image inside rounded corners */
 }
 
-/* Styles the new image inside the logo box */
 .brand-logo img {
     width: 100%;
     height: 100%;
-    object-fit: contain;   /* Prevents image stretching */
+    object-fit: contain;
 }
 
         .brand-title {
@@ -812,15 +810,35 @@
          TOP HEADER NAVIGATION
          ========================================================================== -->
 <header>
+    <!-- 1. Brand Container Link (Closes properly before nav-menu) -->
     <a href="home.html" class="brand-container">
         <div class="brand-logo">
-            <img src="assets/GL.PNG" alt="UEFI Logo">
+            <img src="Assets/GF.PNG" alt="UEFI Logo">
         </div>
         <div class="brand-title">
             <h1>UEFI IB DP MATHEMATICS</h1>
             <span>Interactive Learning Engine</span>
         </div>
     </a>
+
+    <!-- 2. Navigation Links -->
+    <ul class="nav-menu">
+        <li class="nav-item active">DASHBOARD</li>
+        <li class="nav-item">
+            IB AA HL
+            <!-- Add dropdown menu if needed -->
+        </li>
+        <li class="nav-item">IB AA SL</li>
+        <li class="nav-item">IB AI HL</li>
+        <li class="nav-item">IB AI SL</li>
+    </ul>
+
+    <!-- 3. User / System Status Badge -->
+    <div class="user-status">
+        <div class="status-badge">
+            <span class="status-dot"></span> SECURE MODE
+        </div>
+    </div>
 </header>
 
         <nav class="nav-menu">
