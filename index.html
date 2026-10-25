@@ -603,19 +603,18 @@
             flex: 1;
             background: linear-gradient(to top, #0f172a, #334155);
             border-radius: 4px 4px 0 0;
-            height: var(--bar-height, 0%); 
-            animation: growBar 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform-origin: bottom; 
+            animation: growUp 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
         .chart-bar.ghost { background: #e2e8f0; }
-        @keyframes growBar {
+        @keyframes growUp {
             from {
-                height: 0%;
+                transform: scaleY(0);
             }
             to {
-                height: var(--bar-height);
+                transform: scaleY(1);
             }
         }
-
         /* ==========================================================================
            ENROLLMENT / TUITION CARD SECTION
            ========================================================================== */
