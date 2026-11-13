@@ -1,1232 +1,2009 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UEFI Global - A Personalized Learning Odyssey</title>
-<!-- Premium Typography: Bold Serif (Playfair Display) and Clean Sans-Serif (Plus Jakarta Sans) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- Google Auth -->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<style>
-/* === GLOBAL VARIABLES & RESET === */
-:root {
---uefi-dark: #070e0a;
---uefi-darker: #0d1a13;
---uefi-card: #15291e;
---uefi-green: #00A859;
---uefi-light: #f4f7f5;
---uefi-text-main: #ffffff;
---uefi-text-muted: #94a3b8;
---uefi-border: rgba(255, 255, 255, 0.15);
---uefi-border-dark: rgba(0, 0, 0, 0.1);
---font-serif: 'Playfair Display', serif;
---font-sans: 'Plus Jakarta Sans', sans-serif;
---radius-md: 12px;
---radius-lg: 20px;
-}
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-}
-body {
-font-family: var(--font-sans);
-background-color: var(--uefi-dark);
-color: var(--uefi-text-main);
-line-height: 1.6;
-overflow-x: hidden;
-}
-a { text-decoration: none; color: inherit; }
-ul { list-style: none; }
-.serif { font-family: var(--font-serif); }
-.text-green { color: var(--uefi-green); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEFI Global - A Personalized Learning Odyssey</title>
+    
+    <!-- Premium Typography: Bold Serif (Playfair Display) and Clean Sans-Serif (Plus Jakarta Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+        href="https://fonts.googleapis.com/css?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+    
+    <!-- Google Auth -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <style>
+        /* === GLOBAL VARIABLES & RESET === */
+        :root {
+            --uefi-dark: #070e0a;
+            --uefi-darker: #0d1a13;
+            --uefi-card: #15291e;
+            --uefi-green: #00A859;
+            --uefi-light: #f4f7f5;
+            --uefi-text-main: #ffffff;
+            --uefi-text-muted: #94a3b8;
+            --uefi-border: rgba(255, 255, 255, 0.15);
+            --uefi-border-dark: rgba(0, 0, 0, 0.1);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
 
-/* === TOP BANNER === */
-.top-banner {
-background-color: #0b3b24; /* Nice dark green */
-color: white;
-text-align: center;
-padding: 8px 15px;
-font-size: 14px;
-font-weight: 600;
-letter-spacing: 1px;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-z-index: 1000;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-/* === NAVIGATION HEADER === */
-header {
-position: fixed;
-top: 36px; /* Offset for the banner */
-left: 0; right: 0;
-padding: 24px 5%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-z-index: 100;
-background: rgba(7, 14, 10, 0.9); /* Added slight bg for readability */
-backdrop-filter: blur(5px);
-}
-.logo {
-display: flex;
-align-items: center;
-gap: 12px;
-font-family: var(--font-serif);
-font-weight: 700;
-font-size: 24px;
-letter-spacing: 1px;
-}
-.logo img {
-height: 44px;
-width: 44px;
-border-radius: 50%;
-object-fit: cover;
-}
-.nav-links {
-display: flex;
-gap: 24px;
-align-items: center;
-font-weight: 500;
-font-size: 14px;
-}
-.nav-links a:hover { color: var(--uefi-green); transition: color 0.3s; }
-.nav-links .enroll-btn {
-border-bottom: 1px solid white;
-padding-bottom: 2px;
-}
-.nav-links .enroll-btn:hover { border-color: var(--uefi-green); }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--uefi-dark);
+            color: var(--uefi-text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-/* Custom Nav Additions */
-.dropdown {
-position: relative;
-display: inline-block;
-padding-bottom: 10px; /* expands hover area */
-}
-.dropdown-content {
-display: none;
-position: absolute;
-background-color: var(--uefi-card);
-min-width: 220px;
-box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-z-index: 1;
-border-radius: 8px;
-top: 100%;
-left: 0;
-padding: 10px 0;
-border: 1px solid var(--uefi-border);
-}
-.dropdown-content a {
-color: white;
-padding: 12px 20px;
-text-decoration: none;
-display: block;
-}
-.dropdown-content a:hover {
-background-color: rgba(255,255,255,0.05);
-color: var(--uefi-green);
-}
-.dropdown:hover .dropdown-content {
-display: block;
-}
-.capsule-btn {
-background-color: var(--uefi-green);
-color: white;
-padding: 10px 24px;
-border-radius: 50px;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 1px;
-transition: all 0.3s ease;
-border: 1px solid var(--uefi-green);
-}
-.capsule-btn:hover {
-background-color: transparent;
-color: var(--uefi-green);
-}
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-/* === 10-SECOND POPUP ALERT === */
-#leadPopup {
-position: fixed;
-top: 0; left: 0; width: 100%; height: 100%;
-background: rgba(7, 14, 10, 0.95);
-z-index: 9999;
-display: flex;
-justify-content: center;
-align-items: center;
-opacity: 0;
-pointer-events: none;
-transition: opacity 0.5s ease;
-backdrop-filter: blur(10px);
-}
-#leadPopup.active {
-opacity: 1;
-pointer-events: auto;
-}
-.popup-content {
-text-align: center;
-max-width: 600px;
-padding: 40px;
-position: relative;
-}
-.popup-bg-img {
-position: absolute;
-top: 0; left: 0; width: 100%; height: 100%;
-object-fit: cover;
-opacity: 0.3;
-z-index: -1;
-border-radius: var(--radius-lg);
-}
-.popup-close {
-position: absolute;
-top: -40px; right: 0;
-background: none; border: none;
-color: white; font-size: 32px;
-cursor: pointer;
-}
-.popup-subtitle {
-font-size: 12px;
-letter-spacing: 3px;
-text-transform: uppercase;
-color: var(--uefi-text-muted);
-margin-bottom: 16px;
-}
-.popup-title {
-font-size: 42px;
-line-height: 1.1;
-margin-bottom: 24px;
-font-weight: 600;
-}
-.popup-input-group {
-margin-top: 32px;
-display: flex;
-flex-direction: column;
-gap: 16px;
-align-items: center;
-}
-.popup-input {
-width: 100%;
-max-width: 320px;
-background: rgba(255,255,255,0.05);
-border: 1px solid var(--uefi-border);
-padding: 14px 20px;
-border-radius: 8px;
-color: white;
-font-family: var(--font-sans);
-outline: none;
-}
-.popup-btn {
-background: white;
-color: black;
-border: none;
-padding: 14px 40px;
-border-radius: 50px;
-font-weight: 700;
-font-size: 14px;
-cursor: pointer;
-letter-spacing: 1px;
-transition: transform 0.2s;
-}
-.popup-btn:hover { transform: scale(1.05); }
+        ul {
+            list-style: none;
+        }
 
-/* === HERO SECTION === */
-.hero {
-position: relative;
-height: 100vh;
-min-height: 800px;
-display: flex;
-align-items: flex-end;
-padding: 80px 5%;
-}
-.hero-video-bg {
-position: absolute;
-top: 0; left: 0; width: 100%; height: 100%;
-object-fit: cover;
-z-index: -2;
-transform: translateZ(0);
-}
-.hero-overlay {
-position: absolute;
-top: 0; left: 0; width: 100%; height: 100%;
-background: radial-gradient(circle at 15% 80%, rgba(7, 14, 10, 0.75) 0%, rgba(7, 14, 10, 0) 55%);
-z-index: -1;
-}
-.hero-content {
-max-width: 700px;
-margin-bottom: 40px;
-text-shadow: 0 2px 16px rgba(0, 0, 0, 0.85);
-}
-.hero-title {
-font-size: 5vw;
-line-height: 1.1;
-font-weight: 600;
-margin-bottom: 24px;
-}
-@media (max-width: 768px) {
-.hero-title { font-size: 42px; }
-}
-.hero-desc {
-font-size: 18px;
-color: #cbd5e1;
-margin-bottom: 32px;
-max-width: 500px;
-}
-.btn-underline {
-font-family: var(--font-serif);
-font-size: 16px;
-font-weight: 700;
-letter-spacing: 2px;
-text-transform: uppercase;
-border-bottom: 2px solid white;
-padding-bottom: 4px;
-display: inline-block;
-transition: color 0.3s, border-color 0.3s;
-cursor: pointer;
-}
-.btn-underline:hover {
-color: var(--uefi-green);
-border-color: var(--uefi-green);
-}
+        .serif {
+            font-family: var(--font-serif);
+        }
 
-/* === LIBRARY SECTION === */
-.library-section {
-background-color: var(--uefi-darker);
-padding: 100px 5%;
-}
-.section-header-flex {
-display: flex;
-justify-content: space-between;
-align-items: flex-end;
-margin-bottom: 40px;
-border-bottom: 1px solid var(--uefi-border);
-padding-bottom: 20px;
-}
-.library-title {
-font-size: 48px;
-font-weight: 600;
-}
-.library-nav {
-display: flex;
-gap: 32px;
-overflow-x: auto;
-scrollbar-width: none;
-padding-bottom: 10px;
-margin-top: 24px;
-}
-.library-nav::-webkit-scrollbar { display: none; }
-.library-nav button {
-background: none;
-border: none;
-color: var(--uefi-text-muted);
-font-family: var(--font-serif);
-font-size: 18px;
-cursor: pointer;
-white-space: nowrap;
-transition: color 0.3s;
-}
-.library-nav button.active, .library-nav button:hover {
-color: white;
-}
-.grid-4 {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-gap: 24px;
-margin-top: 40px;
-}
-.module-card {
-background: var(--uefi-card);
-border-radius: var(--radius-md);
-overflow: hidden;
-transition: transform 0.3s;
-cursor: pointer;
-position: relative;
-display: flex;
-flex-direction: column;
-}
-.module-card:hover { 
-transform: translateY(-5px); 
-z-index: 10;
-}
-.module-img-container {
-width: 100%;
-height: 300px; /* Increased from 16/9 aspect-ratio to make images taller and fully visible */
-background-color: #1e3a2a;
-position: relative;
-}
-.module-img-container img {
-width: 100%; 
-height: 100%; 
-object-fit: cover; 
-object-position: top; /* Prevents heads from being cropped out on taller images */
-}
-.module-info {
-padding: 20px;
-max-height: 90px; /* Base height for title and tags */
-transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
-overflow: hidden;
-flex-grow: 1;
-}
-.module-card:hover .module-info {
-max-height: 400px; /* Expands container to accommodate longer descriptions on hover */
-}
-.module-instructor {
-font-family: var(--font-serif);
-font-size: 20px;
-font-weight: 600;
-margin-bottom: 4px;
-}
-.module-tags {
-font-size: 13px;
-color: var(--uefi-text-muted);
-}
+        .text-green {
+            color: var(--uefi-green);
+        }
 
-/* === FACULTY SECTION === */
-.faculty-section {
-background-color: var(--uefi-light);
-color: #0F172A;
-padding: 100px 5%;
-position: relative;
-}
-.faculty-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 60px;
-}
-.faculty-title {
-font-size: 56px;
-font-weight: 600;
-line-height: 1.1;
-}
-.faculty-subtitle {
-font-size: 18px;
-color: #64748B;
-margin-top: 12px;
-}
-.partner-logos {
-display: flex;
-gap: 20px;
-opacity: 0.5;
-}
-.partner-logos img { height: 40px; }
-.faculty-grid {
-display: flex;
-gap: 20px;
-overflow-x: auto;
-padding-bottom: 40px;
-scrollbar-width: none;
-}
-.faculty-grid::-webkit-scrollbar { display: none; }
-.faculty-card {
-min-width: 320px;
-height: 480px;
-border-radius: var(--radius-lg);
-position: relative;
-overflow: hidden;
-background: #e2e8f0;
-flex-shrink: 0;
-}
-.faculty-card img {
-width: 100%; height: 100%; object-fit: cover;
-}
-.faculty-card-overlay {
-position: absolute;
-bottom: 0; left: 0; width: 100%;
-background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-padding: 40px 24px 24px;
-color: white;
-}
-.faculty-name {
-font-size: 28px;
-font-weight: 600;
-margin-bottom: 8px;
-}
-.faculty-desc {
-font-size: 14px;
-color: #cbd5e1;
-margin-bottom: 16px;
-display: -webkit-box;
--webkit-line-clamp: 3;
--webkit-box-orient: vertical;
-overflow: hidden;
-}
-.faculty-link {
-font-size: 12px;
-letter-spacing: 2px;
-text-transform: uppercase;
-border-bottom: 1px solid white;
-padding-bottom: 2px;
-}
+        /* === TOP BANNER === */
+        .top-banner {
+            background-color: #0b3b24; /* Nice dark green */
+            color: white;
+            text-align: center;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
 
-/* STICKY ACTION BAR */
-.sticky-action-bar {
-position: absolute;
-bottom: -30px;
-left: 50%;
-transform: translateX(-50%);
-background: rgba(15, 23, 42, 0.85);
-backdrop-filter: blur(12px);
-border: 1px solid var(--uefi-border);
-padding: 12px 12px 12px 32px;
-border-radius: 50px;
-display: flex;
-align-items: center;
-gap: 24px;
-z-index: 10;
-box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-.sticky-price {
-font-family: var(--font-serif);
-font-size: 24px;
-color: white;
-font-weight: 600;
-}
-.sticky-price span { font-size: 14px; color: var(--uefi-text-muted); font-family: var(--font-sans); }
-.sticky-btn {
-background: rgba(255,255,255,0.1);
-color: white;
-border: 1px solid rgba(255,255,255,0.2);
-padding: 12px 32px;
-border-radius: 50px;
-font-size: 13px;
-font-weight: 700;
-letter-spacing: 1px;
-text-transform: uppercase;
-cursor: pointer;
-transition: all 0.3s;
-}
-.sticky-btn:hover {
-background: white;
-color: black;
-}
+        /* === NAVIGATION HEADER === */
+        header {
+            position: fixed;
+            top: 36px; /* Offset for the banner */
+            left: 0;
+            right: 0;
+            padding: 24px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(7, 14, 10, 0.9);
+            backdrop-filter: blur(5px);
+        }
 
-/* === FEATURES TABS SECTION === */
-.features-section {
-background-color: var(--uefi-light);
-color: #0F172A;
-padding: 120px 5%;
-display: flex;
-align-items: center;
-gap: 60px;
-}
-.features-content { flex: 1; }
-.features-visual { flex: 1; text-align: center; }
-.features-title {
-font-size: 56px;
-font-weight: 600;
-line-height: 1.1;
-margin-bottom: 16px;
-}
-.features-subtitle {
-font-size: 20px;
-color: #64748B;
-margin-bottom: 40px;
-}
-.tabs-container {
-background: white;
-border-radius: var(--radius-md);
-display: flex;
-padding: 8px;
-box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-margin-bottom: 24px;
-}
-.tab-btn {
-flex: 1;
-padding: 24px 16px;
-text-align: center;
-background: transparent;
-border: none;
-border-radius: 8px;
-cursor: pointer;
-font-weight: 600;
-color: #64748B;
-transition: all 0.3s;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 12px;
-}
-.tab-btn.active {
-background: #1e293b;
-color: white;
-}
-.features-visual img {
-width: 100%;
-max-width: 600px;
-border-radius: var(--radius-md);
-box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-}
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
 
-/* === STATS & CSS BAR CHART SECTION === */
-.stats-section {
-background-color: var(--uefi-light);
-color: #0F172A;
-padding: 80px 5% 120px;
-display: flex;
-align-items: center;
-gap: 60px;
-border-top: 1px solid var(--uefi-border-dark);
-}
-.stats-content { flex: 1.2; }
-.stats-chart {
-flex: 1;
-background: white;
-padding: 40px;
-border-radius: var(--radius-md);
-box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-.stats-title {
-font-size: 52px;
-font-weight: 600;
-line-height: 1.1;
-margin-bottom: 24px;
-}
-.stats-grid {
-display: flex;
-gap: 40px;
-margin-top: 40px;
-margin-bottom: 40px;
-}
-.stat-item p { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #64748B; margin-bottom: 8px; }
-.stat-item h4 { font-family: var(--font-serif); font-size: 28px; font-weight: 600; }
+        .logo img {
+            height: 44px;
+            width: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
 
-/* Pure CSS Bar Chart */
-.chart-container {
-height: 300px;
-display: flex;
-align-items: flex-end;
-gap: 10px;
-border-bottom: 1px solid var(--uefi-border-dark);
-border-left: 1px solid var(--uefi-border-dark);
-padding-left: 10px;
-position: relative;
-}
-.chart-bar {
-flex: 1;
-background: linear-gradient(to top, #0f172a, #334155);
-border-radius: 4px 4px 0 0;
-transform-origin: bottom;
-animation: growUp 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-.chart-bar.ghost { background: #e2e8f0; }
-@keyframes growUp {
-from { transform: scaleY(0); }
-to { transform: scaleY(1); }
-}
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            font-weight: 500;
+            font-size: 14px;
+        }
 
-/* === ENROLLMENT/TUITION CARD SECTION === */
-.enroll-section {
-position: relative;
-background-color: var(--uefi-darker);
-padding: 120px 5%;
-display: flex;
-align-items: center;
-justify-content: space-between;
-}
-.enroll-bg-silhouette {
-position: absolute;
-top: 0; left: 0; width: 50%; height: 100%;
-object-fit: cover;
-opacity: 0.3;
-z-index: 0;
-mask-image: linear-gradient(to right, black 50%, transparent 100%);
--webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
-}
-.enroll-text-side {
-position: relative;
-z-index: 1;
-flex: 1;
-}
-.enroll-title {
-font-size: 48px;
-font-weight: 600;
-margin-bottom: 40px;
-max-width: 400px;
-}
-.enroll-stats {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 30px;
-max-width: 400px;
-}
-.enroll-stats p { font-size: 15px; font-weight: 500; border-top: 1px solid var(--uefi-border); padding-top: 12px; }
-.enroll-card-side {
-position: relative;
-z-index: 1;
-flex: 1;
-display: flex;
-justify-content: flex-end;
-}
-.pricing-card {
-background: var(--uefi-light);
-color: #0F172A;
-padding: 60px 40px;
-border-radius: var(--radius-lg);
-text-align: center;
-max-width: 450px;
-width: 100%;
-box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-}
-.pricing-card img { height: 60px; margin-bottom: 24px; }
-.pricing-title { font-size: 32px; font-weight: 600; margin-bottom: 16px; }
-.pricing-desc {font-size: 15px; color: #64748B; margin-bottom: 32px; }
-.pricing-amount { font-family: var(--font-serif); font-size: 56px; font-weight: 600; margin-bottom: 32px; }
-.btn-solid-dark {
-background: #0F172A;
-color: white;
-width: 100%;
-padding: 18px;
-border-radius: 50px;
-border: none;
-font-weight: 700;
-font-size: 14px;
-letter-spacing: 1px;
-cursor: pointer;
-margin-bottom: 16px;
-transition: background 0.3s;
-}
-.btn-solid-dark:hover { background: var(--uefi-green); }
+        .nav-links a {
+            transition: color 0.3s;
+        }
 
-/* === QUOTE & FAQ SECTION === */
-.quote-section {
-background: var(--uefi-dark);
-padding: 100px 5%;
-text-align: center;
-}
-.quote-container {
-position: relative;
-max-width: 1200px;
-margin: 0 auto;
-border-radius: var(--radius-lg);
-overflow: hidden;
-height: 600px;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-.quote-bg {
-position: absolute;
-top: 0; left: 0; width: 100%; height: 100%;
-object-fit: cover;
-opacity: 0.4;
-}
-.quote-text {
-position: relative;
-z-index: 1;
-font-size: 42px;
-line-height: 1.3;
-max-width: 800px;
-padding: 40px;
-}
-.faq-section {
-background: var(--uefi-dark);
-padding: 80px 5% 120px;
-max-width: 900px;
-margin: 0 auto;
-}
-.faq-title {
-text-align: center;
-font-size: 48px;
-font-weight: 600;
-margin-bottom: 60px;
-}
-details {
-border-bottom: 1px solid var(--uefi-border);
-padding: 24px 0;
-}
-summary {
-font-size: 18px;
-font-weight: 500;
-cursor: pointer;
-list-style: none;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-summary::-webkit-details-marker { display: none; }
-summary::after {
-content: '+';
-font-size: 24px;
-font-weight: 300;
-color: var(--uefi-text-muted);
-}
-details[open] summary::after { content: '-'; }
-.faq-answer {
-margin-top: 16px;
-color: var(--uefi-text-muted);
-line-height: 1.7;
-}
+        .nav-links a:hover {
+            color: var(--uefi-green);
+        }
 
-/* === GOOGLE AUTH MODAL === */
-.modal-overlay {
-position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-background-color: rgba(7, 14, 10, 0.8);
-backdrop-filter: blur(8px);
-display: flex; justify-content: center; align-items: center;
-z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-}
-.modal-overlay.active { opacity: 1; pointer-events: auto; }
-.modal-container {
-background: var(--uefi-light);
-color: #0F172A;
-width: 100%; max-width: 480px;
-border-radius: var(--radius-lg);
-padding: 40px; position: relative;
-}
-.modal-tabs { display: flex; border-bottom: 1px solid var(--uefi-border-dark); margin-bottom: 24px; }
-.tab-btn-auth {
-flex: 1; padding: 12px; background: none; border: none; font-size: 16px;
-font-weight: 700; color: #64748B; cursor: pointer; border-bottom: 2px solid transparent;
-}
-.tab-btn-auth.active { color: var(--uefi-green); border-bottom-color: var(--uefi-green); }
-.form-input {
-width: 100%; padding: 14px; border: 1px solid var(--uefi-border-dark);
-border-radius: 8px; margin-bottom: 16px; font-family: var(--font-sans);
-}
-.hidden-pane { display: none !important; }
-</style>
+        .nav-links .enroll-btn {
+            border-bottom: 1px solid white;
+            padding-bottom: 2px;
+            transition: border-color 0.3s;
+        }
+
+        .nav-links .enroll-btn:hover {
+            border-color: var(--uefi-green);
+        }
+
+        /* Custom Nav Additions - ALIGNMENT FIX APPLIED HERE */
+        .dropdown {
+            position: relative;
+            display: flex; 
+            align-items: center;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 25px; /* Invisible bridge to maintain hover state */
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--uefi-card);
+            min-width: 220px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 100;
+            border-radius: 8px;
+            top: calc(100% + 15px);
+            left: 0;
+            padding: 10px 0;
+            border: 1px solid var(--uefi-border);
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255,255,255,0.05);
+            color: var(--uefi-green);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .capsule-btn {
+            background-color: var(--uefi-green);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--uefi-green);
+        }
+
+        .capsule-btn:hover {
+            background-color: transparent;
+            color: var(--uefi-green);
+        }
+
+        /* === 10-SECOND POPUP ALERT === */
+        #leadPopup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(7, 14, 10, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        #leadPopup.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .popup-content {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .popup-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: -1;
+            border-radius: var(--radius-lg);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .popup-close:hover {
+            color: var(--uefi-green);
+        }
+
+        .popup-subtitle {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--uefi-text-muted);
+            margin-bottom: 16px;
+        }
+
+        .popup-title {
+            font-size: 42px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .popup-input-group {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .popup-input {
+            width: 100%;
+            max-width: 320px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--uefi-border);
+            padding: 14px 20px;
+            border-radius: 8px;
+            color: white;
+            font-family: var(--font-sans);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .popup-input:focus {
+            border-color: var(--uefi-green);
+        }
+
+        .popup-btn {
+            background: white;
+            color: black;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: transform 0.2s;
+        }
+
+        .popup-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 800px;
+            display: flex;
+            align-items: flex-end;
+            padding: 80px 5%;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            transform: translateZ(0);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 15% 80%, rgba(7, 14, 10, 0.75) 0%, rgba(7, 14, 10, 0) 55%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.85);
+        }
+
+        .hero-title {
+            font-size: 5vw;
+            line-height: 1.1;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 42px;
+            }
+        }
+
+        .hero-desc {
+            font-size: 18px;
+            color: #cbd5e1;
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .btn-underline {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 2px solid white;
+            padding-bottom: 4px;
+            display: inline-block;
+            transition: color 0.3s, border-color 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-underline:hover {
+            color: var(--uefi-green);
+            border-color: var(--uefi-green);
+        }
+
+        /* === LIBRARY SECTION === */
+        .library-section {
+            background-color: var(--uefi-darker);
+            padding: 100px 5%;
+        }
+
+        .section-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--uefi-border);
+            padding-bottom: 20px;
+        }
+
+        .library-title {
+            font-size: 48px;
+            font-weight: 600;
+        }
+
+        .library-nav {
+            display: flex;
+            gap: 32px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 10px;
+            margin-top: 24px;
+        }
+
+        .library-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .library-nav button {
+            background: none;
+            border: none;
+            color: var(--uefi-text-muted);
+            font-family: var(--font-serif);
+            font-size: 18px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: color 0.3s;
+        }
+
+        .library-nav button.active,
+        .library-nav button:hover {
+            color: white;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .module-card {
+            background: var(--uefi-card);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            z-index: 10;
+        }
+
+        .module-img-container {
+            width: 100%;
+            height: 300px;
+            background-color: #1e3a2a;
+            position: relative;
+        }
+
+        .module-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .module-info {
+            padding: 20px;
+            max-height: 90px;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .module-card:hover .module-info {
+            max-height: 400px;
+        }
+
+        .module-instructor {
+            font-family: var(--font-serif);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .module-tags {
+            font-size: 13px;
+            color: var(--uefi-text-muted);
+            text-transform: uppercase;
+        }
+
+        .module-desc {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        /* === FACULTY SECTION === */
+        .faculty-section {
+            background-color: var(--uefi-light);
+            color: #0F172A;
+            padding: 100px 5%;
+            position: relative;
+        }
+
+        .faculty-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .faculty-title {
+            font-size: 56px;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .faculty-subtitle {
+            font-size: 18px;
+            color: #64748B;
+            margin-top: 12px;
+        }
+
+        .partner-logos {
+            display: flex;
+            gap: 20px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        
+        .partner-logos:hover {
+            opacity: 1;
+        }
+
+        .partner-logos img {
+            height: 40px;
+        }
+
+        .faculty-grid {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 40px;
+            scrollbar-width: none;
+        }
+
+        .faculty-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .faculty-card {
+            min-width: 320px;
+            height: 480px;
+            border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
+            background: #e2e8f0;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+        
+        .faculty-card:hover {
+            transform: scale(1.02);
+        }
+
+        .faculty-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .faculty-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 40px 24px 24px;
+            color: white;
+        }
+
+        .faculty-name {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .faculty-desc {
+            font-size: 14px;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .faculty-link {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 1px solid white;
+            padding-bottom: 2px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+        
+        .faculty-link:hover {
+            color: var(--uefi-green);
+            border-color: var(--uefi-green);
+        }
+
+        /* STICKY ACTION BAR */
+        .sticky-action-bar {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--uefi-border);
+            padding: 12px 12px 12px 32px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .sticky-price {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sticky-price span {
+            font-size: 14px;
+            color: var(--uefi-text-muted);
+            font-family: var(--font-sans);
+        }
+
+        .sticky-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sticky-btn:hover {
+            background: white;
+            color: black;
+        }
+
+        /* === FEATURES TABS SECTION === */
+        .features-section {
+            background-color: var(--uefi-light);
+            color: #0F172A;
+            padding: 120px 5%;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .features-content {
+            flex: 1;
+        }
+
+        .features-visual {
+            flex: 1;
+            text-align: center;
+        }
+
+        .features-title {
+            font-size: 56px;
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .features-subtitle {
+            font-size: 20px;
+            color: #64748B;
+            margin-bottom: 40px;
+        }
+
+        .tabs-container {
+            background: white;
+            border-radius: var(--radius-md);
+            display: flex;
+            padding: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 24px 16px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748B;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tab-btn.active {
+            background: #1e293b;
+            color: white;
+        }
+
+        .features-visual img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        /* === STATS & CSS BAR CHART SECTION === */
+        .stats-section {
+            background-color: var(--uefi-light);
+            color: #0F172A;
+            padding: 80px 5% 120px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            border-top: 1px solid var(--uefi-border-dark);
+        }
+
+        .stats-content {
+            flex: 1.2;
+        }
+
+        .stats-chart {
+            flex: 1;
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .stats-title {
+            font-size: 52px;
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .stats-grid {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .stat-item p {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748B;
+            margin-bottom: 8px;
+        }
+
+        .stat-item h4 {
+            font-family: var(--font-serif);
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        /* Pure CSS Bar Chart */
+        .chart-container {
+            height: 300px;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            border-bottom: 1px solid var(--uefi-border-dark);
+            border-left: 1px solid var(--uefi-border-dark);
+            padding-left: 10px;
+            position: relative;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #0f172a, #334155);
+            border-radius: 4px 4px 0 0;
+            transform-origin: bottom;
+            animation: growUp 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        .chart-bar.ghost {
+            background: #e2e8f0;
+        }
+
+        @keyframes growUp {
+            from {
+                transform: scaleY(0);
+            }
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        /* === ENROLLMENT/TUITION CARD SECTION === */
+        .enroll-section {
+            position: relative;
+            background-color: var(--uefi-darker);
+            padding: 120px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .enroll-bg-silhouette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: 0;
+            mask-image: linear-gradient(to right, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
+        }
+
+        .enroll-text-side {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .enroll-title {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            max-width: 400px;
+        }
+
+        .enroll-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 400px;
+        }
+
+        .enroll-stats p {
+            font-size: 15px;
+            font-weight: 500;
+            border-top: 1px solid var(--uefi-border);
+            padding-top: 12px;
+        }
+
+        .enroll-card-side {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .pricing-card {
+            background: var(--uefi-light);
+            color: #0F172A;
+            padding: 60px 40px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .pricing-card img {
+            height: 60px;
+            margin-bottom: 24px;
+        }
+
+        .pricing-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .pricing-desc {
+            font-size: 15px;
+            color: #64748B;
+            margin-bottom: 32px;
+        }
+
+        .pricing-amount {
+            font-family: var(--font-serif);
+            font-size: 56px;
+            font-weight: 600;
+            margin-bottom: 32px;
+        }
+
+        .btn-solid-dark {
+            background: #0F172A;
+            color: white;
+            width: 100%;
+            padding: 18px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: background 0.3s;
+        }
+
+        .btn-solid-dark:hover {
+            background: var(--uefi-green);
+        }
+
+        /* === QUOTE & FAQ SECTION === */
+        .quote-section {
+            background: var(--uefi-dark);
+            padding: 100px 5%;
+            text-align: center;
+        }
+
+        .quote-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quote-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .quote-text {
+            position: relative;
+            z-index: 1;
+            font-size: 42px;
+            line-height: 1.3;
+            max-width: 800px;
+            padding: 40px;
+        }
+
+        .faq-section {
+            background: var(--uefi-dark);
+            padding: 80px 5% 120px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 60px;
+        }
+
+        details {
+            border-bottom: 1px solid var(--uefi-border);
+            padding: 24px 0;
+        }
+
+        summary {
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        summary:hover {
+            color: var(--uefi-green);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--uefi-text-muted);
+        }
+
+        details[open] summary::after {
+            content: '-';
+        }
+
+        .faq-answer {
+            margin-top: 16px;
+            color: var(--uefi-text-muted);
+            line-height: 1.7;
+        }
+
+        /* === GOOGLE AUTH MODAL === */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(7, 14, 10, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background: var(--uefi-light);
+            color: #0F172A;
+            width: 100%;
+            max-width: 480px;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            position: relative;
+        }
+
+        .modal-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--uefi-border-dark);
+            margin-bottom: 24px;
+        }
+
+        .tab-btn-auth {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            color: #64748B;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn-auth.active {
+            color: var(--uefi-green);
+            border-bottom-color: var(--uefi-green);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--uefi-border-dark);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-family: var(--font-sans);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus {
+            border-color: var(--uefi-green);
+        }
+
+        .hidden-pane {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
-<!-- TOP BANNER -->
-<div class="top-banner">We call You Come and Learn!</div>
-<!-- HEADER -->
-<header>
-<a href="#" class="logo">
-<img src="assets/GL.PNG" alt="UEFI Global">
-</a>
-<div class="nav-links">
-<a href="learners.html">Learners</a>
-<a href="educators.html">Educators</a>
-<!-- Partner with Us Dropdown -->
-<div class="dropdown">
-<a href="#" style="cursor: pointer;">Partner with Us ▼</a>
-<div class="dropdown-content">
-<a href="#">Become a sponsor</a>
-<a href="#">Provide mentorship</a>
-<a href="#">Support our Growth</a>
-</div>
-</div>
-<a href="#" class="enroll-btn" onclick="openAuthModal('login')">Sign In</a>
-<!-- Start Learning Capsule Button -->
-<a href="home.html" class="capsule-btn">Start Learning</a>
-</div>
-</header>
+    <!-- TOP BANNER -->
+    <div class="top-banner">We call You Come and Learn!</div>
 
-<!-- 10 SECOND POPUP ALERT -->
-<div id="leadPopup">
-<img src="assets/FAM.PNG" class="popup-bg-img" alt="Students">
-<div class="popup-content">
-<button class="popup-close" onclick="closePopup()">&times;</button>
-<div class="popup-subtitle">How to Plan Your Future</div>
-<h2 class="popup-title serif">WATCH THE FIRST MASTERCLASS FREE</h2>
-<p style="font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">By Top Industry Experts</p>
-<p style="font-size: 12px; color: var(--uefi-text-muted); margin-top: 8px;">Sign up for email notifications</p>
-<div class="popup-input-group">
-<input type="email" class="popup-input" placeholder="Email Address" id="popupEmail">
-<button class="popup-btn" onclick="continueFromPopup()">CONTINUE</button>
-</div>
-</div>
-</div>
+    <!-- HEADER -->
+    <header>
+        <a href="#" class="logo">
+            <img src="assets/GL.PNG" alt="UEFI Global">
+        </a>
+        
+        <div class="nav-links">
+            <a href="learners.html">Learners</a>
+            <a href="educators.html">Educators</a>
+            
+            <!-- Partner with Us Dropdown -->
+            <div class="dropdown">
+                <a href="#" style="cursor: pointer;">Partner with Us ▼</a>
+                <div class="dropdown-content">
+                    <a href="#">Become a sponsor</a>
+                    <a href="#">Provide mentorship</a>
+                    <a href="#">Support our Growth</a>
+                </div>
+            </div>
+            
+            <a href="#" class="enroll-btn" onclick="openAuthModal('login')">Sign In</a>
+            <!-- Start Learning Capsule Button -->
+            <a href="home.html" class="capsule-btn">Start Learning</a>
+        </div>
+    </header>
 
-<!-- HERO SECTION -->
-<section class="hero">
-<video class="hero-video-bg" autoplay loop muted playsinline>
-<source src="assets/WE CALL YOU.mp4" type="video/mp4">
-</video>
-<div class="hero-overlay"></div>
-<div class="hero-content">
-<h1 class="hero-title serif">Learn How to Think, <br>Not What to Think.</h1>
-<p class="hero-desc">A global academy dedicated to intellectual freedom led by distinguished mentors from Kenya, Harvard, Oxford, and other
-great institutions.</p>
-<span class="btn-underline" onclick="openAuthModal('signup')">JOIN THE ACADEMY</span>
-</div>
-</section>
+    <!-- 10 SECOND POPUP ALERT -->
+    <div id="leadPopup">
+        <img src="assets/FAM.PNG" class="popup-bg-img" alt="Students">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">&times;</button>
+            <div class="popup-subtitle">How to Plan Your Future</div>
+            <h2 class="popup-title serif">WATCH THE FIRST MASTERCLASS FREE</h2>
+            <p style="font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">By Top Industry Experts</p>
+            <p style="font-size: 12px; color: var(--uefi-text-muted); margin-top: 8px;">Sign up for email notifications</p>
+            <div class="popup-input-group">
+                <input type="email" class="popup-input" placeholder="Email Address" id="popupEmail">
+                <button class="popup-btn" onclick="continueFromPopup()">CONTINUE</button>
+            </div>
+        </div>
+    </div>
 
-<!-- LIBRARY SECTION -->
-<section class="library-section">
-<div class="section-header-flex">
-<h2 class="library-title serif">Every child deserves the chance to learn.</h2>
-<span class="btn-underline" style="font-size: 12px;">EXPLORE LIBRARY</span>
-</div>
-<div class="library-nav">
-<button class="active">CBE Tracks</button>
-<button>Tech Hub</button>
-<button>University Prep</button>
-<button>Mentorship</button>
-<button>Al Tutoring</button>
-</div>
-<div class="grid-4">
-<div class="module-card">
-<div class="module-img-container">
-<img src="assets/introduction_image.png" alt="Course 1">
-</div>
-<div class="module-info">
-<h3 class="module-instructor">PYTHON PROGRAMMING</h3>
-<p class="module-tags">TECH HUB</p>
-<!-- Added extended description placeholder for hover expansion -->
-<div class="module-desc" style="margin-top: 10px; font-size: 14px; color: #cbd5e1;">Master the fundamentals of Python to build robust applications and scale your engineering potential.</div>
-</div>
-</div>
-<div class="module-card">
-<div class="module-img-container">
-<img src="assets/BIOLOGY IMAGE.jpg" alt="Course 2">
-</div>
-<div class="module-info">
-<h3 class="module-instructor">CBE BIOLOGY GRADE 10-11</h3>
-<p class="module-tags">BIOLOGY</p>
-<!-- Added extended description placeholder for hover expansion -->
-<div class="module-desc" style="margin-top: 10px; font-size: 14px; color: #cbd5e1;">Explore the intricacies of living organisms in this comprehensive biology framework mapped to global standards.</div>
-</div>
-</div>
-<div class="module-card">
-<div class="module-img-container">
-<img src="assets/ICT GURU.png" alt="Course 3">
-</div>
-<div class="module-info">
-<h3 class="module-instructor">DATA ANALYTICS </h3>
-<p class="module-tags">Al & DATA SCIENCE </p>
-<!-- Added extended description placeholder for hover expansion -->
-<div class="module-desc" style="margin-top: 10px; font-size: 14px; color: #cbd5e1;">Unlock powerful insights from raw data using advanced analytics and visualization techniques.</div>
-</div>
-</div>
-<div class="module-card">
-<div class="module-img-container">
-<img src="assets/LYNN.png" alt="Course 4">
-</div>
-<div class="module-info">
-<h3 class="module-instructor">UEFI GO GIRLS</h3>
-<p class="module-tags">Leadership Connect</p>
-<!-- Added extended description placeholder for hover expansion -->
-<div class="module-desc" style="margin-top: 10px; font-size: 14px; color: #cbd5e1;">Empowering the next generation of female leaders through mentorship, connection, and real-world skills.</div>
-</div>
-</div>
-</div>
-</section>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <video class="hero-video-bg" autoplay loop muted playsinline>
+            <source src="assets/WE CALL YOU.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title serif">Learn How to Think, <br>Not What to Think.</h1>
+            <p class="hero-desc">A global academy dedicated to intellectual freedom led by distinguished mentors from Kenya, Harvard, Oxford, and other great institutions.</p>
+            <span class="btn-underline" onclick="openAuthModal('signup')">JOIN THE ACADEMY</span>
+        </div>
+    </section>
 
-<!-- FACULTY SECTION -->
-<section class="faculty-section">
-<div class="faculty-header">
-<div>
-<h2 class="faculty-title serif">Meet our faculty.</h2>
-<p class="faculty-subtitle">Our faculty is composed of some of the world's most respected minds.</p>
-<br>
-<span class="btn-underline" style="color: black; border-color: black;">THE PROFESSORS</span>
-</div>
-<div class="partner-logos">
-<img src="assets/ecultures-logo.png" alt="e-Cultures Kenya">
-<img src="assets/ALAL MATHEMATICA .png" alt="ALAL MATHEMATICA">
-<img src="assets/quantforge-logo.png" alt="Quant Forge">
-</div>
-</div>
-<div class="faculty-grid">
-<div class="faculty-card">
-<img src="assets/CEO.PNG" alt="ELISHA">
-<div class="faculty-card-overlay">
-<h3 class="faculty-name serif">Elisha Alal</h3>
-<p class="faculty-desc">The founder and developer of the UEFI Global</p>
-<a href="https://www.linkedin.com/in/elisha-o-alal-131614318/" target="_blank" class="faculty-link">VIEW PROFILE</a>
-</div>
-</div>
-<div class="faculty-card">
-<img src="assets/Naylan.PNG" alt="NAYLAN">
-<div class="faculty-card-overlay">
-<h3 class="faculty-name serif">NAYLAN AGUNNA</h3>
-<p class="faculty-desc">Acclaimed Photographer, designer, and musician.</p>
-<a href="https://www.facebook.com/profile.php?id=100063778426819&mibextid=ZbWKWL" target="_blank" class="faculty-link">VIEW
-PROFILE</a>
-</div>
-</div>
-<div class="faculty-card">
-<img src="assets/Wilson.PNG" alt="Wilson Alal">
-<div class="faculty-card-overlay">
-<h3 class="faculty-name serif">Wilson Ogunna Sr.</h3>
-<p class="faculty-desc">The founder of the Venerable Men in the UEFI Global</p>
-<span class="faculty-link">VIEW PROFILE</span>
-</div>
-</div>
-<div class="faculty-card">
-<img src="assets/Anto.PNG" alt="ANTHONINAH">
-<div class="faculty-card-overlay">
-<h3 class="faculty-name serif">'Mama' Anthonina Akumu</h3>
-<p class="faculty-desc">Celebrated founder of the UEFI Go Girls fostering the growth of girls and women in Kenya.</p>
-<span class="faculty-link">VIEW PROFILE</span>
-</div>
-</div>
-</div>
-<!-- STICKY ACTION BAR -->
-<div class="sticky-action-bar">
-<div class="sticky-price">Free <span>/track</span></div>
-<button class="sticky-btn" onclick="openAuthModal('signup')">JOIN NOW !</button>
-</div>
-</section>
+    <!-- LIBRARY SECTION -->
+    <section class="library-section">
+        <div class="section-header-flex">
+            <h2 class="library-title serif">Every child deserves the chance to learn.</h2>
+            <span class="btn-underline" style="font-size: 12px;">EXPLORE LIBRARY</span>
+        </div>
+        
+        <div class="library-nav">
+            <button class="active">CBE Tracks</button>
+            <button>Tech Hub</button>
+            <button>University Prep</button>
+            <button>Mentorship</button>
+            <button>AI Tutoring</button>
+        </div>
+        
+        <div class="grid-4">
+            <!-- Course 1 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="assets/introduction_image.png" alt="Course 1">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">PYTHON PROGRAMMING</h3>
+                    <p class="module-tags">TECH HUB</p>
+                    <div class="module-desc">Master the fundamentals of Python to build robust applications and scale your engineering potential.</div>
+                </div>
+            </div>
+            
+            <!-- Course 2 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="assets/BIOLOGY IMAGE.jpg" alt="Course 2">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">CBE BIOLOGY GRADE 10-11</h3>
+                    <p class="module-tags">BIOLOGY</p>
+                    <div class="module-desc">Explore the intricacies of living organisms in this comprehensive biology framework mapped to global standards.</div>
+                </div>
+            </div>
+            
+            <!-- Course 3 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="assets/ICT GURU.png" alt="Course 3">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">DATA ANALYTICS</h3>
+                    <p class="module-tags">AI & DATA SCIENCE</p>
+                    <div class="module-desc">Unlock powerful insights from raw data using advanced analytics and visualization techniques.</div>
+                </div>
+            </div>
+            
+            <!-- Course 4 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="assets/LYNN.png" alt="Course 4">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">UEFI GO GIRLS</h3>
+                    <p class="module-tags">Leadership Connect</p>
+                    <div class="module-desc">Empowering the next generation of female leaders through mentorship, connection, and real-world skills.</div>
+                </div>
+            </div>
+            
+            <!-- Expanded Library Content to meet requirements -->
+            <!-- Course 5 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=CALCULUS" alt="Calculus">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">ADVANCED CALCULUS</h3>
+                    <p class="module-tags">MATHEMATICS</p>
+                    <div class="module-desc">Dive deep into limits, derivatives, integrals, and the fundamental theorems of calculus.</div>
+                </div>
+            </div>
+            
+            <!-- Course 6 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=HISTORY" alt="History">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">WORLD HISTORY G10</h3>
+                    <p class="module-tags">HUMANITIES</p>
+                    <div class="module-desc">A comprehensive chronological journey mapping the rise and fall of major global civilizations.</div>
+                </div>
+            </div>
+            
+            <!-- Course 7 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=FINANCE" alt="Finance">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">FINANCIAL LITERACY</h3>
+                    <p class="module-tags">LIFE SKILLS</p>
+                    <div class="module-desc">Equipping students with essential tools for budgeting, investing, and understanding modern economies.</div>
+                </div>
+            </div>
+            
+            <!-- Course 8 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=PHYSICS" alt="Physics">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">PHYSICS G11</h3>
+                    <p class="module-tags">NATURAL SCIENCES</p>
+                    <div class="module-desc">Analyze mechanics, thermodynamics, and quantum concepts to understand the laws governing our universe.</div>
+                </div>
+            </div>
+            
+            <!-- Course 9 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=CHEMISTRY" alt="Chemistry">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">CHEMISTRY G11</h3>
+                    <p class="module-tags">NATURAL SCIENCES</p>
+                    <div class="module-desc">Explore atomic structure, chemical bonds, reactions, and the periodic table in this interactive module.</div>
+                </div>
+            </div>
+            
+            <!-- Course 10 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=WEB+DEV" alt="Web Dev">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">WEB DEVELOPMENT</h3>
+                    <p class="module-tags">TECH HUB</p>
+                    <div class="module-desc">Learn HTML, CSS, JavaScript, and modern frameworks to build dynamic, responsive web applications.</div>
+                </div>
+            </div>
+            
+            <!-- Course 11 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=MOBILE+APP" alt="Mobile App">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">MOBILE APP DEV</h3>
+                    <p class="module-tags">TECH HUB</p>
+                    <div class="module-desc">Build cross-platform applications for iOS and Android using modern development environments.</div>
+                </div>
+            </div>
+            
+            <!-- Course 12 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=ROBOTICS" alt="Robotics">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">ROBOTICS & IOT</h3>
+                    <p class="module-tags">ENGINEERING</p>
+                    <div class="module-desc">Hands-on experience with microcontrollers, sensors, and basic robotic automation systems.</div>
+                </div>
+            </div>
+            
+            <!-- Course 13 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=WRITING" alt="Creative Writing">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">CREATIVE WRITING</h3>
+                    <p class="module-tags">ARTS & LETTERS</p>
+                    <div class="module-desc">Develop your narrative voice through poetry, prose, and structured storytelling methodologies.</div>
+                </div>
+            </div>
+            
+            <!-- Course 14 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=SPEAKING" alt="Public Speaking">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">PUBLIC SPEAKING</h3>
+                    <p class="module-tags">LEADERSHIP</p>
+                    <div class="module-desc">Conquer stage fright and articulate complex ideas clearly to diverse audiences worldwide.</div>
+                </div>
+            </div>
+            
+            <!-- Course 15 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=ECONOMICS" alt="Economics">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">ECONOMICS 101</h3>
+                    <p class="module-tags">SOCIAL SCIENCES</p>
+                    <div class="module-desc">Understand macroeconomic trends, supply and demand, and global trade infrastructures.</div>
+                </div>
+            </div>
+            
+            <!-- Course 16 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=GEOGRAPHY" alt="Geography">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">GEOGRAPHY G10</h3>
+                    <p class="module-tags">SOCIAL SCIENCES</p>
+                    <div class="module-desc">Investigate physical landscapes, climate change, and human geographical distribution.</div>
+                </div>
+            </div>
+            
+            <!-- Course 17 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=ART+HISTORY" alt="Art History">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">ART HISTORY</h3>
+                    <p class="module-tags">HUMANITIES</p>
+                    <div class="module-desc">Trace the evolution of human expression from ancient cave paintings to modern abstract works.</div>
+                </div>
+            </div>
+            
+            <!-- Course 18 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=MUSIC" alt="Music Theory">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">MUSIC THEORY</h3>
+                    <p class="module-tags">FINE ARTS</p>
+                    <div class="module-desc">Decode the universal language of music, exploring harmony, rhythm, and composition rules.</div>
+                </div>
+            </div>
+            
+            <!-- Course 19 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=ENVIRONMENT" alt="Environmental">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">ENVIRONMENTAL SCI</h3>
+                    <p class="module-tags">NATURAL SCIENCES</p>
+                    <div class="module-desc">Tackle pressing ecological issues and learn sustainable practices for preserving ecosystems.</div>
+                </div>
+            </div>
+            
+            <!-- Course 20 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=AI+ML" alt="Machine Learning">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">MACHINE LEARNING</h3>
+                    <p class="module-tags">AI & DATA SCIENCE</p>
+                    <div class="module-desc">Dive into neural networks, supervised learning, and predictive modeling algorithms.</div>
+                </div>
+            </div>
+            
+            <!-- Course 21 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=BLOCKCHAIN" alt="Blockchain">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">BLOCKCHAIN BASICS</h3>
+                    <p class="module-tags">TECH HUB</p>
+                    <div class="module-desc">Demystify decentralized ledgers, smart contracts, and Web3 application architectures.</div>
+                </div>
+            </div>
+            
+            <!-- Course 22 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=CYBERSECURITY" alt="Cybersecurity">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">CYBERSECURITY</h3>
+                    <p class="module-tags">TECH HUB</p>
+                    <div class="module-desc">Protect digital assets by mastering network defense, encryption, and threat analysis.</div>
+                </div>
+            </div>
+            
+            <!-- Course 23 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=3D+ANIMATION" alt="3D Animation">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">3D ANIMATION</h3>
+                    <p class="module-tags">CREATIVE TECH</p>
+                    <div class="module-desc">Bring characters to life utilizing industry-standard rendering and rigging software.</div>
+                </div>
+            </div>
+            
+            <!-- Course 24 -->
+            <div class="module-card">
+                <div class="module-img-container">
+                    <img src="https://via.placeholder.com/600x800/1e3a2a/ffffff?text=GAME+DESIGN" alt="Game Design">
+                </div>
+                <div class="module-info">
+                    <h3 class="module-instructor">GAME DESIGN</h3>
+                    <p class="module-tags">CREATIVE TECH</p>
+                    <div class="module-desc">Prototype, playtest, and polish interactive digital experiences from scratch.</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- FEATURES SECTION -->
-<section class="features-section">
-<div class="features-content">
-<h2 class="features-title serif">Higher education, <br>as it should be.</h2>
-<p class="features-subtitle">Courses, discussions, downloads, and discovery.</p>
-<div class="tabs-container">
-<button class="tab-btn active" onclick="switchTab(this, 'ui-courses.jpg')">
-<svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/></svg>
-<span style="font-size: 13px;">All your courses in one place</span>
-</button>
-<button class="tab-btn" onclick="switchTab(this, 'ui-tools.jpg')">
-<svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg>
-<span style="font-size: 13px;">Tools for deeper learning</span>
-</button>
-<button class="tab-btn" onclick="switchTab(this, 'ui-social.jpg')">
-<svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4
-4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-<span style="font-size: 13px;">A curated social space</span>
-</button>
-</div>
-<p style="text-align: center; color: #64748B; font-size: 14px;">Learn anywhere. Speed up or slow down. Watch on your laptop, or listen like a
-podcast on your phone.</p>
-</div>
-<div class="features-visual">
-<img src="assets/UEFI Grad 12.jpg" id="featureImage" alt="App Interface">
-</div>
-</section>
+    <!-- FACULTY SECTION -->
+    <section class="faculty-section">
+        <div class="faculty-header">
+            <div>
+                <h2 class="faculty-title serif">Meet our faculty.</h2>
+                <p class="faculty-subtitle">Our faculty is composed of some of the world's most respected minds.</p>
+                <br>
+                <span class="btn-underline" style="color: black; border-color: black;">THE PROFESSORS</span>
+            </div>
+            <div class="partner-logos">
+                <img src="assets/ecultures-logo.png" alt="e-Cultures Kenya">
+                <img src="assets/ALAL MATHEMATICA.png" alt="ALAL MATHEMATICA">
+                <img src="assets/quantforge-logo.png" alt="Quant Forge">
+            </div>
+        </div>
+        
+        <div class="faculty-grid">
+            <!-- Original Faculty 1 -->
+            <div class="faculty-card">
+                <img src="assets/CEO.PNG" alt="ELISHA">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">Elisha Alal</h3>
+                    <p class="faculty-desc">The founder and developer of the UEFI Global</p>
+                    <a href="https://www.linkedin.com/in/elisha-o-alal-131614318/" target="_blank" class="faculty-link">VIEW PROFILE</a>
+                </div>
+            </div>
+            
+            <!-- Original Faculty 2 -->
+            <div class="faculty-card">
+                <img src="assets/Naylan.PNG" alt="NAYLAN">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">NAYLAN AGUNNA</h3>
+                    <p class="faculty-desc">Acclaimed Photographer, designer, and musician.</p>
+                    <a href="https://www.facebook.com/profile.php?id=100063778426819&mibextid=ZbWKWL" target="_blank" class="faculty-link">VIEW PROFILE</a>
+                </div>
+            </div>
+            
+            <!-- Original Faculty 3 -->
+            <div class="faculty-card">
+                <img src="assets/Wilson.PNG" alt="Wilson Alal">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">Wilson Ogunna Sr.</h3>
+                    <p class="faculty-desc">The founder of the Venerable Men in the UEFI Global</p>
+                    <span class="faculty-link">VIEW PROFILE</span>
+                </div>
+            </div>
+            
+            <!-- Original Faculty 4 -->
+            <div class="faculty-card">
+                <img src="assets/Anto.PNG" alt="ANTHONINAH">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">'Mama' Anthonina Akumu</h3>
+                    <p class="faculty-desc">Celebrated founder of the UEFI Go Girls fostering the growth of girls and women in Kenya.</p>
+                    <span class="faculty-link">VIEW PROFILE</span>
+                </div>
+            </div>
+            
+            <!-- Expanded Faculty 5 -->
+            <div class="faculty-card">
+                <img src="https://via.placeholder.com/400x600/1e293b/ffffff?text=Sarah+Jenkins" alt="Sarah">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">Dr. Sarah Jenkins</h3>
+                    <p class="faculty-desc">Award-winning physicist researching quantum mechanics and advanced materials engineering.</p>
+                    <span class="faculty-link">VIEW PROFILE</span>
+                </div>
+            </div>
+            
+            <!-- Expanded Faculty 6 -->
+            <div class="faculty-card">
+                <img src="https://via.placeholder.com/400x600/1e293b/ffffff?text=Michael+Chang" alt="Michael">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">Prof. Michael Chang</h3>
+                    <p class="faculty-desc">Pioneer in artificial neural networks and lead architect of global data ethics consortiums.</p>
+                    <span class="faculty-link">VIEW PROFILE</span>
+                </div>
+            </div>
+            
+            <!-- Expanded Faculty 7 -->
+            <div class="faculty-card">
+                <img src="https://via.placeholder.com/400x600/1e293b/ffffff?text=Elena+Rostova" alt="Elena">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">Dr. Elena Rostova</h3>
+                    <p class="faculty-desc">Acclaimed pure mathematician specializing in algebraic topology and cryptography algorithms.</p>
+                    <span class="faculty-link">VIEW PROFILE</span>
+                </div>
+            </div>
+            
+            <!-- Expanded Faculty 8 -->
+            <div class="faculty-card">
+                <img src="https://via.placeholder.com/400x600/1e293b/ffffff?text=David+Ochieng" alt="David">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">Mr. David Ochieng</h3>
+                    <p class="faculty-desc">Historian and author focused on pre-colonial African societies and modern geopolitical shifts.</p>
+                    <span class="faculty-link">VIEW PROFILE</span>
+                </div>
+            </div>
+            
+            <!-- Expanded Faculty 9 -->
+            <div class="faculty-card">
+                <img src="https://via.placeholder.com/400x600/1e293b/ffffff?text=Amina+Yusuf" alt="Amina">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">Ms. Amina Yusuf</h3>
+                    <p class="faculty-desc">Celebrated poet and literature professor exploring contemporary African narratives.</p>
+                    <span class="faculty-link">VIEW PROFILE</span>
+                </div>
+            </div>
+            
+            <!-- Expanded Faculty 10 -->
+            <div class="faculty-card">
+                <img src="https://via.placeholder.com/400x600/1e293b/ffffff?text=Robert+Vance" alt="Robert">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">Dr. Robert Vance</h3>
+                    <p class="faculty-desc">Macro-economist advising international bodies on developing world fiscal policy and growth.</p>
+                    <span class="faculty-link">VIEW PROFILE</span>
+                </div>
+            </div>
+            
+            <!-- Expanded Faculty 11 -->
+            <div class="faculty-card">
+                <img src="https://via.placeholder.com/400x600/1e293b/ffffff?text=Li+Wei" alt="Li">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">Dr. Li Wei</h3>
+                    <p class="faculty-desc">Leading researcher in biotechnology and genome editing pushing boundaries in genetic sciences.</p>
+                    <span class="faculty-link">VIEW PROFILE</span>
+                </div>
+            </div>
+            
+            <!-- Expanded Faculty 12 -->
+            <div class="faculty-card">
+                <img src="https://via.placeholder.com/400x600/1e293b/ffffff?text=Maria+Gonzalez" alt="Maria">
+                <div class="faculty-card-overlay">
+                    <h3 class="faculty-name serif">Maria Gonzalez</h3>
+                    <p class="faculty-desc">Environmental activist and sustainability advocate reshaping corporate green policies globally.</p>
+                    <span class="faculty-link">VIEW PROFILE</span>
+                </div>
+            </div>
+        </div>
 
-<!-- STATS/CHART SECTION -->
-<section class="stats-section">
-<div class="stats-content">
-<h2 class="stats-title serif">Scaling Educational Outcomes Globally.</h2>
-<p style="color: #64748B; font-size: 18px;">UEFI Global offers world-class structural tracks without the institutional cost barrier.</p>
-<div class="stats-grid">
-<div class="stat-item">
-<p>Learners Affected</p>
-<h4 class="serif">120,000+</h4>
-</div>
-<div class="stat-item">
-<p>Transition Rate</p>
-<h4 class="serif">98.4%</h4>
-</div>
-<div class="stat-item">
-<p>Annual Growth Rate</p>
-<h4 class="serif">+15.2%</h4>
-</div>
-</div>
-<span class="btn-underline" style="color: black; border-color: black;" onclick="openAuthModal('signup')">EXPLORE THE ALTERNATIVE</span>
-</div>
-<div class="stats-chart">
-<div class="chart-container">
-<div class="chart-bar" style="height: 20%;"></div>
-<div class="chart-bar" style="height: 25%;"></div>
-<div class="chart-bar" style="height: 35%;"></div>
-<div class="chart-bar" style="height: 45%;"></div>
-<div class="chart-bar" style="height: 50%;"></div>
-<div class="chart-bar" style="height: 60%;"></div>
-<div class="chart-bar" style="height: 70%;"></div>
-<div class="chart-bar" style="height: 85%;"></div>
-<div class="chart-bar ghost" style="height: 95%;"></div>
-<div class="chart-bar ghost" style="height: 100%;"></div>
-</div>
-<div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 12px; color: #94a3b8;">
-<span>2022</span><span>2024</span><span>2026</span><span>2028</span><span>2030</span>
-</div>
-</div>
-</section>
+        <!-- STICKY ACTION BAR -->
+        <div class="sticky-action-bar">
+            <div class="sticky-price">Free <span>/track</span></div>
+            <button class="sticky-btn" onclick="openAuthModal('signup')">JOIN NOW !</button>
+        </div>
+    </section>
 
-<!-- ENROLLMENT SECTION -->
-<section class="enroll-section">
-<img src="assets/UEFI Grad .jpg" class="enroll-bg-silhouette" alt="Teacher">
-<div class="enroll-text-side">
-<h2 class="enroll-title serif">Enroll in UEFI Global today</h2>
-<div class="enroll-stats">
-<p>New Courses<br>Monthly</p>
-<p>World-class<br>Faculty</p>
-<p>120k+ Students<br>Enrolled</p>
-<p>900+ Hours<br>of Lectures</p>
-<p>Intellectual<br>Community</p>
-<p>Al Tutoring<br>24/7</p>
-</div>
-</div>
-<div class="enroll-card-side">
-<div class="pricing-card">
-<img src="assets/BELL.png" alt="UEFI Badge">
-<h3 class="pricing-title serif">Start Your Journey</h3>
-<p class="pricing-desc">Gain full access to all current and future courses, CBE tracks, and our prestigious community.</p>
-<div class="pricing-amount serif">Free</div>
-<p style="font-size: 12px; color: #64748B; margin-bottom: 24px;">(Funded by Partners)</p>
-<button class="btn-solid-dark" onclick="openAuthModal('signup')">JOIN THE ACADEMY</button>
-<p style="font-size: 12px; font-weight: 500;">Start learning immediately</p>
-</div>
-</div>
-</section>
+    <!-- FEATURES SECTION -->
+    <section class="features-section">
+        <div class="features-content">
+            <h2 class="features-title serif">Higher education, <br>as it should be.</h2>
+            <p class="features-subtitle">Courses, discussions, downloads, and discovery.</p>
+            
+            <div class="tabs-container">
+                <button class="tab-btn active" onclick="switchTab(this, 'ui-courses.jpg')">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M4 6h16v12H4z"/>
+                    </svg>
+                    <span style="font-size: 13px;">All your courses in one place</span>
+                </button>
+                <button class="tab-btn" onclick="switchTab(this, 'ui-tools.jpg')">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 22h20L12 2z"/>
+                    </svg>
+                    <span style="font-size: 13px;">Tools for deeper learning</span>
+                </button>
+                <button class="tab-btn" onclick="switchTab(this, 'ui-social.jpg')">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    <span style="font-size: 13px;">A curated social space</span>
+                </button>
+            </div>
+            
+            <p style="text-align: center; color: #64748B; font-size: 14px;">Learn anywhere. Speed up or slow down. Watch on your laptop, or listen like a podcast on your phone.</p>
+        </div>
+        <div class="features-visual">
+            <img src="assets/UEFI Grad 12.jpg" id="featureImage" alt="App Interface">
+        </div>
+    </section>
 
-<!-- QUOTE SECTION -->
-<section class="quote-section">
-<div class="quote-container">
-<img src="assets/TECHGIRL.png" class="quote-bg" alt="Whiteboard">
-<h2 class="quote-text serif">"Imagine what the best education could be with the new technologies, the best instructors, the lowest cost. That's
-what we're striving for."</h2>
-</div>
-</section>
+    <!-- STATS/CHART SECTION -->
+    <section class="stats-section">
+        <div class="stats-content">
+            <h2 class="stats-title serif">Scaling Educational Outcomes Globally.</h2>
+            <p style="color: #64748B; font-size: 18px;">UEFI Global offers world-class structural tracks without the institutional cost barrier.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <p>Learners Affected</p>
+                    <h4 class="serif">120,000+</h4>
+                </div>
+                <div class="stat-item">
+                    <p>Transition Rate</p>
+                    <h4 class="serif">98.4%</h4>
+                </div>
+                <div class="stat-item">
+                    <p>Annual Growth Rate</p>
+                    <h4 class="serif">+15.2%</h4>
+                </div>
+            </div>
+            
+            <span class="btn-underline" style="color: black; border-color: black;" onclick="openAuthModal('signup')">EXPLORE THE ALTERNATIVE</span>
+        </div>
+        <div class="stats-chart">
+            <div class="chart-container">
+                <div class="chart-bar" style="height: 20%;"></div>
+                <div class="chart-bar" style="height: 25%;"></div>
+                <div class="chart-bar" style="height: 35%;"></div>
+                <div class="chart-bar" style="height: 45%;"></div>
+                <div class="chart-bar" style="height: 50%;"></div>
+                <div class="chart-bar" style="height: 60%;"></div>
+                <div class="chart-bar" style="height: 70%;"></div>
+                <div class="chart-bar" style="height: 85%;"></div>
+                <div class="chart-bar ghost" style="height: 95%;"></div>
+                <div class="chart-bar ghost" style="height: 100%;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 12px; color: #94a3b8;">
+                <span>2022</span>
+                <span>2024</span>
+                <span>2026</span>
+                <span>2028</span>
+                <span>2030</span>
+            </div>
+        </div>
+    </section>
 
-<!-- FAQ SECTION -->
-<section class="faq-section">
-<h2 class="faq-title serif">Frequently Asked Questions</h2>
-<details>
-<summary>Why is UEFI Global free compared to traditional institutions?</summary>
-<div class="faq-answer">Our model is supported by global partnerships, EdTech coalition funding, and a commitment to democratize education
-without the heavy institutional overhead.</div>
-</details>
-<details>
-<summary>What courses are available in the CBE Tracks?</summary>
-<div class="faq-answer">We offer comprehensively aligned curriculums for Grade 9 through 12, focusing on STEM, Arts, Sports Science, and
-Advanced Tech Bootcamps.</div>
-</details>
-<details>
-<summary>Are these courses accredited?</summary>
-<div class="faq-answer">Yes, our completion certificates are mapped to competency-based structural requirements and are recognized by our
-partner university network.</div>
-</details>
-<details>
-<summary>What devices can I watch on?</summary>
-<div class="faq-answer">UEFI Global is fully responsive. You can learn on desktops, laptops, tablets, and smartphones seamlessly.</div>
-</details>
-<details>
-<summary>Is there a mobile app?</summary>
-<div class="faq-answer">Yes, our Progressive Web App (PWA) allows you to install UEFI Global directly to your phone's home screen for offline
-access.</div>
-</details>
-</section>
+    <!-- ENROLLMENT SECTION -->
+    <section class="enroll-section">
+        <img src="assets/UEFI Grad.jpg" class="enroll-bg-silhouette" alt="Teacher">
+        <div class="enroll-text-side">
+            <h2 class="enroll-title serif">Enroll in UEFI Global today</h2>
+            <div class="enroll-stats">
+                <p>New Courses<br>Monthly</p>
+                <p>World-class<br>Faculty</p>
+                <p>120k+ Students<br>Enrolled</p>
+                <p>900+ Hours<br>of Lectures</p>
+                <p>Intellectual<br>Community</p>
+                <p>AI Tutoring<br>24/7</p>
+            </div>
+        </div>
+        <div class="enroll-card-side">
+            <div class="pricing-card">
+                <img src="assets/BELL.png" alt="UEFI Badge">
+                <h3 class="pricing-title serif">Start Your Journey</h3>
+                <p class="pricing-desc">Gain full access to all current and future courses, CBE tracks, and our prestigious community.</p>
+                <div class="pricing-amount serif">Free</div>
+                <p style="font-size: 12px; color: #64748B; margin-bottom: 24px;">(Funded by Partners)</p>
+                <button class="btn-solid-dark" onclick="openAuthModal('signup')">JOIN THE ACADEMY</button>
+                <p style="font-size: 12px; font-weight: 500;">Start learning immediately</p>
+            </div>
+        </div>
+    </section>
 
-<!-- AUTHENTICATION MODAL -->
-<div class="modal-overlay" id="authModal">
-<div class="modal-container">
-<button style="position:absolute; top:20px; right:20px; background:none; border:none; font-size:24px; cursor:pointer;"
-onclick="closeAuthModal()">&times;</button>
-<div class="modal-tabs">
-<button class="tab-btn-auth active" id="tabBtnLogin" onclick="switchAuthMode('login')">Log In</button>
-<button class="tab-btn-auth" id="tabBtnSignup" onclick="switchAuthMode('signup')">Sign Up</button>
-</div>
-<!-- Login Pane -->
-<div id="loginViewPane">
-<h2 class="serif" style="font-size:28px; margin-bottom: 24px;">Welcome Back</h2>
-<form onsubmit="handleAuth(event)">
-<input type="email" class="form-input" id="authEmail" placeholder="Email Address" required>
-<input type="password" class="form-input" placeholder="Password" required>
-<button type="submit" class="btn-solid-dark">Log In</button>
-</form>
-<div style="text-align: center; margin: 20px 0; color: #94a3b8; font-size: 12px; text-transform: uppercase;">or continue with google</div>
-<!-- Google SSO -->
-<div style="display: flex; justify-content: center;">
-<div id="g_id_onload"
-data-client_id="364917808477-afe7jv30ki4r6ld2g5rm6a2dt5kuma3l.apps.googleusercontent.com"
-data-context="signin"
-data-ux_mode="popup"
-data-callback="handleGoogleResponse"
-data-auto_select="false">
-</div>
-<div class="g_id_signin" data-type="standard" data-theme="outline" data-size="large"></div>
-</div>
-</div>
-<!-- Signup Pane -->
-<div id="signupViewPane" class="hidden-pane">
-<h2 class="serif" style="font-size:28px; margin-bottom: 24px;">Join The Academy</h2>
-<form onsubmit="handleAuth(event)">
-<input type="text" class="form-input" placeholder="Full Name" required>
-<input type="email" class="form-input" placeholder="Email Address" required>
-<input type="password" class="form-input" placeholder="Create Password" required>
-<button type="submit" class="btn-solid-dark">Create Account</button>
-</form>
-</div>
-</div>
-</div>
+    <!-- QUOTE SECTION -->
+    <section class="quote-section">
+        <div class="quote-container">
+            <img src="assets/TECHGIRL.png" class="quote-bg" alt="Whiteboard">
+            <h2 class="quote-text serif">"Imagine what the best education could be with the new technologies, the best instructors, the lowest cost. That's what we're striving for."</h2>
+        </div>
+    </section>
 
-<!-- JAVASCRIPT -->
-<script>
-// Immediately Trigger Login/Signup Modal Once Per Session
-window.addEventListener('DOMContentLoaded', () => {
-if (!sessionStorage.getItem('uefi_initial_auth_seen')) {
-setTimeout(() => {
-openAuthModal('signup'); // Opens the modal immediately upon first landing
-sessionStorage.setItem('uefi_initial_auth_seen', 'true');
-}, 500);
-}
-});
+    <!-- FAQ SECTION -->
+    <section class="faq-section">
+        <h2 class="faq-title serif">Frequently Asked Questions</h2>
+        
+        <!-- FAQ 1 -->
+        <details>
+            <summary>Why is UEFI Global free compared to traditional institutions?</summary>
+            <div class="faq-answer">Our model is supported by global partnerships, EdTech coalition funding, and a commitment to democratize education without the heavy institutional overhead.</div>
+        </details>
+        
+        <!-- FAQ 2 -->
+        <details>
+            <summary>What courses are available in the CBE Tracks?</summary>
+            <div class="faq-answer">We offer comprehensively aligned curriculums for Grade 9 through 12, focusing on STEM, Arts, Sports Science, and Advanced Tech Bootcamps.</div>
+        </details>
+        
+        <!-- FAQ 3 -->
+        <details>
+            <summary>Are these courses accredited?</summary>
+            <div class="faq-answer">Yes, our completion certificates are mapped to competency-based structural requirements and are recognized by our partner university network.</div>
+        </details>
+        
+        <!-- FAQ 4 -->
+        <details>
+            <summary>What devices can I watch on?</summary>
+            <div class="faq-answer">UEFI Global is fully responsive. You can learn on desktops, laptops, tablets, and smartphones seamlessly.</div>
+        </details>
+        
+        <!-- FAQ 5 -->
+        <details>
+            <summary>Is there a mobile app?</summary>
+            <div class="faq-answer">Yes, our Progressive Web App (PWA) allows you to install UEFI Global directly to your phone's home screen for offline access.</div>
+        </details>
+        
+        <!-- Expanded FAQ 6 -->
+        <details>
+            <summary>How do I track my progress throughout a course?</summary>
+            <div class="faq-answer">Your learner dashboard provides real-time analytics, module completion checkmarks, and automated competency evaluations.</div>
+        </details>
 
-// 1. 10-Second Lead Popup Logic
-const popup = document.getElementById('leadPopup');
-const emailInput = document.getElementById('popupEmail');
-setTimeout(() => {
-if (!sessionStorage.getItem('uefi_popup_seen')) {
-popup.classList.add('active');
-}
-}, 10000); // 10 seconds
+        <!-- Expanded FAQ 7 -->
+        <details>
+            <summary>Are there live masterclass sessions?</summary>
+            <div class="faq-answer">Absolutely. While core modules are pre-recorded for flexibility, we host monthly live webinars and Q&A sessions with our faculty.</div>
+        </details>
 
-function closePopup() {
-popup.classList.remove('active');
-sessionStorage.setItem('uefi_popup_seen', 'true');
-}
+        <!-- Expanded FAQ 8 -->
+        <details>
+            <summary>How does the mentorship program work?</summary>
+            <div class="faq-answer">Enrolled students can apply for 1-on-1 mentorship pairings based on their career goals, receiving tailored guidance from industry professionals.</div>
+        </details>
 
-function continueFromPopup() {
-const email = emailInput.value;
-closePopup();
-openAuthModal('signup');
-if (email) {
-document.querySelector('#signupViewPane input[type="email"]').value = email;
-}
-}
+        <!-- Expanded FAQ 9 -->
+        <details>
+            <summary>Can I switch my CBE track halfway through?</summary>
+            <div class="faq-answer">Yes, our platform allows modular flexibility. You can pivot tracks and retain credits for overlapping fundamental courses.</div>
+        </details>
 
-// 2. Features Tab Switcher
-function switchTab(btn, imageSrc) {
-document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-btn.classList.add('active');
-// document.getElementById('featureImage').src = imageSrc;
-}
+        <!-- Expanded FAQ 10 -->
+        <details>
+            <summary>What is included in the Tech Hub?</summary>
+            <div class="faq-answer">The Tech Hub grants access to coding environments, cloud hosting credits, software licenses, and advanced bootcamps for web/app development.</div>
+        </details>
 
-// 3. Authentication Modal Logic
-const authModal = document.getElementById('authModal');
-const loginPane = document.getElementById('loginViewPane');
-const signupPane = document.getElementById('signupViewPane');
-const tabLogin = document.getElementById('tabBtnLogin');
-const tabSignup = document.getElementById('tabBtnSignup');
+        <!-- Expanded FAQ 11 -->
+        <details>
+            <summary>Do you provide university placement assistance?</summary>
+            <div class="faq-answer">Our University Prep track includes dedicated advisors who assist with essay writing, portfolio building, and scholarship applications globally.</div>
+        </details>
 
-function openAuthModal(mode) {
-authModal.classList.add('active');
-switchAuthMode(mode);
-}
+        <!-- Expanded FAQ 12 -->
+        <details>
+            <summary>Are there any hidden fees for certificates?</summary>
+            <div class="faq-answer">No. Generating digital, verifiable certificates upon successful course completion is entirely covered by our partner funding model.</div>
+        </details>
 
-function closeAuthModal() {
-authModal.classList.remove('active');
-}
+        <!-- Expanded FAQ 13 -->
+        <details>
+            <summary>How can organizations partner with UEFI Global?</summary>
+            <div class="faq-answer">Organizations can use the 'Partner with Us' dropdown in the navigation menu to explore corporate sponsorship and tech-provision pipelines.</div>
+        </details>
 
-function switchAuthMode(mode) {
-if (mode === 'login') {
-tabLogin.classList.add('active');
-tabSignup.classList.remove('active');
-loginPane.classList.remove('hidden-pane');
-signupPane.classList.add('hidden-pane');
-} else {
-tabSignup.classList.add('active');
-tabLogin.classList.remove('active');
-signupPane.classList.remove('hidden-pane');
-loginPane.classList.add('hidden-pane');
-}
-}
+        <!-- Expanded FAQ 14 -->
+        <details>
+            <summary>How does the 24/7 AI Tutoring work?</summary>
+            <div class="faq-answer">Our proprietary AI model is trained on our curriculum context and can instantly clarify concepts, provide practice quizzes, and explain equations anytime.</div>
+        </details>
 
-function handleAuth(event) {
-event.preventDefault();
-window.location.href = 'home.html';
-}
+        <!-- Expanded FAQ 15 -->
+        <details>
+            <summary>Is there a community forum for students?</summary>
+            <div class="faq-answer">Yes, the curated social space allows learners to form study groups, discuss complex topics, and collaborate on open-source projects safely.</div>
+        </details>
 
-function handleGoogleResponse(response) {
-if (response.credential) {
-window.location.href = 'home.html';
-}
-}
-</script>
-<!-- GoatCounter Analytics -->
-<script data-goatcounter="https://uefiglobal.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+        <!-- Expanded FAQ 16 -->
+        <details>
+            <summary>How are exams and assessments conducted?</summary>
+            <div class="faq-answer">Assessments utilize a mix of automated randomized quizzes, peer-reviewed essays, and practical project submissions graded by our educators.</div>
+        </details>
+
+        <!-- Expanded FAQ 17 -->
+        <details>
+            <summary>Are certificates physical or digital?</summary>
+            <div class="faq-answer">Certificates are primarily issued as secure, blockchain-verified digital credentials, though printable PDFs are provided.</div>
+        </details>
+
+        <!-- Expanded FAQ 18 -->
+        <details>
+            <summary>What happens if I forget my account password?</summary>
+            <div class="faq-answer">You can easily reset your password using the 'Forgot Password' link on the sign-in modal, or log in securely using your Google account.</div>
+        </details>
+
+        <!-- Expanded FAQ 19 -->
+        <details>
+            <summary>Do you support accessibility for students with disabilities?</summary>
+            <div class="faq-answer">Yes, our platform includes closed captioning, screen-reader compatibility, high-contrast modes, and variable playback speeds.</div>
+        </details>
+
+        <!-- Expanded FAQ 20 -->
+        <details>
+            <summary>Can parents track their student's performance?</summary>
+            <div class="faq-answer">Parents or guardians can link their accounts to a student profile to receive weekly automated reports on module completion and assessment scores.</div>
+        </details>
+    </section>
+
+    <!-- AUTHENTICATION MODAL -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-container">
+            <button 
+                style="position:absolute; top:20px; right:20px; background:none; border:none; font-size:24px; cursor:pointer;"
+                onclick="closeAuthModal()"
+            >&times;</button>
+            
+            <div class="modal-tabs">
+                <button class="tab-btn-auth active" id="tabBtnLogin" onclick="switchAuthMode('login')">Log In</button>
+                <button class="tab-btn-auth" id="tabBtnSignup" onclick="switchAuthMode('signup')">Sign Up</button>
+            </div>
+            
+            <!-- Login Pane -->
+            <div id="loginViewPane">
+                <h2 class="serif" style="font-size:28px; margin-bottom: 24px;">Welcome Back</h2>
+                <form onsubmit="handleAuth(event)">
+                    <input type="email" class="form-input" id="authEmail" placeholder="Email Address" required>
+                    <input type="password" class="form-input" placeholder="Password" required>
+                    <button type="submit" class="btn-solid-dark">Log In</button>
+                </form>
+                
+                <div style="text-align: center; margin: 20px 0; color: #94a3b8; font-size: 12px; text-transform: uppercase;">or continue with google</div>
+                
+                <!-- Google SSO -->
+                <div style="display: flex; justify-content: center;">
+                    <div 
+                        id="g_id_onload"
+                        data-client_id="364917808477-afe7jv30ki4r6ld2g5rm6a2dt5kuma3l.apps.googleusercontent.com"
+                        data-context="signin"
+                        data-ux_mode="popup"
+                        data-callback="handleGoogleResponse"
+                        data-auto_select="false"
+                    ></div>
+                    <div class="g_id_signin" data-type="standard" data-theme="outline" data-size="large"></div>
+                </div>
+            </div>
+            
+            <!-- Signup Pane -->
+            <div id="signupViewPane" class="hidden-pane">
+                <h2 class="serif" style="font-size:28px; margin-bottom: 24px;">Join The Academy</h2>
+                <form onsubmit="handleAuth(event)">
+                    <input type="text" class="form-input" placeholder="Full Name" required>
+                    <input type="email" class="form-input" placeholder="Email Address" required>
+                    <input type="password" class="form-input" placeholder="Create Password" required>
+                    <button type="submit" class="btn-solid-dark">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Immediately Trigger Login/Signup Modal Once Per Session
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!sessionStorage.getItem('uefi_initial_auth_seen')) {
+                setTimeout(() => {
+                    openAuthModal('signup'); // Opens the modal immediately upon first landing
+                    sessionStorage.setItem('uefi_initial_auth_seen', 'true');
+                }, 500);
+            }
+        });
+
+        // 1. 10-Second Lead Popup Logic
+        const popup = document.getElementById('leadPopup');
+        const emailInput = document.getElementById('popupEmail');
+
+        setTimeout(() => {
+            if (!sessionStorage.getItem('uefi_popup_seen')) {
+                popup.classList.add('active');
+            }
+        }, 10000); // 10 seconds
+
+        function closePopup() {
+            popup.classList.remove('active');
+            sessionStorage.setItem('uefi_popup_seen', 'true');
+        }
+
+        function continueFromPopup() {
+            const email = emailInput.value;
+            closePopup();
+            openAuthModal('signup');
+            if (email) {
+                document.querySelector('#signupViewPane input[type="email"]').value = email;
+            }
+        }
+
+        // 2. Features Tab Switcher
+        function switchTab(btn, imageSrc) {
+            document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            // document.getElementById('featureImage').src = imageSrc;
+        }
+
+        // 3. Authentication Modal Logic
+        const authModal = document.getElementById('authModal');
+        const loginPane = document.getElementById('loginViewPane');
+        const signupPane = document.getElementById('signupViewPane');
+        const tabLogin = document.getElementById('tabBtnLogin');
+        const tabSignup = document.getElementById('tabBtnSignup');
+
+        function openAuthModal(mode) {
+            authModal.classList.add('active');
+            switchAuthMode(mode);
+        }
+
+        function closeAuthModal() {
+            authModal.classList.remove('active');
+        }
+
+        function switchAuthMode(mode) {
+            if (mode === 'login') {
+                tabLogin.classList.add('active');
+                tabSignup.classList.remove('active');
+                loginPane.classList.remove('hidden-pane');
+                signupPane.classList.add('hidden-pane');
+            } else {
+                tabSignup.classList.add('active');
+                tabLogin.classList.remove('active');
+                signupPane.classList.remove('hidden-pane');
+                loginPane.classList.add('hidden-pane');
+            }
+        }
+
+        function handleAuth(event) {
+            event.preventDefault();
+            window.location.href = 'home.html';
+        }
+
+        function handleGoogleResponse(response) {
+            if (response.credential) {
+                window.location.href = 'home.html';
+            }
+        }
+    </script>
+
+    <!-- GoatCounter Analytics -->
+    <script data-goatcounter="https://uefiglobal.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
